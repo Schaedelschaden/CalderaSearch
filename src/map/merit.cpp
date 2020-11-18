@@ -90,61 +90,66 @@ struct MeritCategoryInfo_t
 
 static const MeritCategoryInfo_t meritCatInfo[] =
 {
-    {3,45,0},  //MCATEGORY_HP_MP
+    {3,45,0},   //MCATEGORY_HP_MP
     {7,105,1},  //MCATEGORY_ATTRIBUTES
     {19,152,2}, //MCATEGORY_COMBAT
     {14,112,4}, //MCATEGORY_MAGIC
-    {5,10,5},  //MCATEGORY_OTHERS
+    {5,10,5},   //MCATEGORY_OTHERS
 
-    {5,10,6},  //MCATEGORY_WAR_1
-    {5,10,6},  //MCATEGORY_MNK_1
-    {5,10,6},  //MCATEGORY_WHM_1
-    {7,10,6},  //MCATEGORY_BLM_1
-    {7,10,6},  //MCATEGORY_RDM_1
-    {5,10,6},  //MCATEGORY_THF_1
-    {5,10,6},  //MCATEGORY_PLD_1
-    {5,10,6},  //MCATEGORY_DRK_1
-    {5,10,6},  //MCATEGORY_BST_1
-    {5,10,6},  //MCATEGORY_BRD_1
-    {5,10,6},  //MCATEGORY_RNG_1
-    {5,10,6},  //MCATEGORY_SAM_1
-    {7,10,6},  //MCATEGORY_NIN_1
-    {5,10,6},  //MCATEGORY_DRG_1
-    {5,10,6},  //MCATEGORY_SMN_1
-    {5,10,6},  //MCATEGORY_BLU_1
-    {5,10,6},  //MCATEGORY_COR_1
-    {5,10,6},  //MCATEGORY_PUP_1
-    {4,10,6},  //MCATEGORY_DNC_1
-    {4,10,6},  //MCATEGORY_SCH_1
+    {5,10,6},   //MCATEGORY_WAR_1
+    {5,10,6},   //MCATEGORY_MNK_1
+    {5,10,6},   //MCATEGORY_WHM_1
+    {7,10,6},   //MCATEGORY_BLM_1
+    {7,10,6},   //MCATEGORY_RDM_1
+    {5,10,6},   //MCATEGORY_THF_1
+    {5,10,6},   //MCATEGORY_PLD_1
+    {5,10,6},   //MCATEGORY_DRK_1
+    {5,10,6},   //MCATEGORY_BST_1
+    {5,10,6},   //MCATEGORY_BRD_1
+    {5,10,6},   //MCATEGORY_RNG_1
+    {5,10,6},   //MCATEGORY_SAM_1
+    {7,10,6},   //MCATEGORY_NIN_1
+    {5,10,6},   //MCATEGORY_DRG_1
+    {5,10,6},   //MCATEGORY_SMN_1
+    {5,10,6},   //MCATEGORY_BLU_1
+    {5,10,6},   //MCATEGORY_COR_1
+    {5,10,6},   //MCATEGORY_PUP_1
+    {4,10,6},   //MCATEGORY_DNC_1
+    {4,10,6},   //MCATEGORY_SCH_1
 
-    {14,15,8}, //MCATEGORY_WS
+    {14,15,8},  //MCATEGORY_WS
 
-	{0,0,8},   //MCATEGORY_UNK_0	26
-    {0,0,8},   //MCATEGORY_UNK_1
-    {0,0,8},   //MCATEGORY_UNK_2
-    {0,0,8},   //MCATEGORY_UNK_3
-    {0,0,8},   //MCATEGORY_UNK_4	30
+	{5,10,6},   //MCATEGORY_GEO_1	26
+    {5,10,6},   //MCATEGORY_RUN_1
+    {0,0,8},    //MCATEGORY_UNK_1
+    {0,0,8},    //MCATEGORY_UNK_2
+    {0,0,8},    //MCATEGORY_UNK_3	30
 
-    {4,10,7},  //MCATEGORY_WAR_2
-    {4,10,7},  //MCATEGORY_MNK_2
-    {6,10,7},  //MCATEGORY_WHM_2
+    {4,10,7},   //MCATEGORY_WAR_2
+    {4,10,7},   //MCATEGORY_MNK_2
+    {6,10,7},   //MCATEGORY_WHM_2
     {12,10,7},  //MCATEGORY_BLM_2
     {12,10,7},  //MCATEGORY_RDM_2
-    {4,10,7},  //MCATEGORY_THF_2
-    {4,10,7},  //MCATEGORY_PLD_2
-    {4,10,7},  //MCATEGORY_DRK_2
-    {4,10,7},  //MCATEGORY_BST_2
-    {6,10,7},  //MCATEGORY_BRD_2
-    {4,10,7},  //MCATEGORY_RNG_2
-    {4,10,7},  //MCATEGORY_SAM_2
+    {4,10,7},   //MCATEGORY_THF_2
+    {4,10,7},   //MCATEGORY_PLD_2
+    {4,10,7},   //MCATEGORY_DRK_2
+    {4,10,7},   //MCATEGORY_BST_2
+    {6,10,7},   //MCATEGORY_BRD_2
+    {4,10,7},   //MCATEGORY_RNG_2
+    {4,10,7},   //MCATEGORY_SAM_2
     {12,10,7},  //MCATEGORY_NIN_2
-    {4,10,7},  //MCATEGORY_DRG_2
-    {6,10,7},  //MCATEGORY_SMN_2
-    {4,10,7},  //MCATEGORY_BLU_2
-    {4,10,7},  //MCATEGORY_COR_2
-    {4,10,7},  //MCATEGORY_PUP_2
-    {4,10,7},  //MCATEGORY_DNC_2
-    {6,10,7},  //MCATEGORY_SHC_2
+    {4,10,7},   //MCATEGORY_DRG_2
+    {6,10,7},   //MCATEGORY_SMN_2
+    {4,10,7},   //MCATEGORY_BLU_2
+    {4,10,7},   //MCATEGORY_COR_2
+    {4,10,7},   //MCATEGORY_PUP_2
+    {4,10,7},   //MCATEGORY_DNC_2
+    {6,10,7},   //MCATEGORY_SCH_2
+	
+	{0,0,8},    //MCATEGORY_UNK_4
+	
+	{4,10,7},   //MCATEGORY_GEO_2
+	{4,10,7},   //MCATEGORY_RUN_2
 };
 
 #define GetMeritCategory(merit) ((merit >> 6) - 1)      // получаем категорию из merit
@@ -199,10 +204,10 @@ void CMeritPoints::LoadMeritPoints(uint32 charid)
 
     for (uint16 i = 0; i < MERITS_COUNT; ++i)
     {
-        if ((catNumber < 51 && i == meritNameSpace::groupOffset[catNumber]) || (catNumber > 25 && catNumber < 31))
+        if ((catNumber < 54 && i == meritNameSpace::groupOffset[catNumber]) || (catNumber > 27 && catNumber < 31))
         {
 
-            if (catNumber > 25 && catNumber < 31) // point these to valid merits to prevent crash
+            if (catNumber > 27 && catNumber < 31 || catNumber == 51 || catNumber == 54) // point these to valid merits to prevent crash
                 Categories[catNumber] = &merits[163];
             else
                 Categories[catNumber] = &merits[i];

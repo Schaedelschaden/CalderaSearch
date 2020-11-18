@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------------------------------
+-- func: !releasepet
+-- desc: Releases the player's current pet.
+---------------------------------------------------------------------------------------------------
+
+cmdprops =
+{
+    permission = 0,
+    parameters = "s"
+}
+
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!release {name}")
+end
+
+function onTrigger(player, name)
+    local target
+    if name == nil then
+        target = player
+    else
+        target = GetPlayerByName(name)
+        if target == nil then
+            error(player, string.format("Player named '%s' not found!", name))
+            return
+        end
+    end
+
+    target:despawnPet()
+end

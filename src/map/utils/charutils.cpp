@@ -4737,10 +4737,13 @@ namespace charutils
     {
         if (PAbility->getAddType() & ADDTYPE_MERIT)
         {
-            if (!(PChar->PMeritPoints->GetMerit((MERIT_TYPE)PAbility->getMeritModID())->count > 0))
-            {
-                return false;
-            }
+			if (JOBTYPE::JOB_GEO != PChar->GetMJob())
+			{
+				if (!(PChar->PMeritPoints->GetMerit((MERIT_TYPE)PAbility->getMeritModID())->count > 0))
+				{
+					return false;
+				}
+			}
         }
         if (PAbility->getAddType() & ADDTYPE_ASTRAL_FLOW)
         {
