@@ -92,6 +92,7 @@ tpz.weaponskill =
     SCOURGE             = 57,
     TORCLEAVER          = 59,
     RESOLUTION          = 60,
+	DIMIDIATION         = 61,
 
     ------------------------------------
     -- AXE

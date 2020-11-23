@@ -18,6 +18,11 @@ function onSpellCast(caster, target, spell)
 
     local duration = calculateDuration(60 + caster:getMod(tpz.mod.REGEN_DURATION), spell:getSkillType(), spell:getSpellGroup(), caster, target)
     duration = calculateDurationForLvl(duration, 66, target:getMainLvl())
+	
+	if (caster:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		hp = hp * 2
+		caster:delStatusEffect(tpz.effect.EMBOLDEN)
+	end
 
     if target:addStatusEffect(tpz.effect.REGEN, hp, 0, duration) then
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)

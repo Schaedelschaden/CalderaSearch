@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Frightful Roar
--- Weakens defense of enemies within range
+-- Weakens defense of enemies within range.
 -- Spell cost: 32 MP
 -- Monster Type: Demon
 -- Spell Type: Magical (Wind)
@@ -24,11 +24,12 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.effect = tpz.effect.DEFENSE_DOWN
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.BLUE_MAGIC
+		params.effect = tpz.effect.DEFENSE_DOWN
+		
     local resist = applyResistance(caster, target, spell, params)
-    local duration = 60 * resist
+    local duration = 180 * resist
     local power = 10
 
     if (resist > 0.5) then -- Do it!

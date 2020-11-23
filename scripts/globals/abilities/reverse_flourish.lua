@@ -11,16 +11,15 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAbilityCheck(player, target, ability)
-    if
-        player:hasStatusEffect(tpz.effect.FINISHING_MOVE_1) or
+	if (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_1) or
         player:hasStatusEffect(tpz.effect.FINISHING_MOVE_2) or
         player:hasStatusEffect(tpz.effect.FINISHING_MOVE_3) or
         player:hasStatusEffect(tpz.effect.FINISHING_MOVE_4) or
-        player:hasStatusEffect(tpz.effect.FINISHING_MOVE_5)
-    then
-        return 0, 0
+        player:hasStatusEffect(tpz.effect.FINISHING_MOVE_5) or
+		player:hasStatusEffect(tpz.effect.GRAND_PAS)) then
+        return 0,0
     else
-        return tpz.msg.basic.NO_FINISHINGMOVES, 0
+        return tpz.msg.basic.NO_FINISHINGMOVES,0
     end
 end
 
@@ -50,11 +49,14 @@ function onUseAbility(player, target, ability)
     TPGain = TPGain * 10
 
     player:addTP(TPGain)
-    player:delStatusEffect(tpz.effect.FINISHING_MOVE_1)
-    player:delStatusEffect(tpz.effect.FINISHING_MOVE_2)
-    player:delStatusEffect(tpz.effect.FINISHING_MOVE_3)
-    player:delStatusEffect(tpz.effect.FINISHING_MOVE_4)
-    player:delStatusEffect(tpz.effect.FINISHING_MOVE_5)
+	
+	if not (player:hasStatusEffect(tpz.effect.GRAND_PAS)) then
+		player:delStatusEffect(tpz.effect.FINISHING_MOVE_1)
+		player:delStatusEffect(tpz.effect.FINISHING_MOVE_2)
+		player:delStatusEffect(tpz.effect.FINISHING_MOVE_3)
+		player:delStatusEffect(tpz.effect.FINISHING_MOVE_4)
+		player:delStatusEffect(tpz.effect.FINISHING_MOVE_5)
+	end
 
     return TPGain
 end

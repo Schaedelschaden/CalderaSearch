@@ -1,17 +1,19 @@
 -----------------------------------
 --
---     tpz.effect.SUBTLE_SORCERY
+-- tpz.effect.SUBTLE_SORCERY
 --
 -----------------------------------
-function onEffectGain(target, effect)
-    target:addMod(tpz.mod.MACC, 100)
+require("scripts/globals/status")
+-----------------------------------
+
+function onEffectGain(target,effect)
+	target:addMod(tpz.mod.MACC, effect:getPower())
 end
 
-function onEffectTick(target, effect)
-    target:addMod(tpz.mod.ENMITY, -20)
+function onEffectTick(target,effect)
+
 end
 
-function onEffectLose(target, effect)
-    target:delMod(tpz.mod.MACC, 100)
-    target:delMod(tpz.mod.ENMITY)
+function onEffectLose(target,effect)
+	target:delMod(tpz.mod.MACC, effect:getPower())
 end

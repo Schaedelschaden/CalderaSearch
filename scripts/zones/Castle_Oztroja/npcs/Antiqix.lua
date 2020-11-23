@@ -75,7 +75,17 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    if (player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND)) then
+    local introMask = player:getCharVar("currencyGoblinIntro")
+
+    -- Introduces the Prismatic Hourglass
+    if (utils.mask.getBit(introMask, 0) and not utils.mask.getBit(introMask, 4)) then
+        player:startEvent(51, TIMELESS_HOURGLASS, TIMELESS_HOURGLASS_COST, tpz.ki.PRISMATIC_HOURGLASS, PRISMATIC_HOURGLASS_COST)
+
+    -- Introduces Currency
+    elseif (utils.mask.getBit(introMask, 4) and not utils.mask.getBit(introMask, 2)) then
+        player:startEvent(52, currency[1], CURRENCY_EXCHANGE_RATE, currency[2], CURRENCY_EXCHANGE_RATE, currency[3], currency[3], CURRENCY_EXCHANGE_RATE, currency[2])
+
+    elseif (player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND)) then
         player:startEvent(53, currency[1], CURRENCY_EXCHANGE_RATE, currency[2], CURRENCY_EXCHANGE_RATE, currency[3], PRISMATIC_HOURGLASS_COST, TIMELESS_HOURGLASS, TIMELESS_HOURGLASS_COST)
     else
         player:startEvent(50)
@@ -83,7 +93,11 @@ function onTrigger(player, npc)
 end
 
 function onEventUpdate(player, csid, option)
-    if (csid == 53) then
+    -- Currency gets re-ordered in introduction
+    if (csid == 52) then
+        player:updateEvent(currency[3], currency[2], CURRENCY_EXCHANGE_RATE)
+
+    elseif (csid == 53) then
 
         -- asking about hourglasses
         if (option == 1) then
@@ -123,12 +137,25 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+    local introMask = player:getCharVar("currencyGoblinIntro")
 
+    if (csid == 51) then
+        -- make prismatic hourglass introduction unavailable to the other goblins
+        player:setCharVar("currencyGoblinIntro", utils.mask.setBit(introMask, 4, true))
+
+    elseif (csid == 52) then
+        player:setCharVar("currencyGoblinIntro", utils.mask.setBit(introMask, 2, true))
+        -- remove if this was the last of the three goblins that introduced currency
+        if utils.mask.isFull(player:getCharVar("currencyGoblinIntro"), 5) then
+            player:setCharVar("currencyGoblinIntro", 0)
+        end
     -- bought prismatic hourglass
-    if (csid == 54) then
+    elseif (csid == 54) then
         player:tradeComplete()
         player:addKeyItem(tpz.ki.PRISMATIC_HOURGLASS)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.PRISMATIC_HOURGLASS)
+        -- player may trade right away before introduction, make sure this gets set
+        player:setCharVar("currencyGoblinIntro", utils.mask.setBit(introMask, 4, true))
 
     -- refund timeless hourglass
     elseif (csid == 97) then

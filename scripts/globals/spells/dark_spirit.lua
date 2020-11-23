@@ -11,6 +11,7 @@ require("scripts/globals/status")
 
 function onMagicCastingCheck(caster, target, spell)
     local result = 0
+	
     if (caster:hasPet()) then
         result = tpz.msg.basic.ALREADY_HAS_A_PET
     elseif (not caster:canUseMisc(tpz.zoneMisc.PET)) then
@@ -18,10 +19,12 @@ function onMagicCastingCheck(caster, target, spell)
     elseif (caster:getObjType() == tpz.objType.PC) then
         result = avatarMiniFightCheck(caster)
     end
+	
     return result
 end
 
 function onSpellCast(caster, target, spell)
     tpz.pet.spawnPet(caster, tpz.pet.id.DARK_SPIRIT)
+	
     return 0
 end

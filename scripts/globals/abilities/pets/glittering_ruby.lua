@@ -1,5 +1,5 @@
 ---------------------------------------------
--- Glittering Ruby
+-- Glittering Ruby (Carbuncle Blood Pact)
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")
@@ -8,13 +8,40 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onAbilityCheck(player, target, ability)
-    return 0, 0
+	local currentMP = player:getMP()
+	local bloodboon = player:getMod(tpz.mod.BLOOD_BOON)
+	local cost = 62 -- Set the Blood Pact MP Cost here
+	
+	if (player:hasStatusEffect(tpz.effect.ASTRAL_CONDUIT)) then
+		ability:setRecast(utils.clamp(0, 0, 0))
+	end
+	
+	if (player:hasStatusEffect(tpz.effect.APOGEE)) then
+		cost = cost * 1.5
+		ability:setRecast(utils.clamp(0, 0, 0))
+		player:delStatusEffect(tpz.effect.APOGEE)
+	end
+	
+	if (math.random(1,100) < bloodboon) then
+		local originalcost = cost
+		cost = (cost * (math.random(8,16) / 16))
+--		printf("Glittering Ruby PET onAbilityCheck BLOOD BOON COST REDUCTION [%i to %i]\n",originalcost,cost)
+	end
+	
+	player:setMP(currentMP - cost)
+	
+--	printf("Glittering Ruby PET onAbilityCheck\n")
+	
+	return 0,0
 end
 
 function onPetAbility(target, pet, skill)
-    --randomly give str/dex/vit/agi/int/mnd/chr (+12)
-    local effect = math.random()
-    local effectid = tpz.effect.STR_BOOST
+    --randomly give str/dex/vit/agi/int/mnd/chr (Formula: 3 + floor(level / 5))
+    local strength = (3 + math.floor(pet:getMainLvl()/ 5))
+--	printf("Glittering Ruby PET onUseAbility STRENGTH [%i]\n",strength)
+	local effect = math.random()
+	local effectid = tpz.effect.STR_BOOST
+	
     if (effect<=0.14) then --STR
         effectid = tpz.effect.STR_BOOST
     elseif (effect<=0.28) then --DEX
@@ -31,7 +58,8 @@ function onPetAbility(target, pet, skill)
         effectid = tpz.effect.CHR_BOOST
     end
 
-    target:addStatusEffect(effectid, math.random(12, 14), 0, 90)
+    target:addStatusEffect(effectid,strength,0,90)
     skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
+	
     return effectid
 end

@@ -6,16 +6,19 @@
 require("scripts/globals/status")
 -----------------------------------
 
-function onEffectGain(target, effect)
-    if (effect:getPower()>100) then
-        effect:setPower(50)
-    end
-    target:addMod(tpz.mod.ATTP, -effect:getPower())
+function onEffectGain(target,effect)
+	power = effect:getPower()
+--	printf("Attack Down onEffectGain POWER: [%f]\n", power)
+    target:addMod(tpz.mod.ATTP,-power)
+	target:addMod(tpz.mod.RATTP,-power)
 end
 
-function onEffectTick(target, effect)
+function onEffectTick(target,effect)
+	
 end
 
-function onEffectLose(target, effect)
-    target:delMod(tpz.mod.ATTP, -effect:getPower())
+function onEffectLose(target,effect)
+    power = effect:getPower()
+	target:delMod(tpz.mod.ATTP,-power)
+	target:delMod(tpz.mod.RATTP,-power)
 end

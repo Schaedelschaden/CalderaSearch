@@ -37,5 +37,5 @@ function onTrigger(player, mount, target)
         end
     end
 
-    targ:addStatusEffectEx(tpz.effect.MOUNTED, tpz.effect.MOUNTED, mount, 0, 0, true)
+    targ:addStatusEffectEx(tpz.effect.MOUNTED, tpz.effect.MOUNTED, mount, 40, 0, true)
 end

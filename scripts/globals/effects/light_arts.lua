@@ -4,7 +4,7 @@
 --
 -----------------------------------
 
-function onEffectGain(target, effect)
+function onEffectGain(target,effect)
     target:recalculateAbilitiesTable()
     local bonus = effect:getPower()
     local regen = effect:getSubPower()
@@ -21,15 +21,15 @@ function onEffectGain(target, effect)
         target:addMod(tpz.mod.BLACK_MAGIC_CAST, 20)
         target:addMod(tpz.mod.BLACK_MAGIC_RECAST, 20)
         target:addMod(tpz.mod.LIGHT_ARTS_REGEN, regen)
-        target:addMod(tpz.mod.REGEN_DURATION, regen*2)
+        target:addMod(tpz.mod.REGEN_DURATION, regen * 2)
     end
     target:recalculateSkillsTable()
 end
 
-function onEffectTick(target, effect)
+function onEffectTick(target,effect)
 end
 
-function onEffectLose(target, effect)
+function onEffectLose(target,effect)
     target:recalculateAbilitiesTable()
     local bonus = effect:getPower()
     local regen = effect:getSubPower()
@@ -46,7 +46,7 @@ function onEffectLose(target, effect)
         target:delMod(tpz.mod.BLACK_MAGIC_CAST, 20)
         target:delMod(tpz.mod.BLACK_MAGIC_RECAST, 20)
         target:delMod(tpz.mod.LIGHT_ARTS_REGEN, regen)
-        target:delMod(tpz.mod.REGEN_DURATION, regen*2)
+        target:delMod(tpz.mod.REGEN_DURATION, regen * 2)
     end
     target:recalculateSkillsTable()
 end

@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Jettatura
--- Enemies within a fan-shaped area originating from the caster are frozen with fear
+-- Enemies within a fan-shaped area originating from the caster are frozen with fear.
 -- Spell cost: 37 MP
 -- Monster Type: Birds
 -- Spell Type: Magical (Dark)
@@ -24,13 +24,14 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.effect = tpz.effect.TERROR
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.BLUE_MAGIC
+		params.effect = tpz.effect.TERROR
+		
     local resist = applyResistance(caster, target, spell, params)
-    local duration = 5 * resist
+    local duration = 2 * resist
 
-    if (resist > 0.5) then -- Do it!
+    if (resist > 0.25) then -- Do it!
         if (target:isFacing(caster)) then
             if (target:addStatusEffect(params.effect, 1, 0, duration)) then
                 spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)

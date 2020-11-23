@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Actinic Burst
--- Greatly lowers the accuracy of enemies within range for a brief period of time
+-- Greatly lowers the accuracy of enemies within range for a brief period of time.
 -- Spell cost: 24 MP
 -- Monster Type: Luminions
 -- Spell Type: Magical (Light)
@@ -24,20 +24,18 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffect = tpz.effect.FLASH
-    local dINT = (caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND))
-    local params = {}
-    params.diff = nil
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus =  150
-    params.effect = nil
+    local duration = 20
+	local params = {}
+		params.diff = (caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.BLUE_MAGIC
+		params.bonus = 150
+	
     local resist = applyResistance(caster, target, spell, params)
-    local duration = 20 * resist
-    local power = 200
+    duration = duration * resist
 
-    if (resist > 0.0625) then -- Do it!
-        if (target:addStatusEffect(typeEffect, power, 0, duration)) then
+    if (resist > 0.0625) then
+        if (target:addStatusEffect(tpz.effect.FLASH, 200, 0, duration)) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
@@ -46,5 +44,5 @@ function onSpellCast(caster, target, spell)
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 
-    return typeEffect
+    return tpz.effect.FLASH
 end

@@ -16,6 +16,11 @@ function onSpellCast(caster, target, spell)
     local int = caster:getStat(tpz.mod.INT)
     local magicAtk = caster:getMod(tpz.mod.MATT)
     local power = ((int + 10) / 20 + 2) * (1 + magicAtk / 100)
+	
+	if (caster:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		power = power * 2
+		caster:delStatusEffect(tpz.effect.EMBOLDEN)
+	end
 
     if target:addStatusEffect(typeEffect, power, 0, duration) then
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)

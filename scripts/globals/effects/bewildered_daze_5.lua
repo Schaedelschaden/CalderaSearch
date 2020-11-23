@@ -1,15 +1,17 @@
 -----------------------------------
 --
---   tpz.effect.BEWILDERED_DAZE_5
+-- tpz.effect.BEWILDERED_DAZE_5
 --
 -----------------------------------
+
 function onEffectGain(target, effect)
-    target:addMod(tpz.mod.CEVA, -13)
+	target:addMod(tpz.mod.CRIT_HIT_EVASION, 10)
 end
 
 function onEffectTick(target, effect)
+	
 end
 
 function onEffectLose(target, effect)
-    target:delMod(tpz.mod.CEVA, -13)
+	target:delMod(tpz.mod.CRIT_HIT_EVASION, 10)
 end

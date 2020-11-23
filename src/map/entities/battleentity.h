@@ -203,7 +203,7 @@ enum SUBSKILLTYPE
     SUBSKILL_TOLOI = 68
 };
 
-// ячейки экипировки. монстры используют лишь первые четыре, персонаж использует все
+// Equipment slots. Monsters use only the first four, player characters use all
 
 enum SLOTTYPE
 {
@@ -229,9 +229,9 @@ enum SLOTTYPE
 
 #define MAX_SLOTTYPE	18
 
-// CROSSBOW и GUN - это Piercing, разделение сделано из-за одинакового skilltype
-// для возможности различить эти орудия при экипировке и избавиться от ошибки
-// использования пуль с арбалетом и арбалетных стрел с огнестрельным оружием (только персонажи)
+// CROSSBOW & GUN - Both weapons are Piercing, the division is done due to the same skilltype
+// to be able to distinguish between these weapons when equipped and get rid of the error
+// using arrows and crossbow bolts with firearms (player characters only)
 
 enum ATTACKTYPE
 {
@@ -366,7 +366,8 @@ enum TARGETTYPE
     TARGET_PLAYER_DEAD = 0x20,
     TARGET_NPC = 0x40,		// скорее всего подразумевается mob, выглядящий как npc и воюющий на стороне персонажа
     TARGET_PLAYER_PARTY_PIANISSIMO = 0x80,
-    TARGET_PET = 0x100
+    TARGET_PET = 0x100,
+	TARGET_PLAYER_PARTY_ENTRUST = 0x200
 };
 
 enum SKILLCHAIN_ELEMENT

@@ -9,7 +9,7 @@ require("scripts/globals/msg")
 require("scripts/globals/status")
 -----------------------------------------
 
-function onMagicCastingCheck(caster, target, spell)
+function onMagicCastingCheck(caster,target,spell)
     if (not caster:canUseMisc(tpz.zoneMisc.PET)) then
         return tpz.msg.basic.CANT_BE_USED_IN_AREA
     elseif (not caster:hasStatusEffect(tpz.effect.ASTRAL_FLOW)) then
@@ -22,8 +22,22 @@ function onMagicCastingCheck(caster, target, spell)
     return 0
 end
 
-function onSpellCast(caster, target, spell)
+function onSpellCast(caster,target,spell)
     caster:spawnPet(tpz.pet.id.ALEXANDER)
+	
+    local pet = caster:getPet()
+	local bloodpact = 2143 -- mob_skill_id from mob_skills.sql
 
-    return 0
+--	printf("Spell: Alexander onSpellCast SUMMON ALEXANDER")
+
+	-- Create a listener for the end of Perfect Defense to despawn Alexander
+    pet:addListener("WEAPONSKILL_STATE_EXIT", "PERFECT_DEFENSE_END", function(pet, skill)
+       local master = pet:getMaster()
+       master:despawnPet()
+       pet:removeListener("PERFECT_DEFENSE_END")
+    end)
+	
+	pet:useMobAbility(bloodpact, caster)
+	
+	return 0
 end

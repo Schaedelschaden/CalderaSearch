@@ -94,7 +94,7 @@ public:
     int32 isAlly(lua_State*);
 
     // AI and Control
-    int32 initNpcAi(lua_State* L);
+    int32 initNpcPathing(lua_State* L);
     int32 resetAI(lua_State* L);
     int32 getStatus(lua_State*);
     int32 setStatus(lua_State*);             // Sets Character's Status
@@ -102,11 +102,17 @@ public:
 
     int32 lookAt(lua_State* L);              // look at given position
     int32 clearTargID(lua_State*);           // clears target of entity
-
+    
+    int32 getPathPoint(lua_State* L);
+    int32 setPathPoint(lua_State* L);
     int32 atPoint(lua_State* L);             // is at given point
     int32 pathTo(lua_State* L);              // set new path to point without changing action
+	int32 stepTo(lua_State* L);
     int32 pathThrough(lua_State* L);         // walk at normal speed through the given points
     int32 isFollowingPath(lua_State* L);     // checks if the entity is following a path
+	int32 rotateToAngle(lua_State* L);
+	int32 pathStop(lua_State* L);
+	int32 pathResume(lua_State* L);
     int32 clearPath(lua_State* L);           // removes current pathfind and stops moving
     int32 checkDistance(lua_State*);         // Check Distacnce and returns distance number
     int32 wait(lua_State* L);                // make the npc wait a number of ms and then back into roam
@@ -139,9 +145,11 @@ public:
     int32 getWorldAngle(lua_State* L);       // return angle (rot) between two points (vector from a to b), aligned to absolute cardinal degree
     int32 getFacingAngle(lua_State* L);      // return angle between entity rot and target pos, aligned to number of degrees of difference
     int32 isFacing(lua_State*);              // true if you are facing the target
+	int32 getAngle(lua_State*);
     int32 isInfront(lua_State*);             // true if you're infront of the input target
     int32 isBehind(lua_State*);              // true if you're behind the input target
     int32 isBeside(lua_State*);              // true if you're to the side of the input target
+	int32 getCardinalQuadrant(lua_State* L); // returns a quadrant of a cardinal direction based on the entity around a target.
 
     int32 getZone(lua_State*);               // Get Entity zone
     int32 getZoneID(lua_State*);             // Get Entity zone ID
@@ -189,6 +197,8 @@ public:
     int32 addTempItem(lua_State*);           // Add temp item to Entity Temp inventory
     int32 hasWornItem(lua_State*);           // Check if the item is already worn (player:hasWornItem(itemid))
     int32 createWornItem(lua_State*);        // Update this item in worn item (player:createWornItem(itemid))
+	
+	int32 getItemSkillType(lua_State* L);
 
     int32 createShop(lua_State*);            // Prepare the container for work of shop ??
     int32 addShopItem(lua_State*);           // Adds item to shop container (16 max)
@@ -483,6 +493,8 @@ public:
     int32 queue(lua_State* L);
     int32 addRecast(lua_State*);
     int32 hasRecast(lua_State*);
+    int32 getRecast(lua_State*);
+    int32 setRecast(lua_State*);
     int32 resetRecast(lua_State*);            // Reset one recast ID
     int32 resetRecasts(lua_State*);           // Reset recasts for the caller
 
@@ -546,7 +558,7 @@ public:
     int32 delLatent(lua_State*);               // Removes a latent effect
 
     int32 fold(lua_State*);
-    int32 doWildCard(lua_State*);
+/*     int32 doWildCard(lua_State*); */
     int32 addCorsairRoll(lua_State*);          // Adds corsair roll effect
     int32 hasCorsairEffect(lua_State*);
     int32 hasBustEffect(lua_State*);           // Checks to see if a character has a specified busted corsair roll
@@ -566,8 +578,11 @@ public:
     int32 getEVA(lua_State*);                   // Get total EVA
     int32 getRACC(lua_State*);                  // Get total r.acc
     int32 getRATT(lua_State*);                  // Get total r.attack
-    int32 getILvlMacc(lua_State *L);
+    int32 getILvlMacc(lua_State *L);            // Get char ILvl MACC skill of all items currently equipped
+    int32 getILvlParry(lua_State*);             // Get char ILvl Parry skill of all items currently equipped
     int32 isSpellAoE(lua_State* L);
+    int32 setAbilityAoE(lua_State* L);
+	int32 getSpellCost(lua_State* L);
 
     int32 physicalDmgTaken(lua_State* L);
     int32 magicDmgTaken(lua_State* L);
@@ -641,6 +656,10 @@ public:
     int32 removeOldestManeuver(lua_State*);
     int32 removeAllManeuvers(lua_State*);
     int32 updateAttachments(lua_State*);
+    
+    int32 getOldestRune(lua_State*);
+    int32 removeOldestRune(lua_State*);
+    int32 removeAllRunes(lua_State*);
 
     // Mob Entity-Specific
     int32 setMobLevel(lua_State*);

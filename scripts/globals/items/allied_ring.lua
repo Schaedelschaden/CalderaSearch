@@ -1,11 +1,11 @@
 -----------------------------------------
 -- ID: 14671
--- Item: allied ring
--- Experience point bonus
+-- Item: Allied Ring
+-- Experience Point Bonus
 -----------------------------------------
 -- Bonus: +150%
--- Duration: 720 min
--- Max bonus: 9000 exp
+-- Duration: 720 min (12 hours)
+-- Max bonus: 30,000 exp
 -----------------------------------------
 require("scripts/globals/status")
 -----------------------------------------
@@ -19,5 +19,5 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffect(tpz.effect.DEDICATION, 150, 0, 43200, 0, 9000)
+	target:addStatusEffect(tpz.effect.DEDICATION,150,0,43200,0,30000)
 end

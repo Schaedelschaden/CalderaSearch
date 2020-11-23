@@ -9,10 +9,12 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
 
-function onAbilityCheck(player, target, ability)
-    return 0, 0
+function onAbilityCheck(player,target,ability)
+    return 0,0
 end
 
-function onUseAbility(player, target, ability)
-   player:addStatusEffect(tpz.effect.FORMLESS_STRIKES, 1, 0, 180)
+function onUseAbility(player,target,ability)
+	local merits = player:getMerit(tpz.merit.FORMLESS_STRIKES)
+	
+	player:addStatusEffect(tpz.effect.FORMLESS_STRIKES,merits,0,180)
 end

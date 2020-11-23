@@ -179,7 +179,7 @@ end
 
 -- Given the raw ratio value (atk/def) and levels, returns the cRatio (min then max)
 function getAutocRatio(attacker, defender, params, ignoredDef, melee)
-    local cratio = (melee and attacker:getStat(tpz.mod.ATT) or attacker:getRATT()) * params.atkmulti / (defender:getStat(tpz.mod.DEF) - ignoredDef)
+    local cratio = (melee and attacker:getStat(tpz.mod.ATT) * params.atkmulti or attacker:getRATT()) * params.atkmulti / (defender:getStat(tpz.mod.DEF) - ignoredDef)
 
     local levelbonus = 0
     if attacker:getMainLvl() > defender:getMainLvl() then

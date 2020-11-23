@@ -1,19 +1,18 @@
 -----------------------------------
 -- Ability: Decoy Shot
--- Description: Diverts enmity when launching a ranged attack from behind a party member.
--- Obtained: RNG Level 95
--- Recast Time: 00:05:00
--- Duration: 00:03:00
+-- Diverts enmity when launching a ranged attack from behind a party member.
+-- Obtained: Ranger Level 95
+-- Recast Time: 5:00
+-- Duration: 3:00
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
-require("scripts/globals/msg")
 -----------------------------------
 
-function onAbilityCheck(player, target, ability)
-    return 0, 0
+function onAbilityCheck(player,target,ability)
+    return 0,0
 end
 
-function onUseAbility(player, target, ability)
-    target:addStatusEffect(tpz.effect.DECOY_SHOT, 11, 1, 30)
+function onUseAbility(player,target,ability)
+    player:addStatusEffect(tpz.effect.DECOY_SHOT,1,0,180)
 end

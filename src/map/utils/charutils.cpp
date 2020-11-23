@@ -2414,7 +2414,8 @@ namespace charutils
 
         memset(&PChar->m_PetCommands, 0, sizeof(PChar->m_PetCommands));
 
-        if (PetID == 0) {//technically Fire Spirit but we're using this to null the abilities shown
+        if (PetID == 0) // Technically Fire Spirit but we're using this to null the abilities shown
+		{
             PChar->pushPacket(new CCharAbilitiesPacket(PChar));
             return;
         }
@@ -2429,13 +2430,22 @@ namespace charutils
 
                 if (PPet->GetMLevel() >= PAbility->getLevel() && PetID >= 8 && PetID <= 20 && CheckAbilityAddtype(PChar, PAbility))
                 {
+					// Carbuncle
                     if (PetID == 8)
                     {
-                        if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_SOOTHING_RUBY)
+                        if ((PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_SOOTHING_RUBY) || (PAbility->getID() == ABILITY_PACIFYING_RUBY))
                         {
-                            addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
+                            if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_SOOTHING_RUBY)
+							{
+								addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
+							}
+							if (PAbility->getID() == ABILITY_PACIFYING_RUBY)
+							{
+								addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
+							}
                         }
                     }
+					// Fenrir, Ifrit, Titan, Leviathan, Garuda, Shiva, Ramuh
                     else if (PetID >= 9 && PetID <= 15)
                     {
                         if (PAbility->getID() >= (ABILITY_HEALING_RUBY + ((PetID - 8) * 16)) && PAbility->getID() < (ABILITY_HEALING_RUBY + ((PetID - 7) * 16)))
@@ -2443,6 +2453,7 @@ namespace charutils
                             addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
                         }
                     }
+					// Diabolos
                     else if (PetID == 16)
                     {
                         if (PAbility->getID() >= ABILITY_CAMISADO && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
@@ -2450,13 +2461,53 @@ namespace charutils
                             addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
                         }
                     }
-                    else if (PetID == 20)
+					// Alexander
+                    else if (PetID == 17)
                     {
-                        if (PAbility->getID() > ABILITY_SOOTHING_RUBY && PAbility->getID() <= ABILITY_MOONLIT_CHARGE)
+                        if (PAbility->getID() == ABILITY_PERFECT_DEFENSE)
                         {
                             addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
                         }
                     }
+					// Odin
+                    else if (PetID == 18)
+                    {
+                        if (PAbility->getID() == ABILITY_ZANTETSUKEN)
+                        {
+                            addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
+                        }
+                    }
+					// Atomos
+                    else if (PetID == 19)
+                    {
+                        if (PAbility->getID() == ABILITY_DECONSTRUCTION || PAbility->getID() == ABILITY_CHRONOSHIFT)
+                        {
+                            addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
+                        }
+                    }
+					// Cait Sith
+                    else if (PetID == 20)
+                    {
+                        if ((PAbility->getID() >= ABILITY_REGAL_SCRATCH && PAbility->getID() <= ABILITY_ALTANAS_FAVOR) || (PAbility->getID() == ABILITY_REGAL_GASH))
+                        {
+							if (PAbility->getID() >= ABILITY_REGAL_SCRATCH && PAbility->getID() <= ABILITY_ALTANAS_FAVOR)
+							{
+								addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
+							}
+							if (PAbility->getID() == ABILITY_REGAL_GASH)
+							{
+								addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
+							}
+                        }
+                    }
+					// Siren
+					else if (PetID == 76)
+					{
+						if (PAbility->getID() >= ABILITY_CLARSACH_CALL && PAbility->getID() <= ABILITY_HYSTERIC_ASSAULT)
+						{
+							addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
+						}
+					}
                 }
             }
         }
@@ -3149,14 +3200,40 @@ namespace charutils
     EMobDifficulty CheckMob(uint8 charlvl, uint8 moblvl)
     {
         uint32 baseExp = GetRealExp(charlvl, moblvl);
+		const uint32 lvlDiff = (moblvl - charlvl) + 11; // Mobs 11 levels or more below level 99+ players are Too Weak
 
-        if (baseExp >= 400) return EMobDifficulty::IncrediblyTough;
-        if (baseExp >= 350) return EMobDifficulty::VeryTough;
-        if (baseExp >= 220) return EMobDifficulty::Tough;
-        if (baseExp >= 200) return EMobDifficulty::EvenMatch;
-        if (baseExp >= 160) return EMobDifficulty::DecentChallenge;
-        if (baseExp >= 60) return EMobDifficulty::EasyPrey;
-        if (baseExp >= 14) return EMobDifficulty::IncrediblyEasyPrey;
+		// Use the new system for player (item) levels over 99
+		if (charlvl >= 100)
+		{
+//			printf("charutils.cpp CheckMob NEW SYSTEM\n");
+			if (lvlDiff >= 19) return EMobDifficulty::IncrediblyTough;
+//			printf("charutils.cpp CheckMob INCREDIBLY TOUGH\n");
+			if (lvlDiff >= 18) return EMobDifficulty::VeryTough;
+//			printf("charutils.cpp CheckMob VERY TOUGH\n");
+			if (lvlDiff >= 12) return EMobDifficulty::Tough;
+//			printf("charutils.cpp CheckMob TOUGH\n");
+			if (lvlDiff >= 11) return EMobDifficulty::EvenMatch;
+//			printf("charutils.cpp CheckMob EVEN MATCH\n");
+			if (lvlDiff >= 10) return EMobDifficulty::DecentChallenge;
+//			printf("charutils.cpp CheckMob DECENT CHALLENGE\n");
+			if (lvlDiff >= 5) return EMobDifficulty::EasyPrey;
+//			printf("charutils.cpp CheckMob EASY PREY\n");
+			if (lvlDiff >= 0) return EMobDifficulty::IncrediblyEasyPrey;
+//			printf("charutils.cpp CheckMob INCREDIBLY EASY PREY\n");
+		}
+
+		// Use the old system for player levels under 99
+		if (charlvl <= 99)
+		{
+//			printf("charutils.cpp CheckMob OLD SYSTEM\n");
+			if (baseExp >= 400) return EMobDifficulty::IncrediblyTough;
+			if (baseExp >= 350) return EMobDifficulty::VeryTough;
+			if (baseExp >= 220) return EMobDifficulty::Tough;
+			if (baseExp >= 200) return EMobDifficulty::EvenMatch;
+			if (baseExp >= 160) return EMobDifficulty::DecentChallenge;
+			if (baseExp >= 60) return EMobDifficulty::EasyPrey;
+			if (baseExp >= 14) return EMobDifficulty::IncrediblyEasyPrey;
+		}
 
         return EMobDifficulty::TooWeak;
     }
@@ -3169,9 +3246,12 @@ namespace charutils
 
     uint32 GetRealExp(uint8 charlvl, uint8 moblvl)
     {
+/* 		// created adjusted character lvl to handle fix for ilvl stat adjustments --klutix 09192020
+        int32 adjCharlvl = (charlvl <= 99 ? charlvl : 99);
+		const int32 levelDif = moblvl - adjCharlvl + 44; */
         const int32 levelDif = moblvl - charlvl + 44;
 
-        if ((charlvl > 0) && (charlvl < 100))
+        if ((charlvl > 0) && (charlvl < 125))
             return g_ExpTable[std::clamp(levelDif, 0, ExpTableRowCount - 1)][(charlvl - 1) / 5];
 
         return 0;
@@ -3261,10 +3341,16 @@ namespace charutils
         uint8 bonus = 0;
         if (auto PMob = dynamic_cast<CMobEntity*>(PEntity))
         {
+			uint16 THLvl = PMob->m_THLvl;
+            if (PMob->StatusEffectContainer->HasStatusEffect(EFFECT_BOUNTY_SHOT))
+			{
+				THLvl = THLvl + PMob->StatusEffectContainer->GetStatusEffect(EFFECT_BOUNTY_SHOT)->GetPower();
+			}
+			
             //THLvl is the number of 'extra chances' at an item. If the item is obtained, then break out.
             tries = 0;
-            maxTries = 1 + (PMob->m_THLvl > 2 ? 2 : PMob->m_THLvl);
-            bonus = (PMob->m_THLvl > 2 ? (PMob->m_THLvl - 2) * 10 : 0);
+            maxTries = 1 + (THLvl > 2 ? 2 : THLvl);
+            bonus = (THLvl > 2 ? (THLvl - 2) * 10 : 0);
         }
         while (tries < maxTries)
         {
@@ -3287,6 +3373,13 @@ namespace charutils
     {
         uint8 pcinzone = 0;
         uint8 minlevel = 0, maxlevel = PChar->GetMLevel();
+		uint8 ilvl = PChar->m_Weapons[SLOT_MAIN]->getILvl();
+		
+		if (ilvl > maxlevel)
+		{
+			maxlevel = ilvl;
+		}
+		
         REGIONTYPE region = PChar->loc.zone->GetRegionID();
 
         if (PChar->PParty)
@@ -3339,8 +3432,14 @@ namespace charutils
 
             bool chainactive = false;
 
-            const uint8 moblevel = PMob->GetMLevel();
-            const uint8 memberlevel = PMember->GetMLevel();
+            uint8 moblevel = PMob->GetMLevel();
+            uint8 memberlevel = PMember->GetMLevel();
+			uint8 memberILvl = PMember->m_Weapons[SLOT_MAIN]->getILvl();
+			
+			if (memberILvl > memberlevel)
+			{
+				memberlevel = memberILvl;
+			}
 
             EMobDifficulty mobCheck = CheckMob(maxlevel, moblevel);
             float exp = (float)GetRealExp(maxlevel, moblevel);
@@ -3424,7 +3523,7 @@ namespace charutils
 
                     if (mobCheck > EMobDifficulty::DecentChallenge)
                     {
-
+                        // Creates a new EXP chain or applies the currently active EXP chain bonus
                         if (PMember->expChain.chainTime > gettick() || PMember->expChain.chainTime == 0)
                         {
                             chainactive = true;
@@ -3450,7 +3549,8 @@ namespace charutils
                             else PMember->expChain.chainTime = gettick() + 360000;
                             PMember->expChain.chainNumber = 1;
                         }
-
+						
+                        // Sets EXP Chains time between kills before the chain is lost. Currently based on level
                         if (chainactive && PMember->GetMLevel() <= 10)
                         {
                             switch (PMember->expChain.chainNumber)
@@ -4737,7 +4837,8 @@ namespace charutils
     {
         if (PAbility->getAddType() & ADDTYPE_MERIT)
         {
-			if (JOBTYPE::JOB_GEO != PChar->GetMJob())
+			// GEO has no merit mods so skip this
+			if (PChar->GetMJob() != JOBTYPE::JOB_GEO)
 			{
 				if (!(PChar->PMeritPoints->GetMerit((MERIT_TYPE)PAbility->getMeritModID())->count > 0))
 				{
@@ -5161,6 +5262,21 @@ namespace charutils
         const char* fmtQuery = "SELECT value FROM char_vars WHERE charid = %u AND varname = '%s' LIMIT 1;";
 
         int32 ret = Sql_Query(SqlHandle, fmtQuery, PChar->id, var);
+
+        if (ret != SQL_ERROR &&
+            Sql_NumRows(SqlHandle) != 0 &&
+            Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        {
+            return Sql_GetIntData(SqlHandle, 0);
+        }
+        return 0;
+    }
+	
+	int32 SetCharVar(CCharEntity* PChar, const char* var, int32 value)
+    {
+        const char* fmtQuery = "UPDATE char_vars SET value = %i WHERE charid = %u AND varname = '%s' LIMIT 1;";
+
+        int32 ret = Sql_Query(SqlHandle, fmtQuery, value, PChar->id, var);
 
         if (ret != SQL_ERROR &&
             Sql_NumRows(SqlHandle) != 0 &&

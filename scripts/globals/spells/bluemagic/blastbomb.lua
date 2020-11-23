@@ -1,6 +1,7 @@
 -----------------------------------------
 -- Spell: Blastbomb
--- Deals fire damage to enemies within area of effect. Additional effect: "Bind"
+-- Deals fire damage to enemies within area of effect.
+-- Additional effect: "Bind"
 -- Spell cost: 36 MP
 -- Monster Type: Beastmen
 -- Spell Type: Magical (Fire)
@@ -22,33 +23,34 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local params = {}
-    params.attackType = tpz.attackType.MAGICAL
-    params.damageType = tpz.damageType.FIRE
-    params.multiplier = 1.375
-    params.tMultiplier = 1.0
-    params.duppercap = 30
-    params.str_wsc = 0.0
-    params.dex_wsc = 0.0
-    params.vit_wsc = 0.0
-    params.agi_wsc = 0.0
-    params.int_wsc = 0.2
-    params.mnd_wsc = 0.0
-    params.chr_wsc = 0.0
+	local duration = 60
+	local params = {}
+		params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.BLUE_MAGIC
+        params.damageType = tpz.damageType.FIRE
+		params.spellFamily = tpz.ecosystem.HUMANOID
+        params.multiplier = 1.375 -- fTP
+        params.tMultiplier = 1.0 -- dINT/dMND/dCHR multiplier
+        params.duppercap = 30
+        params.str_wsc = 0.0
+        params.dex_wsc = 0.0
+        params.vit_wsc = 0.0
+        params.agi_wsc = 0.0
+        params.int_wsc = 0.4 -- 0.2
+        params.mnd_wsc = 0.0
+        params.chr_wsc = 0.0
     damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
-    local params = {}
-    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1.0
     local resist = applyResistance(caster, target, spell, params)
+	
+	duration = duration * resist
 
     if (damage > 0 and resist > 0.125) then
         local typeEffect = tpz.effect.BIND
-        target:delStatusEffect(typeEffect) -- Wiki says it can overwrite itself or other binds
-        target:addStatusEffect(typeEffect, 1, 0, getBlueEffectDuration(caster, resist, typeEffect))
+        target:delStatusEffect(typeEffect)
+        target:addStatusEffect(typeEffect, 1, 0, duration)
     end
 
     return damage

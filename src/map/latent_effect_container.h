@@ -41,7 +41,7 @@ class CLatentEffectContainer
 {
 public:
 
-	void CheckLatentsHP();
+    void CheckLatentsHP();
 	void CheckLatentsTP();
 	void CheckLatentsMP();
 	void CheckLatentsEquip(uint8 slot);
@@ -84,4 +84,3 @@ private:
 };
 
 #endif
-

@@ -7,12 +7,19 @@ require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------------
 
-function onMagicCastingCheck(caster, target, spell)
+function onMagicCastingCheck(caster,target,spell)
     return 0
 end
 
-function onSpellCast(caster, target, spell)
-    local dmg = 10 + 0.575 * caster:getSkillLevel(tpz.skill.DARK_MAGIC)
+function onSpellCast(caster,target,spell)
+	-- Calculate base drain based off Dark Magic Skill. Spell has 30 default damage.
+	local DarkMagic = caster:getSkillLevel(tpz.skill.DARK_MAGIC)
+    local dmg = (DarkMagic * (1 / 2)) + 30
+	
+	if (DarkMagic >= 301) then
+		dmg = ((DarkMagic) * (3 / 5))
+	end
+	
     --get resist multiplier (1x if no resist)
     local params = {}
     params.diff = caster:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT)
@@ -23,9 +30,9 @@ function onSpellCast(caster, target, spell)
     --get the resisted damage
     dmg = dmg*resist
     --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
-    dmg = addBonuses(caster, spell, target, dmg)
+    dmg = addBonuses(caster,spell,target,dmg)
     --add in target adjustment
-    dmg = adjustForTarget(target, dmg, spell:getElement())
+    dmg = adjustForTarget(target,dmg,spell:getElement())
     --add in final adjustments
 
     if (dmg < 0) then
@@ -47,6 +54,10 @@ function onSpellCast(caster, target, spell)
         caster:addMP(dmg)
         target:delMP(dmg)
     end
+	
+	if caster:hasStatusEffect(tpz.effect.NETHER_VOID) then
+		caster:delStatusEffect(tpz.effect.NETHER_VOID)
+	end
 
     return dmg
 end

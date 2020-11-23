@@ -21,8 +21,7 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffect = tpz.effect.BLINK
-    local skill = caster:getSkillLevel(tpz.skill.BLUE_MAGIC)
+	local skill = caster:getSkillLevel(tpz.skill.BLUE_MAGIC)
     local power = (skill / 50)
     local duration = 300
 
@@ -37,15 +36,15 @@ function onSpellCast(caster, target, spell)
         local diffMerit = caster:getMerit(tpz.merit.DIFFUSION)
 
         if (diffMerit > 0) then
-            duration = duration + (duration/100)* diffMerit
+            duration = duration + (duration / 100) * diffMerit
         end
 
         caster:delStatusEffect(tpz.effect.DIFFUSION)
     end
 
-    if (target:addStatusEffect(typeEffect, power, 0, duration) == false) then
+    if (target:addStatusEffect(tpz.effect.BLINK, power, 0, duration) == false) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     end
 
-    return typeEffect
+    return tpz.effect.BLINK
 end

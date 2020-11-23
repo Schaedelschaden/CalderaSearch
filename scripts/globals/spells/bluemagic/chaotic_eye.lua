@@ -17,21 +17,20 @@ require("scripts/globals/magic")
 require("scripts/globals/msg")
 -----------------------------------------
 
-function onMagicCastingCheck(caster, target, spell)
+function onMagicCastingCheck(caster,target,spell)
     return 0
 end
 
-function onSpellCast(caster, target, spell)
+function onSpellCast(caster,target,spell)
     local typeEffect = tpz.effect.SILENCE
-    local dINT = (caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
     local params = {}
-    params.diff = nil
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
-    params.effect = typeEffect
+		params.diff = (caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.BLUE_MAGIC
+		params.bonus = 0
+		params.effect = typeEffect
     local resist = applyResistanceEffect(caster, target, spell, params)
-    local duration = 180 * resist
+    local duration = 120 * resist
 
     if (resist > 0.5) then -- Do it!
         if (target:isFacing(caster)) then

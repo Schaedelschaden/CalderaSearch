@@ -73,6 +73,7 @@ public:
 
     void UpdateStatusIcons();                                   // пересчитываем иконки эффектов
     void CheckEffectsExpiry(time_point tick);
+	void TickAuras(time_point tick);
     void TickEffects(time_point tick);
     void TickRegen(time_point tick);
 
@@ -91,6 +92,10 @@ public:
     uint8 GetActiveManeuvers();
     void RemoveOldestManeuver();
     void RemoveAllManeuvers();
+	
+	uint16 GetOldestRune(); // Gets the oldest Rune Enhancement Status ID
+	void RemoveOldestRune();
+	void RemoveAllRunes();
 
     void WakeUp(); // remove sleep effects
     bool IsAsleep();
@@ -140,4 +145,3 @@ namespace effects
 };
 
 #endif
-

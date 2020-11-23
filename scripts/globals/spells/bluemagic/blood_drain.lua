@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Blood Drain
--- Steals an enemy's HP. Ineffective against undead
+-- Steals an enemy's HP. Ineffective against undead.
 -- Spell cost: 10 MP
 -- Monster Type: Giant Bats
 -- Spell Type: Magical (Dark)
@@ -24,16 +24,26 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local dmg = 1 + (0.705 * caster:getSkillLevel(tpz.skill.BLUE_MAGIC))
+    local blueSkill = caster:getSkillLevel(tpz.skill.BLUE_MAGIC)
+	local blueMerits = caster:getMerit(tpz.merit.BLUE)
+	local blueGear = caster:getMod(tpz.mod.BLUE)
+	local skill = (blueSkill + blueMerits + blueGear)
+	
+	local dmg = 1 + (0.705 * skill)
+	
     local params = {}
-    params.diff = caster:getStat(tpz.mod.MND)-target:getStat(tpz.mod.MND)
-    params.attribute = tpz.mod.MND
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1.0
+		params.diff = caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
+		params.attribute = tpz.mod.MND
+		params.damageType = tpz.damageType.DARK
+		params.spellFamily = tpz.ecosystem.BIRD
+		params.skillType = tpz.skill.BLUE_MAGIC
+		
     local resist = applyResistance(caster, target, spell, params)
-    dmg = dmg*resist
+	
+    dmg = dmg * resist
     dmg = addBonuses(caster, spell, target, dmg)
     dmg = adjustForTarget(target, dmg, spell:getElement())
+	
     if (dmg > (caster:getSkillLevel(tpz.skill.BLUE_MAGIC) + 20)) then
         dmg = (caster:getSkillLevel(tpz.skill.BLUE_MAGIC) + 20)
     end
@@ -50,9 +60,10 @@ function onSpellCast(caster, target, spell)
     if (target:getHP() < dmg) then
         dmg = target:getHP()
     end
-
-    params.attackType = tpz.attackType.MAGICAL
-    params.damageType = tpz.damageType.DARK
+	
+	local ecoBoost = checkEcosystem(caster, target, params)
+	
+	dmg = dmg * ecoBoost
     dmg = BlueFinalAdjustments(caster, target, spell, dmg, params)
     caster:addHP(dmg)
 

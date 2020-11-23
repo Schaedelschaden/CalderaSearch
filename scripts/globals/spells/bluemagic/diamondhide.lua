@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Diamondhide
--- Gives party members within area of effect the effect of "Stoneskin"
+-- Gives party members within area of effect the effect of "Stoneskin".
 -- Spell cost: 99 MP
 -- Monster Type: Beastmen
 -- Spell Type: Magical (Earth)
@@ -10,7 +10,6 @@
 -- Casting Time: 7 seconds
 -- Recast Time: 1 minute 30 seconds
 -- 5 minutes
---
 -- Combos: None
 -----------------------------------------
 require("scripts/globals/bluemagic")
@@ -24,14 +23,12 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffect = tpz.effect.STONESKIN
-    local blueskill = caster:getSkillLevel(tpz.skill.BLUE_MAGIC)
-    local power = ((blueskill)/3) *2
-    local duration = 300
+    local skill = caster:getSkillLevel(tpz.skill.BLUE_MAGIC)
+    local power = (skill / 3) * 2
 
-    if not target:addStatusEffect(typeEffect, power, 0, duration, 0, 0, 2) then
+    if not target:addStatusEffect(tpz.effect.STONESKIN, power, 0, 300, 0, 0, 2) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     end
 
-    return typeEffect
+    return tpz.effect.STONESKIN
 end

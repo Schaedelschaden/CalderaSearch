@@ -4,10 +4,31 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/utils")
 require("scripts/globals/msg")
+require("scripts/globals.geo")
 ------------------------------------
 
 tpz = tpz or {}
 tpz.magic = tpz.magic or {}
+
+tpz.magic.geoCardinalQuadStats =
+{
+    [1]  = {direction = '[N]',   MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 1.00},
+    [2]  = {direction = '[NNE]', MATT = 0.25, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.75},
+    [3]  = {direction = '[NE]',  MATT = 0.50, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.50},
+    [4]  = {direction = '[ENE]', MATT = 0.75, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.25},
+    [5]  = {direction = '[E]',   MATT = 1.00, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
+    [6]  = {direction = '[ESE]', MATT = 0.75, MACC = 0.25, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
+    [7]  = {direction = '[SE]',  MATT = 0.50, MACC = 0.50, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
+    [8]  = {direction = '[SSE]', MATT = 0.25, MACC = 0.75, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
+    [9]  = {direction = '[S]',   MATT = 0.00, MACC = 1.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
+    [10] = {direction = '[SSW]', MATT = 0.00, MACC = 0.75, MAG_BURST_BONUS = 0.25, MAGIC_CRITHITRATE = 0.00},
+    [11] = {direction = '[SW]',  MATT = 0.00, MACC = 0.50, MAG_BURST_BONUS = 0.50, MAGIC_CRITHITRATE = 0.00},
+    [12] = {direction = '[WSW]', MATT = 0.00, MACC = 0.25, MAG_BURST_BONUS = 0.75, MAGIC_CRITHITRATE = 0.00},
+    [13] = {direction = '[W]',   MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 1.00, MAGIC_CRITHITRATE = 0.00},
+    [14] = {direction = '[WNW]', MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 0.75, MAGIC_CRITHITRATE = 0.25},
+    [15] = {direction = '[NW]',  MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 0.50, MAGIC_CRITHITRATE = 0.50},
+    [16] = {direction = '[NNW]', MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 0.25, MAGIC_CRITHITRATE = 0.75},
+}
 
 ------------------------------------
 -- Tables by element
@@ -84,12 +105,16 @@ function doBoostGain(caster, target, spell, effect)
     local magicskill = target:getSkillLevel(spell:getSkillType())
 
     local potency = math.floor((magicskill - 300) / 10) + 5
+    
+    local gearbonus = caster:getMod(tpz.mod.GAIN_MAGIC_EFFECT)
 
     if potency > 25 then
         potency = 25
     elseif potency < 5 then
         potency = 5
     end
+    
+    potency = potency + gearbonus
 
     --printf("BOOST-GAIN: POTENCY = %d", potency)
 
@@ -353,8 +378,12 @@ end
 
 function getMagicHitRate(caster, target, skillType, element, percentBonus, bonusAcc)
     -- resist everything if magic shield is active
-    if (target:hasStatusEffect(tpz.effect.MAGIC_SHIELD, 0)) then
-        return 0
+    if (target:hasStatusEffect(tpz.effect.MAGIC_SHIELD)) then
+        local magicshieldsub = target:getStatusEffect(tpz.effect.MAGIC_SHIELD)
+
+        if magicshieldsub:getSubPower() == 0 then
+            return 0
+        end
     end
 
     local magiceva = 0
@@ -364,6 +393,18 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
     end
 
     local magicacc = caster:getMod(tpz.mod.MACC) + caster:getILvlMacc()
+	
+	local geoMACC = 0.0
+	
+	if caster:getMainJob() == tpz.job.GEO and spellGroup == tpz.magic.spellGroup.BLACK then
+        if caster:isSpellAoE(spellId) then
+            geoBonus = getCardinalStats(caster, target, 1, spell)
+        else
+            geoBonus = getCardinalStats(caster, target, 0, spell)
+        end
+		
+        geoMACC = geoBonus[2]
+    end
 
     -- Get the base acc (just skill + skill mod (79 + skillID = ModID) + magic acc mod)
     if (skillType ~= 0) then
@@ -383,6 +424,8 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
         -- print(elementBonus)
         bonusAcc = bonusAcc + affinityBonus + elementBonus
     end
+	
+	magicacc = magicacc + geoMACC
 
     magicacc = magicacc + caster:getMerit(tpz.merit.MAGIC_ACCURACY)
 
@@ -474,7 +517,7 @@ function getEffectResistance(target, effect)
         effectres = tpz.mod.BINDRES
     elseif (effect == tpz.effect.CURSE_I or effect == tpz.effect.CURSE_II or effect == tpz.effect.BANE) then
         effectres = tpz.mod.CURSERES
-    elseif (effect == tpz.effect.WEIGHT) then
+    elseif (effect == tpz.effect.WEIGHT or tpz.effect.GEO_WEIGHT) then
         effectres = tpz.mod.GRAVITYRES
     elseif (effect == tpz.effect.SLOW or effect == tpz.effect.ELEGY) then
         effectres = tpz.mod.SLOWRES
@@ -682,13 +725,37 @@ function calculateMagicBurst(caster, spell, target, params)
     local burst = 1.0
     local skillchainburst = 1.0
     local modburst = 1.0
+    local modburstII = 1.0
+    local modSengikori = 1.0
+    local SengikoriBonus = target:getMod(tpz.mod.SENGIKORI_BONUS) / 100
+--  print(SengikoriBonus)
+    local geoBonus = {0.00, 0.00, 0.00, 0.00}
+    local geoMagicBurstBonus = 0.0
+    local spellGroup = spell:getSpellGroup()
+    local spellId = spell:getID()
 
-    if (spell:getSpellGroup() == 3 and not caster:hasStatusEffect(tpz.effect.BURST_AFFINITY)) then
+    if (caster:getMainJob() == tpz.job.GEO) and (spellGroup == tpz.magic.spellGroup.BLACK) then
+        if caster:isSpellAoE(spellId) then
+            geoBonus = getCardinalStats(caster, target, 1, spell)
+        else
+            geoBonus = getCardinalStats(caster, target, 0, spell)
+        end
+        geoMagicBurstBonus = geoBonus[3]
+    end
+
+    if (spell:getSpellGroup() == 3 and not(caster:hasStatusEffect(tpz.effect.BURST_AFFINITY) or caster:hasStatusEffect(tpz.effect.AZURE_LORE))) then
         return burst
     end
 
-    -- Obtain first multiplier from gear, atma and job traits
-    modburst = modburst + (caster:getMod(tpz.mod.MAG_BURST_BONUS) / 100) + params.AMIIburstBonus
+    -- Obtain multipliers from gear, atma and job traits
+    modburst = modburst + (caster:getMod(tpz.mod.MAG_BURST_BONUS) / 100) + params.AMIIburstBonus + geoMagicBurstBonus
+    modburstII = modburstII + (caster:getMod(tpz.mod.MAG_BURST_BONUS_II) / 100) -- Magic Burst II Modifier
+    
+    if target:hasStatusEffect(tpz.effect.SENGIKORI) then
+        modSengikori = modSengikori + SengikoriBonus
+--      print(modSengikori) 
+        target:delStatusEffect(tpz.effect.SENGIKORI)
+    end
 
     if caster:isBehind(target) and caster:hasStatusEffect(tpz.effect.INNIN) then
         modburst = modburst + (caster:getMerit(tpz.merit.INNIN_EFFECT)/100)
@@ -698,8 +765,18 @@ function calculateMagicBurst(caster, spell, target, params)
     if (modburst > 1.4) then
         modburst = 1.4
     end
+    
+    -- Cap bonuses from second multiplier at 40% or 1.4
+    if (modburstII > 1.4) then
+        modburstII = 1.4
+    end
+    
+    -- Cap bonuses from third multipler at 40% or 1.4
+    if (modSengikori > 1.4) then
+        modSengikori = 1.4
+    end
 
-    -- Obtain second multiplier from skillchain
+    -- Obtain fourth multiplier from skillchain
     -- Starts at 35% damage bonus, increases by 10% for every additional weaponskill in the chain
     local skillchainTier, skillchainCount = FormMagicBurst(spell:getElement(), target)
 
@@ -722,7 +799,72 @@ function calculateMagicBurst(caster, spell, target, params)
 
     -- Multiply
     if (skillchainburst > 1) then
-        burst = burst * modburst * skillchainburst
+        burst = burst * modburst * skillchainburst * modburstII * modSengikori
+    end
+
+    return burst
+end
+
+function calculateLungeMagicBurst(caster, target, params)
+
+    local burst = 1.0
+    local skillchainburst = 1.0
+    local modburst = 1.0
+    local modburstII = 1.0
+    local modSengikori = 1.0
+    local SengikoriBonus = target:getMod(tpz.mod.SENGIKORI_BONUS) / 100
+--  print(SengikoriBonus)
+
+    -- Obtain multipliers from gear, atma and job traits
+    modburst = modburst + (caster:getMod(tpz.mod.MAG_BURST_BONUS) / 100)
+    modburstII = modburstII + (caster:getMod(tpz.mod.MAG_BURST_BONUS_II) / 100) -- Magic Burst II Modifier
+    
+    if target:hasStatusEffect(tpz.effect.SENGIKORI) then
+        modSengikori = modSengikori + SengikoriBonus
+--      print(modSengikori) 
+--      target:delMod(tpz.mod.SENGIKORI_BONUS, SengikoriBonus)
+        target:delStatusEffect(tpz.effect.SENGIKORI)
+    end
+
+    -- Cap bonuses from first multiplier at 40% or 1.4
+    if (modburst > 1.4) then
+        modburst = 1.4
+    end
+    
+    -- Cap bonuses from second multiplier at 40% or 1.4
+    if (modburstII > 1.4) then
+        modburstII = 1.4
+    end
+    
+    -- Cap bonuses from third multipler at 40% or 1.4
+    if (modSengikori > 1.4) then
+        modSengikori = 1.4
+    end
+
+    -- Obtain fourth multiplier from skillchain
+    -- Starts at 35% damage bonus, increases by 10% for every additional weaponskill in the chain
+    local skillchainTier, skillchainCount = FormMagicBurst(params.element, target)
+
+    if (skillchainTier > 0) then
+        if (skillchainCount == 1) then -- two weaponskills
+            skillchainburst = 1.35
+        elseif (skillchainCount == 2) then -- three weaponskills
+            skillchainburst = 1.45
+        elseif (skillchainCount == 3) then -- four weaponskills
+             skillchainburst = 1.55
+        elseif (skillchainCount == 4) then -- five weaponskills
+            skillchainburst = 1.65
+        elseif (skillchainCount == 5) then -- six weaponskills
+            skillchainburst = 1.75
+        else
+            -- Something strange is going on if this occurs.
+            skillchainburst = 1.0
+        end
+    end
+
+    -- Multiply
+    if (skillchainburst > 1) then
+        burst = burst * modburst * skillchainburst * modburstII * modSengikori
     end
 
     return burst
@@ -799,32 +941,55 @@ function addBonuses(caster, spell, target, dmg, params)
 
     dmg = math.floor(dmg * burst)
     local mabbonus = 0
+    local geoBonus = {0.00,0.00,0.00,0.00} -- {MATT, MACC, MAG_BURST_BONUS, MAGIC_CRITHITRATE}
+    local geoMATT = 0.0
+    local geoMCHR = 0.0
+    local nvbonus = 1 + caster:getMod(tpz.mod.NETHER_VOID_BONUS) / 100
     local spellId = spell:getID()
+    local spellGroup = spell:getSpellGroup()
 
     if (spellId >= 245 and spellId <= 248) then -- Drain/Aspir (II)
-        mabbonus = 1 + caster:getMod(tpz.mod.ENH_DRAIN_ASPIR)/100
+        mabbonus = 1 + caster:getMod(tpz.mod.ENH_DRAIN_ASPIR) / 100
+        if caster:hasStatusEffect(tpz.effect.NETHER_VOID) then
+            dmg = math.floor(dmg * nvbonus)
+        end
         if spellId == 247 or spellId == 248 then
-            mabbonus = mabbonus + caster:getMerit(tpz.merit.ASPIR_ABSORPTION_AMOUNT)/100
+            mabbonus = mabbonus + caster:getMerit(tpz.merit.ASPIR_ABSORPTION_AMOUNT) / 100
         end
     else
         local mab = caster:getMod(tpz.mod.MATT) + params.bonusmab
+        
+        if caster:getMainJob() == tpz.job.GEO and spellGroup == tpz.magic.spellGroup.BLACK then
+            if caster:isSpellAoE(spellId) then
+                geoBonus = getCardinalStats(caster, target, 1, spell)
+            else
+                geoBonus = getCardinalStats(caster, target, 0, spell)
+            end
+            geoMATT = geoBonus[1]
+            geoMCHR = geoBonus[4]
+        end
+
+        mab = mab + geoMATT
 
         if spell:getSkillType() == tpz.skill.NINJUTSU then
             mab = mab + caster:getMerit(tpz.merit.NIN_MAGIC_BONUS)
         end
 
-        local mab_crit = caster:getMod(tpz.mod.MAGIC_CRITHITRATE)
+        local mab_crit = caster:getMod(tpz.mod.MAGIC_CRITHITRATE) + geoMCHR
+		
         if ( math.random(1, 100) < mab_crit ) then
            mab = mab + ( 10 + caster:getMod(tpz.mod.MAGIC_CRIT_DMG_INCREASE ) )
         end
 
         local mdefBarBonus = 0
+		
         if (ele >= tpz.magic.element.FIRE and ele <= tpz.magic.element.WATER) then
             mab = mab + caster:getMerit(blmMerit[ele])
             if (target:hasStatusEffect(tpz.magic.barSpell[ele])) then -- bar- spell magic defense bonus
                 mdefBarBonus = target:getStatusEffect(tpz.magic.barSpell[ele]):getSubPower()
             end
         end
+		
         mabbonus = (100 + mab) / (100 + target:getMod(tpz.mod.MDEF) + mdefBarBonus)
     end
 
@@ -907,6 +1072,16 @@ function addBonusesAbility(caster, ele, target, dmg, params)
     end
 
     dmg = math.floor(dmg * dayWeatherBonus)
+    
+    if (params.canBurst == true) then
+        local burst = calculateLungeMagicBurst(caster, target, params)
+
+        if (burst > 1.0) then
+            caster:PrintToPlayer(string.format("Magic Burst!"),tpz.msg.channel.NS_SAY) -- Swipe/Lunge Magic Burst message
+        end
+        
+        dmg = math.floor(dmg * burst)
+    end
 
     local mab = 1
     local mdefBarBonus = 0
@@ -974,7 +1149,7 @@ end
 
 function getElementalDebuffStatDownFromDOT(dot)
     local stat_down = 0
-    stat_down = (dot-1)*2 +5
+    stat_down = (dot - 1) * 2 + 5
     return stat_down
 end
 
@@ -1165,6 +1340,10 @@ function doElementalNuke(caster, spell, target, spellParams)
 
     --add in final adjustments
     DMG = finalMagicAdjustments(caster, target, spell, DMG)
+	
+	if caster:hasStatusEffect(tpz.effect.THEURGIC_FOCUS) then
+        caster:delStatusEffectSilent(tpz.effect.THEURGIC_FOCUS)
+    end
 
     return DMG
 end
@@ -1193,12 +1372,22 @@ function doNinjutsuNuke(caster, target, spell, params)
 end
 
 function doNuke(caster, target, spell, params)
+    local skill = spell:getSkillType()
+    
     --calculate raw damage
     local dmg = calculateMagicDamage(caster, target, spell, params)
+    
     --get resist multiplier (1x if no resist)
     local resist = applyResistance(caster, target, spell, params)
+    
+    --Consideration for Piety Mitts +3
+    if (skill == tpz.skill.DIVINE and target:isUndead() == true) then -- Spell ID is a Banish Family and Mob Family is Undead
+        dmg = dmg + caster:getMod(tpz.mod.POT_BANISH_UNDEAD)
+    end
+    
     --get the resisted damage
     dmg = dmg*resist
+    
     if (skill == tpz.skill.NINJUTSU) then
         if (caster:getMainJob() == tpz.job.NIN) then -- NIN main gets a bonus to their ninjutsu nukes
             local ninSkillBonus = 100
@@ -1267,16 +1456,21 @@ function calculateDuration(duration, magicSkill, spellGroup, caster, target, use
         duration = duration + caster:getMerit(tpz.merit.ENHANCING_MAGIC_DURATION)
 
         -- Default is true
-        useComposure = useComposure or (useComposure == nill and true)
+        useComposure = useComposure or (useComposure == nil and true)
 
-        -- Composure
+        -- Composure (Schaedel TODO: Determine if this ever gets triggered)
         if useComposure and caster:hasStatusEffect(tpz.effect.COMPOSURE) and caster:getID() == target:getID() then
             duration = duration * 3
         end
 
         -- Perpetuance
         if caster:hasStatusEffect(tpz.effect.PERPETUANCE) and spellGroup == tpz.magic.spellGroup.WHITE then
-            duration  = duration * 2
+            duration = duration * 2
+        end
+        
+        -- Embolden
+        if caster:hasStatusEffect(tpz.effect.EMBOLDEN) then
+            duration = duration * 0.5
         end
     elseif magicSkill == tpz.skill.ENFEEBLING_MAGIC then -- Enfeebling Magic
         if caster:hasStatusEffect(tpz.effect.SABOTEUR) then
@@ -1345,6 +1539,49 @@ function outputMagicHitRateInfo()
 
         end
     end
+end
+
+local geoCardinalTierStat =
+{
+    [1] = {8.0,  5.0},
+    [2] = {10.0, 7.0},
+    [3] = {14.0, 10.0},
+    [4] = {17.0, 13.0},
+}
+
+local geoBurstBonus =
+{
+    [1] = {15.0, 10.0},
+    [2] = {19.0, 14.0},
+    [3] = {24.0, 18.0},
+    [4] = {28.0, 22.0},
+}
+
+function getCardinalStats(caster, target, is_araSpell, spell)
+    local targ = target
+    local spellID = spell:getID()
+    local cardinalQuarant = caster:getCardinalQuadrant(targ)
+    local modTier = caster:getMod(tpz.mod.CARDINAL_CHANT)
+    local MAG_BURST_BONUS = caster:getMod(tpz.mod.MAG_BURST_BONUS)
+    local MAGIC_CRITHITRATE = caster:getMod(tpz.mod.MAGIC_CRITHITRATE)
+    local base = 0.0
+    local burstbase = 0.0
+    local cardinalStats = {0.00, 0.00, 0.00, 0.00}
+
+    if is_araSpell == 1 then
+        base = geoCardinalTierStat[modTier][1]
+        burstbase = geoBurstBonus[modTier][1]
+    else
+        base = geoCardinalTierStat[modTier][2]
+        burstbase = geoBurstBonus[modTier][2]
+    end
+
+    cardinalStats[1] = base *tpz.magic.geoCardinalQuadStats[cardinalQuarant].MATT 
+    cardinalStats[2] = base *tpz.magic.geoCardinalQuadStats[cardinalQuarant].MACC
+    cardinalStats[3] = burstbase *tpz.magic.geoCardinalQuadStats[cardinalQuarant].MAG_BURST_BONUS
+    cardinalStats[4] = base *tpz.magic.geoCardinalQuadStats[cardinalQuarant].MAGIC_CRITHITRATE
+
+    return cardinalStats
 end
 
 tpz.ma = tpz.magic

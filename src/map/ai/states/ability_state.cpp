@@ -22,6 +22,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "ability_state.h"
 #include "../ai_container.h"
 #include "../../ability.h"
+#include "../../item_container.h"
+#include "../../items/item_weapon.h"
 #include "../../recast_container.h"
 #include "../../enmity_container.h"
 #include "../../status_effect_container.h"
@@ -131,11 +133,15 @@ bool CAbilityState::CanUseAbility()
     {
         auto PAbility = GetAbility();
         auto PChar = static_cast<CCharEntity*>(m_PEntity);
+		auto PWeapon = PChar->getStorage(PChar->equipLoc[SLOT_MAIN])->GetItem(PChar->equip[SLOT_MAIN]);
+		
         if (PChar->PRecastContainer->HasRecast(RECAST_ABILITY, PAbility->getRecastId(), PAbility->getRecastTime()))
         {
             PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_WAIT_LONGER));
             return false;
         }
+		
+		// Checks for Amnesia/Impairment
         if (PChar->StatusEffectContainer->HasStatusEffect({EFFECT_AMNESIA, EFFECT_IMPAIRMENT}) ||
             (!PAbility->isPetAbility() && !charutils::hasAbility(PChar, PAbility->getID())) ||
             (PAbility->isPetAbility() && !charutils::hasPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY)))
@@ -143,29 +149,44 @@ bool CAbilityState::CanUseAbility()
             PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_UNABLE_TO_USE_JA2));
             return false;
         }
+		
         std::unique_ptr<CBasicPacket> errMsg;
+		
+		// Turns Liement into an AoE when Epeolatry is equipped
+		if ((PWeapon->getID() == 20753 || PWeapon->getID() == 21685) && (PAbility->getID() == 357))
+		{
+			PAbility->setAOE(1);
+			PAbility->setRange(20);
+			PAbility->setValidTarget(3);
+		}
+		
+		// Set ability target
         auto PTarget = GetTarget();
+		
         if (PChar->IsValidTarget(PTarget->targid, PAbility->getValidTarget(), errMsg))
         {
+			// Check if the target is out of range
             if (PChar != PTarget && distance(PChar->loc.p, PTarget->loc.p) > PAbility->getRange())
             {
                 PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, 0, 0, MSGBASIC_TOO_FAR_AWAY));
                 return false;
             }
+			// Check if the user is in line of sight
             if (!m_PEntity->PAI->TargetFind->canSee(&PTarget->loc.p))
             {
                 m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, PTarget, PAbility->getID(), 0, MSGBASIC_CANNOT_PERFORM_ACTION);
                 return false;
             }
-            if (PAbility->getID() >= ABILITY_HEALING_RUBY)
-            {
-                // Blood pact MP costs are stored under animation ID
-                if (PChar->health.mp < PAbility->getAnimationID())
-                {
-                    PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, 0, 0, MSGBASIC_UNABLE_TO_USE_JA));
-                    return false;
-                }
-            }
+			// Checks if there is enough MP for the Blood Pact                                                   // Remove or permanently disable, moved to scripts
+//          if (PAbility->getID() >= ABILITY_HEALING_RUBY)                                                       // Remove or permanently disable, moved to scripts
+//          {                                                                                                    // Remove or permanently disable, moved to scripts
+//              // Blood pact MP costs are stored under animation ID                                             // Remove or permanently disable, moved to scripts
+//              if (PChar->health.mp < PAbility->getAnimationID())                                               // Remove or permanently disable, moved to scripts
+//              {                                                                                                // Remove or permanently disable, moved to scripts
+//                  PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, 0, 0, MSGBASIC_UNABLE_TO_USE_JA)); // Remove or permanently disable, moved to scripts
+//                  return false;                                                                                // Remove or permanently disable, moved to scripts
+//              }                                                                                                // Remove or permanently disable, moved to scripts
+//          }                                                                                                    // Remove or permanently disable, moved to scripts
             CBaseEntity* PMsgTarget = PChar;
             int32 errNo = luautils::OnAbilityCheck(PChar, PTarget, PAbility, &PMsgTarget);
             if (errNo != 0)

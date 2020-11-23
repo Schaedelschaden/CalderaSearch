@@ -10,7 +10,6 @@
 -- Casting Time: 3 seconds
 -- Recast Time: 60 seconds
 -- Duration: 60 seconds
---
 -- Combos: Defense Bonus
 -----------------------------------------
 require("scripts/globals/bluemagic")
@@ -24,23 +23,21 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffect = tpz.effect.MAGIC_DEF_BOOST
-    local power = 40
-    local duration = 60
+    local duration = 180
 
     if (caster:hasStatusEffect(tpz.effect.DIFFUSION)) then
         local diffMerit = caster:getMerit(tpz.merit.DIFFUSION)
 
         if (diffMerit > 0) then
-            duration = duration + (duration/100)* diffMerit
+            duration = duration + (duration / 100) * diffMerit
         end
 
         caster:delStatusEffect(tpz.effect.DIFFUSION)
     end
 
-    if (target:addStatusEffect(typeEffect, power, 0, duration) == false) then
+    if (target:addStatusEffect(tpz.effect.MAGIC_DEF_BOOST, 50, 0, duration) == false) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     end
 
-    return typeEffect
+    return tpz.effect.MAGIC_DEF_BOOST
 end

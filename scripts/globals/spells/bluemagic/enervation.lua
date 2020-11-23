@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Enervation
--- Lowers the defense and magical defense of enemies within range
+-- Lowers the defense and magical defense of enemies within range.
 -- Spell cost: 48 MP
 -- Monster Type: Beastmen
 -- Spell Type: Magical (Dark)
@@ -23,20 +23,21 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffectOne = tpz.effect.DEFENSE_DOWN
+    local duration = 30
+	local typeEffectOne = tpz.effect.DEFENSE_DOWN
     local typeEffectTwo = tpz.effect.MAGIC_DEF_DOWN
+	local returnEffect = typeEffectOne
     local params = {}
-    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1.0
+		params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.BLUE_MAGIC
+		
     local resist = applyResistance(caster, target, spell, params)
-    local duration = 30 * resist
-    local returnEffect = typeEffectOne
+	duration = 30 * resist
 
     if (resist >= 0.5) then
-        if (target:hasStatusEffect(typeEffectOne) and target:hasStatusEffect(typeEffectTwo)) then -- the def/mag def down does not overwrite the same debuff from any other source
-            spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT) -- no effect
+        if (target:hasStatusEffect(typeEffectOne) and target:hasStatusEffect(typeEffectTwo)) then
+            spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
         elseif (target:hasStatusEffect(typeEffectOne)) then
             target:addStatusEffect(typeEffectTwo, 8, 0, duration)
             returnEffect = typeEffectTwo

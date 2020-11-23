@@ -30,6 +30,7 @@ function onInstanceFailure(instance)
 
     for i, v in pairs(chars) do
         v:messageSpecial(ID.text.MISSION_FAILED, 10, 10)
+		v:setPos(-349.4024, -1.1756, -20.1566, 0, 79)
         v:startEvent(102)
     end
 end
@@ -51,6 +52,7 @@ function onInstanceComplete(instance)
             v:setCharVar("AhtUrganStatus", 1)
         end
 
+		v:setPos(-349.4024, -1.1756, -20.1566, 0, 79)
         v:startEvent(102)
     end
 

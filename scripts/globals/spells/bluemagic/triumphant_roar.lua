@@ -9,7 +9,6 @@
 -- Level: 71
 -- Casting Time: 3 seconds
 -- Recast Time: 90 seconds
---
 -- Combos: None
 -----------------------------------------
 require("scripts/globals/bluemagic")
@@ -23,23 +22,21 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffect = tpz.effect.ATTACK_BOOST
-    local power = 15
     local duration = 90
 
     if (caster:hasStatusEffect(tpz.effect.DIFFUSION)) then
         local diffMerit = caster:getMerit(tpz.merit.DIFFUSION)
 
         if (diffMerit > 0) then
-            duration = duration + (duration/100)* diffMerit
+            duration = duration + (duration / 100) * diffMerit
         end
 
         caster:delStatusEffect(tpz.effect.DIFFUSION)
     end
 
-    if (target:addStatusEffect(typeEffect, power, 1, duration) == false) then
+    if (target:addStatusEffect(tpz.effect.ATTACK_BOOST, 15, 0, duration) == false) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     end
 
-    return typeEffect
+    return tpz.effect.ATTACK_BOOST
 end

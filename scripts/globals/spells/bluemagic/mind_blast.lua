@@ -1,6 +1,7 @@
 -----------------------------------------
 -- Spell: Mind Blast
--- Deals lightning damage to an enemy. Additional effect: Paralysis
+-- Deals lightning damage to an enemy.
+-- Additional effect: Paralysis.
 -- Spell cost: 82 MP
 -- Monster Type: Demons
 -- Spell Type: Magical (Lightning)
@@ -22,36 +23,30 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local params = {}
-    params.attackType = tpz.attackType.MAGICAL
-    params.damageType = tpz.damageType.LIGHTNING
-    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1.0
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
-    params.multiplier = 7.08
-    params.tMultiplier = 1.5
-    params.duppercap = 69
-    params.str_wsc = 0.0
-    params.dex_wsc = 0.0
-    params.vit_wsc = 0.0
-    params.agi_wsc = 0.0
-    params.int_wsc = 0.0
-    params.mnd_wsc = 0.3
-    params.chr_wsc = 0.0
-
-    local resist = applyResistance(caster, target, spell, params)
-    local damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
+    local duration = 90
+	local params = {}
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.BLUE_MAGIC
+        params.damageType = tpz.damageType.THUNDER
+		params.spellFamily = tpz.ecosystem.DEMON
+        params.multiplier = 2.07421875
+        params.tMultiplier = 1.0 -- dINT/dMND/dCHR multiplier
+        params.duppercap = 81
+        params.str_wsc = 0.0
+        params.dex_wsc = 0.0
+        params.vit_wsc = 0.0
+        params.agi_wsc = 0.0
+        params.int_wsc = 0.0
+        params.mnd_wsc = 0.6 -- 0.3
+        params.chr_wsc = 0.0
+    damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
-    if (caster:hasStatusEffect(tpz.effect.AZURE_LORE)) then
-        params.multiplier = params.multiplier + 0.50
-    end
+    local resist = applyResistance(caster, target, spell, params)
+	duration = duration * resist
 
     if (damage > 0 and resist > 0.3) then
-        local typeEffect = tpz.effect.PARALYSIS
-        target:addStatusEffect(typeEffect, 20, 0, getBlueEffectDuration(caster, resist, typeEffect)) -- https://www.bg-wiki.com/bg/Mind_Blast says 20%
+        target:addStatusEffect(tpz.effect.PARALYSIS, 20, 0, duration)
     end
 
     return damage

@@ -5,11 +5,10 @@
 -- Monster Type: Vermin
 -- Spell Type: Magical (Light)
 -- Blue Magic Points: 1
--- Stat Bonus: CHR+1, HP+5
+-- Stat Bonus: CHR+1 HP+5
 -- Level: 1
 -- Casting Time: 2 seconds
 -- Recast Time: 5 seconds
---
 -- Combos: Resist Sleep
 -----------------------------------------
 require("scripts/globals/settings")
@@ -28,15 +27,15 @@ function onSpellCast(caster, target, spell)
     local constant = -6
     local power = getCurePowerOld(caster)
 
-    if (power > 99) then
+    if (power > 33) then
         divisor = 57
         constant = 33.125
-    elseif (power > 59) then
+    elseif (power > 23) then
         divisor =  2
         constant = 9
     end
 
-    local final = getCureFinal(caster, spell, getBaseCureOld(power, divisor, constant), minCure, true)
+    local final = getCureFinal(caster, spell, getBaseCureOld(power,divisor,constant), minCure, true)
 
     final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD)/100))
 

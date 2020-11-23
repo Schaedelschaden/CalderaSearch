@@ -1,6 +1,7 @@
 -----------------------------------------
 -- Spell: Seedspray
--- Delivers a threefold attack. Additional effect: Weakens defense. Chance of effect varies with TP
+-- Delivers a threefold attack. Chance of effect varies with TP.
+-- Additional effect: Weakens defense.
 -- Spell cost: 61 MP
 -- Monster Type: Plantoids
 -- Spell Type: Physical (Slashing)
@@ -9,7 +10,7 @@
 -- Level: 61
 -- Casting Time: 4 seconds
 -- Recast Time: 35 seconds
--- Skillchain Element(s): Ice (Primary) and Wind (Secondary) - (can open Impaction, Compression, Fragmentation, Scission or Gravitation can close Induration or Detonation)
+-- Skillchain Element(s): Induration / Detonation
 -- Combos: Beast Killer
 -----------------------------------------
 require("scripts/globals/bluemagic")
@@ -22,34 +23,51 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local params = {}
+	local threshold = 35 -- 35% chance to inflict additional effect at 0 TP
+    local chance = math.random()
+	local duration = 90
+	
+	local params = {}
     -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
-    params.tpmod = TPMOD_CRITICAL
-    params.attackType = tpz.attackType.PHYSICAL
-    params.damageType = tpz.damageType.SLASHING
-    params.scattr = SC_GRAVITATION
-    params.numhits = 3
-    params.multiplier = 1.925
-    params.tp150 = 1.25
-    params.tp300 = 1.25
-    params.azuretp = 1.25
-    params.duppercap = 61
-    params.str_wsc = 0.0
-    params.dex_wsc = 0.30
-    params.vit_wsc = 0.0
-    params.agi_wsc = 0.0
-    params.int_wsc = 0.20
-    params.mnd_wsc = 0.0
-    params.chr_wsc = 0.0
+        params.damageType = tpz.damageType.SLASHING
+		params.spellFamily = tpz.ecosystem.PLANTOID
+        params.numhits = 3
+        params.multiplier = 0.875
+        params.tp150 = 0.875
+        params.tp300 = 0.875
+        params.azuretp = 0.875
+        params.duppercap = 71
+        params.str_wsc = 0.0
+        params.dex_wsc = 0.6 -- 0.3
+        params.vit_wsc = 0.0
+        params.agi_wsc = 0.0
+        params.int_wsc = 0.0
+        params.mnd_wsc = 0.0
+        params.chr_wsc = 0.0
     damage = BluePhysicalSpell(caster, target, spell, params)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
-    local chance = math.random()
-
-    if (damage > 0 and chance > 1) then
-        local typeEffect = tpz.effect.DEFENSE_DOWN
-        target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 4, 0, getBlueEffectDuration(caster, resist, typeEffect))
+    --           0 TP = No TP bonus
+	--    1 - 1499 TP = Tier 1 bonus
+	-- 1500 - 2999 TP = Tier 2 bonus
+	--      = 3000 TP = Tier 3 bonus
+	--      > 3000 TP = Azure Lore Bonus
+	if (tp >= 1 and tp <= 1499) then
+		threshold = 50
+		duration = 100
+	elseif (tp >= 1500 and tp <= 2999) then
+		threshold = 75
+		duration = 110
+	elseif (tp == 3000) then
+		threshold = 90
+		duration = 120
+	elseif (tp > 3000) then
+		threshold = 100
+		duration = 240
+	end
+	
+	if (damage > 0 and chance < threshold) then
+        target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 8, 0, duration)
     end
 
     return damage

@@ -26,14 +26,17 @@ end
 function onSpellCast(caster, target, spell)
     local dmg = 1 + (0.709 * caster:getSkillLevel(tpz.skill.BLUE_MAGIC))
     local params = {}
-    params.diff = caster:getStat(tpz.mod.MND)-target:getStat(tpz.mod.MND)
-    params.attribute = tpz.mod.MND
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1.0
+		params.diff = caster:getStat(tpz.mod.MND)-target:getStat(tpz.mod.MND)
+		params.attribute = tpz.mod.MND
+		params.skillType = tpz.skill.BLUE_MAGIC
+		params.bonus = 1.0
+		
     local resist = applyResistance(caster, target, spell, params)
+	
     dmg = dmg*resist
-    dmg = addBonuses(caster, spell, target, dmg)
-    dmg = adjustForTarget(target, dmg, spell:getElement())
+    dmg = addBonuses(caster,spell,target,dmg)
+    dmg = adjustForTarget(target,dmg,spell:getElement())
+	
     if (dmg > (caster:getSkillLevel(tpz.skill.BLUE_MAGIC) + 20)) then
         dmg = (caster:getSkillLevel(tpz.skill.BLUE_MAGIC) + 20)
     end
@@ -51,9 +54,8 @@ function onSpellCast(caster, target, spell)
         dmg = target:getHP()
     end
 
-    params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.DARK
-    dmg = BlueFinalAdjustments(caster, target, spell, dmg, params)
+    dmg = BlueFinalAdjustments(caster,target,spell,dmg,params)
     caster:addHP(dmg)
 
     return dmg

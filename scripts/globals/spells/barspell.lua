@@ -34,7 +34,18 @@ function applyBarspell(effectType, caster, target, spell)
 
     local power = calculateBarspellPower(caster, enhanceSkill)
     local duration = calculateBarspellDuration(caster, enhanceSkill)
+	
     duration = calculateDuration(duration, tpz.skill.ENHANCING_MAGIC, tpz.magic.spellGroup.WHITE, caster, target)
+	
+	-- Schaedel TODO: Determine if Composure is applied through the calculateDuration function
+	if target:hasStatusEffect(tpz.effect.COMPOSURE) and target == caster then
+		duration = duration * 3
+	end
+	
+	if (caster:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		power = power * 2
+		caster:delStatusEffect(tpz.effect.EMBOLDEN)
+	end
 
     target:addStatusEffect(effectType, power, 0, duration, 0, mdefBonus)
     return effectType

@@ -9,7 +9,7 @@
 -- Level: 4
 -- Casting Time: 0.5 seconds
 -- Recast Time: 7.25 seconds
--- Skillchain Element(s): Light (can open Compression, Reverberation, or Distortion can close Transfixion)
+-- Skillchain Element(s): Transfixion
 -- Combos: Beast Killer
 -----------------------------------------
 require("scripts/globals/bluemagic")
@@ -23,33 +23,46 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local params = {}
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
-    params.tpmod = TPMOD_DURATION
-    params.attackType = tpz.attackType.PHYSICAL
-    params.damageType = tpz.damageType.PIERCING
-    params.scattr = SC_TRANSFIXION
-    params.numhits = 1
-    params.multiplier = 1.84
-    params.tp150 = 1.84
-    params.tp300 = 1.84
-    params.azuretp = 1.84
-    params.duppercap = 11
-    params.str_wsc = 0.0
-    params.dex_wsc = 0.0
-    params.vit_wsc = 0.0
-    params.agi_wsc = 0.3
-    params.int_wsc = 0.0
-    params.mnd_wsc = 0.0
-    params.chr_wsc = 0.0
-    local damage = BluePhysicalSpell(caster, target, spell, params)
+    local tp = caster:getTP() + caster:getMerit(tpz.merit.ENCHAINMENT)
+	local duration = 30
+	local params = {}
+	-- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+        params.damageType = tpz.damageType.PIERCING
+		params.spellFamily = tpz.ecosystem.PLANTOID
+        params.numhits = 1
+        params.multiplier = 1.84
+        params.tp150 = 1.84
+        params.tp300 = 1.84
+        params.azuretp = 1.84
+        params.duppercap = 11
+        params.str_wsc = 0.0
+        params.dex_wsc = 0.0
+        params.vit_wsc = 0.0
+        params.agi_wsc = 0.6 -- 0.3
+        params.int_wsc = 0.0
+        params.mnd_wsc = 0.0
+        params.chr_wsc = 0.0
+    damage = BluePhysicalSpell(caster, target, spell, params)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+	
+	--           0 TP = No TP bonus
+	--    1 - 1499 TP = Tier 1 bonus
+	-- 1500 - 2999 TP = Tier 2 bonus
+	--      = 3000 TP = Tier 3 bonus
+	--      > 3000 TP = Azure Lore Bonus
+	if (tp == 0) then
+		duration = duration * 0.50
+	elseif (tp >= 1 and tp <= 1499) then
+		duration = duration * 0.70
+	elseif (tp >= 1500 and tp <= 2999) then
+		duration = duration * 0.90
+	elseif (tp == 3000) then
+		duration = duration
+	elseif (tp > 3000) then
+		duration = duration * 1.5
+	end
 
-    if (target:hasStatusEffect(tpz.effect.VIT_DOWN)) then
-        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT) -- no effect
-    else
-        target:addStatusEffect(tpz.effect.VIT_DOWN, 15, 0, 20)
-    end
+    target:addStatusEffect(tpz.effect.VIT_DOWN, 15, 0, duration)
 
     return damage
 end

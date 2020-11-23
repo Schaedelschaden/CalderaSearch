@@ -31,6 +31,12 @@ function onPetAbility(target, automaton, skill, master, action)
         mnd_wsc = 0.0,
         chr_wsc = 0.0
     }
+	
+	if target:isUndead() then
+            params.ftp100 = 2.0
+            params.ftp200 = 2.0
+            params.ftp300 = 2.0
+    end
 
     if USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.ftp100 = 2.66
@@ -42,12 +48,6 @@ function onPetAbility(target, automaton, skill, master, action)
             params.ftp200 = 3.66
             params.ftp300 = 3.66
         end
-    else
-        if target:isUndead() then
-            params.ftp100 = 2.0
-            params.ftp200 = 2.0
-            params.ftp300 = 2.0
-        end
     end
 
 
@@ -55,7 +55,7 @@ function onPetAbility(target, automaton, skill, master, action)
 
     if damage > 0 then
         local chance = 0.033 * skill:getTP()
-        if not target:hasStatusEffect(tpz.effect.STUN) and chance >= math.random()*100 then
+        if not target:hasStatusEffect(tpz.effect.STUN) and chance >= math.random(1, 100) then
             target:addStatusEffect(tpz.effect.STUN, 1, 0, 4)
         end
     end

@@ -123,9 +123,21 @@ float CEnmityContainer::CalculateEnmityBonus(CBattleEntity* PEntity)
         {
             enmityBonus -= PChar->PMeritPoints->GetMeritValue(MERIT_MUTED_SOUL, PChar);
         }
+		
+        if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_FLASHY_SHOT))
+        {
+            enmityBonus += 25;
+        }
+		
+		if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_STEALTH_SHOT))
+        {
+            int16 merit = (100 + PChar->PMeritPoints->GetMeritValue(MERIT_STEALTH_SHOT, PChar)) / 100;
+			merit = enmityBonus * merit;
+			enmityBonus -= merit;
+        }
     }
 
-    float bonus = (100.f + std::clamp(enmityBonus, -50, 100)) / 100.f;
+    float bonus = (100.f + std::clamp(enmityBonus, -75, 100)) / 100.f;
 
     return bonus;
 }
@@ -436,10 +448,12 @@ void CEnmityContainer::DecayEnmity()
     for (auto it = m_EnmityList.begin(); it != m_EnmityList.end(); ++it)
     {
         EnmityObject_t& PEnmityObject = it->second;
-        constexpr int decay_amount = (int)(60 / server_tick_rate);
+        constexpr int ve_decay_amount = (int)(600 / server_tick_rate); //constexpr int decay_amount = (int)(60 / server_tick_rate); // server_tick_rate = 2.5s
+		constexpr int ce_decay_amount = (int)(60 / server_tick_rate); // constexpr int ce_decay_amount = (int)(60 / server_tick_rate);
 
-        PEnmityObject.VE -= PEnmityObject.VE > decay_amount ? decay_amount : PEnmityObject.VE;
-        //ShowDebug("%d: active: %d CE: %d VE: %d\n", it->first, PEnmityObject.active, PEnmityObject.CE, PEnmityObject.VE);
+        PEnmityObject.VE -= PEnmityObject.VE > ve_decay_amount ? ve_decay_amount : PEnmityObject.VE;
+		PEnmityObject.CE -= PEnmityObject.CE > ce_decay_amount ? ce_decay_amount : PEnmityObject.CE;
+//        ShowDebug("%d: active: %d CE: %d VE: %d\n", it->first, PEnmityObject.active, PEnmityObject.CE, PEnmityObject.VE);
     }
 }
 

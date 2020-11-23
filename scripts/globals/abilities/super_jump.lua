@@ -11,11 +11,15 @@ require("scripts/globals/pets")
 require("scripts/globals/msg")
 -----------------------------------
 
-function onAbilityCheck(player, target, ability)
-    return 0, 0
+function onAbilityCheck(player,target,ability)
+    -- Retail behavior for Fly High is 10 second recasts. Caldera is set to 2 second
+	if (player:hasStatusEffect(tpz.effect.FLY_HIGH)) then
+		ability:setRecast(utils.clamp(2, 0, 2))
+	end
+	return 0,0
 end
 
-function onUseAbility(player, target, ability)
+function onUseAbility(player,target,ability)
 
     -- Reduce 99% of total accumulated enmity
     if (target:isMob()) then
@@ -34,5 +38,4 @@ function onUseAbility(player, target, ability)
     if (wyvern ~= nil and player:getPetID() == tpz.pet.id.WYVERN and wyvern:getHP() > 0) then
         wyvern:useJobAbility(636, wyvern)
     end
-
 end

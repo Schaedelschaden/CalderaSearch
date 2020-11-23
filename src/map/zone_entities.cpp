@@ -475,7 +475,16 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
 
             // проверка ночного/дневного сна монстров уже учтена в проверке CurrentAction, т.к. во сне монстры не ходят ^^
 
-            const EMobDifficulty mobCheck = charutils::CheckMob(PChar->GetMLevel(), PCurrentMob->GetMLevel());
+            uint8 mLvl = PChar->GetMLevel();
+			uint8 iLvl = PChar->m_Weapons[SLOT_MAIN]->getILvl();
+			uint8 targetLvl = PCurrentMob->GetMLevel();
+					
+			if (iLvl > mLvl)
+			{
+				mLvl = iLvl;
+			}
+			
+			const EMobDifficulty mobCheck = charutils::CheckMob(mLvl, targetLvl);
 
             CMobController* PController = static_cast<CMobController*>(PCurrentMob->PAI->GetController());
 

@@ -16,11 +16,11 @@ function onAbilityCheck(player, target, ability)
     if (player:hasStatusEffect(tpz.effect.FAN_DANCE)) then
         return tpz.msg.basic.UNABLE_TO_USE_JA2, 0
     elseif (player:hasStatusEffect(tpz.effect.TRANCE)) then
-        return 0, 0
+        return 0,0
     elseif (player:getTP() < 250) then
-        return tpz.msg.basic.NOT_ENOUGH_TP, 0
+        return tpz.msg.basic.NOT_ENOUGH_TP,0
     else
-        return 0, 0
+        return 0,0
     end
 end
 
@@ -30,10 +30,9 @@ function onUseAbility(player, target, ability)
         player:delTP(250)
     end
 
-    local duration = 120 + player:getMod(tpz.mod.SAMBA_DURATION)
-    duration = duration * (100 + player:getMod(tpz.mod.SAMBA_PDURATION))/100
+    local duration = 300 + player:getMod(tpz.mod.SAMBA_DURATION)
+    duration = duration * (100 + player:getMod(tpz.mod.SAMBA_PDURATION)) / 100
     player:delStatusEffect(tpz.effect.HASTE_SAMBA)
     player:delStatusEffect(tpz.effect.DRAIN_SAMBA)
     player:addStatusEffect(tpz.effect.ASPIR_SAMBA, 2, 0, duration)
-
 end

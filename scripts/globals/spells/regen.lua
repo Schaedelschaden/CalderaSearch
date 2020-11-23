@@ -15,6 +15,11 @@ function onSpellCast(caster, target, spell)
     local hp = math.ceil(5 * (1 + 0.01 * caster:getMod(tpz.mod.REGEN_MULTIPLIER))) -- spell base times gear multipliers
     hp = hp + caster:getMerit(tpz.merit.REGEN_EFFECT) -- bonus hp from merits
     hp = hp + caster:getMod(tpz.mod.LIGHT_ARTS_REGEN) -- bonus hp from light arts
+	
+	if (caster:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		hp = hp * 2
+		caster:delStatusEffect(tpz.effect.EMBOLDEN)
+	end
 
     local duration = calculateDuration(75 + caster:getMod(tpz.mod.REGEN_DURATION), spell:getSkillType(), spell:getSpellGroup(), caster, target)
     duration = calculateDurationForLvl(duration, 21, target:getMainLvl())

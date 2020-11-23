@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Sheep Song
--- Puts all enemies within range to sleep
+-- Puts all enemies within range to sleep.
 -- Spell cost: 22 MP
 -- Monster Type: Beasts
 -- Spell Type: Magical (Light)
@@ -24,15 +24,17 @@ end
 
 function onSpellCast(caster, target, spell)
     local typeEffect = tpz.effect.SLEEP_I
+	local duration = 60
     local dINT = (caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
     local params = {}
-    params.diff = nil
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
-    params.effect = typeEffect
+		params.diff = nil
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.BLUE_MAGIC
+		params.bonus = 0
+		params.effect = typeEffect
+		
     local resist = applyResistanceEffect(caster, target, spell, params)
-    local duration = 60 * resist
+    duration = duration * resist
 
     if (resist > 0.5) then -- Do it!
         if (target:addStatusEffect(typeEffect, 1, 0, duration)) then

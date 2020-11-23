@@ -20,6 +20,8 @@ function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
     local criticalHit = false
     local pdif = 0
     local finaldmg = 0
+    local dmgLimitTrait = (attacker:getMod(tpz.mod.DAMAGE_LIMIT_TRAIT) / 10)
+    local dmgLimitGear = ((100 + attacker:getMod(tpz.mod.DAMAGE_LIMIT_GEAR)) / 100)
 
     local missChance = math.random()
 
@@ -37,6 +39,8 @@ function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
             else
                 calcParams.pdif = generatePdif (calcParams.cratio[1], calcParams.cratio[2], true)
             end
+            -- Apply Damage Limit+ from Job Traits and Physical Damage Limit +% from gear
+            calcParams.pdif = ((calcParams.pdif + dmgLimitTrait) * dmgLimitGear)
             finaldmg = dmg * calcParams.pdif
 
             -- Duplicate the first hit with an added magical component for hybrid WSes
@@ -83,9 +87,36 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
         end
     end
 
-    -- Check for and apply WS_DEX_BONUS
-    if (attacker:getMod(tpz.mod.WS_DEX_BONUS) > 0) then
-        wsParams.dex_wsc = wsParams.dex_wsc + (attacker:getMod(tpz.mod.WS_DEX_BONUS)*.01)
+    -- Begin Checks for bonus wsc bonuses. See the following for details:
+    -- https://www.bg-wiki.com/bg/Utu_Grip
+    -- https://www.bluegartr.com/threads/108199-Random-Facts-Thread-Other?p=6826618&viewfull=1#post6826618
+    
+    if attacker:getMod(tpz.mod.WS_STR_BONUS) > 0 then
+        wsParams.str_wsc = wsParams.str_wsc + (attacker:getMod(tpz.mod.WS_STR_BONUS) / 100)
+    end
+
+    if attacker:getMod(tpz.mod.WS_DEX_BONUS) > 0 then
+        wsParams.dex_wsc = wsParams.dex_wsc + (attacker:getMod(tpz.mod.WS_DEX_BONUS) / 100)
+    end
+
+    if attacker:getMod(tpz.mod.WS_VIT_BONUS) > 0 then
+        wsParams.vit_wsc = wsParams.vit_wsc + (attacker:getMod(tpz.mod.WS_VIT_BONUS) / 100)
+    end
+
+    if attacker:getMod(tpz.mod.WS_AGI_BONUS) > 0 then
+        wsParams.agi_wsc = wsParams.agi_wsc + (attacker:getMod(tpz.mod.WS_AGI_BONUS) / 100)
+    end
+
+    if attacker:getMod(tpz.mod.WS_INT_BONUS) > 0 then
+        wsParams.int_wsc = wsParams.int_wsc + (attacker:getMod(tpz.mod.WS_INT_BONUS) / 100)
+    end
+
+    if attacker:getMod(tpz.mod.WS_MND_BONUS) > 0 then
+        wsParams.mnd_wsc = wsParams.mnd_wsc + (attacker:getMod(tpz.mod.WS_MND_BONUS) / 100)
+    end
+
+    if attacker:getMod(tpz.mod.WS_CHR_BONUS) > 0 then
+        wsParams.chr_wsc = wsParams.chr_wsc + (attacker:getMod(tpz.mod.WS_CHR_BONUS) / 100)
     end
 
     local wsMods = calcParams.fSTR +
@@ -139,8 +170,26 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     calcParams.shadowsAbsorbed = 0
 
     -- Calculate the damage from the first hit
-    local dmg = mainBase * ftp
+    local dmg = mainBase
+    
+    local climacticflourishcrits = attacker:getCharVar("ClimacticFlourishCrits")
+    
+    if (attacker:hasStatusEffect(tpz.effect.CLIMACTIC_FLOURISH) and (climacticflourishcrits > 0)) then
+        dmg = dmg + (attacker:getStat(tpz.mod.CHR) / 2)
+        calcParams.critRate = 100
+        attacker:setCharVar("ClimacticFlourishCrits", climacticflourishcrits - 1)
+    end
+    
+    if (attacker:hasStatusEffect(tpz.effect.STRIKING_FLOURISH) or attacker:hasStatusEffect(tpz.effect.TERNARY_FLOURISH)) then
+        dmg = dmg + attacker:getStat(tpz.mod.CHR)
+        attacker:delStatusEffectSilent(tpz.effect.STRIKING_FLOURISH)
+        attacker:delStatusEffectSilent(tpz.effect.TERNARY_FLOURISH)
+    end
+    
+    dmg = dmg * ftp
+    
     hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
+    
     finaldmg = finaldmg + hitdmg
 
     -- Have to calculate added bonus for SA/TA here since it is done outside of the fTP multiplier
@@ -183,7 +232,17 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     -- Calculate additional hits if a multiHit WS (or we're supposed to get a DA/TA/QA proc from main hit)
     dmg = mainBase * ftp
     local hitsDone = 1
+    local BarrageTurbineShots = attacker:getMod(tpz.mod.BARRAGE_TURBINE_SHOTS)
     local numHits = getMultiAttacks(attacker, target, wsParams.numHits)
+    numHits = numHits + BarrageTurbineShots
+    
+    local burden = 15
+    if (BarrageTurbineShots > 0) then
+        local master = attacker:getMaster()
+        burden = burden * BarrageTurbineShots
+        master:addBurden(tpz.magic.ele.WIND-1, burden)
+    end
+    
     while (hitsDone < numHits) do -- numHits is hits in the base WS _and_ DA/TA/QA procs during those hits
         hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
         finaldmg = finaldmg + hitdmg
@@ -193,7 +252,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
 
     -- Apply Souleater bonus
     if calcParams.melee then -- souleaterBonus() checks for the effect inside itself
-        finaldmg = finaldmg + souleaterBonus(attacker, (calcParams.tpHitsLanded+calcParams.extraHitsLanded))
+        finaldmg = finaldmg + souleaterBonus(attacker, (calcParams.tpHitsLanded + calcParams.extraHitsLanded))
     end
 
     -- Factor in "all hits" bonus damage mods
@@ -201,6 +260,10 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     if (attacker:getMod(tpz.mod.WEAPONSKILL_DAMAGE_BASE + wsID) > 0) then -- For specific WS
         bonusdmg = bonusdmg + attacker:getMod(tpz.mod.WEAPONSKILL_DAMAGE_BASE + wsID)
     end
+
+    -- Apply Yaegasumi WS Bonus
+    local YaegasumiBonus = attacker:getMod(tpz.mod.YAEGASUMI_WS_BONUS)
+    bonusdmg = bonusdmg + YaegasumiBonus
 
     finaldmg = finaldmg * ((100 + bonusdmg)/100) -- Apply our "all hits" WS dmg bonuses
     finaldmg = finaldmg + firstHitBonus -- Finally add in our "first hit" WS dmg bonus from before
@@ -282,6 +345,18 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     end
 
     finaldmg = finaldmg * WEAPON_SKILL_POWER -- Add server bonus
+    
+    local posorneg = math.random(0, 1) -- Sets the swing positive or negative
+    local randomness = math.random(1,25) -- 25% swing range
+    
+    if (posorneg == 0) then
+        randomness = ((100 + randomness) / 100)
+    else
+        randomness = ((100 - randomness) / 100)
+    end
+    
+    finaldmg = finaldmg * randomness
+    
     calcParams.finalDmg = finaldmg
     finaldmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
@@ -341,6 +416,18 @@ end
     finaldmg = finaldmg * target:getMod(tpz.mod.PIERCERES) / 1000
 
     finaldmg = finaldmg * WEAPON_SKILL_POWER -- Add server bonus
+    
+    local posorneg = math.random(0, 1) -- Sets the swing positive or negative
+    local randomness = math.random(1,25) -- 25% swing range
+    
+    if (posorneg == 0) then
+        randomness = ((100 + randomness) / 100)
+    else
+        randomness = ((100 - randomness) / 100)
+    end
+    
+    finaldmg = finaldmg * randomness
+    
     calcParams.finalDmg = finaldmg
     finaldmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
@@ -376,9 +463,36 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
     -- Magic-based WSes never miss, so we don't need to worry about calculating a miss, only if a shadow absorbed it.
     if not shadowAbsorb(target) then
 
-        -- Check for and apply WS_DEX_BONUS
-        if (attacker:getMod(tpz.mod.WS_DEX_BONUS) > 0) then
-             wsParams.dex_wsc = wsParams.dex_wsc + (attacker:getMod(tpz.mod.WS_DEX_BONUS) * 0.01)
+        -- Begin Checks for bonus wsc bonuses. See the following for details:
+        -- https://www.bg-wiki.com/bg/Utu_Grip
+        -- https://www.bluegartr.com/threads/108199-Random-Facts-Thread-Other?p=6826618&viewfull=1#post6826618
+    
+        if attacker:getMod(tpz.mod.WS_STR_BONUS) > 0 then
+            wsParams.str_wsc = wsParams.str_wsc + (attacker:getMod(tpz.mod.WS_STR_BONUS) / 100)
+        end
+
+        if attacker:getMod(tpz.mod.WS_DEX_BONUS) > 0 then
+            wsParams.dex_wsc = wsParams.dex_wsc + (attacker:getMod(tpz.mod.WS_DEX_BONUS) / 100)
+        end
+
+        if attacker:getMod(tpz.mod.WS_VIT_BONUS) > 0 then
+            wsParams.vit_wsc = wsParams.vit_wsc + (attacker:getMod(tpz.mod.WS_VIT_BONUS) / 100)
+        end
+
+        if attacker:getMod(tpz.mod.WS_AGI_BONUS) > 0 then
+            wsParams.agi_wsc = wsParams.agi_wsc + (attacker:getMod(tpz.mod.WS_AGI_BONUS) / 100)
+        end
+
+        if attacker:getMod(tpz.mod.WS_INT_BONUS) > 0 then
+            wsParams.int_wsc = wsParams.int_wsc + (attacker:getMod(tpz.mod.WS_INT_BONUS) / 100)
+        end
+
+        if attacker:getMod(tpz.mod.WS_MND_BONUS) > 0 then
+            wsParams.mnd_wsc = wsParams.mnd_wsc + (attacker:getMod(tpz.mod.WS_MND_BONUS) / 100)
+        end
+
+        if attacker:getMod(tpz.mod.WS_CHR_BONUS) > 0 then
+            wsParams.chr_wsc = wsParams.chr_wsc + (attacker:getMod(tpz.mod.WS_CHR_BONUS) / 100)
         end
 
         dmg = attacker:getMainLvl() + 2 + (attacker:getStat(tpz.mod.STR) * wsParams.str_wsc + attacker:getStat(tpz.mod.DEX) * wsParams.dex_wsc +
@@ -396,10 +510,14 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
         if (attacker:getMod(tpz.mod.WEAPONSKILL_DAMAGE_BASE + wsID) > 0) then -- For specific WS
             bonusdmg = bonusdmg + attacker:getMod(tpz.mod.WEAPONSKILL_DAMAGE_BASE + wsID)
         end
+        
+        -- Apply Yaegasumi WS Bonus
+        local YaegasumiBonus = attacker:getMod(tpz.mod.YAEGASUMI_WS_BONUS)
+        bonusdmg = bonusdmg + YaegasumiBonus
 
         -- Add in bonusdmg
-        dmg = dmg * ((100 + bonusdmg)/100) -- Apply our "all hits" WS dmg bonuses
-        dmg = dmg + ((dmg * attacker:getMod(tpz.mod.ALL_WSDMG_FIRST_HIT))/100) -- Add in our "first hit" WS dmg bonus
+        dmg = dmg * ((100 + bonusdmg) / 100) -- Apply our "all hits" WS dmg bonuses
+        dmg = dmg + ((dmg * attacker:getMod(tpz.mod.ALL_WSDMG_FIRST_HIT)) / 100) -- Add in our "first hit" WS dmg bonus
 
         -- Calculate magical bonuses and reductions
         dmg = addBonusesAbility(attacker, wsParams.ele, target, dmg, wsParams)
@@ -411,6 +529,17 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
     else
         calcParams.shadowsAbsorbed = 1
     end
+    
+    local posorneg = math.random(0, 1) -- Sets the swing positive or negative
+    local randomness = math.random(1,25) -- 25% swing range
+    
+    if (posorneg == 0) then
+        randomness = ((100 + randomness) / 100)
+    else
+        randomness = ((100 - randomness) / 100)
+    end
+    
+    dmg = dmg * randomness
 
     calcParams.finalDmg = dmg
     dmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
@@ -663,6 +792,9 @@ end
 
 -- Given the raw ratio value (atk/def) and levels, returns the cRatio (min then max)
 function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
+    local mainLvl = attacker:getMainLvl()
+    local defLvl = defender:getMainLvl()
+    local attackerILvl = attacker:getWeaponSkillLevel(tpz.slot.MAIN)
 
     local flourisheffect = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
     if flourisheffect ~= nil and flourisheffect:getPower() > 1 then
@@ -675,8 +807,29 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
         attacker:delMod(tpz.mod.ATTP, 25 + flourisheffect:getSubPower() / 2)
     end
     local levelcor = 0
-    if attacker:getMainLvl() < defender:getMainLvl() then
-        levelcor = 0.05 * (defender:getMainLvl() - attacker:getMainLvl())
+    
+    if (attackerILvl > 203) then
+        mainLvl = 119
+    elseif(attackerILvl > 177) then
+        mainLvl = 115
+    elseif(attackerILvl > 153) then
+        mainLvl = 113
+    elseif(attackerILvl > 102) then
+        mainLvl = 109
+    elseif(attackerILvl > 89) then
+        mainLvl = 108
+    elseif(attackerILvl > 76) then
+        mainLvl = 107
+    elseif(attackerILvl > 63) then
+        mainLvl = 106
+    elseif(attackerILvl > 51) then
+        mainLvl = 105
+    end
+    
+   if (defLvl < 130) and (mainLvl < defLvl) then
+        levelcor = 0.05 * (defLvl - mainLvl)
+    elseif (defLvl > 130) and (mainLvl < defLvl) then
+        levelcor = 0.55
     end
 
     cratio = cratio - levelcor
@@ -762,13 +915,37 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
 end
 
 function cRangedRatio(attacker, defender, params, ignoredDef, tp)
+    local mainLvl = attacker:getMainLvl()
+    local defLvl = defender:getMainLvl()
+    local attackerILvl = attacker:getWeaponSkillLevel(tpz.slot.MAIN)
 
     local atkmulti = fTP(tp, params.atk100, params.atk200, params.atk300)
     local cratio = attacker:getRATT() / (defender:getStat(tpz.mod.DEF) - ignoredDef)
 
     local levelcor = 0
-    if (attacker:getMainLvl() < defender:getMainLvl()) then
-        levelcor = 0.025 * (defender:getMainLvl() - attacker:getMainLvl())
+    
+    if (attackerILvl > 203) then
+        mainLvl = 119
+    elseif(attackerILvl > 177) then
+        mainLvl = 115
+    elseif(attackerILvl > 153) then
+        mainLvl = 113
+    elseif(attackerILvl > 102) then
+        mainLvl = 109
+    elseif(attackerILvl > 89) then
+        mainLvl = 108
+    elseif(attackerILvl > 76) then
+        mainLvl = 107
+    elseif(attackerILvl > 63) then
+        mainLvl = 106
+    elseif(attackerILvl > 51) then
+        mainLvl = 105
+    end
+    
+    if (defLvl < 130) and (mainLvl < defLvl) then
+        levelcor = 0.025 * (defLvl - mainLvl)
+    elseif (defLvl > 130) and (mainLvl < defLvl) then
+        levelcor = 0.275
     end
 
     cratio = cratio - levelcor

@@ -1486,18 +1486,48 @@ inline int32 CLuaBaseEntity::isAlly(lua_State *L)
 }
 
 /************************************************************************
-*  Function: initNpcAi()
-*  Purpose : Initiate pre-defined NPC AI
-*  Example : npc:initNpcAi(); -- Red Ghost in Port Jeuno (walks a path)
-*  Notes   : To Do: Change name, this is ugly
+*  Function: initNpcPathing()
+*  Purpose : Initiate pre-defined NPC pathfinding AI
+*  Example : npc:initNpcPathing(); -- Red Ghost in Port Jeuno (walks a path)
+*  Notes   : can set a start position by passing an x,y,z
+*  Notes   : can override starting pathpoint by passing an int as the point
+*  Extra   : npc:initNpcPathing(0,0,0,5) -- passing 0 as the x,y,z but setting
+*  #####   : the pathpoint to 5, setting x,y,z to 0 will bypass setting the pos
 ************************************************************************/
 
-inline int32 CLuaBaseEntity::initNpcAi(lua_State* L)
+inline int32 CLuaBaseEntity::initNpcPathing(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_NPC);
+	
+	uint16 pathpoint = 1;
+
+    // Set a starting position by passing an x,y,z pos.
+    if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
+    {
+        if (lua_tonumber(L, 1) != 0 && lua_tonumber(L, 2) != 0 && lua_tonumber(L, 3) != 0)
+        {
+            m_PBaseEntity->loc.p.x = (float)lua_tonumber(L, 1);
+            m_PBaseEntity->loc.p.y = (float)lua_tonumber(L, 2);
+            m_PBaseEntity->loc.p.z = (float)lua_tonumber(L, 3);
+
+            m_PBaseEntity->updatemask |= UPDATE_POS;
+        }
+    }
+
+    // override pathpoint if need to when setting up.
+    if (!lua_isnil(L, 4) && lua_isnumber(L, 4))
+    {
+        pathpoint = (uint16)lua_tonumber(L, 4);
+    }
 
     m_PBaseEntity->PAI = std::make_unique<CAIContainer>(m_PBaseEntity, std::make_unique<CPathFind>(m_PBaseEntity), nullptr, nullptr);
+	
+	// All mobs/npc's now have a pathpoint to refrence from,
+    // so can call last pathpoint to get back on track.
+    // see getPathPoint(), setPathPoint
+    m_PBaseEntity->SetPathPoint(pathpoint);
+	
     return 0;
 }
 
@@ -1679,6 +1709,46 @@ inline int32 CLuaBaseEntity::clearTargID(lua_State* L)
 }
 
 /************************************************************************
+*  Function: getPathPoint()
+*  Purpose : To get the current path point the entity is on
+*  Example : if npc:getPathPoint() == 3 then do stuff end
+*  Notes   : See Novalmauge in Bostaunieux Oubliette
+*  Notes   : currently used for pathfind.lua npcBasicPath
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getPathPoint(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+
+    uint16 point = m_PBaseEntity->GetPathPoint();
+
+    lua_pushnumber(L, point);
+    return 1;
+}
+
+/************************************************************************
+*  Function: setPathPoint()
+*  Purpose : To set the current path point the entity is on
+*  Example : npc:setPathPoint(pathPoint +1)
+*  Notes   : See Novalmauge in Bostaunieux Oubliette
+*  Notes   : currently used for pathfind.lua npcBasicPath
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setPathPoint(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    uint16 pathPoint = (uint16)lua_tonumber(L, 1);
+
+    m_PBaseEntity->SetPathPoint(pathPoint);
+
+    return 0;
+}
+
+/************************************************************************
 *  Function: atPoint()
 *  Purpose : Used to check whether an entity is at a specified point in the specified path
 *  Example : if (npc:atPoint(pathfind.get(path, 45))) then
@@ -1735,20 +1805,64 @@ inline int32 CLuaBaseEntity::pathTo(lua_State* L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
 
     position_t point;
+    uint32 flags = 0;
+    bool clear = false;
+
     point.x = (float)lua_tonumber(L, 1);
     point.y = (float)lua_tonumber(L, 2);
     point.z = (float)lua_tonumber(L, 3);
 
+    if (!lua_isnil(L, 4) && lua_isnumber(L, 4))
+    {
+        point.rotation = (uint8)lua_tonumber(L, 4);
+    }
+
+    if (!lua_isnil(L, 5) && lua_isnumber(L, 5))
+    {
+        flags = (uint32)lua_tonumber(L, 5);
+    }
+
+    if (!lua_isnil(L, 6) && lua_isboolean(L, 6))
+    {
+        clear = (bool)lua_toboolean(L, 6);
+    }
+
     if (m_PBaseEntity->PAI->PathFind)
     {
-        if (lua_isnumber(L, 4))
-        {
-            m_PBaseEntity->PAI->PathFind->PathTo(point, (uint8)lua_tointeger(L, 4));
-        }
-        else
-        {
-            m_PBaseEntity->PAI->PathFind->PathTo(point, PATHFLAG_RUN | PATHFLAG_WALLHACK | PATHFLAG_SCRIPT);
-        }
+        m_PBaseEntity->PAI->PathFind->PathTo(point, flags, clear);
+    }
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: stepTo()
+*  Purpose : Makes a non-PC move toward a target without changing action
+*  Example : mob:stepTo(Pos.x, Pos.y, Pos.z, true)
+************************************************************************/
+
+inline int32 CLuaBaseEntity::stepTo(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
+
+    position_t point;
+    bool run = false;
+	
+    point.x = (float)lua_tonumber(L, 1);
+    point.y = (float)lua_tonumber(L, 2);
+    point.z = (float)lua_tonumber(L, 3);
+	
+	if (!lua_isnil(L, 4) && lua_isboolean(L, 4))
+    {
+        run = (bool)lua_toboolean(L, 4);
+    }
+
+    if (m_PBaseEntity->PAI->PathFind)
+    {
+        m_PBaseEntity->PAI->PathFind->StepTo(point, run);
     }
 
     return 0;
@@ -1819,6 +1933,99 @@ inline int32 CLuaBaseEntity::isFollowingPath(lua_State* L)
         PBattle->PAI->PathFind->IsFollowingPath());
 
     return 1;
+}
+
+/************************************************************************
+* Function: rotateToAngle()
+* Purpose : rotates an entity to a given rotation
+* Example : npc:rotateToAngle(180)
+* Notes   : 
+************************************************************************/
+inline int32 CLuaBaseEntity::rotateToAngle(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    uint8 wantedRotation = (uint8)lua_tointeger(L, 1);
+
+    m_PBaseEntity->PAI->PathFind->RotateTo(wantedRotation);
+
+    return 0;
+}
+
+/************************************************************************
+* Function: pathStop()
+* Purpose : stops an npc from pathing until pathResume() is used
+* Example : npc:pathStop()
+* Notes   : used in conjunction with pathResume()
+************************************************************************/
+
+inline int32 CLuaBaseEntity::pathStop(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+
+    CBattleEntity* PBattle = (CBattleEntity*)m_PBaseEntity;
+	
+	PBattle->speed = 0;
+
+    return 1;
+}
+
+/************************************************************************
+* Function: pathResume()
+* Purpose : resumes an entity's pathing by looking at it's speed set in the DB 
+* Example : npc:pathResume()
+* Notes   : used in conjunction with pathStop()
+************************************************************************/
+
+inline int32 CLuaBaseEntity::pathResume(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+
+    uint8 default_speed = 0;
+
+    if (m_PBaseEntity != nullptr)
+    {
+        if (m_PBaseEntity->objtype == TYPE_NPC)
+        {
+            auto PNpc = static_cast<CNpcEntity*>(m_PBaseEntity);
+            uint32 npcID = PNpc->id;
+            const char* NPCQuery = "SELECT speed FROM npc_list WHERE npcid = %u";
+			int32 retNPC = Sql_Query(SqlHandle, NPCQuery, npcID);
+
+            if (retNPC != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
+            {
+                if (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                {
+                    default_speed = (uint8)Sql_GetIntData(SqlHandle, 0);
+                }
+            }
+        }
+		
+		if (m_PBaseEntity->objtype == TYPE_MOB)
+        {
+            auto PMob = static_cast<CMobEntity*>(m_PBaseEntity);
+            uint16 familyID = PMob->m_Family;
+            const char* MOBQuery = "SELECT speed FROM mob_family_system WHERE familyid = %u";
+
+            int32 retMOB = Sql_Query(SqlHandle, MOBQuery, familyID);
+
+            if (retMOB != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
+            {
+                if (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                {
+                    default_speed = (uint8)Sql_GetIntData(SqlHandle, 0);
+                }
+            }
+        }
+
+        m_PBaseEntity->speed = default_speed;
+        return 1;
+    }
+
+    return 0;
 }
 
 /************************************************************************
@@ -2460,6 +2667,26 @@ inline int32 CLuaBaseEntity::isFacing(lua_State* L)
 }
 
 /************************************************************************
+*  Function: getAngle()
+*  Purpose : Returns the angle between two entities relative to front
+*  Example : player:getAngle(target)
+*  Notes   : 0 degrees front; 180 behind
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getAngle(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+
+    TPZ_DEBUG_BREAK_IF(PLuaBaseEntity == nullptr);
+
+    lua_pushnumber(L, worldAngle(m_PBaseEntity->loc.p, PLuaBaseEntity->GetBaseEntity()->loc.p));
+    return 1;
+}
+
+/************************************************************************
  *  Function: isInfront()
  *  Purpose : Returns true if an entity is in front of another entity
  *  Example : if (attacker:isInfront(target)) then
@@ -2522,6 +2749,48 @@ inline int32 CLuaBaseEntity::isBeside(lua_State* L)
     TPZ_DEBUG_BREAK_IF(PLuaBaseEntity == nullptr);
 
     lua_pushboolean(L, beside(m_PBaseEntity->loc.p, PLuaBaseEntity->GetBaseEntity()->loc.p, angle));
+    return 1;
+}
+
+/************************************************************************
+*  Function: getCardinalQuadrant()
+*  Purpose : Will return a index of what direction you are facing from a target.
+*  Example : if player:getCardinalQuadrant(target) >= 7 and player:getCardinalQuadrant(target) <=11 then
+*  Example :     print("can use sneak attack!!!")
+*  Example : end
+*  Notes   : index is in scripts/globals/status
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getCardinalQuadrant(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+
+    auto angle = PLuaBaseEntity->GetBaseEntity()->loc.p.rotation - worldAngle(PLuaBaseEntity->GetBaseEntity()->loc.p, m_PBaseEntity->loc.p);
+    auto rotRad = rotationToRadian(angle);
+    auto cardinalAngle = radianToRotation(rotRad);
+    uint8 cardinalQuadrant = 0;
+
+    if ((cardinalAngle >= 0 && cardinalAngle < 8) || (cardinalAngle > 248 && cardinalAngle <= 256)){ cardinalQuadrant = 1; }// N
+    else if (cardinalAngle <= 248 && cardinalAngle > 216){ cardinalQuadrant = 2; } // NNE
+    else if (cardinalAngle <= 216 && cardinalAngle > 200){ cardinalQuadrant = 3; } // NE
+    else if (cardinalAngle <= 200 && cardinalAngle > 184){ cardinalQuadrant = 4; } // ENE
+    else if (cardinalAngle <= 184 && cardinalAngle > 168){ cardinalQuadrant = 5; } // E
+    else if (cardinalAngle <= 168 && cardinalAngle > 152){ cardinalQuadrant = 6; } // ESE
+    else if (cardinalAngle <= 152 && cardinalAngle > 136){ cardinalQuadrant = 7; } // SE
+    else if (cardinalAngle <= 136 && cardinalAngle > 120){ cardinalQuadrant = 8; } // SSE
+    else if (cardinalAngle <= 120 && cardinalAngle > 104){ cardinalQuadrant = 9; } // S
+    else if (cardinalAngle <= 104 && cardinalAngle > 88){ cardinalQuadrant = 10;}  // SSW
+    else if (cardinalAngle <= 88 && cardinalAngle > 72){ cardinalQuadrant = 11; }  // SW
+    else if (cardinalAngle <= 72 && cardinalAngle > 56){ cardinalQuadrant = 12; }  // WSW
+    else if (cardinalAngle <= 56 && cardinalAngle > 40){ cardinalQuadrant = 13; }  // W
+    else if (cardinalAngle <= 40 && cardinalAngle > 24){ cardinalQuadrant = 14; }  // WNW
+    else if (cardinalAngle <= 24 && cardinalAngle > 8){ cardinalQuadrant = 15; }   // NW
+    else if (cardinalAngle <= 8 && cardinalAngle > 0){ cardinalQuadrant = 16; }    // NNW
+	
+    lua_pushinteger(L, cardinalQuadrant);
     return 1;
 }
 
@@ -3599,6 +3868,18 @@ inline int32 CLuaBaseEntity::addItem(lua_State *L)
                     lua_pop(L, 2);
                 }
                 SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, silent);
+				
+				// When !additem 513-515 or !giveitem 513-515 is used this will try to assign the linkshell/linksack/linkpearl the server linkshell's settings
+				// This is primarily intended to be used with the !givepearl command
+				if (PItem->isType(ITEM_LINKSHELL))
+				{
+//					printf("\nlua_baseentity.cpp addItem YUP IT'S A LINKSHELL ITEM\n");
+					const char* Query1 = "UPDATE char_inventory SET extra = (SELECT extra FROM (SELECT extra FROM char_inventory WHERE charid = 6 AND itemId = 515 AND signature = 'CalderaServer') AS alias) WHERE signature = 'mKVNO1'";
+					Sql_Query(SqlHandle, Query1);
+					const char* Query2 = "UPDATE char_inventory SET signature = 'CalderaServer' WHERE signature = 'mKVNO1'";
+					Sql_Query(SqlHandle, Query2);
+				}
+				
                 if (SlotID == ERROR_SLOTID)
                     break;
             }
@@ -8461,7 +8742,7 @@ inline int32 CLuaBaseEntity::capAllSkills(lua_State* L)
 
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
-    for (uint8 i = 1; i < 45; ++i)
+    for (uint8 i = 1; i < 46; ++i)
     {
         const char* Query = "INSERT INTO char_skills "
             "SET "
@@ -10284,6 +10565,74 @@ inline int32 CLuaBaseEntity::hasRecast(lua_State* L)
 }
 
 /************************************************************************
+*  Function: getRecast()
+*  Purpose : Pulls the specified ability's current recast time from the char_recast database
+*  Example : player:getRecast(1) to get the recast for Berserk
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getRecast(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    // only reset for players
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+		
+		auto recastID = (uint16)lua_tointeger(L, 1);
+		
+		const char* Query = "SELECT recast FROM char_recast WHERE charid = %u AND id = %u;";
+
+		int32 recast = Sql_Query(SqlHandle, Query, PChar->id, recastID);
+		int32 recastTime = 0;
+		
+		if (recast != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        recastTime = (int32)Sql_GetIntData(SqlHandle, 0);
+	
+//		printf("lua_baseentity.cpp getRecast CHAR ID: [%u]  RECAST ID: [%i]  RECAST TIME: [%i]\n", PChar->id, recastID, recastTime);
+
+        lua_pushinteger(L, recastTime);
+		return 1;
+    }
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: setRecast()
+*  Purpose : Removes an existing recast and replaces it with an adjusted value
+*  Example : target:setRecast(recastID, duration)
+*  Notes   : target:setRecast(1, 30) would set Berserk's recast to 30s
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setRecast(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+
+    CBattleEntity* PBattleEntity = dynamic_cast<CBattleEntity*>(m_PBaseEntity);
+    if(PBattleEntity)
+    {
+        RECASTTYPE recastContainer = (RECASTTYPE)RECAST_ABILITY;
+        auto recastID = (uint16)lua_tointeger(L, 1);
+        auto duration = (uint32)lua_tointeger(L, 2);
+
+        PBattleEntity->PRecastContainer->Del(recastContainer, recastID);
+		PBattleEntity->PRecastContainer->Add(recastContainer, recastID, duration);
+        if(PBattleEntity->objtype == TYPE_PC)
+        {
+            CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+            PChar->pushPacket(new CCharSkillsPacket(PChar));
+            PChar->pushPacket(new CCharRecastPacket(PChar));
+        }
+    }
+	
+    return 0;
+}
+
+/************************************************************************
 *  Function: resetRecast()
 *  Purpose : Resets the cooldown for a specified Ability to 0
 *  Example : player:resetRecast(RECAST_ABILITY, 231)
@@ -10295,21 +10644,17 @@ inline int32 CLuaBaseEntity::resetRecast(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
 
     // only reset for players
     if (m_PBaseEntity->objtype == TYPE_PC)
     {
         CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
-        RECASTTYPE recastContainer = (RECASTTYPE)lua_tointeger(L, 1);
-        auto recastID = (uint16)lua_tointeger(L, 2);
+        RECASTTYPE recastContainer = (RECASTTYPE)RECAST_ABILITY;
+        auto recastID = (uint16)lua_tointeger(L, 1);
+//		printf("lua_baseentity.cpp resetRecast RECAST ID: [%i]\n", recastID);
 
-        if (PChar->PRecastContainer->Has(recastContainer, recastID))
-        {
-            PChar->PRecastContainer->Del(recastContainer, recastID);
-            PChar->PRecastContainer->Add(recastContainer, recastID, 0);
-        }
+        PChar->PRecastContainer->Del(RECAST_ABILITY, recastID);
 
         PChar->pushPacket(new CCharSkillsPacket(PChar));
         PChar->pushPacket(new CCharRecastPacket(PChar));
@@ -11658,9 +12003,10 @@ inline int32 CLuaBaseEntity::fold(lua_State* L)
 *  Purpose : Executes the Wild Card two hour for a COR
 *  Example : caster:doWildCard(target,total)
 *  Notes   : Calls the DoWildCardToEntity member of battleutils
+*  MOVED TO LUA AND DISABLED HERE
 ************************************************************************/
 
-inline int32 CLuaBaseEntity::doWildCard(lua_State *L)
+/* inline int32 CLuaBaseEntity::doWildCard(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
@@ -11672,7 +12018,7 @@ inline int32 CLuaBaseEntity::doWildCard(lua_State *L)
     battleutils::DoWildCardToEntity(static_cast<CCharEntity*>(m_PBaseEntity), static_cast<CCharEntity*>(PEntity->m_PBaseEntity), (uint8)lua_tointeger(L, 2));
 
     return 0;
-}
+} */
 
 /************************************************************************
 *  Function: addCorsairRoll()
@@ -11787,6 +12133,31 @@ inline int32 CLuaBaseEntity::healingWaltz(lua_State *L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
 
     lua_pushinteger(L, ((CBattleEntity*)m_PBaseEntity)->StatusEffectContainer->HealingWaltz());
+    return 1;
+}
+
+/************************************************************************
+*  Function: getItemSkillType()
+*  Purpose : 
+*  Example : 
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getItemSkillType(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    auto slot = (SLOTTYPE)lua_tointeger(L, 1);
+    CItemWeapon* PItem = (CItemWeapon*)PChar->getEquip(slot);
+
+    if (PItem != nullptr)
+    {
+        lua_pushinteger(L, PItem->getSkillType());
+    }
+
     return 1;
 }
 
@@ -12068,6 +12439,25 @@ inline int32 CLuaBaseEntity::getILvlMacc(lua_State *L)
 }
 
 /************************************************************************
+*  Function: getILvlParry()
+*  Purpose : Returns the Parry value of an equipped Main Weapon
+*  Example : player:getILvlParry()
+*  Notes   : Value of m_iLvlParry (private member of CItemWeapon)
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getILvlParry(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (auto weapon = dynamic_cast<CItemWeapon*>(((CBattleEntity*)m_PBaseEntity)->m_Weapons[SLOT_MAIN]))
+        lua_pushinteger(L, weapon->getILvlParry());
+    else
+        lua_pushinteger(L, 0);
+
+    return 1;
+}
+
+/************************************************************************
 *  Function: isSpellAoE()
 *  Purpose : Returns true if a specified spell is AoE
 *  Example : if (caster:isSpellAoE(spell:getID())) then
@@ -12085,6 +12475,68 @@ inline int32 CLuaBaseEntity::isSpellAoE(lua_State* L)
     if (PSpell != nullptr)
     {
         lua_pushboolean(L, battleutils::GetSpellAoEType(PEntity, PSpell) > 0);
+    }
+    else
+    {
+        lua_pushboolean(L, false);
+    }
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: getSpellCost()
+*  Purpose : Returns the cost of the spell after calulations
+*  Example : local spellCost = caster:getSpellCost(spell:getID())
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getSpellCost(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
+    CSpell* PSpell = spell::GetSpell(static_cast<SpellID>(lua_tointeger(L, 1)));
+    uint16 spellCost = 0;
+
+    if (PSpell != nullptr)
+    {
+        spellCost = battleutils::CalculateSpellCost(PEntity, PSpell);
+        lua_pushinteger(L, spellCost);
+    }
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: setAbilityAoE()
+*  Purpose : Forces the specified ability to act as an AoE
+*  Example : player:setAbilityAoE(uint16 abilityID, uint8 AOE, uint8 Range, uint8 ValidTarget)
+*  Notes   : Intended for use by RUN GSword Epeolatry to make Liement AoE
+*          : Calling this function inside OnAbilityUse is too "late" and inadequately addresses the problem
+           : Moved functionality to ability_state.cpp CanUseAbility function
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setAbilityAoE(lua_State* L)
+{
+//    printf("\nlua_baseentity.cpp setAbilityAoE ENTERED FUNCTION\n");
+	TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || lua_isnil(L, 2) || lua_isnil(L, 3) || lua_isnil(L, 4));
+	TPZ_DEBUG_BREAK_IF(!lua_isnumber(L, 1) || !lua_isnumber(L, 2) || !lua_isnumber(L, 3) || !lua_isnumber(L, 4));
+	
+    CBaseEntity* PChar = m_PBaseEntity;
+	CAbility* PAbility = ability::GetAbility((uint16)lua_tointeger(L, 1));
+	uint8 AoE = (uint8)lua_tointeger(L, 2);
+	uint8 Range = (uint8)lua_tointeger(L, 3);
+	uint8 ValidTarget = (uint8)lua_tointeger(L, 4);
+
+	if (PAbility != nullptr)
+    {
+//		printf("\nlua_baseentity.cpp setAbilityAoE ABILITY IS NOT NIL\n");
+        PAbility->setAOE(AoE);
+	    PAbility->setRange(Range);
+		PAbility->setValidTarget(ValidTarget);
     }
     else
     {
@@ -13295,12 +13747,31 @@ inline int32 CLuaBaseEntity::petAttack(lua_State *L)
 /************************************************************************
 *  Function: petAbility()
 *  Purpose : Manually inserts the use of a pet ability into the queue
-*  Example : pet:petAbility(ABILITY)
-*  Notes   : If I had to guess, it's not coded
+*  Example : pet:petAbility(target, ABILITY)
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::petAbility(lua_State *L)
 {
+	TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+
+    CLuaBaseEntity* PEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    uint16 abilityID = (uint16)lua_tointeger(L, 2);
+
+    if (((CBattleEntity*)m_PBaseEntity)->PPet != nullptr)
+    {
+        if (((CBattleEntity*)m_PBaseEntity)->PPet->objtype == TYPE_PET)
+        {
+            ((CBattleEntity*)m_PBaseEntity)->PPet->PAI->Ability(PEntity->GetBaseEntity()->id, abilityID);
+        }
+        else
+        {
+            ((CMobEntity*)m_PBaseEntity)->PPet->PAI->MobSkill(PEntity->GetBaseEntity()->id, abilityID);
+        }
+    }
+	
     return 0;
 }
 
@@ -13579,6 +14050,58 @@ inline int32 CLuaBaseEntity::updateAttachments(lua_State* L)
     CCharEntity* PEntity = (CCharEntity*)m_PBaseEntity;
 
     puppetutils::UpdateAttachments(PEntity);
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: getOldestRune()
+*  Purpose : Returns the oldest rune from the Rune Fencer (FIFO)
+*  Example : player:getOldestRune()
+*  Notes   : Used in Rune Fencer abilities like Swipe/Lunge to determine which effect takes priority
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getOldestRune(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+
+    lua_pushinteger(L, ((CBattleEntity*)m_PBaseEntity)->StatusEffectContainer->GetOldestRune());
+    return 1;
+}
+
+/************************************************************************
+*  Function: removeOldestRune()
+*  Purpose : Removes the oldest rune from the Rune Fencer (FIFO)
+*  Example : player:removeOldestRune()
+*  Notes   : Used in Rune Enhancement abilities like Ignis
+************************************************************************/
+
+inline int32 CLuaBaseEntity::removeOldestRune(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
+
+    PEntity->StatusEffectContainer->RemoveOldestRune();
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: removeAllRunes()
+*  Purpose : Removes all Runes from the Rune Fencer
+*  Example : player:removeAllRunes()
+*  Notes   : Used with Lunge
+************************************************************************/
+
+inline int32 CLuaBaseEntity::removeAllRunes(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
+
+    PEntity->StatusEffectContainer->RemoveAllRunes();
 
     return 0;
 }
@@ -15079,21 +15602,27 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isAlly),
 
     // AI and Control
-    LUNAR_DECLARE_METHOD(CLuaBaseEntity,initNpcAi),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,initNpcPathing),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,resetAI),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getStatus),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setStatus),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCurrentAction),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,lookAt),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,rotateToAngle),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,clearTargID),
 
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPathPoint),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setPathPoint),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,atPoint),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathTo),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,stepTo),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathThrough),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isFollowingPath),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,clearPath),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkDistance),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathStop),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathResume),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,wait),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,openDoor),
@@ -15123,6 +15652,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isInfront),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isBehind),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isBeside),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCardinalQuadrant),
     
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getZone),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getZoneID),
@@ -15165,6 +15695,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addTempItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasWornItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,createWornItem),
+	
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getItemSkillType),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,createShop),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addShopItem),
@@ -15393,6 +15925,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasSpell),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,canLearnSpell),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,delSpell),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getSpellCost),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,recalculateSkillsTable),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,recalculateAbilitiesTable),
@@ -15460,6 +15993,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,queue),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addRecast),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasRecast),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRecast),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,setRecast),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,resetRecast),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,resetRecasts),
 
@@ -15523,7 +16058,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,delLatent),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,fold),
-    LUNAR_DECLARE_METHOD(CLuaBaseEntity,doWildCard),
+/*     LUNAR_DECLARE_METHOD(CLuaBaseEntity,doWildCard), */
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addCorsairRoll),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasCorsairEffect),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasBustEffect),
@@ -15544,8 +16079,10 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRACC),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRATT),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getILvlMacc),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getILvlParry),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isSpellAoE),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,setAbilityAoE),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,physicalDmgTaken),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,magicDmgTaken),
@@ -15612,6 +16149,10 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,removeOldestManeuver),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,removeAllManeuvers),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateAttachments),
+	
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getOldestRune),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,removeOldestRune),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,removeAllRunes),
 
     // Trust related
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,spawnTrust),

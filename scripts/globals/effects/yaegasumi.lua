@@ -1,13 +1,18 @@
 -----------------------------------
 --
---     tpz.effect.YAEGASUMI
+-- tpz.effect.YAEGASUMI
 --
 -----------------------------------
-function onEffectGain(target, effect)
+
+require("scripts/globals/status")
+
+function onEffectGain(target,effect)
+	
 end
 
-function onEffectTick(target, effect)
+function onEffectTick(target,effect)
 end
 
-function onEffectLose(target, effect)
+function onEffectLose(target,effect)
+    target:setMod(tpz.mod.YAEGASUMI_WS_BONUS, 0)
 end

@@ -1,15 +1,19 @@
 -----------------------------------
 --
---     tpz.effect.MANA_WALL
+-- tpz.effect.MANA_WALL
 --
 -----------------------------------
-function onEffectGain(target, effect)
-    target:addMod(tpz.mod.DMG, 50)
+require("scripts/globals/status")
+-----------------------------------
+
+function onEffectGain(target,effect)
+
 end
 
-function onEffectTick(target, effect)
+function onEffectTick(target,effect)
+
 end
 
-function onEffectLose(target, effect)
-    target:delMod(tpz.mod.DMG, 50)
+function onEffectLose(target,effect)
+
 end

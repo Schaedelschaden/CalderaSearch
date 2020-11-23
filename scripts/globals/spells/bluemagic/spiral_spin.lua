@@ -1,6 +1,7 @@
 -----------------------------------------
 -- Spell: Spiral Spin
--- Chance of effect varies with TP. Additional Effect: Accuracy Down
+-- Chance of effect varies with TP.
+-- Additional Effect: Accuracy Down.
 -- Spell cost: 39 MP
 -- Monster Type: Vermin
 -- Spell Type: Physical (Slashing)
@@ -9,7 +10,7 @@
 -- Level: 60
 -- Casting Time: 4 seconds
 -- Recast Time: 45 seconds
--- Skillchain property: Transfixion (can open Compression, Reverberation, or Distortion)
+-- Skillchain property: Transfixion
 -- Combos: Plantoid Killer
 -----------------------------------------
 require("scripts/globals/bluemagic")
@@ -22,34 +23,51 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local params = {}
+    local tp = caster:getTP() + caster:getMerit(tpz.merit.ENCHAINMENT)
+	local threshold = 20 -- 20% chance to apply at 0 TP
+	local duration = 45 -- 45s duration at 0 TP
+	local chance = math.random(1, 100)
+	local params = {}
     -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
-    params.tpmod = TPMOD_CRITICAL
-    params.attackType = tpz.attackType.PHYSICAL
-    params.damageType = tpz.damageType.SLASHING
-    params.scattr = SC_TRANSFIXION
-    params.numhits = 1
-    params.multiplier = 1.925
-    params.tp150 = 1.25
-    params.tp300 = 1.25
-    params.azuretp = 1.25
-    params.duppercap = 60
-    params.str_wsc = 0.0
-    params.dex_wsc = 0.0
-    params.vit_wsc = 0.0
-    params.agi_wsc = 0.30
-    params.int_wsc = 0.10
-    params.mnd_wsc = 0.0
-    params.chr_wsc = 0.0
+        params.damageType = tpz.damageType.SLASHING
+		params.spellFamily = tpz.ecosystem.VERMIN
+        params.numhits = 1
+        params.multiplier = 2.00
+        params.tp150 = 2.00
+        params.tp300 = 2.00
+        params.azuretp = 2.00
+        params.duppercap = 15
+        params.str_wsc = 0.0
+        params.dex_wsc = 0.0
+        params.vit_wsc = 0.0
+        params.agi_wsc = 0.6 -- 0.3
+        params.int_wsc = 0.0
+        params.mnd_wsc = 0.0
+        params.chr_wsc = 0.0
     damage = BluePhysicalSpell(caster, target, spell, params)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+	
+	--           0 TP = No TP bonus
+	--    1 - 1499 TP = Tier 1 bonus
+	-- 1500 - 2999 TP = Tier 2 bonus
+	--      = 3000 TP = Tier 3 bonus
+	--      > 3000 TP = Azure Lore Bonus
+	if (tp >= 1 and tp <= 1499) then
+		threshold = 40
+		duration = 50
+	elseif (tp >= 1500 and tp <= 2999) then
+		threshold = 60
+		duration = 55
+	elseif (tp == 3000) then
+		threshold = 80
+		duration = 60
+	elseif (tp > 3000) then
+		threshold = 100
+		duration = 120
+	end
 
-    local chance = math.random()
-
-    if (damage > 0 and chance > 4) then
-        local typeEffect = tpz.effect.ACCURACY_DOWN
-        target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 4, 0, getBlueEffectDuration(caster, resist, typeEffect))
+    if (damage > 0 and chance < threshold) then
+        target:addStatusEffect(tpz.effect.ACCURACY_DOWN, 4, 0, duration)
     end
 
     return damage

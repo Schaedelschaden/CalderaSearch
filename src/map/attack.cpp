@@ -25,6 +25,7 @@
 #include "attack.h"
 #include "status_effect_container.h"
 #include "items/item_weapon.h"
+#include "utils/charutils.h"
 #include "utils/puppetutils.h"
 #include "ai/ai_container.h"
 
@@ -425,6 +426,7 @@ bool CAttack::CheckCounter()
     //counter check (rate AND your hit rate makes it land, else its just a regular hit)
     //having seigan active gives chance to counter at 25% of the zanshin proc rate
     uint16 seiganChance = 0;
+	
     if (m_victim->objtype == TYPE_PC && m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_SEIGAN))
     {
         seiganChance = m_victim->getMod(Mod::ZANSHIN) + ((CCharEntity*)m_victim)->PMeritPoints->GetMeritValue(MERIT_ZASHIN_ATTACK_RATE, (CCharEntity*)m_victim);
@@ -437,11 +439,30 @@ bool CAttack::CheckCounter()
         m_isCountered = true;
         m_isCritical = (tpzrand::GetRandomNumber(100) < battleutils::GetCritHitRate(m_victim, m_attacker, false));
     }
-    else if (m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_PERFECT_COUNTER))
-    { //Perfect Counter only counters hits that normal counter misses, always critical, can counter 1-3 times before wearing
+    if (m_victim->objtype == TYPE_PC && m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_PERFECT_COUNTER))
+    { //Perfect Counter only counters hits that normal counter misses, always critical, can counter 1-7 times before wearing
         m_isCountered = true;
         m_isCritical = true;
-        m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_PERFECT_COUNTER);
+		CStatusEffect* effect = m_victim->StatusEffectContainer->GetStatusEffect(EFFECT_PERFECT_COUNTER, 0);
+		
+		{ //Determine chance to not wear off using assumed formula VIT / 10 (ex. 250 VIT = 25% chance to not wear off)
+			if (tpzrand::GetRandomNumber(100) < (m_victim->getMod(Mod::VIT) / 10) && effect->GetPower() < 7) //Maximum 7 counters! Similar to Third Eye
+				{
+					//Increment power and don't remove
+					effect->SetPower(effect->GetPower() + 1);
+				}
+			else
+				{
+					m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_PERFECT_COUNTER);
+				}
+		}
+    }
+	if (m_victim->objtype == TYPE_PC && m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_INNER_STRENGTH))
+    { // Inner Strength has a 100% Perfect Counter rate that does not wear off for Inner Strength's duration
+        m_isCountered = true;
+        m_isCritical = true;
+		CStatusEffect* effect = m_victim->StatusEffectContainer->GetStatusEffect(EFFECT_INNER_STRENGTH, 0);
+		effect->SetPower(effect->GetPower() + 1);
     }
     return m_isCountered;
 }
@@ -474,6 +495,8 @@ bool CAttack::CheckCover()
 ************************************************************************/
 void CAttack::ProcessDamage()
 {
+	CCharEntity* PChar = (CCharEntity*)m_attacker;
+	
     // Sneak attack.
     if (m_attacker->GetMJob() == JOB_THF &&
         m_isFirstSwing &&
@@ -490,10 +513,11 @@ void CAttack::ProcessDamage()
         m_isFirstSwing &&
         m_attackRound->GetTAEntity() != nullptr)
     {
-        m_trickAttackDamage += m_attacker->AGI() * (1 + m_attacker->getMod(Mod::TRICK_ATK_AGI) / 100);
+        m_trickAttackDamage += m_attacker->AGI() * (1 + m_attacker->getMod(Mod::TRICK_ATK_AGI) + m_attacker->getMod(Mod::TRICK_ATK_DMG) / 100);
     }
 
     SLOTTYPE slot = (SLOTTYPE)GetWeaponSlot();
+	
     if (m_attackRound->IsH2H())
     {
         // FFXIclopedia H2H: Remove 3 dmg from weapon, DB has an extra 3 for weapon rank. h2hSkill*0.11+3
@@ -559,6 +583,28 @@ void CAttack::ProcessDamage()
     {
         m_damage += (int32)(m_damage * ((100 + (m_attacker->getMod(Mod::AUGMENTS_TA))) / 100.0f));
     }
+	
+		// Apply Climactic, Striking, and Ternary Flourishes based off of player CHR
+	if (m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_CLIMACTIC_FLOURISH) ||
+		m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_STRIKING_FLOURISH) ||
+		m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_TERNARY_FLOURISH))
+	{
+		int32 flourishBonus = m_attacker->stats.CHR + m_attacker->getMod(Mod::CHR);
+
+		if (m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_CLIMACTIC_FLOURISH))
+		{
+			flourishBonus = flourishBonus / 2;
+			int32 climacticflourishcrits = charutils::GetCharVar(PChar, "ClimacticFlourishCrits");
+			if (climacticflourishcrits == 0)
+			{
+				m_attacker->StatusEffectContainer->DelStatusEffect(EFFECT_CLIMACTIC_FLOURISH);
+			}
+		}
+		
+		m_damage = m_damage + flourishBonus;
+		m_attacker->StatusEffectContainer->DelStatusEffectSilent(EFFECT_STRIKING_FLOURISH);
+		m_attacker->StatusEffectContainer->DelStatusEffectSilent(EFFECT_TERNARY_FLOURISH);
+	}
 
     // Try skill up.
     if (m_damage > 0)
@@ -575,4 +621,28 @@ void CAttack::ProcessDamage()
         }
     }
     m_isBlocked = attackutils::IsBlocked(m_attacker, m_victim);
+	
+	// Apply Impetus Attack and Critical Hit Rate Buffs
+	if (m_attacker->objtype == TYPE_PC && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_IMPETUS))
+	{
+		CStatusEffect* effect = m_attacker->StatusEffectContainer->GetStatusEffect(EFFECT_IMPETUS, 0);
+		if (effect->GetPower() > 0 && effect->GetPower() < 50)
+		{
+			m_attacker->StatusEffectContainer->DelStatusEffect(EFFECT_ATTACK_BOOST,effect->GetPower());
+			effect->SetPower(effect->GetPower() + 1);
+			m_attacker->addModifier(Mod::ATT, 2);
+			m_attacker->addModifier(Mod::CRITHITRATE, 1);
+		}
+	}
+	
+	// Apply Restraint Weaponskill Damage Modifier
+	if (m_attacker->objtype == TYPE_PC && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_RESTRAINT))
+	{
+		CStatusEffect* effect = m_attacker->StatusEffectContainer->GetStatusEffect(EFFECT_RESTRAINT, 0);
+		if (effect->GetPower() > 0 && effect->GetPower() < 30)
+		{
+			effect->SetPower(effect->GetPower() + 1);
+			m_attacker->addModifier(Mod::ALL_WSDMG_ALL_HITS, 2);
+		}
+	}
 }

@@ -36,14 +36,16 @@ function onUseAbility(player, target, ability)
         local Tamed = false
 
         if player:getLocalVar("Tamed_Mob") == target:getID() then
-            player:addMod(tpz.mod.CHARM_CHANCE, 10)
+            player:addMod(tpz.mod.CHARM_CHANCE, 100) -- Originally 10
             Tamed = true
         end
+		
+--		player:addMod(tpz.mod.CHARM_CHANCE, 500) -- DELETE ME LATER I'M ONLY FOR TESTING
 
         player:charmPet(target)
 
         if Tamed then
-            player:delMod(tpz.mod.CHARM_CHANCE, 10)
+            player:delMod(tpz.mod.CHARM_CHANCE, 100) -- Originally 10
             player:setLocalVar("Tamed_Mob", 0)
         end
     end

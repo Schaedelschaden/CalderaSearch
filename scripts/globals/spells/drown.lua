@@ -8,11 +8,11 @@ require("scripts/globals/magic")
 require("scripts/globals/msg")
 -----------------------------------------
 
-function onMagicCastingCheck(caster, target, spell)
+function onMagicCastingCheck(caster,target,spell)
     return 0
 end
 
-function onSpellCast(caster, target, spell)
+function onSpellCast(caster,target,spell)
 
     if (target:getStatusEffect(tpz.effect.SHOCK) ~= nil) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT) -- no effect
@@ -35,6 +35,7 @@ function onSpellCast(caster, target, spell)
             local DOT = getElementalDebuffDOT(sINT)
             local effect = target:getStatusEffect(tpz.effect.DROWN)
             local noeffect = false
+			local gearbonus = caster:getMod(tpz.mod.ELEM_DOT_EFFECT)
             if (effect ~= nil) then
                 if (effect:getPower() >= DOT) then
                     noeffect = true
@@ -51,11 +52,14 @@ function onSpellCast(caster, target, spell)
                 duration = duration + caster:getMerit(tpz.merit.ELEMENTAL_DEBUFF_DURATION)
 
                 local mbonus = caster:getMerit(tpz.merit.ELEMENTAL_DEBUFF_EFFECT)
-                DOT = DOT + mbonus/2 -- Damage
+				
+                DOT = DOT + mbonus/2 + gearbonus -- Damage
 
-                target:addStatusEffect(tpz.effect.DROWN, DOT, 3, duration)
+                target:addStatusEffect(tpz.effect.DROWN,DOT, 3, duration)
             end
         end
     end
+	
     return tpz.effect.DROWN
+	
 end

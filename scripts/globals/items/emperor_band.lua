@@ -1,11 +1,11 @@
 -----------------------------------------
 -- ID: 15763
--- Item: emperor band
--- Experience point bonus
+-- Item: Emperor Band
+-- Experience Point Bonus
 -----------------------------------------
 -- Bonus: +50%
--- Duration: 720 min
--- Max bonus: 30000 exp
+-- Duration: 720 min (12 hours)
+-- Max bonus: 30,000 EXP
 -----------------------------------------
 require("scripts/globals/status")
 -----------------------------------------
@@ -19,5 +19,5 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffect(tpz.effect.DEDICATION, 50, 0, 43200, 0, 30000)
+	target:addStatusEffect(tpz.effect.DEDICATION,50,0,43200,0,30000)
 end

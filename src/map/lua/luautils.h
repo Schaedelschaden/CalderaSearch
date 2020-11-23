@@ -272,7 +272,7 @@ namespace luautils
     int32 OnInstanceComplete(CInstance* PInstance);                             // triggers when an instance is completed
 
     int32 GetMobRespawnTime(lua_State* L);                                      // get the respawn time of a mob
-    int32 DisallowRespawn(lua_State* L);                                               // Allow or prevent a mob from spawning
+    int32 DisallowRespawn(lua_State* L);                                        // Allow or prevent a mob from spawning
     int32 UpdateNMSpawnPoint(lua_State* L);                                     // Update the spawn point of an NM
     int32 SetDropRate(lua_State*);                                              // Set drop rate of a mob setDropRate(dropid,itemid,newrate)
     int32 UpdateServerMessage(lua_State*);                                      // update server message, first modify in conf and update
@@ -292,6 +292,10 @@ namespace luautils
 
     void OnFurniturePlaced(CCharEntity* PChar, CItemFurnishing* itemId);
     void OnFurnitureRemoved(CCharEntity* PChar, CItemFurnishing* itemId);
+	
+	int32 KillPlayerByName(lua_State* L);										// Kill the player by name using the !kill <player> command
+	int32 SendServerMsg(lua_State* L);											// Receives a chat message and converts it for broadcast to a server-wide channel
+	int32 PlayPetAnimation(lua_State* L);										// Forces the player's pet to play the specified mob animation ID
 
     int32 SelectDailyItem(lua_State* L);
 

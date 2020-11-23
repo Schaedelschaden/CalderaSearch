@@ -24,6 +24,13 @@ function onSpellCast(caster, target, spell)
 
     -- Cap at 35
     final = math.min(final, 35)
+	
+	if (caster:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		final = final * 2
+		caster:delStatusEffect(tpz.effect.EMBOLDEN)
+	end
+	
+	final = final + target:getMod(tpz.mod.PHALANX_RCVD)
 
     if target:addStatusEffect(tpz.effect.PHALANX, final, 0, duration) then
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)

@@ -1,34 +1,170 @@
--- phpMyAdmin SQL Dump
--- version 3.3.8
--- http://www.phpmyadmin.net
---
--- Serveur: localhost
--- Généré le : Ven 24 Juin 2011 à 08:08
--- Version du serveur: 6.0.0
--- Version de PHP: 5.2.9-2
-
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Base de données: `tpzdb`
---
-
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               5.6.26-log - MySQL Community Server (GPL)
+-- Server OS:                    Win64
+-- HeidiSQL Version:             11.0.0.5919
 -- --------------------------------------------------------
 
---
--- Structure de la table `char_vars`
---
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
-DROP TABLE IF EXISTS `char_vars`;
+-- Dumping structure for table tpzdb.char_vars
 CREATE TABLE IF NOT EXISTS `char_vars` (
   `charid` int(10) unsigned NOT NULL,
   `varname` varchar(30) NOT NULL,
   `value` int(11) NOT NULL,
   PRIMARY KEY (`charid`,`varname`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- Dumping data for table tpzdb.char_vars: 141 rows
+/*!40000 ALTER TABLE `char_vars` DISABLE KEYS */;
+INSERT INTO `char_vars` (`charid`, `varname`, `value`) VALUES
+	(1, 'spokeKindlix', 1),
+	(1, 'spokePyropox', 1),
+	(1, 'TutorialProgress', 1),
+	(1, 'SOA_1_CS3', 1),
+	(1, '[regime]type', 2),
+	(1, '[regime]zone', 167),
+	(1, '[regime]id', 611),
+	(1, '[regime]repeat', 1),
+	(1, '[regime]needed1', 4),
+	(1, '[regime]needed2', 2),
+	(2, 'MoghouseExplication', 1),
+	(2, 'spokeKindlix', 1),
+	(2, 'spokePyropox', 1),
+	(2, 'TutorialProgress', 1),
+	(2, 'SOA_1_CS3', 1),
+	(4, 'spokeKindlix', 1),
+	(4, 'spokePyropox', 1),
+	(4, 'TutorialProgress', 1),
+	(1, '1stTimeAbyssea', 1),
+	(5, 'spokeKindlix', 1),
+	(5, 'spokePyropox', 1),
+	(5, 'TutorialProgress', 1),
+	(1, 'SOA_1_CS2', 1),
+	(5, 'SOA_1_CS2', 1),
+	(6, 'SOA_1_CS2', 1),
+	(6, '[regime]type', 2),
+	(6, '[regime]zone', 196),
+	(6, '[regime]id', 679),
+	(6, '[regime]repeat', 1),
+	(6, '[regime]needed1', 6),
+	(6, '[regime]killed1', 2),
+	(6, '[regime]lastReward', 489152),
+	(10, 'SOA_1_CS1', 1),
+	(17, 'GodMode', 1),
+	(37, 'SOA_1_CS1', 1),
+	(10, 'GMHidden', 0),
+	(14, '[regime]type', 1),
+	(14, '[regime]zone', 107),
+	(14, '[regime]id', 77),
+	(14, '[regime]repeat', 1),
+	(14, '[regime]needed1', 7),
+	(14, 'SOA_1_CS2', 1),
+	(9, 'SOA_1_CS1', 1),
+	(13, 'SOA_1_CS1', 1),
+	(19, 'SOA_1_CS1', 1),
+	(15, '[regime]type', 1),
+	(15, '[regime]zone', 101),
+	(15, '[regime]id', 64),
+	(15, '[regime]repeat', 1),
+	(15, '[regime]needed1', 6),
+	(15, 'SOA_1_CS1', 1),
+	(11, '2', 5),
+	(15, '[regime]lastReward', 489476),
+	(16, 'GodMode', 1),
+	(8, 'SOA_1_CS1', 1),
+	(15, 'BrothersCS', 1),
+	(15, 'Telmoda_Madaline_Event', 1),
+	(10, 'inJail', 1),
+	(34, 'GodMode', 1),
+	(13, 'GodMode', 1),
+	(14, 'inJail', 0),
+	(13, 'inJail', 0),
+	(21, 'SOA_1_CS1', 1),
+	(7, 'GodMode', 1),
+	(7, 'inJail', 0),
+	(21, 'inJail', 0),
+	(10, 'DynaXarcabard_Win', 1),
+	(20, 'SOA_1_CS3', 1),
+	(20, 'ChocoboOnTheLoose', 1),
+	(20, 'COP1', 1),
+	(5, 'Groceries', 1),
+	(20, '1stTimeAbyssea', 1),
+	(20, 'Dynamis_Status', 1),
+	(20, 'option', 2),
+	(20, 'SOA_1_CS1', 1),
+	(20, 'PromathiaStatus', 1),
+	(5, 'inJail', 0),
+	(24, 'MoghouseExplication', 1),
+	(24, 'spokeKindlix', 1),
+	(24, 'spokePyropox', 1),
+	(24, 'TutorialProgress', 1),
+	(24, 'GodMode', 1),
+	(30, 'SOA_1_CS3', 1),
+	(20, 'GodMode', 1),
+	(34, '[regime]type', 2),
+	(34, '[regime]zone', 212),
+	(34, '[regime]id', 770),
+	(34, '[regime]repeat', 1),
+	(34, '[regime]needed1', 5),
+	(34, '[regime]needed2', 2),
+	(36, 'SOA_1_CS1', 1),
+	(9, 'KillCounter_Rabbits', 3),
+	(40, 'SOA_1_CS3', 1),
+	(41, 'SOA_1_CS1', 1),
+	(8, 'GodMode', 1),
+	(39, 'GodMode', 1),
+	(8, 'Dynamis_Status', 1),
+	(42, 'SOA_1_CS3', 1),
+	(43, 'GodMode', 1),
+	(43, '[regime]type', 2),
+	(43, '[regime]zone', 197),
+	(43, '[regime]id', 687),
+	(43, '[regime]repeat', 1),
+	(43, '[regime]needed1', 3),
+	(43, '[regime]needed2', 3),
+	(43, '[regime]killed2', 3),
+	(43, '[regime]killed1', 1),
+	(5, 'KillCounter_MangyTailedMarvin', 34),
+	(8, 'KillCounter_Rabbits', 12),
+	(5, 'KillCounter_Rabbits', 420),
+	(8, 'KillCounter_MangyTailedMarvin', 3),
+	(10, 'KillCounter_MangyTailedMarvin', 15),
+	(4, 'MiniGodMode', 1),
+	(9, 'KillCounter_MangyTailedMarvin', 3),
+	(10, 'KillCounter_Rabbits', 31),
+	(1, 'KillCounter_Rabbits', 45),
+	(1, 'KillCounter_MangyTailedMarvin', 7),
+	(44, 'SOA_1_CS1', 1),
+	(5, 'SOA_1_CS1', 1),
+	(51, '[regime]lastReward', 491100),
+	(4, 'KillCounter_MangyTailedMarvin', 2),
+	(4, 'KillCounter_Rabbits', 16),
+	(1, 'MiniGodMode', 1),
+	(5, 'Gambit_Fire', 10),
+	(18, 'GodMode', 1),
+	(17317960, 'Rayke_Ice', 100),
+	(17317960, 'Rayke_Wind', 100),
+	(47, 'SOA_1_CS1', 1),
+	(48, 'SOA_1_CS1', 1),
+	(18, 'MiniGodMode', 1),
+	(51, '[regime]type', 1),
+	(10, 'MiniGodMode', 1),
+	(51, '[regime]zone', 101),
+	(51, '[regime]id', 64),
+	(51, '[regime]repeat', 1),
+	(51, '[regime]needed1', 6),
+	(51, '[regime]killed1', 1),
+	(45, 'MiniGodMode', 1),
+	(5, 'MiniGodMode', 1),
+	(5, 'SOA_1_CS3', 1),
+	(5, 'WindurstFirstTrust', 2);
+/*!40000 ALTER TABLE `char_vars` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -270,6 +270,7 @@ void CLatentEffectContainer::CheckLatentsStatusEffect()
     {
         switch (latentEffect.GetConditionsID())
         {
+        case LATENT_STATUS_ACTIVE_NO_JOBSP:
         case LATENT_STATUS_EFFECT_ACTIVE:
         case LATENT_WEATHER_ELEMENT:
         case LATENT_NATION_CONTROL:
@@ -532,13 +533,8 @@ void CLatentEffectContainer::CheckLatentsJobLevel()
     {
         switch (latentEffect.GetConditionsID())
         {
-        case LATENT_JOB_LEVEL_EVEN:
-        case LATENT_JOB_LEVEL_ODD:
-        case LATENT_JOB_MULTIPLE_5:
-        case LATENT_JOB_MULTIPLE_10:
-        case LATENT_JOB_MULTIPLE_13_NIGHT:
-        case LATENT_JOB_LEVEL_BELOW:
-        case LATENT_JOB_LEVEL_ABOVE:
+        case LATENT_JOB_MULTIPLE:
+		case LATENT_JOB_MULTIPLE_AT_NIGHT:
             return ProcessLatentEffect(latentEffect);
             break;
         default:
@@ -955,23 +951,35 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
         }
         break;
     }
-    case LATENT_JOB_MULTIPLE_5:
-        expression = m_POwner->GetMLevel() % 5 == 0;
+    case LATENT_JOB_MULTIPLE:
+		// Check if level is odd
+		if (latentEffect.GetConditionsValue() == 0)
+		{
+			expression = m_POwner->GetMLevel() % 2 == 1;
+		}
+		// Check if level is multiple of divisor
+		else
+		{
+			expression = m_POwner->GetMLevel() % latentEffect.GetConditionsValue() == 0;
+		}
         break;
-    case LATENT_JOB_MULTIPLE_10:
-        expression = m_POwner->GetMLevel() % 10 == 0;
-        break;
-    case LATENT_JOB_MULTIPLE_13_NIGHT:
-        expression = m_POwner->GetMLevel() % 13 == 0 && CVanaTime::getInstance()->SyncTime() == TIME_NIGHT;
-        break;
-    case LATENT_JOB_LEVEL_ODD:
-        expression = m_POwner->GetMLevel() % 2 == 1;
-        break;
-    case LATENT_JOB_LEVEL_EVEN:
-        expression = m_POwner->GetMLevel() % 2 == 0;
+    case LATENT_JOB_MULTIPLE_AT_NIGHT:
+		if (latentEffect.GetConditionsValue() == 0)
+		{
+			expression = m_POwner->GetMLevel() % 2 == 1 && CVanaTime::getInstance()->SyncTime() == TIME_NIGHT;
+		}
+		else
+        {
+            expression = m_POwner->GetMLevel() % latentEffect.GetConditionsValue() == 0 &&
+                CVanaTime::getInstance()->SyncTime() == TIME_NIGHT;
+        }
         break;
     case LATENT_WEAPON_DRAWN_HP_UNDER:
         expression = m_POwner->health.hp < latentEffect.GetConditionsValue() && m_POwner->animation == ANIMATION_ATTACK;
+        break;
+    case LATENT_STATUS_ACTIVE_NO_JOBSP:
+        // Todo: for future re-usability, rework this to be ANY 2hr, not just hundred fists. Would rather check if player is under "a" 2hr effect than seeing if they have each status..
+        expression = m_POwner->StatusEffectContainer->HasStatusEffect((EFFECT)latentEffect.GetConditionsValue()) && !m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS);
         break;
     case LATENT_MP_UNDER_VISIBLE_GEAR:
         //TODO: figure out if this is actually right

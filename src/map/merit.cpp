@@ -29,11 +29,11 @@
 
 /************************************************************************
 *                                                                       *
-*  Две версии значений - до abyssea и после                             *
+*  Two versions of values ​​- before abyssea and after                    *
 *                                                                       *
 ************************************************************************/
 
-// массив больше на одно значение, заполняемое нулем
+// The array is one more value filled with zero
 
 static uint8 upgrade[10][16] =
 {
@@ -48,13 +48,13 @@ static uint8 upgrade[10][16] =
     {20,22,24,27,30},                            // Weapon Skills
     {1,3,5,7,9,12,15,18,21,24,27,30,33,36,39}    // Max merits
 };
-#define MAX_LIMIT_POINTS  10000         // количество опыта для получения одного merit
+#define MAX_LIMIT_POINTS  10000         // Number of experience points to get one merit
 
-// TODO: скорее всего придется все это перенести в базу
+// TODO: Need to transfer all this to the database?
 
 /************************************************************************
 *                                                                       *
-*  Ограничение количества усилений metir                                *
+*  Caps the total number of merits per category                         *
 *                                                                       *
 ************************************************************************/
 
@@ -77,15 +77,15 @@ static uint8 cap[100] =
 
 /************************************************************************
 *                                                                       *
-*  Количество элементов в каждой из категорий                           *
+*  Number of items in each category                                     *
 *                                                                       *
 ************************************************************************/
 
 struct MeritCategoryInfo_t
 {
-    int8 MeritsInCat;  // количество элементов в группе
-    uint8 MaxPoints;    // максимальное количество points, которые можно вложить в группу
-    uint8 UpgradeID;    // индекс группы в массиве upgrade
+    int8 MeritsInCat;   // Number of elements in a group
+    uint8 MaxPoints;    // Maximum number of points that can be spent in a group
+    uint8 UpgradeID;    // Group index in upgrade array
 };
 
 static const MeritCategoryInfo_t meritCatInfo[] =
@@ -152,8 +152,8 @@ static const MeritCategoryInfo_t meritCatInfo[] =
 	{4,10,7},   //MCATEGORY_RUN_2
 };
 
-#define GetMeritCategory(merit) ((merit >> 6) - 1)      // получаем категорию из merit
-#define GetMeritID(merit)       ((merit & 0x3F) >> 1)   // получаем смещение в категории из merit
+#define GetMeritCategory(merit) ((merit >> 6) - 1)      // Get the merit's category
+#define GetMeritID(merit)       ((merit & 0x3F) >> 1)   // Get the merit's category ID
 
 /************************************************************************
 *                                                                       *
@@ -204,7 +204,7 @@ void CMeritPoints::LoadMeritPoints(uint32 charid)
 
     for (uint16 i = 0; i < MERITS_COUNT; ++i)
     {
-        if ((catNumber < 54 && i == meritNameSpace::groupOffset[catNumber]) || (catNumber > 27 && catNumber < 31))
+        if ((catNumber < 54 && i == meritNameSpace::groupOffset[catNumber]) || (catNumber > 27 && catNumber < 31) || (catNumber == 51))
         {
 
             if (catNumber > 27 && catNumber < 31 || catNumber == 51 || catNumber == 54) // point these to valid merits to prevent crash
@@ -284,7 +284,7 @@ uint8 CMeritPoints::GetMeritPoints()
 *                                                                       *
 ************************************************************************/
 
-// true - если merit был добавлен
+// True if merit was added
 
 bool CMeritPoints::AddLimitPoints(uint16 points)
 {
@@ -292,7 +292,7 @@ bool CMeritPoints::AddLimitPoints(uint16 points)
 
     if (m_LimitPoints >= MAX_LIMIT_POINTS)
     {
-		//check if player has reached cap
+		// Check if player has reached cap
 		if (m_MeritPoints == map_config.max_merit_points + GetMeritValue(MERIT_MAX_MERIT, m_PChar))
 		{
 			m_LimitPoints = MAX_LIMIT_POINTS -1;
@@ -314,7 +314,7 @@ bool CMeritPoints::AddLimitPoints(uint16 points)
 
 /************************************************************************
 *                                                                       *
-*  set limit points				                                        *
+*  Set limit points				                                        *
 *                                                                       *
 ************************************************************************/
 
@@ -325,7 +325,7 @@ void CMeritPoints::SetLimitPoints(uint16 points)
 
 /************************************************************************
 *                                                                       *
-*  set merit points				                                        *
+*  Set merit points				                                        *
 *                                                                       *
 ************************************************************************/
 
@@ -336,8 +336,8 @@ void CMeritPoints::SetMeritPoints(uint16 points)
 
 /************************************************************************
 *                                                                       *
-*  Проверяем наличие merit. Необходимо использовать лишь в случае       *
-*  получения meritid от персонажа                                       *
+*  Check the presence of a merit. Must be used only if                  *
+*  receiving meritid from a character                                   *
 *                                                                       *
 ************************************************************************/
 
@@ -353,7 +353,7 @@ bool CMeritPoints::IsMeritExist(MERIT_TYPE merit)
 
 /************************************************************************
 *                                                                       *
-*  Получаем указатель на искомый const merit                            *
+*  Get a pointer to the desired const merit                             *
 *                                                                       *
 ************************************************************************/
 
@@ -364,7 +364,7 @@ const Merit_t* CMeritPoints::GetMerit(MERIT_TYPE merit)
 
 /************************************************************************
 *                                                                       *
-*  Получаем указатель на искомый const merit по индексу                 *
+*  Get a pointer to the desired const merit by index                    *
 *                                                                       *
 ************************************************************************/
 
@@ -377,7 +377,7 @@ const Merit_t* CMeritPoints::GetMeritByIndex(uint16 index)
 
 /************************************************************************
 *                                                                       *
-*  Получаем указатель на искомый merit                                  *
+*  Get the pointer to the desired merit                                 *
 *                                                                       *
 ************************************************************************/
 
@@ -449,7 +449,7 @@ void CMeritPoints::LowerMerit(MERIT_TYPE merit)
 
 /************************************************************************
 *                                                                       *
-*  get next merit upgrade					                            *
+*  Get next merit upgrade					                            *
 *                                                                       *
 ************************************************************************/
 
@@ -460,7 +460,7 @@ void CMeritPoints::LowerMerit(MERIT_TYPE merit)
 
 /************************************************************************
 *                                                                       *
-*  Получаем текущее значение указанного merit                           *
+*  Get the current value of the specified merit                         *
 *                                                                       *
 ************************************************************************/
 
@@ -474,7 +474,7 @@ int32 CMeritPoints::GetMeritValue(MERIT_TYPE merit, CCharEntity* PChar)
         if (PMerit->catid < 5 || (PMerit->jobs & (1 << (PChar->GetMJob() - 1)) && PChar->GetMLevel() >= 75))
             meritValue = std::min(PMerit->count, cap[PChar->GetMLevel()]);
 
-        if (PMerit->catid == 25 && PChar->GetMLevel() < 96) // categoryID 25 is for merit weaponskills, which only apply if the player is lv 96+
+        if (PMerit->catid == 25 && PChar->GetMLevel() < 96) // CategoryID 25 is for merit weaponskills, which only apply if the player is lv 96+
             meritValue = 0;
 
         meritValue *= PMerit->value;
@@ -486,19 +486,19 @@ int32 CMeritPoints::GetMeritValue(MERIT_TYPE merit, CCharEntity* PChar)
 
 /************************************************************************
 *                                                                       *
-*  Реализация namespase для работы с Linkshells                         *
+*  Implementing namespace for working with Linkshells                   *
 *                                                                       *
 ************************************************************************/
 
 
 namespace meritNameSpace
 {
-	Merit_t GMeritsTemplate[MERITS_COUNT] = {0};		// global list of merits and their properties
-	int16 groupOffset[MCATEGORY_COUNT/64-1] = {0};		// the first merit offset of each catagory
+	Merit_t GMeritsTemplate[MERITS_COUNT] = {0};		// Global list of merits and their properties
+	int16 groupOffset[MCATEGORY_COUNT/64-1] = {0};		// The first merit offset of each catagory
 
     /************************************************************************
     *                                                                       *
-    *  Загружаем шаблон массива merits  /   Load pattern array merits       *
+    *  Loading the merits array template  /   Load pattern array merits     *
     *                                                                       *
     ************************************************************************/
 
@@ -511,19 +511,19 @@ namespace meritNameSpace
 	    if( ret != SQL_ERROR && Sql_NumRows(SqlHandle) != MERITS_COUNT )
 	    {
 
-			// issue with unknown catagories causing massive confusion
+			// Issue with unknown categories causing massive confusion
 
-            uint16 index = 0;			// global merit template count (to 255)
-			uint8 catIndex = 0;			// global merit catagory count (to 51)
-			int8 previousCatIndex = 0;  // will be set on every loop, used for detecting a catagory change
-			int8 catMeritIndex = 0;		// counts number of merits in a catagory
+            uint16 index = 0;			// Global merit template count (to 255)
+			uint8 catIndex = 0;			// Global merit category count (to 54)
+			int8 previousCatIndex = 0;  // Will be set on every loop, used for detecting a category change
+			int8 catMeritIndex = 0;		// Counts number of merits in a category
 
 
 		    while( Sql_NextRow(SqlHandle) == SQL_SUCCESS )
 		    {
-                Merit_t Merit = {0};								// creat a new merit template.
+                Merit_t Merit = {0};								// Create a new merit template
 
-				Merit.id		= Sql_GetUIntData(SqlHandle,0);		// set data from db.
+				Merit.id		= Sql_GetUIntData(SqlHandle,0);		// Set data from db
                 Merit.value		= Sql_GetUIntData(SqlHandle,1);
                 Merit.jobs		= Sql_GetUIntData(SqlHandle,2);
                 Merit.upgrade	= Sql_GetUIntData(SqlHandle,3);
@@ -532,26 +532,26 @@ namespace meritNameSpace
 				Merit.next      = upgrade[Merit.upgradeid][0];
                 Merit.spellid   = Sql_GetUIntData(SqlHandle, 6);
 
-				GMeritsTemplate[index] = Merit;						// add the merit to the array
+				GMeritsTemplate[index] = Merit;						// Add the merit to the array
 
 
-				previousCatIndex = Merit.catid;						// previousCatIndex is set on everyloop to detect a catogory change.
+				previousCatIndex = Merit.catid;						// PreviousCatIndex is set on every loop to detect a category change
 
-				if (previousCatIndex != catIndex)					// check for catagory change.
+				if (previousCatIndex != catIndex)					// Check for category change
 				{
-					groupOffset[catIndex] = index - catMeritIndex;	// set index offset, first merit of each group.
-					catIndex++;										// now on next catagory.
-					catMeritIndex = 0;								// reset the merit catagory count to 0.
+					groupOffset[catIndex] = index - catMeritIndex;	// Set index offset, first merit of each group
+					catIndex++;										// Increment to next category
+					catMeritIndex = 0;								// Reset the merit category count to 0
 
-					if (previousCatIndex != catIndex)				// this deals with the problem with unknown catagories.
+					if (previousCatIndex != catIndex)				// Deal with unknown categories
 						catIndex = previousCatIndex;
 				}
 
-				catMeritIndex++;									// next index within catagory.
-				index++;											// next global template index.
+				catMeritIndex++;									// Next index within category
+				index++;											// Next global template index
 		    }
 
-			groupOffset[catIndex] = index - catMeritIndex;			// add the last offset manually since loop finishes before hand.
+			groupOffset[catIndex] = index - catMeritIndex;			// Add the last offset manually since loop finishes before hand
 
            /* ret = Sql_Query(SqlHandle, "SELECT meritid, spellid FROM merits INNER JOIN spell_list ON merits.name = spell_list.name");
 

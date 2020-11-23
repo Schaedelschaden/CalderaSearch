@@ -14,7 +14,7 @@ function onAbilityCheck(player, target, ability)
     if player:hasStatusEffect(tpz.effect.ENLIGHTENMENT) then
         return tpz.msg.basic.EFFECT_ALREADY_ACTIVE, 0
     end
-    return 0, 0
+    return 0,0
 end
 
 function onUseAbility(player, target, ability)

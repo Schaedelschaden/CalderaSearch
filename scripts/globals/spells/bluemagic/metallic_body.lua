@@ -10,7 +10,6 @@
 -- Casting Time: 7 seconds
 -- Recast Time: 60 seconds
 -- Duration: 5 minutes
---
 -- Combos: Max MP Boost
 -----------------------------------------
 require("scripts/globals/bluemagic")
@@ -25,19 +24,22 @@ end
 
 function onSpellCast(caster, target, spell)
     local typeEffect = tpz.effect.STONESKIN
-    local blueskill = caster:getSkillLevel(tpz.skill.BLUE_MAGIC)
-    local power = (blueskill/3) + (caster:getMainLvl()/3) + 10
+    local blueSkill = caster:getSkillLevel(tpz.skill.BLUE_MAGIC)
+	local blueMerits = caster:getMerit(tpz.merit.BLUE)
+	local blueGear = caster:getMod(tpz.mod.BLUE)
+	local magicSkill = (blueSkill + blueMerits + blueGear)
+    local power = (magicSkill / 3) + (caster:getMainLvl() / 3) + 10
     local duration = 300
 
-    if (power > 150) then
-        power = 150
+    if (power > 200) then
+        power = 200
     end
 
     if (caster:hasStatusEffect(tpz.effect.DIFFUSION)) then
         local diffMerit = caster:getMerit(tpz.merit.DIFFUSION)
 
         if (diffMerit > 0) then
-            duration = duration + (duration/100)* diffMerit
+            duration = duration + (duration / 100)* diffMerit
         end
 
         caster:delStatusEffect(tpz.effect.DIFFUSION)

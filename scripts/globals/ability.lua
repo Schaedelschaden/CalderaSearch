@@ -698,67 +698,98 @@ tpz.specEffect =
 
 function corsairSetup(caster, ability, action, effect, job)
     local roll = math.random(1,6)
+	local merits = caster:getMerit(tpz.merit.PHANTOM_ROLL_RECAST)
+	local recast = ability:getRecast()
+	
     caster:delStatusEffectSilent(tpz.effect.DOUBLE_UP_CHANCE)
-    caster:addStatusEffectEx(tpz.effect.DOUBLE_UP_CHANCE,
-                             tpz.effect.DOUBLE_UP_CHANCE,
-                             roll,
-                             0,
-                             45,
-                             ability:getID(),
-                             effect,
-                             job,
-                             true)
+    caster:addStatusEffectEx(tpz.effect.DOUBLE_UP_CHANCE, tpz.effect.DOUBLE_UP_CHANCE, roll, 0, 45, ability:getID(), effect, job, true)
     caster:setLocalVar("corsairRollTotal", roll)
     action:speceffect(caster:getID(), roll)
+	
+	recast = recast - merits
+
+	-- Halves phantom roll recast timer for all rolls while under the effects of an 11 (upon first hitting 11, phantom roll cooldown is reset in double-up.lua)
     if (checkForElevenRoll(caster)) then
-        action:recast(action:recast()/2) -- halves phantom roll recast timer for all rolls while under the effects of an 11 (upon first hitting 11, phantom roll cooldown is reset in double-up.lua)
+        recast = recast / 2
     end
+	
+	ability:setRecast(utils.clamp(recast, 0, recast))
     checkForJobBonus(caster, job)
 end
 
 function atMaxCorsairBusts(caster)
     local numBusts = caster:numBustEffects()
+	
     return (numBusts >= 2 and caster:getMainJob() == tpz.job.COR) or (numBusts >= 1 and caster:getMainJob() ~= tpz.job.COR)
 end
 
 function checkForJobBonus(caster, job)
     local jobBonus = 0
-    if (caster:hasPartyJob(job) or math.random(0, 99) < caster:getMod(tpz.mod.JOB_BONUS_CHANCE)) then
+	local chance = math.random(1, 100)
+	
+    if (caster:hasPartyJob(job) or chance <= caster:getMod(tpz.mod.JOB_BONUS_CHANCE)) then
         jobBonus = 1
     end
+	
+--	printf("ability.lua checkForJobBonus BONUS WITHOUT JOB IN PARTY CHANCE: [%i]\n", chance)
+	
     caster:setLocalVar("corsairRollBonus", jobBonus)
 end
 
 function checkForElevenRoll(caster)
     local effects = caster:getStatusEffects()
+	
     for _,effect in ipairs(effects) do
         if (effect:getType() >= tpz.effect.FIGHTERS_ROLL and
             effect:getType() <= tpz.effect.NATURALISTS_ROLL and
             effect:getSubPower() == 11) then
             return true
         end
+		
         if (effect:getType() == tpz.effect.RUNEISTS_ROLL and
                 effect:getSubPower() == 11) then
             return true
         end
     end
+	
     return false
 end
 
-function phantombuffMultiple(caster) -- Check for tpz.mod.PHANTOM_ROLL Value and apply non-stack logic.
+-------------------------------------------------------------------------
+-- Check for "Phantom Roll" effects + (tpz.mod.PHANTOM_ROLL) from gear --
+-- Does NOT multiply Phantom Roll buffs. Increases base value.         --
+-------------------------------------------------------------------------
+function phantombuffMultiple(caster)
     local phantomValue = caster:getMod(tpz.mod.PHANTOM_ROLL)
     local phantombuffValue = 0
-    if (phantomValue == 3) then
-        phantombuffMultiplier = 3
-    elseif ((phantomValue == 5) or (phantomValue == 8)) then
-        phantombuffMultiplier = 5
-    elseif ((phantomValue == 7) or (phantomValue == 10) or (phantomValue == 12) or (phantomValue == 15)) then
-        phantombuffMultiplier = 7
-    else
-        phantombuffMultiplier = 0
-    end
+	local plusValue = 0
+	local equipWeapon = {caster:getEquipID(tpz.slot.MAIN), caster:getEquipID(tpz.slot.SUB)}
+	local equipAccessory = {caster:getEquipID(tpz.slot.NECK), caster:getEquipID(tpz.slot.RING1), caster:getEquipID(tpz.slot.RING2)}
+	
+	-- Lanun Knife, Rostam
+	local weapon = {21580, 21581}
+	-- Regal Necklace, Merirosvo Ring, Barataria Ring
+	local accessory = {26038, 28547, 28548}
+	
+	-- Accessories (Regal Necklace, Merirosvo Ring, Barataria Ring) and Weapons (Lanun Knife, Rostam)
+	-- are based off the highest value present and do not stack with each other
+	if (equipAccessory[2] == accessory[2] or equipAccessory[3] == accessory[2]) then
+        plusValue = 3
+--		printf("ability.lua phantombuffMultiple Merirosvo Ring RECOGNIZED BUFF: [%i]\n", plusValue)
+	elseif (equipAccessory[2] == accessory[3] or equipAccessory[3] == accessory[3]) then
+        plusValue = 5
+--		printf("ability.lua phantombuffMultiple Barataria Ring RECOGNIZED BUFF: [%i]\n", plusValue)
+	elseif (equipAccessory[1] == accessory[1] or equipWeapon[1] == weapon[1] or equipWeapon[2] == weapon[1]) then
+		plusValue = 7
+--		printf("ability.lua phantombuffMultiple Regal Necklace or Lanun Knife RECOGNIZED BUFF: [%i]\n", plusValue)
+	elseif (equipWeapon[1] == weapon[2] or equipWeapon[1] == weapon[2]) then
+		plusValue = 8
+--		printf("ability.lua phantombuffMultiple Rostam RECOGNIZED BUFF: [%i]\n", plusValue)
+	end
+	
+	phantombuffValue = plusValue
 
-    return phantombuffMultiplier
+    return plusValue
 end
 
 function AbilityFinalAdjustments(dmg,mob,skill,target,skilltype,skillparam,shadowbehav)

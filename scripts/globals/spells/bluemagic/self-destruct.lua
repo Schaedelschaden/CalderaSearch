@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Self-Destruct
--- Sacrifices HP to damage enemies within range. Affects caster with Weakness
+-- Sacrifices HP to damage enemies within range. Affects caster with Weakness.
 -- Spell cost: 100 MP
 -- Monster Type: Arcana
 -- Spell Type: Magical (Fire)

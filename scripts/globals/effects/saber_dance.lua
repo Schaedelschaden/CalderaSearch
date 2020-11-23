@@ -10,7 +10,7 @@ require("scripts/globals/status")
 
 function onEffectGain(target, effect)
     local saberDanceMerits = target:getMerit(tpz.merit.SABER_DANCE)
-    if (saberDanceMerits>5) then
+    if (saberDanceMerits > 5) then
         target:addMod(tpz.mod.SAMBA_PDURATION, (saberDanceMerits -5))
     end
     -- Does not stack with warrior Double Attack trait, so disable it
@@ -28,14 +28,14 @@ function onEffectTick(target, effect)
    -- Double attack rate decays until 20% then stays there
    if (power > 20) then
         decayby = 3
-        effect:setPower(power-decayby)
+        effect:setPower(power - decayby)
         target:delMod(tpz.mod.DOUBLE_ATTACK, decayby)
     end
 end
 
 function onEffectLose(target, effect)
     local saberDanceMerits = target:getMerit(tpz.merit.SABER_DANCE)
-    if (saberDanceMerits>1) then
+    if (saberDanceMerits > 1) then
         target:delMod(tpz.mod.SAMBA_PDURATION, (saberDanceMerits -5))
     end
     if (target:hasTrait(15)) then --TRAIT_DOUBLE_ATTACK

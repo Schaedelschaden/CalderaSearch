@@ -467,7 +467,7 @@ uint16 getSkillCap(CCharEntity* PChar, SKILLTYPE skill, uint8 level)
 
 uint16 getSkillCap(CCharEntity* PChar, SKILLTYPE skill)
 {
-    return getSkillCap(PChar, skill, PChar->PAutomaton->GetMLevel());
+    return getSkillCap(PChar, skill, PChar->GetMLevel());
 }
 
 void LoadAutomatonStats(CCharEntity* PChar)

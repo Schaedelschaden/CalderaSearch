@@ -9,7 +9,6 @@
 -- Level: 30
 -- Casting Time: 2.5 seconds
 -- Recast Time: 6 seconds
---
 -- Combos: Resist Sleep
 -----------------------------------------
 require("scripts/globals/settings")
@@ -28,17 +27,17 @@ function onSpellCast(caster, target, spell)
     local constant = 60
     local power = getCurePowerOld(caster)
 
-    if (power > 299) then
+    if (power > 179) then
         divisor = 15.6666
         constant = 170.43
-    elseif (power > 179) then
+    elseif (power > 149) then
         divisor =  2
         constant = 105
     end
 
     local final = getCureFinal(caster, spell, getBaseCureOld(power, divisor, constant), minCure, true)
 
-    final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD)/100))
+    final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD) / 100))
 
     if (target:getAllegiance() == caster:getAllegiance() and (target:getObjType() == tpz.objType.PC or target:getObjType() == tpz.objType.MOB)) then
         --Applying server mods....
@@ -52,7 +51,7 @@ function onSpellCast(caster, target, spell)
 
     target:addHP(final)
     target:wakeUp()
-    caster:updateEnmityFromCure(target, final)
+    caster:updateEnmityFromCure(target,final)
     spell:setMsg(tpz.msg.basic.MAGIC_RECOVERS_HP)
 
     return final

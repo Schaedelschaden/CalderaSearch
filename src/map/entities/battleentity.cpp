@@ -588,8 +588,11 @@ uint16 CBattleEntity::CHR()
 uint16 CBattleEntity::ATT()
 {
     //TODO: consider which weapon!
+	// Determines character, pet, and mod ATT stat
+	// Base 8 ATT + ATT Mod
     int32 ATT = 8 + m_modStat[Mod::ATT];
     auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]);
+    // Determine whether the weapon is one-handed or two-handed and calculate ATT from STR
     if (weapon && weapon->isTwoHanded())
     {
         ATT += (STR() * 3) / 4;
@@ -623,20 +626,46 @@ uint16 CBattleEntity::ATT()
     {
         ATT += this->GetSkill(SKILL_AUTOMATON_MELEE);
     }
-    return ATT + (ATT * m_modStat[Mod::ATTP] / 100) +
-        std::min<int16>((ATT * m_modStat[Mod::FOOD_ATTP] / 100), m_modStat[Mod::FOOD_ATT_CAP]);
+	
+	int32 ATTP = 0;
+	int32 foodATTP = 0;
+	
+	// Get ATTP Mod from buffs/debuffs/gear and determine percent of ATT Mod
+	ATTP += static_cast<int32>(ATT * (m_modStat[Mod::ATTP] / 100.00f));
+	
+	// Get ATTP Mod from food and determine percent of ATT Mod
+	foodATTP += static_cast<int32>(ATT * (m_modStat[Mod::FOOD_ATTP] / 100.00f));
+	
+	// Calculate final ATT stat from Base ATT + ATTP + foodATTP
+	ATT = ATT + ATTP + std::min<int16>(foodATTP, m_modStat[Mod::FOOD_ATT_CAP]);
+	
+    return ATT;
 }
 
 uint16 CBattleEntity::RATT(uint8 skill, uint16 bonusSkill)
 {
+    // Determines character, pet, and mod RATT stat
+	// Base 8 RATT + Ranged Skill + Bonus Skill + RATT Mod + RATT Bonus + (STR / 2)
     auto PWeakness = StatusEffectContainer->GetStatusEffect(EFFECT_WEAKNESS);
     if (PWeakness && PWeakness->GetPower() >= 2)
     {
         return 0;
     }
-    int32 ATT = 8 + GetSkill(skill) + bonusSkill + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + (STR() * 3) / 4;
-    return ATT + (ATT * m_modStat[Mod::RATTP] / 100) +
-        std::min<int16>((ATT * m_modStat[Mod::FOOD_RATTP] / 100), m_modStat[Mod::FOOD_RATT_CAP]);
+    
+	int32 RATTP = 0;
+	int32 foodRATTP = 0;
+	int32 RATT = 8 + GetSkill(skill) + bonusSkill + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + STR() / 2;
+	
+	// Get RATTP Mod from buffs/debuffs/gear and determine percent of RATT Mod
+	RATTP += static_cast<int32>(RATT * (m_modStat[Mod::RATTP] / 100.00f));
+	
+	// Get RATTP Mod from food and determine percent of RATT Mod
+	foodRATTP += static_cast<int32>(RATT * (m_modStat[Mod::FOOD_RATTP] / 100.00f));
+	
+	// Calculate final RATT stat from Base RATT + RATTP + foodRATTP
+	RATT = RATT + RATTP + std::min<int16>(foodRATTP, m_modStat[Mod::FOOD_RATT_CAP]);
+	
+    return RATT;
 }
 
 uint16 CBattleEntity::RACC(uint8 skill, uint16 bonusSkill)
@@ -660,6 +689,7 @@ uint16 CBattleEntity::RACC(uint8 skill, uint16 bonusSkill)
 
 uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
 {
+	// Determines character, pet, and mod ACC stat
     if (this->objtype & TYPE_PC) {
         uint8 skill = 0;
         uint16 iLvlSkill = 0;
@@ -731,13 +761,26 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
 
 uint16 CBattleEntity::DEF()
 {
+    // Determines character, pet, and mod DEF stat
+	// Base 8 DEF + DEF Mod + (VIT / 2)
     int32 DEF = 8 + m_modStat[Mod::DEF] + VIT() / 2;
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_COUNTERSTANCE, 0)) {
 	return DEF / 2;
     }
 
-    return DEF + (DEF * m_modStat[Mod::DEFP] / 100) +
-        std::min<int16>((DEF * m_modStat[Mod::FOOD_DEFP] / 100), m_modStat[Mod::FOOD_DEF_CAP]);
+	int32 DEFP = 0;
+	int32 foodDEFP = 0;
+
+	// Get DEFP Mod from buffs/debuffs/gear and determine percent of DEF Mod
+	DEFP += static_cast<int32>(DEF * (m_modStat[Mod::DEFP] / 100.00f));
+	
+	// Get DEFP Mod from food and determine percent of DEF Mod
+	foodDEFP += static_cast<int32>(DEF * (m_modStat[Mod::FOOD_DEFP] / 100.00f));
+
+	// Calculate final DEF stat from Base DEF + DEFP + foodDEFP
+	DEF = DEF + DEFP + std::min<int16>(foodDEFP, m_modStat[Mod::FOOD_DEF_CAP]);
+
+    return DEF;
 }
 
 uint16 CBattleEntity::EVA()
@@ -1303,14 +1346,17 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
     // can this spell target the dead?
 
     uint8 flags = FINDFLAGS_NONE;
+	
     if (PSpell->getValidTarget() & TARGET_PLAYER_DEAD)
     {
         flags |= FINDFLAGS_DEAD;
     }
+	
     if (PSpell->getFlag() & SPELLFLAG_HIT_ALL)
     {
         flags |= FINDFLAGS_HIT_ALL;
     }
+	
     uint8 aoeType = battleutils::GetSpellAoEType(this, PSpell);
 
     if (aoeType == SPELLAOE_RADIAL) {
@@ -1388,6 +1434,7 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
             ve = 0;
             ce = 0;
         }
+		
         else
         {
             actionTarget.param = luautils::OnSpellCast(this, PTarget, PSpell);
@@ -1525,6 +1572,22 @@ CBattleEntity* CBattleEntity::GetBattleTarget()
 bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
 {
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+	
+/* 	// Potentially handled better by Canary's Cover coding
+	if (PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_COVER) && PTarget->PParty != nullptr)
+	{
+		for (uint8 i = 0; i < PTarget->PParty->members.size(); i++)
+		{
+			if (PTarget->PParty->members.at(i)->GetMJob() == JOB_PLD)
+			{	
+				CBattleEntity* PCoverEntity = PTarget->PParty->members.at(i);
+				if ((abs(PCoverEntity->loc.p.rotation - PTarget->loc.p.rotation) < 23))
+				{
+					PTarget = PCoverEntity;
+				}
+			}
+		}
+	} */
 
     if (PTarget->objtype == TYPE_PC)
     {
@@ -1596,6 +1659,25 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 actionTarget.speceffect = SPECEFFECT_NONE;
                 battleutils::HandleTacticalParry(PTarget);
                 battleutils::HandleIssekiganEnmityBonus(PTarget, this);
+				
+				if (PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BATTUTA))
+				{
+					int16 CounterBonusDMG = PTarget->getMod(Mod::COUNTER_DMG);
+					float DamageRatio = battleutils::GetDamageRatio(PTarget, this, attack.IsCritical(), 0.f);
+                    auto damage = (int32)(((PTarget->GetMainWeaponDmg() + battleutils::GetFSTR(PTarget, this, SLOT_MAIN)) * DamageRatio) * (1 + (CounterBonusDMG / 100)));
+                    actionTarget.spikesParam = battleutils::TakePhysicalDamage(PTarget, this, attack.GetAttackType(), damage, false, SLOT_MAIN, 1, nullptr, true, false, true);
+                    actionTarget.reaction = REACTION_EVADE;
+                    actionTarget.speceffect = SPECEFFECT_NONE;
+                    actionTarget.param = 0;
+                    actionTarget.messageID = 33;
+                    actionTarget.spikesEffect = SUBEFFECT_COUNTER;
+					
+					if (battleutils::IsAbsorbByShadow(this))
+                    {
+                        actionTarget.spikesParam = 0;
+                        actionTarget.spikesMessage = 14;
+                    }
+				}
             }
             else if (attack.CheckAnticipated() || attack.CheckCounter())
             {
@@ -1620,6 +1702,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                     else
                     {
                         int16 naturalh2hDMG = 0;
+						int16 CounterBonusDMG = PTarget->getMod(Mod::COUNTER_DMG);
                         if (auto targ_weapon = dynamic_cast<CItemWeapon*>(PTarget->m_Weapons[SLOT_MAIN]);
                            (targ_weapon && targ_weapon->getSkillType() == SKILL_HAND_TO_HAND) || (PTarget->objtype == TYPE_MOB && PTarget->GetMJob() == JOB_MNK))
                         {
@@ -1627,7 +1710,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                         }
 
                         float DamageRatio = battleutils::GetDamageRatio(PTarget, this, attack.IsCritical(), 0.f);
-                        auto damage = (int32)((PTarget->GetMainWeaponDmg() + naturalh2hDMG + battleutils::GetFSTR(PTarget, this, SLOT_MAIN)) * DamageRatio);
+                        auto damage = (int32)((PTarget->GetMainWeaponDmg() + naturalh2hDMG + CounterBonusDMG + battleutils::GetFSTR(PTarget, this, SLOT_MAIN)) * DamageRatio);
                         actionTarget.spikesParam = battleutils::TakePhysicalDamage(PTarget, this, attack.GetAttackType(), damage, false, SLOT_MAIN, 1, nullptr, true, false, true);
                         actionTarget.spikesMessage = 33;
                         if (PTarget->objtype == TYPE_PC)
@@ -1697,7 +1780,8 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 }
 
                 actionTarget.param = battleutils::TakePhysicalDamage(this, PTarget, attack.GetAttackType(), attack.GetDamage(), attack.IsBlocked(), attack.GetWeaponSlot(), 1, attackRound.GetTAEntity(), true, true, attack.IsCountered(), attack.IsCovered(), POriginalTarget);
-                if (actionTarget.param < 0)
+                
+				if (actionTarget.param < 0)
                 {
                     actionTarget.param = -(actionTarget.param);
                     actionTarget.messageID = 373;
@@ -1745,6 +1829,9 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
 
             // Check & Handle Afflatus Misery Accuracy Bonus
             battleutils::HandleAfflatusMiseryAccuracyBonus(this);
+			
+			// Check & Handle Impetus Attack and Critical Hit Rate Bonuses
+            battleutils::HandleImpetusEffects(this);
         }
 
         if (actionTarget.reaction != REACTION_HIT && actionTarget.reaction != REACTION_BLOCK && actionTarget.reaction != REACTION_GUARD)

@@ -1,18 +1,18 @@
 -----------------------------------
 -- Ability: Sengikori
--- Description: Grants a bonus to skillchains and magic bursts initiated by your next weapon skill.
--- Obtained: SAM Level 77
--- Recast Time: 00:03:00
--- Duration: 0:01:00 or until next Weapon Skill.
+-- Grants a bonus to skillchains and magic bursts initiated by your next weapon skill. 
+-- Obtained: Samurai Level 77
+-- Recast Time: 3:00
+-- Duration: 1:00
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
 
-function onAbilityCheck(player, target, ability)
-    return 0, 0
+function onAbilityCheck(player,target,ability)
+    return 0,0
 end
 
-function onUseAbility(player, target, ability)
-    player:addStatusEffect(tpz.effect.SENGIKORI, 12, 0, 60)
+function onUseAbility(player,target,ability)
+	player:addStatusEffect(tpz.effect.SENGIKORI,25,0,60)
 end

@@ -1,40 +1,29 @@
--- phpMyAdmin SQL Dump
--- version 4.3.10
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: Oct 31, 2019 at 11:13 PM
--- Server version: 10.3.12-MariaDB
--- PHP Version: 5.6.6
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Database: `tpzdb`
---
-
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               5.6.26-log - MySQL Community Server (GPL)
+-- Server OS:                    Win64
+-- HeidiSQL Version:             11.0.0.5919
 -- --------------------------------------------------------
 
---
--- Table structure for table `cheat_incidents`
---
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
-DROP TABLE IF EXISTS `cheat_incidents`;
+-- Dumping structure for table tpzdb.cheat_incidents
 CREATE TABLE IF NOT EXISTS `cheat_incidents` (
   `charid` int(10) unsigned NOT NULL,
-  `incident_time` datetime NOT NULL DEFAULT current_timestamp(),
+  `incident_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `cheatid` int(10) unsigned NOT NULL,
   `cheatarg` int(10) unsigned NOT NULL,
   `description` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- Dumping data for table tpzdb.cheat_incidents: 0 rows
+/*!40000 ALTER TABLE `cheat_incidents` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cheat_incidents` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

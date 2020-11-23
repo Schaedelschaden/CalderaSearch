@@ -1,11 +1,11 @@
 -----------------------------------------
 -- ID: 15793
--- Item: Anniversary Ring
--- Experience point bonus
+-- Item: Kupofried's Ring
+-- Experience Point Bonus
 -----------------------------------------
 -- Bonus: +100%
--- Duration: 720 min
--- Max bonus: 3000 exp
+-- Duration: 1,440 min (24 hours)
+-- Max bonus: 30,000 EXP
 -----------------------------------------
 require("scripts/globals/status")
 -----------------------------------------
@@ -19,5 +19,5 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffect(tpz.effect.DEDICATION, 100, 0, 86400, 0, 6000)
+    target:addStatusEffect(tpz.effect.DEDICATION,100,0,86400,0,30000)
 end

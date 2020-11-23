@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Stinking Gas
--- Lowers Vitality of enemies within range
+-- Lowers Vitality of enemies within range.
 -- Spell cost: 37 MP
 -- Monster Type: Undead
 -- Spell Type: Magical (Wind)
@@ -24,14 +24,14 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.effect = tpz.effect.VIT_DOWN
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.BLUE_MAGIC
+		params.effect = tpz.effect.VIT_DOWN
     local resist = applyResistance(caster, target, spell, params)
     local duration = 60 * resist
-    local power = 5
+    local power = 8
 
-    if (resist > 0.5) then -- Do it!
+    if (resist > 0.25) then -- Do it!
         if (target:addStatusEffect(params.effect, power, 0, duration)) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else

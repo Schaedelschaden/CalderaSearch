@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Filamented Hold
--- Reduces the attack speed of enemies within a fan-shaped area originating from the caster
+-- Reduces the attack speed of enemies within a fan-shaped area originating from the caster.
 -- Spell cost: 38 MP
 -- Monster Type: Vermin
 -- Spell Type: Magical (Earth)
@@ -24,20 +24,19 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffect = tpz.effect.SLOW
-    local dINT = caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
-    local params = {}
-    params.diff = nil
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
-    params.effect = typeEffect
-    local resist = applyResistanceEffect(caster, target, spell, params)
-    local duration = 90 * resist
     local power = 2500
+	local duration = 90
+	local params = {}
+		params.diff = caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.BLUE_MAGIC
+		params.effect = tpz.effect.SLOW
+		
+    local resist = applyResistanceEffect(caster, target, spell, params)
+    duration = duration * resist
 
     if resist > 0.5 then -- Do it!
-        if target:addStatusEffect(typeEffect, power, 0, duration) then
+        if target:addStatusEffect(tpz.effect.SLOW, power, 0, duration) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
@@ -46,5 +45,5 @@ function onSpellCast(caster, target, spell)
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 
-    return typeEffect
+    return tpz.effect.SLOW
 end

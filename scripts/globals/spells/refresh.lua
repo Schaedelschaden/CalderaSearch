@@ -17,6 +17,11 @@ function onSpellCast(caster, target, spell)
     duration = calculateDurationForLvl(duration, 41, target:getMainLvl())
 
     local mp = 3 + caster:getMod(tpz.mod.ENHANCES_REFRESH)
+	
+	if (caster:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		mp = mp * 2
+		caster:delStatusEffect(tpz.effect.EMBOLDEN)
+	end
 
     if target:hasStatusEffect(tpz.effect.SUBLIMATION_ACTIVATED) or target:hasStatusEffect(tpz.effect.SUBLIMATION_COMPLETE) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)

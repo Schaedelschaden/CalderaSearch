@@ -11,6 +11,7 @@ require("scripts/globals/status")
 
 function onMagicCastingCheck(caster, target, spell)
     local result = 0
+	
     if (caster:hasPet()) then
         result = tpz.msg.basic.ALREADY_HAS_A_PET
     elseif (not caster:canUseMisc(tpz.zoneMisc.PET)) then

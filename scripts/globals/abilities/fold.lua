@@ -12,9 +12,9 @@ require("scripts/globals/msg")
 
 function onAbilityCheck(player, target, ability)
     if (target:hasCorsairEffect()) then
-        return 0, 0
+        return 0,0
     else
-        return tpz.msg.basic.CANNOT_PERFORM, 0
+        return tpz.msg.basic.CANNOT_PERFORM,0
     end
 end
 

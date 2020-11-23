@@ -1,9 +1,9 @@
 -----------------------------------------
 -- Spell: Bad Breath
--- Deals earth damage that inflicts multiple status ailments on enemies within a fan-shaped area originating from the caster
+-- Deals earth damage that inflicts multiple status ailments on enemies within a fan-shaped area originating from the caster.
 -- Spell cost: 212 MP
 -- Monster Type: Plantoids
--- Spell Type: Magical (Earth)
+-- Spell Type: Breath (Earth)
 -- Blue Magic Points: 5
 -- Stat Bonus: INT+2, MND+2
 -- Level: 61
@@ -22,73 +22,50 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local params = {}
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
-    local multi = 2.08
-    if (caster:hasStatusEffect(tpz.effect.AZURE_LORE)) then
-        multi = multi + 0.50
-    end
-    params.attackType = tpz.attackType.BREATH
-    params.damageType = tpz.damageType.EARTH
-    params.multiplier = multi
-    params.tMultiplier = 1.5
-    params.duppercap = 69
-    params.str_wsc = 0.0
-    params.dex_wsc = 0.0
-    params.vit_wsc = 0.0
-    params.agi_wsc = 0.0
-    params.int_wsc = 0.0
-    params.mnd_wsc = 0.3
-    params.chr_wsc = 0.0
-    damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
-    damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+	local duration = 60
+	local params = {}
+		params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.BLUE_MAGIC
+		params.attackType = tpz.attackType.BREATH
+		params.damageType = tpz.damageType.EARTH
+		params.spellFamily = tpz.ecosystem.PLANTOID
+		params.hpMod = 12 -- 50%
+		params.lvlMod = 3.0 -- fLV
+		params.bonus = 1.00 -- +% Base Damage Bonus
+		params.multiplier = 1.50 -- Azure Lore Damage multiplier
+	local damage = BlueBreathSpell(caster, target, spell, params)
+	damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
-    local params = {}
-    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1.0
     local resist = applyResistance(caster, target, spell, params)
+	duration = duration * resist
 
-    if (damage > 0 and resist > 0.3) then
-        local typeEffect = tpz.effect.PARALYSIS
-        target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 25, 0, getBlueEffectDuration(caster, resist, typeEffect))
+    if (damage > 0 and resist > 0.16) then
+        target:addStatusEffect(tpz.effect.PARALYSIS, 15, 0, duration)
     end
 
-    if (damage > 0 and resist > 0.3) then
-    local typeEffect = tpz.effect.WEIGHT
-        target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 25, 0, getBlueEffectDuration(caster, resist, typeEffect))
+    if (damage > 0 and resist > 0.16) then
+        target:addStatusEffect(tpz.effect.WEIGHT, 14, 0, duration)
     end
 
-    if (damage > 0 and resist > 0.3) then
-    local typeEffect = tpz.effect.POISON
-        target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 4, 0, getBlueEffectDuration(caster, resist, typeEffect))
+    if (damage > 0 and resist > 0.16) then
+        target:addStatusEffect(tpz.effect.POISON, 4, 0, duration)
     end
 
-    if (damage > 0 and resist > 0.3) then
-    local typeEffect = tpz.effect.SLOW
-        target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 2000, 0, getBlueEffectDuration(caster, resist, typeEffect))
+    if (damage > 0 and resist > 0.16) then
+        target:addStatusEffect(tpz.effect.SLOW, 2000, 0, duration)
     end
 
-    if (damage > 0 and resist > 0.3) then
-    local typeEffect = tpz.effect.SILENCE
-        target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 25, 0, getBlueEffectDuration(caster, resist, typeEffect))
+    if (damage > 0 and resist > 0.16) then
+        target:addStatusEffect(tpz.effect.SILENCE, 1, 0, duration)
     end
 
-    if (damage > 0 and resist > 0.3) then
-    local typeEffect = tpz.effect.BIND
-        target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 1, 0, getBlueEffectDuration(caster, resist, typeEffect))
+    if (damage > 0 and resist > 0.16) then
+        target:addStatusEffect(tpz.effect.BIND, 1, 0, duration)
     end
-        if (damage > 0 and resist > 0.3) then
-    local typeEffect = tpz.effect.BLINDNESS
-        target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 25, 0, getBlueEffectDuration(caster, resist, typeEffect))
+    
+	if (damage > 0 and resist > 0.16) then
+        target:addStatusEffect(tpz.effect.BLINDNESS, 50, 0, duration)
     end
 
     return damage

@@ -28,6 +28,7 @@ zones[tpz.zone.QUFIM_ISLAND] =
         DYNA_NPC_DEFAULT_MESSAGE       = 7834,  -- You hear a mysterious, floating voice: Bring forth the <item>...
         YOU_CANNOT_ENTER_DYNAMIS       = 7846,  -- You cannot enter Dynamis - [Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia] for <number> [day/days] (Vana'diel time).
         PLAYERS_HAVE_NOT_REACHED_LEVEL = 7848,  -- Players who have not reached level <number> are prohibited from entering Dynamis.
+		DYNA_NPC_DEFAULT_MESSAGE       = 7970,  -- There is a strange symbol drawn here. A haunting chill sweeps through you as you gaze upon it...
         PLAYER_OBTAINS_ITEM            = 8044,  -- <name> obtains <item>!
         UNABLE_TO_OBTAIN_ITEM          = 8045,  -- You were unable to obtain the item.
         PLAYER_OBTAINS_TEMP_ITEM       = 8046,  -- <name> obtains the temporary item: <item>!

@@ -1,6 +1,5 @@
 -----------------------------------
--- Area: The Shrine of Ru'Avitau
---  NPC: Treasure Casket
+-- NPC:  Treasure Casket
 -----------------------------------
 require("scripts/globals/caskets")
 -----------------------------------

@@ -63,7 +63,10 @@ enum ENSPELL
     ENSPELL_AUSPICE = 18,
     ENSPELL_DRAIN_SAMBA = 19,
     ENSPELL_ASPIR_SAMBA = 20,
-    ENSPELL_HASTE_SAMBA = 21
+    ENSPELL_HASTE_SAMBA = 21,
+	ENSPELL_SOUL_ENSLAVEMENT = 22,
+	ENSPELL_FENRIR_ENDRAIN = 23,
+	ENSPELL_FENRIR_ENASPIR = 24
 };
 
 enum SPIKES
@@ -172,7 +175,7 @@ namespace battleutils
     void                GenerateInRangeEnmity(CBattleEntity* PSource, int16 CE, int16 VE);
 
     CItemWeapon*        GetEntityWeapon(CBattleEntity* PEntity, SLOTTYPE Slot);
-    CItemEquipment*         GetEntityArmor(CBattleEntity* PEntity, SLOTTYPE Slot);
+    CItemEquipment*     GetEntityArmor(CBattleEntity* PEntity, SLOTTYPE Slot);
 
     void                MakeEntityStandUp(CBattleEntity* PEntity);
     CBattleEntity*      getAvailableTrickAttackChar(CBattleEntity* taUser, CBattleEntity* PMob);
@@ -207,6 +210,7 @@ namespace battleutils
     void                HandleIssekiganEnmityBonus(CBattleEntity* PDefender, CBattleEntity* PAttacker);
     int32               HandleSevereDamage(CBattleEntity* PDefender, int32 damage, bool isPhysical);
     int32               HandleSevereDamageEffect(CBattleEntity* PDefender, EFFECT effect, int32 damage, bool removeEffect);
+	void                HandleImpetusEffects(CBattleEntity* PAttacker);
     void                HandleTacticalParry(CBattleEntity* PEntity);
     void                HandleTacticalGuard(CBattleEntity* PEntity);
 
@@ -233,7 +237,8 @@ namespace battleutils
     WEATHER             GetWeather(CBattleEntity* PEntity, bool ignoreScholar, uint16 zoneWeather);
     bool                WeatherMatchesElement(WEATHER weather, uint8 element);
     bool                DrawIn(CBattleEntity* PEntity, CMobEntity* PMob, float offset);
-    void                DoWildCardToEntity(CCharEntity* PCaster, CCharEntity* PTarget, uint8 roll);
+/*     void                DoWildCardToEntity(CCharEntity* PCaster, CCharEntity* PTarget, uint8 roll); // Moved to LUA
+	void				DoRandomDealToEntity(CBattleEntity* PTarget); // Moved to LUA */
     void                AddTraits(CBattleEntity* PEntity, TraitList_t* TraitList, uint8 level);
     bool                HasClaim(CBattleEntity* PEntity, CBattleEntity* PTarget);
 

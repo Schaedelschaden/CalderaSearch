@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Temporal Shift
--- Enemies within range are temporarily prevented from acting
+-- Enemies within range are temporarily prevented from acting.
 -- Spell cost: 48 MP
 -- Monster Type: Luminians
 -- Spell Type: Magical (Lightning)
@@ -24,18 +24,17 @@ end
 
 function onSpellCast(caster, target, spell)
     local typeEffect = tpz.effect.STUN
-    local dINT = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
-    local params = {}
-    params.diff = nil
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
-    params.effect = tpz.effect.STUN
+    local duration = 5
+	local params = {}
+		params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.BLUE_MAGIC
+		
     local resist = applyResistanceEffect(caster, target, spell, params)
-    local duration = 5 * resist
+	duration = duration * resist
 
-    if (resist > 0.0625) then -- Do it!
-        if (target:addStatusEffect(typeEffect, 2, 0, duration)) then
+    if (resist > 0.0625) then
+        if (target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
@@ -44,5 +43,5 @@ function onSpellCast(caster, target, spell)
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 
-    return typeEffect
+    return tpz.effect.STUN
 end

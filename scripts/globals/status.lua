@@ -197,6 +197,10 @@ tpz.effect =
     ADDLE                    = 21,
     INTIMIDATE               = 22,
     KAUSTRA                  = 23,
+--	ST24                     = 24, -- MP Icon, ST24, .
+--	ST25                     = 25, -- Song Icon, ST25, .
+--	ST26                     = 26, -- SP Icon, ST26, .
+--	ST27                     = 27, -- Food Icon, ST27, .
     TERROR                   = 28,
     MUTE                     = 29,
     BANE                     = 30,
@@ -393,6 +397,9 @@ tpz.effect =
     DIRGE                    = 221,
     SCHERZO                  = 222,
     NOCTURNE                 = 223,
+--	ST224                    = 224, -- Song icon, ST224, (You are benefitting from song effects)
+--	ST225                    = 225, -- Song icon, ST225, (You are benefitting from song effects)
+--	ST226                    = 226, -- Song icon, ST226, (You are benefitting from song effects)
     STORE_TP                 = 227,
     EMBRAVA                  = 228,
     MANAWELL                 = 229,
@@ -538,6 +545,9 @@ tpz.effect =
     ASPIR_SAMBA              = 369,
     HASTE_SAMBA              = 370,
     VELOCITY_SHOT            = 371,
+--	.                        = 372, -- Battlefield icon, ., Evasion is reduced
+--	.                        = 373, -- Battlefield icon, ., Defense is reduced
+--	.                        = 374, -- Battlefield icon, ., Magic resistance is reduced
     BUILDING_FLOURISH        = 375,
     TRANCE                   = 376,
     TABULA_RASA              = 377,
@@ -644,7 +654,7 @@ tpz.effect =
     PALISADE                 = 478, -- PLD 95
     SCARLET_DELIRIUM         = 479, -- DRK 95
     SCARLET_DELIRIUM_1       = 480, -- DRK 95
-    -- NONE                      = 481, -- NONE
+	ABDHALJS_SEAL            = 481,
     DECOY_SHOT               = 482, -- RNG 95
     HAGAKURE                 = 483, -- SAM 95
     ISSEKIGAN                = 484, -- NIN 95
@@ -658,7 +668,7 @@ tpz.effect =
     ASYLUM                   = 492,
     SUBTLE_SORCERY           = 493,
     STYMIE                   = 494,
-    -- NONE                       = 495,
+	RUN_WILD                 = 495, -- (None) DEBUG: Please report. Assigned to Run Wild
     INTERVENE                = 496,
     SOUL_ENSLAVEMENT         = 497,
     UNLEASH                  = 498,
@@ -669,7 +679,7 @@ tpz.effect =
     FLY_HIGH                 = 503,
     ASTRAL_CONDUIT           = 504,
     UNBRIDLED_WISDOM         = 505,
-    -- NONE                      = 506,
+	BOUNTY_SHOT              = 506, -- (None) DEBUG: Please report. Assigned to Bounty Shot
     GRAND_PAS                = 507,
     WIDENED_COMPASS          = 508,
     ODYLLIC_SUBTERFUGE       = 509,
@@ -677,14 +687,14 @@ tpz.effect =
     REIVE_MARK               = 511,
     IONIS                    = 512,
     BOLSTER                  = 513,
-    -- NONE                      = 514,
+	NIGHTMARE                = 514, -- (None) DEBUG: Please report. Assigned to Nightmare
     LASTING_EMANATION        = 515,
     ECLIPTIC_ATTRITION       = 516,
     COLLIMATED_FERVOR        = 517,
     DEMATERIALIZE            = 518,
     THEURGIC_FOCUS           = 519,
-    -- NONE                      = 520,
-    -- NONE                      = 521,
+	HEADY_ARTIFICE           = 520, -- (None) DEBUG: Please Report. Assigned to Heady Artifice
+	CONTRADANCE              = 521,
     ELEMENTAL_SFORZO         = 522,
     IGNIS                    = 523,
     GELUS                    = 524,
@@ -745,6 +755,7 @@ tpz.effect =
     COMMITMENT               = 579,
     GEO_HASTE                = 580,
     FLURRY_II                = 581,
+--	NONE                     = 582, -- 
     APOGEE                   = 583,
     ENTRUST                  = 584,
     COSTUME_II               = 585,
@@ -775,8 +786,32 @@ tpz.effect =
     NEGATE_CHARM             = 610,
     MAGIC_EVASION_BOOST_II   = 611,
     COLURE_ACTIVE            = 612,
-
+	MUMORS_RADIANCE          = 613,
+	ULLEGORES_GLOOM          = 614,
+	BOOST_II                 = 615,
+	ARTISANAL_KNOWLEDGE      = 616,
+	SACRIFICE                = 617,
+	EMPOROXS_GIFT            = 618,
+	SPIRIT_BOND              = 619,
+	AWAKEN                   = 620,
+	MAJESTY                  = 621,
+	GUARDING_RATE_BOOST      = 622,
     RAMPART                  = 623,
+	WINDS_BLESSING           = 624,
+	SIRENS_FAVOR             = 625,
+	NEGATE_SLEEP             = 626,
+	MOBILIZATION             = 627,
+--	NONE                     = 628, -- (None) DEBUG: Please report.
+--	NONE                     = 629, -- (None) DEBUG: Please report.
+--	NONE                     = 630, -- (None) DEBUG: Please report.
+--	NONE                     = 631, -- (None) DEBUG: Please report.
+--	NONE                     = 632, -- (None) DEBUG: Please report.
+--	NONE                     = 633, -- (None) DEBUG: Please report.
+--	NONE                     = 634, -- (None) DEBUG: Please report.
+--	NONE                     = 635, -- (None) DEBUG: Please report.
+--	NONE                     = 636, -- (None) DEBUG: Please report.
+
+--	NONE                     = 767, -- (None) DEBUG: Please report.
     -- Effect icons in packet can go from 0-767, so no custom effects should go in that range.
 
     -- Purchased from Cruor Prospector
@@ -1068,6 +1103,8 @@ tpz.mod =
     MARTIAL_ARTS                    = 173,
     SKILLCHAINBONUS                 = 174,
     SKILLCHAINDMG                   = 175,
+    MAX_SWINGS                      = 978,
+    ADDITIONAL_SWING_CHANCE         = 979,
     FOOD_HPP                        = 176,
     FOOD_HP_CAP                     = 177,
     FOOD_MPP                        = 178,
@@ -1100,22 +1137,22 @@ tpz.mod =
     HUMANOID_KILLER                 = 236,
     LUMORIAN_KILLER                 = 237,
     LUMINION_KILLER                 = 238,
-    SLEEPRES                        = 240,
-    POISONRES                       = 241,
-    PARALYZERES                     = 242,
-    BLINDRES                        = 243,
-    SILENCERES                      = 244,
-    VIRUSRES                        = 245,
-    PETRIFYRES                      = 246,
-    BINDRES                         = 247,
-    CURSERES                        = 248,
-    GRAVITYRES                      = 249,
-    SLOWRES                         = 250,
-    STUNRES                         = 251,
-    CHARMRES                        = 252,
-    AMNESIARES                      = 253,
-    LULLABYRES                      = 254,
-    DEATHRES                        = 255,
+    SLEEPRES                        = 240, -- Dark based
+    POISONRES                       = 241, -- Water based
+    PARALYZERES                     = 242, -- Ice based
+    BLINDRES                        = 243, -- Dark based
+    SILENCERES                      = 244, -- Wind based
+    VIRUSRES                        = 245, -- Water based
+    PETRIFYRES                      = 246, -- Earth based
+    BINDRES                         = 247, -- Ice based
+    CURSERES                        = 248, -- Dark based
+    GRAVITYRES                      = 249, -- Wind based
+    SLOWRES                         = 250, -- Earth based
+    STUNRES                         = 251, -- Lightning based
+    CHARMRES                        = 252, -- Light based
+    AMNESIARES                      = 253, -- Fire based
+    LULLABYRES                      = 254, -- Light based
+    DEATHRES                        = 255, -- Light based
     STATUSRES                       = 958, -- "Resistance to All Status Ailments"
     AFTERMATH                       = 256,
     PARALYZE                        = 257,
@@ -1415,6 +1452,7 @@ tpz.mod =
     ENHANCES_CURSNA_RCVD            = 67,  -- Potency of "Cursna" effects received
     ENHANCES_CURSNA                 = 310, -- Raises success rate of Cursna when removing effect (like Doom) that are not 100% chance to remove
     ENHANCES_HOLYWATER              = 495, -- Used by gear with the "Enhances Holy Water" or "Holy Water+" attribute
+	ENHANCES_PROT_SHELL_RCVD        = 977, -- Enhances Protect and Shell Effects Received (Binary MOD)
 
     RETALIATION                     = 414, -- Increases damage of Retaliation hits
     THIRD_EYE_COUNTER_RATE          = 508, -- Adds counter to 3rd eye anticipates & if using Seigan counter rate is increased by 15%
@@ -1440,7 +1478,7 @@ tpz.mod =
     AMMO_SWING                      = 523, -- Extra swing rate w/ ammo (ie. Jailer weapons). Use gearsets, and does nothing for non-players.
     AMMO_SWING_TYPE                 = 826, -- For the handedness of the weapon - 1h (1) vs. 2h/h2h (2). h2h can safely use the same function as 2h.
     ROLL_RANGE                      = 528, -- Additional range for COR roll abilities.
-    PHANTOM_ROLL                    = 881, -- Phantom Roll+ Effect from SOA Rings.
+    PHANTOM_ROLL_PLUS               = 881, -- Phantom Roll+ Effect from SOA Rings.
     PHANTOM_DURATION                = 882, -- Phantom Roll Duration +.
 
     ENHANCES_REFRESH                = 529, -- "Enhances Refresh" adds +1 per modifier to spell's tick result.
@@ -1456,7 +1494,7 @@ tpz.mod =
     STONESKIN_BONUS_HP              = 539, -- Bonus "HP" granted to Stoneskin spell.
     ENHANCES_ELEMENTAL_SIPHON       = 540, -- Bonus Base MP added to Elemental Siphon skill.
     BP_DELAY_II                     = 541, -- Blood Pact Delay Reduction II
-    JOB_BONUS_CHANCE                = 542, -- Chance to apply job bonus to COR roll without having the job in the party.
+    JOB_BONUS_CHANCE                = 542, -- "Phantom Roll" effects + Gear (chance to apply job bonus to Phantom Roll without having the job in the party.)
     DAY_NUKE_BONUS                  = 565, -- Bonus damage from "Elemental magic affected by day" (Sorc. Tonban)
     IRIDESCENCE                     = 566, -- Iridescence trait (additional weather damage/penalty)
     BARSPELL_AMOUNT                 = 567, -- Additional elemental resistance granted by bar- spells
@@ -1535,7 +1573,13 @@ tpz.mod =
     -- Per https://www.bg-wiki.com/bg/Weapon_Skill_Damage we need all 3..
     ALL_WSDMG_FIRST_HIT             = 841, -- Generic (all Weaponskills) damage, first hit only.
     WS_NO_DEPLETE                   = 949, -- % chance a Weaponskill depletes no TP.
+	WS_STR_BONUS                    = 980, -- % bonus to str_wsc.
     WS_DEX_BONUS                    = 957, -- % bonus to dex_wsc.
+	WS_VIT_BONUS                    = 981, -- % bonus to vit_wsc.
+	WS_AGI_BONUS                    = 982, -- % bonus to agi_wsc.
+	WS_INT_BONUS                    = 983, -- % bonus to int_wsc.
+	WS_MND_BONUS                    = 984, -- % bonus to mnd_wsc.
+	WS_CHR_BONUS                    = 985, -- % bonus to chr_wsc.
 
     -- Circle Abilities Extended Duration from AF/AF+1
     HOLY_CIRCLE_DURATION            = 857,
@@ -1552,6 +1596,7 @@ tpz.mod =
     FENCER_TP_BONUS                 = 903, -- TP Bonus to weapon skills from Fencer Trait
     FENCER_CRITHITRATE              = 904, -- Increased Crit chance from Fencer Trait
     SHIELD_DEF_BONUS                = 905, -- Shield Defense Bonus
+	BLOOD_BOON                      = 913, -- Occasionally cuts down MP cost of Blood Pact abilities. Does not affect abilities that require Astral Flow.
     SNEAK_DURATION                  = 946, -- Additional duration in seconds
     INVISIBLE_DURATION              = 947, -- Additional duration in seconds
     BERSERK_EFFECT                  = 948, -- Conqueror Berserk Effect
@@ -1560,8 +1605,9 @@ tpz.mod =
     DEFENDER_DURATION               = 956, -- Defender Duration
     CARDINAL_CHANT                  = 959,
     INDI_DURATION                   = 960,
-    GEOMANCY                        = 961,
+    GEOMANCY                        = 961, -- Geomancy Skill
     WIDENED_COMPASS                 = 962,
+	HANDBELL                        = 963, -- Handbell Skill
     MENDING_HALATION                = 968,
     RADIAL_ARCANA                   = 969,
     CURATIVE_RECANTATION            = 970,
@@ -1574,9 +1620,99 @@ tpz.mod =
 
     -- The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     -- 570 - 825 used by WS DMG mods these are not spares.
-    -- SPARE = 977, -- stuff
-    -- SPARE = 978, -- stuff
-    -- SPARE = 979, -- stuff
+
+	-- Caldera custom Mod IDs  
+    COUNTER_DMG                     = 3001, -- Increases Counter Damage
+    COUNTER_CRIT_HIT_RATE           = 3002, -- Increases Counter Critical Hit Rate
+    MAG_BURST_BONUS_II              = 3003, -- Magic Burst Bonus II
+    POT_BANISH_UNDEAD               = 3004, -- Potency of "Banish" on Undead
+    ELEM_DOT_EFFECT                 = 3005, -- Potency of Black Magic Elemental DOT
+    GAIN_MAGIC_EFFECT               = 3006, -- Potency of White Magic Gain Spells
+    TRICK_ATK_DMG                   = 3007, -- Increases Trick Attack Damage
+    COVER_CONVERT_DMG               = 3008, -- Cover: % Physical Damage Converted to MP
+    SHIELD_BASH_DISPEL              = 3009, -- Shield Bash: Adds Dispel
+	DIVINE_ENMITY_BONUS             = 3010, -- Divine Magic Special Enmity Bonus
+	DARK_MAGIC_CAST                 = 3011, -- Dark Magic Casting Time -%
+	LAST_RESORT_DEF                 = 3012, -- Last Resort Defense Penalty -%
+	NETHER_VOID_BONUS               = 3013, -- Nether Void Absorb Bonus
+	DAMAGE_LIMIT_TRAIT              = 3014, -- Damage Limit+ Job Trait (Flat pDIF Bonus, value of 1 to 6)
+	DAMAGE_LIMIT_GEAR               = 3015, -- Physical Damage Limit +% from gear (pDIF multiplier)
+	ALL_KILLER_EFFECTS              = 3016, -- All Killer Effects + (caps at 100%)
+	AUGMENT_REWARD                  = 3017, -- Augments "Reward", II, and III
+    JUG_LEVEL_RANGE                 = 3018, -- Decreases the level range of spawned jug pets. Maxes out at 2.
+	BEAST_AFFINITY                  = 3019, -- Increases Jug Pet level by 1 (maxed at 15)
+	REWARD_RECAST					= 3020, -- Reduces Reward's recast by x seconds
+	DOUBLE_SHOT_AMMO                = 3021, -- Tracks Double Shot Ammo Requirement
+	DOUBLE_SHOT_DAMAGE              = 3022, -- Double Shot Damage +
+	BOUNTY_SHOT_RATE                = 3023, -- Bounty Shot +Treasure Hunter (base of 2 when active)
+	SENGIKORI_BONUS                 = 3024, -- % Bonus to Skillchains and Magic Burst II
+	YAEGASUMI_WS_BONUS              = 3025, -- Tracks bonus to WS damage from Yaegasumi SP attack cancellations
+	UTSUSEMI_CAST                   = 3026, -- Utsusemi Spellcasting Time -%
+	ALL_JUMPS_WYVERN_HP             = 3027, -- All Jumps: Adds % of wyvern's max HP as additional damage
+--	WYVERN_SUPPORT_JOB              = 3028, -- Wyvern: Adds support job abilities to wyvern (Added higher up as WYVERN_SUBJOB_TRAITS)
+	MANA_CEDE_STRENGTH				= 3029, -- Enhances "Mana Cede" effect
+	AVATAR_ILVL						= 3030, -- Avatar: Lv. gear
+	SPIRIT_RECAST                   = 3031, -- Shortens magic recast time for Elemental Spirits gear
+	AVATARS_FAVOR_BP_DELAY          = 3032, -- Blood Pact Delay Reduction from Avatar's Favor
+	BREATH_DMG_DEALT				= 3033, -- Increases Breath Damage Dealt +%
+	CHAIN_AFFINITY_EFFECT			= 3034, -- Enhances "Chain Affinity" effect
+	BURST_AFFINITY_EFFECT			= 3035, -- Enhances "Burst Affinity" effect
+	RANDOM_DEAL_EFFECT              = 3036, -- Enhances "Random Deal" effect (+% chance to restore two Job Abilities)
+	TRIPLE_SHOT_RATE                = 3037, -- Activation Rate for Triple Shot
+	TRIPLE_SHOT_AMMO                = 3038, -- Tracks Triple Shot Ammo Requirement
+	TRPL_OCC_QUAD_SHOT              = 3039, -- Triple Shot: Occasionally becomes Quad Shot
+	QUICK_DRAW_TP                   = 3040, -- "Quick Draw" TP Bonus
+	QUAD_SHOT_RATE                  = 3041, -- Activation Rate for Quad Shot
+	REM_OCC_DO_QUAD_DMG_RANGED      = 3042, -- Proc rate for REM Aftermaths that apply "Occasionally do quadruple damage" (Mainly provided for "Quad Shot")
+	TRIPLE_SHOT_DAMAGE              = 3043, -- Triple Shot Damage + Gear
+	PHANTOM_ROLL_EFFECT             = 3044, -- + Phantom Roll Effect from Crooked Cards
+	DBL_OCC_TRPL_SHOT               = 3045, -- Double Shot: Occasionally becomes Triple Shot
+	TRUE_SHOT                       = 3046, -- "True Shot" + Gear
+	AUTOMATON_ILVL                  = 3047, -- Automaton: Lv. Gear
+	BARRAGE_TURBINE_SHOTS           = 3048, -- Barrage Turbine additional shot counter
+	TACTICAL_SWITCH_BONUS           = 3049, -- "Tactical Switch" + Gear (Adds % TP Bonus when using Tactical Switch)
+	STEP_TP_CONSUMED                = 3050, -- "Step" TP Consumed - Gear
+	CRIT_HIT_EVASION                = 3051, -- Adjusts the % chance that a critical hit will land (Feather Step)
+--	SUBTLE_BLOW_II                  = 3052, -- Subtle Blow II Gear (Added higher up)
+	PARRY_RATE_BONUS                = 3053, -- Inquartata and Parrying Rate +% Gear
+	LIEMENT_DURATION                = 3054, -- "Liement" Duration + Gear
+	SWORDPLAY                       = 3055, -- Number of ticks to increase starting value of Swordplay by
+	ENH_MAGIC_CAST_TIME             = 3056, -- Enhancing Magic Casting Time
+	VALLATION_DURATION              = 3057, -- Increases the duration of Vallation
+	LUNGE_BONUS                     = 3058, -- n multiplier from gear and job points for Swipe and Lunge
+	PFLUG_BONUS                     = 3059, -- Improves Pflug base value
+	PHALANX_RCVD                    = 3060, -- Enhances Phalanx Effect Received
+	GAMBIT_DURATION                 = 3061, -- Increases the duration of Gambit
+	BATTUTA_EFFECT                  = 3062, -- Increases the Counter damage of Battuta
+	ONE_FOR_ALL_EFFECT              = 3063, -- Tracks the total amount of magic reduction from One For All
+	LUOPAN_POTENCY                  = 3064, -- Luopan potency from Ecliptic Attrition/Blaze of Glory
+	LUOPAN_REGEN                    = 3065, -- Luopan: Regen +
+	AUGMENT_CONCENTRIC_PULSE        = 3066, -- Augments "Concentric Pulse"
+	GEOMANCY_POTENCY                = 3067, -- +Geomancy potency from Eminent Bell/Dunna/etc
+	
+	ASURAN_FISTS_WS_DMG             = 3100, -- Main Hand: Asuran Fists Damage (H2H)
+	EVISCERATION_WS_DMG             = 3101, -- Main Hand: Evisceration Damage (Dagger)
+	SAVAGE_BLADE_WS_DMG             = 3102, -- Main Hand: Savage Blade Damage (Sword)
+	GROUND_STRIKE_WS_DMG            = 3103, -- Main Hand: Ground Strike Damage (GSword)
+	DECIMATION_WS_DMG               = 3104, -- Main Hand: Decimation Damage (Axe)
+	STEEL_CYCLONE_WS_DMG            = 3105, -- Main Hand: Steel Cycle Damage (GAxe)
+	SPIRAL_HELL_WS_DMG              = 3106, -- Main Hand: Spiral Hell Damage (Scythe)
+	IMPULSE_DRIVE_WS_DMG            = 3107, -- Main Hand: Impulse Drive Damage (Polearm)
+	BLADE_KU_WS_DMG                 = 3108, -- Main Hand: Blade: Ku Damage (Katana)
+	TACHI_KASHA_WS_DMG              = 3109, -- Main Hand: Tachi: Kasha Damage (GKatana)
+	BLACK_HALO_WS_DMG               = 3110, -- Main Hand: Black Halo Damage (Club)
+	RETRIBUTION_WS_DMG              = 3111, -- Main Hand: Retribution Damage (Staff)
+	EMPYREAL_ARROW_WS_DMG           = 3112, -- Main Hand: Empyreal Arrow Damage (Archery)
+	DETONATOR_WS_DMG                = 3113, -- Main Hand: Detonator Damage (Marksmanship)
+	
+	SDT_FIRE                        = 3200, -- Fire Specific Damage Taken
+    SDT_ICE                         = 3201, -- Ice Specific Damage Taken
+    SDT_WIND                        = 3202, -- Wind Specific Damage Taken
+    SDT_EARTH                       = 3203, -- Earth Specific Damage Taken
+    SDT_LIGHTNING                   = 3204, -- Thunder Specific Damage Taken
+    SDT_WATER                       = 3205, -- Water Specific Damage Taken
+    SDT_LIGHT                       = 3206, -- Light Specific Damage Taken
+    SDT_DARK                        = 3207, -- Dark Specific Damage Taken
 }
 
 tpz.latent =
@@ -1618,13 +1754,13 @@ tpz.latent =
     LIGHTNINGSDAY            = 35,
     LIGHTSDAY                = 36,
     MOON_PHASE               = 37, -- PARAM: 0: New Moon, 1: Waxing Crescent, 2: First Quarter, 3: Waxing Gibbous, 4: Full Moon, 5: Waning Gibbous, 6: Last Quarter, 7: Waning Crescent
-    JOB_MULTIPLE_5           = 38,
-    JOB_MULTIPLE_10          = 39,
-    JOB_MULTIPLE_13_NIGHT    = 40,
-    JOB_LEVEL_ODD            = 41,
-    JOB_LEVEL_EVEN           = 42,
+    JOB_MULTIPLE             = 38, -- PARAM: 0: ODD, 2: EVEN, 3-99: DIVISOR
+    JOB_MULTIPLE_AT_NIGHT    = 39, -- PARAM: 0: ODD, 2: EVEN, 3-99: DIVISOR
+    -- 40 free to use
+	-- 41 free to use
+    -- 42 free to use
     WEAPON_DRAWN_HP_UNDER    = 43, -- PARAM: HP PERCENT
-    --                       = 44  -- Unused
+    STATUS_ACTIVE_NO_JOBSP   = 44, -- PARAM: EFFECTID - When status effect active, but without a 1hr/2hr Job Special active
     MP_UNDER_VISIBLE_GEAR    = 45, -- mp less than or equal to %, calculated using MP bonuses from visible gear only
     HP_OVER_VISIBLE_GEAR     = 46, -- hp more than or equal to %, calculated using HP bonuses from visible gear only
     WEAPON_BROKEN            = 47,
@@ -1917,6 +2053,13 @@ tpz.merit =
     LIFE_CYCLE_RECAST           = MCATEGORY_GEO_1 + 0x04,
     BLAZE_OF_GLORY_RECAST       = MCATEGORY_GEO_1 + 0x06,
     DEMATERIALIZE_RECAST        = MCATEGORY_GEO_1 + 0x08,
+	
+	-- RUN 1
+	RUNE_ENHANCE                = MCATEGORY_RUN_1 + 0x00,
+    VALLATION_EFFECT            = MCATEGORY_RUN_1 + 0x02,
+    LUNGE_EFFECT                = MCATEGORY_RUN_1 + 0x04,
+    PFLUG_EFFECT                = MCATEGORY_RUN_1 + 0x06,
+    GAMBIT_EFFECT               = MCATEGORY_RUN_1 + 0x08,
 
     -- WEAPON SKILLS
     SHIJIN_SPIRAL               = MCATEGORY_WS + 0x00,
@@ -2091,6 +2234,12 @@ tpz.merit =
     RADIAL_ARCANA               = MCATEGORY_GEO_2 + 0x02,
     CURATIVE_RECANTATION        = MCATEGORY_GEO_2 + 0x04,
     PRIMEVAL_ZEAL               = MCATEGORY_GEO_2 + 0x06,
+	
+	-- RUN 2
+    BATTUTA                     = MCATEGORY_RUN_2 + 0x00,
+    RAYKE                       = MCATEGORY_RUN_2 + 0x02,
+    INSPIRATION                 = MCATEGORY_RUN_2 + 0x04,
+    SLEIGHT_OF_SWORD            = MCATEGORY_RUN_2 + 0x06,
 }
 
 ------------------------------------
@@ -2896,4 +3045,26 @@ tpz.relicTiers =
     {
         15070, 16195, 16196, 16197, 16198, 11927, 16200
     },
+}
+
+-- Currently only used for GEO cardinal Chant
+-- Mainly just a reference.
+tpz.cardinalDirection =
+{
+    [1]  = '[N]',
+    [2]  = '[NNE]',
+    [3]  = '[NE]',
+    [4]  = '[ENE]',
+    [5]  = '[E]',
+    [6]  = '[ESE]',
+    [7]  = '[SE]',
+    [8]  = '[SSE]',
+    [9]  = '[S]',
+    [10] = '[SSW]',
+    [11] = '[SW]',
+    [12] = '[WSW]',
+    [13] = '[W]',
+    [14] = '[WNW]',
+    [15] = '[NW]',
+    [16] = '[NNW]',
 }

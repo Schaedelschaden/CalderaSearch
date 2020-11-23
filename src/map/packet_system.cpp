@@ -1728,13 +1728,18 @@ void SmallPacket0x04B(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     // todo: kill player til theyre dead and bsod
     const char* fmtQuery = "SELECT version_mismatch FROM accounts_sessions WHERE charid = %u";
     int32 ret = Sql_Query(SqlHandle, fmtQuery, PChar->id);
-    if (ret != SQL_ERROR && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+	std::string msg1 = "<<< ";
+	std::string charName = PChar->name.c_str();
+	std::string msg2 = " has logged in >>>";
+	std::string loginmsg = msg1 + charName + msg2;
+    if (ret != SQL_ERROR && Sql_NextRow(SqlHandle) == SQL_SUCCESS && PChar->objtype == TYPE_PC)
     {
-        if ((bool)Sql_GetUIntData(SqlHandle, 0))
-            PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, "Server does not support this client version."));
-        else
-            PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, "Report bugs on Topaz bugtracker if server admin confirms the bug occurs on stock Topaz."));
-    }
+//        if ((bool)Sql_GetUIntData(SqlHandle, 0))
+//            PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, "The server is currently running FFXI version 30200904_2. Please use POL to update to retail."));
+//        else
+//            PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_3, "<<< Have fun and be courteous to others! >>>"));
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, loginmsg));
+	}
     return;
 }
 
@@ -5004,8 +5009,16 @@ void SmallPacket0x0DD(map_session_data_t* session, CCharEntity* PChar, CBasicPac
             }
             else
             {
-                uint8 mobLvl = PTarget->GetMLevel();
-                EMobDifficulty mobCheck = charutils::CheckMob(PChar->GetMLevel(), mobLvl);
+                uint8 mLvl = PChar->GetMLevel();
+				uint8 iLvl = PChar->m_Weapons[SLOT_MAIN]->getILvl();
+				uint8 mobLvl = PTarget->GetMLevel();
+				
+				if (iLvl > mLvl)
+				{
+					mLvl = iLvl;
+				}
+				
+                EMobDifficulty mobCheck = charutils::CheckMob(mLvl, mobLvl);
 
                 // Calculate main /check message (64 is Too Weak)
                 int32 MessageValue = 64 + (uint8)mobCheck;

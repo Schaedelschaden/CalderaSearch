@@ -111,6 +111,14 @@ bool CWeaponSkillState::Update(time_point tick)
         SpendCost();
         action_t action;
         m_PEntity->OnWeaponSkillFinished(*this, action);
+		
+		if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_RESTRAINT))
+		{
+			uint16 WSBonus = m_PEntity->StatusEffectContainer->GetStatusEffect(EFFECT_RESTRAINT)->GetPower() - 1;
+			m_PEntity->StatusEffectContainer->GetStatusEffect(EFFECT_RESTRAINT)->SetPower(1);
+			m_PEntity->delModifier(Mod::ALL_WSDMG_ALL_HITS, WSBonus);
+		}
+		
         m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, new CActionPacket(action));
         auto PTarget {GetTarget()};
         m_PEntity->PAI->EventHandler.triggerListener("WEAPONSKILL_USE", m_PEntity, PTarget, m_PSkill->getID(), m_spent, &action);

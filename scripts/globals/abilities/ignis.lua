@@ -18,8 +18,8 @@ function onUseAbility(player, target, ability)
 	
 	local MainLevel = player:getMainLvl()
 	local RuneCounter = 0
---	local merits = player:getMerit(tpz.merit.RUNE_ENHANCE)
-	local potency = math.floor((((49 * MainLevel) / 99) + 5.5))
+	local merits = player:getMerit(tpz.merit.RUNE_ENHANCE)
+	local potency = math.floor((((49 * MainLevel) / 99) + 5.5) + merits)
 	
 	if (player:getMainJob() ~= tpz.job.RUN) then
 		MainLevel = math.floor(MainLevel / 2)

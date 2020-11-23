@@ -12,13 +12,14 @@ cmdprops =
 
 function onTrigger(player,page)
     if (page == 0 or page == nil) then
-		ShopMsg = "Please make a choice using one of the following options:\n!shop 1: Food   !shop 2: Crystals   !shop 3: Crafting Gear   !shop 4: Vanity Gear"; -- Prints the message to players on 2 lines using \n as a line break
-		player:PrintToPlayer(ShopMsg);
+		player:PrintToPlayer(string.format("Please make a choice using one of the following options:"),tpz.msg.channel.SYSTEM_3)
+		player:PrintToPlayer(string.format("!shop 1: Food   !shop 2: Crystals   !shop 3: Crafting Gear   !shop 4: Vanity Gear   !shop 5: Charged Ammo"),tpz.msg.channel.SYSTEM_3)
 		
 	elseif ( page == 1) then -- Creates Food shop.
     local stock_1 =
         {
-            6212,   850,         -- Marinara Slice +1 (Low level melee food, 60 min duration)
+            4153,   2500,        -- Antacid (food removal medication)
+			6212,   850,         -- Marinara Slice +1 (Low level melee food, 60 min duration)
             5744,   3500,        -- Marinara Pizza +1 (low level melee food, 240 min duration)
 			6465,   15000,       -- Behemoth Steak +1 (high level DD food, 240 min duration)
 			6070,   15000,       -- Oceanfin Soup (high level Ranged DD food, 240 min duration)
@@ -29,7 +30,6 @@ function onTrigger(player,page)
             6568,   5000,        -- Crepe des Rois (high level MACC food, 60 min duration)
 			6261,   3500,        -- Akamochi +1 (low level pet ATK food, 60 min duration)
 			6263,   7500,        -- Kusamochi +1 (high level pet ATK food, 60 min duration)
-			4153,   2500,        -- Antacid (food removal medication)
         };
         tpz.shop.general(player,stock_1);
 		
@@ -98,6 +98,21 @@ function onTrigger(player,page)
 			10250,   10000,        -- Moogle Suit
       };
       tpz.shop.general(player,stock_4);
+	  
+	elseif ( page == 5) then -- Creates Charged Ammunition Shop.
+        local stock_5 =
+        {
+			18228,   30,           -- Battery
+			18229,   60,           -- Kilo Battery
+			18230,   90,           -- Mega Battery
+            18232,   30,           -- Hydro Pump
+			18233,   60,           -- Kilo Pump
+			18234,   90,           -- Mega Pump
+			18236,   30,           -- Wind Fan
+			18237,   60,           -- Kilo Fan
+			18238,   90,           -- Mega Fan
+      };
+      tpz.shop.general(player,stock_5);
 
     else
         player:PrintToPlayer( string.format( "Page %i not found.", page ) );

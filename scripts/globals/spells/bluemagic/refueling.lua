@@ -10,7 +10,6 @@
 -- Casting Time: 1.5 seconds
 -- Recast Time: 30 seconds
 -- Duration: 5 minutes
---
 -- Combos: None
 -----------------------------------------
 require("scripts/globals/status")
@@ -30,7 +29,7 @@ function onSpellCast(caster, target, spell)
         local diffMerit = caster:getMerit(tpz.merit.DIFFUSION)
 
         if (diffMerit > 0) then
-            duration = duration + (duration / 100)* diffMerit
+            duration = duration + (duration / 100) * diffMerit
         end
 
         caster:delStatusEffect(tpz.effect.DIFFUSION)

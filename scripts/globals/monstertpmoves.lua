@@ -243,8 +243,11 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
     returninfo = {}
     --get all the stuff we need
     local resist = 1
-
     local mdefBarBonus = 0
+	local tp = ((skill:getTP() / 10) + 100) -- Plus 100 prevents the TP DMG BONUS from zeroing out the entire damage calculation
+	local posorneg = math.random(0, 1) -- Determines whether the swing will be positive or negative
+	local randomness = math.random(1,10) -- Adds a +/-10% random swing to the damage
+	
     if
         element >= tpz.magic.element.FIRE and
         element <= tpz.magic.element.WATER and
@@ -252,6 +255,7 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
     then -- bar- spell magic defense bonus
         mdefBarBonus = target:getStatusEffect(tpz.magic.barSpell[element]):getSubPower()
     end
+	
     -- plus 100 forces it to be a number
     mab = (100 + mob:getMod(tpz.mod.MATT)) / (100 + target:getMod(tpz.mod.MDEF) + mdefBarBonus)
 
@@ -264,7 +268,7 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
     end
 
     if (tpeffect==TP_DMG_BONUS) then
-        damage = damage * (((skill:getTP() / 10)*tpvalue)/100)
+        damage = damage * (((tp / 10) * tpvalue) / 100)
     end
 
     -- printf("power: %f, bonus: %f", damage, mab)
@@ -284,6 +288,15 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
     local magicDefense = getElementalDamageReduction(target, element)
 
     finaldmg = finaldmg * resist * magicDefense
+	
+	-- Tends towards the low end of the randomness range
+	if (posorneg == 0) then
+		randomness = ((100 + randomness) / 100)
+	else
+		randomness = ((100 - randomness) / 100)
+	end
+	
+	finaldmg = finaldmg * randomness -- Throw in a +/-10% swing for randomness
 
     returninfo.dmg = finaldmg
 

@@ -23,19 +23,19 @@ local startingRaceInfo =
 
 local startingNationInfo =
 {
-    [tpz.nation.SANDORIA] = {ring = 13495, map = tpz.ki.MAP_OF_THE_SAN_DORIA_AREA},
-    [tpz.nation.BASTOK]   = {ring = 13497, map = tpz.ki.MAP_OF_THE_BASTOK_AREA},
-    [tpz.nation.WINDURST] = {ring = 13496, map = tpz.ki.MAP_OF_THE_WINDURST_AREA},
+    [tpz.nation.SANDORIA] = {ring = 13495, map = tpz.ki.MAP_OF_THE_SAN_DORIA_AREA}, -- San d'Orian Ring
+    [tpz.nation.BASTOK]   = {ring = 13495, map = tpz.ki.MAP_OF_THE_BASTOK_AREA},
+    [tpz.nation.WINDURST] = {ring = 13495, map = tpz.ki.MAP_OF_THE_WINDURST_AREA},
 }
 
 local startingJobGear =
 {
-    [tpz.job.WAR] = {16534},       -- onion sword
-    [tpz.job.MNK] = {13184},       -- white belt
-    [tpz.job.WHM] = {17068, 4608}, -- onion rod, scroll of cure
-    [tpz.job.BLM] = {17104, 4607}, -- onion staff, scroll of stone
-    [tpz.job.RDM] = {16482, 4606}, -- onion dagger, scroll of dia
-    [tpz.job.THF] = {16483},       -- onion knife
+    [tpz.job.WAR] = {16610, 16646, 16716, 10812, 11811, 10293, 13496, 13497, 15840}, -- Wax Sword +1, Bronze Axe +1, Butterfly Axe +1, Chocobo Shield +1, Destrier Beret, Chocobo Shirt, Windurstian Ring, Bastokan Ring, Kupofried's Ring 
+    [tpz.job.MNK] = {16690, 13184, 11811, 10293, 13496, 13497, 15840}, -- Cesti +1, White Belt, Destrier Beret, Chocobo Shirt, Windurstian Ring, Bastokan Ring, Kupofried's Ring
+    [tpz.job.WHM] = {17087, 10812, 4606, 4608, 11811, 10293, 13496, 13497, 15840}, -- Maple Wand +1, Chocobo Shield +1, Scroll of Dia, Scroll of Cure, Destrier Beret, Chocobo Shirt, Windurstian Ring, Bastokan Ring, Kupofried's Ring
+    [tpz.job.BLM] = {17087, 4607, 4828, 11811, 10293, 13496, 13497, 15840}, -- Maple Wand +1, Scroll of Stone, Scroll of Poison, Destrier Beret, Chocobo Shirt, Windurstian Ring, Bastokan Ring, Kupofried's Ring
+    [tpz.job.RDM] = {16610, 10812, 4606, 4608, 11811, 10293, 13496, 13497, 15840}, -- Wax Sword +1, Chocobo Shield +1, Scroll of Dia, Scroll of Cure, Destrier Beret, Chocobo Shirt, Windurstian Ring, Bastokan Ring, Kupofried's Ring
+    [tpz.job.THF] = {16690, 16491, 16610, 11811, 10293, 13496, 13497, 15840}, -- Cesti +1, Bronze Knife +1, Wax Sword +1, Destrier Beret, Chocobo Shirt, Windurstian Ring, Bastokan Ring, Kupofried's Ring
 }
 
 -----------------------------------
@@ -122,13 +122,13 @@ local function CharCreate(player)
        player:setGil(START_GIL)
     end
 
-    player:addItem(536) -- adventurer coupon
+--    player:addItem(536) -- adventurer coupon
     player:addTitle(tpz.title.NEW_ADVENTURER)
-    player:setCharVar("MoghouseExplication", 1) -- needs Moghouse intro
-    player:setCharVar("spokeKindlix", 1) -- Kindlix introduction
-    player:setCharVar("spokePyropox", 1) -- Pyropox introduction
-    player:setCharVar("TutorialProgress", 1) -- Has not started tutorial
-    player:setNewPlayer(true) -- apply new player flag
+    player:setCharVar("MoghouseExplication", 0) -- needs Moghouse intro
+    player:setCharVar("spokeKindlix", 0) -- Kindlix introduction
+    player:setCharVar("spokePyropox", 0) -- Pyropox introduction
+    player:setCharVar("TutorialProgress", 0) -- Has not started tutorial
+    player:setNewPlayer(false) -- apply new player flag
 end
 
 -----------------------------------
@@ -176,6 +176,14 @@ function onGameIn(player, firstLogin, zoning)
         player:setMP(50000)
     end
     
+	if player:getCharVar("MiniGodMode") == 1 then
+		player:addStatusEffect(tpz.effect.PHYSICAL_SHIELD,2,0,0)
+        player:addStatusEffect(tpz.effect.MAGIC_SHIELD,2,0,0)
+        player:addStatusEffect(tpz.effect.REGAIN,10,0,0)
+        player:addStatusEffect(tpz.effect.REFRESH,100,0,0)
+        player:addStatusEffect(tpz.effect.REGEN,1000,0,0)
+	end
+	
     -- !immortal
     if player:getCharVar("Immortal") == 1 then
         player:setUnkillable(true)
@@ -191,6 +199,14 @@ function onGameIn(player, firstLogin, zoning)
 end
 
 function onPlayerLevelUp(player)
+--	player:PrintToPlayer("Congratulations!");
+	mainLvl = player:getMainLvl();
+	
+	if mainLvL == 98 then
+		player:PrintToPlayer("Removing !regen buffs.");
+		player:delStatusEffect(tpz.effect.REGEN);
+		player:delStatusEffect(tpz.effect.REFRESH);
+	end
 end
 
 function onPlayerLevelDown(player)

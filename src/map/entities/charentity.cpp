@@ -62,6 +62,7 @@
 #include "../utils/attackutils.h"
 #include "../utils/charutils.h"
 #include "../utils/battleutils.h"
+#include "../utils/petutils.h"
 #include "../utils/gardenutils.h"
 #include "../item_container.h"
 #include "../items/item_weapon.h"
@@ -632,6 +633,18 @@ bool CCharEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
     {
         return true;
     }
+	
+	if (targetFlags & TARGET_PLAYER_PARTY_ENTRUST)
+    {
+        if (!PInitiator->StatusEffectContainer->HasStatusEffect(EFFECT_ENTRUST) && PInitiator == this)
+        {
+            return true;
+        }
+        else if (PInitiator->StatusEffectContainer->HasStatusEffect(EFFECT_ENTRUST) && ((PParty && PInitiator->PParty == PParty) && PInitiator != this))
+        {
+            return true;
+        }
+    }
 
     return false;
 }
@@ -734,13 +747,15 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
 
     PRecastContainer->Add(RECAST_MAGIC, static_cast<uint16>(PSpell->getID()), action.recast);
+	
+	uint16 currentTP = health.tp;
 
     for (auto&& actionList : action.actionLists)
     {
         for (auto&& actionTarget : actionList.actionTargets)
         {
             if (actionTarget.param > 0 && PSpell->dealsDamage() && PSpell->getSpellGroup() == SPELLGROUP_BLUE &&
-                StatusEffectContainer->HasStatusEffect(EFFECT_CHAIN_AFFINITY) &&
+                (StatusEffectContainer->HasStatusEffect(EFFECT_CHAIN_AFFINITY) || StatusEffectContainer->HasStatusEffect(EFFECT_AZURE_LORE)) &&
                 static_cast<CBlueSpell*>(PSpell)->getPrimarySkillchain() != 0)
             {
                 auto PBlueSpell = static_cast<CBlueSpell*>(PSpell);
@@ -754,7 +769,11 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
                     actionTarget.additionalEffect = effect;
 
                 }
-                if (StatusEffectContainer->HasStatusEffect({EFFECT_SEKKANOKI, EFFECT_MEIKYO_SHISUI}))
+                if (StatusEffectContainer->HasStatusEffect(EFFECT_AZURE_LORE))
+				{
+					health.tp = currentTP;
+				}				
+                else if (StatusEffectContainer->HasStatusEffect({EFFECT_SEKKANOKI, EFFECT_MEIKYO_SHISUI}))
                 {
                     health.tp = (health.tp > 1000 ? health.tp - 1000 : 0);
                 }
@@ -765,15 +784,68 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
 
                 StatusEffectContainer->DelStatusEffectSilent(EFFECT_CHAIN_AFFINITY);
             }
+			
+			if (actionTarget.param > 0 && PSpell->dealsDamage() && PSpell->getSpellGroup() == SPELLGROUP_BLACK &&
+				(StatusEffectContainer->HasStatusEffect(EFFECT_IMMANENCE)))
+			{
+ 				SUBEFFECT effect = SUBEFFECT_NONE;
+				if (PSpell->getSpellFamily() == SPELLFAMILY_STONE)
+				{
+					effect = battleutils::GetSkillChainEffect(PTarget, 4, 0, 0);
+				}
+				else if (PSpell->getSpellFamily() == SPELLFAMILY_WATER)
+				{
+					effect = battleutils::GetSkillChainEffect(PTarget, 5, 0, 0);
+				}
+				else if (PSpell->getSpellFamily() == SPELLFAMILY_AERO)
+				{
+					effect = battleutils::GetSkillChainEffect(PTarget, 6, 0, 0);
+				}
+				else if (PSpell->getSpellFamily() == SPELLFAMILY_FIRE)
+				{
+					effect = battleutils::GetSkillChainEffect(PTarget, 3, 0, 0);
+				}
+				else if (PSpell->getSpellFamily() == SPELLFAMILY_BLIZZARD)
+				{
+					effect = battleutils::GetSkillChainEffect(PTarget, 7, 0, 0);
+				}
+				else if (PSpell->getSpellFamily() == SPELLFAMILY_THUNDER)
+				{
+					effect = battleutils::GetSkillChainEffect(PTarget, 8, 0, 0);
+				}
+				
+				if (effect != SUBEFFECT_NONE)
+				{
+					uint16 skillChainDamage = battleutils::TakeSkillchainDamage(static_cast<CBattleEntity*>(this), PTarget, actionTarget.param, nullptr);
+
+					actionTarget.addEffectParam = skillChainDamage;
+					actionTarget.addEffectMessage = 287 + effect;
+					actionTarget.additionalEffect = effect;
+				}
+				
+				StatusEffectContainer->DelStatusEffectSilent(EFFECT_IMMANENCE);
+			}
         }
     }
     charutils::RemoveStratagems(this, PSpell);
     if (PSpell->tookEffect())
     {
         charutils::TrySkillUP(this, (SKILLTYPE)PSpell->getSkillType(), PTarget->GetMLevel());
+		CItemWeapon* PItem = static_cast<CItemWeapon*>(getEquip(SLOT_RANGED));
+		
+		if (PSpell->getSkillType() == SKILL_GEOMANCY)
+		{
+			if (PItem && PItem->isType(ITEM_EQUIPMENT))
+            {
+                SKILLTYPE Skilltype = (SKILLTYPE)PItem->getSkillType();
+                if (Skilltype == SKILL_HANDBELL)
+                {
+                    charutils::TrySkillUP(this, SKILL_HANDBELL, PTarget->GetMLevel());
+                }
+            }
+		}
         if (PSpell->getSkillType() == SKILL_SINGING)
         {
-            CItemWeapon* PItem = static_cast<CItemWeapon*>(getEquip(SLOT_RANGED));
             if (PItem && PItem->isType(ITEM_EQUIPMENT))
             {
                 SKILLTYPE Skilltype = (SKILLTYPE)PItem->getSkillType();
@@ -918,7 +990,16 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                         }
                     }
                     // check for ws points
-                    if (charutils::CheckMob(this->GetMLevel(), PTarget->GetMLevel()) > EMobDifficulty::TooWeak)
+					uint8 mLvl = this->GetMLevel();
+					uint8 iLvl = this->m_Weapons[SLOT_MAIN]->getILvl();
+					uint8 targetLvl = PTarget->GetMLevel();
+					
+					if (iLvl > mLvl)
+					{
+						mLvl = iLvl;
+					}
+					
+                    if (charutils::CheckMob(mLvl, targetLvl) > EMobDifficulty::TooWeak)
                     {
                         charutils::AddWeaponSkillPoints(this, damslot, wspoints);
                     }
@@ -936,17 +1017,21 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
 void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 {
     auto PAbility = state.GetAbility();
+	
     if (this->PRecastContainer->HasRecast(RECAST_ABILITY, PAbility->getRecastId(), PAbility->getRecastTime()))
     {
         pushPacket(new CMessageBasicPacket(this, this, 0, 0, MSGBASIC_WAIT_LONGER));
         return;
     }
+	
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_AMNESIA)) {
         pushPacket(new CMessageBasicPacket(this, this, 0, 0, MSGBASIC_UNABLE_TO_USE_JA2));
         return;
     }
+	
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
     std::unique_ptr<CBasicPacket> errMsg;
+	
     if (IsValidTarget(PTarget->targid, PAbility->getValidTarget(), errMsg))
     {
         if (this != PTarget && distance(this->loc.p, PTarget->loc.p) > PAbility->getRange())
@@ -954,6 +1039,8 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             pushPacket(new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_TOO_FAR_AWAY));
             return;
         }
+/* 		// Permanently disable or remove
+		// All Blood Pact MP costs moved to scripts
         if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
         {
             // Blood pact MP costs are stored under animation ID
@@ -962,7 +1049,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 pushPacket(new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_UNABLE_TO_USE_JA));
                 return;
             }
-        }
+        } */
 
         if (battleutils::IsParalyzed(this)) {
             // display paralyzed
@@ -999,7 +1086,9 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             if (PAbility)
                 PRecastContainer->Del(RECAST_ABILITY, PAbility->getRecastId());
         }
-        else if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
+/*         // Permanently disable or remove
+		// Apogee's handling has been moved to scripts
+		else if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
         {
             if (this->StatusEffectContainer->HasStatusEffect(EFFECT_APOGEE))
             {
@@ -1010,7 +1099,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 action.recast -= std::min<int16>(getMod(Mod::BP_DELAY), 15);
                 action.recast -= std::min<int16>(getMod(Mod::BP_DELAY_II), 15);
             }
-        }
+        } */
 
         // remove invisible if aggressive
         if (PAbility->getID() != ABILITY_TAME && PAbility->getID() != ABILITY_FIGHT)
@@ -1043,6 +1132,8 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         {
             if (PPet) //is a bp - don't display msg and notify pet
             {
+				// Blood Pact recasts can be reduced by a total of 40 seconds
+				action.recast -= std::min<int16>(getMod(Mod::BP_DELAY) + getMod(Mod::BP_DELAY_II) + getMod(Mod::AVATARS_FAVOR_BP_DELAY), 40);
                 actionList_t& actionList = action.getNewActionList();
                 actionList.ActionTargetID = PTarget->id;
                 actionTarget_t& actionTarget = actionList.getNewActionTarget();
@@ -1053,6 +1144,8 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 actionTarget.messageID = 0;
 
                 auto PPetTarget = PTarget->targid;
+/* 				// Permanently disable or remove
+				// Handling has been moved to scripts
                 if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
                 {
                     // Blood Pact mp cost stored in animation ID
@@ -1074,13 +1167,13 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                         }
                     }
 
-                    addMP((int32)-mpCost);
+                    addMP((int32)-mpCost); */
 
                     if (PAbility->getValidTarget() == TARGET_SELF)
                     {
                         PPetTarget = PPet->targid;
                     }
-                }
+//                }
                 else
                 {
                     auto PMobSkill = battleutils::GetMobSkill(PAbility->getMobSkillID());
@@ -1229,6 +1322,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 {
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+	auto PAttacker = static_cast<CBattleEntity*>(state.GetTarget());
 
     int32 damage = 0;
     int32 totalDamage = 0;
@@ -1280,6 +1374,11 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         hitCount += getMod(Mod::UTSUSEMI);
     }
 
+	// Ranged attack distance correction variables
+	uint16 trueShot = this->getMod(Mod::TRUE_SHOT);
+	float rangedDistance = distance(this->loc.p, PTarget->loc.p); //m_attacker, m_victim
+	float distanceCorrection = 1.00f + float(trueShot / 100.00f);
+
     // loop for barrage hits, if a miss occurs, the loop will end
     for (uint8 i = 1; i <= hitCount; ++i)
     {
@@ -1300,6 +1399,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
             else
             {
                 bool isCritical = tpzrand::GetRandomNumber(100) < battleutils::GetCritHitRate(this, PTarget, true);
+				
                 float pdif = battleutils::GetRangedDamageRatio(this, PTarget, isCritical);
 
                 if (isCritical)
@@ -1319,6 +1419,24 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
                 }
 
                 damage = (int32)((this->GetRangedWeaponDmg() + battleutils::GetFSTR(this, PTarget, slot)) * pdif);
+				
+				// Ranged attack distance correction ideal distances
+				if (rangedDistance >= 3.5f && rangedThrowing == true)
+				{
+					damage = (int32)(damage * distanceCorrection);
+				}
+				else if (rangedDistance >= 3.5f && ammoThrowing == true)
+				{
+					damage = (int32)(damage * distanceCorrection);
+				}
+				else if (rangedDistance >= 8.5f && PItem->getSkillType() == SKILL_MARKSMANSHIP)
+				{
+					damage = (int32)(damage * distanceCorrection);
+				}
+				else if (rangedDistance >= 10.5f && PItem->getSkillType() == SKILL_ARCHERY)
+				{
+					damage = (int32)(damage * distanceCorrection);
+				}
 
                 if (slot == SLOT_RANGED)
                 {
@@ -1357,12 +1475,56 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
             recycleChance += PMeritPoints->GetMeritValue(MERIT_RECYCLE, this);
         }
 
-        // Only remove unlimited shot on hit
+        // Only remove Unlimited Shot on hit
         if (hitOccured && this->StatusEffectContainer->HasStatusEffect(EFFECT_UNLIMITED_SHOT))
         {
             StatusEffectContainer->DelStatusEffect(EFFECT_UNLIMITED_SHOT);
             recycleChance = 100;
         }
+
+		// Only remove Flashy Shot on hit
+        if (hitOccured && this->StatusEffectContainer->HasStatusEffect(EFFECT_FLASHY_SHOT))
+        {
+            StatusEffectContainer->DelStatusEffect(EFFECT_FLASHY_SHOT);
+        }
+		
+		// Only remove Stealth Shot on hit
+        if (hitOccured && this->StatusEffectContainer->HasStatusEffect(EFFECT_STEALTH_SHOT))
+        {
+            StatusEffectContainer->DelStatusEffect(EFFECT_STEALTH_SHOT);
+        }
+		
+		// Add Double Shot ammunition cost
+		if (this->getMod(Mod::DOUBLE_SHOT_AMMO) == 1)
+		{
+			++ammoConsumed;
+			this->delModifier(Mod::DOUBLE_SHOT_AMMO, 1);
+		}
+		
+		// Add Double Shot becomes Triple Shot ammunition cost
+		if (this->getMod(Mod::DOUBLE_SHOT_AMMO) == 2)
+		{
+			++ammoConsumed;
+			++ammoConsumed;
+			this->delModifier(Mod::DOUBLE_SHOT_AMMO, 2);
+		}
+		
+		// Add Triple Shot ammunition cost
+		if (this->getMod(Mod::TRIPLE_SHOT_AMMO) == 2)
+		{
+			++ammoConsumed;
+			++ammoConsumed;
+			this->delModifier(Mod::TRIPLE_SHOT_AMMO, 2);
+		}
+		
+		// Add Triple Shot becomes Quad Shot ammunition cost
+		if (this->getMod(Mod::TRIPLE_SHOT_AMMO) == 3)
+		{
+			++ammoConsumed;
+			++ammoConsumed;
+			++ammoConsumed;
+			this->delModifier(Mod::TRIPLE_SHOT_AMMO, 3);
+		}
 
         if (PAmmo != nullptr && tpzrand::GetRandomNumber(100) > recycleChance)
         {
@@ -1680,6 +1842,15 @@ void CCharEntity::Die()
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, this, 0, 0, MSGBASIC_FALLS_TO_GROUND));
 
     battleutils::RelinquishClaim(this);
+	
+	if (this->PPet != nullptr)
+	{
+		if (!this->PPet->isCharmed)
+		{
+			petutils::DespawnPet(this);
+		}
+	}
+	
     Die(death_duration);
     SetDeathTimestamp((uint32)time(nullptr));
 

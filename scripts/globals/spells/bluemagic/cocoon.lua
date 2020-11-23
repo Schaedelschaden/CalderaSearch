@@ -10,7 +10,6 @@
 -- Casting Time: 1.75 seconds
 -- Recast Time: 60 seconds
 -- Duration: 90 seconds
---
 -- Combos: None
 -----------------------------------------
 require("scripts/globals/bluemagic")
@@ -32,7 +31,7 @@ function onSpellCast(caster, target, spell)
         local diffMerit = caster:getMerit(tpz.merit.DIFFUSION)
 
         if (diffMerit > 0) then
-            duration = duration + (duration/100)* diffMerit
+            duration = duration + (duration / 100)* diffMerit
         end
 
         caster:delStatusEffect(tpz.effect.DIFFUSION)

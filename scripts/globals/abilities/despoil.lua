@@ -24,12 +24,6 @@ function onAbilityCheck(player, target, ability)
         return tpz.msg.basic.FULL_INVENTORY, 0
     end
 
-    if player:getObjType() == tpz.objType.TRUST then
-        if player:getMaster():getFreeSlotsCount() == 0 then
-            return 1, 0
-        end
-    end
-
     return 0, 0
 end
 
@@ -40,11 +34,7 @@ function onUseAbility(player, target, ability, action)
 
     local stolen = target:getDespoilItem()
     if target:isMob() and math.random(100) < despoilChance and stolen then
-        if player:getObjType() == tpz.objType.TRUST then
-            player:getMaster():addItem(stolen)
-        else
-            player:addItem(stolen)
-        end
+        player:addItem(stolen)
         target:itemStolen()
 
         -- Attempt to grab the debuff from the DB

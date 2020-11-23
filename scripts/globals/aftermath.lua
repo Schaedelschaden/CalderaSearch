@@ -146,7 +146,7 @@ tpz.aftermath.effects =
     -----------------------------------
     -- Tier 3 Mythic
     -----------------------------------
-    [39] = -- Conqueror, Glanzfaust, Vajra, Burtgang, Liberator, Aymur, Kogarasumaru, Nagi, Ryunohige, Nirvana, Kenkonken, Terpsichore
+    [39] = -- Conqueror, Glanzfaust, Vajra, Burtgang, Liberator, Aymur, Kogarasumaru, Nagi, Ryunohige, Nirvana, Kenkonken, Terpsichore, Epeolatry
     {
         mods = { { tpz.mod.ACC, function(tp) return math.floor(tp / 50 + 10) end },
                  { tpz.mod.ATT, function(tp) return math.floor(tp * 0.6 - 80) end },

@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Sandspray
--- Blinds enemies within a fan-shaped area originating from the caster
+-- Blinds enemies within a fan-shaped area originating from the caster.
 -- Spell cost: 43 MP
 -- Monster Type: Beastmen
 -- Spell Type: Magical (Dark)
@@ -18,25 +18,35 @@ require("scripts/globals/magic")
 require("scripts/globals/msg")
 -----------------------------------------
 
-function onMagicCastingCheck(caster, target, spell)
+function onMagicCastingCheck(caster,target,spell)
     return 0
 end
 
-function onSpellCast(caster, target, spell)
-    local typeEffect = tpz.effect.BLINDNESS
-    local dINT = caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
-    local params = {}
-    params.diff = nil
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
-    params.effect = typeEffect
+function onSpellCast(caster,target,spell)
+	local duration = 120
+	local params = {}
+		params.attribute = tpz.mod.MND
+		params.skillType = tpz.skill.BLUE_MAGIC
+        params.damageType = tpz.damageType.DARK
+		params.spellFamily = tpz.ecosystem.HUMANOID
+        params.multiplier = 1.25
+        params.tMultiplier = 1.0 -- dINT/dMND/dCHR multiplier
+        params.duppercap = 71
+        params.str_wsc = 0.0
+        params.dex_wsc = 0.0
+        params.vit_wsc = 0.0
+        params.agi_wsc = 0.0
+        params.int_wsc = 0.0
+        params.mnd_wsc = 0.6 -- 0.3
+        params.chr_wsc = 0.0
+    damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
+    damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+	
     local resist = applyResistanceEffect(caster, target, spell, params)
-    local duration = 120 * resist
-    local power = 25
+	duration = duration * resist
 
     if (resist > 0.5) then -- Do it!
-        if (target:addStatusEffect(typeEffect, power, 0, duration)) then
+        if (target:addStatusEffect(tpz.effect.BLINDNESS, 25, 0, duration)) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
@@ -45,5 +55,5 @@ function onSpellCast(caster, target, spell)
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 
-    return typeEffect
+    return tpz.effect.BLINDNESS
 end

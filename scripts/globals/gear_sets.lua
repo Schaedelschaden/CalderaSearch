@@ -151,10 +151,13 @@ local GearSets =  {
              {id = 196, items = {26085, 23329, 23664, 23262, 23597, 23195, 23530, 23128, 23463, 23061, 23396}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.ACC, 15, 0, 0}, {tpz.mod.RACC, 15, 0, 0}, {tpz.mod.MACC, 15, 0, 0}} }, -- AF1 119 +2/3 GEO
              {id = 199, items = {26191, 23330, 23665, 23263, 23598, 23196, 23531, 23129, 23464, 23062, 23397}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.ACC, 15, 0, 0}, {tpz.mod.RACC, 15, 0, 0}, {tpz.mod.MACC, 15, 0, 0}} }, -- AF1 119 +2/3 RUN
 
-             {id = 200, items = {27740, 27881, 28029, 28168, 28306},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.DMGPHYS, -10, 0, 0}} },          -- Outrider set (Phys damage taken -10%)
-             {id = 201, items = {27741, 27882, 28030, 28169, 28307},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.CRIT_DMG_INCREASE, 10, 0, 0}} }, -- Espial set (Crit damage +10%)
-             {id = 202, items = {27742, 27883, 28031, 28170, 28308},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.REFRESH, 3, 0, 0}} },            -- Wayfarer set (Refresh+3)
-        }
+             {id = 200, items = {27740, 27881, 28029, 28168, 28306},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.DMGPHYS, -10, 0, 0}} },                      -- Outrider set (Phys damage taken -10%)
+             {id = 201, items = {27741, 27882, 28030, 28169, 28307},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.CRIT_DMG_INCREASE, 10, 0, 0}} },             -- Espial set (Crit damage +10%)
+             {id = 202, items = {27742, 27883, 28031, 28170, 28308},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.REFRESH, 3, 0, 0}} },                        -- Wayfarer set (Refresh+3)
+		     {id = 203, items = {11811, 10293}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.STR, 10, 0, 0}, {tpz.mod.INT, 10, 0, 0}} },                        -- Chocobo Gear "set" (+STR, +INT)(Caldera Customization)
+			 {id = 204, items = {26965, 27291}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.DOUBLE_ATTACK, 10, 0, 0}, {tpz.mod.TRIPLE_ATTACK, 10, 0, 0}} },    -- Sexy Beast (Male) "set" (+Double Attack, +Triple Attack)(Caldera Customization)
+		     {id = 205, items = {26967, 27293}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.DOUBLE_ATTACK, 10, 0, 0}, {tpz.mod.TRIPLE_ATTACK, 10, 0, 0}} },    -- Sexy Beast (Female) "set" (+Double Attack, +Triple Attack)(Caldera Customization)
+		}
 
              -- increment id by (number of mods in previous gearset - 1)
 
@@ -187,6 +190,9 @@ local HipsterSets = {
     {id = 193, hipster = true},
     {id = 196, hipster = true},
     {id = 199, hipster = true},
+	{id = 203, hipster = true},
+	{id = 204, hipster = true},
+	{id = 205, hipster = true},
 }
 
 ------------------------------------------
@@ -351,6 +357,50 @@ function HandleHipsterSet(player, gearset, matches)
             modValue = 60 -- 5 or more matches
         end
         --Unimplemented method to add pet mods
+        return
+	-- Chocobo Gear Set
+    elseif (gearset.id == 203) then
+        local mlvl = player:getMainLvl()
+		local modValue = 0
+
+        if (mlvl > 90) then
+            modValue = 10
+        elseif (mlvl > 75) then
+            modValue = 15
+		elseif (mlvl > 50) then
+            modValue = 25
+		elseif (mlvl > 30) then
+            modValue = 35
+		elseif (mlvl >= 1) then
+            modValue = 50
+        end
+        player:addGearSetMod(gearset.id, tpz.mod.STR, modValue)
+		player:addGearSetMod(gearset.id + 1, tpz.mod.INT, modValue / 4)
+        return
+	-- Sexy Beast (Male/Female) Gear Sets
+	elseif (gearset.id == 204) or (gearset.id == 205) then
+        local mlvl = player:getMainLvl()
+		local modValue = 0
+
+        if (mlvl > 90) then
+            modValue = 10
+        elseif (mlvl > 75) then
+            modValue = 20
+			player:addGearSetMod(gearset.id + 3, tpz.mod.SUBTLE_BLOW, 20)
+		elseif (mlvl > 50) then
+            modValue = 35
+			player:addGearSetMod(gearset.id + 3, tpz.mod.SUBTLE_BLOW, 35)
+		elseif (mlvl > 30) then
+            modValue = 50
+			player:addGearSetMod(gearset.id + 3, tpz.mod.SUBTLE_BLOW, 50)
+		elseif (mlvl >= 1) then
+            modValue = 65
+			player:addGearSetMod(gearset.id + 3, tpz.mod.SUBTLE_BLOW, 50)
+			player:addGearSetMod(gearset.id + 4, tpz.mod.SUBTLE_BLOW_II, 15)
+        end
+        player:addGearSetMod(gearset.id, tpz.mod.DOUBLE_ATTACK, modValue)
+		player:addGearSetMod(gearset.id + 1, tpz.mod.TRIPLE_ATTACK, modValue)
+		player:addGearSetMod(gearset.id + 2, tpz.mod.STR, modValue / 5)
         return
     end
 end

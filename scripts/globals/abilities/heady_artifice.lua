@@ -1,17 +1,23 @@
 -----------------------------------
 -- Ability: Heady Artifice
--- Description: Allows automatons to perform a special ability that varies with the head used.
--- Obtained: PUP Level 96
--- Recast Time: 01:00:00
+-- Allows automatons to perform a special ability that varies with the head used.
+-- Obtained: Puppetmaster Level 96
+-- Recast Time: 1:00:00
+-- Duration: Varies with head used
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
 
 function onAbilityCheck(player, target, ability)
-    return 0, 0
+    if (player:hasPet() == true) then
+		return 0, 0
+	else
+		return tpz.msg.basic.REQUIRES_A_PET, 0
+	end
 end
 
 function onUseAbility(player, target, ability)
-    target:addStatusEffect(tpz.effect.HEADY_ARTIFICE, 18, 1, 1)
+	local pet = player:getPet()
+    pet:addStatusEffect(tpz.effect.HEADY_ARTIFICE, 1, 0, 60)
 end

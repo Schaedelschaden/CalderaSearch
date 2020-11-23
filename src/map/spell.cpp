@@ -744,6 +744,13 @@ namespace spell
                 total = 20;
             }
         }
+		
+		if (entity->StatusEffectContainer->HasStatusEffect(EFFECT_THEURGIC_FOCUS) &&
+            (spell->getSpellFamily() >= SPELLFAMILY_FIRE && spell->getSpellFamily() <= SPELLFAMILY_FLOOD) ||
+            (spell->getSpellFamily() >= SPELLFAMILY_FIRA && spell->getSpellFamily() <= SPELLFAMILY_WATERA))
+        {
+            total = total / 2;
+        }
 
         return total;
     }

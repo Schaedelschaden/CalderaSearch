@@ -12,7 +12,7 @@ function calculateBarstatusPower(caster, enhanceSkill)
     end
 
     -- No known way to determine actual potency.
-    return 1 + 0.02 * enhanceSkill + meritBonus
+    return 1 + 0.12 * enhanceSkill + meritBonus
 end
 
 function calculateBarstatusDuration(caster, enhanceSkill)
@@ -26,7 +26,18 @@ function applyBarstatus(effectType, caster, target, spell)
 
     local power = calculateBarstatusPower(caster, enhanceSkill)
     local duration = calculateBarstatusDuration(caster, enhanceSkill)
+	
     duration = calculateDuration(duration, tpz.skill.ENHANCING_MAGIC, tpz.magic.spellGroup.WHITE, caster, target)
+	
+	-- Schaedel TODO: Determine if Composure is applied through the calculateDuration function
+	if target:hasStatusEffect(tpz.effect.COMPOSURE) and target == caster then
+		duration = duration * 3
+	end
+	
+	if (caster:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		power = power * 2
+		caster:delStatusEffect(tpz.effect.EMBOLDEN)
+	end
 
     target:addStatusEffect(effectType, power, 0, duration)
     return effectType

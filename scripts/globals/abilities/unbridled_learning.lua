@@ -1,19 +1,22 @@
 -----------------------------------
 -- Ability: Unbridled Learning
--- Description: Allows access to additional blue magic spells.
--- Obtained: BLU Level 95
--- Recast Time: 00:05:00
--- Duration: 00:01:00
+-- Allows access to additional blue magic spells.
+-- Obtained: Blue Mage Level 95
+-- Recast Time: 5:00
+-- Duration: 1:00 or until one of the unlocked spells is cast
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
-require("scripts/globals/msg")
 -----------------------------------
 
-function onAbilityCheck(player, target, ability)
-    return 0, 0
+function onAbilityCheck(player,target,ability)
+--	printf("Unbridled Learning PLAYER onAbilityCheck START\n")
+    return 0,0
 end
 
 function onUseAbility(player, target, ability)
-    target:addStatusEffect(tpz.effect.UNBRIDLED_LEARNING, 16, 1, 60)
+--	printf("Unbridled Learning PLAYER onUseAbility\n")
+    player:addStatusEffect(tpz.effect.UNBRIDLED_LEARNING,1,0,60)
+
+    return tpz.effect.UNBRIDLED_LEARNING
 end

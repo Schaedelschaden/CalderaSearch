@@ -1,16 +1,16 @@
 -----------------------------------
 --
---
+-- tpz.effect.BLITZERS_ROLL
 --
 -----------------------------------
 
-function onEffectGain(target, effect)
-    target:addMod(tpz.mod.DELAY, effect:getPower())
+function onEffectGain(target,effect)
+    target:addMod(tpz.mod.DELAYP, effect:getPower())
 end
 
-function onEffectTick(target, effect)
+function onEffectTick(target,effect)
 end
 
-function onEffectLose(target, effect)
-    target:delMod(tpz.mod.DELAY, effect:getPower())
+function onEffectLose(target,effect)
+    target:delMod(tpz.mod.DELAYP, effect:getPower())
 end

@@ -1,15 +1,19 @@
 -----------------------------------
 --
---     tpz.effect.MANAWELL
+-- tpz.effect.MANAWELL
 --
 -----------------------------------
-function onEffectGain(target, effect)
-    target:addMod(tpz.mod.NO_SPELL_MP_DEPLETION, 100)
+require("scripts/globals/status")
+-----------------------------------
+
+function onEffectGain(target,effect)
+
 end
 
-function onEffectTick(target, effect)
+function onEffectTick(target,effect)
+
 end
 
-function onEffectLose(target, effect)
-    target:delMod(tpz.mod.NO_SPELL_MP_DEPLETION, 100)
+function onEffectLose(target,effect)
+
 end

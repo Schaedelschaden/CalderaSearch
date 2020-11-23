@@ -22,7 +22,9 @@ function onSpellCast(caster, target, spell)
         final = math.floor((enhskill - 300.5) / 28.5) + 28
     end
 
-    if target:addStatusEffect(tpz.effect.PHALANX, final, 0, duration) then
+	final = final + target:getMod(tpz.mod.PHALANX_RCVD)
+
+    if target:addStatusEffect(tpz.effect.PHALANX,final,0,duration) then
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)
     else
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)

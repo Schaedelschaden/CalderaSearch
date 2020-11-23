@@ -22,7 +22,7 @@ function onAbilityCheck(player, target, ability)
     if player:hasStatusEffect(tpz.effect.ALTRUISM) then
         return tpz.msg.basic.EFFECT_ALREADY_ACTIVE, 0
     end
-    return 0, 0
+    return 0,0
 end
 
 function onUseAbility(player, target, ability)

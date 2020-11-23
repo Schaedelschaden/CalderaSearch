@@ -1,31 +1,17 @@
--- phpMyAdmin SQL Dump
--- version 3.3.8
--- http://www.phpmyadmin.net
---
--- Serveur: localhost
--- Généré le : Lun 09 Janvier 2012 à 23:18
--- Version du serveur: 6.0.0
--- Version de PHP: 5.2.9-2
-
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Base de données: `tpzdb`
---
-
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               5.6.26-log - MySQL Community Server (GPL)
+-- Server OS:                    Win64
+-- HeidiSQL Version:             11.0.0.5919
 -- --------------------------------------------------------
 
---
--- Structure de la table `delivery_box`
---
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
-DROP TABLE IF EXISTS `delivery_box`;
+-- Dumping structure for table tpzdb.delivery_box
 CREATE TABLE IF NOT EXISTS `delivery_box` (
   `charid` int(10) unsigned NOT NULL,
   `charname` varchar(15) DEFAULT NULL,
@@ -34,10 +20,18 @@ CREATE TABLE IF NOT EXISTS `delivery_box` (
   `itemid` smallint(5) unsigned NOT NULL,
   `itemsubid` smallint(5) unsigned NOT NULL DEFAULT '0',
   `quantity` int(10) unsigned NOT NULL,
-  `extra` blob(24) DEFAULT NULL,
+  `extra` tinyblob,
   `senderid` int(10) unsigned NOT NULL DEFAULT '0',
   `sender` varchar(15) DEFAULT NULL,
-  `received` tinyint(1) NOT NULL DEFAULT 0,
-  `sent` tinyint(1) NOT NULL DEFAULT 0,
+  `received` tinyint(1) NOT NULL DEFAULT '0',
+  `sent` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`charid`,`box`,`slot`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table tpzdb.delivery_box: ~0 rows (approximately)
+/*!40000 ALTER TABLE `delivery_box` DISABLE KEYS */;
+/*!40000 ALTER TABLE `delivery_box` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

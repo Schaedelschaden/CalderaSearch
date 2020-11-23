@@ -158,6 +158,14 @@ CSpell* CMagicState::GetSpell()
 bool CMagicState::CanCastSpell(CBattleEntity* PTarget)
 {
     auto ret = m_PEntity->CanUseSpell(GetSpell());
+	float range = m_PSpell->getRange();
+
+    if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_THEURGIC_FOCUS) &&
+        (m_PSpell->getSpellFamily() >= SPELLFAMILY_FIRE && m_PSpell->getSpellFamily() <= SPELLFAMILY_FLOOD) ||
+        (m_PSpell->getSpellFamily() >= SPELLFAMILY_FIRA && m_PSpell->getSpellFamily() <= SPELLFAMILY_WATERA))
+    {
+        range = range / 2;
+    }
 
     if (!ret)
     {
@@ -192,7 +200,7 @@ bool CMagicState::CanCastSpell(CBattleEntity* PTarget)
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, PTarget, static_cast<uint16>(m_PSpell->getID()), 0, MSGBASIC_TOO_FAR_AWAY);
         return false;
     }
-    if (m_PEntity->objtype == TYPE_PC && distance(m_PEntity->loc.p, PTarget->loc.p) > m_PSpell->getRange())
+    if (m_PEntity->objtype == TYPE_PC && distance(m_PEntity->loc.p, PTarget->loc.p) > range)
     {
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, PTarget, static_cast<uint16>(m_PSpell->getID()), 0, MSGBASIC_OUT_OF_RANGE_UNABLE_CAST);
         return false;
@@ -223,7 +231,7 @@ bool CMagicState::HasCost()
         }
     }
     // check has mp available
-    else if (!m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT) &&
+    else if (!m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT) && !m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MANAWELL) &&
         !(m_flags & MAGICFLAGS_IGNORE_MP) && battleutils::CalculateSpellCost(m_PEntity, GetSpell()) > m_PEntity->health.mp)
     {
         if (m_PEntity->objtype == TYPE_MOB && m_PEntity->health.maxmp == 0)
@@ -246,7 +254,8 @@ void CMagicState::SpendCost()
             battleutils::HasNinjaTool(m_PEntity, GetSpell(), true);
         }
     }
-    else if (m_PSpell->hasMPCost() && !m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT) && !(m_flags & MAGICFLAGS_IGNORE_MP))
+    else if (m_PSpell->hasMPCost() && !m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT) &&
+			!m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MANAWELL) && !(m_flags && MAGICFLAGS_IGNORE_MP))
     {
         int16 cost = battleutils::CalculateSpellCost(m_PEntity, GetSpell());
 
@@ -260,6 +269,10 @@ void CMagicState::SpendCost()
 
         m_PEntity->addMP(-cost);
     }
+	if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MANAWELL))
+	{
+		m_PEntity->StatusEffectContainer->DelStatusEffect(EFFECT_MANAWELL);
+	}
 }
 
 uint32 CMagicState::GetRecast()
@@ -313,6 +326,24 @@ void CMagicState::ApplyEnmity(CBattleEntity* PTarget, int ce, int ve)
                     }
                     battleutils::DirtyExp(PTarget, m_PEntity);
                 }
+				
+				if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_SUBTLE_SORCERY))
+				{
+					ce = 0;
+					ve = 0;
+					mob->PEnmityContainer->UpdateEnmity(m_PEntity, ce, ve);
+					battleutils::GenerateInRangeEnmity(m_PEntity, ce, ve);
+					enmityApplied = true;
+				}
+				
+				if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_DIVINE_EMBLEM) && (m_PSpell->getSpellFamily() == SPELLFAMILY_HOLY ||
+				m_PSpell->getSpellFamily() == SPELLFAMILY_BANISH || m_PSpell->getSpellFamily() == SPELLFAMILY_BANISHGA))
+				{
+					ve = ve * (1 + (m_PEntity->getMod(Mod::DIVINE_ENMITY_BONUS) / 100));
+					mob->PEnmityContainer->UpdateEnmity(m_PEntity, ce, ve);
+					battleutils::GenerateInRangeEnmity(m_PEntity, ce, ve);
+					enmityApplied = true;
+				}
             }
         }
         else if (PTarget->allegiance == m_PEntity->allegiance)
@@ -338,6 +369,11 @@ void CMagicState::ApplyEnmity(CBattleEntity* PTarget, int ce, int ve)
     {
         m_PEntity->delModifier(Mod::ENMITY, -(m_PEntity->getMod(Mod::DIVINE_BENISON) >> 1)); // Half of divine benison mod amount = -enmity
     }
+	if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_CASCADE) && m_PSpell->getSpellGroup() == SPELLGROUP_BLACK)
+	{
+		m_PEntity->StatusEffectContainer->DelStatusEffect(EFFECT_CASCADE);
+		m_PEntity->health.tp = 0;
+	}
 }
 
 bool CMagicState::HasMoved()

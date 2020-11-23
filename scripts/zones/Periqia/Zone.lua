@@ -34,7 +34,7 @@ function onEventFinish(player, csid, option)
     local chars = instance:getChars()
     if csid == 102 then
         for i, v in pairs(chars) do
-            v:setPos(0, 0, 0, 0, 79)
+            v:setPos(-349.4024, -1.1756, -20.1566, 0, 79)
         end
     end
 end

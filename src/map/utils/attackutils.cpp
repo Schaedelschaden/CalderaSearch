@@ -151,14 +151,33 @@ namespace attackutils
         }
 
         uint32 originalDamage = damage;
+	    int16 occ_do_quad_dmg = 0;
         int16 occ_do_triple_dmg = 0;
         int16 occ_do_double_dmg = 0;
+		int16 random = 0;
+
+		if (PChar->objtype == TYPE_PC)
+		{
+			random = tpzrand::GetRandomNumber(100);
+		}
 
         switch (attackType)
         {
             case PHYSICAL_ATTACK_TYPE::RANGED:
+				if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_DOUBLE_SHOT))
+				{
+					occ_do_double_dmg = PChar->getMod(Mod::DOUBLE_SHOT_RATE);
+					occ_do_triple_dmg = PChar->getMod(Mod::TRIPLE_SHOT_RATE);
+				}
+				else if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_TRIPLE_SHOT))
+				{
+					occ_do_triple_dmg = PChar->getMod(Mod::TRIPLE_SHOT_RATE);
+					occ_do_quad_dmg = PChar->getMod(Mod::QUAD_SHOT_RATE);
+				}
+				break;
             case PHYSICAL_ATTACK_TYPE::RAPID_SHOT:
-                occ_do_triple_dmg = PChar->getMod(Mod::REM_OCC_DO_TRIPLE_DMG_RANGED) / 10;
+                occ_do_quad_dmg = PChar->getMod(Mod::REM_OCC_DO_QUAD_DMG_RANGED) / 10;
+				occ_do_triple_dmg = PChar->getMod(Mod::REM_OCC_DO_TRIPLE_DMG_RANGED) / 10;
                 occ_do_double_dmg = PChar->getMod(Mod::REM_OCC_DO_DOUBLE_DMG_RANGED) / 10;
                 break;
             case PHYSICAL_ATTACK_TYPE::NORMAL:
@@ -174,6 +193,72 @@ namespace attackutils
 
         float occ_extra_dmg = battleutils::GetScaledItemModifier(PChar, PWeapon, Mod::OCC_DO_EXTRA_DMG) / 100.f;
         int16 occ_extra_dmg_chance = battleutils::GetScaledItemModifier(PChar, PWeapon, Mod::EXTRA_DMG_CHANCE) / 10;
+		uint16 doubleDmgBonus = PChar->getMod(Mod::DOUBLE_SHOT_DAMAGE);
+		uint16 tripleDmgBonus = PChar->getMod(Mod::TRIPLE_SHOT_DAMAGE);
+		uint16 dbl_occ_trpl = PChar->getMod(Mod::DBL_OCC_TRPL_SHOT);
+		uint16 trpl_occ_quad = PChar->getMod(Mod::TRPL_OCC_QUAD_SHOT);
+		
+        if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_OVERKILL))
+		{
+			occ_do_double_dmg = 66;
+			if (random > occ_do_double_dmg)
+			{
+				PChar->setModifier(Mod::DOUBLE_SHOT_AMMO, 2);
+				damage = damage + tripleDmgBonus;
+				return (uint32)(damage * 3.f);
+			}
+			else
+			{
+				damage = damage + doubleDmgBonus;
+				PChar->setModifier(Mod::DOUBLE_SHOT_AMMO, 1);
+				return (uint32)(damage * 2.f);
+			}
+		}
+		else if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_TRIPLE_SHOT))
+		{
+			CItemEquipment* PAmmo = PChar->getEquip(SLOT_AMMO);
+			uint16 chanceQuad = tpzrand::GetRandomNumber(100);
+			
+			// Triple Shot: Occasionally becomes Quad Shot
+			if (PAmmo->getQuantity() >= 4 && trpl_occ_quad > 0 && chanceQuad <= trpl_occ_quad)
+			{
+				PChar->setModifier(Mod::TRIPLE_SHOT_AMMO, 3);
+				return (uint32)(damage * 4.f);
+			}
+			else if (PAmmo->getQuantity() >= 3 && random <= occ_do_triple_dmg) //PAmmo != nullptr && 
+			{
+				PChar->setModifier(Mod::TRIPLE_SHOT_AMMO, 2);
+				damage = damage + tripleDmgBonus;
+				return (uint32)(damage * 3.f);
+			}
+			else
+			{
+				return originalDamage;
+			}
+		}
+		else if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_DOUBLE_SHOT))
+		{
+			CItemEquipment* PAmmo = PChar->getEquip(SLOT_AMMO);
+			uint16 chanceTrpl = tpzrand::GetRandomNumber(100);
+			
+			// Double Shot: Occasionally becomes Double Shot
+			if (PAmmo->getQuantity() >= 3 && dbl_occ_trpl > 0 && chanceTrpl <= dbl_occ_trpl)
+			{
+				PChar->setModifier(Mod::DOUBLE_SHOT_AMMO, 2);
+				damage = damage + tripleDmgBonus;
+				return (uint32)(damage * 3.f);
+			}
+			else if (PAmmo->getQuantity() >= 2 && random <= occ_do_double_dmg) //PAmmo != nullptr && 
+			{
+				PChar->setModifier(Mod::DOUBLE_SHOT_AMMO, 1);
+				damage = damage + doubleDmgBonus;
+				return (uint32)(damage * 2.f);
+			}
+			else
+			{
+				return originalDamage;
+			}
+		}
 
         if (occ_extra_dmg > 3.f && occ_extra_dmg_chance > 0 && tpzrand::GetRandomNumber(100) <= occ_extra_dmg_chance)
         {
@@ -202,10 +287,9 @@ namespace attackutils
             case PHYSICAL_ATTACK_TYPE::TRIPLE:		if (tpzrand::GetRandomNumber(100) < PChar->getMod(Mod::TA_TRIPLE_DAMAGE))			return originalDamage * 3;
             case PHYSICAL_ATTACK_TYPE::DOUBLE:		if (tpzrand::GetRandomNumber(100) < PChar->getMod(Mod::DA_DOUBLE_DAMAGE))			return originalDamage * 2;
             case PHYSICAL_ATTACK_TYPE::RAPID_SHOT:	if (tpzrand::GetRandomNumber(100) < PChar->getMod(Mod::RAPID_SHOT_DOUBLE_DAMAGE))	return originalDamage * 2;
-            case PHYSICAL_ATTACK_TYPE::SAMBA:		if (tpzrand::GetRandomNumber(100) < PChar->getMod(Mod::SAMBA_DOUBLE_DAMAGE))		    return originalDamage * 2;
+            case PHYSICAL_ATTACK_TYPE::SAMBA:		if (tpzrand::GetRandomNumber(100) < PChar->getMod(Mod::SAMBA_DOUBLE_DAMAGE))		return originalDamage * 2;
             default: break;
         }
         return originalDamage;
     }
-
 }

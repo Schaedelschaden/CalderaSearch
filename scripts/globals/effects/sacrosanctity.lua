@@ -1,15 +1,19 @@
 -----------------------------------
 --
---     tpz.effect.SACROSANCTITY
+-- tpz.effect.SACROSANCTITY
 --
 -----------------------------------
-function onEffectGain(target, effect)
-    target:addMod(tpz.mod.MDEF, 75)
+require("scripts/globals/status")
+-----------------------------------
+
+function onEffectGain(target,effect)
+	target:addMod(tpz.mod.DMGMAGIC_II,75)
 end
 
-function onEffectTick(target, effect)
+function onEffectTick(target,effect)
+
 end
 
-function onEffectLose(target, effect)
-    target:delMod(tpz.mod.MDEF, 75)
+function onEffectLose(target,effect)
+	target:delMod(tpz.mod.DMGMAGIC_II,75)
 end

@@ -39,7 +39,7 @@ void CPetController::Tick(time_point tick)
     TracyZoneScoped;
     TracyZoneIString(PPet->GetName());
 
-    if (PPet->isCharmed && tick > PPet->charmTime)
+    if ((PPet->isCharmed && tick > PPet->charmTime) || ((PPet->PMaster == nullptr || PPet->PMaster->isDead()) && PPet->isAlive()))
     {
         petutils::DespawnPet(PPet->PMaster);
         return;

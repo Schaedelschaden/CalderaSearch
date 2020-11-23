@@ -79,7 +79,7 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    if math.random(100) <= 25 then -- 25% chance to spawn Absolute Virtue
+    if math.random(100) <= 40 then -- 40% chance to spawn Absolute Virtue
         SpawnMob(ID.mob.ABSOLUTE_VIRTUE)
     end
 end

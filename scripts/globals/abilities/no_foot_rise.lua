@@ -12,9 +12,9 @@ require("scripts/globals/status")
 
 function onAbilityCheck(player, target, ability)
     if (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_5)) then
-        return 561, 0
+        return 561,0
     else
-        return 0, 0
+        return 0,0
     end
 end
 
@@ -27,7 +27,7 @@ function onUseAbility(player, target, ability)
         end
         player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_1)
         player:addStatusEffect(tpz.effect.FINISHING_MOVE_1 + moves, 1, 0, 7200)
-        return moves+1
+        return moves + 1
     elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_2)) then
         if (moves > 3) then
             moves = 3

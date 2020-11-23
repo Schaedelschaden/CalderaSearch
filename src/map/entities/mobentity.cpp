@@ -870,6 +870,15 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 
     bool validZone = ((Pzone > 0 && Pzone < 39) || (Pzone > 42 && Pzone < 134) || (Pzone > 135 && Pzone < 185) || (Pzone > 188 && Pzone < 255));
 
+	uint8 pCharLvl = PChar->GetMLevel();
+	uint8 mLvl = this->GetMLevel();
+	uint8 iLvl = this->m_Weapons[SLOT_MAIN]->getILvl();
+					
+	if (iLvl > mLvl)
+	{
+		mLvl = iLvl;
+	}
+
     if (validZone && charutils::CheckMob(m_HiPCLvl, GetMLevel()) > EMobDifficulty::TooWeak)
     {
 

@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Geist Wall
--- Removes one beneficial magic effect from enemies within range
+-- Removes one beneficial magic effect from enemies within range.
 -- Spell cost: 35 MP
 -- Monster Type: Lizards
 -- Spell Type: Magical (Dark)
@@ -24,8 +24,8 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.BLUE_MAGIC
     local resist = applyResistance(caster, target, spell, params)
     local effect = tpz.effect.NONE
 

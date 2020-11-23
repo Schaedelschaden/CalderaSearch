@@ -9,7 +9,7 @@ require("scripts/globals/ability")
 ---------------------------------------------------
 
 function onAbilityCheck(player, target, ability)
-    return 0, 0
+    return 0,0
 end
 
 function onUseAbility(pet, target, skill, action)
@@ -31,7 +31,8 @@ function onUseAbility(pet, target, skill, action)
     dmgmod = (dmgmod * (1+gear))*deep
     pet:setTP(0)
 
-    local dmg = AbilityFinalAdjustments(dmgmod, pet, skill, target, tpz.attackType.BREATH, tpz.damageType.ICE, MOBPARAM_IGNORE_SHADOWS)
+    local dmg = AbilityFinalAdjustments(dmgmod,pet,skill,target,tpz.attackType.BREATH,tpz.damageType.ICE,MOBPARAM_IGNORE_SHADOWS)
+	dmg = dmg * 3 -- Retail breath damage calc is underwhelming, juice it up!
     target:takeDamage(dmg, pet, tpz.attackType.BREATH, tpz.damageType.ICE)
     return dmg
 end

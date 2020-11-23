@@ -545,7 +545,7 @@ enum EFFECT
     EFFECT_PALISADE                 = 478, // PLD 95
     EFFECT_SCARLET_DELIRIUM         = 479, // DRK 95
     EFFECT_SCARLET_DELIRIUM_1       = 480, // DRK 95
-    // EFFECT_NONE                      = 481, // NONE
+    EFFECT_ABDHALJS_SEAL            = 481,
     EFFECT_DECOY_SHOT               = 482, // RNG 95
     EFFECT_HAGAKURE                 = 483, // SAM 95
     EFFECT_ISSEKIGAN                = 484, // NIN 95
@@ -559,7 +559,7 @@ enum EFFECT
     EFFECT_ASYLUM                   = 492,
     EFFECT_SUBTLE_SORCERY           = 493,
     EFFECT_STYMIE                   = 494,
-    // EFFECT_NONE                     = 495,
+    EFFECT_RUN_WILD                 = 495, // (None) DEBUG: Please report. Assigned to Run Wild
     EFFECT_INTERVENE                = 496,
     EFFECT_SOUL_ENSLAVEMENT         = 497,
     EFFECT_UNLEASH                  = 498,
@@ -570,7 +570,7 @@ enum EFFECT
     EFFECT_FLY_HIGH                 = 503,
     EFFECT_ASTRAL_CONDUIT           = 504,
     EFFECT_UNBRIDLED_WISDOM         = 505,
-    // EFFECT_NONE                     = 506,
+    EFFECT_BOUNTY_SHOT              = 506, // (None) DEBUG: Please report. Assigned to Bounty Shot
     EFFECT_GRAND_PAS                = 507,
     EFFECT_WIDENED_COMPASS          = 508,
     EFFECT_ODYLLIC_SUBTERFUGE       = 509,
@@ -578,14 +578,14 @@ enum EFFECT
     EFFECT_REIVE_MARK               = 511,
     EFFECT_IONIS                    = 512,
     EFFECT_BOLSTER                  = 513,
-    // EFFECT_NONE                     = 514,
+    EFFECT_NIGHTMARE                = 514, // (None) DEBUG: Please report. Assigned to Nightmare
     EFFECT_LASTING_EMANATION        = 515,
     EFFECT_ECLIPTIC_ATTRITION       = 516,
     EFFECT_COLLIMATED_FERVOR        = 517,
     EFFECT_DEMATERIALIZE            = 518,
     EFFECT_THEURGIC_FOCUS           = 519,
-    // EFFECT_NONE                     = 520,
-    // EFFECT_NONE                     = 521,
+    EFFECT_HEADY_ARTIFICE           = 520, // (None) DEBUG: Please Report. Assigned to Heady Artifice
+    EFFECT_CONTRADANCE              = 521, // (None) DEBUG: Please Report. Assigned to Contradance
     EFFECT_ELEMENTAL_SFORZO         = 522,
     EFFECT_IGNIS                    = 523,
     EFFECT_GELUS                    = 524,
@@ -676,8 +676,31 @@ enum EFFECT
     EFFECT_NEGATE_CHARM             = 610,
     EFFECT_MAGIC_EVASION_BOOST_II   = 611,
     EFFECT_COLURE_ACTIVE            = 612,
-
+	EFFECT_MUMORS_RADIANCE          = 613,
+	EFFECT_ULLEGORES_GLOOM          = 614,
+	EFFECT_BOOST_II                 = 615,
+	EFFECT_ARTISANAL_KNOWLEDGE      = 616,
+	EFFECT_SACRIFICE                = 617,
+	EFFECT_EMPOROXS_GIFT            = 618,
+	EFFECT_SPIRIT_BOND              = 619,
+	EFFECT_AWAKEN                   = 620,
+    EFFECT_MAJESTY                  = 621,
+	EFFECT_GUARDING_RATE_BOOST      = 622,
     EFFECT_RAMPART                  = 623,
+	EFFECT_WINDS_BLESSING           = 624,
+	EFFECT_SIRENS_FAVOR             = 625,
+	EFFECT_NEGATE_SLEEP             = 626,
+	EFFECT_MOBILIZATION             = 627,
+//	EFFECT_NONE                     = 628, // (None) DEBUG: Please report.
+//	EFFECT_NONE                     = 629, // (None) DEBUG: Please report.
+//	EFFECT_NONE                     = 630, // (None) DEBUG: Please report.
+//	EFFECT_NONE                     = 631, // (None) DEBUG: Please report.
+//	EFFECT_NONE                     = 632, // (None) DEBUG: Please report.
+//	EFFECT_NONE                     = 633, // (None) DEBUG: Please report.
+//	EFFECT_RUN_WILD                 = 634,
+//	EFFECT_NONE                     = 765, // (None) Blank - Crashed
+//	EFFECT_NONE                     = 766, // (None) Blank
+//	EFFECT_NONE                     = 767, // (None) Blank
 
     // Effect icons in packet can go from 0-767, so no custom effects should go in that range.
 

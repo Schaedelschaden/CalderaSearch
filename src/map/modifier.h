@@ -232,6 +232,8 @@ enum class Mod
     MARTIAL_ARTS              = 173, // The integer amount of delay to reduce from H2H weapons' base delay. (TRAIT)
     SKILLCHAINBONUS           = 174, // Damage bonus applied to skill chain damage.  Modifier from effects/traits
     SKILLCHAINDMG             = 175, // Damage bonus applied to skill chain damage.  Modifier from gear (multiplicative after effect/traits)
+	MAX_SWINGS                = 978, // Max swings for "Occasionally attacks X times"
+    ADDITIONAL_SWING_CHANCE   = 979, // Chance that allows for an additional swing despite of multiple hits, mostly for Amood weapons
 
     MAGIC_DAMAGE             = 311, // Magic damage added directly to the spell's base damage
 
@@ -455,7 +457,7 @@ enum class Mod
     // Corsair
     EXP_BONUS                 = 382, //
     ROLL_RANGE                = 528, // Additional range for COR roll abilities.
-    JOB_BONUS_CHANCE          = 542, // Chance to apply job bonus to COR roll without having the job in the party.
+	JOB_BONUS_CHANCE          = 542, // "Phantom Roll" effects + Gear (chance to apply job bonus to Phantom Roll without having the job in the party.)
 
     DMG_REFLECT               = 316, // Tracks totals
     ROLL_ROGUES               = 317, // Tracks totals
@@ -488,7 +490,7 @@ enum class Mod
     QUICK_DRAW_DMG            = 411, // Flat damage increase to base QD damage
     QUICK_DRAW_DMG_PERCENT    = 834, // Percentage increase to QD damage
     QUICK_DRAW_MACC           = 191, // Quick draw magic accuracy
-    PHANTOM_ROLL              = 881, // Phantom Roll+ Effect from SOA Rings.
+    PHANTOM_ROLL_PLUS         = 881, // "Phantom Roll" + from Accessories and Weapons.
     PHANTOM_DURATION          = 882, // Phantom Roll Duration +.
 
     // Puppetmaster
@@ -549,8 +551,9 @@ enum class Mod
     // Geo
     CARDINAL_CHANT            = 959,
     INDI_DURATION             = 960,
-    GEOMANCY                  = 961,
+    GEOMANCY                  = 961, // Geomancy Skill
     WIDENED_COMPASS           = 962,
+	HANDBELL                  = 963, // Handbell Skill
     MENDING_HALATION          = 968,
     RADIAL_ARCANA             = 969,
     CURATIVE_RECANTATION      = 970,
@@ -712,6 +715,7 @@ enum class Mod
     ENHANCES_CURSNA_RCVD      = 67,  // Potency of "Cursna" effects received
     ENHANCES_CURSNA           = 310, // Used by gear with the "Enhances Cursna" or "Cursna+" attribute
     ENHANCES_HOLYWATER        = 495, // Used by gear with the "Enhances Holy Water" or "Holy Water+" attribute
+	ENHANCES_PROT_SHELL_RCVD  = 977, // Enhances Protect and Shell Effects Received (Binary MOD)
 
     RETALIATION               = 414, // Increases damage of Retaliation hits
 
@@ -800,7 +804,13 @@ enum class Mod
     // Per https://www.bg-wiki.com/bg/Weapon_Skill_Damage we need all 3..
     ALL_WSDMG_FIRST_HIT       = 841, // Generic (all Weaponskills) damage, first hit only.
     WS_NO_DEPLETE             = 949, // % chance a Weaponskill depletes no TP.
+	WS_STR_BONUS              = 980, // % bonus to str_wsc.
     WS_DEX_BONUS              = 957, // % bonus to dex_wsc.
+	WS_VIT_BONUS              = 981, // % bonus to vit_wsc.
+	WS_AGI_BONUS              = 982, // % bonus to agi_wsc.
+	WS_INT_BONUS              = 983, // % bonus to int_wsc.
+	WS_MND_BONUS              = 984, // % bonus to mnd_wsc.
+	WS_CHR_BONUS              = 985, // % bonus to chr_wsc.
 
     EXPERIENCE_RETAINED       = 914, // Experience points retained upon death (this is a percentage)
     CAPACITY_BONUS            = 915, // Capacity point bonus granted
@@ -816,6 +826,99 @@ enum class Mod
     // SPARE = 977, // stuff
     // SPARE = 978, // stuff
     // SPARE = 979, // stuff
+	
+	// Caldera custom Mod IDs
+    COUNTER_DMG                     = 3001, // Increases Counter Damage
+    COUNTER_CRIT_HIT_RATE           = 3002, // Increases Counter Critical Hit Rate
+    MAG_BURST_BONUS_II              = 3003, // Magic Burst Bonus II
+    POT_BANISH_UNDEAD               = 3004, // Potency of "Banish" on Undead
+    ELEM_DOT_EFFECT                 = 3005, // Potency of Black Magic Elemental DOT
+    GAIN_MAGIC_EFFECT               = 3006, // Potency of White Magic Gain Spells
+    TRICK_ATK_DMG                   = 3007, // Increases Trick Attack Damage
+    COVER_CONVERT_DMG               = 3008, // Cover: % Physical Damage Converted to MP
+    SHIELD_BASH_DISPEL              = 3009, // Shield Bash: Adds Dispel
+	DIVINE_ENMITY_BONUS             = 3010, // Divine Magic Special Enmity Bonus
+	DARK_MAGIC_CAST                 = 3011, // Dark Magic Casting Time -%
+	LAST_RESORT_DEF                 = 3012, // Last Resort Defense Penalty -%
+    NETHER_VOID_BONUS               = 3013, // Nether Void Absorb Bonus
+    DAMAGE_LIMIT_TRAIT              = 3014, // Damage Limit+ Job Trait (Flat pDIF Bonus, value of 1 to 6)
+	DAMAGE_LIMIT_GEAR               = 3015, // Physical Damage Limit +% from gear (pDIF multiplier)
+	ALL_KILLER_EFFECTS              = 3016, // All Killer Effects + (caps at 100%)
+	AUGMENT_REWARD                  = 3017, // Augments "Reward", II, and III
+//	JUG_LEVEL_RANGE                 = 3018, // Decreases the level range of spawned jug pets. Maxes out at 2. (Added higher up)
+	BEAST_AFFINITY                  = 3019, // Increases Jug Pet level by 1 (maxed at 15)
+	REWARD_RECAST					= 3020, // Reduces Reward's recast by x seconds
+	DOUBLE_SHOT_AMMO                = 3021, // Tracks Double Shot Ammo Requirement
+	DOUBLE_SHOT_DAMAGE              = 3022, // Double Shot Damage + Gear
+	BOUNTY_SHOT_RATE                = 3023, // Bounty Shot +Treasure Hunter (base of 2 when active)
+	SENGIKORI_BONUS                 = 3024, // % Bonus to Skillchains and Magic Burst II
+	YAEGASUMI_WS_BONUS              = 3025, // Tracks bonus to WS damage from Yaegasumi SP attack cancellations
+	UTSUSEMI_CAST                   = 3026, // Utsusemi Spellcasting Time -%
+	ALL_JUMPS_WYVERN_HP             = 3027, // All Jumps: Adds % of wyvern's max HP as additional damage
+//	WYVERN_SUPPORT_JOB              = 3028, // Wyvern: Adds support job abilities to wyvern (Added higher up as WYVERN_SUBJOB_TRAITS)
+	MANA_CEDE_STRENGTH				= 3029, // Enhances "Mana Cede" effect
+	AVATAR_ILVL						= 3030, // Avatar: Lv. gear
+	SPIRIT_RECAST                   = 3031, // Shortens magic recast time for Elemental Spirits gear
+	AVATARS_FAVOR_BP_DELAY          = 3032, // Blood Pact Delay Reduction from Avatar's Favor
+	BREATH_DMG_DEALT				= 3033, // Increases Breath Damage Dealt +%
+	CHAIN_AFFINITY_EFFECT			= 3034, // Enhances "Chain Affinity" effect
+	BURST_AFFINITY_EFFECT			= 3035, // Enhances "Burst Affinity" effect
+	RANDOM_DEAL_EFFECT              = 3036, // Enhances "Random Deal" effect (+% chance to restore two Job Abilities)
+	TRIPLE_SHOT_RATE                = 3037, // Activation Rate for Triple Shot
+	TRIPLE_SHOT_AMMO                = 3038, // Tracks Triple Shot Ammo Requirement
+	TRPL_OCC_QUAD_SHOT              = 3039, // Triple Shot: Occasionally becomes Quad Shot
+	QUICK_DRAW_TP                   = 3040, // "Quick Draw" TP Bonus
+	QUAD_SHOT_RATE                  = 3041, // Activation Rate for Quad Shot
+	REM_OCC_DO_QUAD_DMG_RANGED      = 3042, // Proc rate for REM Aftermaths that apply "Occasionally do quadruple damage" (Mainly provided for "Quad Shot")
+	TRIPLE_SHOT_DAMAGE              = 3043, // Triple Shot Damage + Gear
+	PHANTOM_ROLL_EFFECT             = 3044, // + Phantom Roll Effect from Crooked Cards
+	DBL_OCC_TRPL_SHOT               = 3045, // Double Shot: Occasionally becomes Triple Shot
+	TRUE_SHOT                       = 3046, // "True Shot" + Gear
+	AUTOMATON_ILVL                  = 3047, // Automaton: Lv. Gear
+	BARRAGE_TURBINE_SHOTS           = 3048, // Barrage Turbine additional shot counter
+	TACTICAL_SWITCH_BONUS           = 3049, // "Tactical Switch" + Gear (Adds % TP Bonus when using Tactical Switch)
+	STEP_TP_CONSUMED                = 3050, // "Step" TP Consumed - Gear
+	CRIT_HIT_EVASION                = 3051, // Adjusts the % chance that a critical hit will land (Feather Step)
+//	SUBTLE_BLOW_II                  = 3052, // Subtle Blow II Gear (Added higher up)
+	PARRY_RATE_BONUS                = 3053, // Inquartata and Parrying Rate +% Gear
+	LIEMENT_DURATION                = 3054, // "Liement" Duration + Gear
+	SWORDPLAY                       = 3055, // Number of ticks to increase starting value of Swordplay by
+	ENH_MAGIC_CAST_TIME             = 3056, // Enhancing Magic Casting Time
+	VALLATION_DURATION              = 3057, // Increases the duration of Vallation
+	LUNGE_BONUS                     = 3058, // n multiplier from gear and job points for Swipe and Lunge
+	PFLUG_BONUS                     = 3059, // Improves Pflug base value
+	PHALANX_RCVD                    = 3060, // Enhances Phalanx Effect Received
+	GAMBIT_DURATION                 = 3061, // Increases the duration of Gambit
+	BATTUTA_EFFECT                  = 3062, // Increases the Counter damage of Battuta
+	ONE_FOR_ALL_EFFECT              = 3063, // Tracks the total amount of magic reduction from One For All
+	LUOPAN_POTENCY                  = 3064, // Luopan potency from Ecliptic Attrition/Blaze of Glory
+	LUOPAN_REGEN                    = 3065, // Luopan: Regen +
+	AUGMENT_CONCENTRIC_PULSE        = 3066, // Augments "Concentric Pulse"
+	GEOMANCY_POTENCY                = 3067, // +Geomancy potency from Eminent Bell/Dunna/etc
+	
+	ASURAN_FISTS_WS_DMG             = 3100, // Main Hand: Asuran Fists Damage (H2H)
+	EVISCERATION_WS_DMG             = 3101, // Main Hand: Evisceration Damage (Dagger)
+	SAVAGE_BLADE_WS_DMG             = 3102, // Main Hand: Savage Blade Damage (Sword)
+	GROUND_STRIKE_WS_DMG            = 3103, // Main Hand: Ground Strike Damage (GSword)
+	DECIMATION_WS_DMG               = 3104, // Main Hand: Decimation Damage (Axe)
+	STEEL_CYCLONE_WS_DMG            = 3105, // Main Hand: Steel Cycle Damage (GAxe)
+	SPIRAL_HELL_WS_DMG              = 3106, // Main Hand: Spiral Hell Damage (Scythe)
+	IMPULSE_DRIVE_WS_DMG            = 3107, // Main Hand: Impulse Drive Damage (Polearm)
+	BLADE_KU_WS_DMG                 = 3108, // Main Hand: Blade: Ku Damage (Katana)
+	TACHI_KASHA_WS_DMG              = 3109, // Main Hand: Tachi: Kasha Damage (GKatana)
+	BLACK_HALO_WS_DMG               = 3110, // Main Hand: Black Halo Damage (Club)
+	RETRIBUTION_WS_DMG              = 3111, // Main Hand: Retribution Damage (Staff)
+	EMPYREAL_ARROW_WS_DMG           = 3112, // Main Hand: Empyreal Arrow Damage (Archery)
+	DETONATOR_WS_DMG                = 3113, // Main Hand: Detonator Damage (Marksmanship)
+	
+    SDT_FIRE                        = 3200, // Fire Specific Damage Taken
+    SDT_ICE                         = 3201, // Ice Specific Damage Taken
+    SDT_WIND                        = 3202, // Wind Specific Damage Taken
+    SDT_EARTH                       = 3203, // Earth Specific Damage Taken
+    SDT_LIGHTNING                   = 3204, // Thunder Specific Damage Taken
+    SDT_WATER                       = 3205, // Water Specific Damage Taken
+    SDT_LIGHT                       = 3206, // Light Specific Damage Taken
+    SDT_DARK                        = 3207, // Dark Specific Damage Taken
 };
 
 //temporary workaround for using enum class as unordered_map key until compilers support it
@@ -858,7 +961,8 @@ enum class PetModType
     Harlequin = 4,
     Valoredge = 5,
     Sharpshot = 6,
-    Stormwaker = 7
+    Stormwaker = 7,
+	Luopan = 8
 };
 
 class CPetModifier : public CModifier

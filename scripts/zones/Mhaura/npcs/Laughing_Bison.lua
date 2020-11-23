@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Mhaura
---  NPC: Lacia
+--  NPC: Laughing Bison
 -- Standard Info NPC
 -----------------------------------
 

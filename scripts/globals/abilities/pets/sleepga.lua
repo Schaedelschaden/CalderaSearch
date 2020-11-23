@@ -1,23 +1,44 @@
------------------------------------------
--- Sleepga
------------------------------------------
+---------------------------------------------
+-- Sleepga (Shiva Blood Pact)
+---------------------------------------------
 require("scripts/globals/monstertpmoves")
+require("scripts/globals/settings")
 require("scripts/globals/status")
-require("scripts/globals/magic")
-require("scripts/globals/msg")
-require("scripts/globals/spell_data")
 require("scripts/globals/summon")
------------------------------------------
+require("scripts/globals/msg")
+---------------------------------------------
 
 function onAbilityCheck(player, target, ability)
-    return 0, 0
+	local currentMP = player:getMP()
+	local bloodboon = player:getMod(tpz.mod.BLOOD_BOON)
+	local cost = 54 -- Set the Blood Pact MP Cost here
+		
+	if (player:hasStatusEffect(tpz.effect.ASTRAL_CONDUIT)) then
+		ability:setRecast(utils.clamp(0, 0, 0))
+	end
+	
+	if (player:hasStatusEffect(tpz.effect.APOGEE)) then
+		cost = cost * 1.5
+		ability:setRecast(utils.clamp(0, 0, 0))
+		player:delStatusEffect(tpz.effect.APOGEE)
+	end
+	
+	if (math.random(1,100) < bloodboon) then
+		local originalcost = cost
+		cost = (cost * (math.random(8,16) / 16))
+--		printf("Sleepga PET onAbilityCheck BLOOD BOON COST REDUCTION [%i to %i]\n",originalcost,cost)
+	end
+	
+	player:setMP(currentMP - cost)
+	
+--	printf("Sleepga PET onAbilityCheck\n")
+	
+	return 0,0
 end
 
 function onPetAbility(target, pet, skill)
-    local duration = 90
-    local dINT = pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
-    local bonus = getSummoningSkillOverCap(pet)
-    local resm = applyPlayerResistance(pet, -1, target, dINT, bonus, tpz.magic.element.ICE)
+    local duration = 60
+    local resm = applyPlayerResistance(pet,-1,target,pet:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT),tpz.skill.ELEMENTAL_MAGIC, 5)
     if (resm < 0.5) then
         skill:setMsg(tpz.msg.basic.JA_MISS_2) -- resist message
         return tpz.effect.SLEEP_I
@@ -29,7 +50,7 @@ function onPetAbility(target, pet, skill)
     else
         skill:setMsg(tpz.msg.basic.SKILL_ENFEEB)
 
-        target:addStatusEffect(tpz.effect.SLEEP_I, 1, 0, duration)
+        target:addStatusEffect(tpz.effect.SLEEP_I,1,0,duration)
     end
 
     return tpz.effect.SLEEP_I

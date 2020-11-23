@@ -37,7 +37,7 @@ function onUseAbility(player, target, ability)
         if player:hasStatusEffect(tpz.effect.REGEN) then
             player:delStatusEffect(tpz.effect.REGEN)
         end
-        player:addStatusEffect(tpz.effect.REGEN, 10, 0, merits, 0, 0, 1)
+        player:addStatusEffect(tpz.effect.REGEN, 10, 3, merits, 0, 0, 1)
     end
 
     return recover

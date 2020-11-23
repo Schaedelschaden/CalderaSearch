@@ -39,6 +39,8 @@
 #include "lua_zone.h"
 #include "lua_item.h"
 
+#include "../message.h"
+
 #include "../ability.h"
 #include "../entities/baseentity.h"
 #include "../utils/battleutils.h"
@@ -57,8 +59,13 @@
 #include "../transport.h"
 #include "../packets/action.h"
 #include "../packets/char_update.h"
+#include "../packets/chat_message.h"
 #include "../packets/entity_update.h"
 #include "../packets/menu_raisetractor.h"
+#include "../packets/message_basic.h"
+#include "../packets/message_standard.h"
+#include "../packets/message_system.h"
+#include "../packets/server_message.h"
 #include "../packets/entity_visual.h"
 #include "../items/item_puppet.h"
 #include "../entities/automatonentity.h"
@@ -161,6 +168,11 @@ namespace luautils
         lua_register(LuaHandle, "getAbility", luautils::getAbility);
         lua_register(LuaHandle, "getSpell", luautils::getSpell);
         lua_register(LuaHandle, "SelectDailyItem", luautils::SelectDailyItem);
+		
+		// Caldera custom functions
+		lua_register(LuaHandle, "KillPlayerByName", luautils::KillPlayerByName); // Klutix
+		lua_register(LuaHandle, "SendServerMsg", luautils::SendServerMsg); // Schaedel
+		lua_register(LuaHandle, "PlayPetAnimation", luautils::PlayPetAnimation); // Schaedel
 
         Lunar<CLuaAbility>::Register(LuaHandle);
         Lunar<CLuaAction>::Register(LuaHandle);
@@ -4784,6 +4796,153 @@ namespace luautils
             lua_pop(LuaHandle, 1);
         }
     }
+	
+	//kills das player ~ Klutix
+	int32 KillPlayerByName(lua_State* L)
+    {
+        if (!lua_isnil(L, -1) && lua_isstring(L, -1))
+        {
+            int8* name = (int8*)lua_tolstring(L, -1, nullptr);
+
+            CCharEntity* PTargetChar = zoneutils::GetCharByName(name);
+
+            if (PTargetChar != nullptr)
+            {
+                PTargetChar->Die();
+				PTargetChar->health.hp = 0;
+				PTargetChar->health.mp = 0;
+                return 1;
+            }
+        }
+        ShowError(CL_RED "KillPlayerByName :: Input string is not valid.\n" CL_RESET);
+        lua_pushnil(L);
+        return 1;
+    }
+	
+	// Send a message to the entire server (intended to be used with server kill counters/messages in scripts)
+	// Also used in the !msgserver command
+	int32 SendServerMsg(lua_State* L) // player:sendServerMsg(player, channel, message)
+	{
+		TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1));
+        TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2));
+		TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3));
+		
+		int8* name = (int8*)lua_tolstring(L, 1, nullptr); // Get the triggering player's name
+		int8 channel = (int8)lua_tointeger(L, 2); // Set the chat channel
+		const char* msg = lua_tostring(L, 3); // Set the message
+		CCharEntity* PChar = zoneutils::GetCharByName(name); // Point to the triggering player
+
+		if (channel == 0)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SAY, msg));
+		}
+		else if (channel == 1)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SHOUT, msg));
+		}
+		else if (channel == 2)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_UNKNOWN, msg));
+		}
+		else if (channel == 3)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_TELL, msg));
+		}
+		else if (channel == 4)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_PARTY, msg));
+		}
+		else if (channel == 5)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_LINKSHELL, msg));
+		}
+		else if (channel == 6)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, msg));
+		}
+		else if (channel == 7)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_2, msg));
+		}
+		else if (channel == 8)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_EMOTION, msg));
+		}
+		else if (channel == 13)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_NS_SAY, msg));
+		}
+		else if (channel == 14)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_NS_SHOUT, msg));
+		}
+		else if (channel == 15)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_NS_PARTY, msg));
+		}
+		else if (channel == 16)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_NS_LINKSHELL, msg));
+		}
+		else if (channel == 26)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_YELL, msg));
+		}
+		else if (channel == 27)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_LINKSHELL2, msg));
+		}
+		else if (channel == 28)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_NS_LINKSHELL2, msg));
+		}
+		else if (channel == 29)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, msg));
+		}
+		else if (channel == 30)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_LINKSHELL3, msg));
+		}
+		else if (channel == 31)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_NS_LINKSHELL3, msg));
+		}
+		else if (channel == 32)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_UNKNOWN_32, msg));
+		}
+		else if (channel == 33)
+		{
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_UNITY, msg));
+		}
+
+		return 1;
+	}
+	
+	// Force the pet to play an animation (developed to circumvent the animation issues with Cait Sith)
+	int32 PlayPetAnimation(lua_State* L) // PlayPetAnimation(pet, target, animationID)
+	{
+/* 		uint32 petID = (uint32)lua_tointeger(L, 2);
+		uint32 mobID = (uint32)lua_tointeger(L, 4); */
+		
+		CBaseEntity* PPet = !lua_isnil(L, 1) && lua_isuserdata(L, 1) ? Lunar<CLuaBaseEntity>::check(L, 1)->GetBaseEntity() : nullptr; // Determines the pet from the first variable
+		CBaseEntity* PTarget = !lua_isnil(L, 2) && lua_isuserdata(L, 2) ? Lunar<CLuaBaseEntity>::check(L, 2)->GetBaseEntity() : nullptr; // Determines the target from the second variable
+		uint32 animationID = (uint32)lua_tointeger(L, 3); // Determines the animation ID from the third variable
+//		printf("luautils.cpp PlayPetAnimation ANIMATION ID: [%i]\n", animationID);
+		
+		action_t action;
+		action.actiontype = ACTION_MOBABILITY_FINISH;
+		action.id = PPet->id;
+		actionList_t& list = action.getNewActionList();
+		list.ActionTargetID = PTarget->id;
+		actionTarget_t& target = list.getNewActionTarget();
+		target.animation = animationID; // Sets the animation ID
+		target.param = 2582;
+		PPet->loc.zone->PushPacket(PPet, CHAR_INRANGE, new CActionPacket(action)); // Pushes new action packet to anyone within range of the triggering location
+		
+		return 1;
+	}
 
     int32 SelectDailyItem(lua_State* L)
     {

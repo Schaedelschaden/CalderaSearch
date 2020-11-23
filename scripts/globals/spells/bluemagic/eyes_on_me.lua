@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Eyes On Me
--- Deals dark damage to an enemy
+-- Deals dark damage to an enemy.
 -- Spell cost: 112 MP
 -- Monster Type: Demons
 -- Spell Type: Magical (Dark)
@@ -23,24 +23,24 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    -- This data should match information on https://www.bg-wiki.com/bg/Calculating_Blue_Magic_Damage
-    local multi = 2.625
-    if (caster:hasStatusEffect(tpz.effect.AZURE_LORE)) then
-        multi = multi + 2.0
-    end
-    params.attackType = tpz.attackType.MAGICAL
-    params.damageType = tpz.damageType.DARK
-    params.multiplier = multi
-    params.tMultiplier = 1.5
-    params.duppercap = 69
-    params.str_wsc = 0.0
-    params.dex_wsc = 0.0
-    params.vit_wsc = 0.0
-    params.agi_wsc = 0.0
-    params.int_wsc = 0.0
-    params.mnd_wsc = 0.0
-    params.chr_wsc = 0.4
-    damage = BlueMagicalSpell(caster, target, spell, params, CHR_BASED)
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.BLUE_MAGIC
+        params.damageType = tpz.damageType.DARK
+		params.spellFamily = tpz.ecosystem.DEMON
+        params.multiplier = 2.625
+        params.tMultiplier = 1.0 -- dINT/dMND/dCHR multiplier
+        params.duppercap = 71
+        params.str_wsc = 0.0
+        params.dex_wsc = 0.0
+        params.vit_wsc = 0.0
+        params.agi_wsc = 0.0
+        params.int_wsc = 0.0
+        params.mnd_wsc = 0.0
+        params.chr_wsc = 0.8 -- 0.4
+		
+	spell:setFlag(tpz.magic.spellFlag.IGNORE_SHADOWS)
+	
+    damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
     return damage

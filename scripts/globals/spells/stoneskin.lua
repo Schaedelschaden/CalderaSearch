@@ -35,6 +35,12 @@ function onSpellCast(caster, target, spell)
     duration = calculateDurationForLvl(duration, 28, target:getMainLvl())
 
     local final = pAbs + pEquipMods
+	
+	if (caster:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		final = final * 2
+		caster:delStatusEffect(tpz.effect.EMBOLDEN)
+	end
+	
     if target:addStatusEffect(tpz.effect.STONESKIN, final, 0, duration, 0, 0, 4) then
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)
     else

@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Venom Shell
--- Poisons enemies within range and gradually reduces their HP
+-- Poisons enemies within range and gradually reduces their HP.
 -- Spell cost: 86 MP
 -- Monster Type: Aquans
 -- Spell Type: Magical (Water)
@@ -26,11 +26,11 @@ function onSpellCast(caster, target, spell)
     local typeEffect = tpz.effect.POISON
     local dINT = caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
     local params = {}
-    params.diff = nil
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
-    params.effect = typeEffect
+		params.diff = nil
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.BLUE_MAGIC
+		params.bonus = 0
+		params.effect = typeEffect
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = 180 * resist
     local power = 6

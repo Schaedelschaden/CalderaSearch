@@ -26,13 +26,14 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.includemab = true
 
     if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
-        params.int_wsc = 0.7
+        params.ftp100 = 7 params.ftp200 = 7.75 params.ftp300 = 8.50
+		params.int_wsc = 0.7
     end
 
     local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
 
     if (damage > 0 and target:hasStatusEffect(tpz.effect.ATTACK_DOWN) == false) then
-        local duration = (tp/1000 * 180) * applyResistanceAddEffect(player, target, tpz.magic.ele.WATER, 0)
+        local duration = (tp/1000 * 180) * applyResistanceAddEffect(player,target,tpz.magic.ele.WATER,0)
         target:addStatusEffect(tpz.effect.ATTACK_DOWN, 25, 0, duration)
     end
     return tpHits, extraHits, criticalHit, damage

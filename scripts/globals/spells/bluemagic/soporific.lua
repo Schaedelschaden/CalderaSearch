@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Soporific
--- Puts all enemies within range to sleep
+-- Puts all enemies within range to sleep.
 -- Spell cost: 38 MP
 -- Monster Type: Plantoids
 -- Spell Type: Magical (Dark)
@@ -25,13 +25,11 @@ end
 
 function onSpellCast(caster, target, spell)
     local typeEffect = tpz.effect.SLEEP_II
-    local dINT = (caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
     local params = {}
-    params.diff = nil
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
-    params.effect = typeEffect
+		params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.BLUE_MAGIC
+		params.effect = typeEffect
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = 90 * resist
 

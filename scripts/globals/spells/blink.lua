@@ -12,6 +12,12 @@ end
 
 function onSpellCast(caster, target, spell)
     local duration = calculateDuration(300, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+	local power = BLINK_SHADOWS
+	
+	if (caster:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		power = power * 2
+		caster:delStatusEffect(tpz.effect.EMBOLDEN)
+	end
 
     if target:addStatusEffect(tpz.effect.BLINK, BLINK_SHADOWS, 0, duration) then
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)

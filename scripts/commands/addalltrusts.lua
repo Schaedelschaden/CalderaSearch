@@ -46,5 +46,9 @@ function onTrigger(player, target)
         end
         targ:addSpell(ValidSpells[i], silent, save)
     end
+	
+	targ:addKeyItem(2884) -- Rhapsody in White (allows +1 trusts to be summoned)
+	targ:addKeyItem(2887) -- Rhapsody in Crimson (allows +1 trusts to be summoned)
+	
     player:PrintToPlayer(string.format("%s now has all trusts.", targ:getName()))
 end

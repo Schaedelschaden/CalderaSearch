@@ -18,25 +18,28 @@ require("scripts/globals/magic")
 require("scripts/globals/msg")
 -----------------------------------------
 
-function onMagicCastingCheck(caster, target, spell)
+function onMagicCastingCheck(caster,target,spell)
     return 0
 end
 
-function onSpellCast(caster, target, spell)
-    local minCure = 250
-    local divisor = 0.6666
-    local constant = 130
-    local power = getCurePowerOld(caster)
-    local final = getCureFinal(caster, spell, getBaseCureOld(power, divisor, constant), minCure, true)
-    local diff = (target:getMaxHP() - target:getHP())
-
-    if (power > 559) then
-        divisor = 2.8333
+function onSpellCast(caster,target,spell)
+	-- Info from https://www.bg-wiki.com/bg/Cure_Formula
+    local minCure = 250 -- Min Cap
+    local divisor = 0.6666 -- Rate
+    local constant = 130 -- Const
+    local power = getCurePowerOld(caster) -- ((3 * MND) + VIT + (3 * math.floor(healingskill/5)))
+	
+	if (power > 559) then
+        divisor = 1.8 -- 2.8333
         constant = 391.2
     elseif (power > 319) then
         divisor =  1
         constant = 210
     end
+	
+	local basecure = getBaseCureOld(power,divisor,constant)
+    local final = getCureFinal(caster,spell,basecure,minCure,true)
+    local diff = (target:getMaxHP() - target:getHP())
 
     final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD)/100))
 
@@ -51,7 +54,7 @@ function onSpellCast(caster, target, spell)
 
     target:addHP(final)
     target:wakeUp()
-    caster:updateEnmityFromCure(target, final)
+    caster:updateEnmityFromCure(target,final)
     spell:setMsg(tpz.msg.basic.MAGIC_RECOVERS_HP)
 
     return final

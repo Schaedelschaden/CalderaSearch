@@ -1,14 +1,11 @@
 -----------------------------------------
 -- ID: 15761
 -- Item: Chariot Band
------------------------------------------
--- ID: 15761
--- Item: chariot band
--- Experience point bonus
+-- Experience Point Bonus
 -----------------------------------------
 -- Bonus: +75%
--- Duration: 720 min
--- Max bonus: 750 exp
+-- Duration: 720 min (12 hours)
+-- Max bonus: 10,000 exp
 -----------------------------------------
 require("scripts/globals/status")
 -----------------------------------------
@@ -22,5 +19,5 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffect(tpz.effect.DEDICATION, 75, 0, 43200, 0, 10000)
+	target:addStatusEffect(tpz.effect.DEDICATION,75,0,43200,0,10000)
 end

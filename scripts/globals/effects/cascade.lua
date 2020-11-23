@@ -1,15 +1,19 @@
 -----------------------------------
 --
---     tpz.effect.CASCADE
+-- tpz.effect.CASCADE
 --
 -----------------------------------
-function onEffectGain(target, effect)
-    target:addMod(tpz.mod.MATT, 100)
+require("scripts/globals/status")
+-----------------------------------
+
+function onEffectGain(target,effect)
+	target:addMod(tpz.mod.MAGIC_DAMAGE, effect:getPower())
 end
 
-function onEffectTick(target, effect)
+function onEffectTick(target,effect)
+
 end
 
-function onEffectLose(target, effect)
-    target:delMod(tpz.mod.MATT, 100)
+function onEffectLose(target,effect)
+	target:delMod(tpz.mod.MAGIC_DAMAGE, effect:getPower())
 end

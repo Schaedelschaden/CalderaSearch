@@ -1,18 +1,22 @@
 -----------------------------------
 -- Ability: Unbridled Wisdom
--- Description: Allows certain blue magic spells to be cast.
--- Obtained: BLU Level 96
--- Recast Time: 01:00:00
--- Duration: 00:01:00
+-- Allows certain blue magic spells to be cast.
+-- Obtained: Blue Mage Level 96
+-- Recast Time: 1:00:00
+-- Duration: 1:00
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
 
-function onAbilityCheck(player, target, ability)
-    return 0, 0
+function onAbilityCheck(player,target,ability)
+--	printf("Unbridled Wisdom PLAYER onAbilityCheck START\n")
+    return 0,0
 end
 
 function onUseAbility(player, target, ability)
-    target:addStatusEffect(tpz.effect.UNBRIDLED_WISDOM, 16, 1, 30)
+--	printf("Unbridled Wisdom PLAYER onUseAbility\n")
+    player:addStatusEffect(tpz.effect.UNBRIDLED_WISDOM,1,0,60)
+
+    return tpz.effect.UNBRIDLED_WISDOM
 end

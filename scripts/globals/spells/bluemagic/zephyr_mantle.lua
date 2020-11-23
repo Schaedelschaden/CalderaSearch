@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Zephyr Mantle
--- Creates shadow images that each absorb a single attack directed at you
+-- Creates shadow images that each absorb a single attack directed at you.
 -- Spell cost: 31 MP
 -- Monster Type: Dragons
 -- Spell Type: Magical (Wind)
@@ -10,7 +10,6 @@
 -- Casting Time: 7 seconds
 -- Recast Time: 60 seconds
 -- Duration: 5 minutes
---
 -- Combos: Conserve MP
 -----------------------------------------
 require("scripts/globals/status")
@@ -22,23 +21,21 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffect = tpz.effect.BLINK
-    local power = 4
     local duration = 300
 
     if (caster:hasStatusEffect(tpz.effect.DIFFUSION)) then
         local diffMerit = caster:getMerit(tpz.merit.DIFFUSION)
 
         if (diffMerit > 0) then
-            duration = duration + (duration/100)* diffMerit
+            duration = duration + (duration / 100) * diffMerit
         end
 
         caster:delStatusEffect(tpz.effect.DIFFUSION)
     end
 
-    if (target:addStatusEffect(typeEffect, power, 0, duration) == false) then
+    if (target:addStatusEffect(tpz.effect.BLINK, 4, 0, duration) == false) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     end
 
-    return typeEffect
+    return tpz.effect.BLINK
 end

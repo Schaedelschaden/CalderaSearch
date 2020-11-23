@@ -9,10 +9,11 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
 
-function onAbilityCheck(player, target, ability)
-    return 0, 0
+function onAbilityCheck(player,target,ability)
+    return 0,0
 end
 
 function onUseAbility(player, target, ability)
-    player:addStatusEffect(tpz.effect.DIABOLIC_EYE, player:getMerit(tpz.merit.DIABOLIC_EYE), 0, 180)
+	local merits = player:getMerit(tpz.merit.DIABOLIC_EYE)
+    player:addStatusEffect(tpz.effect.DIABOLIC_EYE,merits,0,180)
 end

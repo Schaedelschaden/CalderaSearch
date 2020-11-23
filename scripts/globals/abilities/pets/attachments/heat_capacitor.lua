@@ -20,7 +20,9 @@ function onUnequip(pet)
 end
 
 function onManeuverGain(pet, maneuvers)
+	
 end
 
 function onManeuverLose(pet, maneuvers)
+	
 end

@@ -11,26 +11,31 @@ require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------
 
-function onAbilityCheck(player, target, ability)
-    return 0, 0
+function onAbilityCheck(player,target,ability)
+	-- Retail behavior for Fly High is 10 second recasts. Caldera is set to 2 second
+	if (player:hasStatusEffect(tpz.effect.FLY_HIGH)) then
+		ability:setRecast(utils.clamp(2, 0, 2))
+	end
+	return 0,0
 end
 
-function onUseAbility(player, target, ability, action)
-    local params = {}
-    params.numHits = 1
-    local ftp = 1
-    params.ftp100 = ftp params.ftp200 = ftp params.ftp300 = ftp
-    params.str_wsc = 0.0 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
-    params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
-    if (player:getMod(tpz.mod.FORCE_JUMP_CRIT) > 0) then
-        params.crit100 = 1.0 params.crit200 = 1.0 params.crit300 = 1.0
-    end
-    params.canCrit = true
-    params.acc100 = 0.0 params.acc200= 0.0 params.acc300= 0.0
-    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
-    params.bonusTP = player:getMod(tpz.mod.JUMP_TP_BONUS)
-    params.targetTPMult = 0
-    params.hitsHigh = true
+function onUseAbility(player,target,ability,action)
+    local alljumpsdmg = 0
+	local ftp = 1
+	local params = {}
+		params.numHits = 1
+		params.ftp100 = ftp params.ftp200 = ftp params.ftp300 = ftp
+		params.str_wsc = 0.0 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
+		params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
+		params.canCrit = true
+		params.acc100 = 0.0 params.acc200= 0.0 params.acc300= 0.0
+		params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
+		params.bonusTP = player:getMod(tpz.mod.JUMP_TP_BONUS)
+		params.targetTPMult = 0
+		params.hitsHigh = true
+	if (player:getMod(tpz.mod.FORCE_JUMP_CRIT) > 0) then
+		params.crit100 = 1.0 params.crit200 = 1.0 params.crit300 = 1.0
+	end
 
     if (target:isMob()) then
         local enmityShed = 50
@@ -41,8 +46,12 @@ function onUseAbility(player, target, ability, action)
     end
 
     local taChar = player:getTrickAttackChar(target)
-
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, 0, params, 0, action, true, taChar)
+	local alljumpsbonus = player:getMod(tpz.mod.ALL_JUMPS_WYVERN_HP)
+	local pet = player:getPet()
+	if ((pet ~= nil) and (player:getPetID() == tpz.pet.id.WYVERN)) then
+		alljumpsdmg = pet:getHP() * (alljumpsbonus / 100)
+	end
 
     if (tpHits + extraHits > 0) then
         -- Under Spirit Surge, High Jump reduces TP of target
@@ -59,5 +68,12 @@ function onUseAbility(player, target, ability, action)
         action:speceffect(target:getID(), 0)
     end
 
-    return damage
+	if (alljumpsbonus > 0) then
+--		printf("Damage 1: [%i] All Jumps DMG: [%i]\n", damage, alljumpsdmg)
+		damage = damage + alljumpsdmg
+--		printf("Damage 2: [%i]\n", damage)
+		return damage	
+	else
+		return damage
+	end
 end

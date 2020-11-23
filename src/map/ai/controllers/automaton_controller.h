@@ -70,6 +70,7 @@ protected:
 private:
     bool TryAction();
     bool TryShieldBash();
+	bool TryHeadyArtifice();
     bool TrySpellcast(const CurrentManeuvers& maneuvers);
     bool TryHeal(const CurrentManeuvers& maneuvers);
     bool TryElemental(const CurrentManeuvers& maneuvers);

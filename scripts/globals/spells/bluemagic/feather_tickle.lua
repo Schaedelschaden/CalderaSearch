@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Feather Tickle
--- Reduces an enemy's TP
+-- Reduces an enemy's TP.
 -- Spell cost: 48 MP
 -- Monster Type: Birds
 -- Spell Type: Magical (Wind)
@@ -24,10 +24,11 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.BLUE_MAGIC
+		
     local resist = applyResistance(caster, target, spell, params)
-    local power = 3000 * resist
+    local power = 1000 * resist
 
     if (target:getTP() == 0) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)

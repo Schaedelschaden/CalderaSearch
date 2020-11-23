@@ -1,6 +1,6 @@
 -----------------------------------------
 -- Spell: Voracious Trunk
--- Steals an enemy's buff
+-- Steals one beneficial effect from an enemy.
 -- Spell cost: 72 MP
 -- Monster Type: Beasts
 -- Spell Type: Magical (Wind)
@@ -22,11 +22,11 @@ end
 
 function onSpellCast(caster, target, spell)
     local resist = applyResistanceAbility(caster, target, tpz.magic.ele.WIND, 0, 0)
-    local StealChance = math.random(1, 100)
+    local StealChance = math.random(1,100)
     local stolen = 0
 
     if resist > 0.0625 and StealChance < 90 then
-        stolen = caster:stealStatusEffect(target)
+        stolen = caster:stealStatusEffect(target, tpz.effectFlag.DISPELABLE)
         if stolen ~= 0 then
             spell:setMsg(tpz.msg.basic.MAGIC_STEAL)
         else
