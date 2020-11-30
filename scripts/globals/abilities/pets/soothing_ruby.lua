@@ -8,46 +8,35 @@ require("scripts/globals/summon")
 ---------------------------------------------------
 
 function onAbilityCheck(player, target, ability)
-	local currentMP = player:getMP()
-	local bloodboon = player:getMod(tpz.mod.BLOOD_BOON)
-	local cost = 74 -- Set the Blood Pact MP Cost here
-		
-	if (player:hasStatusEffect(tpz.effect.ASTRAL_CONDUIT)) then
-		ability:setRecast(utils.clamp(0, 0, 0))
-	end
-	
-	if (player:hasStatusEffect(tpz.effect.APOGEE)) then
-		cost = cost * 1.5
-		ability:setRecast(utils.clamp(0, 0, 0))
-		player:delStatusEffect(tpz.effect.APOGEE)
-	end
-	
-	if (math.random(1,100) < bloodboon) then
---		local originalcost = cost
-		cost = (cost * (math.random(8,16) / 16))
---		printf("Soothing Ruby PET onAbilityCheck BLOOD BOON COST REDUCTION [%i to %i]\n",originalcost,cost)
-	end
-	
-	player:setMP(currentMP - cost)
-	
---	printf("Soothing Ruby PET onAbilityCheck\n")
-	
+	printf("Soothing Ruby PET onUseAbility\n")
 	return 0,0
 end
 
-function onPetAbility(target, pet, skill)
-	printf("Soothing Ruby PET onUseAbility\n")
---	This still needs to be adjusted for skill level, just not sure what that looks like at the moment
---	4 removed for base level 99, 5 removed for 109+, 6 removed for 119+?
-
-	local effect1 = target:eraseStatusEffect()
-	local effect2 = target:eraseStatusEffect()
-	local effect3 = target:eraseStatusEffect()
-	local effect4 = target:eraseStatusEffect()
-	local effect5 = target:eraseStatusEffect()
-	local effect6 = target:eraseStatusEffect()
+function onPetAbility(target, pet, skill, player)
+--	printf("Soothing Ruby PET onUseAbility\n")
+	local smnSkill = player:getSkillLevel(tpz.skill.SUMMONING_MAGIC)
+	local effect = {}
 	
-	skill:setMsg(tpz.msg.basic.NONE) -- Display no message
+	-- Display no message
+	skill:setMsg(tpz.msg.basic.NONE)
 	
-	return effect1, effect2, effect3, effect4, effect5, effect6
+	if (smnSkill <= 382) then
+		effect[1] = target:eraseStatusEffect()
+		effect[2] = target:eraseStatusEffect()
+		effect[3] = target:eraseStatusEffect()
+		effect[4] = target:eraseStatusEffect()
+	elseif (smnSkill <= 417) then
+		effect[1] = target:eraseStatusEffect()
+		effect[2] = target:eraseStatusEffect()
+		effect[3] = target:eraseStatusEffect()
+		effect[4] = target:eraseStatusEffect()
+		effect[5] = target:eraseStatusEffect()
+	elseif (smnSkill >= 418) then
+		effect[1] = target:eraseStatusEffect()
+		effect[2] = target:eraseStatusEffect()
+		effect[3] = target:eraseStatusEffect()
+		effect[4] = target:eraseStatusEffect()
+		effect[5] = target:eraseStatusEffect()
+		effect[6] = target:eraseStatusEffect()
+	end
 end

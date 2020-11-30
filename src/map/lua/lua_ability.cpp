@@ -122,6 +122,7 @@ inline int32 CLuaAbility::setAnimation(lua_State *L)
 
 inline int32 CLuaAbility::setRecast(lua_State* L)
 {
+//	printf("lua_ability.cpp setRecast NEW RECAST: [%i]", (uint16)lua_tointeger(L, -1));
     TPZ_DEBUG_BREAK_IF(m_PLuaAbility == nullptr);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
 

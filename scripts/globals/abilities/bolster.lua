@@ -15,5 +15,6 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-    player:addStatusEffect(tpz.effect.BOLSTER, 0, 0, 240)
+	player:delStatusEffect(tpz.effect.BLAZE_OF_GLORY)
+    player:addStatusEffect(tpz.effect.BOLSTER, 1, 0, 180)
 end

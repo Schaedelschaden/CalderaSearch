@@ -15,6 +15,7 @@ function onSpellCast(caster, target, spell)
     -- Get extras shadows
     local numShadows = 3 + target:getMod(tpz.mod.UTSUSEMI_BONUS)
     local icon = tpz.effect.COPY_IMAGE_3
+	
     if (numShadows > 3) then
         icon = tpz.effect.COPY_IMAGE_4
     end

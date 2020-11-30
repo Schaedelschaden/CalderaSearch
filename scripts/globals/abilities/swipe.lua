@@ -36,7 +36,8 @@ function onUseAbility(player, target, ability, action)
 	local skillType = player:getWeaponSkillType(tpz.slot.MAIN)
 	local bonus = 1.0
 	local lungeBonus = player:getMod(tpz.mod.LUNGE_BONUS) / 100
-	local dmg = player:getCharSkillLevel(skillType) * (0.75 + lungeBonus)
+	local multiplier = 2
+	local dmg = player:getSkillLevel(skillType) * (0.75 + lungeBonus) * multiplier
 	
 	for i,v in ipairs(RuneEnhancement) do
 		if (player:getOldestRune() == RuneEnhancement[i]) then

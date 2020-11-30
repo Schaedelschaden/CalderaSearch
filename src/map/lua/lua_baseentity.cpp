@@ -2768,27 +2768,28 @@ inline int32 CLuaBaseEntity::getCardinalQuadrant(lua_State* L)
 
     CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
 
-    auto angle = PLuaBaseEntity->GetBaseEntity()->loc.p.rotation - worldAngle(PLuaBaseEntity->GetBaseEntity()->loc.p, m_PBaseEntity->loc.p);
+    auto angle = worldAngle(PLuaBaseEntity->GetBaseEntity()->loc.p, m_PBaseEntity->loc.p);
     auto rotRad = rotationToRadian(angle);
     auto cardinalAngle = radianToRotation(rotRad);
+//	printf("lua_baseentity.cpp getCardinalQuadrant ROTATION: [%i]\n", (int16)cardinalAngle);
     uint8 cardinalQuadrant = 0;
 
-    if ((cardinalAngle >= 0 && cardinalAngle < 8) || (cardinalAngle > 248 && cardinalAngle <= 256)){ cardinalQuadrant = 1; }// N
-    else if (cardinalAngle <= 248 && cardinalAngle > 216){ cardinalQuadrant = 2; } // NNE
-    else if (cardinalAngle <= 216 && cardinalAngle > 200){ cardinalQuadrant = 3; } // NE
-    else if (cardinalAngle <= 200 && cardinalAngle > 184){ cardinalQuadrant = 4; } // ENE
-    else if (cardinalAngle <= 184 && cardinalAngle > 168){ cardinalQuadrant = 5; } // E
-    else if (cardinalAngle <= 168 && cardinalAngle > 152){ cardinalQuadrant = 6; } // ESE
-    else if (cardinalAngle <= 152 && cardinalAngle > 136){ cardinalQuadrant = 7; } // SE
-    else if (cardinalAngle <= 136 && cardinalAngle > 120){ cardinalQuadrant = 8; } // SSE
-    else if (cardinalAngle <= 120 && cardinalAngle > 104){ cardinalQuadrant = 9; } // S
-    else if (cardinalAngle <= 104 && cardinalAngle > 88){ cardinalQuadrant = 10;}  // SSW
-    else if (cardinalAngle <= 88 && cardinalAngle > 72){ cardinalQuadrant = 11; }  // SW
-    else if (cardinalAngle <= 72 && cardinalAngle > 56){ cardinalQuadrant = 12; }  // WSW
-    else if (cardinalAngle <= 56 && cardinalAngle > 40){ cardinalQuadrant = 13; }  // W
-    else if (cardinalAngle <= 40 && cardinalAngle > 24){ cardinalQuadrant = 14; }  // WNW
-    else if (cardinalAngle <= 24 && cardinalAngle > 8){ cardinalQuadrant = 15; }   // NW
-    else if (cardinalAngle <= 8 && cardinalAngle > 0){ cardinalQuadrant = 16; }    // NNW
+    if ((cardinalAngle <= 256 && cardinalAngle > 248) || (cardinalAngle <= 8 && cardinalAngle >= 0)){ cardinalQuadrant = 1; } // W
+    else if (cardinalAngle <= 248 && cardinalAngle > 232){ cardinalQuadrant = 2; } // WSW
+    else if (cardinalAngle <= 232 && cardinalAngle > 216){ cardinalQuadrant = 3; } // SW
+    else if (cardinalAngle <= 216 && cardinalAngle > 200){ cardinalQuadrant = 4; } // SSW
+    else if (cardinalAngle <= 200 && cardinalAngle > 184){ cardinalQuadrant = 5; } // S
+    else if (cardinalAngle <= 184 && cardinalAngle > 168){ cardinalQuadrant = 6; } // SSE
+    else if (cardinalAngle <= 168 && cardinalAngle > 152){ cardinalQuadrant = 7; } // SE
+    else if (cardinalAngle <= 152 && cardinalAngle > 136){ cardinalQuadrant = 8; } // ESE
+    else if (cardinalAngle <= 136 && cardinalAngle > 120){ cardinalQuadrant = 9; } // E
+    else if (cardinalAngle <= 120 && cardinalAngle > 104){ cardinalQuadrant = 10;}  // ENE
+    else if (cardinalAngle <= 104 && cardinalAngle > 88){ cardinalQuadrant = 11; }  // NE
+    else if (cardinalAngle <= 88 && cardinalAngle > 72){ cardinalQuadrant = 12; }  // NNE
+    else if (cardinalAngle <= 72 && cardinalAngle > 56){ cardinalQuadrant = 13; }  // N
+    else if (cardinalAngle <= 56 && cardinalAngle > 40){ cardinalQuadrant = 14; }  // NNW
+    else if (cardinalAngle <= 40 && cardinalAngle > 24){ cardinalQuadrant = 15; }   // NW
+    else if (cardinalAngle <= 24 && cardinalAngle > 8){ cardinalQuadrant = 16; }    // WNW
 	
     lua_pushinteger(L, cardinalQuadrant);
     return 1;
@@ -10612,12 +10613,16 @@ inline int32 CLuaBaseEntity::setRecast(lua_State* L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
 
+//	printf("lua_baseentity.cpp setRecast INT1: [%i]  INT2: [%i]\n", (uint16)lua_tointeger(L, 1), (uint32)lua_tointeger(L, 2));
+
     CBattleEntity* PBattleEntity = dynamic_cast<CBattleEntity*>(m_PBaseEntity);
     if(PBattleEntity)
     {
         RECASTTYPE recastContainer = (RECASTTYPE)RECAST_ABILITY;
         auto recastID = (uint16)lua_tointeger(L, 1);
         auto duration = (uint32)lua_tointeger(L, 2);
+		
+//		printf("lua_baseentity.cpp setRecast RECAST ID: [%i]  DURATION: [%i]\n", recastID, duration);
 
         PBattleEntity->PRecastContainer->Del(recastContainer, recastID);
 		PBattleEntity->PRecastContainer->Add(recastContainer, recastID, duration);

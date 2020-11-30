@@ -3624,12 +3624,14 @@ namespace luautils
 
     int32 OnAbilityCheck(CBaseEntity* PChar, CBaseEntity* PTarget, CAbility* PAbility, CBaseEntity** PMsgTarget)
     {
+//		printf("luautils.cpp OnAbilityCheck START\n");
         TPZ_DEBUG_BREAK_IF(PAbility == nullptr);
 
         char filePath[40] = "scripts/globals/abilities/%s.lua";
 
         if (PAbility->isPetAbility())
         {
+//			printf("luautils.cpp OnAbilityCheck IS PET ABILITY\n");
             memcpy(filePath, "scripts/globals/abilities/pets/%s.lua", 38);
         }
 
@@ -3649,6 +3651,7 @@ namespace luautils
             }
             else
             {
+//				printf("luautils.cpp OnAbilityCheck RETURNING 0\n");
                 lua_pop(LuaHandle, 1);
                 return 0;
             }
@@ -3665,6 +3668,7 @@ namespace luautils
         lua_getglobal(LuaHandle, "onAbilityCheck");
         if (lua_isnil(LuaHandle, -1))
         {
+//			printf("luautils.cpp OnAbilityCheck RETURNING 87\n");
             lua_pop(LuaHandle, 1);
             return 87;
         }
@@ -3687,9 +3691,12 @@ namespace luautils
 
         if ((!lua_isnil(LuaHandle, -1) && lua_isnumber(LuaHandle, -1) ? (int32)lua_tonumber(LuaHandle, -1) : 0) != 0)
             *PMsgTarget = (CBaseEntity*)PTarget;
+//			printf("luautils.cpp OnAbilityCheck TARGET WEIRD?\n");
 
         uint32 retVal = (!lua_isnil(LuaHandle, -2) && lua_isnumber(LuaHandle, -2) ? (int32)lua_tonumber(LuaHandle, -2) : -5);
         lua_pop(LuaHandle, 2);
+//		printf("luautils.cpp OnAbilityCheck retVal: [%i]\n", retVal);
+		
         return retVal;
     }
 
@@ -3701,7 +3708,9 @@ namespace luautils
 
     int32 OnPetAbility(CBaseEntity* PTarget, CBaseEntity* PMob, CMobSkill* PMobSkill, CBaseEntity* PMobMaster, action_t* action)
     {
+		// printf("luautils.cpp OnPetAbility START\n");
         lua_prepscript("scripts/globals/abilities/pets/%s.lua", PMobSkill->getName());
+		// printf("luautils.cpp OnPetAbility PMOBSKILL NAME %s\n", PMobSkill->getName());
 
         if (prepFile(File, "onPetAbility"))
         {

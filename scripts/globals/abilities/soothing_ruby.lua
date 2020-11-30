@@ -18,6 +18,6 @@ function onUseAbility(player, target, ability)
 	local pet = player:getPet()
 	local bloodpact = 3579 -- mob_skill_id from mob_skills.sql
 
---	printf("Healing Ruby PLAYER onUseAbility\n")
+--	printf("Soothing Ruby PLAYER onUseAbility\n")
 	pet:useMobAbility(bloodpact)
 end

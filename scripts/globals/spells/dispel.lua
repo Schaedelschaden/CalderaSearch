@@ -10,16 +10,22 @@ function onMagicCastingCheck(caster,target,spell)
     return 0
 end
 
-function onSpellCast(caster,target,spell)
+function onSpellCast(caster, target, spell)
     local params = {}
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.ENFEEBLING_MAGIC
+		params.attribute = tpz.mod.INT
+		params.skillType = tpz.skill.ENFEEBLING_MAGIC
     local resist = applyResistance(caster, target, spell, params)
     local effect = tpz.effect.NONE
+	local bonusEffect = tpz.effect.NONE
 
     if (resist > 0.0625) then
         spell:setMsg(tpz.msg.basic.MAGIC_ERASE)
         effect = target:dispelStatusEffect()
+	
+		if (caster:getMod(tpz.mod.ENH_DISPEL) > 0) then
+			bonusEffect = target:dispelStatusEffect()
+		end
+	
         if (effect == tpz.effect.NONE) then
             -- no effect
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)

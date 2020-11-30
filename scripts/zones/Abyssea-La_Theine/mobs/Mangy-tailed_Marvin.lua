@@ -56,4 +56,4 @@ function onMobDeath(mob, player, isKiller)
 	end)
 	
 	player:setCharVar("KillCounter_MangyTailedMarvin", KillCounter)
-end;
+end

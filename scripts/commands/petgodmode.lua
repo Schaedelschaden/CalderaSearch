@@ -25,7 +25,7 @@ function onTrigger(player)
         pet:addStatusEffect(tpz.effect.PERFECT_DODGE, 1, 0, 0)
         pet:addStatusEffect(tpz.effect.INVINCIBLE, 1, 0, 0)
         pet:addStatusEffect(tpz.effect.MANAFONT, 1, 0, 0)
-        pet:addStatusEffect(tpz.effect.REGAIN, 150, 1, 0)
+        pet:addStatusEffect(tpz.effect.REGAIN, 150, 3, 0)
         pet:addStatusEffect(tpz.effect.REFRESH, 99, 0, 0)
         pet:addStatusEffect(tpz.effect.REGEN, 99, 0, 0)
 

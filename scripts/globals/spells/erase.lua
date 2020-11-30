@@ -13,6 +13,11 @@ end
 
 function onSpellCast(caster, target, spell)
     local effect = target:eraseStatusEffect()
+	local bonusEffect
+	
+	if (caster:getMod(tpz.mod.ENH_ERASE) > 0) then
+		bonusEffect = target:eraseStatusEffect()
+	end
 
     if (effect == tpz.effect.NONE) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT) -- no effect

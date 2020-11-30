@@ -9,20 +9,9 @@ require("/scripts/globals/magic")
 
 function onAbilityCheck(player, target, ability)
 	local currentMP = player:getMP()
-	local bloodboon = player:getMod(tpz.mod.BLOOD_BOON)
 	local level = player:getMainLvl()
 	local cost = level * 2 -- Set the Blood Pact MP Cost here
-		
-	if (player:hasStatusEffect(tpz.effect.ASTRAL_CONDUIT)) then
-		ability:setRecast(utils.clamp(0, 0, 0))
-	end
 	
-	if (player:hasStatusEffect(tpz.effect.APOGEE)) then
-		cost = cost * 1.5
-		ability:setRecast(utils.clamp(0, 0, 0))
-		player:delStatusEffect(tpz.effect.APOGEE)
-	end
-		
 	if(currentMP < cost) then
         return 87,0
     end
@@ -34,7 +23,7 @@ function onAbilityCheck(player, target, ability)
 	return 0,0
 end
 
-function onPetAbility(target, pet, skill, master)
+function onPetAbility(target, pet, skill)
 	local mobHealth = target:getMaxHP()
 	local damage = math.random(1,99) / 100
 	

@@ -75,6 +75,9 @@ CCharStatsPacket::CCharStatsPacket(CCharEntity * PChar)
     ref<uint16>(0x4A) = PChar->profile.home_point.destination;
 	ref<uint8>(0x50) = PChar->profile.nation;
     ref<uint8>(0x52) = PChar->GetMLevel () == 99? 5: 0;
+	
+	//0x51 = New character has this as 0x01, 0x03 on seasoned 99
+	//0x52 = superior level (1 through 5)
     //0x54 = maximum item level
     //0x55 = itemlevel over 99
     //0x56 = main weapon item level

@@ -18,9 +18,11 @@ function onAbilityCheck(player,target,ability)
     if player:getHP() <= 2 then
         return tpz.msg.basic.UNABLE_TO_USE_JA
     end
-    if not player:hasPet() or not player:getPetID() == 75 then
+	
+    if not player:hasPet() or not player:getPetID() == tpz.pet.id.LUOPAN then
         return tpz.msg.basic.REQUIRE_LUOPAN, 0
     end
+	
     return 0,0
 end
 
@@ -33,5 +35,6 @@ function onUseAbility(player,target,ability)
     
     luopan:restoreHP(hp_transfer)
     player:delHP(hp_transfer)
+	
     return hp_transfer
 end

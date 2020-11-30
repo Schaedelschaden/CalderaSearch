@@ -14,5 +14,11 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player, target, ability)
-    player:addStatusEffect(tpz.effect.ELEMENTAL_SEAL,1,0,60)
+	local bonus = player:getMod(tpz.mod.MAGIC_DAMAGE) * (player:getMod(tpz.mod.ENH_ELEMENTAL_SEAL) / 100)
+	
+	if (bonus <= 0) then
+		bonus = 1
+	end
+	
+    player:addStatusEffect(tpz.effect.ELEMENTAL_SEAL, bonus, 0, 60)
 end

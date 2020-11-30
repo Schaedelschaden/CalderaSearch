@@ -11,8 +11,8 @@ require("scripts/globals/magic")
 require("scripts/globals/utils")
 -----------------------------------
 
-function onAbilityCheck(player,target,ability)
-    if not player:hasPet() or not player:getPetID() == 75 then
+function onAbilityCheck(player, target, ability)
+    if not (player:hasPet()) or not (player:getPetID() == tpz.pet.id.LUOPAN) then
         return tpz.msg.basic.REQUIRE_LUOPAN, 0
     elseif not target then
         return tpz.msg.basic.CANNOT_PERFORM
@@ -20,7 +20,7 @@ function onAbilityCheck(player,target,ability)
     return 0,0
 end
 
-function onUseAbility(player,target,ability)
+function onUseAbility(player, target, ability)
     local pet = player:getPet()
     pet:useMobAbility(3045, target)
 end

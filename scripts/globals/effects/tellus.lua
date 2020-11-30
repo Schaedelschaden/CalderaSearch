@@ -19,7 +19,7 @@ function onEffectGain(target, effect)
 		potency = potency * 3
 	end
 	
-	target:setMod(tpz.mod.ENSPELL, 2)
+	target:setMod(tpz.mod.ENSPELL, 4)
     target:setMod(tpz.mod.ENSPELL_DMG, potency)
 	target:addMod(tpz.mod.THUNDERRES, effect:getPower())
 end
@@ -37,7 +37,7 @@ function onEffectTick(target, effect)
 	end
 	
 	if ((RuneCounter > 1) or (target:getMod(tpz.mod.ENSPELL) == 0)) then
-		target:setMod(tpz.mod.ENSPELL, 2)
+		target:setMod(tpz.mod.ENSPELL, 4)
 		target:setMod(tpz.mod.ENSPELL_DMG, potency)
 	end
 end
@@ -45,7 +45,7 @@ end
 function onEffectLose(target, effect)
 	local RuneCounter = target:countEffect(tpz.effect.TELLUS)
 
-	if ((RuneCounter == 0) and (target:getMod(tpz.mod.ENSPELL) == 2)) then
+	if ((RuneCounter == 0) and (target:getMod(tpz.mod.ENSPELL) == 4)) then
 		target:setMod(tpz.mod.ENSPELL, 0)
 		target:setMod(tpz.mod.ENSPELL_DMG, 0)
 		target:setMod(tpz.mod.THUNDERRES, 0)

@@ -8,11 +8,12 @@
 require("scripts/globals/status")
 -----------------------------------
 
-function onAbilityCheck(player,target,ability)
+function onAbilityCheck(player, target, ability)
     return 0,0
 end
 
-function onUseAbility(player,target,ability)
-    target:addStatusEffect(tpz.effect.WIDENED_COMPASS,0,0,60,0,0)
+function onUseAbility(player, target, ability)
+    target:addStatusEffect(tpz.effect.WIDENED_COMPASS, 0, 0, 60, 0, 0)
+	
     return tpz.effect.WIDENED_COMPASS
 end

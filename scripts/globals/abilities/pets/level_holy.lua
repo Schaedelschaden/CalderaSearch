@@ -7,21 +7,19 @@
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")
 require("scripts/globals/status")
+require("scripts/globals/summon")
 require("scripts/globals/msg")
 ---------------------------------------------
 
-function onAbilityCheck(player, target, ability)	
+function onAbilityCheck(player, target, ability)
 --	printf("LeveL ? Holy PLAYER onAbilityCheck START\n")
-	return 0,0
-end
-
-function onUseAbility(player, target, ability)
+	
 	local rolldie = math.random(1,6)
 	local mobLvl = target:getMainLvl()	
-	local pet = player:getPet()
 	local bloodpact
+	local pet = player:getPet()
 	
-	printf("Level ? Holy PLAYER onUseAbility RANDOM DIE ROLL: [%i]\n", rolldie)
+--	printf("Level ? Holy PLAYER onUseAbility RANDOM DIE ROLL: [%i]\n", rolldie)
 	
 	if (rolldie == 6) then
 		bloodpact = 2457
@@ -37,6 +35,11 @@ function onUseAbility(player, target, ability)
 		bloodpact = 2452 -- mob_skill_id from mob_skills.sql
 	end
 
---	printf("Level ? Holy PLAYER onUseAbility\n")
 	pet:useMobAbility(bloodpact, target)
+	
+	return 0,0
+end
+
+function onUseAbility(target, pet, skill)
+	
 end

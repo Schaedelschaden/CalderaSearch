@@ -12,22 +12,22 @@ tpz.magic = tpz.magic or {}
 
 tpz.magic.geoCardinalQuadStats =
 {
-    [1]  = {direction = '[N]',   MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 1.00},
-    [2]  = {direction = '[NNE]', MATT = 0.25, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.75},
-    [3]  = {direction = '[NE]',  MATT = 0.50, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.50},
-    [4]  = {direction = '[ENE]', MATT = 0.75, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.25},
-    [5]  = {direction = '[E]',   MATT = 1.00, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
-    [6]  = {direction = '[ESE]', MATT = 0.75, MACC = 0.25, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
-    [7]  = {direction = '[SE]',  MATT = 0.50, MACC = 0.50, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
-    [8]  = {direction = '[SSE]', MATT = 0.25, MACC = 0.75, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
-    [9]  = {direction = '[S]',   MATT = 0.00, MACC = 1.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
-    [10] = {direction = '[SSW]', MATT = 0.00, MACC = 0.75, MAG_BURST_BONUS = 0.25, MAGIC_CRITHITRATE = 0.00},
-    [11] = {direction = '[SW]',  MATT = 0.00, MACC = 0.50, MAG_BURST_BONUS = 0.50, MAGIC_CRITHITRATE = 0.00},
-    [12] = {direction = '[WSW]', MATT = 0.00, MACC = 0.25, MAG_BURST_BONUS = 0.75, MAGIC_CRITHITRATE = 0.00},
-    [13] = {direction = '[W]',   MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 1.00, MAGIC_CRITHITRATE = 0.00},
-    [14] = {direction = '[WNW]', MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 0.75, MAGIC_CRITHITRATE = 0.25},
-    [15] = {direction = '[NW]',  MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 0.50, MAGIC_CRITHITRATE = 0.50},
-    [16] = {direction = '[NNW]', MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 0.25, MAGIC_CRITHITRATE = 0.75},
+   [1]  = {direction = '[W]',   MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 1.00, MAGIC_CRITHITRATE = 0.00},
+   [2]  = {direction = '[WSW]', MATT = 0.00, MACC = 0.25, MAG_BURST_BONUS = 0.75, MAGIC_CRITHITRATE = 0.00},
+   [3]  = {direction = '[SW]',  MATT = 0.00, MACC = 0.50, MAG_BURST_BONUS = 0.50, MAGIC_CRITHITRATE = 0.00},
+   [4]  = {direction = '[SSW]', MATT = 0.00, MACC = 0.75, MAG_BURST_BONUS = 0.25, MAGIC_CRITHITRATE = 0.00},
+   [5]  = {direction = '[S]',   MATT = 0.00, MACC = 1.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
+   [6]  = {direction = '[SSE]', MATT = 0.25, MACC = 0.75, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
+   [7]  = {direction = '[SE]',  MATT = 0.50, MACC = 0.50, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
+   [8]  = {direction = '[ESE]', MATT = 0.75, MACC = 0.25, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
+   [9]  = {direction = '[E]',   MATT = 1.00, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
+   [10] = {direction = '[ENE]', MATT = 0.75, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.25},
+   [11] = {direction = '[NE]',  MATT = 0.50, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.50},
+   [12] = {direction = '[NNE]', MATT = 0.25, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.75},
+   [13] = {direction = '[N]',   MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 1.00},
+   [14] = {direction = '[NNW]', MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 0.25, MAGIC_CRITHITRATE = 0.75},
+   [15] = {direction = '[NW]',  MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 0.50, MAGIC_CRITHITRATE = 0.50},
+   [16] = {direction = '[WNW]', MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 0.75, MAGIC_CRITHITRATE = 0.25},
 }
 
 ------------------------------------
@@ -402,8 +402,8 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
         else
             geoBonus = getCardinalStats(caster, target, 0, spell)
         end
-		
         geoMACC = geoBonus[2]
+--		printf("magic.lua getMagicHitRate GEO MACC Bonus: [%i]", geoMACC)
     end
 
     -- Get the base acc (just skill + skill mod (79 + skillID = ModID) + magic acc mod)
@@ -543,6 +543,7 @@ function getSpellBonusAcc(caster, target, spell, params)
     local skill = spell:getSkillType()
     local spellGroup = spell:getSpellGroup()
     local element = spell:getElement()
+	local geoMACC = 0.0
 
     if caster:hasStatusEffect(tpz.effect.ALTRUISM) and spellGroup == tpz.magic.spellGroup.WHITE then
         magicAccBonus = magicAccBonus + caster:getStatusEffect(tpz.effect.ALTRUISM):getPower()
@@ -584,6 +585,19 @@ function getSpellBonusAcc(caster, target, spell, params)
     -- BLU mag acc merits - nuke acc is handled in bluemagic.lua
     if (skill == tpz.skill.BLUE_MAGIC) then
         magicAccBonus = magicAccBonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
+    end
+	
+	-- GEO Cardinal Chant bonus
+	if caster:getMainJob() == tpz.job.GEO and spellGroup == tpz.magic.spellGroup.BLACK then
+        if caster:isSpellAoE(spellId) then
+            geoBonus = getCardinalStats(caster, target, 1, spell)
+        else
+            geoBonus = getCardinalStats(caster, target, 0, spell)
+        end
+		
+        geoMACC = geoBonus[2]
+		magicAccBonus = magicAccBonus + geoMACC
+--		printf("magic.lua getSpellBonusAcc GEO MACC Bonus: [%i]", geoMACC)
     end
 
     return magicAccBonus
@@ -741,6 +755,7 @@ function calculateMagicBurst(caster, spell, target, params)
             geoBonus = getCardinalStats(caster, target, 0, spell)
         end
         geoMagicBurstBonus = geoBonus[3]
+--		printf("magic.lua calculateMagicBurst GEO MAGIC BURST Bonus: [%i]", geoMagicBurstBonus)
     end
 
     if (spell:getSpellGroup() == 3 and not(caster:hasStatusEffect(tpz.effect.BURST_AFFINITY) or caster:hasStatusEffect(tpz.effect.AZURE_LORE))) then
@@ -967,6 +982,7 @@ function addBonuses(caster, spell, target, dmg, params)
             end
             geoMATT = geoBonus[1]
             geoMCHR = geoBonus[4]
+--			printf("magic.lua addBonuses GEO MATT Bonus: [%i]  GEO MAGIC CRIT HIT RATE: [%i]\n", geoMATT, geoMCHR)
         end
 
         mab = mab + geoMATT
@@ -1344,6 +1360,10 @@ function doElementalNuke(caster, spell, target, spellParams)
 	if caster:hasStatusEffect(tpz.effect.THEURGIC_FOCUS) then
         caster:delStatusEffectSilent(tpz.effect.THEURGIC_FOCUS)
     end
+	
+	if caster:hasStatusEffect(tpz.effect.COLLIMATED_FERVOR) then
+        caster:delStatusEffectSilent(tpz.effect.COLLIMATED_FERVOR)
+    end
 
     return DMG
 end
@@ -1501,6 +1521,8 @@ function calculatePotency(basePotency, magicSkill, caster, target)
         end
     end
 
+	basePotency = basePotency + caster:getMod(tpz.mod.ENH_ENFEEBLE)
+
     return math.floor(basePotency * (1 + caster:getMod(tpz.mod.ENF_MAG_POTENCY) / 100))
 end
 
@@ -1508,8 +1530,8 @@ end
 function outputMagicHitRateInfo()
     for casterLvl = 1, 75 do
 
-        printf("")
-        printf("-------- CasterLvl: %d", casterLvl)
+--        printf("")
+--        printf("-------- CasterLvl: %d", casterLvl)
 
         for lvlMod = -5, 20 do
 
@@ -1534,7 +1556,7 @@ function outputMagicHitRateInfo()
 
                 local magicHitRate = calculateMagicHitRate(magicAcc, magicEva, 0, casterLvl, targetLvl)
 
-                printf("Lvl: %d vs %d, %d%%, MA: %d, ME: %d", casterLvl, targetLvl, magicHitRate, magicAcc, magicEva)
+--                printf("Lvl: %d vs %d, %d%%, MA: %d, ME: %d", casterLvl, targetLvl, magicHitRate, magicAcc, magicEva)
             end
 
         end
@@ -1560,7 +1582,7 @@ local geoBurstBonus =
 function getCardinalStats(caster, target, is_araSpell, spell)
     local targ = target
     local spellID = spell:getID()
-    local cardinalQuarant = caster:getCardinalQuadrant(targ)
+    local cardinalQuadrant = caster:getCardinalQuadrant(targ)
     local modTier = caster:getMod(tpz.mod.CARDINAL_CHANT)
     local MAG_BURST_BONUS = caster:getMod(tpz.mod.MAG_BURST_BONUS)
     local MAGIC_CRITHITRATE = caster:getMod(tpz.mod.MAGIC_CRITHITRATE)
@@ -1575,11 +1597,16 @@ function getCardinalStats(caster, target, is_araSpell, spell)
         base = geoCardinalTierStat[modTier][2]
         burstbase = geoBurstBonus[modTier][2]
     end
+	
+	if (caster:hasStatusEffect(tpz.effect.COLLIMATED_FERVOR)) then
+		base = base * 1.5
+		burstbase = burstbase * 1.5
+	end
 
-    cardinalStats[1] = base *tpz.magic.geoCardinalQuadStats[cardinalQuarant].MATT 
-    cardinalStats[2] = base *tpz.magic.geoCardinalQuadStats[cardinalQuarant].MACC
-    cardinalStats[3] = burstbase *tpz.magic.geoCardinalQuadStats[cardinalQuarant].MAG_BURST_BONUS
-    cardinalStats[4] = base *tpz.magic.geoCardinalQuadStats[cardinalQuarant].MAGIC_CRITHITRATE
+    cardinalStats[1] = base * tpz.magic.geoCardinalQuadStats[cardinalQuadrant].MATT 
+    cardinalStats[2] = base * tpz.magic.geoCardinalQuadStats[cardinalQuadrant].MACC
+    cardinalStats[3] = burstbase * tpz.magic.geoCardinalQuadStats[cardinalQuadrant].MAG_BURST_BONUS
+    cardinalStats[4] = base * tpz.magic.geoCardinalQuadStats[cardinalQuadrant].MAGIC_CRITHITRATE
 
     return cardinalStats
 end

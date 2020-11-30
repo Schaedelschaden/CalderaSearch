@@ -19,5 +19,5 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
-	
+    
 end

@@ -16,7 +16,7 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAbilityCheck(player,target,ability)
-    if not player:hasPet() or not player:getPetID() == 75 then
+    if not (player:hasPet()) or not (player:getPetID() == tpz.pet.id.LUOPAN) then
         return tpz.msg.basic.REQUIRE_LUOPAN, 0
     end
     return 0,0

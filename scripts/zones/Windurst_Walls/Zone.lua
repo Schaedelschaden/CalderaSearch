@@ -20,9 +20,9 @@ function onZoneIn(player, prevZone)
     local cs = -1
 
     if ENABLE_ROV == 1 and player:getCurrentMission(ROV) == tpz.mission.id.rov.RHAPSODIES_OF_VANADIEL and player:getMainLvl()>=3 then
-        cs = 30035
+--        cs = 30035
     elseif player:getCurrentMission(ROV) == tpz.mission.id.rov.FATES_CALL and player:getRank(player:getNation()) >= 5 then
-        cs = 30036
+--        cs = 30036
     elseif
         ENABLE_ASA == 1 and player:getCurrentMission(ASA) == tpz.mission.id.asa.A_SHANTOTTO_ASCENSION
         and (prevZone == tpz.zone.WINDURST_WATERS or prevZone == tpz.zone.WINDURST_WOODS) and player:getMainLvl()>=10

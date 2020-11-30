@@ -221,6 +221,7 @@ tpz.weaponskill =
     FLASH_NOVA          = 172,
     DAGAN               = 173,
     REALMRAZER          = 174,
+	EXUDATION           = 175,
 
     ------------------------------------
     -- STAFF

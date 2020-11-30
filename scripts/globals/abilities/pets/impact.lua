@@ -9,42 +9,18 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onAbilityCheck(player, target, ability)
-	local currentMP = player:getMP()
-	local bloodboon = player:getMod(tpz.mod.BLOOD_BOON)
-	local cost = 222 -- Set the Blood Pact MP Cost here
-		
-	if (player:hasStatusEffect(tpz.effect.ASTRAL_CONDUIT)) then
-		ability:setRecast(utils.clamp(0, 0, 0))
-	end
-	
-	if (player:hasStatusEffect(tpz.effect.APOGEE)) then
-		cost = cost * 1.5
-		ability:setRecast(utils.clamp(0, 0, 0))
-		player:delStatusEffect(tpz.effect.APOGEE)
-	end
-	
-	if (math.random(1,100) < bloodboon) then
---		local originalcost = cost
-		cost = (cost * (math.random(8,16) / 16))
---		printf("Impact PET onAbilityCheck BLOOD BOON COST REDUCTION [%i to %i]\n",originalcost,cost)
-	end
-	
-	player:setMP(currentMP - cost)
-	
---	printf("Impact PET onAbilityCheck\n")
-	
 	return 0,0
 end
 
-function onPetAbility(target, pet, skill, summoner)
+function onPetAbility(target, pet, skill, player)
 --	printf("Impact PET onPetAbility START\n")
 	local petlvl = pet:getMainLvl()
 	local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
 --	printf("Impact PET onPetAbility TP [%f]\n",tp)
-	local debuff = math.floor(summoner:getSkillLevel(tpz.skill.SUMMONING_MAGIC) / 18.75)
+	local debuff = math.floor(player:getSkillLevel(tpz.skill.SUMMONING_MAGIC) / 18.75)
 	local debuffmultiplier = 1
 	local duration = 180
-	local dmgmultiplier = 1.000 -- Originally 2.335
+	local dmgmultiplier = 2.335 -- Originally 2.335
 	
 	if (petlvl > 99) then
 		debuffmultiplier = 2

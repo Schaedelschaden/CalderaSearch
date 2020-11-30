@@ -109,6 +109,7 @@ bool CAIContainer::MobSkill(uint16 targid, uint16 wsid)
     auto AIController = dynamic_cast<CMobController*>(Controller.get());
     if (AIController)
     {
+		// printf("ai_container.cpp MobSkill TRIGGERED targid: [%i]  wsid: [%i]\n", targid, wsid);
         return AIController->MobSkill(targid, wsid);
     }
     return false;
@@ -239,8 +240,10 @@ bool CAIContainer::Internal_WeaponSkill(uint16 targid, uint16 wsid)
 
 bool CAIContainer::Internal_MobSkill(uint16 targid, uint16 wsid)
 {
+	// printf("ai_container.cpp INTERNAL MOBSKILL TRIGGERED targid: [%i]  wsid: [%i]\n", targid, wsid);
     auto entity {dynamic_cast<CMobEntity*>(PEntity)};
     if (entity)
+		// printf("ai_container.cpp ENTITY FOUND\n");
         return ChangeState<CMobSkillState>(entity, targid, wsid);
     return false;
 }

@@ -6,12 +6,19 @@
 cmdprops =
 {
     permission = 0,
-    parameters = ""
+    parameters = "s"
 }
 
-function onTrigger(player)
-	if (player:getHP() < player:getMaxHP()) then
-		player:PrintToPlayer(string.format("You must have full HP to use this command!", player))
+function onTrigger(player, target)
+	local targ = GetPlayerByName(target)
+
+	if (targ:getHP() < targ:getMaxHP()) then
+		player:PrintToPlayer(string.format("The target must have full HP to use this command!", player))
+		return
+	end
+	
+	if (targ:getCharVar("ServerLS_RCVD") > 0) then
+		player:PrintToPlayer(string.format("That player already has a server linkpearl!", player))
 		return
 	end
 
@@ -26,11 +33,10 @@ function onTrigger(player)
         player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, itemId)
         player:PrintToPlayer(string.format("You don't not have enough inventory space for that item!"))
     else
---      targ:addItem({test[1], test[2]})
---		player:addItem({id=itemId, signature="Khalum"})
---		player:addItem({id=itemId, signature=sig, augments={[1]=4,[9]=4}})
 		player:addItem({id=itemId, signature=sig})
---		player:PrintToPlayer(string.format("Gave %s a server linkpearl! They will be zoned to update their inventory.", player))
-		player:setPos(player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID())
+		player:PrintToPlayer(string.format("Gave %s a server linkpearl! They will need to zone to refresh their inventory.", target))
+		targ:PrintToPlayer(string.format("You just received a server linkpearl! You will need to zone to refresh your inventory."))
+		targ:setCharVar("ServerLS_RCVD", 1)
+--		player:setPos(player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID())
     end
 end

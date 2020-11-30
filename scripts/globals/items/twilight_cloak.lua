@@ -6,13 +6,12 @@
 require("scripts/globals/status")
 -----------------------------------------
 
-function onItemCheck(target)
-
-local body = target:getEquipID(tpz.slot.BODY)
-
-    if (body == 11363) then
-        target:addSpell(503)
-    else
-        target:delSpell(503)
-    end
+function onItemCheck(target, itemCheck)
+	if (itemCheck == 1) then --Equip
+		target:addSpell(503)
+	end
+	
+	if (itemCheck == 2) then -- Unequip
+		target:delSpell(503)
+	end
 end

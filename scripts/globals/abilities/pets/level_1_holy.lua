@@ -9,38 +9,14 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onAbilityCheck(player, target, ability)
-	local currentMP = player:getMP()
-	local bloodboon = player:getMod(tpz.mod.BLOOD_BOON)
-	local cost = 235 -- Set the Blood Pact MP Cost here
-		
-	if (player:hasStatusEffect(tpz.effect.ASTRAL_CONDUIT)) then
-		ability:setRecast(utils.clamp(0, 0, 0))
-	end
-	
-	if (player:hasStatusEffect(tpz.effect.APOGEE)) then
-		cost = cost * 1.5
-		ability:setRecast(utils.clamp(0, 0, 0))
-		player:delStatusEffect(tpz.effect.APOGEE)
-	end
-	
-	if (math.random(1,100) < bloodboon) then
-		local originalcost = cost
-		cost = (cost * (math.random(8,16) / 16))
---		printf("LeveL 1 Holy PET onAbilityCheck BLOOD BOON COST REDUCTION [%i to %i]\n",originalcost,cost)
-	end
-	
-	player:setMP(currentMP - cost)
-	
---	printf("Level 1 Holy PET onAbilityCheck\n")
-	
 	return 0,0
 end
 
-function onPetAbility(target, pet, skill)
+function onPetAbility(target, pet, skill, player)
 	local animationID = 1690
 --	printf("Level 1 Holy PET onPetAbility\n")
-	local player = pet:getMaster()
 	local mobName = target:getName()
+	local fixedName = string.gsub(mobName, "_", " ")
 	local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
 
 	local damage = 700
@@ -52,10 +28,10 @@ function onPetAbility(target, pet, skill)
 	target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.LIGHT)
 	target:updateEnmityFromDamage(pet,damage)
 	
-	player:PrintToPlayer(string.format("The %s takes %i damage.", mobName, damage),tpz.msg.channel.SYSTEM_3)
+	player:PrintToPlayer(string.format("The %s takes %i damage.", fixedName, damage),tpz.msg.channel.SYSTEM_3)
 	skill:setMsg(tpz.msg.basic.HIT_DMG)
 	
-	PlayPetAnimation(pet, pet, animationID)
+	PlayPetAnimation(pet, target, animationID)
 
 	return damage
 end

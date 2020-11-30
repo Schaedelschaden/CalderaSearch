@@ -9,11 +9,16 @@ cmdprops =
     parameters = "s"
 }
 
-function error(player, msg)
+function error(player)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!rezone")
+    player:PrintToPlayer("You must have full HP to use this command!")
 end
 
 function onTrigger(player)
+	if (player:getHP() < player:getMaxHP()) then
+		player:PrintToPlayer(string.format("You must have full HP to use this command!", player))
+		return
+	end
+	
     player:setPos(player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID())
 end

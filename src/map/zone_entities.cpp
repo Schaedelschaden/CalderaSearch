@@ -477,11 +477,17 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
 
             uint8 mLvl = PChar->GetMLevel();
 			uint8 iLvl = PChar->m_Weapons[SLOT_MAIN]->getILvl();
+			uint8 riLvl = PChar->m_Weapons[SLOT_RANGED]->getILvl();
 			uint8 targetLvl = PCurrentMob->GetMLevel();
 					
 			if (iLvl > mLvl)
 			{
 				mLvl = iLvl;
+			}
+		
+			if (riLvl > mLvl)
+			{
+				mLvl = riLvl;
 			}
 			
 			const EMobDifficulty mobCheck = charutils::CheckMob(mLvl, targetLvl);

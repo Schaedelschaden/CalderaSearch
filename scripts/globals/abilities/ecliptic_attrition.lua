@@ -14,15 +14,22 @@ require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------
 
-function onAbilityCheck(player,target,ability)
-    if not player:hasPet() or not player:getPetID() == 75 then
+function onAbilityCheck(player, target, ability)
+    if not (player:hasPet()) or not (player:getPetID() == tpz.pet.id.LUOPAN) then
         return tpz.msg.basic.REQUIRE_LUOPAN, 0
+	end
+	
+	if (player:hasStatusEffect(tpz.effect.BOLSTER)) then
+		return tpz.msg.basic.CANNOT_PERFORM
     end
+	
     return 0,0
 end
 
-function onUseAbility(player,target,ability)
+function onUseAbility(player, target, ability)
     local luopan = player:getPet()
     local luopanLvl = luopan:getMainLvl()
-    luopan:addStatusEffect(tpz.effect.ECLIPTIC_ATTRITION, math.floor(luopanLvl / 16), 0, 0)
+	local regenDown = math.floor(luopanLvl / 16)
+	
+    luopan:addStatusEffect(tpz.effect.ECLIPTIC_ATTRITION, regenDown, 0, 0)
 end

@@ -37,6 +37,7 @@ function onUseAbility(player, target, ability, action)
 	local RuneCounter = 0
 	local bonus = 1.0
 	local lungeBonus = player:getMod(tpz.mod.LUNGE_BONUS) / 100
+	local multiplier = 2
 	
 	for i,v in ipairs(RuneEnhancement) do
 		player:delStatusEffectSilent(RuneEnspell[i])
@@ -51,7 +52,7 @@ function onUseAbility(player, target, ability, action)
 --	printf("lunge.lua onUseAbility LUNGE RUNE COUNTER: [%i]", RuneCounter)
 	
 	local runeBonus = RuneCounter * 0.25
-	local dmg = player:getCharSkillLevel(skillType) * (0.50 + runeBonus + lungeBonus)
+	local dmg = player:getSkillLevel(skillType) * (0.50 + runeBonus + lungeBonus) * multiplier
 	
 	local params = {}
 		params.includemab = true

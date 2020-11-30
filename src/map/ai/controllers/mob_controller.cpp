@@ -270,6 +270,7 @@ bool CMobController::MobSkill(int wsList)
 {
     TracyZoneScoped;
     /* #TODO: mob 2 hours, etc */
+//	printf("mob_controller.cpp MobSkill WS List TRIGGERED\n");
     if (!wsList) wsList = PMob->getMobMod(MOBMOD_SKILL_LIST);
     auto skillList {battleutils::GetMobSkillList(wsList)};
 
@@ -291,13 +292,16 @@ bool CMobController::MobSkill(int wsList)
         if (PMobSkill->getValidTargets() == TARGET_ENEMY) //enemy
         {
             PActionTarget = PTarget;
+//			printf("mob_controller.cpp MobSkill TARGETING ENEMY: [%i]\n", PActionTarget->targid);
         }
         else if (PMobSkill->getValidTargets() == TARGET_SELF) //self
         {
             PActionTarget = PMob;
+//			printf("mob_controller.cpp MobSkill TARGETING SELF: [%i]\n", PActionTarget->targid);
         }
         else
         {
+//			printf("mob_controller.cpp MobSkill NO TARGET\n");
             continue;
         }
         float currentDistance = distance(PMob->loc.p, PActionTarget->loc.p);
@@ -305,6 +309,7 @@ bool CMobController::MobSkill(int wsList)
         {
             if (currentDistance <= PMobSkill->getDistance())
             {
+//				printf("mob_controller.cpp MobSkill PASSING TARGID:[%i]  SKILLID: [%i]\n", PActionTarget->targid, PMobSkill->getID());
                 return MobSkill(PActionTarget->targid, PMobSkill->getID());
             }
         }
@@ -361,6 +366,7 @@ bool CMobController::TrySpecialSkill()
 
     if (luautils::OnMobSkillCheck(PAbilityTarget, PMob, PSpecialSkill) == 0)
     {
+//		printf("mob_controller.cpp TrySpecialSkill OnMobSkillCheck TRIGGERED\n");
         return MobSkill(PAbilityTarget->targid, PSpecialSkill->getID());
     }
 
@@ -941,6 +947,7 @@ bool CMobController::MobSkill(uint16 targid, uint16 wsid)
     TracyZoneScoped;
     if (POwner)
     {
+//		printf("mob_controller.cpp MobSkill TRIGGERED targid: [%i]  wsid: [%i]\n", targid, wsid);
         FaceTarget(targid);
         return POwner->PAI->Internal_MobSkill(targid, wsid);
     }

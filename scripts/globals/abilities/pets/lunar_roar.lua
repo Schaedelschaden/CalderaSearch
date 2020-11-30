@@ -9,30 +9,6 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onAbilityCheck(player, target, ability)
-	local currentMP = player:getMP()
-	local bloodboon = player:getMod(tpz.mod.BLOOD_BOON)
-	local cost = 27 -- Set the Blood Pact MP Cost here
-		
-	if (player:hasStatusEffect(tpz.effect.ASTRAL_CONDUIT)) then
-		ability:setRecast(utils.clamp(0, 0, 0))
-	end
-	
-	if (player:hasStatusEffect(tpz.effect.APOGEE)) then
-		cost = cost * 1.5
-		ability:setRecast(utils.clamp(0, 0, 0))
-		player:delStatusEffect(tpz.effect.APOGEE)
-	end
-	
-	if (math.random(1,100) < bloodboon) then
---		local originalcost = cost
-		cost = (cost * (math.random(8,16) / 16))
---		printf("Lunar Roar PET onAbilityCheck BLOOD BOON COST REDUCTION [%i to %i]\n",originalcost,cost)
-	end
-	
-	player:setMP(currentMP - cost)
-	
---	printf("Lunar Roar PET onAbilityCheck\n")
-	
 	return 0,0
 end
 
@@ -40,5 +16,6 @@ function onPetAbility(target, pet, skill)
     target:dispelStatusEffect()
     target:dispelStatusEffect()
     skill:setMsg(tpz.msg.basic.NONE)
+	
     return 0
 end

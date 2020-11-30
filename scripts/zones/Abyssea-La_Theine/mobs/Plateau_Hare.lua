@@ -45,7 +45,7 @@ function onMobDeath(mob, player, isKiller)
 	player:addListener("TICK", "HIT_RAISE", function(player)
 		local raiseDelay = player:getCharVar("KillCounter_RaiseDelay")
 		if (hitOrdered == 1 and os.time() > raiseDelay) then
-			player:PrintToPlayer(string.format("Rabbit Conclave: Learned your lesson %s?!? We'll take mercy on you for now...", playerName), tpz.msg.channel.NS_LINKSHELL3)
+			player:PrintToPlayer(string.format("Rabbit Conclave: Learned your lesson %s?!? We'll have mercy on you for now...", playerName), tpz.msg.channel.NS_LINKSHELL3)
 			player:sendRaise(3)
 			player:setCharVar("KillCounter_RaiseDelay", 0)
 			player:setCharVar("KillCounter_HitOrdered", 0)
@@ -56,4 +56,8 @@ function onMobDeath(mob, player, isKiller)
 	end)
 	
 	player:setCharVar("KillCounter_Rabbits", KillCounter)
-end;
+	
+	if (mob:getMobFlags() < 4) then
+		mob:setMobFlags(mob:getMobFlags() + 1, mob:getID())
+	end
+end

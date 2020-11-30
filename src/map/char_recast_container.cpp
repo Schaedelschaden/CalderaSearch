@@ -46,6 +46,7 @@ CCharRecastContainer::CCharRecastContainer(CCharEntity* PChar) : CRecastContaine
 void CCharRecastContainer::Add(RECASTTYPE type, uint16 id, uint32 duration, uint32 chargeTime, uint8 maxCharges)
 {
     Recast_t* recast = Load(type, id, duration, chargeTime, maxCharges);
+//	printf("char_recast_container.cpp Add START ABILITY ID: [%i]  DURATION: [%i]\n", id, duration);
 
     if (type == RECAST_ABILITY)
     {
@@ -77,6 +78,7 @@ void CCharRecastContainer::Del(RECASTTYPE type)
 
 void CCharRecastContainer::Del(RECASTTYPE type, uint16 id)
 {
+//	printf("char_recast_container.cpp Del START ABILITY ID: [%i]\n", id);
     CRecastContainer::Del(type, id);
     Sql_Query(SqlHandle, "DELETE FROM char_recast WHERE charid = %u AND id = %u;", m_PChar->id, id);
 }

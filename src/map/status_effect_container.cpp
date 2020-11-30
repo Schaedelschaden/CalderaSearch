@@ -1763,12 +1763,22 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
     CBattleEntity* PEntity = static_cast<CBattleEntity*>(m_POwner);
     AURATARGET auraTarget = static_cast<AURATARGET>(PStatusEffect->GetTier());
 
+    float auraRange = 6.25; // TODO: Add mods
+	
+	if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_WIDENED_COMPASS))
+    {
+        auraRange = auraRange * 2;
+    }
+	
+	if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_AVATARS_FAVOR))
+	{
+		auraRange = 10.00;
+	}
+
     if (PEntity->objtype == TYPE_PET || PEntity->objtype == TYPE_TRUST)
     {
         PEntity = PEntity->PMaster;
     }
-
-    float auraRange = 6.25; // TODO: Add mods
 
     std::vector<CBattleEntity*> validTargets;
     auto addIfValidTarget = [this, &validTargets, &auraRange](CBattleEntity* PTarget)
@@ -1895,11 +1905,13 @@ void CStatusEffectContainer::TickRegen(time_point tick)
 
             if ((damage > 0) && (m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_NIGHTMARE)))
             {
+//				printf("status_effect_container.cpp TickRegen Nightmare DoT Tick\n");
                 DelStatusEffectSilent(EFFECT_HEALING);
                 m_POwner->takeDamage(damage);
             }
 			else
 			{
+//				printf("status_effect_container.cpp TickRegen Normal DoT Tick\n");
                 DelStatusEffectSilent(EFFECT_HEALING);
                 m_POwner->takeDamage(damage);
                 WakeUp();

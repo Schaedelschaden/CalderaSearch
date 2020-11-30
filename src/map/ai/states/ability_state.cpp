@@ -106,20 +106,24 @@ bool CAbilityState::Update(time_point tick)
     {
         if (CanUseAbility())
         {
-            action_t action;
+//            printf("ability_state.cpp Update CanUseAbility CHECK PASSED\n");
+			action_t action;
             m_PEntity->OnAbility(*this, action);
             m_PEntity->PAI->EventHandler.triggerListener("ABILITY_USE", m_PEntity, GetTarget(), m_PAbility.get(), &action);
             m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, new CActionPacket(action));
             if (auto target = GetTarget())
             {
+//				printf("ability_state.cpp Update GetTarget\n");
                 target->PAI->EventHandler.triggerListener("ABILITY_TAKE", target, m_PEntity, m_PAbility.get(), &action);
             }
         }
+//		printf("ability_state.cpp Update COMPLETE\n");
         Complete();
     }
 
     if (IsCompleted() && tick > GetEntryTime() + m_castTime + m_PAbility->getAnimationTime())
     {
+//		printf("ability_state.cpp Update TRIGGER LISTENER ABILITY_STATE_EXIT\n");
         m_PEntity->PAI->EventHandler.triggerListener("ABILITY_STATE_EXIT", m_PEntity, m_PAbility.get());
         return true;
     }
@@ -129,6 +133,7 @@ bool CAbilityState::Update(time_point tick)
 
 bool CAbilityState::CanUseAbility()
 {
+//	printf("\nability_state.cpp CanUseAbility TRIGGER\n");
     if (m_PEntity->objtype == TYPE_PC)
     {
         auto PAbility = GetAbility();
@@ -165,6 +170,7 @@ bool CAbilityState::CanUseAbility()
 		
         if (PChar->IsValidTarget(PTarget->targid, PAbility->getValidTarget(), errMsg))
         {
+//			printf("ability_state.cpp CanUseAbility IS A VALID TARGET\n");
 			// Check if the target is out of range
             if (PChar != PTarget && distance(PChar->loc.p, PTarget->loc.p) > PAbility->getRange())
             {
@@ -174,6 +180,7 @@ bool CAbilityState::CanUseAbility()
 			// Check if the user is in line of sight
             if (!m_PEntity->PAI->TargetFind->canSee(&PTarget->loc.p))
             {
+//				printf("ability_state.cpp CanUseAbility CAN SEE THE TARGET\n");
                 m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, PTarget, PAbility->getID(), 0, MSGBASIC_CANNOT_PERFORM_ACTION);
                 return false;
             }
@@ -188,7 +195,9 @@ bool CAbilityState::CanUseAbility()
 //              }                                                                                                // Remove or permanently disable, moved to scripts
 //          }                                                                                                    // Remove or permanently disable, moved to scripts
             CBaseEntity* PMsgTarget = PChar;
+//			printf("ability_state.cpp CanUseAbility PUSHED TO onAbilityCheck\n");
             int32 errNo = luautils::OnAbilityCheck(PChar, PTarget, PAbility, &PMsgTarget);
+//			printf("ability_state.cpp CanUseAbility RETURNING FROM onAbilityCheck  errNo:[%i]\n", errNo);
             if (errNo != 0)
             {
                 PChar->pushPacket(new CMessageBasicPacket(PChar, PMsgTarget, PAbility->getID(), PAbility->getID(), errNo));

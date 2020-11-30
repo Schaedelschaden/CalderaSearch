@@ -12,26 +12,29 @@ require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------
 
-function onAbilityCheck(player,target,ability)
-    if not player:hasPet() or not player:getPetID() == 75 then
+function onAbilityCheck(player, target, ability)
+    if not (player:hasPet()) or not (player:getPetID() == tpz.pet.id.LUOPAN) then
         return tpz.msg.basic.REQUIRE_LUOPAN, 0
     end
     return 0,0
 end
 
 
-function onUseAbility(player,target,ability)
+function onUseAbility(player, target, ability)
     local luopan        = player:getPet()
     local hpp_remaining = luopan:getHPP()
     local mp_cost       = luopan:getLocalVar("MP_COST")
-    local mp_returned   = (0.5 * mp_cost) * hpp_remaining / 100
+	local modifier      = 0.5 + (player:getMod(tpz.mod.ENH_FULL_CIRCLE) / 10)
+	local fcMerit       = 1 + (player:getMerit(tpz.merit.FULL_CIRCLE_EFFECT) / 100)
+	local crMerit       = 1 + (player:getMerit(tpz.merit.CURATIVE_RECANTATION) / 100)
+    local mp_returned   = ((modifier * mp_cost) * (hpp_remaining / 100)) * fcMerit
     local hp_returned   = 0
-    local crMerit       = player:getMerit(tpz.merit.CURATIVE_RECANTATION)
 
     if crMerit > 0 then
-       hp_returned = mp_returned + ((mp_returned *0.5) *crMerit)
-       player:restoreHP(hp_returned)
+       hp_returned = (mp_returned + (mp_returned * modifier)) * crMerit
     end
+	
+	player:restoreHP(hp_returned)
     player:restoreMP(mp_returned)
-    target:despawnPet()
+    player:despawnPet()
 end

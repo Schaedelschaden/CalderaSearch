@@ -195,6 +195,8 @@ CZoneInPacket::CZoneInPacket(CCharEntity * PChar, int16 csid)
 
     ref<uint32>(0xE8) = PChar->GetMaxHP();
     ref<uint32>(0xEC) = PChar->GetMaxMP();
+	
+	// ref<uint8>(0xF4) = 0x18; // Replace with menuConfigFlags
 
     ref<uint8>(0x100) = 0x01;
 }

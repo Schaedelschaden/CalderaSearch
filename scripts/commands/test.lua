@@ -12,14 +12,24 @@ cmdprops =
 function onTrigger(player)
 ---------------------------------------------------------------------------------------------------
 
+-- Code for determining the linkpearl's signature
+
+local item = player:getItem(515)
+
+if (player:hasItem(515) and (item:getSignature() == "CalderaServer")) then
+	player:PrintToPlayer("Player has the server linkpearl!")
+end
+
+---------------------------------------------------------------------------------------------------
+
 -- Code for messaging the entire server
 
 --	printf("Player Name: [%s]  Message: [%s]\n", playerName, message)
 
-	local message = "Normal chat in Say from the player"
-	local channel = 0
-	local playerName = player:getName()
-	SendServerMsg(playerName, channel, message)
+	-- local message = "Normal chat in Say from the player"
+	-- local channel = 0
+	-- local playerName = player:getName()
+	-- SendServerMsg(playerName, channel, message)
 	
 	-- local message = "Normal chat in Say from the player"
 	-- local channel = 0

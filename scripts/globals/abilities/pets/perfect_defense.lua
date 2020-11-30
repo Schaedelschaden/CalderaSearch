@@ -11,12 +11,13 @@ function onAbilityCheck(player, target, ability)
     return 0,0
 end
 
-function onPetAbility(target, pet, skill, master)
-    local power = 100 * (master:getMP() / master:getMaxMP())
+function onPetAbility(target, pet, skill)
+	local player = pet:getMaster()
+    local power = 100 * (player:getMP() / player:getMaxMP())
     local duration = 60
-	local summoningSkill = master:getSkillLevel(tpz.skill.SUMMONING_MAGIC)
+	local summoningSkill = player:getSkillLevel(tpz.skill.SUMMONING_MAGIC)
     
-	if (master ~= nil) then
+	if (player ~= nil) then
         if (summoningSkill > 600) then
             summoningSkill = 600
         end
@@ -26,7 +27,7 @@ function onPetAbility(target, pet, skill, master)
 	target:delStatusEffect(tpz.effect.PERFECT_DEFENSE)
     target:addStatusEffect(tpz.effect.PERFECT_DEFENSE,power,3,duration)
     skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
-    master:setMP(0)
+    player:setMP(0)
     
 	return tpz.effect.PERFECT_DEFENSE
 end

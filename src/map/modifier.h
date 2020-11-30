@@ -329,6 +329,7 @@ enum class Mod
     // Black Mage
     CLEAR_MIND                = 295, // Used in conjunction with HEALMP to increase amount between tics
     CONSERVE_MP               = 296, // Percent chance
+    ENH_ELEMENTAL_SEAL        = 756, // Adds a Magic Damage bonus to Elemental Seal
 
     // Red Mage
     BLINK                     = 299, // Tracks blink shadows
@@ -552,8 +553,8 @@ enum class Mod
     CARDINAL_CHANT            = 959,
     INDI_DURATION             = 960,
     GEOMANCY                  = 961, // Geomancy Skill
-    WIDENED_COMPASS           = 962,
-	HANDBELL                  = 963, // Handbell Skill
+	HANDBELL                  = 962, // Handbell Skill
+    WIDENED_COMPASS           = 963,
     MENDING_HALATION          = 968,
     RADIAL_ARCANA             = 969,
     CURATIVE_RECANTATION      = 970,
@@ -845,7 +846,7 @@ enum class Mod
 	DAMAGE_LIMIT_GEAR               = 3015, // Physical Damage Limit +% from gear (pDIF multiplier)
 	ALL_KILLER_EFFECTS              = 3016, // All Killer Effects + (caps at 100%)
 	AUGMENT_REWARD                  = 3017, // Augments "Reward", II, and III
-//	JUG_LEVEL_RANGE                 = 3018, // Decreases the level range of spawned jug pets. Maxes out at 2. (Added higher up)
+	WYVERN_ILVL                     = 3018, // Wyvern: Lv. gear
 	BEAST_AFFINITY                  = 3019, // Increases Jug Pet level by 1 (maxed at 15)
 	REWARD_RECAST					= 3020, // Reduces Reward's recast by x seconds
 	DOUBLE_SHOT_AMMO                = 3021, // Tracks Double Shot Ammo Requirement
@@ -855,7 +856,7 @@ enum class Mod
 	YAEGASUMI_WS_BONUS              = 3025, // Tracks bonus to WS damage from Yaegasumi SP attack cancellations
 	UTSUSEMI_CAST                   = 3026, // Utsusemi Spellcasting Time -%
 	ALL_JUMPS_WYVERN_HP             = 3027, // All Jumps: Adds % of wyvern's max HP as additional damage
-//	WYVERN_SUPPORT_JOB              = 3028, // Wyvern: Adds support job abilities to wyvern (Added higher up as WYVERN_SUBJOB_TRAITS)
+	ENHANCES_AVATARS_FAVOR          = 3028, // Enhances the effects of Avatar's Favor by 1 tier
 	MANA_CEDE_STRENGTH				= 3029, // Enhances "Mana Cede" effect
 	AVATAR_ILVL						= 3030, // Avatar: Lv. gear
 	SPIRIT_RECAST                   = 3031, // Shortens magic recast time for Elemental Spirits gear
@@ -892,24 +893,9 @@ enum class Mod
 	BATTUTA_EFFECT                  = 3062, // Increases the Counter damage of Battuta
 	ONE_FOR_ALL_EFFECT              = 3063, // Tracks the total amount of magic reduction from One For All
 	LUOPAN_POTENCY                  = 3064, // Luopan potency from Ecliptic Attrition/Blaze of Glory
-	LUOPAN_REGEN                    = 3065, // Luopan: Regen +
+	ENH_FULL_CIRCLE                 = 3065, // Full Circle + Gear (Enhances the base MP return multiplier)
 	AUGMENT_CONCENTRIC_PULSE        = 3066, // Augments "Concentric Pulse"
 	GEOMANCY_POTENCY                = 3067, // +Geomancy potency from Eminent Bell/Dunna/etc
-	
-	ASURAN_FISTS_WS_DMG             = 3100, // Main Hand: Asuran Fists Damage (H2H)
-	EVISCERATION_WS_DMG             = 3101, // Main Hand: Evisceration Damage (Dagger)
-	SAVAGE_BLADE_WS_DMG             = 3102, // Main Hand: Savage Blade Damage (Sword)
-	GROUND_STRIKE_WS_DMG            = 3103, // Main Hand: Ground Strike Damage (GSword)
-	DECIMATION_WS_DMG               = 3104, // Main Hand: Decimation Damage (Axe)
-	STEEL_CYCLONE_WS_DMG            = 3105, // Main Hand: Steel Cycle Damage (GAxe)
-	SPIRAL_HELL_WS_DMG              = 3106, // Main Hand: Spiral Hell Damage (Scythe)
-	IMPULSE_DRIVE_WS_DMG            = 3107, // Main Hand: Impulse Drive Damage (Polearm)
-	BLADE_KU_WS_DMG                 = 3108, // Main Hand: Blade: Ku Damage (Katana)
-	TACHI_KASHA_WS_DMG              = 3109, // Main Hand: Tachi: Kasha Damage (GKatana)
-	BLACK_HALO_WS_DMG               = 3110, // Main Hand: Black Halo Damage (Club)
-	RETRIBUTION_WS_DMG              = 3111, // Main Hand: Retribution Damage (Staff)
-	EMPYREAL_ARROW_WS_DMG           = 3112, // Main Hand: Empyreal Arrow Damage (Archery)
-	DETONATOR_WS_DMG                = 3113, // Main Hand: Detonator Damage (Marksmanship)
 	
     SDT_FIRE                        = 3200, // Fire Specific Damage Taken
     SDT_ICE                         = 3201, // Ice Specific Damage Taken
@@ -919,6 +905,26 @@ enum class Mod
     SDT_WATER                       = 3205, // Water Specific Damage Taken
     SDT_LIGHT                       = 3206, // Light Specific Damage Taken
     SDT_DARK                        = 3207, // Dark Specific Damage Taken
+	
+	ENH_ERASE                       = 3208, // Increases the number of effects removed by Erase (Cleric's Torque/+1/+2)
+	ENH_DISPEL                      = 3209, // Increases the number of effects removed by Dispel (Duelist's Torque/+1/+2)
+	ENH_ENFEEBLE                    = 3210, // Increases Enfeebling magic potency + (Duelist's Torque/+1/+2)
+	UTSU_ATK_SHADOWS                = 3211, // Adds Attack for each Utsusemi Shadow Image present
+	
+	ASURAN_FISTS_WS_DMG             = 3300, // Main Hand: Asuran Fists Damage (H2H)
+	EVISCERATION_WS_DMG             = 3301, // Main Hand: Evisceration Damage (Dagger)
+	SAVAGE_BLADE_WS_DMG             = 3302, // Main Hand: Savage Blade Damage (Sword)
+	GROUND_STRIKE_WS_DMG            = 3303, // Main Hand: Ground Strike Damage (GSword)
+	DECIMATION_WS_DMG               = 3304, // Main Hand: Decimation Damage (Axe)
+	STEEL_CYCLONE_WS_DMG            = 3305, // Main Hand: Steel Cycle Damage (GAxe)
+	SPIRAL_HELL_WS_DMG              = 3306, // Main Hand: Spiral Hell Damage (Scythe)
+	IMPULSE_DRIVE_WS_DMG            = 3307, // Main Hand: Impulse Drive Damage (Polearm)
+	BLADE_KU_WS_DMG                 = 3308, // Main Hand: Blade: Ku Damage (Katana)
+	TACHI_KASHA_WS_DMG              = 3309, // Main Hand: Tachi: Kasha Damage (GKatana)
+	BLACK_HALO_WS_DMG               = 3310, // Main Hand: Black Halo Damage (Club)
+	RETRIBUTION_WS_DMG              = 3311, // Main Hand: Retribution Damage (Staff)
+	EMPYREAL_ARROW_WS_DMG           = 3312, // Main Hand: Empyreal Arrow Damage (Archery)
+	DETONATOR_WS_DMG                = 3313, // Main Hand: Detonator Damage (Marksmanship)
 };
 
 //temporary workaround for using enum class as unordered_map key until compilers support it

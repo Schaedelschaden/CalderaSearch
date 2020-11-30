@@ -14,9 +14,14 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAbilityCheck(player,target,ability)
-    if player:hasPet() and player:getPetID() == 75 then
+    if ((player:hasPet()) and (player:getPetID() == tpz.pet.id.LUOPAN)) then
         return tpz.msg.basic.HAS_LUOPON_NO_USE, 0
+	end
+	
+	if (player:hasStatusEffect(tpz.effect.BOLSTER)) then
+		return tpz.msg.basic.CANNOT_PERFORM
     end
+	
     return 0,0
 end
 

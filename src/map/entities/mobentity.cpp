@@ -578,7 +578,8 @@ void CMobEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& actio
 
 void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
 {
-    auto PSkill = state.GetSkill();
+    // printf("mobentity.cpp OnMobSkillFinished START\n");
+	auto PSkill = state.GetSkill();
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
 
     static_cast<CMobController*>(PAI->GetController())->TapDeaggroTime();
@@ -593,31 +594,51 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
     if (PSkill->getFlag() & SKILLFLAG_HIT_ALL)
     {
         findFlags |= FINDFLAGS_HIT_ALL;
+		// printf("mobentity.cpp OnMobSkillFinished FINDFLAGS HIT ALL: [%i]\n", findFlags);
     }
 
     // Mob buff abilities also hit monster's pets
     if (PSkill->getValidTargets() == TARGET_SELF)
     {
         findFlags |= FINDFLAGS_PET;
+		// printf("mobentity.cpp OnMobSkillFinished FINDFLAGS PET: [%i]\n", findFlags);
+    }
+	
+	if (PSkill->getValidTargets() == TARGET_PLAYER_DEAD)
+    {
+        findFlags |= FINDFLAGS_DEAD;
+		// printf("mobentity.cpp OnMobSkillFinished FINDFLAGS DEAD: [%i]\n", findFlags);
     }
 
     action.id = id;
     if (objtype == TYPE_PET && static_cast<CPetEntity*>(this)->getPetType() == PETTYPE_AVATAR)
+	{
+		// printf("mobentity.cpp OnMobSkillFinished TRIGGER PET_MOBABILITY_FINISH\n");
         action.actiontype = ACTION_PET_MOBABILITY_FINISH;
+	}
     else if (PSkill->getID() < 256)
+	{
+		// printf("mobentity.cpp OnMobSkillFinished TRIGGER ACTION_WEAPONSKILL_FINISH\n");
         action.actiontype = ACTION_WEAPONSKILL_FINISH;
+	}
     else
+	{
+		// printf("mobentity.cpp OnMobSkillFinished TRIGGER ACTION_MOBABILITY_FINISH\n");
         action.actiontype = ACTION_MOBABILITY_FINISH;
+	}
     action.actionid = PSkill->getID();
 
     if (PTarget && PAI->TargetFind->isWithinRange(&PTarget->loc.p, distance))
     {
+		// printf("mobentity.cpp OnMobSkillFinished PTARGET WITHIN RANGE\n");
         if (PSkill->isAoE())
         {
+			// printf("mobentity.cpp OnMobSkillFinished MOBSKILL AOE\n");
             PAI->TargetFind->findWithinArea(PTarget, (AOERADIUS)PSkill->getAoe(), PSkill->getRadius(), findFlags);
         }
         else if (PSkill->isConal())
         {
+			// printf("mobentity.cpp OnMobSkillFinished MOBSKILL CONAL\n");
             float angle = 45.0f;
             PAI->TargetFind->findWithinCone(PTarget, distance, angle, findFlags);
         }
@@ -631,15 +652,18 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
                     PTarget = PCoverAbilityUser;
                 }
             }
-
+			
+			// printf("mobentity.cpp OnMobSkillFinished FIND SINGLE TARGET findFlags: [%i]\n", findFlags);
             PAI->TargetFind->findSingleTarget(PTarget, findFlags);
         }
     }
 
     uint16 targets = (uint16)PAI->TargetFind->m_targets.size();
+	// printf("mobentity.cpp OnMobSkillFinished TARGETS: [%i]\n", targets);
 
     if (!PTarget || targets == 0)
     {
+		// printf("mobentity.cpp OnMobSkillFinished NO TARGET FOUND!\n");
         action.actiontype = ACTION_MOBABILITY_INTERRUPT;
         actionList_t& actionList = action.getNewActionList();
         actionList.ActionTargetID = id;
@@ -659,6 +683,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
     bool first {true};
     for (auto&& PTarget : PAI->TargetFind->m_targets)
     {
+		// printf("mobentity.cpp OnMobSkillFinished FOUND TARGET\n");
         actionList_t& list = action.getNewActionList();
 
         list.ActionTargetID = PTarget->id;
@@ -677,10 +702,12 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
 
         if (objtype == TYPE_PET && static_cast<CPetEntity*>(this)->getPetType() != PETTYPE_JUG_PET)
         {
+			// printf("mobentity.cpp OnMobSkillFinished FOUND PET\n");
             if(static_cast<CPetEntity*>(this)->getPetType() == PETTYPE_AVATAR || static_cast<CPetEntity*>(this)->getPetType() == PETTYPE_WYVERN)
             {
                 target.animation = PSkill->getPetAnimationID();
             }
+			// printf("mobentity.cpp OnMobSkillFinished TRIGGER onPetAbility\n");
             target.param = luautils::OnPetAbility(PTarget, this, PSkill, PMaster, &action);
         }
         else
@@ -870,14 +897,20 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 
     bool validZone = ((Pzone > 0 && Pzone < 39) || (Pzone > 42 && Pzone < 134) || (Pzone > 135 && Pzone < 185) || (Pzone > 188 && Pzone < 255));
 
-	uint8 pCharLvl = PChar->GetMLevel();
+/* 	uint8 pCharLvl = PChar->GetMLevel();
 	uint8 mLvl = this->GetMLevel();
-	uint8 iLvl = this->m_Weapons[SLOT_MAIN]->getILvl();
-					
+	uint8 iLvl = PChar->m_Weapons[SLOT_MAIN]->getILvl();
+	uint8 riLvl = PChar->m_Weapons[SLOT_RANGED]->getILvl();
+
 	if (iLvl > mLvl)
 	{
 		mLvl = iLvl;
 	}
+		
+	if (riLvl > mLvl)
+	{
+		mLvl = riLvl;
+	} */
 
     if (validZone && charutils::CheckMob(m_HiPCLvl, GetMLevel()) > EMobDifficulty::TooWeak)
     {

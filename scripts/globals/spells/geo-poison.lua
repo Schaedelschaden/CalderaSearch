@@ -16,12 +16,17 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local geo_skill = caster:getCharSkillLevel(tpz.skill.GEOMANCY)
-    local power = (geo_skill / 30) / 10
+    local skill = caster:getSkillLevel(tpz.skill.GEOMANCY)
+	
+	if (caster:getWeaponSkillType(tpz.slot.RANGED) == tpz.skill.HANDBELL) then
+		skill = skill + caster:getSkillLevel(tpz.skill.HANDBELL)
+	end
+	
+    local power = (skill / 30) + (GeomancyPotency(caster) * 3)
+	
     if power < 1 then
         power = 1
     end
 
     tpz.geo.spawnLuopan(caster, target, spell, tpz.effect.GEO_POISON, power, tpz.auraTarget.ENEMIES)
-	
 end

@@ -27,9 +27,9 @@ function onZoneIn(player, prevZone)
         player:setPos(0, 0, -50, 0)
         player:setHomePoint()
     elseif ENABLE_ROV == 1 and player:getCurrentMission(ROV) == tpz.mission.id.rov.RHAPSODIES_OF_VANADIEL and player:getMainLvl()>=3 then
-        cs = 30035
+--        cs = 30035
     elseif player:getCurrentMission(ROV) == tpz.mission.id.rov.FATES_CALL and player:getCurrentMission(player:getNation()) > 15 then
-        cs = 30036
+--        cs = 30036
     -- SOA 1-1 Optional CS
     elseif
         ENABLE_SOA == 1 and

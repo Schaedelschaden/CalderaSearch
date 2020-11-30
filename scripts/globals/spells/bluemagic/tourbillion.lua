@@ -64,7 +64,7 @@ function onSpellCast(caster, target, spell)
 		target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 33, 0, duration)
 	end
 	
-	printf("Tourbillion onSpellCast CHANCE: [%i]\n", chance)
+--	printf("Tourbillion onSpellCast CHANCE: [%i]\n", chance)
 	
 	caster:delStatusEffect(tpz.effect.UNBRIDLED_LEARNING)
 

@@ -11,7 +11,7 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onAbilityCheck(player, target, ability)	
---	printf("Raise II PLAYER onAbilityCheck START\n")
+	printf("Raise II PLAYER onAbilityCheck START\n")
 	return 0,0
 end
 

@@ -1669,7 +1669,7 @@ namespace petutils
 
     void LoadWyvernStatistics(CBattleEntity* PMaster, CPetEntity* PPet, bool finalize)
     {
-		uint8 mlvl = PMaster->GetMLevel();
+		uint8 mlvl = PMaster->GetMLevel() + PMaster->getMod(Mod::WYVERN_ILVL);
 		uint8 weaponlevel = PMaster->m_Weapons[SLOT_MAIN]->getILvl();
 		uint16 mainLevelUpTo75 = (mlvl < 75 ? mlvl - 1 : 75);
 		uint16 mainLevelOver76andUnder99 = std::clamp(mlvl - 75, 0, 24); 

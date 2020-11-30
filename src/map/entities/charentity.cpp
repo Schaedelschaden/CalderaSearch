@@ -992,11 +992,17 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                     // check for ws points
 					uint8 mLvl = this->GetMLevel();
 					uint8 iLvl = this->m_Weapons[SLOT_MAIN]->getILvl();
+					uint8 riLvl = this->m_Weapons[SLOT_RANGED]->getILvl();
 					uint8 targetLvl = PTarget->GetMLevel();
 					
 					if (iLvl > mLvl)
 					{
 						mLvl = iLvl;
+					}
+		
+					if (riLvl > mLvl)
+					{
+						mLvl = riLvl;
 					}
 					
                     if (charutils::CheckMob(mLvl, targetLvl) > EMobDifficulty::TooWeak)
@@ -1039,8 +1045,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             pushPacket(new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_TOO_FAR_AWAY));
             return;
         }
-/* 		// Permanently disable or remove
-		// All Blood Pact MP costs moved to scripts
+		// Check if the player has enough MP to use the Blood Pact
         if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
         {
             // Blood pact MP costs are stored under animation ID
@@ -1049,7 +1054,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 pushPacket(new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_UNABLE_TO_USE_JA));
                 return;
             }
-        } */
+        }
 
         if (battleutils::IsParalyzed(this)) {
             // display paralyzed
@@ -1086,20 +1091,19 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             if (PAbility)
                 PRecastContainer->Del(RECAST_ABILITY, PAbility->getRecastId());
         }
-/*         // Permanently disable or remove
-		// Apogee's handling has been moved to scripts
+        // Handle Apogee and Astral Conduit's recast reset
 		else if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
         {
-            if (this->StatusEffectContainer->HasStatusEffect(EFFECT_APOGEE))
+            if (this->StatusEffectContainer->HasStatusEffect(EFFECT_APOGEE) || this->StatusEffectContainer->HasStatusEffect(EFFECT_ASTRAL_CONDUIT))
             {
                 action.recast = 0;
             }
-            else
+			else
             {
-                action.recast -= std::min<int16>(getMod(Mod::BP_DELAY), 15);
-                action.recast -= std::min<int16>(getMod(Mod::BP_DELAY_II), 15);
+				// Blood Pact recasts can be reduced by a total of 40 seconds
+                action.recast -= std::min<int16>(getMod(Mod::BP_DELAY) + getMod(Mod::BP_DELAY_II) + getMod(Mod::AVATARS_FAVOR_BP_DELAY), 40);
             }
-        } */
+        }
 
         // remove invisible if aggressive
         if (PAbility->getID() != ABILITY_TAME && PAbility->getID() != ABILITY_FIGHT)
@@ -1127,13 +1131,10 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         action.actiontype = PAbility->getActionType();
         action.actionid = PAbility->getID();
 
-        // #TODO: get rid of this to script, too
         if (PAbility->isPetAbility())
         {
-            if (PPet) //is a bp - don't display msg and notify pet
+            if (PPet) // Is a bp - don't display msg and notify pet
             {
-				// Blood Pact recasts can be reduced by a total of 40 seconds
-				action.recast -= std::min<int16>(getMod(Mod::BP_DELAY) + getMod(Mod::BP_DELAY_II) + getMod(Mod::AVATARS_FAVOR_BP_DELAY), 40);
                 actionList_t& actionList = action.getNewActionList();
                 actionList.ActionTargetID = PTarget->id;
                 actionTarget_t& actionTarget = actionList.getNewActionTarget();
@@ -1144,48 +1145,50 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 actionTarget.messageID = 0;
 
                 auto PPetTarget = PTarget->targid;
-/* 				// Permanently disable or remove
-				// Handling has been moved to scripts
+				
+				// Handle Apogee and Blood Boon MP Cost modifications
                 if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
                 {
-                    // Blood Pact mp cost stored in animation ID
+                    // Handle Blood Pact MP Cost. Cost stored in abilities.sql animation column
                     float mpCost = PAbility->getAnimationID();
+//					printf("\ncharentity.cpp onAbility BLOOD PACT MP COST: [%i]\n", (int16)mpCost);
 
                     if (StatusEffectContainer->HasStatusEffect(EFFECT_APOGEE))
                     {
                         mpCost *= 1.5f;
                         StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_BLOODPACT);
+//						printf("charentity.cpp onAbility APOGEE MP COST: [%i]\n", (int16)mpCost);
                     }
 
-                    // Blood Boon (does not affect Astra Flow BPs)
+                    // Handle Blood Boon (does not affect Astral Flow BPs)
                     if ((PAbility->getAddType() & ADDTYPE_ASTRAL_FLOW) == 0)
                     {
                         int16 bloodBoonRate = getMod(Mod::BLOOD_BOON);
                         if (tpzrand::GetRandomNumber(100) < bloodBoonRate)
                         {
                             mpCost *= tpzrand::GetRandomNumber(8.f, 16.f) / 16.f;
+//							printf("charentity.cpp onAbility BLOOD BOON MP COST: [%i]\n", (int16)mpCost);
                         }
                     }
 
-                    addMP((int32)-mpCost); */
-
-                    if (PAbility->getValidTarget() == TARGET_SELF)
-                    {
-                        PPetTarget = PPet->targid;
-                    }
-//                }
+                    // Subtract MP from player
+                    addMP((int32)-mpCost);
+				}
+				
+                if (PAbility->getValidTarget() == TARGET_SELF)
+                {
+//					printf("charentity.cpp onAbility SELF TARGET\n");
+                    PPetTarget = PPet->targid;
+                }
                 else
                 {
                     auto PMobSkill = battleutils::GetMobSkill(PAbility->getMobSkillID());
                     if (PMobSkill)
                     {
-                        if (PMobSkill->getValidTargets() & TARGET_ENEMY)
+                         if (PMobSkill->getValidTargets() & TARGET_ENEMY)
                         {
-                            PPetTarget = PPet->GetBattleTargetID();
-                        }
-                        else
-                        {
-                            PPetTarget = PPet->targid;
+                            PPetTarget = PTarget->targid;
+//							printf("charentity.cpp onAbility TARGET ID: [%i]\n", PPetTarget);
                         }
                     }
                 }
@@ -1856,7 +1859,7 @@ void CCharEntity::Die()
 
     setBlockingAid(false);
 
-    //influence for conquest system
+    // Influence for conquest system
     conquest::LoseInfluencePoints(this);
 
     if (GetLocalVar("MijinGakure") == 0)
@@ -1864,6 +1867,13 @@ void CCharEntity::Die()
         float retainPercent = std::clamp(map_config.exp_retain + getMod(Mod::EXPERIENCE_RETAINED) / 100.0f, 0.0f, 1.0f);
         charutils::DelExperiencePoints(this, retainPercent, 0);
     }
+	
+	// Resets the !godmode and !minigodmode character variables so they don't have to be toggled
+	if (charutils::GetCharVar(this, "GodMode") == 1 || charutils::GetCharVar(this, "MiniGodMode") == 1)
+	{
+		charutils::SetCharVar(this, "GodMode", 0);
+		charutils::SetCharVar(this, "MiniGodMode", 0);
+	}
 }
 
 void CCharEntity::Die(duration _duration)

@@ -32,18 +32,22 @@ CMobSkillState::CMobSkillState(CMobEntity* PEntity, uint16 targid, uint16 wsid) 
     CState(PEntity, targid),
     m_PEntity(PEntity)
 {
+	// printf("mobskill_state.cpp MOBSKILL STATE TRIGGERED targid: [%i]  wsid: [%i]\n", targid, wsid);
     auto skill = battleutils::GetMobSkill(wsid);
     if (!skill)
     {
+		// printf("mobskill_state.cpp SKILL EXCEPTION\n");
         throw CStateInitException(nullptr);
     }
 
     if (m_PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_AMNESIA, EFFECT_IMPAIRMENT}))
     {
+		// printf("mobskill_state.cpp AMNESIA/IMPAIRMENT EXCEPTION\n");
         throw CStateInitException(nullptr);
     }
 
     auto PTarget = m_PEntity->IsValidTarget(m_targid, skill->getValidTargets(), m_errorMsg);
+	// printf("mobskill_state.cpp targid: [%i]\n", targid);
 
     if (!PTarget || m_errorMsg)
     {
@@ -72,6 +76,7 @@ CMobSkillState::CMobSkillState(CMobEntity* PEntity, uint16 targid, uint16 wsid) 
         actionTarget.messageID = 43;
         m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE, new CActionPacket(action));
     }
+	// printf("mobskill_state.cpp MOBSKILL STATE TRIGGER WEAPONSKILL_STATE_ENTER\n");
     m_PEntity->PAI->EventHandler.triggerListener("WEAPONSKILL_STATE_ENTER", m_PEntity, m_PSkill->getID());
     SpendCost();
 }
@@ -92,10 +97,12 @@ void CMobSkillState::SpendCost()
 
 bool CMobSkillState::Update(time_point tick)
 {
+	// printf("mobskill_state.cpp Update START\n");
     if (tick > GetEntryTime() + m_castTime && !IsCompleted())
     {
         action_t action;
         m_PEntity->OnMobSkillFinished(*this, action);
+		// printf("mobskill_state.cpp Update onMobSkillFinished REACHED\n");
         m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, new CActionPacket(action));
         auto delay = std::chrono::milliseconds(m_PSkill->getAnimationTime());
         m_finishTime = tick + delay;

@@ -22,11 +22,11 @@ function onZoneIn(player, prevZone)
     local cs = -1
 
     if ENABLE_ROV == 1 and player:getCurrentMission(ROV) == tpz.mission.id.rov.RHAPSODIES_OF_VANADIEL and player:getMainLvl()>=3 then
-        cs = 30035
+--        cs = 30035
     end
 
     if player:getCurrentMission(ROV) == tpz.mission.id.rov.FATES_CALL and player:getCurrentMission(player:getNation()) > 15 then
-        cs = 30036
+--        cs = 30036
     end
 
     -- FIRST LOGIN (START CS)

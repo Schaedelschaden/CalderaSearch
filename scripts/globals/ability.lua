@@ -776,18 +776,19 @@ function phantombuffMultiple(caster)
 	if (equipAccessory[2] == accessory[2] or equipAccessory[3] == accessory[2]) then
         plusValue = 3
 --		printf("ability.lua phantombuffMultiple Merirosvo Ring RECOGNIZED BUFF: [%i]\n", plusValue)
-	elseif (equipAccessory[2] == accessory[3] or equipAccessory[3] == accessory[3]) then
+	end
+	if (equipAccessory[2] == accessory[3] or equipAccessory[3] == accessory[3]) then
         plusValue = 5
 --		printf("ability.lua phantombuffMultiple Barataria Ring RECOGNIZED BUFF: [%i]\n", plusValue)
-	elseif (equipAccessory[1] == accessory[1] or equipWeapon[1] == weapon[1] or equipWeapon[2] == weapon[1]) then
+	end
+	if (equipAccessory[1] == accessory[1] or equipWeapon[1] == weapon[1] or equipWeapon[2] == weapon[1]) then
 		plusValue = 7
 --		printf("ability.lua phantombuffMultiple Regal Necklace or Lanun Knife RECOGNIZED BUFF: [%i]\n", plusValue)
-	elseif (equipWeapon[1] == weapon[2] or equipWeapon[1] == weapon[2]) then
+	end
+	if (equipWeapon[1] == weapon[2] or equipWeapon[1] == weapon[2]) then
 		plusValue = 8
 --		printf("ability.lua phantombuffMultiple Rostam RECOGNIZED BUFF: [%i]\n", plusValue)
 	end
-	
-	phantombuffValue = plusValue
 
     return plusValue
 end

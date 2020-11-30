@@ -21,10 +21,15 @@ function onSpellCast(caster, target, spell)
     if (resist > 0.0625) then
         spell:setMsg(tpz.msg.basic.MAGIC_ERASE)
         effect = target:dispelStatusEffect()
+		
         if (effect == tpz.effect.NONE) then
             -- no effect
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
         end
+		
+		if (caster:getMod(tpz.mod.ENH_DISPEL) > 0) then
+			bonusEffect = target:dispelStatusEffect()
+		end
     else
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end

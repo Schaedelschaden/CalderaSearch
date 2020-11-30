@@ -2350,16 +2350,87 @@ namespace battleutils
             }
             //ShowDebug("Accuracy mod after direction checks: %d\n", offsetAccuracy);
 
-            hitrate = hitrate + (PAttacker->ACC(attackNumber, offsetAccuracy) - PDefender->EVA()) / 2 + (PAttacker->GetMLevel() - PDefender->GetMLevel()) * 2;
+			// Hit Rate (%) = 75 + floor( (Accuracy - Evasion)/2 ) + 2*(dLVL)
+            // For Avatars negative penalties for level correction seem to be ignored for attack and likely for accuracy,
+            // bonuses cap at level diff of 38 based on this testing: 
+            // https://www.bluegartr.com/threads/114636-Monster-Avatar-Pet-damage
 
+            // Floor because hitrate can only be integer values
+            // https://www.bluegartr.com/threads/68786-Dexterity-s-impact-on-critical-hits?p=3209015&viewfull=1#post3209015
+
+            uint16 attackerAcc = PAttacker->ACC(attackNumber, offsetAccuracy);
+
+            // Enlight gives an ACC bonus not a hit rate bonus, ACC bonus is equal to damage dealt
             if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_ENLIGHT))
             {
-                hitrate += PAttacker->getMod(Mod::ENSPELL_DMG);
+                attackerAcc += PAttacker->getMod(Mod::ENSPELL_DMG);
+            }
+			
+			hitrate += static_cast<int32>(std::floor((attackerAcc - PDefender->EVA()) / 2));
+
+            // Level correction does not happen in Adoulin zones, Legion, or zones in Escha/Reisenjima
+            // https://www.bg-wiki.com/bg/PDIF#Level_Correction_Function_.28cRatio.29
+            uint16 zoneId = PAttacker->getZone();
+            
+            // All zones from Adoulin onward have an id of 256+
+            // This includes Escha/Reisenjima and the new Dynamis zones
+            // (Not a post Adoulin Zone) && (Not Legion_A)
+			bool shouldApplyLevelCorrection = (zoneId < 256) && (zoneId != 183);
+
+            if (shouldApplyLevelCorrection)
+			{
+                int16 dLvl = PAttacker->GetMLevel() - PDefender->GetMLevel();
+                // Skip penalties for avatars, this should likely be all pets and mobs but I have no proof
+                // of this for ACC, ATT level correction for Pets/Avatars is the same as mobs though.
+                bool isPet = PAttacker->objtype == TYPE_PET;
+                bool isAvatar = false;
+                
+                if (isPet) {
+                    CPetEntity* petEntity = dynamic_cast<CPetEntity*>(PAttacker);
+                    isAvatar = petEntity->getPetType() == PETTYPE_AVATAR;
+                }
+
+                if (isAvatar)
+                {
+                    if (dLvl > 0)
+                    {
+                        // Avatars have a known level difference cap of 38
+                        hitrate += static_cast<int16>(std::min(dLvl, (int16)38) * 2);
+                    }
+                }
+                else
+                {
+                    // Everything else has no known caps, though it's likely 38 like avatars
+                    hitrate += static_cast<int16>(dLvl * 2);
+                }
+			}
+
+            // https://www.bg-wiki.com/bg/Hit_Rate
+            // Update Notes: https://forum.square-enix.com/ffxi/threads/45365?p=534537#post534537
+            // The maximum accuracy of one-handed weapons equipped as the main weapon has been increased from 95% to 99%.
+            // * Owing to this change, the maximum accuracy of abilities that rely on main weapon accuracy has also been raised from 95% to 99%.
+            // Further, some monster damage types have been changed from hand-to-hand to blunt.* Fellows and alter egos enjoy this benefit as well.
+            // The maximum accuracy of beastmaster familiars, wyverns, avatars, and automatons has been increased from 95% to 99%.
+            // * In line with this change, familiars summoned using the following items have had their damage types changed from hand-to-hand to blunt.
+            // Carrot Broth / Famous Carrot Broth / Bug Broth / Quadav Bug Broth / Herbal Broth / Singing Herbal Broth / Carrion Broth / 
+            // Cold Carrion Broth / Meat Broth / Warm Meat Broth / Tree Sap / Scarlet Sap / Fish Broth / Fish Oil Broth / Seedbed Soil / Sun Water / 
+            // Grasshopper Broth / Noisy Grasshopper Broth / Mole Broth / Lively Mole Broth / Blood Broth / Clear Blood Broth / Antica Broth / Fragrant Antica Broth
+
+            int32 maxHitRate = 99;
+            auto targ_weapon = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_MAIN]);
+
+            // As far as I can tell kick attacks fall under Hand-to-Hand so ignoring them and letting them go to 99
+            bool isOffhand = attackNumber == 1;
+            bool isTwoHanded = targ_weapon && targ_weapon->isTwoHanded();
+
+            if (isOffhand || isTwoHanded)
+            {
+                maxHitRate = 95;
             }
 
-            hitrate = std::clamp(hitrate, 20, 95);
+            hitrate = std::clamp(hitrate, 20, maxHitRate);
         }
-        return (uint8)hitrate;
+        return static_cast<uint8>(hitrate);
     }
     uint8 GetHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender)
     {
@@ -3535,6 +3606,50 @@ namespace battleutils
             maxSlope = (maxZpoint - mobZ) / (maxXpoint - mobX);
             minSlope = (minZpoint - mobZ) / (minXpoint - mobX);
         }
+		
+		auto checkPosition = [&](CBattleEntity* PEntity) -> bool
+        {
+            if (taUser->id != PEntity->id && distance(PEntity->loc.p, PMob->loc.p) <= distance(taUser->loc.p, PMob->loc.p))
+            {
+                float memberXdif = PEntity->loc.p.x - mobX;
+                float memberZdif = PEntity->loc.p.z - mobZ;
+                if (zDependent)
+                {
+                    if ((memberZdif <= memberXdif * maxSlope) && (memberZdif >= memberXdif * minSlope))
+                    {
+                        // Finally found a TA/Decoy Shot partner
+                        return true;
+                    }
+                }
+                else
+                {
+                    if ((memberXdif <= memberZdif * maxSlope) && (memberXdif >= memberZdif * minSlope))
+                    {
+                        // Finally found a TA/Decoy Shot partner
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        };
+		
+		auto checkTrusts = [&](CBattleEntity* PEntity) -> CBattleEntity*
+        {
+            if (auto* PChar = dynamic_cast<CCharEntity*>(PEntity))
+            {
+                for (auto* PTrust : PChar->PTrusts)
+                {
+                    if (checkPosition(PTrust))
+                    {
+                        return PTrust;
+                    }
+                }
+            }
+
+            return nullptr;
+        };
+		
         if (taUser->PParty != nullptr)
         {
             if (taUser->PParty->m_PAlliance != nullptr)
@@ -3544,60 +3659,36 @@ namespace battleutils
                     for (uint8 i = 0; i < taUser->PParty->m_PAlliance->partyList.at(a)->members.size(); ++i)
                     {
                         CBattleEntity* member = taUser->PParty->m_PAlliance->partyList.at(a)->members.at(i);
-                        if (taUser->id != member->id && distance(member->loc.p, PMob->loc.p) <= distance(taUser->loc.p, PMob->loc.p))
+                        if (checkPosition(member))
                         {
-                            float memberXdif = member->loc.p.x - mobX;
-                            float memberZdif = member->loc.p.z - mobZ;
-                            if (zDependent)
-                            {
-                                if ((memberZdif <= memberXdif * maxSlope) &&
-                                    (memberZdif >= memberXdif * minSlope))
-                                {
-                                    //finally found a TA/Decoy Shot partner
-                                    return member;
-                                }
-                            }
-                            else {
-                                if ((memberXdif <= memberZdif * maxSlope) &&
-                                    (memberXdif >= memberZdif * minSlope))
-                                {
-                                    //finally found a TA/Decoy Shot partner
-                                    return member;
-                                }
-                            }
+                            return member;
+                        }
+
+                        if (auto* potentialTrust = checkTrusts(member))
+                        {
+                            return potentialTrust;
                         }
                     }
                 }
             }
-            else {//no alliance
+            else
+            { // No alliance
                 for (uint8 i = 0; i < taUser->PParty->members.size(); ++i)
                 {
                     CBattleEntity* member = taUser->PParty->members.at(i);
-                    if (member->id != taUser->id && distance(member->loc.p, PMob->loc.p) <= distance(taUser->loc.p, PMob->loc.p))
+                    if (checkPosition(member))
                     {
-                        float memberXdif = member->loc.p.x - mobX;
-                        float memberZdif = member->loc.p.z - mobZ;
-                        if (zDependent)
-                        {
-                            if ((memberZdif <= memberXdif * maxSlope) &&
-                                (memberZdif >= memberXdif * minSlope))
-                            {
-                                //finally found a TA/Decoy Shot partner
-                                return member;
-                            }
-                        }
-                        else {
-                            if ((memberXdif <= memberZdif * maxSlope) &&
-                                (memberXdif >= memberZdif * minSlope))
-                            {
-                                //finally found a TA/Decoy Shot partner
-                                return member;
-                            }
-                        }
+                        return member;
+                    }
+
+                    if (auto* potentialTrust = checkTrusts(member))
+                    {
+                        return potentialTrust;
                     }
                 }
             }
         }
+		
         //no Trick attack party member available
         return nullptr;
     }
@@ -5432,7 +5523,7 @@ namespace battleutils
             cast = (uint32)(cast * 2.0f);
         }
 		
-		if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_THEURGIC_FOCUS) &&
+		if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_COLLIMATED_FERVOR) &&
             (PSpell->getSpellFamily() >= SPELLFAMILY_FIRE && PSpell->getSpellFamily() <= SPELLFAMILY_FLOOD) ||
             (PSpell->getSpellFamily() >= SPELLFAMILY_FIRA && PSpell->getSpellFamily() <= SPELLFAMILY_WATERA))
         {

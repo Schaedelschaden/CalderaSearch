@@ -2456,7 +2456,7 @@ namespace charutils
 					// Diabolos
                     else if (PetID == 16)
                     {
-                        if (PAbility->getID() >= ABILITY_CAMISADO && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
+                        if (PAbility->getID() >= ABILITY_CAMISADO && PAbility->getID() <= ABILITY_BLINDSIDE)
                         {
                             addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
                         }
@@ -2711,7 +2711,13 @@ namespace charutils
             meritIndex++;
 
             skillBonus += PChar->getMod(static_cast<Mod>(i + 79));
-
+			
+			// Handles Geomancy and Handbell skill modifiers
+			if (i >= 44 && i <= 45)
+			{
+				skillBonus += PChar->getMod(static_cast<Mod>(i + 917));
+			}
+			
             PChar->WorkingSkills.rank[i] = battleutils::GetSkillRank((SKILLTYPE)i, PChar->GetMJob());
 
             if (MaxMSkill != 0)
@@ -3200,26 +3206,52 @@ namespace charutils
     EMobDifficulty CheckMob(uint8 charlvl, uint8 moblvl)
     {
         uint32 baseExp = GetRealExp(charlvl, moblvl);
-		const uint32 lvlDiff = (moblvl - charlvl) + 11; // Mobs 11 levels or more below level 99+ players are Too Weak
+		int32 lvlDiff = (moblvl - charlvl) + 11; // Mobs 11 levels or more below level 99+ players are Too Weak
 
 		// Use the new system for player (item) levels over 99
 		if (charlvl >= 100)
 		{
-//			printf("charutils.cpp CheckMob NEW SYSTEM\n");
-			if (lvlDiff >= 19) return EMobDifficulty::IncrediblyTough;
-//			printf("charutils.cpp CheckMob INCREDIBLY TOUGH\n");
-			if (lvlDiff >= 18) return EMobDifficulty::VeryTough;
-//			printf("charutils.cpp CheckMob VERY TOUGH\n");
-			if (lvlDiff >= 12) return EMobDifficulty::Tough;
-//			printf("charutils.cpp CheckMob TOUGH\n");
-			if (lvlDiff >= 11) return EMobDifficulty::EvenMatch;
-//			printf("charutils.cpp CheckMob EVEN MATCH\n");
-			if (lvlDiff >= 10) return EMobDifficulty::DecentChallenge;
-//			printf("charutils.cpp CheckMob DECENT CHALLENGE\n");
-			if (lvlDiff >= 5) return EMobDifficulty::EasyPrey;
-//			printf("charutils.cpp CheckMob EASY PREY\n");
-			if (lvlDiff >= 0) return EMobDifficulty::IncrediblyEasyPrey;
-//			printf("charutils.cpp CheckMob INCREDIBLY EASY PREY\n");
+//			printf("charutils.cpp CheckMob NEW SYSTEM lvlDiff: [%i]\n", lvlDiff);
+			if (lvlDiff >= 19)
+			{
+//				printf("charutils.cpp CheckMob INCREDIBLY TOUGH\n");
+				return EMobDifficulty::IncrediblyTough;
+			}
+			else if (lvlDiff >= 18)
+			{
+//				printf("charutils.cpp CheckMob VERY TOUGH\n");
+				return EMobDifficulty::VeryTough;
+			}
+			else if (lvlDiff >= 12)
+			{
+//				printf("charutils.cpp CheckMob TOUGH\n");
+				return EMobDifficulty::Tough;
+			}
+			else if (lvlDiff >= 11)
+			{
+//				printf("charutils.cpp CheckMob EVEN MATCH\n");
+				return EMobDifficulty::EvenMatch;
+			}
+			else if (lvlDiff >= 10)
+			{
+//				printf("charutils.cpp CheckMob DECENT CHALLENGE\n");
+				return EMobDifficulty::DecentChallenge;
+			}
+			else if (lvlDiff >= 5)
+			{
+//				printf("charutils.cpp CheckMob EASY PREY\n");
+				return EMobDifficulty::EasyPrey;
+			}
+			else if (lvlDiff >= 0)
+			{
+//				printf("charutils.cpp CheckMob INCREDIBLY EASY PREY\n");
+				return EMobDifficulty::IncrediblyEasyPrey;
+			}
+			else if (lvlDiff < 0)
+			{
+//				printf("charutils.cpp CheckMob TOO WEAK\n");
+				return EMobDifficulty::TooWeak;
+			}
 		}
 
 		// Use the old system for player levels under 99
@@ -3374,10 +3406,16 @@ namespace charutils
         uint8 pcinzone = 0;
         uint8 minlevel = 0, maxlevel = PChar->GetMLevel();
 		uint8 ilvl = PChar->m_Weapons[SLOT_MAIN]->getILvl();
+		uint8 rilvl = PChar->m_Weapons[SLOT_RANGED]->getILvl();
 		
 		if (ilvl > maxlevel)
 		{
 			maxlevel = ilvl;
+		}
+		
+		if (rilvl > maxlevel)
+		{
+			maxlevel = rilvl;
 		}
 		
         REGIONTYPE region = PChar->loc.zone->GetRegionID();
@@ -3435,10 +3473,21 @@ namespace charutils
             uint8 moblevel = PMob->GetMLevel();
             uint8 memberlevel = PMember->GetMLevel();
 			uint8 memberILvl = PMember->m_Weapons[SLOT_MAIN]->getILvl();
+			uint8 memberRILvl = 0;
+			
+			if (PMember->getEquip(SLOT_RANGED) && PMember->getEquip(SLOT_RANGED)->isType(ITEM_WEAPON))
+			{
+				memberRILvl = PMember->m_Weapons[SLOT_RANGED]->getILvl();
+			}
 			
 			if (memberILvl > memberlevel)
 			{
 				memberlevel = memberILvl;
+			}
+			
+			if (memberRILvl > memberlevel)
+			{
+				memberlevel = memberRILvl;
 			}
 
             EMobDifficulty mobCheck = CheckMob(maxlevel, moblevel);
