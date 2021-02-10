@@ -36,6 +36,9 @@ function onTrigger(player, jobId, level)
         end
     end
 
+	-- Despawns pets if they're out
+	player:despawnPet()
+
     -- change job and (optionally) level
     player:changeJob(jobId)
     if (level ~= nil) then

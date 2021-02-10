@@ -90,6 +90,7 @@ CActionPacket::CActionPacket(action_t& action)
         ref<uint8>(0x0D) = 0x5D;
         ref<uint8>(0x0E) = 0x19;
 
+//		printf("action.cpp CActionPacket ACTION_MOBABILITY_START\n");
         ActionType = ACTION_WEAPONSKILL_START;
     }
     break;
@@ -107,6 +108,7 @@ CActionPacket::CActionPacket(action_t& action)
     case ACTION_MOBABILITY_FINISH:
     case ACTION_PET_MOBABILITY_FINISH:
     {
+//		printf("action.cpp CActionPacket ACTION_PET_MOBABILITY_FINISH\n");
         uint16 id = action.actionid;
 
         //higher number of bits than anything else that we know of. CAP OF 4095 (2300ish is abyssea tp moves)!

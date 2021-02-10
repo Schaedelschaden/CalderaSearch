@@ -11,7 +11,7 @@ require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------
 
-function onAbilityCheck(player,target,ability)
+function onAbilityCheck(player, target, ability)
 	-- Retail behavior for Fly High is 10 second recasts. Caldera is set to 2 second
 	if (player:hasStatusEffect(tpz.effect.FLY_HIGH)) then
 		ability:setRecast(utils.clamp(2, 0, 2))
@@ -19,26 +19,22 @@ function onAbilityCheck(player,target,ability)
 	return 0,0
 end
 
-function onUseAbility(player,target,ability,action)
+function onUseAbility(player, target, ability, action)
     local ftp = 1 + (player:getStat(tpz.mod.VIT) / 256)
-	local atkmulti = (player:getMod(tpz.mod.JUMP_ATT_BONUS) + 100) / 100
-	local tpbonus = player:getMod(tpz.mod.JUMP_TP_BONUS)
+	local atkmulti = (player:getMod(tpz.mod.SOUL_JUMP_ATT_BONUS) + 100) / 100
+	local tpbonus
 	local alljumpsbonus = player:getMod(tpz.mod.ALL_JUMPS_WYVERN_HP)
 	local alljumpsdmg = 0
 	
 	local params = {}
-     
+    
 	if ((player:hasPet() == true) and (player:getPetID() == tpz.pet.id.WYVERN)) then
 		local pet = player:getPet()
 		alljumpsdmg = pet:getHP() * (alljumpsbonus / 100)
-		player:addMod(tpz.mod.JUMP_ATT_BONUS, 50)
-		player:addMod(tpz.mod.FORCE_JUMP_CRIT, 1)
-		tpbonus = tpbonus + 270
+		atkmulti = atkmulti + (50 / 100)
+		params.crit100 = 1.0 params.crit200 = 1.0 params.crit300 = 1.0
+		tpbonus = 270
 	end
-	
-	if (player:getMod(tpz.mod.FORCE_JUMP_CRIT) > 0) then
-        params.crit100 = 1.0 params.crit200 = 1.0 params.crit300 = 1.0
-    end
 	
 	params.numHits = 1
     params.ftp100 = ftp params.ftp200 = ftp params.ftp300 = ftp
@@ -63,11 +59,6 @@ function onUseAbility(player,target,ability,action)
         action:messageID(target:getID(), tpz.msg.basic.JA_MISS_2)
         action:speceffect(target:getID(), 0)
     end
-	
-	if (player:hasPet()) then
-		player:delMod(tpz.mod.JUMP_ATT_BONUS, 50)
-		player:delMod(tpz.mod.FORCE_JUMP_CRIT, 1)
-	end
 	
 	target:lowerEnmity(player, 65)
 

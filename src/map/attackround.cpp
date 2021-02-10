@@ -279,6 +279,13 @@ void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION
 			doubleAttack += PChar->PMeritPoints->GetMeritValue(MERIT_DOUBLE_ATTACK_RATE, PChar);
 		}
 		
+		// Augments Innin gear mod (Adds bonus Double Attack when attacking from behind)
+		if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INNIN) && abs(m_defender->loc.p.rotation - m_attacker->loc.p.rotation) < 23
+			&& PChar->getMod(Mod::AUGMENT_INNIN) > 0)
+		{
+			doubleAttack += PChar->getMod(Mod::AUGMENT_INNIN);
+		}
+		
 		// Dancer's Striking Flourish
 		if (m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_STRIKING_FLOURISH) && (direction == PHYSICAL_ATTACK_DIRECTION::RIGHTATTACK))
 		{

@@ -1,21 +1,21 @@
 ---------------------------------------------------------------------------------------------------
--- func: setplayermodel <modelid> <slot> <player>
+-- func: setplayermodel <player> <slot> <modelid>
 -- desc: Sets the look of the user or target player based on model id offset and slot (for testing).
 ---------------------------------------------------------------------------------------------------
 
 cmdprops =
 {
     permission = 1,
-    parameters = "iis"
+    parameters = "sii"
 }
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!setplayermodel <model> <slot> {player}")
+    player:PrintToPlayer("!setplayermodel {player} <slot> <model>")
     player:PrintToPlayer("Slots: 0=main 1=sub 2=ranged 3=ammo 4=head 5=body 6=hands 7=legs 8=feet")
 end
 
-function onTrigger(player, model, slot, target)
+function onTrigger(player, target, slot, model)
     -- validate model
     if (model == nil) then
         error(player, "Invalid model ID.")

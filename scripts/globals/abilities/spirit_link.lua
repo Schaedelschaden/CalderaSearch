@@ -37,12 +37,33 @@ function onAbilityCheck(player,target,ability)
     end
 end
 
+function shuffle(effects)
+	for i = 1, #effects do
+		local j = math.random(i, #effects)
+		-- printf("%s (%s) <--> %s (select %s)", i, effects[i], j, effects[j])
+		effects[i], effects[j] = effects[j], effects[i]
+	end
+	
+	return effects
+end
+
 function onUseAbility(player,target,ability)
 
     local playerHP = player:getHP()
-    local drainamount = (math.random(25,35) / 100) * playerHP
-    if (player:getPet():getHP() == player:getPet():getMaxHP()) then
-        drainamount = 0 -- Prevents player HP lose if wyvern is at full HP
+    local drainamount = (math.random(25, 35) / 100) * playerHP
+
+    local pet = player:getPet()
+    local healPet = ((drainamount + player:getStat(tpz.mod.MND) + (pet:getMainLvl() * 0.7)) * 2) * (1 + (player:getMod(tpz.mod.SPIRIT_LINK_POTENCY) / 100))
+    local petTP = pet:getTP()
+    local regenAmount = player:getMainLvl() / 3 -- level / 3 per tick regen
+	
+	-- Damage the triggering player
+	if (player:getMod(tpz.mod.SPIRIT_LINK_HP_COST) > 0) then
+		drainamount = drainamount - (drainamount * (player:getMod(tpz.mod.SPIRIT_LINK_HP_COST) / 100))
+	end
+	
+	if (player:getPet():getHP() == player:getPet():getMaxHP()) then
+        drainamount = 0 -- Prevents player HP loss if wyvern is at full HP
     end
 
     if (player:hasStatusEffect(tpz.effect.STONESKIN)) then
@@ -53,8 +74,8 @@ function onUseAbility(player,target,ability)
                 player:delStatusEffect(tpz.effect.STONESKIN)
             else
                 local effect = player:getStatusEffect(tpz.effect.STONESKIN)
-                effect:setPower(effect:getPower() - drainamount) -- fixes the status effeect so when it ends it uses the new power instead of old
-                player:delMod(tpz.mod.STONESKIN,drainamount) --removes the amount from the mod
+                effect:setPower(effect:getPower() - drainamount) -- fixes the status effect so when it ends it uses the new power instead of old
+                player:delMod(tpz.mod.STONESKIN, drainamount) -- removes the amount from the mod
 
             end
         else
@@ -66,27 +87,35 @@ function onUseAbility(player,target,ability)
         player:takeDamage(drainamount)
     end
 
-    local pet = player:getPet()
-    local healPet = drainamount * 2
-    local petTP = pet:getTP()
-    local regenAmount = player:getMainLvl()/3 -- level/3 tic regen
-
-    if (player:getEquipID(tpz.slot.HEAD)==15238) then
-        healPet = healPet + 15
-    end
-
-    pet:delStatusEffect(tpz.effect.POISON)
-    pet:delStatusEffect(tpz.effect.BLINDNESS)
-    pet:delStatusEffect(tpz.effect.PARALYSIS)
-
-    if (math.random(1,2) == 1) then
-        pet:delStatusEffect(tpz.effect.DOOM)
-    end
-    if (pet:getHP() < pet:getMaxHP()) then -- sleep is only removed if it heals the wyvern
+	-- Remove status effects
+	local debuffs = {tpz.effect.POISON, tpz.effect.DOOM, tpz.effect.BLINDNESS, tpz.effect.PARALYSIS}
+	local removeCounter
+	
+	-- Poison, Blind, Paralyze, Doom
+	if (player:getMod(tpz.mod.SPIRIT_LINK_POTENCY) >= 10) then
+		removeCounter = math.random(3, 4)
+		shuffle(debuffs)
+		
+		for i = 1, removeCounter do
+			pet:delStatusEffect(debuffs[i])
+		end
+	elseif (player:getMod(tpz.mod.SPIRIT_LINK_POTENCY) <= 5) then
+		removeCounter = math.random(2, 3)
+		shuffle(debuffs)
+		
+		for i = 1, removeCounter do
+			pet:delStatusEffect(debuffs[i])
+		end
+	elseif (player:getMod(tpz.mod.SPIRIT_LINK_POTENCY) < 5) then
+		pet:delStatusEffect(debuffs[math.random(4)])
+	end
+	
+	-- Sleep
+    if (pet:getHP() < pet:getMaxHP()) then -- Only removed if it heals the wyvern
         removeSleepEffects(pet)
     end
 
-    -- Empathy copying
+    -- Empathy status effect copying
     local empathyTotal = player:getMerit(tpz.merit.EMPATHY)
     if empathyTotal > 0 then
         local effects = player:getStatusEffects()
@@ -114,13 +143,13 @@ function onUseAbility(player,target,ability)
                 pet:delStatusEffect(copyEffect:getType())
             end
 
-            pet:addStatusEffect(copyEffect:getType(),copyEffect:getPower(),copyEffect:getTick(),math.ceil((copyEffect:getTimeRemaining())/1000)) -- id,power,tick,duration(convert ms to s)
+            pet:addStatusEffect(copyEffect:getType(), copyEffect:getPower(), copyEffect:getTick(), math.ceil((copyEffect:getTimeRemaining()) / 1000)) -- id,power,tick,duration(convert ms to s)
             copyi = copyi + 1
         end
     end
 
     pet:addHP(healPet) --add the hp to pet
-    pet:addStatusEffect(tpz.effect.REGEN,regenAmount,3,90,0,0,0) -- 90 seconds of regen
-    player:addTP(petTP/2) --add half pet tp to you
-    pet:delTP(petTP/2) -- remove half tp from pet
+    pet:addStatusEffect(tpz.effect.REGEN, regenAmount, 3, 90) -- 90 seconds of regen
+    player:addTP(petTP / 2) --add half pet tp to you
+    pet:delTP(petTP / 2) -- remove half tp from pet
 end

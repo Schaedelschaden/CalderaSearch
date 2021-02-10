@@ -61,6 +61,10 @@ function onUseAbility(player, target, ability)
 		end
 	end
 	
+	if (player:getMod(tpz.mod.ENH_CLIMACTIC_FLOURISH) > 0) then
+		crits = crits + 1
+	end
+	
 	player:setCharVar("ClimacticFlourishCrits", crits)
 	
     player:addStatusEffect(tpz.effect.CLIMACTIC_FLOURISH, 1, 0, 60)

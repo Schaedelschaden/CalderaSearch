@@ -311,7 +311,7 @@ enum class Mod
     SUBTLE_BLOW               = 289, // How much TP to reduce.
     COUNTER                   = 291, // Percent chance to counter
     KICK_ATTACK_RATE          = 292, // Percent chance to kick
-    PERFECT_COUNTER_ATT       = 428, // TODO: Raises weapon damage by 20 when countering while under the Perfect Counter effect. This also affects Weapon Rank (though not if fighting barehanded).
+    PERFECT_COUNTER_ATT       = 428, // Raises weapon damage when countering while under the Perfect Counter effect. This also affects Weapon Rank (though not if fighting barehanded).
     FOOTWORK_ATT_BONUS        = 429, // Raises the attack bonus of Footwork. (Tantra Gaiters +2 raise 25/256 to 38/256)
     COUNTERSTANCE_EFFECT      = 543, // Counterstance effect in percents
     DODGE_EFFECT              = 552, // Dodge effect in percents
@@ -680,7 +680,7 @@ enum class Mod
     PHYS_ABSORB               = 512, // Occasionally absorbs physical damage taken, in percents
     ABSORB_DMG_TO_MP          = 516, // Unlike PLD gear mod, works on all damage types (Ethereal Earring)
 
-    ADDITIONAL_EFFECT         = 431, //
+    ADDITIONAL_EFFECT         = 431, // Flags the item to trigger onAdditionalEffect in the item's script when set to 1
     ITEM_SPIKES_TYPE          = 499, // Type spikes an item has
     ITEM_SPIKES_DMG           = 500, // Damage of an items spikes
     ITEM_SPIKES_CHANCE        = 501, // Chance of an items spike proc
@@ -744,7 +744,7 @@ enum class Mod
     AUGMENTS_ASSASSINS_CHARGE = 886, // Gives Assassin's Charge +1% Critical Hit Rate per merit level
     AUGMENTS_AMBUSH           = 887, // Gives +1% Triple Attack per merit level when Ambush conditions are met
     AUGMENTS_AURA_STEAL       = 889, // 20% chance of 2 effects to be dispelled or stolen per merit level
-    AUGMENTS_CONSPIRATOR      = 912, // Applies Conspirator benefits to player at the top of the hate list
+    AUGMENTS_CONSPIRATOR      = 912, // Adds an attack bonus to Conspirator
     ENHANCES_REFRESH          = 529, // "Enhances Refresh" adds +1 per modifier to spell's tick result.
     NO_SPELL_MP_DEPLETION     = 530, // % to not deplete MP on spellcast.
     FORCE_FIRE_DWBONUS        = 531, // Set to above 0 to force fire day/weather spell bonus/penalty.
@@ -829,6 +829,69 @@ enum class Mod
     // SPARE = 979, // stuff
 	
 	// Caldera custom Mod IDs
+	ENEMY_TP_ACCUM                  = 2800, // Reduces enemy TP accumulation by % when player takes physical damage
+	WALTZ_POTENCY_RCVD              = 2801, // Increases the potency of Waltz's received
+	
+	ENH_KLIMAFORM                   = 2940, // Enhances "Klimaform" effect (Increases damage of spells under matching weather while Klimaform is active)
+	ENH_PARSIMONY                   = 2941, // Enhances "Parsimony" effect (Further reduces MP cost by % of associated Black Magic spell)
+	ENH_PENURY                      = 2942, // Enhances "Penury" effect (Further reduces MP cost by % of associated White Magic spell)
+	GRIMOIRE_MACC                   = 2943, // Increases magic accuracy when casting magic associated with active grimoire
+	ENH_IMMANENCE                   = 2944, // Enhances "Immanence" effect (Increases skillchain damage)
+	ENH_PERPETUANCE                 = 2945, // Enhances "Perpetuance" effect (Increases spell duration by %)
+	ENH_ADDENDUM_BLACK              = 2946, // Enhances "Addendum: Black" effect (Reduces enmity generated while under the effect of Addendum: Black)
+	ENH_ADDENDUM_WHITE              = 2947, // Enhances "Addendum: White" effect (Reduces enmity generated while under the effect of Addendum: White)
+	ENH_FEATHER_STEP                = 2948, // Enhances "Feather Step" effect (Adds additional crit evasion down to Feather Step)
+	ENH_STRIKING_FLOURISH           = 2949, // Enhances "Striking Flourish" effect (Adds a crit hit chance bonus to Striking Flourish) 
+	ENH_CLIMACTIC_FLOURISH          = 2950, // Enhances "Climactic Flourish" effect (Increases the number of crits by 1 and adds % damage)
+	QUICK_DRAW_ENH_DMG              = 2951, // Increases the next elemental damage taken matching the Quick Draw card used
+	ENH_EFFLUX                      = 2952, // Enhances "Efflux" effect (Increases TP Bonus from Efflux)
+	BLUE_MAGIC_CAST_TIME            = 2953, // Reduces the casting time of blue magic spells
+	BLUE_MAGIC_RECAST               = 2954, // Reduces the recast of blue magic spells
+	AUGMENT_BLUE_MAGIC              = 2955, // Occ. augments blue magic spells (% chance to triple WSC component of blue magic spells)
+	AUGMENT_BLOOD_BOON              = 2956, // Augments "Blood Boon" (Sometimes causes Blood Pacts to deal increased damage when Blood Boon activates)
+	SPIRIT_JUMP_TP_BONUS            = 2957, // "Spirit Jump" TP Bonus (Increases the amount of TP gained by Spirit Jump)
+	SOUL_JUMP_ATT_BONUS             = 2958, // Enhances "Soul Jump" effect (Adds additional attack as a %)
+	SPIRIT_JUMP_ATT_BONUS           = 2959, // Enhances "Spirit Jump" effect (Adds additional attack as a %)
+	SPIRIT_LINK_POTENCY             = 2960, // Increases the amount healed by Spirit Link (%) and allows multiple debuffs to be removed
+	SPIRIT_LINK_HP_COST             = 2961, // Reduces the player's HP consumed by Spirit Link (% based)
+	FOOD_AFFECTS_WYVERN             = 2962, // Gives your wyvern your food effects
+	AUGMENT_YONIN                   = 2963, // Adds % Counter chance to Yonin when attacked from the front
+	ENH_FUTAE                       = 2964, // Enhances "Futae" effect (Increases the damage bonus % from Futae)
+	ENH_MIGAWARI                    = 2965, // Enhances "Migawari" effect ()
+	AUGMENT_INNIN                   = 2966, // Adds % Double Attack to Innin when attacking from behind
+	HASSO_PLUS                      = 2967, // Hasso + gear mod (Increases STR bonus (not from retail/BGWiki))
+	ENH_SEKKANOKI                   = 2969, // Enhances "Sekkanoki" effect (Weaponskill stacked with Sekkanoki has the fTP of 1000TP + % of remaining TP)
+	ENH_SEIGAN                      = 2970, // Enhances "Seigan" effect (Adds chance to Counter when using Seigan without Third Eye)
+	ENH_UNLIMITED_SHOT              = 2971, // Enhances "Unlimited Shot" effect (Ignores the ranged distance correction requirement)
+	ENH_DOUBLE_SHOT                 = 2972, // Enhances "Double Shot" effect (Reduces enmity when Double Shot activates)
+	AUGMENT_SONGS                   = 2973, // Augments songs (Adds attributes or MP to songs depending on song element)
+	ENH_SIC_READY                   = 2974, // Enhances "Sic" and "Ready" effects (Adds TP Bonus to Sic and Ready abilities)
+	ENH_MONSTER_CORRELATION         = 2975, // Pet: Enhances monster correlation effects (Adds +100 ATT and +20 ACC when monster correlation triggered)
+	AUGMENT_KILLER_EFFECTS          = 2976, // Augments "Killer" effects (Adds Killer effect (strength / 2)% as damage and -PDT)
+	ENH_SPUR                        = 2977, // Enhances "Spur" effect (Adds additional Store TP to Spur)
+	STOUT_SERVANT                   = 2978, // Enhances "Stout Servant" effect
+	OCC_VARIES_ATT_PET_HP           = 2979, // "Attack occasionally varies with pet's HP" set bonus
+	ENH_DESPOIL                     = 2980, // Enhances "Despoil" effect (Increases power of debuff effect)
+	ENFEEBLING_MAGIC_CAST           = 2981, // Reduces enfeebling magic cast time -%
+	ENH_MANA_WALL                   = 2982, // Enhances "Mana Wall" effect (Further reduces the damage taken while under the effect of Mana Wall)
+	CUMULATIVE_THUNDER_DMG          = 2983, // Tracks the cumulative elemental damage for thunder magic spells
+	CUMULATIVE_ICE_DMG              = 2984, // Tracks the cumulative elemental damage for ice magic spells
+	CUMULATIVE_FIRE_DMG             = 2985, // Tracks the cumulative elemental damage for fire magic spells
+	CUMULATIVE_WIND_DMG             = 2986, // Tracks the cumulative elemental damage for wind magic spells
+	CUMULATIVE_WATER_DMG            = 2987, // Tracks the cumulative elemental damage for water magic spells
+	CUMULATIVE_EARTH_DMG            = 2988, // Tracks the cumulative elemental damage for earth magic spells
+	ENH_AFFLATUS_SOLACE             = 2989, // Enhances "Afflatus Solace" effect (Increases the amount of Stoneskin and adds additional MDB to barspells)
+	ENH_DIVINE_VEIL                 = 2990, // Enhances "Divine Veil" effect (Percent chance to make -na spells AoE without Divine Seal)
+	AUGMENT_IMPETUS                 = 2991, // Augments "Impetus" (Adds +ACC and +Crit Hit DMG to Impetus)
+	ENH_RESTRAINT                   = 2992, // Enhances "Restraint" effect
+	ENH_BLOOD_RAGE                  = 2993, // Enhances "Blood Rage" effect (Increases Blood Rage duration)
+	ENH_NETHER_VOID                 = 2994, // Enhances "Nether Void" effect
+	ENH_ABSORB_TP                   = 2995, // Enhances "Absorb-TP" effect (Increases amount absorbed)
+	ENH_DREAD_SPIKES                = 2996, // Enhances "Dread Spikes" effect as a percentage (Divided by 1000 to allow for floating decimal values)
+	OCC_VARIES_ATT_HP               = 2997, // "Attack occasionally varies with HP" set bonus
+	AUGMENT_COMPOSURE               = 2998, // Percent duration increase from Augments "Composure" set bonus
+	AUGMENT_CONSERVE_MP             = 2999, // Percent chance to activate Augments "Conserve MP" set bonus
+	
     COUNTER_DMG                     = 3001, // Increases Counter Damage
     COUNTER_CRIT_HIT_RATE           = 3002, // Increases Counter Critical Hit Rate
     MAG_BURST_BONUS_II              = 3003, // Magic Burst Bonus II
@@ -836,7 +899,7 @@ enum class Mod
     ELEM_DOT_EFFECT                 = 3005, // Potency of Black Magic Elemental DOT
     GAIN_MAGIC_EFFECT               = 3006, // Potency of White Magic Gain Spells
     TRICK_ATK_DMG                   = 3007, // Increases Trick Attack Damage
-    COVER_CONVERT_DMG               = 3008, // Cover: % Physical Damage Converted to MP
+
     SHIELD_BASH_DISPEL              = 3009, // Shield Bash: Adds Dispel
 	DIVINE_ENMITY_BONUS             = 3010, // Divine Magic Special Enmity Bonus
 	DARK_MAGIC_CAST                 = 3011, // Dark Magic Casting Time -%
@@ -880,7 +943,7 @@ enum class Mod
 	TACTICAL_SWITCH_BONUS           = 3049, // "Tactical Switch" + Gear (Adds % TP Bonus when using Tactical Switch)
 	STEP_TP_CONSUMED                = 3050, // "Step" TP Consumed - Gear
 	CRIT_HIT_EVASION                = 3051, // Adjusts the % chance that a critical hit will land (Feather Step)
-//	SUBTLE_BLOW_II                  = 3052, // Subtle Blow II Gear (Added higher up)
+	TP_MOVE_EVASION                 = 3052, // Chance to evade special/TP moves (Foil)
 	PARRY_RATE_BONUS                = 3053, // Inquartata and Parrying Rate +% Gear
 	LIEMENT_DURATION                = 3054, // "Liement" Duration + Gear
 	SWORDPLAY                       = 3055, // Number of ticks to increase starting value of Swordplay by

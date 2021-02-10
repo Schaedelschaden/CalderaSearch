@@ -11,7 +11,7 @@ zones[tpz.zone.RABAO] =
     text =
     {
         HOMEPOINT_SET           = 2, -- Home point set!
-        ITEM_CANNOT_BE_OBTAINED = 6404, -- You cannot obtain the <item>. Come back after sorting your inventory.
+        ITEM_CANNOT_BE_OBTAINED = 6405, -- You cannot obtain the <item>. Come back after sorting your inventory.
         ITEM_OBTAINED           = 6410, -- Obtained: <item>.
         GIL_OBTAINED            = 6411, -- Obtained <number> gil.
         KEYITEM_OBTAINED        = 6413, -- Obtained key item: <keyitem>.

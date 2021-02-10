@@ -95,6 +95,19 @@ function AvatarPhysicalMove(avatar, target, skill, numberofhits, accmod, dmgmod,
     if tpeffect == TP_DMG_BONUS then
         finaldmg = finaldmg * avatarFTP(skill:getTP(), mtp100, mtp200, mtp300)
     end
+	
+--	printf("summon.lua AvatarPhysicalMove BLOOD PACT DAMAGE 1: [%i]\n", finaldmg)
+	
+	-- Apply Augments "Blood Boon" effect
+	-- 5% chance to activate per set piece, 25% damage boost per set piece
+	local master = avatar:getMaster()
+	if (master:getLocalVar("BloodBoonActivated") == 1 and math.random(1,100) < master:getMod(tpz.mod.AUGMENT_BLOOD_BOON)) then
+		local multBloodBoon = master:getMod(tpz.mod.AUGMENT_BLOOD_BOON) / 5
+		local dmgBoost = 1 + ((multBloodBoon * 25) / 100)
+		
+		finaldmg = finaldmg * dmgBoost
+		master:setLocalVar("BloodBoonActivated", 0)
+	end
 
     returninfo.dmg = finaldmg
     returninfo.hitslanded = hitslanded
@@ -231,6 +244,17 @@ function AvatarFinalAdjustments(dmg, mob, skill, target, skilltype, skillparam, 
 
     -- Calculate Blood Pact Damage before stoneskin
     dmg = dmg + dmg * mob:getMod(tpz.mod.BP_DAMAGE) / 100
+	
+	-- Apply Augments "Blood Boon" effect
+	-- 5% chance to activate per set piece, 25% damage boost per set piece
+	local master = mob:getMaster()
+	if (master:getLocalVar("BloodBoonActivated") == 1 and math.random(1,100) < master:getMod(tpz.mod.AUGMENT_BLOOD_BOON)) then
+		local multBloodBoon = master:getMod(tpz.mod.AUGMENT_BLOOD_BOON) / 5
+		local dmgBoost = 1 + ((multBloodBoon * 25) / 100)
+		
+		finaldmg = finaldmg * dmgBoost
+		master:setLocalVar("BloodBoonActivated", 0)
+	end
 
     -- handling stoneskin
     dmg = utils.stoneskin(target, dmg)

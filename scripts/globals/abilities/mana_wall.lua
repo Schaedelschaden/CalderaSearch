@@ -13,5 +13,6 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player, target, ability)
-	player:addStatusEffect(tpz.effect.MANA_WALL,1,0,300)
+	local power = 50 + player:getMod(tpz.mod.ENH_MANAWALL)
+	player:addStatusEffect(tpz.effect.MANA_WALL, power, 0, 300)
 end

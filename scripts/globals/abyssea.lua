@@ -266,6 +266,16 @@ tpz.abyssea.getDemiluneAbyssite = function(player)
     return demilune
 end
 
+tpz.abyssea.getCosmosAbyssite = function(player)
+	local cosmos = 0
+	
+	if (player:hasKeyItem(tpz.ki.ABYSSITE_OF_THE_COSMOS)) then
+		cosmos = 1
+	end
+	
+	return cosmos
+end
+
 tpz.abyssea.getNewYellowWeakness = function(mob)
     local day = VanadielDayOfTheWeek()
     local weakness = math.random(day - 1, day + 1)

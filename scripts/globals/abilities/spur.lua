@@ -13,5 +13,6 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-    target:addStatusEffect(tpz.effect.SPUR, 1, 0, 90)
+	local power = 20 + player:getMod(tpz.mod.ENH_SPUR)
+    target:addStatusEffect(tpz.effect.SPUR, power, 0, 90)
 end

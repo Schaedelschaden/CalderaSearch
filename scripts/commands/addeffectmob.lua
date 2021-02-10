@@ -43,7 +43,7 @@ function onTrigger(player, arg1, arg2, arg3)
 				error(player, "You must target a mob with your cursor.")
 				return
 			end
-			printf("addeffectmob.lua onTrigger 1 ID: [%i]  Power: [%i]  Duration: [%i]", id, power, duration)
+--			printf("addeffectmob.lua onTrigger 1 ID: [%i]  Power: [%i]  Duration: [%i]", id, power, duration)
 		else
 			targ = player:getCursorTarget()
 			if (targ == nil) then
@@ -53,7 +53,7 @@ function onTrigger(player, arg1, arg2, arg3)
 			id = tonumber(arg1) or tpz.effect[string.upper(arg1)]
 			power = tonumber(arg2) or 1
 			duration = tonumber(arg3) or 60
-			printf("addeffectmob.lua onTrigger 2 ID: [%s]  Power: [%i]  Duration: [%i]", id, power, duration)
+--			printf("addeffectmob.lua onTrigger 2 ID: [%s]  Power: [%i]  Duration: [%i]", id, power, duration)
 		end
     end
 

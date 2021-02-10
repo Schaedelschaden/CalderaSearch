@@ -14,7 +14,15 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    mob:spawnPet()
+	local idAbsoluteVirtue = 16912876
+
+	if (mob:getID() == idAbsoluteVirtue) then
+		SpawnMob(idAbsoluteVirtue + 1)
+		SpawnMob(idAbsoluteVirtue + 2)
+		SpawnMob(idAbsoluteVirtue + 3)
+	else
+		mob:spawnPet()
+	end
 
     skill:setMsg(tpz.msg.basic.NONE)
 

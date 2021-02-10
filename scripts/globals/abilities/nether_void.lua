@@ -14,5 +14,6 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player, target, ability)
-    player:addStatusEffect(tpz.effect.NETHER_VOID,1,0,60)
+	local power = 50 + player:getMod(tpz.mod.ENH_NETHER_VOID)
+    player:addStatusEffect(tpz.effect.NETHER_VOID, power, 0, 60)
 end

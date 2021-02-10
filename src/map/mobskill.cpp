@@ -378,6 +378,7 @@ void CMobSkill::setKnockback(uint8 knockback)
 
 uint16 CMobSkill::getValidTargets() const
 {
+//	printf("mobskill.cpp getValidTargets: [%i]\n", m_ValidTarget);
     return m_ValidTarget;
 }
 

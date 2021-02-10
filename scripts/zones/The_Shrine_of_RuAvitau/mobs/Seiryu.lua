@@ -6,16 +6,16 @@ require("scripts/globals/status");
 -----------------------------------
 
 function onMobSpawn(mob)
-    mob:setMod(tpz.mod.SILENCERES, 35);
-    mob:setMod(tpz.mod.STUNRES, 35);
-    mob:setMod(tpz.mod.BINDRES, 35);
-    mob:setMod(tpz.mod.GRAVITYRES, 35);
-	mob:setMod(tpz.mod.DMGPHYS, -25);
-	mob:setMod(tpz.mod.DMGMAGIC, -50);
-	mob:addMod(tpz.mod.ACC, 2000);
-	mob:addMod(tpz.mod.MACC, 2000);
-	mob:addMod(tpz.mod.MATT, 500);
-	mob:useMobAbility(690);
+    mob:setMod(tpz.mod.SILENCERES, 35)
+    mob:setMod(tpz.mod.STUNRES, 35)
+    mob:setMod(tpz.mod.BINDRES, 35)
+    mob:setMod(tpz.mod.GRAVITYRES, 35)
+	mob:setMod(tpz.mod.DMGPHYS, -25)
+	mob:setMod(tpz.mod.DMGRANGE, -25)
+	mob:setMod(tpz.mod.DMGMAGIC, -30)
+	mob:addMod(tpz.mod.ACC, 500)
+	mob:addMod(tpz.mod.MACC, 500)
+	mob:addMod(tpz.mod.MATT, 150)
 end
 
 function onMobFight( mob, target )
@@ -26,6 +26,19 @@ function onMobFight( mob, target )
 --            god:updateEnmity(target);
 --        end
 --    end
+
+	local isBusy = false
+	local has2Hrd = mob:getLocalVar("has2Hrd")
+	local act = mob:getCurrentAction()
+	
+	if act == tpz.act.MOBABILITY_START or act == tpz.act.MOBABILITY_USING or act == tpz.act.MOBABILITY_FINISH or act == tpz.act.MAGIC_START or act == tpz.act.MAGIC_CASTING or act == tpz.act.MAGIC_START then
+        isBusy = true -- Set to true if Seiryu is in any stage of using a mobskill or casting a spell
+    end
+	
+	if (mob:getHPP() <= 50 and isBusy == false and has2Hrd ~= 1) then
+		mob:useMobAbility(690)
+		mob:setLocalVar("has2Hrd", 1)
+	end
 end
 
 function onMonsterMagicPrepare(mob,target)

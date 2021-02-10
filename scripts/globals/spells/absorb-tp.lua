@@ -38,7 +38,7 @@ function onSpellCast(caster, target, spell)
     else
         spell:setMsg(tpz.msg.basic.MAGIC_ABSORB_TP)
 
-        dmg = dmg * ((100 + caster:getMod(tpz.mod.AUGMENTS_ABSORB)) / 100)
+        dmg = dmg * (1 + (caster:getMod(tpz.mod.ENH_ABSORB_TP) / 100))
 
         if ((target:getTP()) < dmg) then
             dmg = target:getTP()

@@ -12,13 +12,23 @@ cmdprops =
 function onTrigger(player)
 ---------------------------------------------------------------------------------------------------
 
+-- Code for testing a pet's HP ratio
+
+	-- local pet = player:getPet()
+	-- local petMaxHP = pet:getMaxHP()
+	-- local petHP = pet:getHP()
+	
+	-- player:PrintToPlayer(string.format("Pet HP as a ratio: [%f]", utils.clamp((petHP/petMaxHP) * 100, 50, 100)), tpz.msg.channel.NS_LINKSHELL3)
+	
+---------------------------------------------------------------------------------------------------
+
 -- Code for determining the linkpearl's signature
 
-local item = player:getItem(515)
+-- local item = player:getItem(515)
 
-if (player:hasItem(515) and (item:getSignature() == "CalderaServer")) then
-	player:PrintToPlayer("Player has the server linkpearl!")
-end
+-- if (player:hasItem(515) and (item:getSignature() == "CalderaServer")) then
+	-- player:PrintToPlayer("Player has the server linkpearl!")
+-- end
 
 ---------------------------------------------------------------------------------------------------
 

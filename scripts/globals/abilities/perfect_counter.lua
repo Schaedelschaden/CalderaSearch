@@ -13,5 +13,5 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player, target, ability)
-    player:addStatusEffect(tpz.effect.PERFECT_COUNTER,1,0,30)
+    player:addStatusEffect(tpz.effect.PERFECT_COUNTER, 1, 0, 30)
 end

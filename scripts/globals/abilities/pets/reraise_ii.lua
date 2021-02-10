@@ -13,7 +13,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
-	local animationID = 1689
+	local animationID = 160
 	target:addStatusEffect(tpz.effect.RERAISE, 2, 0, 3600)
-	PlayPetAnimation(pet, target, animationID)
+	PlayPetAnimation(pet, target, 13, animationID)
 end

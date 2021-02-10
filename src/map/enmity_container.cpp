@@ -124,6 +124,11 @@ float CEnmityContainer::CalculateEnmityBonus(CBattleEntity* PEntity)
             enmityBonus -= PChar->PMeritPoints->GetMeritValue(MERIT_MUTED_SOUL, PChar);
         }
 		
+		if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_DOUBLE_SHOT) && PChar->getMod(Mod::DOUBLE_SHOT_AMMO) > 0)
+		{
+			enmityBonus -= PEntity->getMod(Mod::ENH_DOUBLE_SHOT);
+		}
+		
         if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_FLASHY_SHOT))
         {
             enmityBonus += 25;
@@ -135,6 +140,16 @@ float CEnmityContainer::CalculateEnmityBonus(CBattleEntity* PEntity)
 			merit = enmityBonus * merit;
 			enmityBonus -= merit;
         }
+		
+		if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LIGHT_ARTS) && PChar->getMod(Mod::ENH_ADDENDUM_WHITE) > 0)
+		{
+			enmityBonus -= PChar->getMod(Mod::ENH_ADDENDUM_WHITE);
+		}
+		
+		if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_ARTS) && PChar->getMod(Mod::ENH_ADDENDUM_BLACK) > 0)
+		{
+			enmityBonus -= PChar->getMod(Mod::ENH_ADDENDUM_BLACK);
+		}
     }
 
     float bonus = (100.f + std::clamp(enmityBonus, -75, 100)) / 100.f;
@@ -361,10 +376,21 @@ void CEnmityContainer::UpdateEnmityFromDamage(CBattleEntity* PEntity, int32 Dama
 {
     TracyZoneScoped;
     Damage = (Damage < 1 ? 1 : Damage);
+	int16 level = m_EnmityHolder->GetMLevel();
     int16 damageMod = battleutils::GetEnmityModDamage(m_EnmityHolder->GetMLevel());
+	double lvlScalingFactor = 1;
+	
+	if (level >= 51 && level <= 99)
+	{
+		lvlScalingFactor = 1 - ((level - 49) * 0.014);
+	}
+	else if (level > 99)
+	{
+		lvlScalingFactor = 0.3;
+	}
 
-    int32 CE = (int32)(80.f / damageMod * Damage);
-    int32 VE = (int32)(240.f / damageMod * Damage);
+    int32 CE = (int32)(((80.f / damageMod) * Damage) * lvlScalingFactor);
+    int32 VE = (int32)(((240.f / damageMod) * Damage) * lvlScalingFactor);
 
     UpdateEnmity(PEntity, CE, VE);
 
@@ -445,15 +471,59 @@ CBattleEntity* CEnmityContainer::GetHighestEnmity()
 
 void CEnmityContainer::DecayEnmity()
 {
+	CBattleEntity* PEntity = nullptr;
+	int16 playerLevel = 0;
+	int16 decayVE = 1;
+	int16 decayCE = 1;
+	
     for (auto it = m_EnmityList.begin(); it != m_EnmityList.end(); ++it)
     {
-        EnmityObject_t& PEnmityObject = it->second;
-        constexpr int ve_decay_amount = (int)(600 / server_tick_rate); //constexpr int decay_amount = (int)(60 / server_tick_rate); // server_tick_rate = 2.5s
-		constexpr int ce_decay_amount = (int)(60 / server_tick_rate); // constexpr int ce_decay_amount = (int)(60 / server_tick_rate);
+//		printf("enmity_container.cpp DecayEnmity FOR LOOP\n");
+		EnmityObject_t& PEnmityObject = it->second;
+		PEntity = PEnmityObject.PEnmityOwner;
+			
+		if (PEntity != nullptr)
+		{
+			playerLevel = PEntity->GetMLevel();
+//			printf("enmity_container.cpp DecayEnmity PLAYER LEVEL: [%i]\n", playerLevel);
 
-        PEnmityObject.VE -= PEnmityObject.VE > ve_decay_amount ? ve_decay_amount : PEnmityObject.VE;
-		PEnmityObject.CE -= PEnmityObject.CE > ce_decay_amount ? ce_decay_amount : PEnmityObject.CE;
-//        ShowDebug("%d: active: %d CE: %d VE: %d\n", it->first, PEnmityObject.active, PEnmityObject.CE, PEnmityObject.VE);
+			if (playerLevel <= 50)
+			{
+				decayVE = 150;
+//				printf("enmity_container.cpp DecayEnmity PLAYER LEVEL < 50\n");
+			}
+			else if (playerLevel >= 51 && playerLevel < 99)
+			{
+				decayVE = (int16)(playerLevel * 3.04);
+				decayCE = (int16)(playerLevel * 0.61);
+//				printf("enmity_container.cpp DecayEnmity PLAYER LEVEL < 99\n");
+
+				if (PEntity->GetMJob() == JOB_PLD || PEntity->GetMJob() == JOB_NIN || PEntity->GetMJob() == JOB_RUN)
+				{
+					decayVE = 90;
+					decayCE = 30;
+				}
+			}
+			else if (playerLevel >= 99)
+			{
+				decayVE = 300;
+				decayCE = 60;
+			
+				if (PEntity->GetMJob() == JOB_PLD || PEntity->GetMJob() == JOB_NIN || PEntity->GetMJob() == JOB_RUN)
+				{
+					decayVE = 120;
+					decayCE = 30;
+				}
+//				printf("enmity_container.cpp DecayEnmity PLAYER LEVEL = 99\n");
+			}
+		
+			int32 ve_decay_amount = (int)(decayVE / server_tick_rate); //constexpr int decay_amount = (int)(60 / server_tick_rate); // server_tick_rate = 2.5s
+			int32 ce_decay_amount = (int)(decayCE / server_tick_rate); // constexpr int ce_decay_amount = (int)(60 / server_tick_rate);
+
+			PEnmityObject.VE -= PEnmityObject.VE > ve_decay_amount ? ve_decay_amount : PEnmityObject.VE;
+			PEnmityObject.CE -= PEnmityObject.CE > ce_decay_amount ? ce_decay_amount : PEnmityObject.CE;
+//        	ShowDebug("%d: active: %d CE: %d VE: %d\n", it->first, PEnmityObject.active, PEnmityObject.CE, PEnmityObject.VE);
+		}
     }
 }
 

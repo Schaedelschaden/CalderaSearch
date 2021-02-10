@@ -25,74 +25,73 @@ local instantCastChance = 15
 --              {id, {item, ids, in, no, particular, order}, minimum matches required, match type, mods{id, value, modvalue for each additional match, additional whole set bonus}
 local GearSets =  {
              {id = 1, items = {16092, 14554, 14969, 15633, 15719},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.HASTE_GEAR, 500, 0, 0}} },    --  Usukane's set (5% Haste)
-             {id = 2, items = {16088, 14550, 14965, 15629, 15715},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.CRITHITRATE, 5, 0, 0}} },    --  Skadi's set (5% critrate is guess)
-             {id = 3, items = {16084, 14546, 14961, 15625, 15711},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.DOUBLE_ATTACK, 5, 0, 0}} },  --  Ares's set (5% DA)
-             {id = 4, items = {16107, 14569, 14984, 15648, 15734},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.ACC, 20, 0, 0}} },           --  Denali Jacket Set (Increases Accuracy +20)
-             {id = 5, items = {16106, 14568, 14983, 15647, 15733},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.HPP, 10, 0, 0}} },           --  Askar Korazin Set (Max HP Boost %10)
-             {id = 6, items = {16069, 14530, 14940, 15609, 15695},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.SUBTLE_BLOW, 8, 0, 0}} },    --  Pahluwan Khazagand Set (8% is guess)
-             {id = 7, items = {16100, 14562, 14977, 15641, 15727},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.MATT, 5, 0, 0}} },           --  Morrigan's Robe Set (+5 Magic. Atk Bonus)
-             {id = 8, items = {16096, 14558, 14973, 15637, 15723},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.FASTCAST, 5, 0, 0}} },       --  Marduk's Jubbah Set (5% fastcast)
-             {id = 9, items = {16108, 14570, 14985, 15649, 15735},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.MDEF, 10, 0, 0}} },          --  Goliard Saio Set - Total Set Bonus +10% Magic Def. Bonus
-
-             {id = 10, items = {16064, 14527, 14935, 15606, 15690},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.REFRESH, 1, 0, 0}} },      --  Yigit Gomlek Set (1mp per tick) Adds "Refresh" effect
+             {id = 2, items = {16088, 14550, 14965, 15629, 15715},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.CRITHITRATE, 5, 0, 0}} },     --  Skadi's set (5% critrate is guess)
+             {id = 3, items = {16084, 14546, 14961, 15625, 15711},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.DOUBLE_ATTACK, 5, 0, 0}} },   --  Ares's set (5% DA)
+             {id = 4, items = {16107, 14569, 14984, 15648, 15734},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.ACC, 20, 0, 0}} },            --  Denali Jacket Set (Increases Accuracy +20)
+             {id = 5, items = {16106, 14568, 14983, 15647, 15733},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.HPP, 10, 0, 0}} },            --  Askar Korazin Set (Max HP Boost %10)
+             {id = 6, items = {16069, 14530, 14940, 15609, 15695},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.SUBTLE_BLOW, 8, 0, 0}} },     --  Pahluwan Khazagand Set (8% is guess)
+             {id = 7, items = {16100, 14562, 14977, 15641, 15727},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.MATT, 5, 0, 0}} },            --  Morrigan's Robe Set (+5 Magic. Atk Bonus)
+             {id = 8, items = {16096, 14558, 14973, 15637, 15723},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.FASTCAST, 5, 0, 0}} },        --  Marduk's Jubbah Set (5% fastcast)
+             {id = 9, items = {16108, 14570, 14985, 15649, 15735},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.MDEF, 10, 0, 0}} },           --  Goliard Saio Set - Total Set Bonus +10% Magic Def. Bonus
+             {id = 10, items = {16064, 14527, 14935, 15606, 15690},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.REFRESH, 1, 0, 0}} },        --  Yigit Gomlek Set (1mp per tick) Adds "Refresh" effect
              {id = 11, items = {11503, 13759, 12745, 14210, 11413},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.HASTE_GEAR, 500, 0, 0}} },   --  Perle Hauberk Set 5% haste
-             {id = 12, items = {11504, 13760, 12746, 14257, 11414},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.STORETP, 8, 0, 0}} },      --  Aurore Doublet Set  store tp +8
-             {id = 13, items = {11505, 13778, 12747, 14258, 11415},  matches = 2, matchType = matchtype.any, mods = {{tpz.mod.FASTCAST, 4, 2, 0}} },    -- Teal Set: Fast Cast +4-10%
+             {id = 12, items = {11504, 13760, 12746, 14257, 11414},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.STORETP, 8, 0, 0}} },        --  Aurore Doublet Set  store tp +8
+             {id = 13, items = {11505, 13778, 12747, 14258, 11415},  matches = 2, matchType = matchtype.any, mods = {{tpz.mod.FASTCAST, 4, 2, 0}} },       -- Teal Set: Fast Cast +4-10%
              {id = 14, items = {10890, 10462, 10512, 11980, 10610},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.HASTE_GEAR, 600, 0, 0}} },   --  Calma Armor Set haste%6
-             {id = 15, items = {10892, 10464, 10514, 11982, 10612},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.MACC, 5, 0, 0}} },        --  Magavan Armor Set  magic accuracy +5
-             {id = 16, items = {10891, 10463, 10513, 11981, 10611},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.CRITHITRATE, 5, 0, 0}} },  --  Mustela Harness Set  crit rate 5%
-             {id = 17, items = {16126, 15744}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.RATT, 15, 0, 0}} }, -- Bowman's set: Ranged atk +15
-             {id = 18, items = {16147, 14589, 15010, 16316, 15756},  matches = 2, matchType = matchtype.any, mods = {{tpz.mod.ATT, 1, 4.7, 0}} },        --  Fourth Division Brune Set
-             {id = 19, items = {16148, 14590, 15011, 16317, 15757},  matches = 2, matchType = matchtype.any, mods = {{tpz.mod.COUNTER, 1, 1, 0}} },      --  Cobra Unit Harness Set
-             {id = 20, items = {16149, 14591, 15012, 16318, 15758},  matches = 2, matchType = matchtype.any, mods = {{tpz.mod.MACC, 1, 1, 0}} },        --  Cobra Unit Robe Set
-             {id = 21, items = { 6141, 14581, 15005, 16312, 15749},  matches = 2, matchType = matchtype.any, mods = {{tpz.mod.ACC, 1, 1, 0}, {tpz.mod.ATT, 1, 1, 0}} },       --  Iron Ram Chainmail Set. Double mod here! It is why it has 2 IDs.
-             {id = 23, items = {16142, 14582, 15006, 16313, 15750} , matches = 2, matchType = matchtype.any, mods = {{tpz.mod.HP, 10, 10, 0}} },        --  Fourth Division Cuirass Set
-             {id = 24, items = {16143, 14583, 15007, 16314, 15751} , matches = 2, matchType = matchtype.any, mods = {{tpz.mod.MP, 10, 10, 0}} },        --  Cobra Unit Coat Set
-             {id = 25, items = {16062, 14525, 14933, 15604, 15688} , matches = 5, matchType = matchtype.any, mods = {{tpz.mod.UDMGBREATH, -8, 0, 0}, {tpz.mod.UDMGMAGIC, -8, 0, 0}} },       --  Amir Korazin Set - Double mod here! It is why it has 2 IDs.
+             {id = 15, items = {10892, 10464, 10514, 11982, 10612},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.MACC, 5, 0, 0}} },           --  Magavan Armor Set  magic accuracy +5
+             {id = 16, items = {10891, 10463, 10513, 11981, 10611},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.CRITHITRATE, 5, 0, 0}} },    --  Mustela Harness Set  crit rate 5%
+             {id = 17, items = {16126, 15744}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.RATT, 15, 0, 0}} },                                -- Bowman's set: Ranged atk +15
+             {id = 18, items = {16147, 14589, 15010, 16316, 15756},  matches = 2, matchType = matchtype.any, mods = {{tpz.mod.ATT, 1, 4.7, 0}} },          --  Fourth Division Brune Set
+             {id = 19, items = {16148, 14590, 15011, 16317, 15757},  matches = 2, matchType = matchtype.any, mods = {{tpz.mod.COUNTER, 1, 1, 0}} },        --  Cobra Unit Harness Set
+             {id = 20, items = {16149, 14591, 15012, 16318, 15758},  matches = 2, matchType = matchtype.any, mods = {{tpz.mod.MACC, 1, 1, 0}} },           --  Cobra Unit Robe Set
+             {id = 21, items = { 6141, 14581, 15005, 16312, 15749},  matches = 2, matchType = matchtype.any, mods = {{tpz.mod.ACC, 1, 1, 0}, {tpz.mod.ATT, 1, 1, 0}} }, --  Iron Ram Chainmail Set. Double mod here! It is why it has 2 IDs.
+             {id = 23, items = {16142, 14582, 15006, 16313, 15750} , matches = 2, matchType = matchtype.any, mods = {{tpz.mod.HP, 10, 10, 0}} },           --  Fourth Division Cuirass Set
+             {id = 24, items = {16143, 14583, 15007, 16314, 15751} , matches = 2, matchType = matchtype.any, mods = {{tpz.mod.MP, 10, 10, 0}} },           --  Cobra Unit Coat Set
+             {id = 25, items = {16062, 14525, 14933, 15604, 15688} , matches = 5, matchType = matchtype.any, mods = {{tpz.mod.UDMGBREATH, -8, 0, 0}, {tpz.mod.UDMGMAGIC, -8, 0, 0}} }, --  Amir Korazin Set - Double mod here! It is why it has 2 IDs.
 
-             {id = 27, items = {11281, 15015, 16337, 11364}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.STORETP, 5, 5, 5}} },             --  Hachiryu Haramaki Set - Store tp
-             {id = 28, items = {11064, 11084, 11104, 11124, 11144}, matches = 5, matchType = matchtype.any, mods = {{tpz.mod.DA_DOUBLE_DAMAGE, 5, 0, 0}} }, --  Ravager's Armor +2 Set - Double attack double damage chance
-
-             {id = 29, items = {11808, 11824, 11850, 11857, 11858}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.DOUBLE_ATTACK, 5, 0, 0}} },   --  Fazheluo Mail Set. Set Bonus: "Double Attack"+5%. Active with any 2 pieces.
-
-             {id = 30, items = {11809, 11825, 11851, 11855, 11859}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.HASTE_GEAR, 800, 0, 0}} }, --  Cuauhtli Harness Set. Set Bonus: Haste+8%. Active with any 2 pieces.
-
-             {id = 31, items = {11810, 11826, 11852, 11856, 11860}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.MACC, 5, 0, 0}} },    --  Hyskos Robe Set. Set Bonus: Magic Accuracy+5. Active with any 2 pieces.
-             {id = 32, items = {10876, 10450, 10500, 11969, 10600}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.REFRESH, 1, 0.4, 0}} },     --  Ogier's Armor Set. Set Bonus: Adds "Refresh" tpz.effect. Provides 1 mp/tick for 2-3 pieces worn, 2 mp/tick for 4-5 pieces worn.
-             {id = 33, items = {10877, 10451, 10501, 11970, 10601}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.CRITHITRATE, 1, 1, 0}} },   --  Athos's Armor Set. Set Bonus: Increases rate of critical hits. Gives +3% for the first 2 pieces and +1% for every additional piece.
-
+             {id = 27, items = {11281, 15015, 16337, 11364}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.STORETP, 5, 5, 5}} },                                 --  Hachiryu Haramaki Set - Store tp
+             {id = 28, items = {11064, 11084, 11104, 11124, 11144}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.DA_DOUBLE_DAMAGE, 10, 5, 0}} },                --  Ravager's Armor +2 Set - Double attack double damage chance
+             {id = 29, items = {11808, 11824, 11850, 11857, 11858}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.DOUBLE_ATTACK, 5, 0, 0}} },                    --  Fazheluo Mail Set. Set Bonus: "Double Attack"+5%. Active with any 2 pieces.
+             {id = 30, items = {11809, 11825, 11851, 11855, 11859}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.HASTE_GEAR, 800, 0, 0}} },                     --  Cuauhtli Harness Set. Set Bonus: Haste+8%. Active with any 2 pieces.
+             {id = 31, items = {11810, 11826, 11852, 11856, 11860}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.MACC, 5, 0, 0}} },                             --  Hyskos Robe Set. Set Bonus: Magic Accuracy+5. Active with any 2 pieces.
+             {id = 32, items = {10876, 10450, 10500, 11969, 10600}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.REFRESH, 1, 0.4, 0}} },                        --  Ogier's Armor Set. Set Bonus: Adds "Refresh" tpz.effect. Provides 1 mp/tick for 2-3 pieces worn, 2 mp/tick for 4-5 pieces worn.
+             {id = 33, items = {10877, 10451, 10501, 11970, 10601}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.CRITHITRATE, 1, 1, 0}} },                      --  Athos's Armor Set. Set Bonus: Increases rate of critical hits. Gives +3% for the first 2 pieces and +1% for every additional piece.
              -- hipster set, stick it in HipsterSets below so we can handle it separately (still need to check if it's a set, though)
-             {id = 34, items = {10878, 10452, 10502, 11971, 10602}, matches = 5, matchType = matchtype.any, mods = {{tpz.mod.FASTCAST, 10, 0, 0}} },        --  Rubeus Armor Set. Set Bonus: Enhances "Fast Cast" tpz.effect. 2 or 3 pieces equipped: Fast Cast +4, 4 or 5 pieces equipped: Fast Cast +10
-             {id = 35, items = {11080, 11100, 11120, 11140, 11160}, matches = 5, matchType = matchtype.any, mods = {{tpz.mod.QUICK_DRAW_TRIPLE_DAMAGE, extraDamageChance, 0, 0}} },        --  Navarch's Attire +2 Set. Set Bonus: Augments "Quick Draw". Quick Draw will occasionally deal triple damage.
-             {id = 36, items = {11082, 11102, 11122, 11142, 11162}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.SAMBA_DOUBLE_DAMAGE, 1, 1.8, 0}} },                         --  Charis Attire +2 Set. Set Bonus: Augments "Samba". Occasionally doubles damage with Samba up. Adds approximately 1-2% per piece past the first.
-             {id = 37, items = {11076, 11096, 11116, 11136, 11156}, matches = 5, matchType = matchtype.any, mods = {{tpz.mod.EXTRA_DUAL_WIELD_ATTACK, extraAttackChance, 0, 0}} },         --  Iga Garb +2 Set. Set Bonus: Augments "Dual Wield". Attacks made while dual wielding occasionally add an extra attack
-             {id = 38, items = {11074, 11094, 11114, 11134, 11154}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.RAPID_SHOT_DOUBLE_DAMAGE, extraDamageChance, 0, 0}} },        --  Sylvan Attire +2 Set. Set Bonus: Augments "Rapid Shot". Rapid Shots occasionally deal double damage.
-             {id = 39, items = {11070, 11090, 11110, 11130, 11150}, matches = 5, matchType = matchtype.any, mods = {{tpz.mod.ABSORB_DMG_CHANCE, 1, 1, 0}} },                          --  Creed Armor +2 Set. Set Bonus: Occasionally absorbs damage taken. Set proc believed to be somewhere around 5%, more testing needed. Verification Needed Absorb rate likely varies with # of set pieces.
-             {id = 40, items = {11075, 11095, 11115, 11135, 11155}, matches = 5, matchType = matchtype.any, mods = {{tpz.mod.ZANSHIN_DOUBLE_DAMAGE, extraDamageChance, 0, 0}} },          --  Unkai Domaru +2 Set. Set Bonus: Augments "Zanshin". Zanshin attacks will occasionally deal double damage.
-             {id = 41, items = {11065, 11085, 11105, 11125, 11145}, matches = 5, matchType = matchtype.any, mods = {{tpz.mod.EXTRA_KICK_ATTACK, extraAttackChance, 0, 0}} },             --  Tantra Attire +2 Set. Set Bonus: Augments "Kick Attacks". Occasionally allows a second Kick Attack during an attack round without the use of Footwork.
-             {id = 42, items = {11069, 11089, 11109, 11129, 11149}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.TA_TRIPLE_DAMAGE, extraDamageChance, 0, 0}} },              --  Raider's Attire +2 Set. Set Bonus: Augments "Triple Attack". Occasionally causes the second and third hits of a Triple Attack to deal triple damage.Verification Needed Requires a minimum of two pieces.
-             {id = 43, items = {11066, 11086, 11106, 11126, 11146}, matches = 5, matchType = matchtype.any, mods = {{tpz.mod.BAR_ELEMENT_NULL_CHANCE, nullDamageChance, 0, 0}} },        --  Orison Attire +2 Set. Set Bonus: Augments elemental resistance spells. Bar Elemental spells will occasionally nullify damage of the same element.
-             {id = 44, items = {11083, 11103, 11123, 11143, 11163}, matches = 5, matchType = matchtype.any, mods = {{tpz.mod.GRIMOIRE_INSTANT_CAST, instantCastChance, 0, 0}} },          --  Savant's Attire +2 Set. Set Bonus: Augments Grimoire. Spells that match your current Arts will occasionally cast instantly, without recast.
+             {id = 34, items = {10878, 10452, 10502, 11971, 10602}, matches = 5, matchType = matchtype.any, mods = {{tpz.mod.FASTCAST, 10, 0, 0}} },                        --  Rubeus Armor Set. Set Bonus: Enhances "Fast Cast" tpz.effect. 2 or 3 pieces equipped: Fast Cast +4, 4 or 5 pieces equipped: Fast Cast +10
+             {id = 35, items = {11080, 11100, 11120, 11140, 11160}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.QUICK_DRAW_TRIPLE_DAMAGE, 10, 5, 0}} },        --  Navarch's Attire +2 Set. Set Bonus: Augments "Quick Draw". Quick Draw will occasionally deal triple damage.
+             {id = 36, items = {11082, 11102, 11122, 11142, 11162}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.SAMBA_DOUBLE_DAMAGE, 10, 5, 0}} },             --  Charis Attire +2 Set. Set Bonus: Augments "Samba". Occasionally doubles damage with Samba up. Adds approximately 1-2% per piece past the first.
+             {id = 37, items = {11076, 11096, 11116, 11136, 11156}, matches = 5, matchType = matchtype.any, mods = {{tpz.mod.EXTRA_DUAL_WIELD_ATTACK, 10, 5, 0}} },         --  Iga Garb +2 Set. Set Bonus: Augments "Dual Wield". Attacks made while dual wielding occasionally add an extra attack
+             {id = 38, items = {11074, 11094, 11114, 11134, 11154}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.RAPID_SHOT_DOUBLE_DAMAGE, 20, 5, 0}} },        --  Sylvan Attire +2 Set. Set Bonus: Augments "Rapid Shot". Rapid Shots occasionally deal double damage.
+             {id = 39, items = {11070, 11090, 11110, 11130, 11150}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.ABSORB_DMG_CHANCE, 4, 2, 0}} },                --  Creed Armor +2 Set. Set Bonus: Occasionally absorbs damage taken. Set proc believed to be somewhere around 5%, more testing needed. Verification Needed Absorb rate likely varies with # of set pieces.
+             {id = 40, items = {11075, 11095, 11115, 11135, 11155}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.ZANSHIN_DOUBLE_DAMAGE, 20, 5, 0}} },           --  Unkai Domaru +2 Set. Set Bonus: Augments "Zanshin". Zanshin attacks will occasionally deal double damage.
+             {id = 41, items = {11065, 11085, 11105, 11125, 11145}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.EXTRA_KICK_ATTACK, 10, 5, 0}} },               --  Tantra Attire +2 Set. Set Bonus: Augments "Kick Attacks". Occasionally allows a second Kick Attack during an attack round without the use of Footwork.
+             {id = 42, items = {11069, 11089, 11109, 11129, 11149}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.TA_TRIPLE_DAMAGE, 20, 5, 0}} },                --  Raider's Attire +2 Set. Set Bonus: Augments "Triple Attack". Occasionally causes the second and third hits of a Triple Attack to deal triple damage.Verification Needed Requires a minimum of two pieces.
+             {id = 43, items = {11066, 11086, 11106, 11126, 11146}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.BAR_ELEMENT_NULL_CHANCE, 6, 3, 0}} },          --  Orison Attire +2 Set. Set Bonus: Augments elemental resistance spells. Bar Elemental spells will occasionally nullify damage of the same element.
+             {id = 44, items = {11083, 11103, 11123, 11143, 11163}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.GRIMOIRE_INSTANT_CAST, 10, 5, 0}} },           --  Savant's Attire +2 Set. Set Bonus: Augments Grimoire. Spells that match your current Arts will occasionally cast instantly, without recast.
              {id = 45, items = {16005, 17756, 17962, 18596, 18760, 19112, 19215, 19271, 19156}, matches = 2, matchType = matchtype.earring_weapon, mods = {{tpz.mod.HP, 30, 0, 0}, {tpz.mod.VIT, 6, 0, 0}, {tpz.mod.ACC, 6, 0, 0}, {tpz.mod.RACC, 6, 0, 0}} }, --  Paramount Earring Sets. Set Bonus: HP+30, VIT+6, Accuracy+6, Ranged Accuracy+6. Set Bonus is active with any 2 items(Earring+Weapon or Weapon+Weapon)
              {id = 45, items = {17756, 17962, 18596, 18760, 19112, 19215, 19271, 19156}, matches = 2, matchType = matchtype.weapon_weapon, mods = {{tpz.mod.HP, 30, 0, 0}, {tpz.mod.VIT, 6, 0, 0}, {tpz.mod.ACC, 6, 0, 0}, {tpz.mod.RACC, 6, 0, 0}} }, --  Paramount Earring Sets. Set Bonus: HP+30, VIT+6, Accuracy+6, Ranged Accuracy+6. Set Bonus is active with any 2 items(Earring+Weapon or Weapon+Weapon)
-
+			 {id = 46, items = {11067, 11087, 11107, 11127, 11147}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.AUGMENT_CONSERVE_MP, 10, 5, 0}} },             --  Goetia Attire +2 Set. Set Bonus: Augments "Conserve MP". Occasionally causes spells which proc Conserve MP to deal between +12.5% ~ +100% damage.
+			 {id = 47, items = {11068, 11088, 11108, 11128, 11148}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.AUGMENT_COMPOSURE, 25, 10, 0}} },              --  Estoqueur's Armor +2 Set. Set Bonus: Augments "Composure". Increases the duration of enhancing magic when cast on other people.
+			 {id = 48, items = {11071, 11091, 11111, 11131, 11151}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.OCC_VARIES_ATT_HP, 10, 5, 0}} },               --  Bale Armor +2 Set. Set Bonus: “Attack occasionally varies with HP”. Chance to increase ATK by 50-100% based on HP
              {id = 49, items = {18761, 18597, 17757, 19218, 18128, 18500, 16004, 18951}, matches = 2, matchType = matchtype.earring_weapon, mods = {{tpz.mod.STR, 6, 0, 0}, {tpz.mod.ATT, 4, 0, 0}, {tpz.mod.RATT, 4, 0, 0}, {tpz.mod.MATT, 2, 0, 0}} }, --  Supremacy Earring Sets. Set Bonus: STR+6, Attack+4, Ranged Attack+4, "Magic Atk. Bonus"+2. Active with any 2 items(Earring+Weapon)
-
+			 {id = 50, items = {11072, 11092, 11112, 11132, 11152}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.OCC_VARIES_ATT_PET_HP, 10, 5, 0}} },           --  Ferine Armor +2 Set. Set Bonus: “Attack occasionally varies with pet's HP”. Chance to increase ATK by 50-100% based on pet's HP
+			 {id = 51, items = {11073, 11093, 11113, 11133, 11153}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.AUGMENT_SONGS, 2, 1, 0}} },                    --  Aoidos' Attire +2 Set. Set Bonus: Augments songs. Adds stats or MP based on song element
+			 {id = 52, items = {11077, 11097, 11117, 11137, 11157}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.OCC_VARIES_ATT_PET_HP, 10, 5, 0}} },           --  Lancer's Armor +2 Set. Set Bonus: “Attack occasionally varies with wyvern's HP”. Chance to increase ATK by 50-100% based on pet's HP
              {id = 53, items = {16006, 18450, 18499, 18861, 18862, 18952, 19111, 19217, 19272}, matches = 2, matchType = matchtype.earring_weapon, mods = {{tpz.mod.EVA, 10, 0, 0}, {tpz.mod.HPHEAL, 10, 0, 0}, {tpz.mod.ENMITY, -5, 0, 0}} }, --  Brilliant Earring Set. Set Bonus: Evasion, HP Recovered while healing, Reduces Emnity. Active with any 2 items(Earring+Weapon)
-             {id = 56, items = {11798, 11362}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.RERAISE_III, 1, 0, 0}} },        -- Twilight Mail Set. Set Bonus: Auto-Reraise
-             {id = 57, items = {18244, 17595}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.AMMO_SWING, 50, 0, 0}} },        -- Begin Jailer weapons: Set is weapon + Virtue stone, bonus 50% extra melee swing.
+             {id = 56, items = {11798, 11362}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.RERAISE_III, 1, 0, 0}} },   -- Twilight Mail Set. Set Bonus: Auto-Reraise
+             {id = 57, items = {18244, 17595}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.AMMO_SWING, 50, 0, 0}} },   -- Begin Jailer weapons: Set is weapon + Virtue stone, bonus 50% extra melee swing.
              {id = 58, items = {18244, 17710}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.AMMO_SWING, 50, 0, 0}} },
              {id = 59, items = {18244, 17948}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.AMMO_SWING, 50, 0, 0}} },
              {id = 60, items = {18244, 18100}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.AMMO_SWING, 50, 0, 0}} },
              {id = 61, items = {18244, 18222}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.AMMO_SWING, 50, 0, 0}} },
              {id = 62, items = {18244, 18360}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.AMMO_SWING, 50, 0, 0}} },
-             {id = 63, items = {18244, 18397}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.AMMO_SWING, 50, 0, 0}} },        -- End Jailer weapons
+             {id = 63, items = {18244, 18397}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.AMMO_SWING, 50, 0, 0}} },   -- End Jailer weapons
              {id = 71, items = {28520, 28521}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.DOUBLE_ATTACK, 7, 0, 0}} }, -- Bladeborn/Steelflash Earrings
-             {id = 72, items = {28522, 28523}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.DUAL_WIELD, 7, 0, 0}} }, -- Dudgeon/Heartseeker Earrings
-             {id = 73, items = {28524, 28525}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.MACC, 12, 0, 0}} }, -- Psystorm/Lifestorm Earrings
+             {id = 72, items = {28522, 28523}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.DUAL_WIELD, 7, 0, 0}} },    -- Dudgeon/Heartseeker Earrings
+             {id = 73, items = {28524, 28525}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.MACC, 12, 0, 0}} },         -- Psystorm/Lifestorm Earrings
              {id = 74, items = {26920, 26921, 27434, 27259, 27260, 26762, 26763, 27074, 27075, 27433}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.ZANSHIN_DOUBLE_DAMAGE, extraDamageChance, 0, 0}} }, -- Samurai 109/119 af3
              {id = 75, items = {27414, 27413, 27240, 27239, 27055, 27054, 26901, 26900, 26743, 26742}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.EXTRA_KICK_ATTACK, extraAttackChance, 0, 0}} }, -- MNK 109/119 af3
-             {id = 76, items = {26740, 26741, 27411, 27412, 27238, 27237, 27053, 27054, 26899, 26900}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.DA_DOUBLE_DAMAGE, extraDamageChance, 0, 0}} }, -- 109/119 WAR AF3
+             {id = 76, items = {26740, 26741, 27411, 27412, 27238, 27237, 27053, 27052, 26899, 26898}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.DA_DOUBLE_DAMAGE, extraDamageChance, 0, 0}} }, -- 109/119 WAR AF3
              {id = 77, items = {26750, 26751, 27421, 27422, 27247, 27248, 27063, 27062, 26908, 26909}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.TA_TRIPLE_DAMAGE, extraDamageChance, 0, 0}} }, -- 109/119 THF AF3
              {id = 78, items = {26918, 26919, 26761, 26762, 27431, 27432, 27257, 27258, 27072, 27073}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.RAPID_SHOT_DOUBLE_DAMAGE, extraDamageChance, 0, 0}} }, -- 109/119 RNG AF3
              {id = 79, items = {26910, 26911, 26752, 26753, 27424, 27423, 27064, 27065, 27249, 27250}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.ABSORB_DMG_CHANCE, nullDamageChance, 0, 0}} }, -- 109/119 PLD AF3
@@ -151,12 +150,17 @@ local GearSets =  {
              {id = 196, items = {26085, 23329, 23664, 23262, 23597, 23195, 23530, 23128, 23463, 23061, 23396}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.ACC, 15, 0, 0}, {tpz.mod.RACC, 15, 0, 0}, {tpz.mod.MACC, 15, 0, 0}} }, -- AF1 119 +2/3 GEO
              {id = 199, items = {26191, 23330, 23665, 23263, 23598, 23196, 23531, 23129, 23464, 23062, 23397}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.ACC, 15, 0, 0}, {tpz.mod.RACC, 15, 0, 0}, {tpz.mod.MACC, 15, 0, 0}} }, -- AF1 119 +2/3 RUN
 
-             {id = 200, items = {27740, 27881, 28029, 28168, 28306},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.DMGPHYS, -10, 0, 0}} },                      -- Outrider set (Phys damage taken -10%)
-             {id = 201, items = {27741, 27882, 28030, 28169, 28307},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.CRIT_DMG_INCREASE, 10, 0, 0}} },             -- Espial set (Crit damage +10%)
-             {id = 202, items = {27742, 27883, 28031, 28170, 28308},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.REFRESH, 3, 0, 0}} },                        -- Wayfarer set (Refresh+3)
-		     {id = 203, items = {11811, 10293}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.STR, 10, 0, 0}, {tpz.mod.INT, 10, 0, 0}} },                        -- Chocobo Gear "set" (+STR, +INT)(Caldera Customization)
-			 {id = 204, items = {26965, 27291}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.DOUBLE_ATTACK, 10, 0, 0}, {tpz.mod.TRIPLE_ATTACK, 10, 0, 0}} },    -- Sexy Beast (Male) "set" (+Double Attack, +Triple Attack)(Caldera Customization)
-		     {id = 205, items = {26967, 27293}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.DOUBLE_ATTACK, 10, 0, 0}, {tpz.mod.TRIPLE_ATTACK, 10, 0, 0}} },    -- Sexy Beast (Female) "set" (+Double Attack, +Triple Attack)(Caldera Customization)
+             {id = 200, items = {27740, 27881, 28029, 28168, 28306},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.DMGPHYS, -10, 0, 0}} },                                              -- Outrider set (Phys damage taken -10%)
+             {id = 201, items = {27741, 27882, 28030, 28169, 28307},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.CRIT_DMG_INCREASE, 10, 0, 0}} },                                     -- Espial set (Crit damage +10%)
+             {id = 202, items = {27742, 27883, 28031, 28170, 28308},  matches = 5, matchType = matchtype.any, mods = {{tpz.mod.REFRESH, 3, 0, 0}} },                                                -- Wayfarer set (Refresh+3)
+			 {id = 203, items = {13146, 13619, 15922},  matches = 1, matchType = matchtype.any, mods = {{tpz.mod.HASTE_GEAR, 600, 300, 0}} },                  				                        -- Tern set (Haste+6%; Caldera adjusted to +9% for all 3 pieces)
+		     {id = 204, items = {11811, 10293}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.STR, 10, 0, 0}, {tpz.mod.INT, 10, 0, 0}} },                                                -- Chocobo Gear "set" (+STR, +INT)(Caldera Customization)
+			 {id = 205, items = {26965, 27291}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.DOUBLE_ATTACK, 10, 0, 0}, {tpz.mod.TRIPLE_ATTACK, 10, 0, 0}} },                            -- Sexy Beast (Male) "set" (+Double Attack, +Triple Attack)(Caldera Customization)
+		     {id = 206, items = {26967, 27293}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.DOUBLE_ATTACK, 10, 0, 0}, {tpz.mod.TRIPLE_ATTACK, 10, 0, 0}} },                            -- Sexy Beast (Female) "set" (+Double Attack, +Triple Attack)(Caldera Customization)
+			 {id = 207, items = {11078, 11098, 11118, 11138, 11158}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.AUGMENT_BLOOD_BOON, 10, 5, 0}} },                                     -- Caller's Attire +2 Set. Set Bonus: Augments "Blood Boon". Blood Boon occasionally increases the damage of Blood Pacts by 25% per armor piece
+			 {id = 208, items = {11079, 11099, 11119, 11139, 11159}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.AUGMENT_AUGMENT_BLUE_MAGIC, 10, 5, 0}} },                             -- Mavi Attire +2 Set. Set Bonus: Occ. augments blue magic spells. Triples the WSC factor of blue magic spells
+			 {id = 209, items = {11081, 11101, 11121, 11141, 11161}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.OCC_VARIES_ATT_PET_HP, 10, 5, 0}} },                                  -- Cirque Attire +2 Set. Set Bonus: “Attack occasionally varies with automaton's HP”. Chance to increase ATK by 50-100% based on pet's HP
+			 {id = 210, items = {26671, 26847, 27023, 27199, 27375}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.DMG, -4, -2, 0}} },                                                   -- Souveran Armor +1 Set. Reduces Damage Taken by -2% per armor piece.
 		}
 
              -- increment id by (number of mods in previous gearset - 1)
@@ -193,6 +197,7 @@ local HipsterSets = {
 	{id = 203, hipster = true},
 	{id = 204, hipster = true},
 	{id = 205, hipster = true},
+	{id = 206, hipster = true},
 }
 
 ------------------------------------------
@@ -358,8 +363,20 @@ function HandleHipsterSet(player, gearset, matches)
         end
         --Unimplemented method to add pet mods
         return
-	-- Chocobo Gear Set
+	-- Tern Gear Set
     elseif (gearset.id == 203) then
+--		printf("gear_sets.cpp HandleHipsterSet TERN SET\n")
+		local modValue = 0
+
+        if (matches == 1) then
+            modValue = 300 -- 2 matches
+        elseif (matches == 2) then
+            modValue = 600 -- 3 matches
+        end
+        player:addGearSetMod(gearset.id, tpz.mod.HASTE_GEAR, modValue)
+        return
+	-- Chocobo Gear Set
+    elseif (gearset.id == 204) then
         local mlvl = player:getMainLvl()
 		local modValue = 0
 
@@ -378,7 +395,8 @@ function HandleHipsterSet(player, gearset, matches)
 		player:addGearSetMod(gearset.id + 1, tpz.mod.INT, modValue / 4)
         return
 	-- Sexy Beast (Male/Female) Gear Sets
-	elseif (gearset.id == 204) or (gearset.id == 205) then
+	elseif (gearset.id == 205) or (gearset.id == 206) then
+--		printf("gear_sets.cpp HandleHipsterSet SEXY BEAST SET\n")
         local mlvl = player:getMainLvl()
 		local modValue = 0
 

@@ -8,6 +8,7 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onMobSpawn(mob)
+	mob:setMod(tpz.mod.REFRESH, 10)
     mob:addStatusEffectEx(tpz.effect.SHOCK_SPIKES,0,60,0,0) -- ~60 damage
     -- TODO: Effect can be stolen, giving a THF (Aura Steal) or BLU (Voracious Trunk) a 60 minute shock spikes effect (unknown potency).
     -- If effect is stolen, he will recast it instantly.
@@ -47,16 +48,24 @@ end
 function onMobDeath(mob, player, isKiller)
     local motherGlobe = mob:getID()
 
-    mob:setRespawnTime(math.random(10800, 21600)) -- respawn 3-6 hrs
-
     for i = motherGlobe + 1, motherGlobe + 6 do
         local pet = GetMobByID(i)
         if pet:isSpawned() then
             DespawnMob(i)
         end
     end
+	
+	local KillCounter = player:getCharVar("KillCounter_MotherGlobe")
+	local playerName = player:getName()
+	local mobName = mob:getName()
+	local fixedMobName = string.gsub(mobName, "_", " ")
+	
+	KillCounter = KillCounter + 1
+	
+	player:setCharVar("KillCounter_MotherGlobe", KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
 end
 
 function onMobDespawn(mob)
-    mob:setRespawnTime(math.random(10800, 21600)) -- 3 to 6 hours
+    mob:setRespawnTime(math.random(6900, 7500)) -- 115-125 minutes
 end

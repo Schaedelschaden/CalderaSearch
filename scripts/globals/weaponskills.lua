@@ -163,6 +163,8 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     end
     calcParams.critRate = critrate
 
+--	printf("weaponskills.lua calculateRawWSDmg  WS ACC MOD: [%i]  WS BASE DMG: [%i]  CRIT HIT RATE: [%s]  fTP: [%i]", calcParams.hitRate, mainBase, critrate, ftp)
+
     -- Start the WS
     local hitdmg = 0
     local finaldmg = 0
@@ -175,13 +177,14 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     local climacticflourishcrits = attacker:getCharVar("ClimacticFlourishCrits")
     
     if (attacker:hasStatusEffect(tpz.effect.CLIMACTIC_FLOURISH) and (climacticflourishcrits > 0)) then
-        dmg = dmg + (attacker:getStat(tpz.mod.CHR) / 2)
+        dmg = (dmg + (attacker:getStat(tpz.mod.CHR) / 2)) * (1 + (attacker:getMod(tpz.mod.ENH_CLIMACTIC_FLOURISH) / 100))
         calcParams.critRate = 100
         attacker:setCharVar("ClimacticFlourishCrits", climacticflourishcrits - 1)
     end
     
     if (attacker:hasStatusEffect(tpz.effect.STRIKING_FLOURISH) or attacker:hasStatusEffect(tpz.effect.TERNARY_FLOURISH)) then
         dmg = dmg + attacker:getStat(tpz.mod.CHR)
+		calcParams.critRate = calcParams.critRate + attacker:getMod(tpz.mod.ENH_STRIKING_FLOURISH)
         attacker:delStatusEffectSilent(tpz.effect.STRIKING_FLOURISH)
         attacker:delStatusEffectSilent(tpz.effect.TERNARY_FLOURISH)
     end
@@ -324,6 +327,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     -- Send our wsParams off to calculate our raw WS damage, hits landed, and shadows absorbed
     calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
     local finaldmg = calcParams.finalDmg
+--	printf("weaponskills.lua doPhysicalWeaponskill  FINAL DMG: [%i]\n", finaldmg)
 
     -- Delete statuses that may have been spent by the WS
     attacker:delStatusEffectsByFlag(tpz.effectFlag.DETECTABLE)
@@ -693,30 +697,30 @@ function getHitRate(attacker, target, capHitRate, bonus)
     acc = acc + bonus
 
     if (attacker:getMainLvl() > target:getMainLvl()) then -- acc bonus!
-        acc = acc + ((attacker:getMainLvl()-target:getMainLvl())*4)
+        acc = acc + ((attacker:getMainLvl() - target:getMainLvl()) * 4)
     elseif (attacker:getMainLvl() < target:getMainLvl()) then -- acc penalty :(
-        acc = acc - ((target:getMainLvl()-attacker:getMainLvl())*4)
+        acc = acc - ((target:getMainLvl() - attacker:getMainLvl()) * 4)
     end
 
     local hitdiff = 0
     local hitrate = 75
-    if (acc>eva) then
-    hitdiff = (acc-eva)/2
+    if (acc > eva) then
+		hitdiff = (acc - eva) / 2
     end
-    if (eva>acc) then
-    hitdiff = ((-1)*(eva-acc))/2
+    if (eva > acc) then
+		hitdiff = ((-1) * (eva-acc)) / 2
     end
 
-    hitrate = hitrate+hitdiff
-    hitrate = hitrate/100
+    hitrate = hitrate + hitdiff
+    hitrate = hitrate / 100
 
 
     -- Applying hitrate caps
     if (capHitRate) then -- this isn't capped for when acc varies with tp, as more penalties are due
-        if (hitrate>0.95) then
+        if (hitrate > 0.95) then
             hitrate = 0.95
         end
-        if (hitrate<0.2) then
+        if (hitrate < 0.2) then
             hitrate = 0.2
         end
     end
@@ -747,22 +751,22 @@ function getRangedHitRate(attacker, target, capHitRate, bonus)
 
     local hitdiff = 0
     local hitrate = 75
-    if (acc>eva) then
-    hitdiff = (acc-eva)/2
+    if (acc > eva) then
+    hitdiff = (acc - eva) / 2
     end
     if (eva>acc) then
-    hitdiff = ((-1)*(eva-acc))/2
+    hitdiff = ((-1) * (eva - acc)) / 2
     end
 
-    hitrate = hitrate+hitdiff
-    hitrate = hitrate/100
+    hitrate = hitrate + hitdiff
+    hitrate = hitrate / 100
 
     -- Applying hitrate caps
     if (capHitRate) then -- this isn't capped for when acc varies with tp, as more penalties are due
-        if (hitrate>0.95) then
+        if (hitrate > 0.95) then
             hitrate = 0.95
         end
-        if (hitrate<0.2) then
+        if (hitrate < 0.2) then
             hitrate = 0.2
         end
     end
@@ -771,10 +775,10 @@ end
 
 function fTP(tp, ftp1, ftp2, ftp3)
     if (tp >= 1000 and tp < 2000) then
-        return ftp1 + ( ((ftp2-ftp1)/1000) * (tp-1000))
+        return ftp1 + ( ((ftp2 - ftp1) / 1000) * (tp - 1000))
     elseif (tp >= 2000 and tp <= 3500) then
         -- generate a straight line between ftp2 and ftp3 and find point @ tp
-        return ftp2 + ( ((ftp3-ftp2)/1000) * (tp-2000))
+        return ftp2 + ( ((ftp3 - ftp2) / 1000) * (tp - 2000))
     else
         print("fTP error: TP value is not between 1000-3000! TP VALUE: [%i]", tp)
     end
@@ -782,10 +786,10 @@ function fTP(tp, ftp1, ftp2, ftp3)
 end
 
 function calculatedIgnoredDef(tp, def, ignore1, ignore2, ignore3)
-    if (tp>=1000 and tp <2000) then
-        return (ignore1 + ( ((ignore2-ignore1)/1000) * (tp-1000)))*def
-    elseif (tp>=2000 and tp<=3000) then
-        return (ignore2 + ( ((ignore3-ignore2)/1000) * (tp-2000)))*def
+    if (tp >= 1000 and tp < 2000) then
+        return (ignore1 + ( ((ignore2 - ignore1) / 1000) * (tp - 1000))) * def
+    elseif (tp >= 2000 and tp <= 3000) then
+        return (ignore2 + ( ((ignore3 - ignore2) / 1000) * (tp - 2000))) * def
     end
     return 1 -- no def ignore mod
 end
@@ -877,7 +881,7 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
     cratio = cratio + 1
     cratio = utils.clamp(cratio, 0, 3)
 
-    -- printf("ratio: %f min: %f max %f\n", cratio, pdifmin, pdifmax)
+--    printf("ratio: %f min: %f max %f", cratio, pdifmin, pdifmax)
 
     if cratio < 0.5 then
         pdifmax = cratio + 0.5

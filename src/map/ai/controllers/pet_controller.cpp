@@ -123,6 +123,7 @@ bool CPetController::Ability(uint16 targid, uint16 abilityid)
 {
     if (PPet->PAI->CanChangeState())
     {
+//		printf("pet_controller.cpp CPetController::Ability CHANGING STATE\n");
         return PPet->PAI->Internal_Ability(targid, abilityid);
     }
     return false;

@@ -36,6 +36,10 @@ function onSpellCast(caster, target, spell)
 
     -- convert to new haste system
     power = (power / 1024) * 10000
+	
+	if (caster:getMod(tpz.mod.AUGMENT_SONGS) > 0) then
+		power = power + (10000 * caster:getMod(tpz.mod.AUGMENT_SONGS))
+	end
 
     local duration = 120
     duration = duration * ((iBoost * 0.1) + (caster:getMod(tpz.mod.SONG_DURATION_BONUS)/100) + 1)

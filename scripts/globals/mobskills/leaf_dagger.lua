@@ -25,12 +25,13 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING, info.hitslanded)
 
     local typeEffect = tpz.effect.POISON
-    local power = (mob:getMainLvl()/10)
+    local power = (mob:getMainLvl() / 10)
+	
     if (power < 1 ) then
         power = 1
     end
 
-    MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 1, 3, 18)
+    MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, power, 3, 60)
 
     target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
     return dmg

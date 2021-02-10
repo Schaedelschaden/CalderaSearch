@@ -10,7 +10,7 @@ zones[tpz.zone.AHT_URHGAN_WHITEGATE] =
 {
     text =
     {
-        ITEM_CANNOT_BE_OBTAINED       = 219, -- You cannot obtain the <item>. Come back after sorting your inventory.
+        ITEM_CANNOT_BE_OBTAINED       = 220, -- You cannot obtain the <item>. Come back after sorting your inventory.
         ITEM_CANNOT_BE_OBTAINEDX      = 223, -- You cannot obtain the <item>. Try trading again after sorting your inventory.
         ITEM_OBTAINED                 = 225, -- Obtained: <item>.
         GIL_OBTAINED                  = 226, -- Obtained <number> gil.

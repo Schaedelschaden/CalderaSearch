@@ -56,7 +56,7 @@ INITIAL_LEVEL_CAP = 99 -- The initial level cap for new players.  There seems to
 MAX_LEVEL = 99 -- Level max of the server, lowers the attainable cap by disabling Limit Break quests.
 NORMAL_MOB_MAX_LEVEL_RANGE_MIN = 0 -- Lower Bound of Max Level Range for Normal Mobs (0 = Uncapped)
 NORMAL_MOB_MAX_LEVEL_RANGE_MAX = 0 -- Upper Bound of Max Level Range for Normal Mobs (0 = Uncapped)
-START_GIL = 500000 -- Amount of gil given to newly created characters.
+START_GIL = 50000 -- Amount of gil given to newly created characters.
 START_INVENTORY = 80 -- Starting inventory and satchel size.  Ignores values < 30.  Do not set above 80!
 NEW_CHARACTER_CUTSCENE = 0 -- Set to 1 to enable opening cutscenes, 0 to disable.
 SUBJOB_QUEST_LEVEL = 0 -- Minimum level to accept either subjob quest.  Set to 0 to start the game with subjobs unlocked.
@@ -65,7 +65,7 @@ ALL_MAPS = 1 -- Set to 1 to give starting characters all the maps.
 UNLOCK_OUTPOST_WARPS = 1 -- Set to 1 to give starting characters all outpost warps.  2 to add Tu'Lia and Tavnazia.
 
 SHOP_PRICE      = 1.000 -- Multiplies prices in NPC shops.
-GIL_RATE        = 5.000 -- Multiplies gil earned from quests.  Won't always display in game.
+GIL_RATE        = 2.500 -- Multiplies gil earned from quests.  Won't always display in game.
 BAYLD_RATE      = 1.000 -- Multiples bayld earned from quests.
 EXP_RATE        = 3.500 -- Multiplies exp earned from fov and quests.
 TABS_RATE       = 1.000 -- Multiplies tabs earned from fov.

@@ -18,7 +18,7 @@ function onSpellCast(caster,target,spell)
 
     local params = {}
 
-    params.dmg = 134
+    params.dmg = 268
 
     params.multiplier = 1.5
 
@@ -29,9 +29,7 @@ function onSpellCast(caster,target,spell)
     params.mabBonus = bonusMab
 
     dmg = doNinjutsuNuke(caster, target, spell, params)
-    handleNinjutsuDebuff(caster,target,spell,30,duration,tpz.mod.FIRERES)
-	
-	printf("Damage %i\n", dmg)
+    handleNinjutsuDebuff(caster, target, spell, 30, duration,tpz.mod.FIRERES)
 
     return dmg
 end

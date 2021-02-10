@@ -12,7 +12,7 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local hp = math.ceil(5 * (1 + 0.01 * caster:getMod(tpz.mod.REGEN_MULTIPLIER))) -- spell base times gear multipliers
+    local hp = math.ceil(5 * (1 + 0.011 * caster:getMod(tpz.mod.REGEN_MULTIPLIER))) -- spell base times gear multipliers
     hp = hp + caster:getMerit(tpz.merit.REGEN_EFFECT) -- bonus hp from merits
     hp = hp + caster:getMod(tpz.mod.LIGHT_ARTS_REGEN) -- bonus hp from light arts
 	

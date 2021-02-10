@@ -29,7 +29,7 @@ function onZoneIn(player, prevZone)
     local cs = -1
 
     if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
-        player:setPos(333.017, -44.896, -458.35, 164)
+        player:setPos(0, -34, -471, 191)
     end
     if (player:getCurrentMission(ZILART) == tpz.mission.id.zilart.THE_GATE_OF_THE_GODS and player:getCharVar("ZilartStatus") == 1) then
         cs = 51

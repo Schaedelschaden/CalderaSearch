@@ -1728,17 +1728,18 @@ void SmallPacket0x04B(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     // todo: kill player til theyre dead and bsod
     const char* fmtQuery = "SELECT version_mismatch FROM accounts_sessions WHERE charid = %u";
     int32 ret = Sql_Query(SqlHandle, fmtQuery, PChar->id);
-	std::string msg1 = "<<< ";
+/* 	std::string msg1 = "<<< ";
 	std::string charName = PChar->name.c_str();
 	std::string msg2 = " has logged in >>>";
-	std::string loginmsg = msg1 + charName + msg2;
+	std::string loginmsg = msg1 + charName + msg2; */
     if (ret != SQL_ERROR && Sql_NextRow(SqlHandle) == SQL_SUCCESS && PChar->objtype == TYPE_PC)
     {
 //        if ((bool)Sql_GetUIntData(SqlHandle, 0))
 //            PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, "The server is currently running FFXI version 30200904_2. Please use POL to update to retail."));
 //        else
 //            PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_3, "<<< Have fun and be courteous to others! >>>"));
-			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, loginmsg));
+//			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, loginmsg));
+//			printf("packet_system.cpp LOGIN MESSAGE\n");
 	}
     return;
 }
@@ -5024,7 +5025,7 @@ void SmallPacket0x0DD(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 					mLvl = iLvl;
 				}
 				
-				if (riLvl > mLvl)
+				if (riLvl > mLvl && riLvl > mLvl)
 				{
 					mLvl = riLvl;
 				}

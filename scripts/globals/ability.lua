@@ -657,7 +657,12 @@ tpz.jobAbility =
     DISEMBOWEL         = 786,
     EXTIRPATING_SALVO  = 787,
 
-    -- NONE      = 788 - 959,
+    -- NONE      = 788 - 794,
+	
+	CROSSTHRASH        = 795,
+	PREDATORY_GLARE    = 796,
+	
+	-- NONE      = 797 - 959,
 
     CLARSACH_CALL      = 960,
     WELT               = 961,

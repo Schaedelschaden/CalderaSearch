@@ -14,15 +14,15 @@ require("scripts/globals/msg")
 
 function onAbilityCheck(player, target, ability)
     if (player:getAnimation() ~= 1) then
-        return tpz.msg.basic.REQUIRES_COMBAT,0
+        return tpz.msg.basic.REQUIRES_COMBAT, 0
     elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_1)) then
-        return tpz.msg.basic.NO_FINISHINGMOVES,0
-	elseif player:hasStatusEffect(tpz.effect.FINISHING_MOVE_2) or
+        return tpz.msg.basic.NO_FINISHINGMOVES, 0
+	elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_2) or
         player:hasStatusEffect(tpz.effect.FINISHING_MOVE_3) or
         player:hasStatusEffect(tpz.effect.FINISHING_MOVE_4) or
         player:hasStatusEffect(tpz.effect.FINISHING_MOVE_5) or
 		player:hasStatusEffect(tpz.effect.GRAND_PAS)) then
-		return 0,0
+		return 0, 0
     end
 end
 

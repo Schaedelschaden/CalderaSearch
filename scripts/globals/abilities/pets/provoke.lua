@@ -13,7 +13,7 @@ end
 
 function onPetAbility(target, automaton, skill, master, action)
     automaton:addRecast(tpz.recast.ABILITY, skill:getID(), 30)
-    target:addEnmity(automaton, 1, 1800)
+    target:addEnmity(automaton, 1800, 5400)
     skill:setMsg(tpz.msg.basic.USES)
     return 0
 end

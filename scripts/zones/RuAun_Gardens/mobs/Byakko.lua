@@ -5,10 +5,17 @@
 local ID = require("scripts/zones/RuAun_Gardens/IDs")
 mixins = {require("scripts/mixins/job_special")}
 require("scripts/globals/mobs")
+require("scripts/globals/keyitems")
 -----------------------------------
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+end
+
+function onMobSpawn(mob)
+	mob:addMod(tpz.mod.ACC, 500)
+	mob:addMod(tpz.mod.MACC, 500)
+	mob:addMod(tpz.mod.REFRESH, 25)
 end
 
 function onAdditionalEffect(mob, target, damage)
@@ -16,5 +23,7 @@ function onAdditionalEffect(mob, target, damage)
 end
 
 function onMobDeath(mob, player, isKiller)
+	player:addKeyItem( tpz.ki.BYAKKOS_PRIDE )
+	player:messageSpecial( ID.text.KEYITEM_OBTAINED, tpz.ki.BYAKKOS_PRIDE )
     player:showText(mob, ID.text.SKY_GOD_OFFSET + 12)
 end

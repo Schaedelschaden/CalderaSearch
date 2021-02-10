@@ -264,7 +264,7 @@ void CMagicState::SpendCost()
 
         if (tpzrand::GetRandomNumber(100) < rate)
         {
-            cost = (int16)(cost * (tpzrand::GetRandomNumber(8.f, 16.f) / 16.0f));
+            cost = (int16)(cost * (tpzrand::GetRandomNumber(8.f, 15.f) / 16.0f));
         }
 
         m_PEntity->addMP(-cost);
@@ -340,6 +340,7 @@ void CMagicState::ApplyEnmity(CBattleEntity* PTarget, int ce, int ve)
 				m_PSpell->getSpellFamily() == SPELLFAMILY_BANISH || m_PSpell->getSpellFamily() == SPELLFAMILY_BANISHGA))
 				{
 					ve = ve * (1 + (m_PEntity->getMod(Mod::DIVINE_ENMITY_BONUS) / 100));
+					ce = ce * (1 + (m_PEntity->getMod(Mod::DIVINE_ENMITY_BONUS) / 100));
 					mob->PEnmityContainer->UpdateEnmity(m_PEntity, ce, ve);
 					battleutils::GenerateInRangeEnmity(m_PEntity, ce, ve);
 					enmityApplied = true;

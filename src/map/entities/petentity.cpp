@@ -214,6 +214,8 @@ void CPetEntity::OnAbility(CAbilityState& state, action_t& action)
         if (prevMsg == actionTarget.messageID) actionTarget.messageID = PAbility->getMessage();
         if (actionTarget.messageID == 0) actionTarget.messageID = MSGBASIC_USES_JA;
         actionTarget.param = value;
+		
+//		printf("petentity.cpp OnAbility prevMsg: [%i]  messageID: [%i]\n", prevMsg, actionTarget.messageID);
 
         if (value < 0)
         {

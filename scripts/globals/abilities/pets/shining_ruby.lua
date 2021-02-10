@@ -18,7 +18,8 @@ function onPetAbility(target, pet, skill, player)
     local duration = 180 + bonusTime
 
     target:delStatusEffect(tpz.effect.SHINING_RUBY)
-    target:addStatusEffect(tpz.effect.SHINING_RUBY,1,0,duration)
+    target:addStatusEffect(tpz.effect.SHINING_RUBY, 1, 0, duration)
     target:messageBasic(tpz.msg.basic.GAINS_EFFECT_OF_STATUS, tpz.effect.SHINING_RUBY)
+	
     return tpz.effect.SHINING_RUBY
 end

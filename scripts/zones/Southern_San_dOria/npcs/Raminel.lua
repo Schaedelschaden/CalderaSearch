@@ -96,12 +96,12 @@ end
 
 function onTrigger(player,npc)
     player:startEvent(614)
-    npc:pathStop()
+--    npc:pathStop()
 end
 
 function onEventUpdate(player,csid,option)
 end
 
 function onEventFinish(player,csid,option,npc)
-    npc:pathResume()
+--    npc:pathResume()
 end

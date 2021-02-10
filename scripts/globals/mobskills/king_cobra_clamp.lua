@@ -3,7 +3,7 @@
 -- Damage varies with TP.
 -- Type: Magical
 -- Utsusemi/Blink absorb: Ignores shadows
--- Skillchain Properties: Fragmentation-IconFragmentation
+-- Skillchain Properties: Fragmentation
 ---------------------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
@@ -21,6 +21,7 @@ function onMobWeaponSkill(target, mob, skill)
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
 
+	target:addStatusEffect(tpz.effect.STUN, 1, 0, math.random(3,5))
     target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.SLASHING)
     return dmg
 end

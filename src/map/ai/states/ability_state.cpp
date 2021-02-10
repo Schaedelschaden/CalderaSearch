@@ -58,6 +58,7 @@ CAbilityState::CAbilityState(CBattleEntity* PEntity, uint16 targid, uint16 abili
         action_t action;
         action.id = PEntity->id;
         action.actiontype = ACTION_WEAPONSKILL_START;
+//		printf("ability_state.cpp CAbilityState ABILITY CHANGED TO ACTION_WEAPONSKILL_START\n");
         auto& list = action.getNewActionList();
         list.ActionTargetID = PTarget->id;
         auto& actionTarget = list.getNewActionTarget();

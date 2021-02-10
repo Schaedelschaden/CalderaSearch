@@ -8,10 +8,11 @@
 require("scripts/globals/status")
 -----------------------------------
 
-function onAbilityCheck(player,target,ability)
+function onAbilityCheck(player, target, ability)
     return 0,0
 end
 
 function onUseAbility(player, target, ability)
-    player:addStatusEffect(tpz.effect.IMPETUS,1,0,180)
+	local subPower = player:getMod(tpz.mod.AUGMENT_IMPETUS)
+    player:addStatusEffect(tpz.effect.IMPETUS, 1, 0, 180, 0, subPower)
 end

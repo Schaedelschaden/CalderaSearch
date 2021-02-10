@@ -43,7 +43,7 @@ function onUseAbility(player, target, ability)
 		if (player:hasStatusEffect(RuneEnhancement[i])) then
 			RuneCounter = player:countEffect(RuneEnhancement[i])
 			power = power * RuneCounter
-			player:addMod(SDT[i], power)
+			player:addMod(SDT[i], -power)
 --			printf("vallation.lua onUseAbility VALLATION RUNE: [%i] COUNTER: [%i] POWER: [%i]", RuneEnhancement[i], RuneCounter, power)
 		end
 	end

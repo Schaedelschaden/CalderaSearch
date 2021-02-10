@@ -477,9 +477,14 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
 
             uint8 mLvl = PChar->GetMLevel();
 			uint8 iLvl = PChar->m_Weapons[SLOT_MAIN]->getILvl();
-			uint8 riLvl = PChar->m_Weapons[SLOT_RANGED]->getILvl();
+			uint8 riLvl = 0;
 			uint8 targetLvl = PCurrentMob->GetMLevel();
-					
+			
+			if (PChar->getEquip(SLOT_RANGED) && PChar->getEquip(SLOT_RANGED)->isType(ITEM_WEAPON))
+			{
+				riLvl = PChar->m_Weapons[SLOT_RANGED]->getILvl();
+			}
+
 			if (iLvl > mLvl)
 			{
 				mLvl = iLvl;

@@ -32,10 +32,10 @@ function onMobDespawn(mob)
             DisallowRespawn(nqId, true)
             DisallowRespawn(hqId, false)
             UpdateNMSpawnPoint(hqId)
-            GetMobByID(hqId):setRespawnTime(math.random(75600, 86400))
+            GetMobByID(hqId):setRespawnTime(math.random(10800, 14400)) -- (3-4 hours) -- 75600, 86400 (21-24 hours)
         else
             UpdateNMSpawnPoint(nqId)
-            mob:setRespawnTime(math.random(75600, 86400))
+            mob:setRespawnTime(math.random(10800, 14400)) -- (3-4 hours) -- 75600, 86400 (21-24 hours)
             SetServerVariable("[PH]Tzee_Xicu_the_Manifest", kills + 1)
         end
     end

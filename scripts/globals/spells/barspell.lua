@@ -31,13 +31,16 @@ end
 function applyBarspell(effectType, caster, target, spell)
     local enhanceSkill = caster:getSkillLevel(tpz.skill.ENHANCING_MAGIC)
     local mdefBonus = caster:getMerit(tpz.merit.BAR_SPELL_EFFECT) + caster:getMod(tpz.mod.BARSPELL_MDEF_BONUS)
+	
+	if (caster:hasStatusEffect(tpz.effect.AFFLATUS_SOLACE)) then
+		mdefBonus = mdefBonus + caster:getMod(tpz.mod.ENH_AFFLATUS_SOLACE)
+	end
 
     local power = calculateBarspellPower(caster, enhanceSkill)
     local duration = calculateBarspellDuration(caster, enhanceSkill)
 	
     duration = calculateDuration(duration, tpz.skill.ENHANCING_MAGIC, tpz.magic.spellGroup.WHITE, caster, target)
 	
-	-- Schaedel TODO: Determine if Composure is applied through the calculateDuration function
 	if target:hasStatusEffect(tpz.effect.COMPOSURE) and target == caster then
 		duration = duration * 3
 	end

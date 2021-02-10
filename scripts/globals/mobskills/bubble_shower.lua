@@ -14,13 +14,20 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
+	local master = mob:getMaster()
     local typeEffect = tpz.effect.STR_DOWN
 
     MobStatusEffectMove(mob, target, typeEffect, 10, 3, 120)
+	
+	local dmg = 200
+	
+	if (master ~= nil) then
+		dmg = dmg * (mob:getMainLvl() / 20)
+	end
+	
+    local dmgmod = MobBreathMove(mob, target, 0.15, 5, tpz.magic.ele.WATER, dmg)
 
-    local dmgmod = MobBreathMove(mob, target, 0.15, 5, tpz.magic.ele.WATER, 200)
-
-    local dmg = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.BREATH, tpz.damageType.WATER, MOBPARAM_IGNORE_SHADOWS)
+    dmg = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.BREATH, tpz.damageType.WATER, MOBPARAM_IGNORE_SHADOWS)
     target:takeDamage(dmg, mob, tpz.attackType.BREATH, tpz.damageType.WATER)
     return dmg
 end

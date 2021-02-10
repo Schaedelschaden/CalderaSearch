@@ -156,8 +156,8 @@ void CBattleEntity::UpdateHealth()
 {
     int32 dif = (getMod(Mod::CONVMPTOHP) - getMod(Mod::CONVHPTOMP));
 
-    health.modmp = std::max(0, ((health.maxmp) * (100 + getMod(Mod::MPP)) / 100) + std::min<int16>((health.maxmp * m_modStat[Mod::FOOD_MPP] / 100), m_modStat[Mod::FOOD_MP_CAP]) + getMod(Mod::MP));
-    health.modhp = std::max(1, ((health.maxhp) * (100 + getMod(Mod::HPP)) / 100) + std::min<int16>((health.maxhp * m_modStat[Mod::FOOD_HPP] / 100), m_modStat[Mod::FOOD_HP_CAP]) + getMod(Mod::HP));
+    health.modmp = std::max(0, (((health.maxmp) + getMod(Mod::MP)) * (100 + getMod(Mod::MPP)) / 100) + std::min<int16>((health.maxmp * m_modStat[Mod::FOOD_MPP] / 100), m_modStat[Mod::FOOD_MP_CAP]));
+    health.modhp = std::max(1, (((health.maxhp) + getMod(Mod::HP)) * (100 + getMod(Mod::HPP)) / 100) + std::min<int16>((health.maxhp * m_modStat[Mod::FOOD_HPP] / 100), m_modStat[Mod::FOOD_HP_CAP]));
 
     dif = (health.modmp - 0) < dif ? (health.modmp - 0) : dif;
     dif = (health.modhp - 1) < -dif ? -(health.modhp - 1) : dif;
@@ -638,6 +638,32 @@ uint16 CBattleEntity::ATT()
 	
 	// Calculate final ATT stat from Base ATT + ATTP + foodATTP
 	ATT = ATT + ATTP + std::min<int16>(foodATTP, m_modStat[Mod::FOOD_ATT_CAP]);
+	
+	// Check for Ferine +2 set effect
+	if (this->objtype & TYPE_PC && this->PPet != nullptr && tpzrand::GetRandomNumber(100) <= this->getMod(Mod::OCC_VARIES_ATT_PET_HP))
+	{
+		int32 beforeAdj = ATT;
+		float adjATT = (float)this->PPet->health.hp / (float)this->PPet->GetMaxHP();
+		if (adjATT < 0.5)
+		{
+			adjATT = 0.5;
+		}
+		ATT = static_cast<int32>(ATT * (1 + adjATT));
+//		printf("battleentity.cpp ATT VARIES PET HP  ATT BEFORE: [%i]  ADJUSTMENT: [%f]  ADJUSTED: [%i]\n", beforeAdj, adjATT, ATT);
+	}
+	
+	// Check for Bale +2 set effect
+	if (this->objtype & TYPE_PC && tpzrand::GetRandomNumber(100) <= this->getMod(Mod::OCC_VARIES_ATT_HP))
+    {
+		int32 beforeAdj = ATT;
+		float adjATT = (float)health.hp / (float)this->GetMaxHP();
+		if (adjATT < 0.5)
+		{
+			adjATT = 0.5;
+		}
+		ATT = static_cast<int32>(ATT * (1 + adjATT));
+//		printf("battleentity.cpp ATT VARIES HP  ATT BEFORE: [%i]  ADJUSTMENT: [%f]  ADJUSTED: [%i]\n", beforeAdj, adjATT, ATT);
+	}
 	
     return ATT;
 }
@@ -1327,8 +1353,18 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
     bool IsMagicCovered= false;
 
     luautils::OnSpellPrecast(this, PSpell);
-
-    state.SpendCost();
+	
+	// Retrieve original spell MP cost and calculate Conserve MP trait
+	int16 currentMP = this->health.mp;
+	int16 spellCost = PSpell->getMPCost();
+		
+	state.SpendCost();
+		
+	// Calculate cost reduction from Conserve MP and overwrite spell's original cost with new value for use with
+	// "Augments Conserve MP" gear sets (Probably hacky but this was the easiest way to get the Conserve MP value into lua)
+	int16 costReduction = PSpell->getMPCost() - (currentMP - this->health.mp);
+	uint16 reductionPercent = (uint16)(((float)costReduction / (float)spellCost) * 100.0f);
+	PSpell->setMPCost(reductionPercent);
 
     // remove effects based on spell cast first
     int16 effectFlags = EFFECTFLAG_INVISIBLE | EFFECTFLAG_MAGIC_BEGIN;

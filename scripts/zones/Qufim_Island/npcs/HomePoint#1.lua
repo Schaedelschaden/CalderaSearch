@@ -3,6 +3,7 @@
 --  NPC: HomePoint#1
 -- !pos -212 -21 93 126
 -----------------------------------
+local ID = require("scripts/zones/Qufim_Island/IDs")
 require("scripts/globals/homepoint")
 -----------------------------------
 

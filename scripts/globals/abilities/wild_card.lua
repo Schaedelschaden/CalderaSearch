@@ -25,12 +25,12 @@ function onUseAbility(caster, target, ability, action)
 	if (targetName == casterName) then
         roll = math.random(1,6)
 		caster:setLocalVar("corsairRollTotal", roll)
-		printf("wild_card.lua onUseAbility WILD CARD ROLL: [%i]\n", roll)
+--		printf("wild_card.lua onUseAbility WILD CARD ROLL: [%i]\n", roll)
         action:speceffect(caster:getID(), roll)
     end
 	
 	local total = caster:getLocalVar("corsairRollTotal")
-	printf("wild_card.lua onUseAbility WILD CARD ROLL: [%i]\n", total)
+--	printf("wild_card.lua onUseAbility WILD CARD ROLL: [%i]\n", total)
 	
 	if (total == 1 or total == 2) then -- Resets all job abilities except SP abilities
 		NormalReset(target)

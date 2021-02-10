@@ -81,6 +81,11 @@ function MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeff
     if (target:hasStatusEffect(tpz.effect.YONIN) and mob:isFacing(target, 23)) then -- Yonin evasion boost if mob is facing target
         eva = eva + target:getStatusEffect(tpz.effect.YONIN):getPower()
     end
+	
+	-- Foil "special attack" evasion bonus
+	if (target:hasStatusEffect(tpz.effect.FOIL)) then
+		eva = eva * (1 + (target:getMod(tpz.mod.TP_MOVE_EVASION) / 100))
+	end
 
     --apply WSC
     local base = mob:getWeaponDmg() + dstr --todo: change to include WSC
@@ -118,7 +123,8 @@ function MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeff
     hitdamage = hitdamage * dmgmod
 
     if (tpeffect == TP_DMG_VARIES) then
-        hitdamage = hitdamage * MobTPMod(skill:getTP() / 10)
+--		printf("monstertpmoves.lua MobPhysicalMove  TP: [%i]  ENH SIC/READY: [%i]  MOB TP MOD: [%i]", skill:getTP(), mob:getMod(tpz.mod.ENH_SIC_READY), MobTPMod(skill:getTP() + mob:getMod(tpz.mod.ENH_SIC_READY)))
+        hitdamage = hitdamage * MobTPMod(skill:getTP() + mob:getMod(tpz.mod.ENH_SIC_READY))
     end
 
     --work out min and max cRatio
@@ -244,9 +250,10 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
     --get all the stuff we need
     local resist = 1
     local mdefBarBonus = 0
-	local tp = ((skill:getTP() / 10) + 100) -- Plus 100 prevents the TP DMG BONUS from zeroing out the entire damage calculation
+--	printf("monstertpmoves.lua MobMagicalMove  TP: [%i]  ENH SIC/READY: [%i]  TP CALC: [%i]", skill:getTP(), mob:getMod(tpz.mod.ENH_SIC_READY), (((skill:getTP() + mob:getMod(tpz.mod.ENH_SIC_READY))/ 10) + 1))
+	local tp = (((skill:getTP() + mob:getMod(tpz.mod.ENH_SIC_READY))/ 10) + 1) -- Plus 1 prevents the TP DMG BONUS from zeroing out the entire damage calculation
 	local posorneg = math.random(0, 1) -- Determines whether the swing will be positive or negative
-	local randomness = math.random(1,10) -- Adds a +/-10% random swing to the damage
+	local randomness = math.random(1, 10) -- Adds a +/-10% random swing to the damage
 	
     if
         element >= tpz.magic.element.FIRE and
@@ -257,10 +264,12 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
     end
 	
     -- plus 100 forces it to be a number
-    mab = (100 + mob:getMod(tpz.mod.MATT)) / (100 + target:getMod(tpz.mod.MDEF) + mdefBarBonus)
+	local cMAB = 1 + (mob:getMod(tpz.mod.MATT) / 100)
+	local tMDB = 1 + ((target:getMod(tpz.mod.MDEF) + mdefBarBonus) / 100)
+    mab = cMAB / tMDB
 
-    if (mab > 1.3) then
-        mab = 1.3
+    if (mab > 1.8) then
+        mab = 1.8
     end
 
     if (mab < 0.7) then
@@ -272,10 +281,10 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
     end
 
     -- printf("power: %f, bonus: %f", damage, mab)
-    -- resistence is added last
+    -- Resistance is added last
     finaldmg = damage * mab * dmgmod
 
-    -- get resistence
+    -- Get resistance
     local avatarAccBonus = 0
     if (mob:isPet() and mob:getMaster() ~= nil) then
         local master = mob:getMaster()
@@ -549,6 +558,13 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 
     end
 
+	-- Caldera custom damage modification for Jug Pets
+	if (mob:isPet() and mob:getMaster():isPC()) then
+		local PetRandom = math.random(1, 3)
+		dmg = dmg * PetRandom
+--		printf("monstertpmoves.cpp MobFinalAdjustments PetRandom: [%i]  DMG: [%i]", PetRandom, dmg)
+	end
+
     --handling phalanx
     dmg = dmg - target:getMod(tpz.mod.PHALANX)
 
@@ -728,6 +744,14 @@ end
 function MobBuffMove(mob, typeEffect, power, tick, duration)
 
     if (mob:addStatusEffect(typeEffect, power, tick, duration)) then
+        return tpz.msg.basic.SKILL_GAIN_EFFECT
+    end
+    return tpz.msg.basic.SKILL_NO_EFFECT
+end
+
+function MobBuffMoveEx(mob, typeEffect, icon, power, tick, duration)
+
+    if (mob:addStatusEffectEx(typeEffect, icon, power, tick, duration)) then
         return tpz.msg.basic.SKILL_GAIN_EFFECT
     end
     return tpz.msg.basic.SKILL_NO_EFFECT

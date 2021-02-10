@@ -59,7 +59,7 @@ function onUseAbility(player, target, ability)
     end
 
     -- Apply waltz modifiers
-    cure = math.floor(cure * (1.0 + (player:getMod(tpz.mod.WALTZ_POTENTCY) / 100)))
+    cure = math.floor(cure * (1.0 + (player:getMod(tpz.mod.WALTZ_POTENTCY) / 100) + (target:getMod(tpz.mod.WALTZ_POTENCY_RCVD) / 100)))
 	
 	-- Apply Contradance
 	if (player:hasStatusEffect(tpz.effect.CONTRADANCE)) then

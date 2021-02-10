@@ -32,8 +32,8 @@ function onUseAbility(player, target, ability)
 	
 	-- Find all players on the monster's enmity list
 	for i,v in ipairs(enmityList) do		
-			PlayerName[i] = v.entity:getName()
-			-- printf("libra.lua onUseAbility ENMITY LIST %s FOUND", PlayerName[i])
+		PlayerName[i] = v.entity:getName()
+		-- printf("libra.lua onUseAbility ENMITY LIST %s FOUND", PlayerName[i])
 	end
 	
 	-- Find all players currently in a party with the SCH
@@ -61,8 +61,11 @@ function onUseAbility(player, target, ability)
 		totalCE = totalCE + playerCE[i]
 		totalVE = totalVE + playerVE[i]
 --		printf("libra.lua onUseAbility TOTAL CE: [%i]  TOTAL VE: [%i]", totalCE, totalVE)
+	end
+	
+	for i,v in ipairs(Report) do
 		if (Report[i] ~= nil) then
---			printf("libra.lua onUseAbility PLAYER NAME: [%s]  PLAYER CE: [%i]  PLAYER VE: [%i]\nTOTAL CE: [%i]  TOTAL VE: [%i]", Report[i], playerCE[i], playerVE[i], totalCE, totalVE)
+--			printf("libra.lua onUseAbility PLAYER NAME: [%s]  PLAYER CE: [%i]  PLAYER VE: [%i]\nTOTAL CE: [%i]  TOTAL VE: [%i]\n", Report[i], playerCE[i], playerVE[i], totalCE, totalVE)
 			playerCE[i] = (playerCE[i] / totalCE) * 100
 			playerVE[i] = (playerVE[i] / totalVE) * 100
 			player:PrintToPlayer(string.format("%s's Cumulative Enmity: %i%% Volatile Enmity: %i%%", Report[i], playerCE[i], playerVE[i]),tpz.msg.channel.SYSTEM_3)

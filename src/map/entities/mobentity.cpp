@@ -613,7 +613,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
     action.id = id;
     if (objtype == TYPE_PET && static_cast<CPetEntity*>(this)->getPetType() == PETTYPE_AVATAR)
 	{
-		// printf("mobentity.cpp OnMobSkillFinished TRIGGER PET_MOBABILITY_FINISH\n");
+//		printf("mobentity.cpp OnMobSkillFinished TRIGGER PET_MOBABILITY_FINISH\n");
         action.actiontype = ACTION_PET_MOBABILITY_FINISH;
 	}
     else if (PSkill->getID() < 256)
@@ -623,7 +623,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
 	}
     else
 	{
-		// printf("mobentity.cpp OnMobSkillFinished TRIGGER ACTION_MOBABILITY_FINISH\n");
+//		printf("mobentity.cpp OnMobSkillFinished TRIGGER ACTION_MOBABILITY_FINISH\n");
         action.actiontype = ACTION_MOBABILITY_FINISH;
 	}
     action.actionid = PSkill->getID();
@@ -695,6 +695,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         target.speceffect = SPECEFFECT_HIT;
         target.animation = PSkill->getAnimationID();
         target.messageID = PSkill->getMsg();
+//		printf("mobentity.cpp OnMobSkillFinished DEFAULT MESSAGE: [%i]\n", target.messageID);
 
 
         // reset the skill's message back to default
@@ -702,30 +703,35 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
 
         if (objtype == TYPE_PET && static_cast<CPetEntity*>(this)->getPetType() != PETTYPE_JUG_PET)
         {
-			// printf("mobentity.cpp OnMobSkillFinished FOUND PET\n");
+//			printf("mobentity.cpp OnMobSkillFinished FOUND PET\n");
             if(static_cast<CPetEntity*>(this)->getPetType() == PETTYPE_AVATAR || static_cast<CPetEntity*>(this)->getPetType() == PETTYPE_WYVERN)
             {
                 target.animation = PSkill->getPetAnimationID();
             }
-			// printf("mobentity.cpp OnMobSkillFinished TRIGGER onPetAbility\n");
+//			printf("mobentity.cpp OnMobSkillFinished TRIGGER onPetAbility MESSAGE ID: [%i]\n", PSkill->getMsg());
             target.param = luautils::OnPetAbility(PTarget, this, PSkill, PMaster, &action);
         }
-        else
+        else // Sic or Ready
         {
+//			printf("mobentity.cpp OnMobSkillFinished FOUND JUG PET\n");
             target.param = luautils::OnMobWeaponSkill(PTarget, this, PSkill, &action);
             this->PAI->EventHandler.triggerListener("WEAPONSKILL_USE", this, PTarget, PSkill->getID(), state.GetSpentTP(), &action);
             PTarget->PAI->EventHandler.triggerListener("WEAPONSKILL_TAKE", PTarget, this, PSkill->getID(), state.GetSpentTP(), &action);
         }
+		
         if (msg == 0)
         {
             msg = PSkill->getMsg();
+//			printf("mobentity.cpp OnMobSkillFinished MESSAGE: [%i]\n", msg);
         }
         else
         {
             msg = PSkill->getAoEMsg();
+//			printf("mobentity.cpp OnMobSkillFinished AOE MESSAGE: [%i]\n", msg);
         }
 
         target.messageID = msg;
+//		printf("mobentity.cpp OnMobSkillFinished FINAL MESSAGE ID: [%i]\n", target.messageID);
 
         if (PSkill->hasMissMsg())
         {

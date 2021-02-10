@@ -58,7 +58,7 @@ function onSpellCast(caster,target,spell)
 		tpModValue = 90 -- 90% chance @ 3000+ TP
 	end
 	
-	printf("Delta Thrust onSpellCast IF RANDOM [%i] <= PLAGUE CHANCE [%i] INFLICT PLAGUE\n", chance, tpModValue)
+--	printf("Delta Thrust onSpellCast IF RANDOM [%i] <= PLAGUE CHANCE [%i] INFLICT PLAGUE\n", chance, tpModValue)
 	
 	if (damage > 0 and chance <= tpModValue) then
 		target:addStatusEffect(tpz.effect.PLAGUE, 12, 0, duration) -- 6 MP/120 TP per tick

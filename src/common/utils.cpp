@@ -238,6 +238,7 @@ position_t nearPosition(const position_t& A, float offset, float radian)
 
 int32 hasBit(uint16 value, uint8* BitArray, uint32 size)
 {
+//	printf("utils.cpp hasBit VALUE: [%u]  SIZE: [%u]\n", value, size);
     if(value >= size * 8)
     {
         ShowError(CL_RED"hasBit: value (%u) is out of range\n" CL_RESET, value);

@@ -226,11 +226,12 @@ local function setCasketData(player, x, y, z, r, npc, partyID, mobLvl)
     --     kupowersBonus = 0.2
     -- end
 
-    if typeChance < 0.2 + kupowersBonus then
-        chestStyle = 966 -- Brown locked
-    else
+	-- Schaedel set all chests to drop as blue because the unlock messages are incorrect
+    -- if typeChance < 0.2 + kupowersBonus then
+        -- chestStyle = 966 -- Brown locked
+    -- else
         chestStyle = 965 -- Blue
-    end
+    -- end
 
     if npc ~= nil then
         npc:resetLocalVars()

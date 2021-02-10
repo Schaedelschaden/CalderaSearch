@@ -66,19 +66,11 @@ function onSpellCast(caster,target,spell)
         end
         final = getCureFinal(caster,spell,basecure,minCure,false)
         if (caster:hasStatusEffect(tpz.effect.AFFLATUS_SOLACE) and target:hasStatusEffect(tpz.effect.STONESKIN) == false) then
-            local solaceStoneskin = 0
-            local equippedBody = caster:getEquipID(tpz.slot.BODY)
-            if (equippedBody == 11186) then
-                solaceStoneskin = math.floor(final * 0.30)
-            elseif (equippedBody == 11086) then
-                solaceStoneskin = math.floor(final * 0.35)
-            else
-                solaceStoneskin = math.floor(final * 0.25)
-            end
+            local solaceStoneskin = math.floor(final * (0.25 + (caster:getMod(tpz.mod.ENH_AFFLATUS_SOLACE) / 100)))
 
             solaceStoneskin = solaceStoneskin * (1 + caster:getMerit(tpz.merit.ANIMUS_SOLACE)/100)
 
-            target:addStatusEffect(tpz.effect.STONESKIN,solaceStoneskin,0,25,0,0,1)
+            target:addStatusEffect(tpz.effect.STONESKIN,solaceStoneskin, 0, 25, 0, 0, 1)
         end
         final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD)/100))
 

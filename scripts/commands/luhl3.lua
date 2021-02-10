@@ -9,12 +9,17 @@ cmdprops =
     parameters = "siiiiiiii"
 }
 
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!luhl3 <player>")
+end
+
 function onTrigger(player, target, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val)
     local itemId = 0
 	local amount = 1
 	
 	if (target == nil or itemId == nil) then
-        player:PrintToPlayer("You must enter a valid player name.")
+        error(player, "You must enter a valid player name.")
         return
     end
 

@@ -33,12 +33,12 @@ tpz.magic.geoCardinalQuadStats =
 ------------------------------------
 -- Tables by element
 ------------------------------------
-
 tpz.magic.dayStrong           = {tpz.day.FIRESDAY,              tpz.day.ICEDAY,               tpz.day.WINDSDAY,               tpz.day.EARTHSDAY,              tpz.day.LIGHTNINGDAY,               tpz.day.WATERSDAY,               tpz.day.LIGHTSDAY,           tpz.day.DARKSDAY}
 tpz.magic.singleWeatherStrong = {tpz.weather.HOT_SPELL,         tpz.weather.SNOW,             tpz.weather.WIND,               tpz.weather.DUST_STORM,         tpz.weather.THUNDER,                tpz.weather.RAIN,                tpz.weather.AURORAS,         tpz.weather.GLOOM}
 tpz.magic.doubleWeatherStrong = {tpz.weather.HEAT_WAVE,         tpz.weather.BLIZZARDS,        tpz.weather.GALES,              tpz.weather.SAND_STORM,         tpz.weather.THUNDERSTORMS,          tpz.weather.SQUALL,              tpz.weather.STELLAR_GLARE,   tpz.weather.DARKNESS}
 local elementalObi            = {tpz.mod.FORCE_FIRE_DWBONUS,    tpz.mod.FORCE_ICE_DWBONUS,    tpz.mod.FORCE_WIND_DWBONUS,     tpz.mod.FORCE_EARTH_DWBONUS,    tpz.mod.FORCE_LIGHTNING_DWBONUS,    tpz.mod.FORCE_WATER_DWBONUS,     tpz.mod.FORCE_LIGHT_DWBONUS, tpz.mod.FORCE_DARK_DWBONUS}
-local spellAcc                = {tpz.mod.FIREACC,               tpz.mod.ICEACC,               tpz.mod.WINDACC,                tpz.mod.EARTHACC,               tpz.mod.THUNDERACC,                 tpz.mod.WATERACC,                tpz.mod.LIGHTACC,            tpz.mod.DARKACC}
+local spellAcc                = {tpz.mod.FIREACC,               tpz.mod.EARTHACC,             tpz.mod.WATERACC,               tpz.mod.WINDACC,                tpz.mod.ICEACC,                     tpz.mod.THUNDERACC,              tpz.mod.LIGHTACC,            tpz.mod.DARKACC}
+local spellMAB                = {tpz.mod.FIREATT,               tpz.mod.EARTHATT,             tpz.mod.WATERATT,               tpz.mod.WINDATT,                tpz.mod.ICEATT,                     tpz.mod.THUNDERATT,              tpz.mod.LIGHTATT,            tpz.mod.DARKATT}
 local strongAffinityDmg       = {tpz.mod.FIRE_AFFINITY_DMG,     tpz.mod.ICE_AFFINITY_DMG,     tpz.mod.WIND_AFFINITY_DMG,      tpz.mod.EARTH_AFFINITY_DMG,     tpz.mod.THUNDER_AFFINITY_DMG,       tpz.mod.WATER_AFFINITY_DMG,      tpz.mod.LIGHT_AFFINITY_DMG,  tpz.mod.DARK_AFFINITY_DMG}
 local strongAffinityAcc       = {tpz.mod.FIRE_AFFINITY_ACC,     tpz.mod.ICE_AFFINITY_ACC,     tpz.mod.WIND_AFFINITY_ACC,      tpz.mod.EARTH_AFFINITY_ACC,     tpz.mod.THUNDER_AFFINITY_ACC,       tpz.mod.WATER_AFFINITY_ACC,      tpz.mod.LIGHT_AFFINITY_ACC,  tpz.mod.DARK_AFFINITY_ACC}
 tpz.magic.resistMod           = {tpz.mod.FIRERES,               tpz.mod.ICERES,               tpz.mod.WINDRES,                tpz.mod.EARTHRES,               tpz.mod.THUNDERRES,                 tpz.mod.WATERRES,                tpz.mod.LIGHTRES,            tpz.mod.DARKRES}
@@ -206,7 +206,7 @@ function getCureFinal(caster, spell, basecure, minCure, isBlueMagic)
     local rapture = 1
     if (isBlueMagic == false) then --rapture doesn't affect BLU cures as they're not white magic
         if (caster:hasStatusEffect(tpz.effect.RAPTURE)) then
-            rapture = 1.5 + caster:getMod(tpz.mod.RAPTURE_AMOUNT)/100
+            rapture = 1.5 + caster:getMod(tpz.mod.RAPTURE_AMOUNT) / 100
             caster:delStatusEffectSilent(tpz.effect.RAPTURE)
         end
     end
@@ -559,6 +559,15 @@ function getSpellBonusAcc(caster, target, spell, params)
     if (skillchainTier > 0) then
         magicAccBonus = magicAccBonus + 25
     end
+	
+	-- Add acc for Grimoire: Magic Accuracy mod
+	if (caster:getMod(tpz.mod.GRIMOIRE_MACC) > 0 and spellGroup == tpz.magic.spellGroup.WHITE and caster:hasStatusEffect(tpz.effect.EFFECT_LIGHT_ARTS)) then
+		magicAccBonus = magicAccBonus + caster:getMod(tpz.mod.GRIMOIRE_MACC)
+	end
+	
+	if (caster:getMod(tpz.mod.GRIMOIRE_MACC) > 0 and spellGroup == tpz.magic.spellGroup.BLACK and caster:hasStatusEffect(tpz.effect.EFFECT_DARK_ARTS)) then
+		magicAccBonus = magicAccBonus + caster:getMod(tpz.mod.GRIMOIRE_MACC)
+	end
 
     --Add acc for klimaform
     if element > 0 then
@@ -668,7 +677,7 @@ end
         dmg = dmg * DIVINE_POWER
     end
 
-    dmg = target:magicDmgTaken(dmg)
+    dmg = target:magicDmgTaken(dmg, spell:getElement())
 
     if (dmg > 0) then
         dmg = dmg - target:getMod(tpz.mod.PHALANX)
@@ -768,8 +777,7 @@ function calculateMagicBurst(caster, spell, target, params)
     
     if target:hasStatusEffect(tpz.effect.SENGIKORI) then
         modSengikori = modSengikori + SengikoriBonus
---      print(modSengikori) 
-        target:delStatusEffect(tpz.effect.SENGIKORI)
+--      print(modSengikori)
     end
 
     if caster:isBehind(target) and caster:hasStatusEffect(tpz.effect.INNIN) then
@@ -888,6 +896,7 @@ end
 function addBonuses(caster, spell, target, dmg, params)
     params = params or {}
 
+--	Fire (1), Stone (2), Water (3), Aero (4), Blizzard (5), Thunder (6), Light (7), Dark (8)
     local ele = spell:getElement()
 
     local affinityBonus = AffinityBonusDmg(caster, ele)
@@ -895,6 +904,9 @@ function addBonuses(caster, spell, target, dmg, params)
 
     params.bonusmab = params.bonusmab or 0
     params.AMIIburstBonus = params.AMIIburstBonus or 0
+--	printf("magic.lua addBonuses BONUS MAB 1: [%i]", params.bonusmab)
+	params.bonusmab = params.bonusmab + caster:getMod(spellMAB[ele])
+--	printf("magic.lua addBonuses ELEMENT: [%i]  BONUS MAB 2: [%i]", ele, params.bonusmab)
 
     local magicDefense = getElementalDamageReduction(target, ele)
     dmg = math.floor(dmg * magicDefense)
@@ -941,6 +953,12 @@ function addBonuses(caster, spell, target, dmg, params)
             dayWeatherBonus = dayWeatherBonus - 0.10
         end
     end
+	
+	if (caster:getMod(tpz.mod.ENH_KLIMAFORM) > 0 and (weather == tpz.magic.singleWeatherStrong[ele] or weather == tpz.magic.doubleWeatherStrong[ele])) then
+		printf("magic.lua addBonuses KLIMAFORM WEATHER BEFORE BONUS: [%i]", dayWeatherBonus)
+		dayWeatherBonus = dayWeatherBonus + (caster:getMod(tpz.mod.ENH_KLIMAFORM) / 100)
+		printf("magic.lua addBonuses KLIMAFORM WEATHER AFTER BONUS: [%i]", dayWeatherBonus)
+	end
 
     if dayWeatherBonus > 1.4 then
         dayWeatherBonus = 1.4
@@ -959,7 +977,7 @@ function addBonuses(caster, spell, target, dmg, params)
     local geoBonus = {0.00,0.00,0.00,0.00} -- {MATT, MACC, MAG_BURST_BONUS, MAGIC_CRITHITRATE}
     local geoMATT = 0.0
     local geoMCHR = 0.0
-    local nvbonus = 1 + caster:getMod(tpz.mod.NETHER_VOID_BONUS) / 100
+    local nvbonus = 1 + (caster:getMod(tpz.mod.NETHER_VOID_BONUS) / 100)
     local spellId = spell:getID()
     local spellGroup = spell:getSpellGroup()
 
@@ -1357,6 +1375,13 @@ function doElementalNuke(caster, spell, target, spellParams)
     --add in final adjustments
     DMG = finalMagicAdjustments(caster, target, spell, DMG)
 	
+	-- Checks for and applies Augments "Conserve MP" set bonus
+	local conMPReduction = spell:getMPCost()
+	if (conMPReduction > 0 and math.random(1, 100) < caster:getMod(tpz.mod.AUGMENT_CONSERVE_MP)) then
+--		printf("magic.lua doElementalNuke CONSERVE MP ADJUSTMENT: [%f]\n", 1 + ((conMPReduction * 2) / 100))
+		DMG = DMG * (1 + ((conMPReduction * 2) / 100))
+	end
+	
 	if caster:hasStatusEffect(tpz.effect.THEURGIC_FOCUS) then
         caster:delStatusEffectSilent(tpz.effect.THEURGIC_FOCUS)
     end
@@ -1423,7 +1448,7 @@ function doNuke(caster, target, spell, params)
         end
         -- boost with Futae
         if (caster:hasStatusEffect(tpz.effect.FUTAE)) then
-            dmg = math.floor(dmg * 1.50)
+            dmg = math.floor(dmg * (1.50 + (caster:getMod(tpz.mod.ENH_FUTAE) / 100)))
             caster:delStatusEffect(tpz.effect.FUTAE)
         end
     end
@@ -1478,14 +1503,18 @@ function calculateDuration(duration, magicSkill, spellGroup, caster, target, use
         -- Default is true
         useComposure = useComposure or (useComposure == nil and true)
 
-        -- Composure (Schaedel TODO: Determine if this ever gets triggered)
         if useComposure and caster:hasStatusEffect(tpz.effect.COMPOSURE) and caster:getID() == target:getID() then
             duration = duration * 3
         end
+		
+		-- Set: Augments "Composure" only applies to others, not the RDM
+		if (caster ~= target and caster:getMod(tpz.mod.AUGMENT_COMPOSURE) > 0) then
+			duration = duration * (1 + (caster:getMod(tpz.mod.AUGMENT_COMPOSURE) / 100))
+		end
 
         -- Perpetuance
         if caster:hasStatusEffect(tpz.effect.PERPETUANCE) and spellGroup == tpz.magic.spellGroup.WHITE then
-            duration = duration * 2
+            duration = duration * (2 + (caster:getMod(tpz.mod.ENH_PERPETUANCE) / 100))
         end
         
         -- Embolden
@@ -1515,9 +1544,9 @@ function calculatePotency(basePotency, magicSkill, caster, target)
 
     if caster:hasStatusEffect(tpz.effect.SABOTEUR) then
         if target:isNM() then
-            basePotency = math.floor(basePotency * (1.3 + caster:getMod(tpz.mod.ENHANCES_SABOTEUR)))
+            basePotency = math.floor(basePotency * (1.25 + (caster:getMod(tpz.mod.ENHANCES_SABOTEUR) / 100)))
         else
-            basePotency = math.floor(basePotency * (2 + caster:getMod(tpz.mod.ENHANCES_SABOTEUR)))
+            basePotency = math.floor(basePotency * (2 + (caster:getMod(tpz.mod.ENHANCES_SABOTEUR) / 100)))
         end
     end
 

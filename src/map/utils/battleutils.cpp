@@ -344,7 +344,7 @@ namespace battleutils
 
     int16 GetEnmityModDamage(int16 level)
     {
-        return level * 31 / 50 + 6;
+        return 31 * level / 50 + 6;
     }
 
     int16 GetEnmityModCure(int16 level)
@@ -413,6 +413,7 @@ namespace battleutils
 
     const std::vector<uint16>& GetMobSkillList(uint16 ListID)
     {
+//		printf("battleutils.cpp GetMobSkillList ListID: [%i]\n", ListID);
         return g_PMobSkillLists[ListID];
     }
 
@@ -1878,9 +1879,10 @@ namespace battleutils
 		// Check for Mana Wall status, reduce damage by 50% and reduce MP by the damage. If there is not enough MP then the damage rolls over into HP
 		if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_MANA_WALL))
 		{
-			uint8 ManaWallMod = 50;
+			CStatusEffect* manawallEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_MANA_WALL);
+			uint16 ManaWallMod = manawallEffect->GetPower();
 			uint16 CurrentMP = PDefender->health.mp;
-						
+			
 			damage = damage * ManaWallMod / 100;
 			
 			uint16 Overflow = damage - CurrentMP;
@@ -1901,6 +1903,11 @@ namespace battleutils
         {
             damageType = (DAMAGETYPE)(weapon ? weapon->getDmgType() : 0);
 			int32 CounterDMG = 0;
+			
+			if (isCounter && PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_PERFECT_COUNTER))
+			{
+				damage = damage + PDefender->getMod(Mod::PERFECT_COUNTER_ATT);
+			}
 
             if (isRanged)
             {
@@ -1994,6 +2001,50 @@ namespace battleutils
                 damage = (damage * absorb) / 100;
             }
         }
+		
+		// Checks for Monster Correlation bonus
+		if (PDefender->objtype == TYPE_MOB || PDefender->objtype == TYPE_PET || PDefender->getMod(Mod::AUGMENT_KILLER_EFFECTS) > 0)
+		{
+			int16 KillerEffect = 0;
+	
+			switch (PAttacker->m_EcoSystem)
+			{
+				case SYSTEM_AMORPH:     KillerEffect = PDefender->getMod(Mod::AMORPH_KILLER);   break;
+				case SYSTEM_AQUAN:      KillerEffect = PDefender->getMod(Mod::AQUAN_KILLER);    break;
+				case SYSTEM_ARCANA:     KillerEffect = PDefender->getMod(Mod::ARCANA_KILLER);   break;
+				case SYSTEM_BEAST:      KillerEffect = PDefender->getMod(Mod::BEAST_KILLER);    break;
+				case SYSTEM_BIRD:       KillerEffect = PDefender->getMod(Mod::BIRD_KILLER);     break;
+				case SYSTEM_DEMON:      KillerEffect = PDefender->getMod(Mod::DEMON_KILLER);    break;
+				case SYSTEM_DRAGON:     KillerEffect = PDefender->getMod(Mod::DRAGON_KILLER);   break;
+				case SYSTEM_EMPTY:      KillerEffect = PDefender->getMod(Mod::EMPTY_KILLER);    break;
+				case SYSTEM_HUMANOID:   KillerEffect = PDefender->getMod(Mod::HUMANOID_KILLER); break;
+				case SYSTEM_LIZARD:     KillerEffect = PDefender->getMod(Mod::LIZARD_KILLER);   break;
+				case SYSTEM_LUMINION:   KillerEffect = PDefender->getMod(Mod::LUMINION_KILLER); break;
+				case SYSTEM_LUMORIAN:   KillerEffect = PDefender->getMod(Mod::LUMORIAN_KILLER); break;
+				case SYSTEM_PLANTOID:   KillerEffect = PDefender->getMod(Mod::PLANTOID_KILLER); break;
+				case SYSTEM_UNDEAD:     KillerEffect = PDefender->getMod(Mod::UNDEAD_KILLER);   break;
+				case SYSTEM_VERMIN:     KillerEffect = PDefender->getMod(Mod::VERMIN_KILLER);   break;
+				default: break;
+			}
+	
+			float bonus = 0;
+			if (PDefender->objtype == TYPE_PC)
+			{
+				KillerEffect += ((CCharEntity*)PDefender)->PMeritPoints->GetMeritValue(MERIT_KILLER_EFFECTS, (CCharEntity*)PDefender)
+				+ PDefender->getMod(Mod::ALL_KILLER_EFFECTS);
+				
+				bonus = ((float)KillerEffect / 2) / 100;
+			}
+			else
+			{
+				bonus = (float)KillerEffect / 100;
+			}
+
+//			printf("battleutils.cpp TakePhysicalDamage DAMAGE: [%i]\n", damage);			
+			damage = damage - (int32)(damage * bonus);
+//			printf("battleutils.cpp TakePhysicalDamage KILLER EFFECT: [%i]  BONUS: [%1.3f]  DAMAGE: [%i]\n", KillerEffect, bonus, damage);
+		}
+		
         if (damage > 0)
         {
             damage = std::max(damage - PDefender->getMod(Mod::PHALANX), 0);
@@ -2001,9 +2052,11 @@ namespace battleutils
             damage = HandleStoneskin(PDefender, damage);
             HandleAfflatusMiseryDamage(PDefender, damage);
         }
+		
         damage = std::clamp(damage, -99999, 99999);
 
         int32 corrected = PDefender->takeDamage(damage, PAttacker, attackType, damageType);
+		
         if (damage < 0)
             damage = -corrected;
 
@@ -2029,6 +2082,7 @@ namespace battleutils
                         ((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(taChar, damage);
 					}
 
+					// Check for Decoy Shot and redirect enmity if behind a party member
 					if (dsChar == nullptr) //PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_DECOY_SHOT) && PAttacker->PParty != nullptr
 					{
 						((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(PAttacker, damage);
@@ -2045,7 +2099,9 @@ namespace battleutils
 
                     //if the mob is charmed by player
                     if (PDefender->PMaster != nullptr && PDefender->PMaster->objtype == TYPE_PC)
+					{
                         ((CPetEntity*)PDefender)->loc.zone->PushPacket(PDefender, CHAR_INRANGE, new CEntityUpdatePacket(PDefender, ENTITY_UPDATE, UPDATE_COMBAT));
+					}
 
                     break;
 
@@ -2108,7 +2164,10 @@ namespace battleutils
                     baseTp += ((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_IKISHOTEN, (CCharEntity*)PAttacker);
                 }
 
-                PAttacker->addTP((int16)(tpMultiplier * (baseTp * (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker)))))));
+				int16 attackerTP = ((int16)(tpMultiplier * (baseTp * (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker)))))));
+				attackerTP = attackerTP + (int16)(attackerTP * (float)(PDefender->getMod(Mod::ENEMY_TP_ACCUM) / 100.0f));
+
+                PAttacker->addTP(attackerTP);
             }
 
             if (giveTPtoVictim)
@@ -2318,7 +2377,7 @@ namespace battleutils
         if (PAttacker->objtype == TYPE_PC && ((PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK) && (behind(PAttacker->loc.p, PDefender->loc.p, 64) || PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE))) ||
             (charutils::hasTrait((CCharEntity*)PAttacker, TRAIT_ASSASSIN) && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_TRICK_ATTACK) && battleutils::getAvailableTrickAttackChar(PAttacker, PDefender))))
         {
-            hitrate = 100; //attack with SA active or TA/Assassin cannot miss
+			hitrate = 100; //attack with SA active or TA/Assassin cannot miss
         }
         else
         {
@@ -2359,6 +2418,64 @@ namespace battleutils
             // https://www.bluegartr.com/threads/68786-Dexterity-s-impact-on-critical-hits?p=3209015&viewfull=1#post3209015
 
             uint16 attackerAcc = PAttacker->ACC(attackNumber, offsetAccuracy);
+			
+			// Check for Enhanced Monster Correlation bonus
+			if (PAttacker->objtype == TYPE_PET && PAttacker->getMod(Mod::ENH_MONSTER_CORRELATION) > 0)
+			{
+				int32 correlationBonus = 0;
+		
+				switch (PDefender->m_EcoSystem)
+				{
+					case SYSTEM_AMORPH:
+						if (PAttacker->m_EcoSystem == SYSTEM_AQUAN)
+						{
+							correlationBonus = (PAttacker->getMod(Mod::ENH_MONSTER_CORRELATION) * 10) / 5;
+						}
+						break;
+					case SYSTEM_AQUAN:
+						if (PAttacker->m_EcoSystem == SYSTEM_BIRD)
+						{
+							correlationBonus = (PAttacker->getMod(Mod::ENH_MONSTER_CORRELATION) * 10) / 5;
+						}
+						break;
+					case SYSTEM_BEAST:
+						if (PAttacker->m_EcoSystem == SYSTEM_PLANTOID)
+						{
+							correlationBonus = (PAttacker->getMod(Mod::ENH_MONSTER_CORRELATION) * 10) / 5;
+						}
+						break;
+					case SYSTEM_BIRD:
+						if (PAttacker->m_EcoSystem == SYSTEM_AMORPH)
+						{
+							correlationBonus = (PAttacker->getMod(Mod::ENH_MONSTER_CORRELATION) * 10) / 5;
+						}
+						break;
+					case SYSTEM_LIZARD:
+						if (PAttacker->m_EcoSystem == SYSTEM_BEAST)
+						{
+							correlationBonus = (PAttacker->getMod(Mod::ENH_MONSTER_CORRELATION) * 10) / 5;
+						}
+						break;
+					case SYSTEM_PLANTOID:
+						if (PAttacker->m_EcoSystem == SYSTEM_VERMIN)
+						{
+							correlationBonus = (PAttacker->getMod(Mod::ENH_MONSTER_CORRELATION) * 10) / 5;
+						}
+						break;
+					case SYSTEM_VERMIN:
+						if (PAttacker->m_EcoSystem == SYSTEM_LIZARD)
+						{
+							correlationBonus = (PAttacker->getMod(Mod::ENH_MONSTER_CORRELATION) * 10) / 5;
+						}
+						break;
+					default: break;
+				}
+
+//				printf("battleutils.cpp GetDamageRatio UNADJUSTED ACC: [%i]  BONUS: [%i]\n", attackerAcc, correlationBonus);
+		
+				attackerAcc += correlationBonus;
+//				printf("battleutils.cpp GetDamageRatio ADJUSTED ACC: [%i]\n", attackerAcc);
+			}
 
             // Enlight gives an ACC bonus not a hit rate bonus, ACC bonus is equal to damage dealt
             if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_ENLIGHT))
@@ -2515,6 +2632,11 @@ namespace battleutils
 				crithitrate += PDefender->getMod(Mod::CRIT_HIT_EVASION);
 			}
 			
+			if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_STRIKING_FLOURISH) && PAttacker->getMod(Mod::ENH_STRIKING_FLOURISH) > 0)
+			{
+				crithitrate += PAttacker->getMod(Mod::ENH_STRIKING_FLOURISH);
+			}
+			
             // Check for Innin crit rate bonus from behind target
             if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_INNIN) && behind(PAttacker->loc.p, PDefender->loc.p, 64))
             {
@@ -2546,13 +2668,75 @@ namespace battleutils
 
     float GetDamageRatio(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool isCritical, float bonusAttPercent)
     {
+		int32 ATT = PAttacker->ATT();
+		
         // used to apply a % of attack bonus
         float attPercentBonus = 0;
         if (bonusAttPercent >= 1)
-            attPercentBonus = PAttacker->ATT() * bonusAttPercent;
+		{
+            attPercentBonus = ATT * bonusAttPercent;
+		}
+		
+		// Check for Enhanced Monster Correlation bonus
+		if (PAttacker->objtype == TYPE_PET && PAttacker->getMod(Mod::ENH_MONSTER_CORRELATION) > 0)
+		{
+			int32 correlationBonus = 0;
+	
+			switch (PDefender->m_EcoSystem)
+			{
+				case SYSTEM_AMORPH:
+					if (PAttacker->m_EcoSystem == SYSTEM_AQUAN)
+					{
+						correlationBonus = PAttacker->getMod(Mod::ENH_MONSTER_CORRELATION) * 10;
+					}
+					break;
+				case SYSTEM_AQUAN:
+					if (PAttacker->m_EcoSystem == SYSTEM_BIRD)
+					{
+						correlationBonus = PAttacker->getMod(Mod::ENH_MONSTER_CORRELATION) * 10;
+					}
+					break;
+				case SYSTEM_BEAST:
+					if (PAttacker->m_EcoSystem == SYSTEM_PLANTOID)
+					{
+						correlationBonus = PAttacker->getMod(Mod::ENH_MONSTER_CORRELATION) * 10;
+					}
+					break;
+				case SYSTEM_BIRD:
+					if (PAttacker->m_EcoSystem == SYSTEM_AMORPH)
+					{
+						correlationBonus = PAttacker->getMod(Mod::ENH_MONSTER_CORRELATION) * 10;
+					}
+					break;
+				case SYSTEM_LIZARD:
+					if (PAttacker->m_EcoSystem == SYSTEM_BEAST)
+					{
+						correlationBonus = PAttacker->getMod(Mod::ENH_MONSTER_CORRELATION) * 10;
+					}
+					break;
+				case SYSTEM_PLANTOID:
+					if (PAttacker->m_EcoSystem == SYSTEM_VERMIN)
+					{
+						correlationBonus = PAttacker->getMod(Mod::ENH_MONSTER_CORRELATION) * 10;
+					}
+					break;
+				case SYSTEM_VERMIN:
+					if (PAttacker->m_EcoSystem == SYSTEM_LIZARD)
+					{
+						correlationBonus = PAttacker->getMod(Mod::ENH_MONSTER_CORRELATION) * 10;
+					}
+					break;
+				default: break;
+			}
+
+//			printf("battleutils.cpp GetDamageRatio UNADJUSTED ATT: [%i]  BONUS: [%i]\n", ATT, correlationBonus);
+		
+			ATT += correlationBonus;
+//			printf("battleutils.cpp GetDamageRatio ADJUSTED ATT: [%i]\n", ATT);
+		}
 
         //wholly possible for DEF to be near 0 with the amount of debuffs/effects now.
-        float ratio = (float)(PAttacker->ATT() + attPercentBonus) / (float)((PDefender->DEF() == 0) ? 1 : PDefender->DEF());
+        float ratio = (float)(ATT + attPercentBonus) / (float)((PDefender->DEF() == 0) ? 1 : PDefender->DEF());
         float cRatioMax = 0;
         float cRatioMin = 0;
         float ratioCap = 2.0f;
@@ -2641,6 +2825,11 @@ namespace battleutils
             criticaldamage = std::clamp<int16>(criticaldamage, 0, 100);
             pDIF *= ((100 + criticaldamage) / 100.0f);
         }
+		
+/* 		if (PAttacker->objtype == TYPE_PC)
+        {
+			printf("battleutils.cpp ATT: [%i]  pDIF: [%f]  cRatioMin: [%f]  cRatioMax: [%f]\n", ATT, pDIF, cRatioMin, cRatioMax);
+		} */
 
         //x1.00 ~ x1.05 final multiplier, giving max value 3*1.05 -> 3.15
         return pDIF * tpzrand::GetRandomNumber(1.f, 1.05f);
@@ -3348,16 +3537,27 @@ namespace battleutils
         //            TODO:     × (1 + Day/Weather bonuses)
         //            TODO:     × (1 + Staff Affinity)
 
+//		printf("battleutils.cpp TakeSkillchainDamage  LAST SKILL DAMAGE: [%i]  CHAIN LVL: [%i]  CHAIN COUNT: [%i]  SC BONUS: [%1.2f]  SC DMG: [%1.2f]\n", lastSkillDamage, chainLevel, chainCount, (double)((100.0f + (double)PAttacker->getMod(Mod::SKILLCHAINBONUS)) / 100.0f), (double)((100.0f + (double)PAttacker->getMod(Mod::SKILLCHAINDMG)) / 100.0f));
         auto damage = (int32)floor((double)(abs(lastSkillDamage))
             * g_SkillChainDamageModifiers[chainLevel][chainCount] / 1000
             * (100 + PAttacker->getMod(Mod::SKILLCHAINBONUS)) / 100
             * (100 + PAttacker->getMod(Mod::SKILLCHAINDMG)) / 100);
 			
+//		printf("battleutils.cpp TakeSkillchainDamage  ADJUSTED DAMAGE: [%i]\n", damage);
+
+		if (PAttacker->getMod(Mod::ENH_IMMANENCE) > 0)
+		{
+			damage = (int32)(damage * ((float)(100 + PAttacker->getMod(Mod::ENH_IMMANENCE)) / 100.0f));
+		}
+			
 		if (PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_SENGIKORI))
 		{
-			damage = damage * ((100 + PAttacker->getMod(Mod::SENGIKORI_BONUS)) / 100);
-			PDefender->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_SENGIKORI, EFFECT_SENGIKORI, 25, 0, 60));
+			uint16 power = PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_SENGIKORI)->GetPower();
+			damage = (int32)(damage * ((float)(100 + PAttacker->getMod(Mod::SENGIKORI_BONUS)) / 100.0f));
+			PDefender->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_SENGIKORI, EFFECT_SENGIKORI, power, 0, 15));
 			PAttacker->StatusEffectContainer->DelStatusEffect(EFFECT_SENGIKORI);
+			
+//			printf("battleutils.cpp TakeSkillchainDamage  SENGIKORI POWER: [%i]  DAMAGE: [%i]\n", power, damage);
 		}
 
         auto PChar = dynamic_cast<CCharEntity *>(PAttacker);
@@ -3559,8 +3759,7 @@ namespace battleutils
 
     CBattleEntity* getAvailableTrickAttackChar(CBattleEntity* taUser, CBattleEntity* PMob)
     {
-        if (!taUser->StatusEffectContainer->HasStatusEffect(EFFECT_TRICK_ATTACK) ||
-		    !taUser->StatusEffectContainer->HasStatusEffect(EFFECT_DECOY_SHOT))
+        if (!taUser->StatusEffectContainer->HasStatusEffect({EFFECT_TRICK_ATTACK, EFFECT_DECOY_SHOT}))
         {
             return nullptr;
         }
@@ -4529,7 +4728,7 @@ namespace battleutils
     }
 
     int32 MagicDmgTaken(CBattleEntity* PDefender, int32 damage, ELEMENT element)
-    {
+    {		
         Mod absorb[8] = { Mod::FIRE_ABSORB, Mod::ICE_ABSORB, Mod::WIND_ABSORB, Mod::EARTH_ABSORB, Mod::LTNG_ABSORB, Mod::WATER_ABSORB, Mod::LIGHT_ABSORB, Mod::DARK_ABSORB };
         Mod nullarray[8] = { Mod::FIRE_NULL, Mod::ICE_NULL, Mod::WIND_NULL, Mod::EARTH_NULL, Mod::LTNG_NULL, Mod::WATER_NULL, Mod::LIGHT_NULL, Mod::DARK_NULL };
 		Mod sdt[8] = { Mod::SDT_FIRE, Mod::SDT_EARTH, Mod::SDT_WATER, Mod::SDT_WIND, Mod::SDT_ICE, Mod::SDT_LIGHTNING, Mod::SDT_LIGHT, Mod::SDT_DARK };
@@ -4549,6 +4748,17 @@ namespace battleutils
 		{
             damage = HandleSteamJacket(PDefender, damage, 5);
 		}
+		
+		if (PDefender->getMod(sdt[element - 1]) != 0)
+		{
+            damage += (int32)((float)damage * ((float)PDefender->getMod(sdt[element - 1]) / 100.f));
+			
+			if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_MAGIC_DEF_DOWN) &&
+				PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_MAGIC_DEF_DOWN)->GetSubPower() > 0)
+			{
+				PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_MAGIC_DEF_DOWN);
+			}
+		}
 
         if (tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::ABSORB_DMG_CHANCE) ||
             (element && tpzrand::GetRandomNumber(100) < PDefender->getMod(absorb[element - 1])) ||
@@ -4560,10 +4770,6 @@ namespace battleutils
             tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::MAGIC_NULL))
 		{
             damage = 0;
-		}
-		else if (element && PDefender->getMod(sdt[element - 1]) != 0)
-		{
-            damage = (int32)(damage * (PDefender->getMod(sdt[element - 1]) / 100.f));
 		}
         else
         {
@@ -4579,6 +4785,7 @@ namespace battleutils
 
     int32 PhysicalDmgTaken(CBattleEntity* PDefender, int32 damage, int16 damageType, bool IsCovered)
     {
+		
         float resist = 1.f + PDefender->getMod(Mod::UDMGPHYS) / 100.f;
         resist = std::max(resist, 0.f);
         damage = (int32)(damage * resist);
@@ -4586,6 +4793,7 @@ namespace battleutils
         resist = 1.f + PDefender->getMod(Mod::DMGPHYS) / 100.f + PDefender->getMod(Mod::DMG) / 100.f;
         resist = std::max(resist, 0.5f); // PDT caps at -50%
         resist += PDefender->getMod(Mod::DMGPHYS_II) / 100.f; // Add Burtgang reduction after 50% cap. Extends cap to -68%
+		
         damage = (int32)(damage * resist);
 
         if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_STEAM_JACKET) > 0)
@@ -4719,17 +4927,31 @@ namespace battleutils
     {
         if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_IMPETUS))
         {
-			uint16 attBonus = PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_IMPETUS)->GetPower() * 2;
-			uint16 crithitrateBonus = PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_IMPETUS)->GetPower();
+			uint16 statBonus = PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_IMPETUS)->GetPower() * 2;
+			uint16 critBonus = PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_IMPETUS)->GetPower();
             
-
             // Update the Attack and Critical Hit Rate Modifers so that this is reflected
             // throughout the battle system
-			PAttacker->delModifier(Mod::ATT, attBonus);
-			PAttacker->delModifier(Mod::CRITHITRATE, crithitrateBonus);
-			PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_IMPETUS)->SetPower(1);
-			PAttacker->addModifier(Mod::ATT, 2);
-			PAttacker->addModifier(Mod::CRITHITRATE, 1);
+			if (PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_IMPETUS)->GetSubPower() > 0)
+			{
+				PAttacker->delModifier(Mod::ATT, statBonus);
+				PAttacker->delModifier(Mod::ACC, statBonus);
+				PAttacker->delModifier(Mod::CRITHITRATE, critBonus);
+				PAttacker->delModifier(Mod::CRIT_DMG_INCREASE, critBonus);
+				PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_IMPETUS)->SetPower(1);
+				PAttacker->addModifier(Mod::ATT, 2);
+				PAttacker->addModifier(Mod::ACC, 2);
+				PAttacker->addModifier(Mod::CRITHITRATE, 1);
+				PAttacker->addModifier(Mod::CRIT_DMG_INCREASE, 1);
+			}
+			else
+			{
+				PAttacker->delModifier(Mod::ATT, statBonus);
+				PAttacker->delModifier(Mod::CRITHITRATE, critBonus);
+				PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_IMPETUS)->SetPower(1);
+				PAttacker->addModifier(Mod::ATT, 2);
+				PAttacker->addModifier(Mod::CRITHITRATE, 1);
+			}
         }
     }
 
@@ -4935,6 +5157,7 @@ namespace battleutils
             if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_ACCESSION) || (PCaster->objtype == TYPE_PC &&
                 charutils::hasTrait((CCharEntity*)PCaster, TRAIT_DIVINE_VEIL) && PSpell->isNa() &&
                 (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_DIVINE_SEAL) || PCaster->getMod(Mod::AOE_NA) == 1)) ||
+				(PCaster->objtype == TYPE_PC && tpzrand::GetRandomNumber(100) < PCaster->getMod(Mod::ENH_DIVINE_VEIL) && PSpell->isNa()) ||
 				(PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_MAJESTY) && 
 				(PSpell->getSpellFamily() == 1 || PSpell->getSpellFamily() == 10)))
                 return SPELLAOE_RADIAL;
@@ -5567,6 +5790,7 @@ namespace battleutils
                 }
             }
         }
+		
         else if (PSpell->getSpellGroup() == SPELLGROUP_WHITE)
         {
             if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_CELERITY))
@@ -5593,6 +5817,7 @@ namespace battleutils
                 }
             }
         }
+		
         else if (PSpell->getSpellGroup() == SPELLGROUP_SONG)
         {
             if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_PIANISSIMO))
@@ -5618,6 +5843,7 @@ namespace battleutils
             uint16 songcasting = PEntity->getMod(Mod::SONG_SPELLCASTING_TIME);
             cast = (uint32)(cast * (1.0f - ((songcasting > 50 ? 50 : songcasting) / 100.0f)));
         }
+		
 		else if (PSpell->getSpellFamily() == SPELLFAMILY_UTSUSEMI) // PSpell->getSpellGroup() == SPELLGROUP_NINJUTSU && 
 		{
 			cast = (uint32)(cast * (1.0f + (PEntity->getMod(Mod::UTSUSEMI_CAST) / 100.0f)));
@@ -5629,6 +5855,12 @@ namespace battleutils
         {
             fastCast += PEntity->getMod(Mod::ELEMENTAL_CELERITY);
         }
+		
+		else if (PSpell->getSkillType() == SKILLTYPE::SKILL_ENFEEBLING_MAGIC) // Enfeebling reductions
+        {
+            fastCast += (uint32)(fastCast * (1.0f + PEntity->getMod(Mod::ENFEEBLING_MAGIC_CAST) / 100.0f));
+        }
+		
         else if (PSpell->isCure()) // Cure cast time reductions
         {
             fastCast += PEntity->getMod(Mod::CURE_CAST_TIME);
@@ -5637,9 +5869,15 @@ namespace battleutils
                 fastCast += ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_CURE_CAST_TIME, (CCharEntity*)PEntity);
             }
         }
+		
 		else if (PSpell->getSkillType() == SKILLTYPE::SKILL_ENHANCING_MAGIC) // Enhancing Magic Cast Time
         {
             fastCast += PEntity->getMod(Mod::ENH_MAGIC_CAST_TIME);
+        }
+		
+		else if (PSpell->getSkillType() == SKILLTYPE::SKILL_BLUE_MAGIC) // Blue Magic Cast Time
+        {
+            fastCast += PEntity->getMod(Mod::BLUE_MAGIC_CAST_TIME);
         }
 
         fastCast = std::clamp<int16>(fastCast, -100, 80);
@@ -5688,7 +5926,9 @@ namespace battleutils
             }
             if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_PARSIMONY))
             {
-                cost /= 2;
+				printf("battletutils.cpp CalculateSpellCost BEFORE PARSIMONY COST: [%i]\n", cost);
+                cost /= (int16)(2 + ((float)PEntity->getMod(Mod::ENH_PARSIMONY) / 100.0f));
+				printf("battletutils.cpp CalculateSpellCost AFTER PARSIMONY COST: [%i]\n", cost);
                 applyArts = false;
             }
             else if (applyArts)
@@ -5705,7 +5945,9 @@ namespace battleutils
             }
             if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_PENURY))
             {
-                cost /= 2;
+				printf("battletutils.cpp CalculateSpellCost BEFORE PENURY COST: [%i]\n", cost);
+                cost /= (int16)(2 + ((float)PEntity->getMod(Mod::ENH_PENURY) / 100.0f));
+				printf("battletutils.cpp CalculateSpellCost AFTER PENURY COST: [%i]\n", cost);
                 applyArts = false;
             }
             else if (applyArts)
@@ -5862,6 +6104,10 @@ namespace battleutils
                 }
             }
         }
+		else if (PSpell->getSpellGroup() == SPELLGROUP_BLUE)
+		{
+			recast = (int32)(recast * (1.0f + PEntity->getMod(Mod::BLUE_MAGIC_RECAST) / 100.0f));
+		}
 
         recast = std::max(recast, 0);
 

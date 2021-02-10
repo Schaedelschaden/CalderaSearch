@@ -11,13 +11,15 @@ zones[tpz.zone.ABYSSEA_LA_THEINE] =
 {
     text =
     {
-        ITEM_CANNOT_BE_OBTAINED = 6382, -- You cannot obtain the <item>. Come back after sorting your inventory.
-        ITEM_OBTAINED           = 6388, -- Obtained: <item>.
-        GIL_OBTAINED            = 6389, -- Obtained <number> gil.
-        KEYITEM_OBTAINED        = 6391, -- Obtained key item: <keyitem>.
-        CRUOR_TOTAL             = 6986, -- Obtained <number> cruor. (Total: <number>)
-        FISHING_MESSAGE_OFFSET  = 7049, -- You can't fish here.
-        CRUOR_OBTAINED          = 7495, -- <name> obtained <number> cruor.
+        ITEM_CANNOT_BE_OBTAINED = 6383, -- You cannot obtain the <item>. Come back after sorting your inventory.
+        ITEM_OBTAINED           = 6389, -- Obtained: <item>.
+        GIL_OBTAINED            = 6390, -- Obtained <number> gil.
+        KEYITEM_OBTAINED        = 6392, -- Obtained key item: <keyitem>.
+        CRUOR_TOTAL             = 6987, -- Obtained <number> cruor. (Total: <number>)
+        FISHING_MESSAGE_OFFSET  = 7050, -- You can't fish here.
+		ALREADY_HAVE_KI         = 7392, -- It appears you already possess that key item.
+		MUST_HAVE_VISITANT      = 7393, -- You do not have visitant status. Please proceed to the nearest Conflux Surveyor to have it granted.
+        CRUOR_OBTAINED          = 7496, -- <name> obtained <number> cruor.
     },
     mob =
     {

@@ -340,58 +340,73 @@ bool CAttack::CheckAnticipated()
         return false;
     }
 
-    CStatusEffect* effect = m_victim->StatusEffectContainer->GetStatusEffect(EFFECT_THIRD_EYE, 0);
-    if (effect == nullptr)
-    {
-        return false;
-    }
+	if (m_victim->objtype == TYPE_PC)
+	{
+		bool hasSeigan = m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_SEIGAN, 0);
+		bool hasThirdEye = m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_THIRD_EYE, 0);
+		CStatusEffect* thirdEye = m_victim->StatusEffectContainer->GetStatusEffect(EFFECT_THIRD_EYE, 0);
+		
+		if (hasSeigan && !hasThirdEye && tpzrand::GetRandomNumber(100) < m_victim->getMod(Mod::ENH_SEIGAN))
+		{
+			if (m_victim->PAI->IsEngaged())
+			{
+				m_isCountered = true;
+				m_isCritical = (tpzrand::GetRandomNumber(100) < battleutils::GetCritHitRate(m_victim, m_attacker, false));
+			}
+			m_anticipated = true;
+			return true;
+		}
+		
+		if (thirdEye == nullptr)
+		{
+			return false;
+		}
 
-    //power stores how many times this effect has anticipated
-    auto pastAnticipations = effect->GetPower();
+		//power stores how many times this effect has anticipated
+		auto pastAnticipations = thirdEye->GetPower();
 
-    if (pastAnticipations > 7)
-    {
-        //max 7 anticipates!
-        m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_THIRD_EYE);
-        return false;
-    }
+		if (pastAnticipations > 7)
+		{
+			//max 7 anticipates!
+			m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_THIRD_EYE);
+			return false;
+		}
 
-    bool hasSeigan = m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_SEIGAN, 0);
+		if (!hasSeigan && pastAnticipations == 0)
+		{
+			m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_THIRD_EYE);
+			m_anticipated = true;
+			return true;
+		}
+		else if (!hasSeigan)
+		{
+			m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_THIRD_EYE);
+			return false;
+		}
+		else
+		{ //do have seigan, decay anticipations correctly (guesstimated)
+			//5-6 anticipates is a 'lucky' streak, going to assume 15% decay per proc, with a 100% base w/ Seigan
+			if (tpzrand::GetRandomNumber(100) < (100 - (pastAnticipations * 15) + m_victim->getMod(Mod::THIRD_EYE_ANTICIPATE_RATE)))
+			{
+				//increment power and don't remove
+				thirdEye->SetPower(thirdEye->GetPower() + 1);
+				//chance to counter - 25% base
+				if (tpzrand::GetRandomNumber(100) < 25 + m_victim->getMod(Mod::THIRD_EYE_COUNTER_RATE))
+				{
 
-    if (!hasSeigan && pastAnticipations == 0)
-    {
-        m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_THIRD_EYE);
-        m_anticipated = true;
-        return true;
-    }
-    else if (!hasSeigan)
-    {
-        m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_THIRD_EYE);
-        return false;
-    }
-    else
-    { //do have seigan, decay anticipations correctly (guesstimated)
-        //5-6 anticipates is a 'lucky' streak, going to assume 15% decay per proc, with a 100% base w/ Seigan
-        if (tpzrand::GetRandomNumber(100) < (100 - (pastAnticipations * 15) + m_victim->getMod(Mod::THIRD_EYE_ANTICIPATE_RATE)))
-        {
-            //increment power and don't remove
-            effect->SetPower(effect->GetPower() + 1);
-            //chance to counter - 25% base
-            if (tpzrand::GetRandomNumber(100) < 25 + m_victim->getMod(Mod::THIRD_EYE_COUNTER_RATE))
-            {
-
-                if (m_victim->PAI->IsEngaged())
-                {
-                    m_isCountered = true;
-                    m_isCritical = (tpzrand::GetRandomNumber(100) < battleutils::GetCritHitRate(m_victim, m_attacker, false));
-                }
-            }
-            m_anticipated = true;
-            return true;
-        }
-        m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_THIRD_EYE);
-        return false;
-    }
+					if (m_victim->PAI->IsEngaged())
+					{
+						m_isCountered = true;
+						m_isCritical = (tpzrand::GetRandomNumber(100) < battleutils::GetCritHitRate(m_victim, m_attacker, false));
+					}
+				}
+				m_anticipated = true;
+				return true;
+			}
+			m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_THIRD_EYE);
+			return false;
+		}
+	}
 
     return false;
 }
@@ -427,18 +442,28 @@ bool CAttack::CheckCounter()
     //having seigan active gives chance to counter at 25% of the zanshin proc rate
     uint16 seiganChance = 0;
 	
+	// Zanshin based Counter while Seigan is in effect
     if (m_victim->objtype == TYPE_PC && m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_SEIGAN))
     {
         seiganChance = m_victim->getMod(Mod::ZANSHIN) + ((CCharEntity*)m_victim)->PMeritPoints->GetMeritValue(MERIT_ZASHIN_ATTACK_RATE, (CCharEntity*)m_victim);
         seiganChance = std::clamp<uint16>(seiganChance, 0, 100);
         seiganChance /= 4;
     }
+	// Yonin based Counter when wearing Augments "Yonin" effect gear
+	if (m_victim->objtype == TYPE_PC && m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_YONIN) && facing(m_victim->loc.p, m_attacker->loc.p, 64) &&
+		tpzrand::GetRandomNumber(100) < m_victim->getMod(Mod::AUGMENT_YONIN))
+	{
+		m_isCountered = true;
+        m_isCritical = (tpzrand::GetRandomNumber(100) < battleutils::GetCritHitRate(m_victim, m_attacker, false));
+	}
+	// Normal Counter
     if ((tpzrand::GetRandomNumber(100) < std::clamp<uint16>(m_victim->getMod(Mod::COUNTER) + meritCounter, 0, 80) || tpzrand::GetRandomNumber(100) < seiganChance) &&
         facing(m_victim->loc.p, m_attacker->loc.p, 64) && tpzrand::GetRandomNumber(100) < battleutils::GetHitRate(m_victim, m_attacker))
     {
         m_isCountered = true;
         m_isCritical = (tpzrand::GetRandomNumber(100) < battleutils::GetCritHitRate(m_victim, m_attacker, false));
     }
+	// Perfect Counter based Counter
     if (m_victim->objtype == TYPE_PC && m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_PERFECT_COUNTER))
     { //Perfect Counter only counters hits that normal counter misses, always critical, can counter 1-7 times before wearing
         m_isCountered = true;
@@ -447,16 +472,17 @@ bool CAttack::CheckCounter()
 		
 		{ //Determine chance to not wear off using assumed formula VIT / 10 (ex. 250 VIT = 25% chance to not wear off)
 			if (tpzrand::GetRandomNumber(100) < (m_victim->getMod(Mod::VIT) / 10) && effect->GetPower() < 7) //Maximum 7 counters! Similar to Third Eye
-				{
+			{
 					//Increment power and don't remove
 					effect->SetPower(effect->GetPower() + 1);
-				}
+			}
 			else
-				{
+			{
 					m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_PERFECT_COUNTER);
-				}
+			}
 		}
     }
+	// Inner Strength based Counter
 	if (m_victim->objtype == TYPE_PC && m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_INNER_STRENGTH))
     { // Inner Strength has a 100% Perfect Counter rate that does not wear off for Inner Strength's duration
         m_isCountered = true;
@@ -496,6 +522,7 @@ bool CAttack::CheckCover()
 void CAttack::ProcessDamage()
 {
 	CCharEntity* PChar = (CCharEntity*)m_attacker;
+/* 	CBattleEntity* PDefender = (CBattleEntity*)m_defender; */
 	
     // Sneak attack.
     if (m_attacker->GetMJob() == JOB_THF &&
@@ -562,13 +589,54 @@ void CAttack::ProcessDamage()
     {
         SetAttackType(PHYSICAL_ATTACK_TYPE::SAMBA);
     }
+	
+	// Check for Monster Correlation and Empyrean armor Killer Effects bonus
+	if (m_attacker->objtype == TYPE_MOB || m_attacker->objtype == TYPE_PET || m_attacker->getMod(Mod::AUGMENT_KILLER_EFFECTS) > 0)
+	{
+		int16 KillerEffect = 0;
+	
+		switch (m_victim->m_EcoSystem)
+		{
+			case SYSTEM_AMORPH:     KillerEffect = m_attacker->getMod(Mod::AMORPH_KILLER);   break;
+			case SYSTEM_AQUAN:      KillerEffect = m_attacker->getMod(Mod::AQUAN_KILLER);    break;
+			case SYSTEM_ARCANA:     KillerEffect = m_attacker->getMod(Mod::ARCANA_KILLER);   break;
+			case SYSTEM_BEAST:      KillerEffect = m_attacker->getMod(Mod::BEAST_KILLER);    break;
+			case SYSTEM_BIRD:       KillerEffect = m_attacker->getMod(Mod::BIRD_KILLER);     break;
+			case SYSTEM_DEMON:      KillerEffect = m_attacker->getMod(Mod::DEMON_KILLER);    break;
+			case SYSTEM_DRAGON:     KillerEffect = m_attacker->getMod(Mod::DRAGON_KILLER);   break;
+			case SYSTEM_EMPTY:      KillerEffect = m_attacker->getMod(Mod::EMPTY_KILLER);    break;
+			case SYSTEM_HUMANOID:   KillerEffect = m_attacker->getMod(Mod::HUMANOID_KILLER); break;
+			case SYSTEM_LIZARD:     KillerEffect = m_attacker->getMod(Mod::LIZARD_KILLER);   break;
+			case SYSTEM_LUMINION:   KillerEffect = m_attacker->getMod(Mod::LUMINION_KILLER); break;
+			case SYSTEM_LUMORIAN:   KillerEffect = m_attacker->getMod(Mod::LUMORIAN_KILLER); break;
+			case SYSTEM_PLANTOID:   KillerEffect = m_attacker->getMod(Mod::PLANTOID_KILLER); break;
+			case SYSTEM_UNDEAD:     KillerEffect = m_attacker->getMod(Mod::UNDEAD_KILLER);   break;
+			case SYSTEM_VERMIN:     KillerEffect = m_attacker->getMod(Mod::VERMIN_KILLER);   break;
+			default: break;
+		}
+	
+		float bonus = 0;
+		if (m_attacker->objtype == TYPE_PC)
+		{
+			KillerEffect += ((CCharEntity*)m_attacker)->PMeritPoints->GetMeritValue(MERIT_KILLER_EFFECTS, (CCharEntity*)m_attacker) + m_attacker->getMod(Mod::ALL_KILLER_EFFECTS);
+			bonus = 1 + (((float)KillerEffect / 2) / 100);
+		}
+		else
+		{
+			bonus = 1 + ((float)KillerEffect / 100);
+		}
+		
+//		printf("attack.cpp ProcessDamage DAMAGE: [%i]\n", m_damage);
+		m_damage = (uint32)(m_damage * bonus);
+//		printf("attack.cpp ProcessDamage KILLER EFFECT: [%i]  BONUS: [%1.3f]  DAMAGE: [%i]\n", KillerEffect, bonus, m_damage);
+	}
 
     // Get damage multipliers.
     m_damage = attackutils::CheckForDamageMultiplier((CCharEntity*)m_attacker, dynamic_cast<CItemWeapon*>(m_attacker->m_Weapons[slot]), m_damage, m_attackType, slot);
 
     // Get critical bonus mods.
     if (m_isCritical)
-    {
+    {		
         m_damage += (int32)(m_damage * (m_attacker->getMod(Mod::CRIT_DMG_INCREASE) - m_victim->getMod(Mod::CRIT_DEF_BONUS)) / 100.0f);
     }
 
@@ -584,8 +652,8 @@ void CAttack::ProcessDamage()
         m_damage += (int32)(m_damage * ((100 + (m_attacker->getMod(Mod::AUGMENTS_TA))) / 100.0f));
     }
 	
-		// Apply Climactic, Striking, and Ternary Flourishes based off of player CHR
-	if (m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_CLIMACTIC_FLOURISH) ||
+	// Apply Climactic, Striking, and Ternary Flourishes based off of player CHR
+	if (m_isFirstSwing && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_CLIMACTIC_FLOURISH) ||
 		m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_STRIKING_FLOURISH) ||
 		m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_TERNARY_FLOURISH))
 	{
@@ -601,7 +669,7 @@ void CAttack::ProcessDamage()
 			}
 		}
 		
-		m_damage = m_damage + flourishBonus;
+		m_damage = (int32)((m_damage + flourishBonus) * (1 + ((float)m_attacker->getMod(Mod::ENH_CLIMACTIC_FLOURISH) / 100.0f)));
 		m_attacker->StatusEffectContainer->DelStatusEffectSilent(EFFECT_STRIKING_FLOURISH);
 		m_attacker->StatusEffectContainer->DelStatusEffectSilent(EFFECT_TERNARY_FLOURISH);
 	}
@@ -623,26 +691,42 @@ void CAttack::ProcessDamage()
     m_isBlocked = attackutils::IsBlocked(m_attacker, m_victim);
 	
 	// Apply Impetus Attack and Critical Hit Rate Buffs
+	// Effect power tracks the bonus per hit to be added to the modifiers
+	// Sub Effect tracks if Augment "Impetus" is active
 	if (m_attacker->objtype == TYPE_PC && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_IMPETUS))
 	{
 		CStatusEffect* effect = m_attacker->StatusEffectContainer->GetStatusEffect(EFFECT_IMPETUS, 0);
 		if (effect->GetPower() > 0 && effect->GetPower() < 50)
 		{
-			m_attacker->StatusEffectContainer->DelStatusEffect(EFFECT_ATTACK_BOOST,effect->GetPower());
-			effect->SetPower(effect->GetPower() + 1);
-			m_attacker->addModifier(Mod::ATT, 2);
-			m_attacker->addModifier(Mod::CRITHITRATE, 1);
+			if (effect->GetSubPower() > 0)
+			{
+				m_attacker->StatusEffectContainer->DelStatusEffect(EFFECT_ATTACK_BOOST, effect->GetPower());
+				effect->SetPower(effect->GetPower() + 1);
+				m_attacker->addModifier(Mod::ATT, 2);
+				m_attacker->addModifier(Mod::ACC, 2);
+				m_attacker->addModifier(Mod::CRITHITRATE, 1);
+				m_attacker->addModifier(Mod::CRIT_DMG_INCREASE, 1);
+			}
+			else
+			{
+				m_attacker->StatusEffectContainer->DelStatusEffect(EFFECT_ATTACK_BOOST, effect->GetPower());
+				effect->SetPower(effect->GetPower() + 1);
+				m_attacker->addModifier(Mod::ATT, 2);
+				m_attacker->addModifier(Mod::CRITHITRATE, 1);
+			}
 		}
 	}
 	
 	// Apply Restraint Weaponskill Damage Modifier
-	if (m_attacker->objtype == TYPE_PC && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_RESTRAINT))
+	// Effect power tracks the bonus per hit to be added to the modifiers
+	// Sub Effect power tracks the total bonus
+	if (m_isFirstSwing && m_attacker->objtype == TYPE_PC && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_RESTRAINT))
 	{
 		CStatusEffect* effect = m_attacker->StatusEffectContainer->GetStatusEffect(EFFECT_RESTRAINT, 0);
-		if (effect->GetPower() > 0 && effect->GetPower() < 30)
+		if (effect->GetSubPower() > 0 && effect->GetSubPower() < 30)
 		{
-			effect->SetPower(effect->GetPower() + 1);
-			m_attacker->addModifier(Mod::ALL_WSDMG_ALL_HITS, 2);
+			effect->SetSubPower(effect->GetSubPower() + effect->GetPower());
+			m_attacker->addModifier(Mod::ALL_WSDMG_ALL_HITS, effect->GetPower());
 		}
 	}
 }

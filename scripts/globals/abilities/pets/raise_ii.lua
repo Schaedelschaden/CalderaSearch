@@ -14,7 +14,7 @@ end
 
 function onPetAbility(target, pet, skill)
 --	printf("Raise II Pet onPetAbility\n")
-	local animationID = 1655
+	local animationID = 159
 	target:sendRaise(2)
-	PlayPetAnimation(pet, target, animationID)
+	PlayPetAnimation(pet, target, 13, animationID)
 end

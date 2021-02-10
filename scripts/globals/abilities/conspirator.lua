@@ -9,35 +9,32 @@
 require("scripts/globals/status")
 -----------------------------------
 
-function onAbilityCheck(player,target,ability)
+function onAbilityCheck(player, target, ability)
     return 0,0
 end
 
-function onUseAbility(player,target,ability)
-    local subtleBlow = 0
-    local accuracy = 0
-    local scale = 1
+function onUseAbility(player, target, ability)
+	local power = 0
+	local subPower = player:getMod(tpz.mod.AUGMENTS_CONSPIRATOR)
     local mob = player:getTarget()
+	
     if mob then
         local enmityList = mob:getEnmityList()
         if enmityList and #enmityList > 0 then
-            if #enmityList < 6 then
-                subtleBlow = 20
-                accuracy = 15
-            elseif #enmityList < 18 then
-                subtleBlow = 50
-                accuracy = 25
+            if #enmityList > 1 and #enmityList < 6 then
+                power = 4
+            elseif #enmityList == 6 then
+                power = 5
             else
-                subtleBlow = 50
-                accuracy = 49
+                power = 6
             end
         end
 
         -- See if we should apply the effects to the player at the top of the hate list
         if mob:getTarget() == target then
-            scale = player:getMod(tpz.mod.AUGMENTS_CONSPIRATOR)
+            return
         end
     end
 
-    target:addStatusEffect(tpz.effect.CONSPIRATOR, subtleBlow * scale, 0, 60, 0, accuracy * scale)
+    target:addStatusEffect(tpz.effect.CONSPIRATOR, power, 0, 60, 0, subPower)
 end

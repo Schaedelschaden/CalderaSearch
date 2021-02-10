@@ -11,4 +11,5 @@ cmdprops =
 
 function onTrigger(player)
     UpdateServerMessage()
+	player:PrintToPlayer(string.format("Server message updated!"),tpz.msg.channel.SYSTEM_3)
 end

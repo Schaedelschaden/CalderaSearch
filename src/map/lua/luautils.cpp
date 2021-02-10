@@ -3708,9 +3708,9 @@ namespace luautils
 
     int32 OnPetAbility(CBaseEntity* PTarget, CBaseEntity* PMob, CMobSkill* PMobSkill, CBaseEntity* PMobMaster, action_t* action)
     {
-		// printf("luautils.cpp OnPetAbility START\n");
+//		printf("luautils.cpp OnPetAbility START\n");
         lua_prepscript("scripts/globals/abilities/pets/%s.lua", PMobSkill->getName());
-		// printf("luautils.cpp OnPetAbility PMOBSKILL NAME %s\n", PMobSkill->getName());
+//		printf("luautils.cpp OnPetAbility PMOBSKILL NAME: [%s]  PMOBSKILL MSG: [%i]\n", PMobSkill->getName(), PMobSkill->getMsg());
 
         if (prepFile(File, "onPetAbility"))
         {
@@ -4830,7 +4830,7 @@ namespace luautils
 	
 	// Send a message to the entire server (intended to be used with server kill counters/messages in scripts)
 	// Also used in the !msgserver command
-	int32 SendServerMsg(lua_State* L) // player:sendServerMsg(player, channel, message)
+	int32 SendServerMsg(lua_State* L) // SendServerMsg(player, channel, message)
 	{
 		TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1));
         TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2));
@@ -4930,18 +4930,28 @@ namespace luautils
 	}
 	
 	// Force the pet to play an animation (developed to circumvent the animation issues with Cait Sith)
-	int32 PlayPetAnimation(lua_State* L) // PlayPetAnimation(pet, target, animationID)
+	int32 PlayPetAnimation(lua_State* L) // PlayPetAnimation(pet, target, actionType, animationID)
 	{
 /* 		uint32 petID = (uint32)lua_tointeger(L, 2);
 		uint32 mobID = (uint32)lua_tointeger(L, 4); */
 		
 		CBaseEntity* PPet = !lua_isnil(L, 1) && lua_isuserdata(L, 1) ? Lunar<CLuaBaseEntity>::check(L, 1)->GetBaseEntity() : nullptr; // Determines the pet from the first variable
 		CBaseEntity* PTarget = !lua_isnil(L, 2) && lua_isuserdata(L, 2) ? Lunar<CLuaBaseEntity>::check(L, 2)->GetBaseEntity() : nullptr; // Determines the target from the second variable
-		uint32 animationID = (uint32)lua_tointeger(L, 3); // Determines the animation ID from the third variable
-//		printf("luautils.cpp PlayPetAnimation ANIMATION ID: [%i]\n", animationID);
+		uint32 actionType = (uint32)lua_tointeger(L, 3); // Determines the action type from the third variable
+		uint32 animationID = (uint32)lua_tointeger(L, 4); // Determines the animation ID from the fourth variable
+		
+//		printf("luautils.cpp PlayPetAnimation ACTION TYPE: [%i]  ANIMATION ID: [%i]\n", actionType, animationID);
 		
 		action_t action;
-		action.actiontype = ACTION_MOBABILITY_FINISH;
+		if (actionType == 11 || actionType == 0)
+		{
+			action.actiontype = ACTION_MOBABILITY_FINISH;
+		}
+		else if (actionType == 13)
+		{
+			action.actiontype = ACTION_PET_MOBABILITY_FINISH;
+		}
+//		action.actiontype = actionType; // ACTION_MOBABILITY_FINISH;
 		action.id = PPet->id;
 		actionList_t& list = action.getNewActionList();
 		list.ActionTargetID = PTarget->id;

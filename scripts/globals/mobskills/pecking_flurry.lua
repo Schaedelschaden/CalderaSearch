@@ -1,3 +1,11 @@
+---------------------------------------------------
+--  Pecking Flurry
+--  Family: Colibri
+--  Description: Deals physical damage. Damage varies with TP.
+--  Type: Physical
+--  Range: Melee
+--  Notes:
+---------------------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")

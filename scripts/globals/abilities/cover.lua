@@ -7,18 +7,20 @@
 -----------------------------------
 require("scripts/globals/status")
 
-function onAbilityCheck(player,target,ability)
-	return 0,0
+function onAbilityCheck(player, target, ability)
+    if target == nil or target:getID() == player:getID() or not target:isPC() then
+        return tpz.msg.basic.CANNOT_PERFORM_TARG, 0
+    else
+        return 0, 0
+    end
 end
 
-function onUseAbility(player,target,ability,action)
-	local base = 15
-	local PLDVIT = player:getMod(tpz.mod.VIT)
-	local PLDMND = player:getMod(tpz.mod.MND)
-	local targVIT = target:getMod(tpz.mod.VIT) * 2
-	local merit = player:getMerit(tpz.merit.COVER_EFFECT_LENGTH)
-	
-	local duration = base + math.min(math.max(math.floor((PLDVIT + PLDMND - targVIT)/4),0),15) + merit
-	
-	target:addStatusEffect(tpz.effect.COVER,1,0,duration)
+function onUseAbility(player, target, ability, action)
+    local baseDuration = 15
+    local bonusTime    = utils.clamp(math.floor((player:getStat(tpz.mod.VIT) + player:getStat(tpz.mod.MND) - target:getStat(tpz.mod.VIT) * 2) / 4), 0, 15)
+    local duration     = baseDuration + bonusTime + player:getMerit(tpz.merit.COVER_EFFECT_LENGTH) + player:getMod(tpz.mod.COVER_DURATION)
+
+    player:addStatusEffect(tpz.effect.COVER, player:getMod(tpz.mod.COVER_TO_MP), 0, duration)
+    player:setLocalVar("COVER_ABILITY_TARGET", target:getID())
+    ability:setMsg(tpz.msg.basic.COVER_SUCCESS)
 end

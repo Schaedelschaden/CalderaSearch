@@ -13,7 +13,6 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill, player)
-	local animationID = 1690
 --	printf("Level 1 Holy PET onPetAbility\n")
 	local mobName = target:getName()
 	local fixedName = string.gsub(mobName, "_", " ")
@@ -28,10 +27,8 @@ function onPetAbility(target, pet, skill, player)
 	target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.LIGHT)
 	target:updateEnmityFromDamage(pet,damage)
 	
-	player:PrintToPlayer(string.format("The %s takes %i damage.", fixedName, damage),tpz.msg.channel.SYSTEM_3)
+	player:PrintToPlayer(string.format("The %s takes %i damage.", fixedName, damage),tpz.msg.channel.NS_SAY)
 	skill:setMsg(tpz.msg.basic.HIT_DMG)
-	
-	PlayPetAnimation(pet, target, animationID)
 
 	return damage
 end

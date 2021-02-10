@@ -14,5 +14,5 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player,target,ability)
-	player:addStatusEffect(tpz.effect.DIVINE_EMBLEM,1,0,60)
+	player:addStatusEffect(tpz.effect.DIVINE_EMBLEM, 50, 0, 60) -- 50% increase to enmity
 end

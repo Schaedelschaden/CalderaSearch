@@ -14,7 +14,6 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill, player)
-	local animationID = 1691
 --	printf("Level 2 Holy PET onPetAbility\n")
 	local mobName = target:getName()
 	local fixedName = string.gsub(mobName, "_", " ")
@@ -22,8 +21,6 @@ function onPetAbility(target, pet, skill, player)
 	local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
 
 	local damage = 900
-	
-	PlayPetAnimation(pet, target, animationID)
 	
 	if (moblevel % 2 == 0) then -- Divides moblevel by 2 then checks if there is any remainder
 		damage = damage + (dINT * 1.5)
@@ -34,12 +31,12 @@ function onPetAbility(target, pet, skill, player)
 		target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.LIGHT)
 		target:updateEnmityFromDamage(pet,damage)
 	
-		player:PrintToPlayer(string.format("The %s takes %i damage.", fixedName, damage),tpz.msg.channel.SYSTEM_3)
+		player:PrintToPlayer(string.format("The %s takes %i damage.", fixedName, damage),tpz.msg.channel.NS_SAY)
 		skill:setMsg(tpz.msg.basic.HIT_DMG)
 
 		return damage
 	else
-		player:PrintToPlayer(string.format("Cait Sith's ability has no effect on the %s.", fixedName),tpz.msg.channel.SYSTEM_3)
+		player:PrintToPlayer(string.format("Cait Sith's ability has no effect on the %s.", fixedName),tpz.msg.channel.NS_SAY)
 		return 0
 	end
 end

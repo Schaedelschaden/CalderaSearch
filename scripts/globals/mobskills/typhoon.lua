@@ -24,14 +24,15 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded)
     target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
 
-    if (mob:getName() == "Faust") then
-        if (mob:getLocalVar("Typhoon") == 0) then
-            mob:useMobAbility(539)
-            mob:setLocalVar("Typhoon", 1)
-        else
-            mob:setLocalVar("Typhoon", 0)
-        end
-    end
+    -- if (mob:getName() == "Faust") then
+        -- if (mob:getLocalVar("Typhoon") < 2) then
+            -- mob:useMobAbility(539)
+            -- mob:setLocalVar("Typhoon", mob:getLocalVar("Typhoon") + 1)
+			-- printf("Faust.lua onMobWeaponSkill Typhoon Counter: [%i]\n", mob:getLocalVar("Typhoon"))
+        -- else
+            -- mob:setLocalVar("Typhoon", 0)
+        -- end
+    -- end
 
     return dmg
 end

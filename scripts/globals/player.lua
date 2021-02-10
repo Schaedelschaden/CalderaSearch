@@ -4,6 +4,7 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/teleports")
 require("scripts/globals/titles")
+require("scripts/globals/utils")
 require("scripts/globals/zone")
 -----------------------------------
 require("scripts/quests/full_speed_ahead")
@@ -137,13 +138,17 @@ end
 
 -- called by core after a player logs into the server or zones
 function onGameIn(player, firstLogin, zoning)
+--	local playerName = player:getName()
+--	local message = string.format("%s has logged in!", playerName)
     if not zoning then
         -- things checked ONLY during logon go here
+--		printf("player.lua onGameIn [%s]\n", message)
         if firstLogin then
             CharCreate(player)
         end
     else
         -- things checked ONLY during zone in go here
+--		printf("player.lua onGameIn [%s] HAS LOGGED IN 2\n", player:getName())
     end
 
     -- apply mods from gearsets (scripts/globals/gear_sets.lua)
@@ -212,7 +217,7 @@ end
 function onPlayerLevelDown(player)
 end
 
-function onPlayerEmote(player, emoteId)   
+function onPlayerEmote(player, emoteId)
     if emoteId == tpz.emote.CHEER and player:hasStatusEffect(tpz.effect.FULL_SPEED_AHEAD) then
         tpz.fsa.onCheer(player)
     end

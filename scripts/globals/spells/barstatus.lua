@@ -29,7 +29,6 @@ function applyBarstatus(effectType, caster, target, spell)
 	
     duration = calculateDuration(duration, tpz.skill.ENHANCING_MAGIC, tpz.magic.spellGroup.WHITE, caster, target)
 	
-	-- Schaedel TODO: Determine if Composure is applied through the calculateDuration function
 	if target:hasStatusEffect(tpz.effect.COMPOSURE) and target == caster then
 		duration = duration * 3
 	end

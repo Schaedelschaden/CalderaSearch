@@ -21,17 +21,17 @@ end
 function onUseAbility(player,target,ability)
 --	printf("Active #1\n")
     local breath_healing_range = 18
-	local healingbreath = 624 -- Default Healing Breath I
+	local healingbreath = 640 -- Default Healing Breath I
 --	printf("Healing Breath Set to I\n")
 	
 	if (player:getMainLvl() >= 80) then
-		healingbreath = 623
+		healingbreath = 639
 --		printf("Healing Breath Set to IV\n")
 	elseif (player:getMainLvl() >= 40) then
-		healingbreath = 626
+		healingbreath = 642
 --		printf("Healing Breath Set to III\n")
 	elseif (player:getMainLvl() >= 20) then
-		healingbreath = 625
+		healingbreath = 641
 --		printf("Healing Breath Set to II\n")
 	end
 

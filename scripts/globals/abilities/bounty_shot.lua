@@ -13,6 +13,6 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-	local strength = 2 + getMod(tpz.mod.BOUNTY_SHOT_RATE) -- Base TH2, goes up to TH4 with gear
+	local strength = 2 + player:getMod(tpz.mod.BOUNTY_SHOT_RATE) -- Base TH2, goes up to TH4 with gear
 	target:addStatusEffect(tpz.effect.BOUNTY_SHOT, strength, 0, 60)
 end

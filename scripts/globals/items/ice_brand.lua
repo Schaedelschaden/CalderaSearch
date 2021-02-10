@@ -1,5 +1,5 @@
 -----------------------------------------
--- ID: 16937
+-- ID: 20672
 -- Ice Brand
 -- Additional Effect: Ice Damage
 -----------------------------------------
@@ -14,7 +14,7 @@ function onAdditionalEffect(player, target, damage)
     if (math.random(0, 99) >= chance) then
         return 0, 0, 0
     else
-        local dmg = math.random(7, 21)
+        local dmg = math.random(10, 25)
         local params = {}
         params.bonusmab = 0
         params.includemab = false

@@ -9031,12 +9031,23 @@ inline int32 CLuaBaseEntity::addLearnedAbility(lua_State *L)
 
     uint16 AbilityID = (uint16)lua_tointeger(L, 1);
 
+    int32 n = lua_gettop(L);
+	bool silent = false;
+	
+    if (n > 1)
+    {
+        silent = lua_toboolean(L, 2);
+    }
+
     if (charutils::addLearnedAbility(PChar, AbilityID))
     {
         charutils::addAbility(PChar, AbilityID);
         charutils::SaveLearnedAbilities(PChar);
-        PChar->pushPacket(new CCharAbilitiesPacket(PChar));
-        PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 442));
+		if (silent == false)
+        {
+			PChar->pushPacket(new CCharAbilitiesPacket(PChar));
+			PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 442));
+		}
     }
     return 0;
 }
@@ -13469,7 +13480,7 @@ inline int32 CLuaBaseEntity::hasValidJugPetItem(lua_State* L)
 
     CItemWeapon* PItem = static_cast<CItemWeapon *>(static_cast<CCharEntity *>(m_PBaseEntity)->getEquip(SLOT_AMMO));
 
-    if (PItem != nullptr && PItem->getSubSkillType() >= SUBSKILL_SHEEP && PItem->getSubSkillType() <= SUBSKILL_TOLOI)
+    if (PItem != nullptr && PItem->getSubSkillType() >= SUBSKILL_SHEEP && PItem->getSubSkillType() <= SUBSKILL_GLENN)
     {
         lua_pushboolean(L, true);
         return 1;
@@ -15206,12 +15217,14 @@ inline int32 CLuaBaseEntity::useJobAbility(lua_State* L)
 
 inline int32 CLuaBaseEntity::useMobAbility(lua_State* L)
 {
+//	printf("lua_baseentity.cpp useMobAbility START\n");
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_TRUST && m_PBaseEntity->objtype != TYPE_MOB && m_PBaseEntity->objtype != TYPE_PET);
 
     if (lua_isnumber(L, 1))
     {
         auto skillid {(uint16)lua_tointeger(L, 1)};
+//		printf("lua_baseentity.cpp useMobAbility MOBSKILL ID: [%i]\n", (uint16)lua_tointeger(L, 1));
         CBattleEntity* PTarget {nullptr};
         auto PMobSkill {battleutils::GetMobSkill(skillid)};
 

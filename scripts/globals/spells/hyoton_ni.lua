@@ -18,7 +18,7 @@ function onSpellCast(caster, target, spell)
 
     local params = {}
 
-    params.dmg = 69
+    params.dmg = 138
 
     params.multiplier = 1
 

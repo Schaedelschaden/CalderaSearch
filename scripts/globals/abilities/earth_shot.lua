@@ -76,10 +76,20 @@ function onUseAbility(player, target, ability, action)
             newEffect:setStartTime(startTime)
         end
     end
+	
+	if (player:getMod(tpz.mod.QUICK_DRAW_ENH_DMG) > 0) then
+		local strength = player:getMod(tpz.mod.QUICK_DRAW_ENH_DMG)
+		target:addStatusEffect(tpz.effect.MAGIC_DEF_DOWN, 0, 0, 10, 0, strength, 4)
+	end
 
     local del = player:delItem(2179, 1) or player:delItem(2974, 1)
 	
     target:updateClaim(player)
+	
+	-- Check for Augment "Quick Draw" set effect
+	if (math.random(1, 100) < player:getMod(tpz.mod.QUICK_DRAW_TRIPLE_DAMAGE)) then
+		dmg = dmg * 3
+	end
 	
     return dmg
 end

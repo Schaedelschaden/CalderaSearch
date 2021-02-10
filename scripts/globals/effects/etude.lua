@@ -8,18 +8,38 @@ require("scripts/globals/magic")
 -----------------------------------
 
 function onEffectGain(target,effect)
-    target:addMod(effect:getSubPower(), effect:getPower())
+	power = effect:getPower()
+	setBonus = 0
+	
+	if (power >= 2000 and power < 3000) then
+		power = power - 2000
+		setBonus = 1
+	elseif (power >= 3000 and power < 4000) then
+		power = power - 3000
+		setBonus = 2
+	elseif (power >= 4000 and power < 5000) then
+		power = power - 4000
+		setBonus = 3
+	elseif (power >= 5000) then
+		power = power - 5000
+		setBonus = 5
+	end
+	
+	if (setBonus > 0) then
+		target:addMod(effect:getSubPower(), setBonus)
+	end
+
+    target:addMod(effect:getSubPower(), power)
 end
 
 function onEffectTick(target,effect)
-    -- the effect loses modifier of 1 every 10 ticks.
-    local song_effect_size = effect:getPower()
-    if (effect:getTier() == 2 and effect:getPower() > 0) then
-        effect:setPower(song_effect_size -1)
-        target:delMod(effect:getSubPower(), 1)
-    end
+
 end
 
 function onEffectLose(target,effect)
-    target:delMod(effect:getSubPower(), effect:getPower())
+    target:delMod(effect:getSubPower(), power)
+	
+	if (setBonus > 0) then
+		target:delMod(effect:getSubPower(), setBonus)
+	end
 end

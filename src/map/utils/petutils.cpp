@@ -288,7 +288,7 @@ namespace petutils
     uint16 GetJugWeaponDamage(CPetEntity* PPet)
     {
         float MainLevel = PPet->GetMLevel();
-        return (uint16)(MainLevel * (MainLevel < 40 ? 1.4 - MainLevel / 100 : 1) * 3);
+        return (uint16)(MainLevel * (MainLevel < 40 ? 1.4 - MainLevel / 100 : 1) * 2.5);
     }
     uint16 GetJugBase(CPetEntity * PMob, uint8 rank)
     {
@@ -388,51 +388,122 @@ namespace petutils
         {
             growth = 1.07f;
         }
-
-        PMob->health.maxhp = (int16)(17.0 * pow(lvl, growth) * petStats->HPscale);
-
-        switch (PMob->GetMJob())
+		
+		int16 maxHP = 0;
+		int16 att = 0;
+		int16 def = 0;
+		int16 acc = 0;
+		int16 eva = 0;
+		int16 meva = 0;
+		int16 mdef = 0;
+		
+		switch (PMob->GetMJob())
         {
+		case JOB_WAR:
+			((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetJugWeaponDamage(PMob));
+			maxHP = (int16)(16.39 * pow(lvl, growth) * petStats->HPscale);
+			att = (int16)(GetJugBase(PMob, petStats->attRank) * 1.99);
+			def = (int16)(GetJugBase(PMob, petStats->defRank) * 2.33);
+			acc = (int16)(GetJugBase(PMob, petStats->accRank) * 1.97);
+			eva = (int16)(GetJugBase(PMob, petStats->evaRank) * 1.60);
+			meva = (int16)(5.87 * (lvl < 119 ? lvl - 1 : 119));
+			mdef = (int16)(0.25 * (lvl < 119 ? lvl - 1 : 119));
+			PMob->setModifier(Mod::DOUBLE_ATTACK, 10);
+			PMob->setModifier(Mod::CRIT_DMG_INCREASE, 10);
+			break;
+		case JOB_MNK:
+			((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage((uint16)(GetJugWeaponDamage(PMob) * 0.63));
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->resetDelay();
+			PMob->setMobMod(MOBMOD_MULTI_HIT, 1); // Make the pet attack twice
+			maxHP = (int16)(17.32 * pow(lvl, growth) * petStats->HPscale);
+			att = (int16)(GetJugBase(PMob, petStats->attRank) * 1.69);
+			def = (int16)(GetJugBase(PMob, petStats->defRank) * 1.92);
+			acc = (int16)(GetJugBase(PMob, petStats->accRank) * 1.88);
+			eva = (int16)(GetJugBase(PMob, petStats->evaRank) * 1.57);
+			meva = (int16)(5.28 * (lvl < 119 ? lvl - 1 : 119));
+			mdef = (int16)(0.25 * (lvl < 119 ? lvl - 1 : 119));
+			PMob->setModifier(Mod::COUNTER, 10);
+			PMob->setModifier(Mod::CRIT_DMG_INCREASE, 10);
+			break;
+		case JOB_BLM:
+			((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage((uint16)(GetJugWeaponDamage(PMob) * 0.90));
+			maxHP = (int16)(16.87 * pow(lvl, growth) * petStats->HPscale);
+			att = (int16)(GetJugBase(PMob, petStats->attRank) * 2.27);
+			def = (int16)(GetJugBase(PMob, petStats->defRank) * 2.06);
+			acc = (int16)(GetJugBase(PMob, petStats->accRank) * 1.93);
+			eva = (int16)(GetJugBase(PMob, petStats->evaRank) * 1.53);
+			meva = (int16)(6.59 * (lvl < 119 ? lvl - 1 : 119));
+			mdef = (int16)(0.34 * (lvl < 119 ? lvl - 1 : 119));
+			PMob->setModifier(Mod::MATT, 100);
+			PMob->setModifier(Mod::CRIT_DMG_INCREASE, 10);
+			break;
+		case JOB_RDM:
+			((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage((uint16)(GetJugWeaponDamage(PMob) * 0.90));
+			maxHP = (int16)(16.87 * pow(lvl, growth) * petStats->HPscale);
+			att = (int16)(GetJugBase(PMob, petStats->attRank) * 1.54);
+			def = (int16)(GetJugBase(PMob, petStats->defRank) * 1.99);
+			acc = (int16)(GetJugBase(PMob, petStats->accRank) * 2.01);
+			eva = (int16)(GetJugBase(PMob, petStats->evaRank) * 1.65);
+			meva = (int16)(6.75 * (lvl < 119 ? lvl - 1 : 119));
+			mdef = (int16)(0.34 * (lvl < 119 ? lvl - 1 : 119));
+			PMob->setModifier(Mod::CRIT_DMG_INCREASE, 10);
+			break;
+		case JOB_THF:
+			((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage((uint16)(GetJugWeaponDamage(PMob) * 0.75));
+			maxHP = (int16)(9.80 * pow(lvl, growth) * petStats->HPscale);
+			att = (int16)(GetJugBase(PMob, petStats->attRank) * 1.53);
+			def = (int16)(GetJugBase(PMob, petStats->defRank) * 1.77);
+			acc = (int16)(GetJugBase(PMob, petStats->accRank) * 2.05);
+			eva = (int16)(GetJugBase(PMob, petStats->evaRank) * 1.89);
+			meva = (int16)(5.63 * (lvl < 119 ? lvl - 1 : 119));
+			mdef = (int16)(0.29 * (lvl < 119 ? lvl - 1 : 119));
+			PMob->setModifier(Mod::TREASURE_HUNTER, 2);
+			PMob->setModifier(Mod::CRIT_DMG_INCREASE, 10);
+			break;
         case JOB_PLD:
-        case JOB_WHM:
-        case JOB_BLM:
-        case JOB_RDM:
+			((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage((uint16)(GetJugWeaponDamage(PMob) * 0.85));
+			maxHP = (int16)(16.50 * pow(lvl, growth) * petStats->HPscale);
+			att = (int16)(GetJugBase(PMob, petStats->attRank) * 1.41);
+			def = (int16)(GetJugBase(PMob, petStats->defRank) * 2.53);
+			acc = (int16)(GetJugBase(PMob, petStats->accRank) * 1.85);
+			eva = (int16)(GetJugBase(PMob, petStats->evaRank) * 1.50);
+			meva = (int16)(5.14 * (lvl < 119 ? lvl - 1 : 119));
+			mdef = (int16)(0.21 * (lvl < 119 ? lvl - 1 : 119));
+			PMob->setModifier(Mod::CRIT_DEF_BONUS, 10);
+			PMob->setModifier(Mod::CRIT_DMG_INCREASE, 10);
+			break;
         case JOB_DRK:
-        case JOB_BLU:
-        case JOB_SCH:
-            PMob->health.maxmp = (int16)(15.2 * pow(lvl, 1.1075) * petStats->MPscale);
-            break;
+			((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage((uint16)(GetJugWeaponDamage(PMob) * 1.10));
+			maxHP = (int16)(16.87 * pow(lvl, growth) * petStats->HPscale);
+			att = (int16)(GetJugBase(PMob, petStats->attRank) * 2.23);
+			def = (int16)(GetJugBase(PMob, petStats->defRank) * 1.96);
+			acc = (int16)(GetJugBase(PMob, petStats->accRank) * 1.90);
+			eva = (int16)(GetJugBase(PMob, petStats->evaRank) * 1.53);
+			meva = (int16)(5.14 * (lvl < 119 ? lvl - 1 : 119));
+			mdef = (int16)(0.25 * (lvl < 119 ? lvl - 1 : 119));
+			PMob->setModifier(Mod::CRITHITRATE, 5);
+			PMob->setModifier(Mod::CRIT_DMG_INCREASE, 20);
+			break;
         default:
             break;
         }
 
-        PMob->speed = petStats->speed * 2;
-        PMob->speedsub = petStats->speed * 2;
-
-        PMob->UpdateHealth();
+		PMob->health.maxhp = maxHP;
+		PMob->UpdateHealth();
         PMob->health.tp = 0;
-        PMob->health.hp = PMob->GetMaxHP() * 2;
+        PMob->health.hp = PMob->GetMaxHP();
         PMob->health.mp = PMob->GetMaxMP();
-
-        PMob->setModifier(Mod::DEF, (GetJugBase(PMob, petStats->defRank) * 2));
-        PMob->setModifier(Mod::EVA, (GetJugBase(PMob, petStats->evaRank) * 2));
-        PMob->setModifier(Mod::ATT, (GetJugBase(PMob, petStats->attRank) * 2));
-        PMob->setModifier(Mod::ACC, (GetJugBase(PMob, petStats->accRank) * 2));
-		PMob->setModifier(Mod::DMG, -50);
 		
-		int16 meva = (int16)(6 * (lvl < 122 ? lvl - 1 : 122));
-		PMob->setModifier(Mod::MEVA, meva);
+		PMob->setModifier(Mod::ATT, att); // Attack
+		PMob->setModifier(Mod::DEF, def); // Defense
+		PMob->setModifier(Mod::ACC, acc); // Accuracy
+		PMob->setModifier(Mod::EVA, eva); // Evasion
+		PMob->setModifier(Mod::MEVA, meva); // Magic Evasion
+		PMob->setModifier(Mod::MDEF, mdef); // Magic Defense
+		PMob->setModifier(Mod::DMG, -50); // -% Damage Taken
 		
-		int16 mdef = (int16)(0.29f * (lvl < 122 ? lvl - 1 : 122));
-		PMob->setModifier(Mod::MDEF, mdef);
-
-        ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetJugWeaponDamage(PMob));
-
-        //reduce weapon delay of MNK
-        if (PMob->GetMJob() == JOB_MNK)
-        {
-            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->resetDelay();
-        }
+		PMob->speed = petStats->speed * 2;
+        PMob->speedsub = petStats->speed * 2;
 
         uint16 fSTR = GetBaseToRank(petStats->strRank, PMob->GetMLevel());
         uint16 fDEX = GetBaseToRank(petStats->dexRank, PMob->GetMLevel());
@@ -1513,15 +1584,15 @@ namespace petutils
 			// Originally set at 0.74f. Results in 73 base damage at lvl 99 and 88 base damage at level 119
 			// Level 1-99 2x Retail Value (1.48f), 3x Retail Value (2.22f)
 			// Level 100-121 2x Retail Value (5.5f), 3x Retail Value (8.25f)
-			// Main level @ 99, ilvl @ 121 ((99 * 1.48) + (22 * 5.5)) = 146 + 121 = 267
-			((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(floor((PPet->GetMLevel() * 1.48f) + (PMaster->getMod(Mod::AVATAR_ILVL) * 5.5f))));
+			// Main level @ 99, ilvl @ 121 ((99 * 1.48) + (22 * 3.5)) = 146 + 77 = 223
+			((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(floor((PPet->GetMLevel() * 1.48f) + (PMaster->getMod(Mod::AVATAR_ILVL) * 3.5f))));
 
             if (PetID == PETID_CARBUNCLE)
             {
 				// Originally set at 0.67f. Results in 66 base damage at lvl 99 and 79 base damage at level 119
 				// 2x Retail Value (1.34f), 3x Retail Value (2.01f)
-				// Main level @ 99, ilvl @ 121 ((99 * 1.34) + (22 * 5.5)) = 132 + 121 = 253
-                ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(floor((PPet->GetMLevel() * 1.34f) + (PMaster->getMod(Mod::AVATAR_ILVL) * 5.5f))));
+				// Main level @ 99, ilvl @ 121 ((99 * 1.34) + (22 * 3.5)) = 132 + 77 = 209
+                ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(floor((PPet->GetMLevel() * 1.34f) + (PMaster->getMod(Mod::AVATAR_ILVL) * 3.5f))));
             }
 
 			uint16 calcatt = (uint16)((4.413 * mainLevelUpTo75) + (5.92 * mainLevelOver76andUnder99) + (15.3 * mainLevelOver99));
@@ -1596,6 +1667,28 @@ namespace petutils
         }
         else if (PPet->getPetType() == PETTYPE_WYVERN)
         {
+			uint8 mlvl = PMaster->GetMLevel();
+			uint8 ilvl = PMaster->m_Weapons[SLOT_MAIN]->getILvl();
+			ilvl += PMaster->getMod(Mod::WYVERN_ILVL);
+			
+			uint16 calchp = 0;
+			
+			if (PMaster->GetMJob() == JOB_DRG)
+            {
+				if (ilvl < mlvl)
+				{
+					PPet->SetMLevel(mlvl);
+					calchp = (uint16)(3.09 * mlvl);
+				}
+				else
+				{
+					PPet->SetMLevel(ilvl);
+					calchp = (uint16)(13.20 * ilvl);
+				}
+            }
+			
+			PPet->addModifier(Mod::HP, calchp);
+			
             LoadWyvernStatistics(PMaster, PPet, false);
         }
         else if (PPet->getPetType() == PETTYPE_AUTOMATON && PMaster->objtype == TYPE_PC)
@@ -1663,6 +1756,18 @@ namespace petutils
         PPet->status = STATUS_NORMAL;
         PPet->m_ModelSize = PPetData->size;
         PPet->m_EcoSystem = PPetData->EcoSystem;
+		
+		switch (PPet->m_EcoSystem)
+		{
+			case SYSTEM_AMORPH:     PPet->setModifier(Mod::BIRD_KILLER, 5);      break;
+			case SYSTEM_AQUAN:      PPet->setModifier(Mod::AMORPH_KILLER, 5);    break;
+			case SYSTEM_BEAST:      PPet->setModifier(Mod::LIZARD_KILLER, 5);    break;
+			case SYSTEM_BIRD:       PPet->setModifier(Mod::AQUAN_KILLER, 5);     break;
+			case SYSTEM_LIZARD:     PPet->setModifier(Mod::VERMIN_KILLER, 5);    break;
+			case SYSTEM_PLANTOID:   PPet->setModifier(Mod::BEAST_KILLER, 5);     break;
+			case SYSTEM_VERMIN:     PPet->setModifier(Mod::PLANTOID_KILLER, 5);  break;
+			default: break;
+		}
 
         PMaster->PPet = PPet;
     }
@@ -1726,7 +1831,7 @@ namespace petutils
                 {
                     if (trait->getID() == TRAIT_STOUT_SERVANT)
                     {
-                        PPet->addModifier(Mod::DMG, -trait->getValue());
+                        PPet->addModifier(Mod::DMG, -trait->getValue() - PPet->getMod(Mod::STOUT_SERVANT));
                         break;
                     }
                 }

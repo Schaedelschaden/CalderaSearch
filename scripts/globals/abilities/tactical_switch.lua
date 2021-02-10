@@ -21,7 +21,7 @@ function onUseAbility(player, target, ability)
 	local petTP = pet:getTP()
 	local bonus = 1 + (player:getMod(tpz.mod.TACTICAL_SWITCH_BONUS) / 100)
 	
-	printf("tactical_switch.lua onUseAbility MASTER TP: [%i]  PET TP: [%i]  BONUS: [x%1.2f]", masterTP, petTP, bonus)
+--	printf("tactical_switch.lua onUseAbility MASTER TP: [%i]  PET TP: [%i]  BONUS: [x%1.2f]", masterTP, petTP, bonus)
 	
 	player:setTP(petTP * bonus)
 	pet:setTP(masterTP * bonus)

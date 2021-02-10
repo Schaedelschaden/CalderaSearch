@@ -19,8 +19,13 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.SHELL
     local power = 50
+	local master = mob:getMaster()
+	
+	if (master ~= nil) then
+		master:addStatusEffect(typeEffect, power, 0, 180)
+	end
 
-    skill:setMsg(MobBuffMove(mob, typeEffect, power, 0, 180))
+    skill:setMsg(MobBuffMove(target, typeEffect, power, 0, 180))
 
     return typeEffect
 end

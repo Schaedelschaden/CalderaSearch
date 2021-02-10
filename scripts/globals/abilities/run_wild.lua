@@ -14,7 +14,7 @@ end
 
 function onUseAbility(player, target, ability)
 --	local pet = player:getPet()
-	target:addStatusEffect(tpz.effect.RUN_WILD, 1, 0, 30)
+	target:addStatusEffect(tpz.effect.RUN_WILD, 1, 0, 300)
 	
 	local ATTP = target:getMod(tpz.mod.ACC) * 0.25
 	local DEFP = target:getMod(tpz.mod.DEF) * 0.25

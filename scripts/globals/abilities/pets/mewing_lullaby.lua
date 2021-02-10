@@ -1,5 +1,5 @@
 ---------------------------------------------
--- Sleepga (Shiva Blood Pact)
+-- Mewing Lullaby (Cait Sith Blood Pact)
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")
@@ -12,8 +12,10 @@ function onAbilityCheck(player, target, ability)
 	return 0,0
 end
 
-function onPetAbility(target, pet, skill)
-    local animationID = 1687
+function onPetAbility(target, pet, skill, player)
+    local animationID = 162
+	local mobName = target:getName()
+	local fixedMobName = string.gsub(mobName, "_", " ")
 	local duration = 60
     local resm = applyPlayerResistance(pet,-1,target,pet:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT),tpz.skill.ELEMENTAL_MAGIC, 5)
     if (resm < 0.5) then
@@ -30,7 +32,9 @@ function onPetAbility(target, pet, skill)
         target:addStatusEffect(tpz.effect.SLEEP_I,1,0,duration)
     end
 	
-	PlayPetAnimation(pet, target, animationID)
+	player:PrintToPlayer(string.format("The %s is asleep.", fixedMobName),tpz.msg.channel.NS_SAY)
+	
+	PlayPetAnimation(pet, target, 13, animationID)
 
     return tpz.effect.SLEEP_I
 end

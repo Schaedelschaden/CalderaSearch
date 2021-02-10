@@ -115,7 +115,7 @@ function onUseAbility(caster, target, ability, action)
 		end
 		
 		target:resetRecast(randomAbilityA)
-		printf("random_deal.lua onUseAbility RANDOM ABILITY: [%i] NO LOADED DECK MERITS\n", randomAbilityA)
+--		printf("random_deal.lua onUseAbility RANDOM ABILITY: [%i] NO LOADED DECK MERITS\n", randomAbilityA)
 	else
 		if (MainJob == tpz.job.WAR) then
 			pickRandomA = math.random(1,10)
@@ -231,7 +231,7 @@ function onUseAbility(caster, target, ability, action)
 		
 		target:resetRecast(randomAbilityA)
 		target:resetRecast(randomAbilityB)
-		printf("random_deal.lua onUseAbility RANDOM ABILITY 1: [%i] RANDOM ABILITY 2: [%i]\n", randomAbilityA, randomAbilityB)
+--		printf("random_deal.lua onUseAbility RANDOM ABILITY 1: [%i] RANDOM ABILITY 2: [%i]\n", randomAbilityA, randomAbilityB)
 	end
 	
     return 0

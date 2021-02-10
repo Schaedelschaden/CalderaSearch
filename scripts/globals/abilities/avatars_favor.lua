@@ -22,7 +22,8 @@ local potency =
 		Shiva = {15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45},
 		Ramuh = {12, 14, 16, 18, 19, 21, 21, 23, 23, 24, 24},
 		Diabolos = {3, 4, 4, 5, 5, 5, 6, 7, 7, 8, 8},
-		CaitSith = {10, 12, 14, 16, 18, 20, 22, 24, 26, 27, 28}
+		CaitSith = {10, 12, 14, 16, 18, 20, 22, 24, 26, 27, 28},
+		Siren = {7, 9, 11, 13, 15, 17, 19, 20, 21, 22, 23}
 	}
 
 
@@ -74,6 +75,8 @@ function onUseAbility(player, target, ability)
 		pet:addStatusEffectEx(tpz.effect.AVATAR_S_FAVOR, tpz.effect.AVATAR_S_FAVOR, visibleAura, 3, 0, tpz.effect.DIABOLOS_S_FAVOR, potency.Diabolos[tier], tpz.auraTarget.ALLIES, tpz.effectFlag.AURA)
 	elseif (player:getPetID() == 20) then -- Cait Sith
 		pet:addStatusEffectEx(tpz.effect.AVATAR_S_FAVOR, tpz.effect.AVATAR_S_FAVOR, visibleAura, 3, 0, tpz.effect.CAIT_SITH_S_FAVOR, potency.CaitSith[tier], tpz.auraTarget.ALLIES, tpz.effectFlag.AURA)
+	elseif (player:getPetID() == 76) then -- Siren
+		pet:addStatusEffectEx(tpz.effect.AVATAR_S_FAVOR, tpz.effect.AVATAR_S_FAVOR, visibleAura, 3, 0, tpz.effect.SIRENS_FAVOR, potency.Siren[tier], tpz.auraTarget.ALLIES, tpz.effectFlag.AURA)
 	end
 	
 	player:setMod(tpz.mod.AVATAR_PERPETUATION, perpetuation)

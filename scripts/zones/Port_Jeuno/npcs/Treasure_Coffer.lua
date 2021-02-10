@@ -10,7 +10,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-
+	-- player:startEvent(350, -4, 0, 7, 7, 7, 4484854, 4095, 131109) -- Prishe Statue only
     player:messageSpecial(ID.text.CHEST_IS_EMPTY)
 end
 

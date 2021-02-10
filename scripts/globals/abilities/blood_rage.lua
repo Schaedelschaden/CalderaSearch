@@ -13,7 +13,7 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player, target, ability)
+	local duration = 30 + player:getMod(tpz.mod.ENH_BLOOD_RAGE)
 	target:delStatusEffect(tpz.effect.WARCRY)
-    target:addStatusEffect(tpz.effect.BLOOD_RAGE,20,0,30)
-	local CritHitRate = player:getMod(tpz.mod.CRITHITRATE)
+    target:addStatusEffect(tpz.effect.BLOOD_RAGE, 20 ,0, 30)
 end

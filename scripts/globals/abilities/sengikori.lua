@@ -14,5 +14,6 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player,target,ability)
-	player:addStatusEffect(tpz.effect.SENGIKORI,25,0,60)
+	local power = 25 + player:getMod(tpz.mod.SENGIKORI_BONUS)
+	player:addStatusEffect(tpz.effect.SENGIKORI, power, 0, 60)
 end

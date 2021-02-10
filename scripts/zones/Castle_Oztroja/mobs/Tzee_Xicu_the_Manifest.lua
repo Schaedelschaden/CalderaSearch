@@ -31,10 +31,10 @@ end
 function onMobDespawn(mob)
     -- reset hqnm system back to the nm placeholder
     local nqId = mob:getID() - 3
-    SetServerVariable("[POP]Tzee_Xicu_the_Manifest", os.time() + 259200) -- 3 days
+    SetServerVariable("[POP]Tzee_Xicu_the_Manifest", os.time() + 46800) -- (18 hours) -- 259200 (3 days)
     SetServerVariable("[PH]Tzee_Xicu_the_Manifest", 0)
     DisallowRespawn(mob:getID(), true)
     DisallowRespawn(nqId, false)
     UpdateNMSpawnPoint(nqId)
-    GetMobByID(nqId):setRespawnTime(math.random(75600, 86400))
+    GetMobByID(nqId):setRespawnTime(math.random(10800, 14400)) -- (3-4 hours) -- 75600, 86400 (21-24 hours)
 end

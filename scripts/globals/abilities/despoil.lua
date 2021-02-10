@@ -28,27 +28,56 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability, action)
-    local level = player:getMainLvl() -- Can only reach THF77 as main job
-    local despoilMod = player:getMod(tpz.mod.DESPOIL)
-    local despoilChance = 50 + despoilMod * 2 + level - target:getMainLvl() -- Same math as Steal
+	if not (player:isPC()) then
+		trustPC = player:getMaster()
+--		printf("despoil.lua onUseAbility TRUST TRIGGERED  MASTER: [%s]\n", trustPC:getName())
+		
+		local level = player:getMainLvl() -- Can only reach THF77 as main job
+		local despoilMod = player:getMod(tpz.mod.DESPOIL)
+		local despoilChance = 50 + despoilMod * 2 + level - target:getMainLvl() -- Same math as Steal
 
-    local stolen = target:getDespoilItem()
-    if target:isMob() and math.random(100) < despoilChance and stolen then
-        player:addItem(stolen)
-        target:itemStolen()
+		local stolen = target:getDespoilItem()
+		if target:isMob() and math.random(100) < despoilChance and stolen then
+			trustPC:addItem(stolen)
+			target:itemStolen()
 
-        -- Attempt to grab the debuff from the DB
-        -- If there isn't a debuff assigned to the item stolen, select one at random
-        local debuff = player:getDespoilDebuff(stolen)
-        if not debuff then
-            debuff = despoilDebuffs[math.random(#despoilDebuffs)]
-        end
-        local power = processDebuff(player, target, ability, debuff) -- Also sets ability message
-        target:addStatusEffect(debuff, power, 0, 90)
-    else
-        action:animation(target:getID(), 182)
-        ability:setMsg(tpz.msg.basic.STEAL_FAIL) -- Failed
-    end
+			-- Attempt to grab the debuff from the DB
+			-- If there isn't a debuff assigned to the item stolen, select one at random
+			local debuff = player:getDespoilDebuff(stolen)
+			if not debuff then
+				debuff = despoilDebuffs[math.random(#despoilDebuffs)]
+			end
+			local power = processDebuff(player, target, ability, debuff) -- Also sets ability message
+			target:addStatusEffect(debuff, power, 0, 90)
+		else
+			action:animation(target:getID(), 182)
+			ability:setMsg(tpz.msg.basic.STEAL_FAIL) -- Failed
+		end
+
+		-- return stolen
+	else
+		local level = player:getMainLvl() -- Can only reach THF77 as main job
+		local despoilMod = player:getMod(tpz.mod.DESPOIL)
+		local despoilChance = 50 + despoilMod * 2 + level - target:getMainLvl() -- Same math as Steal
+
+		local stolen = target:getDespoilItem()
+		if target:isMob() and math.random(100) < despoilChance and stolen then
+			player:addItem(stolen)
+			target:itemStolen()
+
+			-- Attempt to grab the debuff from the DB
+			-- If there isn't a debuff assigned to the item stolen, select one at random
+			local debuff = player:getDespoilDebuff(stolen)
+			if not debuff then
+				debuff = despoilDebuffs[math.random(#despoilDebuffs)]
+			end
+			local power = processDebuff(player, target, ability, debuff) -- Also sets ability message
+			target:addStatusEffect(debuff, power, 0, 90)
+		else
+			action:animation(target:getID(), 182)
+			ability:setMsg(tpz.msg.basic.STEAL_FAIL) -- Failed
+		end
+	end
 
     return stolen
 end
@@ -82,6 +111,8 @@ function processDebuff(player, target, ability, debuff)
         end
         power = utils.clamp(power, 750, 3000)
     end
+
+	power = power + player:getMod(tpz.mod.ENH_DESPOIL)
 
     return power
 end

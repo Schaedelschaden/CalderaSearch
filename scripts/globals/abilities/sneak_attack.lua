@@ -12,7 +12,7 @@ require("scripts/globals/status")
 function onAbilityCheck(player, target, ability)
     if (player:hasStatusEffect(tpz.effect.CLIMACTIC_FLOURISH) or 
 		player:hasStatusEffect(tpz.effect.STRIKING_FLOURISH) or
-		player:hasStatusEffect(tpz.effect.TERNARY_ATTACK)) then
+		player:hasStatusEffect(tpz.effect.TERNARY_FLOURISH)) then
 		return tpz.msg.basic.STATUS_PREVENTS,0
 	else
 		return 0,0

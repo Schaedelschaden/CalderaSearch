@@ -76,14 +76,21 @@ CWeaponSkill* CWeaponSkillState::GetSkill()
 
 void CWeaponSkillState::SpendCost()
 {
-    auto tp = 0;
+    int32 tp = 0;
     if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MEIKYO_SHISUI))
     {
         tp = m_PEntity->addTP(-1000);
     }
     else if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_SEKKANOKI))
     {
-        tp = m_PEntity->addTP(-1000);
+		int32 currentTP = m_PEntity->health.tp;
+		tp = m_PEntity->addTP(-1000);
+		
+		if (m_PEntity->getMod(Mod::ENH_SEKKANOKI) > 0)
+		{
+			tp = tp + (int32)((currentTP - tp) * ((float)m_PEntity->getMod(Mod::ENH_SEKKANOKI) / 100.0f));
+		}
+
         m_PEntity->StatusEffectContainer->DelStatusEffect(EFFECT_SEKKANOKI);
     }
     else
@@ -114,8 +121,8 @@ bool CWeaponSkillState::Update(time_point tick)
 		
 		if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_RESTRAINT))
 		{
-			uint16 WSBonus = m_PEntity->StatusEffectContainer->GetStatusEffect(EFFECT_RESTRAINT)->GetPower() - 1;
-			m_PEntity->StatusEffectContainer->GetStatusEffect(EFFECT_RESTRAINT)->SetPower(1);
+			uint16 WSBonus = m_PEntity->StatusEffectContainer->GetStatusEffect(EFFECT_RESTRAINT)->GetSubPower() - 1;
+			m_PEntity->StatusEffectContainer->GetStatusEffect(EFFECT_RESTRAINT)->SetSubPower(1);
 			m_PEntity->delModifier(Mod::ALL_WSDMG_ALL_HITS, WSBonus);
 		}
 		

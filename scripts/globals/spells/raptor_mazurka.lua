@@ -12,6 +12,10 @@ end
 
 function onSpellCast(caster, target, spell)
     local power = 12
+	
+	if (caster:getMod(tpz.mod.AUGMENT_SONGS) > 0) then
+		power = power + (1000 * caster:getMod(tpz.mod.AUGMENT_SONGS))
+	end
 
     local iBoost = caster:getMod(tpz.mod.MAZURKA_EFFECT) + caster:getMod(tpz.mod.ALL_SONGS_EFFECT)
 
@@ -36,4 +40,3 @@ function onSpellCast(caster, target, spell)
 
     return tpz.effect.MAZURKA
 end
-

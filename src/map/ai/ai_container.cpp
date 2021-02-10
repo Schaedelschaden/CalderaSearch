@@ -240,16 +240,17 @@ bool CAIContainer::Internal_WeaponSkill(uint16 targid, uint16 wsid)
 
 bool CAIContainer::Internal_MobSkill(uint16 targid, uint16 wsid)
 {
-	// printf("ai_container.cpp INTERNAL MOBSKILL TRIGGERED targid: [%i]  wsid: [%i]\n", targid, wsid);
+//	printf("ai_container.cpp INTERNAL MOBSKILL TRIGGERED targid: [%i]  wsid: [%i]\n", targid, wsid);
     auto entity {dynamic_cast<CMobEntity*>(PEntity)};
     if (entity)
-		// printf("ai_container.cpp ENTITY FOUND\n");
+//		printf("ai_container.cpp ENTITY FOUND\n");
         return ChangeState<CMobSkillState>(entity, targid, wsid);
     return false;
 }
 
 bool CAIContainer::Internal_Ability(uint16 targetid, uint16 abilityid)
 {
+//	printf("ai_container.cpp CAIContainer::Internal_Ability CHANGING STATE\n");
     auto entity {dynamic_cast<CBattleEntity*>(PEntity)};
     if (entity)
         return ChangeState<CAbilityState>(entity, targetid, abilityid);

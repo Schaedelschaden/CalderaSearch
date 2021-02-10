@@ -36,7 +36,7 @@ function onSpellCast(caster, target, spell)
     if (resist >= 0.25 and caster:getCharmChance(target, false) > 0) then
         spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         if (caster:isMob()) then
-            target:addStatusEffect(tpz.effect.CHARM_I, 0, 0, 30*resist)
+            target:addStatusEffect(tpz.effect.CHARM_I, 0, 0, 30 * resist)
             caster:charm(target)
         else
             caster:charmPet(target)

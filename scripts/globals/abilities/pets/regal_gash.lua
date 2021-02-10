@@ -12,17 +12,24 @@ function onAbilityCheck(player, target, ability)
 	return 0,0
 end
 
-function onPetAbility(target, pet, skill)
-    local numhits = 5
+function onPetAbility(target, pet, skill, player)
+    local animationID = 174
+	local mobName = target:getName()
+	local fixedMobName = string.gsub(mobName, "_", " ")
+    local numhits = 3
     local accmod = 1
-    local dmgmod = 5
+    local dmgmod = 3.5
     local dmgmodsubsequent = 2
 
     local totaldamage = 0
-    local damage = AvatarPhysicalMove(pet,target,skill,numhits,accmod,dmgmod,dmgmodsubsequent,TP_NO_EFFECT,1,2,3)
-    totaldamage = AvatarFinalAdjustments(damage.dmg,pet,skill,target,tpz.attackType.PHYSICAL,tpz.damageType.BLUNT,numhits)
-    target:takeDamage(totaldamage, pet, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
-    target:updateEnmityFromDamage(pet,totaldamage)
+    local damage = AvatarPhysicalMove(pet, target, skill, numhits, accmod, dmgmod, dmgmodsubsequent, TP_NO_EFFECT, 1, 2, 3)
+    totaldamage = AvatarFinalAdjustments(damage.dmg, pet, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, numhits)
+    target:takeDamage(totaldamage, pet, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
+    target:updateEnmityFromDamage(pet, totaldamage)
+
+	player:PrintToPlayer(string.format("The %s takes %i damage.", fixedMobName, totaldamage),tpz.msg.channel.NS_SAY)
+	
+	PlayPetAnimation(pet, target, 13, animationID)
 
     return totaldamage
 end

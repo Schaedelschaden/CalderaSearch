@@ -13,5 +13,6 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player, target, ability)
-    player:addStatusEffect(tpz.effect.RESTRAINT,1,0,300)
+	local power = 1 + player:getMod(tpz.mod.ENH_RESTRAINT)
+    player:addStatusEffect(tpz.effect.RESTRAINT, power, 0, 300, 0, 1)
 end

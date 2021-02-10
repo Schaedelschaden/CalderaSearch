@@ -11,6 +11,7 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
+	printf("snow_cloud.lua onMobSkillCheck")
     return 0
 end
 

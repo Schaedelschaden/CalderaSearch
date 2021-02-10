@@ -27,22 +27,23 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    local statue = npc:getID()
-    local passwordIndex = GetNPCByID(ID.npc.TRAP_DOOR_FLOOR_4):getLocalVar("password")
-    local password = passwordTable[passwordIndex]
+	GetNPCByID(ID.npc.TRAP_DOOR_FLOOR_4):openDoor(6)
+    -- local statue = npc:getID()
+    -- local passwordIndex = GetNPCByID(ID.npc.TRAP_DOOR_FLOOR_4):getLocalVar("password")
+    -- local password = passwordTable[passwordIndex]
 
-    if statue == ID.npc.FIRST_PASSWORD_STATUE then
-        player:messageSpecial(ID.text.FIRST_WORD)
-        player:messageSpecial(password[1][1])
-    elseif statue == ID.npc.SECOND_PASSWORD_STATUE then
-        player:messageSpecial(ID.text.SECOND_WORD)
-        player:messageSpecial(password[2][1])
-    elseif statue == ID.npc.THIRD_PASSWORD_STATUE then
-        player:messageSpecial(ID.text.THIRD_WORD)
-        player:messageSpecial(password[3][1])
-    elseif statue == ID.npc.FINAL_PASSWORD_STATUE then
-        player:startEvent(13)
-    end
+    -- if statue == ID.npc.FIRST_PASSWORD_STATUE then
+        -- player:messageSpecial(ID.text.FIRST_WORD)
+        -- player:messageSpecial(password[1][1])
+    -- elseif statue == ID.npc.SECOND_PASSWORD_STATUE then
+        -- player:messageSpecial(ID.text.SECOND_WORD)
+        -- player:messageSpecial(password[2][1])
+    -- elseif statue == ID.npc.THIRD_PASSWORD_STATUE then
+        -- player:messageSpecial(ID.text.THIRD_WORD)
+        -- player:messageSpecial(password[3][1])
+    -- elseif statue == ID.npc.FINAL_PASSWORD_STATUE then
+        -- player:startEvent(13)
+    -- end
 end
 
 function onEventUpdate(player, csid, option)

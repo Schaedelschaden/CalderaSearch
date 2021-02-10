@@ -966,6 +966,7 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                     int wspoints = 1;
                     if (PWeaponSkill->getPrimarySkillchain() != 0)
                     {
+//						printf("charentity.cpp OnWeaponSkillFinished  DAMAGE: [%i]\n\n", damage);
                         // NOTE: GetSkillChainEffect is INSIDE this if statement because it
                         //  ALTERS the state of the resonance, which misses and non-elemental skills should NOT do.
                         SUBEFFECT effect = battleutils::GetSkillChainEffect(PBattleTarget, PWeaponSkill->getPrimarySkillchain(), PWeaponSkill->getSecondarySkillchain(), PWeaponSkill->getTertiarySkillchain() );
@@ -992,15 +993,20 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                     // check for ws points
 					uint8 mLvl = this->GetMLevel();
 					uint8 iLvl = this->m_Weapons[SLOT_MAIN]->getILvl();
-					uint8 riLvl = this->m_Weapons[SLOT_RANGED]->getILvl();
+					uint8 riLvl = 0;
 					uint8 targetLvl = PTarget->GetMLevel();
+					
+					if (this->getEquip(SLOT_RANGED) && this->getEquip(SLOT_RANGED)->isType(ITEM_WEAPON))
+					{
+						riLvl = this->m_Weapons[SLOT_RANGED]->getILvl();
+					}
 					
 					if (iLvl > mLvl)
 					{
 						mLvl = iLvl;
 					}
 		
-					if (riLvl > mLvl)
+					if (riLvl > mLvl && riLvl > mLvl)
 					{
 						mLvl = riLvl;
 					}
@@ -1022,6 +1028,7 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
 
 void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 {
+	auto PChar = dynamic_cast<CCharEntity *>(this);
     auto PAbility = state.GetAbility();
 	
     if (this->PRecastContainer->HasRecast(RECAST_ABILITY, PAbility->getRecastId(), PAbility->getRecastTime()))
@@ -1046,7 +1053,8 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             return;
         }
 		// Check if the player has enough MP to use the Blood Pact
-        if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
+        if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE||
+			PAbility->getID() >= ABILITY_CLARSACH_CALL && PAbility->getID() <= ABILITY_HYSTERIC_ASSAULT)
         {
             // Blood pact MP costs are stored under animation ID
             if (this->health.mp < PAbility->getAnimationID())
@@ -1092,7 +1100,9 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 PRecastContainer->Del(RECAST_ABILITY, PAbility->getRecastId());
         }
         // Handle Apogee and Astral Conduit's recast reset
-		else if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
+		else if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE ||
+				PAbility->getID() == ABILITY_REGAL_GASH || PAbility->getID() >= ABILITY_CLARSACH_CALL &&
+				PAbility->getID() <= ABILITY_HYSTERIC_ASSAULT)
         {
             if (this->StatusEffectContainer->HasStatusEffect(EFFECT_APOGEE) || this->StatusEffectContainer->HasStatusEffect(EFFECT_ASTRAL_CONDUIT))
             {
@@ -1147,7 +1157,8 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 auto PPetTarget = PTarget->targid;
 				
 				// Handle Apogee and Blood Boon MP Cost modifications
-                if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
+                if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE||
+					PAbility->getID() >= ABILITY_CLARSACH_CALL && PAbility->getID() <= ABILITY_HYSTERIC_ASSAULT)
                 {
                     // Handle Blood Pact MP Cost. Cost stored in abilities.sql animation column
                     float mpCost = PAbility->getAnimationID();
@@ -1167,6 +1178,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                         if (tpzrand::GetRandomNumber(100) < bloodBoonRate)
                         {
                             mpCost *= tpzrand::GetRandomNumber(8.f, 16.f) / 16.f;
+							this->SetLocalVar("BloodBoonActivated", 1);
 //							printf("charentity.cpp onAbility BLOOD BOON MP COST: [%i]\n", (int16)mpCost);
                         }
                     }
@@ -1188,11 +1200,12 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                          if (PMobSkill->getValidTargets() & TARGET_ENEMY)
                         {
                             PPetTarget = PTarget->targid;
-//							printf("charentity.cpp onAbility TARGET ID: [%i]\n", PPetTarget);
+//							printf("charentity.cpp onAbility TARGET ENEMY ID: [%i]\n", PPetTarget);
                         }
                     }
                 }
                 PPet->PAI->MobSkill(PPetTarget, PAbility->getMobSkillID());
+//				printf("charentity.cpp onAbility MOVING TO MOB SKILL\n");
             }
         }
         //#TODO: make this generic enough to not require an if
@@ -1381,6 +1394,12 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 	uint16 trueShot = this->getMod(Mod::TRUE_SHOT);
 	float rangedDistance = distance(this->loc.p, PTarget->loc.p); //m_attacker, m_victim
 	float distanceCorrection = 1.00f + float(trueShot / 100.00f);
+	
+	// Eliminates distance correction if Enhances "Unlimited Shot" is found
+	if (this->StatusEffectContainer->HasStatusEffect(EFFECT_UNLIMITED_SHOT) && this->getMod(Mod::ENH_UNLIMITED_SHOT) > 0)
+	{
+		rangedDistance = 11.5f;
+	}
 
     // loop for barrage hits, if a miss occurs, the loop will end
     for (uint8 i = 1; i <= hitCount; ++i)
@@ -1501,7 +1520,6 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 		if (this->getMod(Mod::DOUBLE_SHOT_AMMO) == 1)
 		{
 			++ammoConsumed;
-			this->delModifier(Mod::DOUBLE_SHOT_AMMO, 1);
 		}
 		
 		// Add Double Shot becomes Triple Shot ammunition cost
@@ -1509,7 +1527,6 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 		{
 			++ammoConsumed;
 			++ammoConsumed;
-			this->delModifier(Mod::DOUBLE_SHOT_AMMO, 2);
 		}
 		
 		// Add Triple Shot ammunition cost
@@ -1517,7 +1534,6 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 		{
 			++ammoConsumed;
 			++ammoConsumed;
-			this->delModifier(Mod::TRIPLE_SHOT_AMMO, 2);
 		}
 		
 		// Add Triple Shot becomes Quad Shot ammunition cost
@@ -1526,7 +1542,6 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 			++ammoConsumed;
 			++ammoConsumed;
 			++ammoConsumed;
-			this->delModifier(Mod::TRIPLE_SHOT_AMMO, 3);
 		}
 
         if (PAmmo != nullptr && tpzrand::GetRandomNumber(100) > recycleChance)
@@ -1600,6 +1615,24 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     }
     battleutils::ClaimMob(PTarget, this);
     battleutils::RemoveAmmo(this, ammoConsumed);
+	
+	if (this->getMod(Mod::DOUBLE_SHOT_AMMO) == 1)
+	{
+		this->delModifier(Mod::DOUBLE_SHOT_AMMO, 1);
+	}
+	if (this->getMod(Mod::DOUBLE_SHOT_AMMO) == 2)
+	{
+		this->delModifier(Mod::DOUBLE_SHOT_AMMO, 2);
+	}
+	if (this->getMod(Mod::TRIPLE_SHOT_AMMO) == 2)
+	{
+		this->delModifier(Mod::TRIPLE_SHOT_AMMO, 2);
+	}
+	if (this->getMod(Mod::TRIPLE_SHOT_AMMO) == 3)
+	{
+		this->delModifier(Mod::TRIPLE_SHOT_AMMO, 3);
+	}
+	
     // only remove detectables
     StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
 
@@ -1809,6 +1842,7 @@ CBattleEntity* CCharEntity::IsValidTarget(uint16 targid, uint16 validTargetFlags
     {
         if (PTarget->objtype == TYPE_PC && charutils::IsAidBlocked(this, static_cast<CCharEntity*>(PTarget)))
         {
+//			printf("charentity.cpp IsValidTarget BLOCKAID ENABLED PC\n");
             // Target is blocking assistance
             errMsg = std::make_unique<CMessageSystemPacket>(0, 0, 225);
             // Interaction was blocked
@@ -1818,22 +1852,27 @@ CBattleEntity* CCharEntity::IsValidTarget(uint16 targid, uint16 validTargetFlags
         {
             if (PTarget->isAlive() || (validTargetFlags & TARGET_PLAYER_DEAD) != 0)
             {
+//				printf("charentity.cpp IsValidTarget TARGET IS ALIVE\n");
                 return PTarget;
             }
             else
             {
+//				printf("charentity.cpp IsValidTarget ERROR CANNOT PERFORM ACTION ON THAT TARGET\n");
                 errMsg = std::make_unique<CMessageBasicPacket>(this, this, 0, 0, MSGBASIC_CANNOT_ON_THAT_TARG);
             }
         }
         else
         {
+//			printf("charentity.cpp IsValidTarget TARGET ALREADY CLAIMED\n");
             errMsg = std::make_unique<CMessageBasicPacket>(this, PTarget, 0, 0, MSGBASIC_ALREADY_CLAIMED);
         }
     }
     else
     {
+//		printf("charentity.cpp IsValidTarget CANNOT ATTACK THAT TARGET\n");
         errMsg = std::make_unique<CMessageBasicPacket>(this, this, 0, 0, MSGBASIC_CANNOT_ATTACK_TARGET);
     }
+//	printf("charentity.cpp IsValidTarget NO TARGET RETURNING NULLPTR\n");
     return nullptr;
 }
 

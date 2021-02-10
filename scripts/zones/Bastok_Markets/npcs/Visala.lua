@@ -13,7 +13,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    if (player:sendGuild(5272, 8, 23, 4)) then
+    if (player:sendGuild(5272, 8, 23, 4)) then -- shopID, openHour, closeHour, holiday
         player:showText(npc, ID.text.VISALA_SHOP_DIALOG)
     end
 end

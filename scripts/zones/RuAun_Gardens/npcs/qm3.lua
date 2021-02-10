@@ -16,7 +16,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.SKY_GOD_OFFSET + 2)
+	player:messageSpecial(ID.text.SKY_GOD_OFFSET + 2)
 end
 
 function onEventUpdate(player, csid, option)

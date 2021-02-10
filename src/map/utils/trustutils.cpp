@@ -307,7 +307,26 @@ CTrustEntity* LoadTrust(CCharEntity* PMaster, uint32 TrustID)
     PTrust->SetSJob(trustData->sJob);
 
     // assume level matches master
-    PTrust->SetMLevel(PMaster->GetMLevel());
+	uint8 mLvl = PMaster->GetMLevel();
+	uint8 iLvl = PMaster->m_Weapons[SLOT_MAIN]->getILvl();
+	uint8 riLvl = 0;
+	
+	if (PMaster->getEquip(SLOT_RANGED) && PMaster->getEquip(SLOT_RANGED)->isType(ITEM_WEAPON))
+	{
+		riLvl = PMaster->m_Weapons[SLOT_RANGED]->getILvl();
+	}
+
+	if (iLvl > mLvl)
+	{
+		mLvl = iLvl;
+	}
+		
+	if (riLvl > mLvl && riLvl > iLvl)
+	{
+		mLvl = riLvl;
+	}
+	
+	PTrust->SetMLevel(mLvl);
     PTrust->SetSLevel(PMaster->GetSLevel());
 
     LoadTrustStatsAndSkills(PTrust);

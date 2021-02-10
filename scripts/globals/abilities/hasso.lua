@@ -10,7 +10,7 @@ require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------
 
-function onAbilityCheck(player,target,ability)
+function onAbilityCheck(player, target, ability)
     if (not target:isWeaponTwoHanded()) then
         return tpz.msg.basic.NEEDS_2H_WEAPON,0
     else
@@ -18,14 +18,14 @@ function onAbilityCheck(player,target,ability)
     end
 end
 
-function onUseAbility(player,target,ability)
-    local strboost = target:getMainLvl()/7
-    if (target:getMainJob()~=12) then --sjob sam, use sub level
-        strboost = target:getSubLvl()/7
+function onUseAbility(player, target, ability)
+    local strboost = (target:getMainLvl() / 7) + (player:getMod(tpz.mod.HASSO_PLUS) * 2)
+    if (target:getMainJob() ~= 12) then --sjob sam, use sub level
+        strboost = target:getSubLvl() / 7
     end
     if (target:isWeaponTwoHanded()) then
         target:delStatusEffect(tpz.effect.HASSO)
         target:delStatusEffect(tpz.effect.SEIGAN)
-        target:addStatusEffect(tpz.effect.HASSO,strboost,0,300)
+        target:addStatusEffect(tpz.effect.HASSO, strboost, 0, 300)
     end
 end

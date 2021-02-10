@@ -73,6 +73,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../grades.h"
 #include "../conquest_system.h"
 #include "../map.h"
+#include "../message.h" // Schaedel
 #include "../spell.h"
 #include "../trait.h"
 #include "../vana_time.h"
@@ -702,8 +703,17 @@ namespace charutils
         Sql_Query(SqlHandle, "UPDATE char_stats SET zoning = 0 WHERE charid = %u", PChar->id);
 
         if (zoning == 2)
+		{
             ShowDebug("Player <%s> logging in to zone <%u>\n", PChar->name.c_str(), PChar->getZone());
-
+			
+			//Schaedel - Handle login message
+			std::string msg1 = "^(o.o)> ";
+			std::string charName = PChar->name.c_str();
+			std::string msg2 = " has logged in <(o.o)^";
+			std::string loginmsg = msg1 + charName + msg2;
+			
+			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, loginmsg));
+		}
 
         PChar->SetMLevel(PChar->jobs.job[PChar->GetMJob()]);
         PChar->SetSLevel(PChar->jobs.job[PChar->GetSJob()]);
@@ -1562,6 +1572,12 @@ namespace charutils
 
     void UnequipItem(CCharEntity* PChar, uint8 equipSlotID, bool update)
     {
+		CPetEntity* PPet = nullptr;
+		if (PChar->PPet != nullptr)
+		{
+			PPet = (CPetEntity*)PChar->PPet;
+		}
+		
         CItem* PItem = PChar->getEquip((SLOTTYPE)equipSlotID);
 
         if ((PItem != nullptr) && PItem->isType(ITEM_EQUIPMENT))
@@ -1722,6 +1738,12 @@ namespace charutils
                 PChar->m_EquipSwap = true;
                 PChar->updatemask |= UPDATE_LOOK;
             }
+			
+			if (PPet != nullptr && PPet->getPetType() == PETTYPE_WYVERN && PPet->StatusEffectContainer->HasStatusEffect(EFFECT_FOOD) &&
+			PChar->getMod(Mod::FOOD_AFFECTS_WYVERN) == 0)
+			{
+				PPet->StatusEffectContainer->DelStatusEffectSilent(EFFECT_FOOD);
+			}
         }
     }
 
@@ -2131,6 +2153,12 @@ namespace charutils
 
     void EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 containerID)
     {
+		CPetEntity* PPet = nullptr;
+		if (PChar->PPet != nullptr)
+		{
+			PPet = (CPetEntity*)PChar->PPet;
+		}
+		
         CItemEquipment* PItem = (CItemEquipment*)PChar->getStorage(containerID)->GetItem(slotID);
 
         if (PItem && PItem == PChar->getEquip((SLOTTYPE)equipSlotID))
@@ -2230,6 +2258,15 @@ namespace charutils
             BuildingCharWeaponSkills(PChar);
             PChar->pushPacket(new CCharAbilitiesPacket(PChar));
         }
+
+		if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_FOOD) && PPet != nullptr && PPet->getPetType() == PETTYPE_WYVERN &&
+			PChar->getMod(Mod::FOOD_AFFECTS_WYVERN) > 0)
+		{
+			CStatusEffect* food = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_FOOD);
+			uint16 foodID = food->GetSubID();
+			uint16 duration = food->GetDuration();
+			PPet->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_FOOD, EFFECT_FOOD, 0, 0, duration, foodID));
+		}
 
         charutils::BuildingCharSkillsTable(PChar);
 
@@ -2428,7 +2465,7 @@ namespace charutils
             {
                 CAbility* PAbility = AbilitiesList.at(i);
 
-                if (PPet->GetMLevel() >= PAbility->getLevel() && PetID >= 8 && PetID <= 20 && CheckAbilityAddtype(PChar, PAbility))
+                if (PPet->GetMLevel() >= PAbility->getLevel() && (PetID >= 8 && PetID <= 20 || PetID == 76) && CheckAbilityAddtype(PChar, PAbility))
                 {
 					// Carbuncle
                     if (PetID == 8)
@@ -2488,6 +2525,7 @@ namespace charutils
 					// Cait Sith
                     else if (PetID == 20)
                     {
+//						printf("charutils.cpp BuildingCharPetAbilityTable CAIT SITH SUMMONED\n");
                         if ((PAbility->getID() >= ABILITY_REGAL_SCRATCH && PAbility->getID() <= ABILITY_ALTANAS_FAVOR) || (PAbility->getID() == ABILITY_REGAL_GASH))
                         {
 							if (PAbility->getID() >= ABILITY_REGAL_SCRATCH && PAbility->getID() <= ABILITY_ALTANAS_FAVOR)
@@ -2503,8 +2541,10 @@ namespace charutils
 					// Siren
 					else if (PetID == 76)
 					{
+//						printf("charutils.cpp BuildingCharPetAbilityTable SIREN SUMMONED\n");
 						if (PAbility->getID() >= ABILITY_CLARSACH_CALL && PAbility->getID() <= ABILITY_HYSTERIC_ASSAULT)
 						{
+//							printf("charutils.cpp BuildingCharPetAbilityTable ADDING ABILITY: [%i]  MINUS HEALING RUBY: [%i]\n", PAbility->getID(), PAbility->getID() - ABILITY_HEALING_RUBY);
 							addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
 						}
 					}
@@ -2513,21 +2553,23 @@ namespace charutils
         }
         if (PPet->getPetType() == PETTYPE_JUG_PET)
         {
+//			printf("charutils.cpp BuildingCharPetAbilityTable JUG PET\n");
             auto skillList {battleutils::GetMobSkillList(PPet->m_MobSkillList)};
             for (auto&& abilityid : skillList)
             {
+//				printf("charutils.cpp BuildingCharPetAbilityTable ADDING ABILITY: [%i]  MINUS HEALING RUBY: [%i]\n", abilityid, abilityid - ABILITY_HEALING_RUBY);
                 addPetAbility(PChar, abilityid - ABILITY_HEALING_RUBY);
             }
         }
         PChar->pushPacket(new CCharAbilitiesPacket(PChar));
     }
 
-    /************************************************************************
-    *                                                                       *
-    *  Собираем рабочую таблицу способностей персонажа. С нулевым уровнем   *
-    *  должны быть 2h способности. По этому условию отсеиваем их для sjob   *
-    *                                                                       *
-    ************************************************************************/
+    /****************************************************************************
+    *                                                                           *
+    *  Putting together a worksheet of character abilities. With zero level     *
+    *  should have 2h ability. By this condition, we filter them out for sjob   *
+    *                                                                           *
+    ****************************************************************************/
 
     void BuildingCharAbilityTable(CCharEntity* PChar)
     {
@@ -3406,14 +3448,19 @@ namespace charutils
         uint8 pcinzone = 0;
         uint8 minlevel = 0, maxlevel = PChar->GetMLevel();
 		uint8 ilvl = PChar->m_Weapons[SLOT_MAIN]->getILvl();
-		uint8 rilvl = PChar->m_Weapons[SLOT_RANGED]->getILvl();
+		uint8 rilvl = 0;
+		
+		if (PChar->getEquip(SLOT_RANGED) && PChar->getEquip(SLOT_RANGED)->isType(ITEM_WEAPON))
+		{
+			rilvl = PChar->m_Weapons[SLOT_RANGED]->getILvl();
+		}
 		
 		if (ilvl > maxlevel)
 		{
 			maxlevel = ilvl;
 		}
 		
-		if (rilvl > maxlevel)
+		if (rilvl > maxlevel && rilvl > ilvl)
 		{
 			maxlevel = rilvl;
 		}
@@ -3485,7 +3532,7 @@ namespace charutils
 				memberlevel = memberILvl;
 			}
 			
-			if (memberRILvl > memberlevel)
+			if (memberRILvl > memberlevel && memberRILvl > memberILvl)
 			{
 				memberlevel = memberRILvl;
 			}
@@ -3883,15 +3930,15 @@ namespace charutils
         {
             REGIONTYPE region = PChar->loc.zone->GetRegionID();
 
-            // Should this user be awarded conquest points..
+            // Should this user be awarded conquest points.
             if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SIGNET) &&
                 (region >= 0 && region <= 22))
             {
-                // Add influence for the players region..
+                // Add influence for the players region.
                 conquest::AddConquestPoints(PChar, exp);
             }
 
-            // Should this user be awarded imperial standing..
+            // Should this user be awarded imperial standing.
             if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SANCTION) &&
                 (region >= 28 && region <= 32))
             {
@@ -3901,12 +3948,47 @@ namespace charutils
 
             // Cruor Drops in Abyssea zones.
             uint16 Pzone = PChar->getZone();
+			CMobEntity* PCurrentMob = (CMobEntity*)PMob;
             if (zoneutils::GetCurrentRegion(Pzone) == REGION_ABYSSEA)
             {
                 uint16 TextID = luautils::GetTextIDVariable(Pzone, "CRUOR_OBTAINED");
                 uint32 Total = charutils::GetPoints(PChar, "cruor");
                 uint32 Cruor = 0; // Need to work out how to do cruor chains, until then no cruor will drop unless this line is customized for non retail play.
-
+				
+				if (Pzone == ZONE_ABYSSEA_KONSCHTAT || Pzone == ZONE_ABYSSEA_TAHRONGI || Pzone == ZONE_ABYSSEA_LA_THEINE)
+				{
+					if (PCurrentMob->m_Type & MOBTYPE_NOTORIOUS)
+					{
+						Cruor = 200;
+					}
+					else
+					{
+						Cruor = 50;
+					}
+				}
+				else if (Pzone == ZONE_ABYSSEA_ATTOHWA || Pzone == ZONE_ABYSSEA_MISAREAUX || Pzone == ZONE_ABYSSEA_VUNKERL)
+				{
+					if (PCurrentMob->m_Type & MOBTYPE_NOTORIOUS)
+					{
+						Cruor = 250;
+					}
+					else
+					{
+						Cruor = 75;
+					}
+				}
+				else if (Pzone == ZONE_ABYSSEA_ALTEPA || Pzone == ZONE_ABYSSEA_ULEGUERAND || Pzone == ZONE_ABYSSEA_GRAUBERG)
+				{
+					if (PCurrentMob->m_Type & MOBTYPE_NOTORIOUS)
+					{
+						Cruor = 300;
+					}
+					else
+					{
+						Cruor = 100;
+					}
+				}
+				
                 if (TextID == 0)
                 {
                     ShowWarning(CL_YELLOW"Failed to fetch Cruor Message ID for zone: %i\n" CL_RESET, Pzone);
@@ -4774,6 +4856,7 @@ namespace charutils
     uint16 AvatarPerpetuationReduction(CCharEntity* PChar)
     {
         uint16 reduction = PChar->getMod(Mod::PERPETUATION_REDUCTION);
+		bool dayBonusApplied = false;
 
         static const Mod strong[8] = {
             Mod::FIRE_AFFINITY_PERP,
@@ -4785,32 +4868,37 @@ namespace charutils
             Mod::LIGHT_AFFINITY_PERP,
             Mod::DARK_AFFINITY_PERP};
 
-        static const WEATHER weatherStrong[8] = {
-            WEATHER_HOT_SPELL,
-            WEATHER_SNOW,
-            WEATHER_WIND,
-            WEATHER_DUST_STORM,
-            WEATHER_THUNDER,
-            WEATHER_RAIN,
-            WEATHER_AURORAS,
-            WEATHER_GLOOM};
+        uint8 element = ((CPetEntity*)(PChar->PPet))->m_Element;
 
-        uint8 element = ((CPetEntity*)(PChar->PPet))->m_Element - 1;
-
-        TPZ_DEBUG_BREAK_IF(element > 7);
+        TPZ_DEBUG_BREAK_IF(element > 8);
 
         reduction = reduction + PChar->getMod(strong[element]);
 
         if (battleutils::GetDayElement() == element)
         {
-            reduction = reduction + PChar->getMod(Mod::DAY_REDUCTION);
+			if (PChar->getMod(Mod::DAY_REDUCTION) >= 50)
+			{
+				reduction = (uint16)((float)PChar->getMod(Mod::AVATAR_PERPETUATION) / 2.0f) + (PChar->getMod(Mod::DAY_REDUCTION) - 50);
+				dayBonusApplied = true;
+			}
+			else
+			{
+				reduction = reduction + PChar->getMod(Mod::DAY_REDUCTION);
+			}
         }
 
         WEATHER weather = battleutils::GetWeather(PChar, false);
 
-        if (weather == weatherStrong[element] || weather == weatherStrong[element] + 1)
+        if (battleutils::WeatherMatchesElement(weather, element))
         {
-            reduction = reduction + PChar->getMod(Mod::WEATHER_REDUCTION);
+			if (PChar->getMod(Mod::WEATHER_REDUCTION) >= 50 && dayBonusApplied == false)
+			{
+				reduction = (uint16)((float)PChar->getMod(Mod::AVATAR_PERPETUATION) / 2.0f) + (PChar->getMod(Mod::WEATHER_REDUCTION) - 50);
+			}
+			else
+			{
+				reduction = reduction + PChar->getMod(Mod::WEATHER_REDUCTION);
+			}
         }
 
         return reduction;

@@ -1,37 +1,49 @@
--- --------------------------------------------------------
--- Host:                         127.0.0.1
--- Server version:               5.6.26-log - MySQL Community Server (GPL)
--- Server OS:                    Win64
--- HeidiSQL Version:             11.0.0.5919
--- --------------------------------------------------------
+-- phpMyAdmin SQL Dump
+-- version 3.3.8
+-- http://www.phpmyadmin.net
+--
+-- Serveur: localhost
+-- G?n?r? le : Dim 07 Octobre 2012 ? 09:39
+-- Version du serveur: 6.0.0
+-- Version de PHP: 5.2.9-2
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping structure for table tpzdb.guilds
+--
+-- Base de donn?es: `tpzdb`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `item_mods_pet`
+--
+
+DROP TABLE IF EXISTS `guilds`;
 CREATE TABLE IF NOT EXISTS `guilds` (
   `id` tinyint(1) unsigned NOT NULL,
   `points_name` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=13 PACK_KEYS=1;
 
--- Dumping data for table tpzdb.guilds: 9 rows
-/*!40000 ALTER TABLE `guilds` DISABLE KEYS */;
-INSERT INTO `guilds` (`id`, `points_name`) VALUES
-	(0, 'guild_fishing'),
-	(1, 'guild_woodworking'),
-	(2, 'guild_smithing'),
-	(3, 'guild_goldsmithing'),
-	(4, 'guild_weaving'),
-	(5, 'guild_leathercraft'),
-	(6, 'guild_bonecraft'),
-	(7, 'guild_alchemy'),
-	(8, 'guild_cooking');
-/*!40000 ALTER TABLE `guilds` ENABLE KEYS */;
 
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+LOCK TABLES `guilds` WRITE;
+
+INSERT INTO `guilds` VALUES (0, 'guild_fishing');
+INSERT INTO `guilds` VALUES (1, 'guild_woodworking');
+INSERT INTO `guilds` VALUES (2, 'guild_smithing');
+INSERT INTO `guilds` VALUES (3, 'guild_goldsmithing');
+INSERT INTO `guilds` VALUES (4, 'guild_weaving');
+INSERT INTO `guilds` VALUES (5, 'guild_leathercraft');
+INSERT INTO `guilds` VALUES (6, 'guild_bonecraft');
+INSERT INTO `guilds` VALUES (7, 'guild_alchemy');
+INSERT INTO `guilds` VALUES (8, 'guild_cooking');
+
+UNLOCK TABLES;
+

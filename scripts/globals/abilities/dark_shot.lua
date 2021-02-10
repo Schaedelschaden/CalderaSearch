@@ -73,6 +73,11 @@ function onUseAbility(player, target, ability)
 		
         newEffect:setStartTime(startTime)
     end
+	
+	if (player:getMod(tpz.mod.QUICK_DRAW_ENH_DMG) > 0) then
+		local strength = player:getMod(tpz.mod.QUICK_DRAW_ENH_DMG)
+		target:addStatusEffect(tpz.effect.MAGIC_DEF_DOWN, 0, 0, 10, 0, strength, 8)
+	end
 
     ability:setMsg(tpz.msg.basic.JA_REMOVE_EFFECT_2)
 	

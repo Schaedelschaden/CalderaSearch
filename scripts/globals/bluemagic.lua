@@ -108,7 +108,7 @@ function BluePhysicalSpell(caster, target, spell, params)
 	local blueMerits = caster:getMerit(tpz.merit.BLUE)
 	local blueGear = caster:getMod(tpz.mod.BLUE)
 	local magicskill = (blueSkill + blueMerits + blueGear) -- Skill + Merits + Equipment bonuses
-	local tp = caster:getTP() + caster:getMerit(tpz.merit.ENCHAINMENT)
+	local tp = caster:getTP()
 	local tpModValue = 0
 	local isACrit = false
 	local accbonus = 0
@@ -161,9 +161,23 @@ function BluePhysicalSpell(caster, target, spell, params)
 
     local WSC = BlueGetWsc(caster, params)
 	
-	if (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY)) then
-		WSC = WSC * 2
+	local wscCA = 1
+	local wscAugBlueMagic = 0
+	local augChance = math.random(0, 100)
+	local setEffect = caster:getMod(tpz.mod.AUGMENT_BLUE_MAGIC)
+	
+	if (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and augChance > setEffect) then
+		wscCA = 2
+	elseif (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and augChance < setEffect) then
+		wscCA = 1
 	end
+	
+	-- Apply Mavi/Hashishin set effect and Chain Affinity WSC modifier	
+	if (setEffect < caster:getMod(tpz.mod.AUGMENT_BLUE_MAGIC)) then
+		wscAugBlueMagic = 3
+	end
+	
+	WSC = WSC * (wscCA + wscAugBlueMagic)
 
     -- print("wsc val is ".. WSC)
 
@@ -181,14 +195,32 @@ function BluePhysicalSpell(caster, target, spell, params)
     local chainAffinity = caster:getStatusEffect(tpz.effect.CHAIN_AFFINITY)
     if chainAffinity ~= nil then
         -- Calculate the total TP available for the fTP multiplier.
+		if not (caster:hasStatusEffect(tpz.effect.EFFLUX)) then
+			tp = tp + caster:getMerit(tpz.merit.ENCHAINMENT)
+		end
+		
         if (tp > 3000) then
             tp = 3000
         end
 
         multiplier = BluefTP(tp, multiplier, params.tp150, params.tp300)
 		-- printf("bluemagic.lua BluePhysicalSpell CHAIN AFFINITY MULTIPLIER: [%i]", multiplier)
-		multiplier = multiplier + caster:getMod(tpz.mod.CHAIN_AFFINITY_EFFECT)
+		D = D + caster:getMod(tpz.mod.CHAIN_AFFINITY_EFFECT)
     end
+	
+	----------------------------------------------------------------
+	-- Applies Efflux, increases base damage, and adds a TP Bonus --
+	-- the multipliers to fTP(multiplier, tp150, tp300)           --
+	----------------------------------------------------------------
+	if (caster:hasStatusEffect(tpz.effect.EFFLUX)) then
+		tp = tp + 1000 + caster:getMod(tpz.mod.ENH_EFFLUX)
+		
+		if (tp > 3000) then
+            tp = 3000
+        end
+		
+		D = D * 1.5
+	end
 	
 	------------------------
 	-- Applies Azure Lore --
@@ -447,11 +479,25 @@ function BlueMagicalSpell(caster, target, spell, params, statMod)
     end
 
     local ST = BlueGetWsc(caster, params) -- According to Wiki ST is the same as WSC, essentially Blue mage spells that are magical use the dmg formula of Magical type Weapon skills
-
-    if (caster:hasStatusEffect(tpz.effect.BURST_AFFINITY)) then
-        local baBonus = caster:getMod(tpz.mod.BURST_AFFINITY_EFFECT) / 100
-		ST = (ST + baBonus) * 2
-    end
+	
+	local stBA = 1
+	local baBonus = caster:getMod(tpz.mod.BURST_AFFINITY_EFFECT) / 100
+	local stAugBlueMagic = 0
+	local augChance = math.random(0, 100)
+	local setEffect = caster:getMod(tpz.mod.AUGMENT_BLUE_MAGIC)
+	
+	if (caster:hasStatusEffect(tpz.effect.BURST_AFFINITY) and augChance > setEffect) then
+		stBA = 2 + baBonus
+	elseif (caster:hasStatusEffect(tpz.effect.BURST_AFFINITY) and augChance < setEffect) then
+		stBA = 1 + baBonus
+	end
+	
+	-- Apply Mavi/Hashishin set effect and Burst Affinity WSC modifier	
+	if (augChance < setEffect) then
+		stAugBlueMagic = 3
+	end
+	
+	ST = ST * (stBA + stAugBlueMagic)
 
 	-- Always assume a 1x multiplier so the calculation doesn't zero out
 	-- Sets the multiplier to the value specified in the spell if provided
@@ -462,7 +508,7 @@ function BlueMagicalSpell(caster, target, spell, params, statMod)
 	
 	local convergenceBonus = 1.0
     if (caster:hasStatusEffect(tpz.effect.CONVERGENCE)) then
-        convergenceEffect = caster:getStatusEffect(tpz.effect.CONVERGENCE)
+        local convergenceEffect = caster:getStatusEffect(tpz.effect.CONVERGENCE)
         local convLvl = convergenceEffect:getPower()
         if (convLvl == 1) then
             convergenceBonus = 1.05
@@ -551,7 +597,7 @@ function BlueBreathSpell(caster, target, spell, params)
 	-----------------------------------
 	local convBonus = 1.0	
     if (caster:hasStatusEffect(tpz.effect.CONVERGENCE)) then
-        convergenceEffect = caster:getStatusEffect(tpz.effect.CONVERGENCE)
+        local convergenceEffect = caster:getStatusEffect(tpz.effect.CONVERGENCE)
         local convLvl = convergenceEffect:getPower()
         if (convLvl == 1) then
             convBonus = 1.05
@@ -627,7 +673,7 @@ function BlueGetWsc(attacker, params)
          attacker:getStat(tpz.mod.VIT) * params.vit_wsc + attacker:getStat(tpz.mod.AGI) * params.agi_wsc +
          attacker:getStat(tpz.mod.INT) * params.int_wsc + attacker:getStat(tpz.mod.MND) * params.mnd_wsc +
          attacker:getStat(tpz.mod.CHR) * params.chr_wsc) * BlueGetAlpha(attacker:getMainLvl())
-    return wsc
+	return wsc
 end
 
 --------------------------------------------------------------------------

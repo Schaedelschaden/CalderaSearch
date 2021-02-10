@@ -68,7 +68,8 @@ function onTrigger(player, arg1, arg2, arg3, arg4, arg5)
 
     -- report or move position
     if (x == nil or y == nil or z == nil) then
-        player:PrintToPlayer(string.format("%s's position: X %.4f  Y %.4f  Z %.4f", targ:getName(), targ:getXPos(), targ:getYPos(), targ:getZPos() ))
+		local pos = targ:getPos()
+        player:PrintToPlayer(string.format("X: %.4f  Y: %.4f  Z: %.4f  Rotation: %i  Zone: %i", pos.x, pos.y, pos.z, pos.rot, targ:getZoneID()),tpz.msg.channel.SYSTEM_3)
     else
         if (zoneId == nil) then
             zoneId = targ:getZoneID()

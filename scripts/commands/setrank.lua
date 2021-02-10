@@ -33,4 +33,9 @@ function onTrigger(player, target, rank)
     end
     player:PrintToPlayer(string.format("You set %s's rank to %d", target, rank))
     targ:setRank(rank)
+	
+	if (rank >= 6 and player:getCurrentMission(ZILART) ~= tpz.mission.id.zilart.THE_NEW_FRONTIER and not player:hasCompletedMission(ZILART, tpz.mission.id.zilart.THE_NEW_FRONTIER)) then
+        -- Don't add missions we already completed. Players who change nation will hit this.
+        player:addMission(ZILART, tpz.mission.id.zilart.THE_NEW_FRONTIER)
+	end
 end

@@ -420,7 +420,7 @@ tpz.mob.onAddEffect = function(mob, target, damage, effect, params)
                     local tick = ae.tick or 0
                     local duration = params.duration or ae.duration
 
-                    if dLevel < 0 then
+                    if dLevel < 0 and ae.eff ~= tpz.effect.TERROR then
                         duration = duration - dLevel
                     end
 
