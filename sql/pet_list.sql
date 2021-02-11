@@ -1,120 +1,151 @@
--- phpMyAdmin SQL Dump
--- version 3.3.8
--- http://www.phpmyadmin.net
---
--- Serveur: localhost
--- G�n�r� le : Sam 25 Juin 2011 � 10:09
--- Version du serveur: 6.0.0
--- Version de PHP: 5.2.9-2
-
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Base de donn�es: `tpzdb`
---
-
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               10.5.5-MariaDB - mariadb.org binary distribution
+-- Server OS:                    Win64
+-- HeidiSQL Version:             11.0.0.5919
 -- --------------------------------------------------------
 
---
--- Structure de la table `pet_list`
---
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
-DROP TABLE IF EXISTS `pet_list`;
+-- Dumping structure for table tpzdb.pet_list
 CREATE TABLE IF NOT EXISTS `pet_list` (
   `petid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` char(15) NOT NULL,
-  `poolid` int(10) unsigned NOT NULL DEFAULT '0',
-  `minLevel` tinyint(2) unsigned NOT NULL DEFAULT '0',
-  `maxLevel` tinyint(2) unsigned NOT NULL DEFAULT '0',
-  `time` int(10) unsigned NOT NULL DEFAULT '0',
-  `element` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `name` char(16) NOT NULL,
+  `poolid` int(10) unsigned NOT NULL DEFAULT 0,
+  `minLevel` tinyint(2) unsigned NOT NULL DEFAULT 0,
+  `maxLevel` tinyint(2) unsigned NOT NULL DEFAULT 0,
+  `time` int(10) unsigned NOT NULL DEFAULT 0,
+  `element` tinyint(3) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`petid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+) ENGINE=MyISAM AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
 
---
--- Contenu de la table `pet_list`
---
+-- Dumping data for table tpzdb.pet_list: 118 rows
+/*!40000 ALTER TABLE `pet_list` DISABLE KEYS */;
+INSERT INTO `pet_list` (`petid`, `name`, `poolid`, `minLevel`, `maxLevel`, `time`, `element`) VALUES
+	(0, 'FireSpirit', 5830, 1, 99, 0, 1),
+	(1, 'IceSpirit', 5831, 1, 99, 0, 2),
+	(2, 'AirSpirit', 5832, 1, 99, 0, 3),
+	(3, 'EarthSpirit', 5833, 1, 99, 0, 4),
+	(4, 'ThunderSpirit', 5834, 1, 99, 0, 5),
+	(5, 'WaterSpirit', 5835, 1, 99, 0, 6),
+	(6, 'LightSpirit', 5836, 1, 99, 0, 7),
+	(7, 'DarkSpirit', 5837, 1, 99, 0, 8),
+	(8, 'Carbuncle', 4588, 1, 99, 0, 7),
+	(9, 'Fenrir', 4581, 1, 99, 0, 8),
+	(10, 'Ifrit', 4582, 1, 99, 0, 1),
+	(11, 'Titan', 4583, 1, 99, 0, 4),
+	(12, 'Leviathan', 4584, 1, 99, 0, 6),
+	(13, 'Garuda', 4585, 1, 99, 0, 3),
+	(14, 'Shiva', 4586, 1, 99, 0, 2),
+	(15, 'Ramuh', 4587, 1, 99, 0, 5),
+	(16, 'Diabolos', 4590, 1, 99, 0, 8),
+	(17, 'Alexander', 4589, 1, 99, 0, 7),
+	(18, 'Odin', 4591, 1, 99, 0, 8),
+	(19, 'Atomos', 1, 1, 99, 0, 0),
+	(20, 'CaitSith', 6233, 1, 99, 0, 7),
+	(21, 'SheepFamiliar', 4598, 23, 35, 3600, 0),
+	(22, 'HareFamiliar', 4641, 23, 35, 5400, 0),
+	(23, 'CrabFamiliar', 4610, 23, 55, 1800, 0),
+	(24, 'CourierCarrie', 4611, 23, 75, 1800, 0),
+	(25, 'Homunculus', 4616, 23, 75, 3600, 0),
+	(26, 'FlytrapFamiliar', 4619, 28, 40, 3600, 0),
+	(27, 'TigerFamiliar', 4604, 28, 40, 3600, 0),
+	(28, 'FlowerpotBill', 4602, 28, 40, 3600, 0),
+	(29, 'EftFamiliar', 4621, 33, 45, 3600, 0),
+	(30, 'LizardFamiliar', 4600, 33, 45, 3600, 0),
+	(31, 'MayflyFamiliar', 4596, 33, 45, 3600, 0),
+	(32, 'FunguarFamiliar', 4614, 33, 65, 3600, 0),
+	(33, 'BeetleFamiliar', 4606, 38, 45, 3600, 0),
+	(34, 'AntlionFamiliar', 4625, 38, 50, 3600, 0),
+	(35, 'MiteFamiliar', 4623, 43, 55, 3600, 0),
+	(36, 'LullabyMelodia', 4599, 43, 55, 3600, 0),
+	(37, 'KeenearedSteffi', 4595, 43, 55, 5400, 0),
+	(38, 'FlowerpotBen', 4603, 51, 63, 3600, 0),
+	(39, 'SaberSiravarde', 4605, 51, 63, 3600, 0),
+	(40, 'ColdbloodComo', 4601, 53, 65, 3600, 0),
+	(41, 'ShellbusterOrob', 4597, 53, 65, 3600, 0),
+	(42, 'VoraciousAudrey', 4620, 53, 75, 3600, 0),
+	(43, 'AmbusherAllie', 4622, 58, 75, 3600, 0),
+	(44, 'LifedrinkerLars', 4624, 63, 75, 3600, 0),
+	(45, 'PanzerGalahad', 4607, 63, 75, 3600, 0),
+	(46, 'ChopsueyChucky', 4626, 63, 75, 1800, 0),
+	(47, 'AmigoSabotender', 4618, 75, 75, 1200, 0),
+	(48, 'Wyvern', 5551, 1, 119, 0, 0),
+	(49, 'CraftyClyvonne', 4608, 76, 90, 7200, 0),
+	(50, 'BloodclawShasr', 4609, 90, 99, 7200, 0),
+	(51, 'LuckyLulush', 4612, 76, 99, 7200, 0),
+	(52, 'FatsoFargann', 4613, 81, 99, 7200, 0),
+	(53, 'DiscreetLouise', 4615, 79, 99, 7200, 0),
+	(54, 'SwiftSieghard', 4617, 86, 96, 7200, 0),
+	(55, 'DipperYuly', 4627, 76, 99, 7200, 0),
+	(56, 'FlowerpotMerle', 4628, 76, 99, 10800, 0),
+	(57, 'NurseryNazuna', 4629, 76, 86, 7200, 0),
+	(58, 'MailbusterCetas', 4630, 85, 95, 7200, 0),
+	(59, 'AudaciousAnna', 4631, 85, 95, 7200, 0),
+	(60, 'PrestoJulio', 4632, 83, 93, 7200, 0),
+	(61, 'BugeyedBroncha', 4633, 90, 99, 7200, 0),
+	(62, 'GooeyGerard', 4634, 95, 99, 5400, 0),
+	(63, 'GorefangHobs', 4635, 93, 99, 7200, 0),
+	(64, 'FaithfulFalcor', 4636, 86, 99, 5400, 0),
+	(65, 'CrudeRaphie', 4637, 96, 99, 5400, 0),
+	(66, 'DapperMac', 4638, 76, 99, 7200, 0),
+	(67, 'SlipperySilas', 4639, 23, 99, 1800, 0),
+	(68, 'TurbidToloi', 4640, 23, 99, 3600, 0),
+	(69, 'HarlequinFrame', 5124, 1, 119, 0, 0),
+	(70, 'ValoredgeFrame', 5125, 1, 119, 0, 0),
+	(71, 'SharpshotFrame', 5126, 1, 119, 0, 0),
+	(72, 'StormwakerFrame', 5127, 1, 119, 0, 0),
+	(75, 'Luopan', 6040, 1, 119, 0, 0),
+	(76, 'Siren', 6234, 1, 99, 0, 3),
+	(73, 'AdventuringFell', 1, 1, 119, 0, 0),
+	(74, 'Chocobo', 2, 1, 119, 0, 4),
+	(77, 'AmiableRoche', 6235, 99, 110, 7200, 0),
+	(78, 'SweetCaroline', 6236, 99, 119, 7200, 0),
+	(79, 'HeadbreakerKen', 6237, 99, 115, 7200, 0),
+	(80, 'AnklebiterJedd', 6238, 99, 116, 7200, 0),
+	(81, 'CursedAnnabelle', 6239, 99, 118, 7200, 0),
+	(82, 'BrainyWaluis', 6240, 99, 113, 7200, 0),
+	(83, 'GenerousArthur', 6241, 99, 119, 7200, 0),
+	(84, 'RedolentCandi', 6242, 99, 115, 7200, 0),
+	(85, 'AlluringHoney', 6243, 99, 119, 7200, 0),
+	(86, 'CaringKiyomaro', 6244, 99, 116, 7200, 0),
+	(87, 'VivaciousVickie', 6245, 99, 119, 7200, 0),
+	(88, 'SuspiciousAlice', 6246, 99, 113, 7200, 0),
+	(89, 'SurgingStorm', 6247, 99, 118, 7200, 0),
+	(90, 'SubmergedIyo', 6248, 99, 119, 7200, 0),
+	(91, 'WarlikePatrick', 6249, 99, 104, 7200, 0),
+	(92, 'RhymingShizuna', 6250, 99, 107, 7200, 0),
+	(93, 'BlackbeardRandy', 6251, 99, 117, 7200, 0),
+	(94, 'ThreestarLynn', 6252, 99, 119, 7200, 0),
+	(95, 'HurlerPercival', 6253, 99, 116, 7200, 0),
+	(96, 'AcuexFamiliar', 6254, 99, 119, 7200, 0),
+	(97, 'FluffyBredo', 6255, 99, 119, 7200, 0),
+	(98, 'WeevilFamiliar', 6256, 99, 119, 7200, 0),
+	(99, 'StalwartAngelina', 6257, 99, 119, 7200, 0),
+	(100, 'FleetReinhard', 6258, 99, 117, 7200, 0),
+	(101, 'SharpwitHermes', 6259, 99, 119, 7200, 0),
+	(102, 'AttentiveIbuki', 6260, 99, 109, 7200, 0),
+	(103, 'SwoopingZhivago', 6261, 99, 119, 7200, 0),
+	(104, 'SunburstMalfik', 6262, 99, 104, 7200, 0),
+	(105, 'AgedAngus', 6263, 99, 105, 7200, 0),
+	(106, 'ScissorlegXerin', 6264, 99, 105, 7200, 0),
+	(107, 'BouncingBertha', 6265, 99, 105, 7200, 0),
+	(108, 'SpiderFamiliar', 6266, 99, 118, 7200, 0),
+	(109, 'GussyHachirobe', 6267, 99, 119, 7200, 0),
+	(110, 'ColibriFamiliar', 6268, 99, 117, 7200, 0),
+	(111, 'ChoralLeera', 6269, 99, 119, 7200, 0),
+	(112, 'DroopyDortwin', 6270, 99, 103, 7200, 0),
+	(113, 'PonderingPeter', 6271, 99, 103, 7200, 0),
+	(114, 'HeraldHenry', 6272, 99, 113, 7200, 0),
+	(115, 'MosquitoFamiliar', 6273, 99, 119, 7200, 0),
+	(116, 'Left-HandedYoko', 6274, 99, 119, 7200, 0),
+	(117, 'BraveHeroGlenn', 6275, 99, 119, 7200, 0);
+/*!40000 ALTER TABLE `pet_list` ENABLE KEYS */;
 
-INSERT INTO `pet_list` VALUES (0, 'FireSpirit', 5830, 1, 99, 0, 1);
-INSERT INTO `pet_list` VALUES (1, 'IceSpirit', 5831, 1, 99, 0, 2);
-INSERT INTO `pet_list` VALUES (2, 'AirSpirit', 5832, 1, 99, 0, 3);
-INSERT INTO `pet_list` VALUES (3, 'EarthSpirit', 5833, 1, 99, 0, 4);
-INSERT INTO `pet_list` VALUES (4, 'ThunderSpirit', 5834, 1, 99, 0, 5);
-INSERT INTO `pet_list` VALUES (5, 'WaterSpirit', 5835, 1, 99, 0, 6);
-INSERT INTO `pet_list` VALUES (6, 'LightSpirit', 5836, 1, 99, 0, 7);
-INSERT INTO `pet_list` VALUES (7, 'DarkSpirit', 5837, 1, 99, 0, 8);
-INSERT INTO `pet_list` VALUES (8, 'Carbuncle', 4588, 1, 99, 0, 7);
-INSERT INTO `pet_list` VALUES (9, 'Fenrir', 4581, 1, 99, 0, 8);
-INSERT INTO `pet_list` VALUES (10, 'Ifrit', 4582, 1, 99, 0, 1);
-INSERT INTO `pet_list` VALUES (11, 'Titan', 4583, 1, 99, 0, 4);
-INSERT INTO `pet_list` VALUES (12, 'Leviathan', 4584, 1, 99, 0, 6);
-INSERT INTO `pet_list` VALUES (13, 'Garuda', 4585, 1, 99, 0, 3);
-INSERT INTO `pet_list` VALUES (14, 'Shiva', 4586, 1, 99, 0, 2);
-INSERT INTO `pet_list` VALUES (15, 'Ramuh', 4587, 1, 99, 0, 5);
-INSERT INTO `pet_list` VALUES (16, 'Diabolos', 4590, 1, 99, 0, 8);
-INSERT INTO `pet_list` VALUES (17, 'Alexander', 4589, 1, 99, 0, 7);
-INSERT INTO `pet_list` VALUES (18, 'Odin', 4591, 1, 99, 0, 8);
-INSERT INTO `pet_list` VALUES (19, 'Atomos', 1, 1, 99, 0, 0);
-INSERT INTO `pet_list` VALUES (20, 'CaitSith', 1, 1, 99, 0, 0);
-INSERT INTO `pet_list` VALUES (21, 'SheepFamiliar', 4598, 23, 35, 3600, 0);
-INSERT INTO `pet_list` VALUES (22, 'HareFamiliar', 4641, 23, 35, 5400, 0);
-INSERT INTO `pet_list` VALUES (23, 'CrabFamiliar', 4610, 23, 55, 1800, 0);
-INSERT INTO `pet_list` VALUES (24, 'CourierCarrie', 4611, 23, 75, 1800, 0);
-INSERT INTO `pet_list` VALUES (25, 'Homunculus', 4616, 23, 75, 3600, 0);
-INSERT INTO `pet_list` VALUES (26, 'FlytrapFamiliar', 4619, 28, 40, 3600, 0);
-INSERT INTO `pet_list` VALUES (27, 'TigerFamiliar', 4604, 28, 40, 3600, 0);
-INSERT INTO `pet_list` VALUES (28, 'FlowerpotBill', 4602, 28, 40, 3600, 0);
-INSERT INTO `pet_list` VALUES (29, 'EftFamiliar', 4621, 33, 45, 3600, 0);
-INSERT INTO `pet_list` VALUES (30, 'LizardFamiliar', 4600, 33, 45, 3600, 0);
-INSERT INTO `pet_list` VALUES (31, 'MayflyFamiliar', 4596, 33, 45, 3600, 0);
-INSERT INTO `pet_list` VALUES (32, 'FunguarFamiliar', 4614, 33, 65, 3600, 0);
-INSERT INTO `pet_list` VALUES (33, 'BeetleFamiliar', 4606, 38, 45, 3600, 0);
-INSERT INTO `pet_list` VALUES (34, 'AntlionFamiliar', 4625, 38, 50, 3600, 0);
-INSERT INTO `pet_list` VALUES (35, 'MiteFamiliar', 4623, 43, 55, 3600, 0);
-INSERT INTO `pet_list` VALUES (36, 'LullabyMelodia', 4599, 43, 55, 3600, 0);
-INSERT INTO `pet_list` VALUES (37, 'KeenearedSteffi', 4595, 43, 55, 5400, 0);
-INSERT INTO `pet_list` VALUES (38, 'FlowerpotBen', 4603, 51, 63, 3600, 0);
-INSERT INTO `pet_list` VALUES (39, 'SaberSiravarde', 4605, 51, 63, 3600, 0);
-INSERT INTO `pet_list` VALUES (40, 'ColdbloodComo', 4601, 53, 65, 3600, 0);
-INSERT INTO `pet_list` VALUES (41, 'ShellbusterOrob', 4597, 53, 65, 3600, 0);
-INSERT INTO `pet_list` VALUES (42, 'VoraciousAudrey', 4620, 53, 75, 3600, 0);
-INSERT INTO `pet_list` VALUES (43, 'AmbusherAllie', 4622, 58, 75, 3600, 0);
-INSERT INTO `pet_list` VALUES (44, 'LifedrinkerLars', 4624, 63, 75, 3600, 0);
-INSERT INTO `pet_list` VALUES (45, 'PanzerGalahad', 4607, 63, 75, 3600, 0);
-INSERT INTO `pet_list` VALUES (46, 'ChopsueyChucky', 4626, 63, 85, 1800, 0);
-INSERT INTO `pet_list` VALUES (47, 'AmigoSabotender', 4618, 75, 85, 1200, 0);
-INSERT INTO `pet_list` VALUES (48, 'Wyvern', 5551, 1, 99, 0, 0);
-INSERT INTO `pet_list` VALUES (49, 'Crafty Clyvonne', 4608, 76, 90, 7200, 0);
-INSERT INTO `pet_list` VALUES (50, 'Bloodclaw Shasr', 4609, 90, 99, 7200, 0);
-INSERT INTO `pet_list` VALUES (51, 'Lucky Lulush', 4612, 76, 99, 7200, 0);
-INSERT INTO `pet_list` VALUES (52, 'Fatso Fargann', 4613, 81, 99, 7200, 0);
-INSERT INTO `pet_list` VALUES (53, 'Discreet Louise', 4615, 79, 99, 7200, 0);
-INSERT INTO `pet_list` VALUES (54, 'Swift Sieghard', 4617, 86, 94, 7200, 0);
-INSERT INTO `pet_list` VALUES (55, 'Dipper Yuly', 4627, 76, 99, 7200, 0);
-INSERT INTO `pet_list` VALUES (56, 'Flowerpot Merle', 4628, 76, 99, 10800, 0);
-INSERT INTO `pet_list` VALUES (57, 'Nursery Nazuna', 4629, 76, 86, 7200, 0);
-INSERT INTO `pet_list` VALUES (58, 'Mailbuster Ceta', 4630, 85, 95, 7200, 0);
-INSERT INTO `pet_list` VALUES (59, 'Audacious Anna', 4631, 85, 95, 7200, 0);
-INSERT INTO `pet_list` VALUES (60, 'Presto Julio', 4632, 83, 93, 7200, 0);
-INSERT INTO `pet_list` VALUES (61, 'Bugeyed Broncha', 4633, 90, 99, 7200, 0);
-INSERT INTO `pet_list` VALUES (62, 'Gooey Gerard', 4634, 95, 99, 5400, 0);
-INSERT INTO `pet_list` VALUES (63, 'Gorefang Hobs', 4635, 93, 99, 7200, 0);
-INSERT INTO `pet_list` VALUES (64, 'Faithful Falcor', 4636, 86, 99, 5400, 0);
-INSERT INTO `pet_list` VALUES (65, 'Crude Raphie', 4637, 96, 99, 5400, 0);
-INSERT INTO `pet_list` VALUES (66, 'Dapper Mac', 4638, 76, 99, 7200, 0);
-INSERT INTO `pet_list` VALUES (67, 'Slippery Silas', 4639, 23, 99, 1800, 0);
-INSERT INTO `pet_list` VALUES (68, 'Turbid Toloi', 4640, 23, 99, 3600, 0);
-INSERT INTO `pet_list` VALUES (69, 'HarlequinFrame', 5124, 1, 99, 0, 0);
-INSERT INTO `pet_list` VALUES (70, 'ValoredgeFrame', 5125, 1, 99, 0, 0);
-INSERT INTO `pet_list` VALUES (71, 'SharpshotFrame', 5126, 1, 99, 0, 0);
-INSERT INTO `pet_list` VALUES (72, 'StormwakerFrame', 5127, 1, 99, 0, 0);
--- INSERT INTO `pet_list` VALUES (73, 'AdventuringFellow', 0, 1, 99, 0, 0);
--- 74 is Chocobo in the enum..
-INSERT INTO `pet_list` VALUES (75, 'Luopan', 6040, 1, 99, 0, 0);
-
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

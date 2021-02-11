@@ -1,1141 +1,1155 @@
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               10.5.5-MariaDB - mariadb.org binary distribution
+-- Server OS:                    Win64
+-- HeidiSQL Version:             11.0.0.5919
+-- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
-DROP TABLE IF EXISTS `pet_name`;
+-- Dumping structure for table tpzdb.pet_name
 CREATE TABLE IF NOT EXISTS `pet_name` (
   `id` smallint(3) unsigned NOT NULL,
   `name` char(15) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `pet_name` VALUES (0,'');
-INSERT INTO `pet_name` VALUES (1, 'Azure');
-INSERT INTO `pet_name` VALUES (2, 'Cerulean');
-INSERT INTO `pet_name` VALUES (3, 'Rygor');
-INSERT INTO `pet_name` VALUES (4, 'Firewing');
-INSERT INTO `pet_name` VALUES (5, 'Delphyne');
-INSERT INTO `pet_name` VALUES (6, 'Ember');
-INSERT INTO `pet_name` VALUES (7, 'Rover');
-INSERT INTO `pet_name` VALUES (8, 'Max');
-INSERT INTO `pet_name` VALUES (9, 'Buster');
-INSERT INTO `pet_name` VALUES (10, 'Duke');
-INSERT INTO `pet_name` VALUES (11, 'Oscar');
-INSERT INTO `pet_name` VALUES (12, 'Maggie');
-INSERT INTO `pet_name` VALUES (13, 'Jessie');
-INSERT INTO `pet_name` VALUES (14, 'Lady');
-INSERT INTO `pet_name` VALUES (15, 'Hien');
-INSERT INTO `pet_name` VALUES (16, 'Raiden');
-INSERT INTO `pet_name` VALUES (17, 'Lumiere');
-INSERT INTO `pet_name` VALUES (18, 'Eisenzahn');
-INSERT INTO `pet_name` VALUES (19, 'Pfeil');
-INSERT INTO `pet_name` VALUES (20, 'Wuffi');
-INSERT INTO `pet_name` VALUES (21, 'George');
-INSERT INTO `pet_name` VALUES (22, 'Donryu');
-INSERT INTO `pet_name` VALUES (23, 'Qiqiru');
-INSERT INTO `pet_name` VALUES (24, 'Karav-Marav');
-INSERT INTO `pet_name` VALUES (25, 'Oboro');
-INSERT INTO `pet_name` VALUES (26, 'Darug-Borug');
-INSERT INTO `pet_name` VALUES (27, 'Mikan');
-INSERT INTO `pet_name` VALUES (28, 'Vhiki');
-INSERT INTO `pet_name` VALUES (29, 'Sasavi');
-INSERT INTO `pet_name` VALUES (30, 'Tatang');
-INSERT INTO `pet_name` VALUES (31, 'Nanaja');
-INSERT INTO `pet_name` VALUES (32, 'Khocha');
-INSERT INTO `pet_name` VALUES (33, 'Dino');
-INSERT INTO `pet_name` VALUES (34, 'Chomper');
-INSERT INTO `pet_name` VALUES (35, 'Huffy');
-INSERT INTO `pet_name` VALUES (36, 'Pouncer');
-INSERT INTO `pet_name` VALUES (37, 'Fido');
-INSERT INTO `pet_name` VALUES (38, 'Lucy');
-INSERT INTO `pet_name` VALUES (39, 'Jake');
-INSERT INTO `pet_name` VALUES (40, 'Rocky');
-INSERT INTO `pet_name` VALUES (41, 'Rex');
-INSERT INTO `pet_name` VALUES (42, 'Rusty');
-INSERT INTO `pet_name` VALUES (43, 'Himmelskralle');
-INSERT INTO `pet_name` VALUES (44, 'Gizmo');
-INSERT INTO `pet_name` VALUES (45, 'Spike');
-INSERT INTO `pet_name` VALUES (46, 'Sylvester');
-INSERT INTO `pet_name` VALUES (47, 'Milo');
-INSERT INTO `pet_name` VALUES (48, 'Tom');
-INSERT INTO `pet_name` VALUES (49, 'Toby');
-INSERT INTO `pet_name` VALUES (50, 'Felix');
-INSERT INTO `pet_name` VALUES (51, 'Komet');
-INSERT INTO `pet_name` VALUES (52, 'Bo');
-INSERT INTO `pet_name` VALUES (53, 'Molly');
-INSERT INTO `pet_name` VALUES (54, 'Unryu');
-INSERT INTO `pet_name` VALUES (55, 'Daisy');
-INSERT INTO `pet_name` VALUES (56, 'Baron');
-INSERT INTO `pet_name` VALUES (57, 'Ginger');
-INSERT INTO `pet_name` VALUES (58, 'Muffin');
-INSERT INTO `pet_name` VALUES (59, 'Lumineux');
-INSERT INTO `pet_name` VALUES (60, 'Quatrevents');
-INSERT INTO `pet_name` VALUES (61, 'Toryu');
-INSERT INTO `pet_name` VALUES (62, 'Tataba');
-INSERT INTO `pet_name` VALUES (63, 'Etoilazuree');
-INSERT INTO `pet_name` VALUES (64, 'Grisnuage');
-INSERT INTO `pet_name` VALUES (65, 'Belorage');
-INSERT INTO `pet_name` VALUES (66, 'Centonnerre');
-INSERT INTO `pet_name` VALUES (67, 'Nouvellune');
-INSERT INTO `pet_name` VALUES (68, 'Missy');
-INSERT INTO `pet_name` VALUES (69, 'Amedeo');
-INSERT INTO `pet_name` VALUES (70, 'Tranchevent');
-INSERT INTO `pet_name` VALUES (71, 'Soufflefeu');
-INSERT INTO `pet_name` VALUES (72, 'Etoile');
-INSERT INTO `pet_name` VALUES (73, 'Tonnerre');
-INSERT INTO `pet_name` VALUES (74, 'Nuage');
-INSERT INTO `pet_name` VALUES (75, 'Foudre');
-INSERT INTO `pet_name` VALUES (76, 'Hyuh');
-INSERT INTO `pet_name` VALUES (77, 'Orage');
-INSERT INTO `pet_name` VALUES (78, 'Lune');
-INSERT INTO `pet_name` VALUES (79, 'Astre');
-INSERT INTO `pet_name` VALUES (80, 'Waffenzahn');
-INSERT INTO `pet_name` VALUES (81, 'Soleil');
-INSERT INTO `pet_name` VALUES (82, 'Courageux');
-INSERT INTO `pet_name` VALUES (83, 'Koffla-Paffla');
-INSERT INTO `pet_name` VALUES (84, 'Venteuse');
-INSERT INTO `pet_name` VALUES (85, 'Lunaire');
-INSERT INTO `pet_name` VALUES (86, 'Tora');
-INSERT INTO `pet_name` VALUES (87, 'Celeste');
-INSERT INTO `pet_name` VALUES (88, 'Galja-Mogalja');
-INSERT INTO `pet_name` VALUES (89, 'Gaboh');
-INSERT INTO `pet_name` VALUES (90, 'Vhyun');
-INSERT INTO `pet_name` VALUES (91, 'Orageuse');
-INSERT INTO `pet_name` VALUES (92, 'Stellaire');
-INSERT INTO `pet_name` VALUES (93, 'Solaire');
-INSERT INTO `pet_name` VALUES (94, 'Wirbelwind');
-INSERT INTO `pet_name` VALUES (95, 'Blutkralle');
-INSERT INTO `pet_name` VALUES (96, 'Bogen');
-INSERT INTO `pet_name` VALUES (97, 'Junker');
-INSERT INTO `pet_name` VALUES (98, 'Flink');
-INSERT INTO `pet_name` VALUES (99, 'Knirps');
-INSERT INTO `pet_name` VALUES (100, 'Bodo');
-INSERT INTO `pet_name` VALUES (101, 'Soryu');
-INSERT INTO `pet_name` VALUES (102, 'Wawaro');
-INSERT INTO `pet_name` VALUES (103, 'Totona');
-INSERT INTO `pet_name` VALUES (104, 'Levian-Movian');
-INSERT INTO `pet_name` VALUES (105, 'Kagero');
-INSERT INTO `pet_name` VALUES (106, 'Joseph');
-INSERT INTO `pet_name` VALUES (107, 'Paparal');
-INSERT INTO `pet_name` VALUES (108, 'Coco');
-INSERT INTO `pet_name` VALUES (109, 'Ringo');
-INSERT INTO `pet_name` VALUES (110, 'Nonomi');
-INSERT INTO `pet_name` VALUES (111, 'Teter');
-INSERT INTO `pet_name` VALUES (112, 'Gigima');
-INSERT INTO `pet_name` VALUES (113, 'Gogodavi');
-INSERT INTO `pet_name` VALUES (114, 'Rurumo');
-INSERT INTO `pet_name` VALUES (115, 'Tupah');
-INSERT INTO `pet_name` VALUES (116, 'Jyubih');
-INSERT INTO `pet_name` VALUES (117, 'Majha');
-INSERT INTO `pet_name` VALUES (118, 'Luron');
-INSERT INTO `pet_name` VALUES (119, 'Drille');
-INSERT INTO `pet_name` VALUES (120, 'Tournefoux');
-INSERT INTO `pet_name` VALUES (121, 'Chafouin');
-INSERT INTO `pet_name` VALUES (122, 'Plaisantin');
-INSERT INTO `pet_name` VALUES (123, 'Loustic');
-INSERT INTO `pet_name` VALUES (124, 'Histrion');
-INSERT INTO `pet_name` VALUES (125, 'Bobeche');
-INSERT INTO `pet_name` VALUES (126, 'Bougrion');
-INSERT INTO `pet_name` VALUES (127, 'Rouleteau');
-INSERT INTO `pet_name` VALUES (128, 'Allouette');
-INSERT INTO `pet_name` VALUES (129, 'Serenade');
-INSERT INTO `pet_name` VALUES (130, 'Ficelette');
-INSERT INTO `pet_name` VALUES (131, 'Tocadie');
-INSERT INTO `pet_name` VALUES (132, 'Caprice');
-INSERT INTO `pet_name` VALUES (133, 'Foucade');
-INSERT INTO `pet_name` VALUES (134, 'Capillotte');
-INSERT INTO `pet_name` VALUES (135, 'Quenotte');
-INSERT INTO `pet_name` VALUES (136, 'Pacotille');
-INSERT INTO `pet_name` VALUES (137, 'Comedie');
-INSERT INTO `pet_name` VALUES (138, 'Kagekiyo');
-INSERT INTO `pet_name` VALUES (139, 'Toraoh');
-INSERT INTO `pet_name` VALUES (140, 'Genta');
-INSERT INTO `pet_name` VALUES (141, 'Kintoki');
-INSERT INTO `pet_name` VALUES (142, 'Koumei');
-INSERT INTO `pet_name` VALUES (143, 'Pamama');
-INSERT INTO `pet_name` VALUES (144, 'Lobo');
-INSERT INTO `pet_name` VALUES (145, 'Tsukushi');
-INSERT INTO `pet_name` VALUES (146, 'Oniwaka');
-INSERT INTO `pet_name` VALUES (147, 'Kenbishi');
-INSERT INTO `pet_name` VALUES (148, 'Hannya');
-INSERT INTO `pet_name` VALUES (149, 'Mashira');
-INSERT INTO `pet_name` VALUES (150, 'Nadeshiko');
-INSERT INTO `pet_name` VALUES (151, 'E100');
-INSERT INTO `pet_name` VALUES (152, 'Koume');
-INSERT INTO `pet_name` VALUES (153, 'X-32');
-INSERT INTO `pet_name` VALUES (154, 'Poppo');
-INSERT INTO `pet_name` VALUES (155, 'Asuka');
-INSERT INTO `pet_name` VALUES (156, 'Sakura');
-INSERT INTO `pet_name` VALUES (157, 'Tao');
-INSERT INTO `pet_name` VALUES (158, 'Mao');
-INSERT INTO `pet_name` VALUES (159, 'Gadget');
-INSERT INTO `pet_name` VALUES (160, 'Marion');
-INSERT INTO `pet_name` VALUES (161, 'Widget');
-INSERT INTO `pet_name` VALUES (162, 'Quirk');
-INSERT INTO `pet_name` VALUES (163, 'Sprocket');
-INSERT INTO `pet_name` VALUES (164, 'Cogette');
-INSERT INTO `pet_name` VALUES (165, 'Lecter');
-INSERT INTO `pet_name` VALUES (166, 'Coppelia');
-INSERT INTO `pet_name` VALUES (167, 'Sparky');
-INSERT INTO `pet_name` VALUES (168, 'Clank');
-INSERT INTO `pet_name` VALUES (169, 'Calcobrena');
-INSERT INTO `pet_name` VALUES (170, 'Crackle');
-INSERT INTO `pet_name` VALUES (171, 'Ricochet');
-INSERT INTO `pet_name` VALUES (172, 'Josette');
-INSERT INTO `pet_name` VALUES (173, 'Fritz');
-INSERT INTO `pet_name` VALUES (174, 'Skippy');
-INSERT INTO `pet_name` VALUES (175, 'Pino');
-INSERT INTO `pet_name` VALUES (176, 'Mandarin');
-INSERT INTO `pet_name` VALUES (177, 'Jackstraw');
-INSERT INTO `pet_name` VALUES (178, 'Guignol');
-INSERT INTO `pet_name` VALUES (179, 'Moppet');
-INSERT INTO `pet_name` VALUES (180, 'Nutcracker');
-INSERT INTO `pet_name` VALUES (181, 'Erwin');
-INSERT INTO `pet_name` VALUES (182, 'Otto');
-INSERT INTO `pet_name` VALUES (183, 'Gustav');
-INSERT INTO `pet_name` VALUES (184, 'Muffin');
-INSERT INTO `pet_name` VALUES (185, 'Xaver');
-INSERT INTO `pet_name` VALUES (186, 'Toni');
-INSERT INTO `pet_name` VALUES (187, 'Ina');
-INSERT INTO `pet_name` VALUES (188, 'Gerda');
-INSERT INTO `pet_name` VALUES (189, 'Petra');
-INSERT INTO `pet_name` VALUES (190, 'Verena');
-INSERT INTO `pet_name` VALUES (191, 'Rosi');
-INSERT INTO `pet_name` VALUES (192, 'Schatzi');
-INSERT INTO `pet_name` VALUES (193, 'Warashi');
-INSERT INTO `pet_name` VALUES (194, 'Klingel');
-INSERT INTO `pet_name` VALUES (195, 'Clochette');
-INSERT INTO `pet_name` VALUES (196, 'Campanello');
-INSERT INTO `pet_name` VALUES (197, 'Kaiserin');
-INSERT INTO `pet_name` VALUES (198, 'Principessa');
-INSERT INTO `pet_name` VALUES (199, 'Butler');
-INSERT INTO `pet_name` VALUES (200, 'Graf');
-INSERT INTO `pet_name` VALUES (201, 'Caro');
-INSERT INTO `pet_name` VALUES (202, 'Cara');
-INSERT INTO `pet_name` VALUES (203, 'Mademoiselle');
-INSERT INTO `pet_name` VALUES (204, 'Herzog');
-INSERT INTO `pet_name` VALUES (205, 'Tramp');
-INSERT INTO `pet_name` VALUES (206, 'V-1000');
-INSERT INTO `pet_name` VALUES (207, 'Hikozaemon');
-INSERT INTO `pet_name` VALUES (208, 'Nine');
-INSERT INTO `pet_name` VALUES (209, 'Acht');
-INSERT INTO `pet_name` VALUES (210, 'Quattro');
-INSERT INTO `pet_name` VALUES (211, 'Zero');
-INSERT INTO `pet_name` VALUES (212, 'Dreizehn');
-INSERT INTO `pet_name` VALUES (213, 'Seize');
-INSERT INTO `pet_name` VALUES (214, 'Fukusuke');
-INSERT INTO `pet_name` VALUES (215, 'Mataemon');
-INSERT INTO `pet_name` VALUES (216, 'Kansuke');
-INSERT INTO `pet_name` VALUES (217, 'Polichinelle');
-INSERT INTO `pet_name` VALUES (218, 'Tobisuke');
-INSERT INTO `pet_name` VALUES (219, 'Sasuke');
-INSERT INTO `pet_name` VALUES (220, 'Shijimi');
-INSERT INTO `pet_name` VALUES (221, 'Chobi');
-INSERT INTO `pet_name` VALUES (222, 'Aurelie');
-INSERT INTO `pet_name` VALUES (223, 'Magalie');
-INSERT INTO `pet_name` VALUES (224, 'Aurore');
-INSERT INTO `pet_name` VALUES (225, 'Caroline');
-INSERT INTO `pet_name` VALUES (226, 'Andrea');
-INSERT INTO `pet_name` VALUES (227, 'Machinette');
-INSERT INTO `pet_name` VALUES (228, 'Clarine');
-INSERT INTO `pet_name` VALUES (229, 'Armelle');
-INSERT INTO `pet_name` VALUES (230, 'Reinette');
-INSERT INTO `pet_name` VALUES (231, 'Dorlote');
-INSERT INTO `pet_name` VALUES (232, 'Turlupin');
-INSERT INTO `pet_name` VALUES (233, 'Klaxon');
-INSERT INTO `pet_name` VALUES (234, 'Bambino');
-INSERT INTO `pet_name` VALUES (235, 'Potiron');
-INSERT INTO `pet_name` VALUES (236, 'Fustige');
-INSERT INTO `pet_name` VALUES (237, 'Amidon');
-INSERT INTO `pet_name` VALUES (238, 'Machin');
-INSERT INTO `pet_name` VALUES (239, 'Bidulon');
-INSERT INTO `pet_name` VALUES (240, 'Tandem');
-INSERT INTO `pet_name` VALUES (241, 'Prestidige');
-INSERT INTO `pet_name` VALUES (242, 'Purute-Porute');
-INSERT INTO `pet_name` VALUES (243, 'Bito-Rabito');
-INSERT INTO `pet_name` VALUES (244, 'Cocoa');
-INSERT INTO `pet_name` VALUES (245, 'Totomo');
-INSERT INTO `pet_name` VALUES (246, 'Centurion');
-INSERT INTO `pet_name` VALUES (247, 'A7V');
-INSERT INTO `pet_name` VALUES (248, 'Scipio');
-INSERT INTO `pet_name` VALUES (249, 'Sentinel');
-INSERT INTO `pet_name` VALUES (250, 'Pioneer');
-INSERT INTO `pet_name` VALUES (251, 'Seneschal');
-INSERT INTO `pet_name` VALUES (252, 'Ginjin');
-INSERT INTO `pet_name` VALUES (253, 'Amagatsu');
-INSERT INTO `pet_name` VALUES (254, 'Dolly');
-INSERT INTO `pet_name` VALUES (255, 'Fantoccini');
-INSERT INTO `pet_name` VALUES (256, 'Joe');
-INSERT INTO `pet_name` VALUES (257, 'Kikizaru');
-INSERT INTO `pet_name` VALUES (258, 'Whippet');
-INSERT INTO `pet_name` VALUES (259, 'Punchinello');
-INSERT INTO `pet_name` VALUES (260, 'Charlie');
-INSERT INTO `pet_name` VALUES (261, 'Midge');
-INSERT INTO `pet_name` VALUES (262, 'Petrouchka');
-INSERT INTO `pet_name` VALUES (263, 'Schneider');
-INSERT INTO `pet_name` VALUES (264, 'Ushabti');
-INSERT INTO `pet_name` VALUES (265, 'Noel');
-INSERT INTO `pet_name` VALUES (266, 'Yajirobe');
-INSERT INTO `pet_name` VALUES (267, 'Hina');
-INSERT INTO `pet_name` VALUES (268, 'Nora');
-INSERT INTO `pet_name` VALUES (269, 'Shoki');
-INSERT INTO `pet_name` VALUES (270, 'Kobina');
-INSERT INTO `pet_name` VALUES (271, 'Kokeshi');
-INSERT INTO `pet_name` VALUES (272, 'Mame');
-INSERT INTO `pet_name` VALUES (273, 'Bishop');
-INSERT INTO `pet_name` VALUES (274, 'Marvin');
-INSERT INTO `pet_name` VALUES (275, 'Dora');
-INSERT INTO `pet_name` VALUES (276, 'Data');
-INSERT INTO `pet_name` VALUES (277, 'Robin');
-INSERT INTO `pet_name` VALUES (278, 'Robby');
-INSERT INTO `pet_name` VALUES (279, 'Porlo-Moperlo');
-INSERT INTO `pet_name` VALUES (280, 'Paroko-Puronko');
-INSERT INTO `pet_name` VALUES (281, 'Pipima');
-INSERT INTO `pet_name` VALUES (282, 'Gagaja');
-INSERT INTO `pet_name` VALUES (283, 'Mobil');
-INSERT INTO `pet_name` VALUES (284, 'Donzel');
-INSERT INTO `pet_name` VALUES (285, 'Archer');
-INSERT INTO `pet_name` VALUES (286, 'Shooter');
-INSERT INTO `pet_name` VALUES (287, 'Stephen');
-INSERT INTO `pet_name` VALUES (288, 'Mk.IV');
-INSERT INTO `pet_name` VALUES (289, 'Conjurer');
-INSERT INTO `pet_name` VALUES (290, 'Footman');
-INSERT INTO `pet_name` VALUES (291, 'Tokotoko');
-INSERT INTO `pet_name` VALUES (292, 'Sancho');
-INSERT INTO `pet_name` VALUES (293, 'Sarumaro');
-INSERT INTO `pet_name` VALUES (294, 'Picket');
-INSERT INTO `pet_name` VALUES (295, 'Mushroom');
-INSERT INTO `pet_name` VALUES (296, 'G');
-INSERT INTO `pet_name` VALUES (297, 'I');
-INSERT INTO `pet_name` VALUES (298, 'Q');
-INSERT INTO `pet_name` VALUES (299, 'V');
-INSERT INTO `pet_name` VALUES (300, 'X');
-INSERT INTO `pet_name` VALUES (301, 'Z');
-INSERT INTO `pet_name` VALUES (302, 'II');
-INSERT INTO `pet_name` VALUES (303, 'IV');
-INSERT INTO `pet_name` VALUES (304, 'IX');
-INSERT INTO `pet_name` VALUES (305, 'Or');
-INSERT INTO `pet_name` VALUES (306, 'VI');
-INSERT INTO `pet_name` VALUES (307, 'XI');
-INSERT INTO `pet_name` VALUES (308, 'Ace');
-INSERT INTO `pet_name` VALUES (309, 'Air');
-INSERT INTO `pet_name` VALUES (310, 'Aki');
-INSERT INTO `pet_name` VALUES (311, 'Ayu');
-INSERT INTO `pet_name` VALUES (312, 'Bat');
-INSERT INTO `pet_name` VALUES (313, 'Bec');
-INSERT INTO `pet_name` VALUES (314, 'Bel');
-INSERT INTO `pet_name` VALUES (315, 'Big');
-INSERT INTO `pet_name` VALUES (316, 'Bon');
-INSERT INTO `pet_name` VALUES (317, 'Boy');
-INSERT INTO `pet_name` VALUES (318, 'Cap');
-INSERT INTO `pet_name` VALUES (319, 'Coq');
-INSERT INTO `pet_name` VALUES (320, 'Cry');
-INSERT INTO `pet_name` VALUES (321, 'Dom');
-INSERT INTO `pet_name` VALUES (322, 'Duc');
-INSERT INTO `pet_name` VALUES (323, 'Dun');
-INSERT INTO `pet_name` VALUES (324, 'End');
-INSERT INTO `pet_name` VALUES (325, 'Ete');
-INSERT INTO `pet_name` VALUES (326, 'Eye');
-INSERT INTO `pet_name` VALUES (327, 'Fat');
-INSERT INTO `pet_name` VALUES (328, 'Fee');
-INSERT INTO `pet_name` VALUES (329, 'Fer');
-INSERT INTO `pet_name` VALUES (330, 'Feu');
-INSERT INTO `pet_name` VALUES (331, 'Fog');
-INSERT INTO `pet_name` VALUES (332, 'Fox');
-INSERT INTO `pet_name` VALUES (333, 'Hot');
-INSERT INTO `pet_name` VALUES (334, 'Ice');
-INSERT INTO `pet_name` VALUES (335, 'Ice');
-INSERT INTO `pet_name` VALUES (336, 'Icy');
-INSERT INTO `pet_name` VALUES (337, 'III');
-INSERT INTO `pet_name` VALUES (338, 'Jet');
-INSERT INTO `pet_name` VALUES (339, 'Joy');
-INSERT INTO `pet_name` VALUES (340, 'Leg');
-INSERT INTO `pet_name` VALUES (341, 'Max');
-INSERT INTO `pet_name` VALUES (342, 'Neo');
-INSERT INTO `pet_name` VALUES (343, 'One');
-INSERT INTO `pet_name` VALUES (344, 'Pur');
-INSERT INTO `pet_name` VALUES (345, 'Ray');
-INSERT INTO `pet_name` VALUES (346, 'Red');
-INSERT INTO `pet_name` VALUES (347, 'Roi');
-INSERT INTO `pet_name` VALUES (348, 'Sea');
-INSERT INTO `pet_name` VALUES (349, 'Sky');
-INSERT INTO `pet_name` VALUES (350, 'Sui');
-INSERT INTO `pet_name` VALUES (351, 'Sun');
-INSERT INTO `pet_name` VALUES (352, 'Ten');
-INSERT INTO `pet_name` VALUES (353, 'Vif');
-INSERT INTO `pet_name` VALUES (354, 'VII');
-INSERT INTO `pet_name` VALUES (355, 'XII');
-INSERT INTO `pet_name` VALUES (356, 'Aile');
-INSERT INTO `pet_name` VALUES (357, 'Ange');
-INSERT INTO `pet_name` VALUES (358, 'Ardi');
-INSERT INTO `pet_name` VALUES (359, 'Beak');
-INSERT INTO `pet_name` VALUES (360, 'Beau');
-INSERT INTO `pet_name` VALUES (361, 'Best');
-INSERT INTO `pet_name` VALUES (362, 'Bleu');
-INSERT INTO `pet_name` VALUES (363, 'Blue');
-INSERT INTO `pet_name` VALUES (364, 'Bone');
-INSERT INTO `pet_name` VALUES (365, 'Cart');
-INSERT INTO `pet_name` VALUES (366, 'Chic');
-INSERT INTO `pet_name` VALUES (367, 'Ciel');
-INSERT INTO `pet_name` VALUES (368, 'Claw');
-INSERT INTO `pet_name` VALUES (369, 'Cool');
-INSERT INTO `pet_name` VALUES (370, 'Dame');
-INSERT INTO `pet_name` VALUES (371, 'Dark');
-INSERT INTO `pet_name` VALUES (372, 'Dore');
-INSERT INTO `pet_name` VALUES (373, 'Dray');
-INSERT INTO `pet_name` VALUES (374, 'Duke');
-INSERT INTO `pet_name` VALUES (375, 'Easy');
-INSERT INTO `pet_name` VALUES (376, 'Edel');
-INSERT INTO `pet_name` VALUES (377, 'Face');
-INSERT INTO `pet_name` VALUES (378, 'Fast');
-INSERT INTO `pet_name` VALUES (379, 'Fier');
-INSERT INTO `pet_name` VALUES (380, 'Fine');
-INSERT INTO `pet_name` VALUES (381, 'Fire');
-INSERT INTO `pet_name` VALUES (382, 'Foot');
-INSERT INTO `pet_name` VALUES (383, 'Fury');
-INSERT INTO `pet_name` VALUES (384, 'Fuyu');
-INSERT INTO `pet_name` VALUES (385, 'Gale');
-INSERT INTO `pet_name` VALUES (386, 'Girl');
-INSERT INTO `pet_name` VALUES (387, 'Goer');
-INSERT INTO `pet_name` VALUES (388, 'Gold');
-INSERT INTO `pet_name` VALUES (389, 'Good');
-INSERT INTO `pet_name` VALUES (390, 'Graf');
-INSERT INTO `pet_name` VALUES (391, 'Gray');
-INSERT INTO `pet_name` VALUES (392, 'Gust');
-INSERT INTO `pet_name` VALUES (393, 'Gute');
-INSERT INTO `pet_name` VALUES (394, 'Haoh');
-INSERT INTO `pet_name` VALUES (395, 'Haru');
-INSERT INTO `pet_name` VALUES (396, 'Held');
-INSERT INTO `pet_name` VALUES (397, 'Hero');
-INSERT INTO `pet_name` VALUES (398, 'Hope');
-INSERT INTO `pet_name` VALUES (399, 'Idol');
-INSERT INTO `pet_name` VALUES (400, 'Iris');
-INSERT INTO `pet_name` VALUES (401, 'Iron');
-INSERT INTO `pet_name` VALUES (402, 'Jack');
-INSERT INTO `pet_name` VALUES (403, 'Jade');
-INSERT INTO `pet_name` VALUES (404, 'Joli');
-INSERT INTO `pet_name` VALUES (405, 'Jung');
-INSERT INTO `pet_name` VALUES (406, 'Kiku');
-INSERT INTO `pet_name` VALUES (407, 'King');
-INSERT INTO `pet_name` VALUES (408, 'Kopf');
-INSERT INTO `pet_name` VALUES (409, 'Lady');
-INSERT INTO `pet_name` VALUES (410, 'Last');
-INSERT INTO `pet_name` VALUES (411, 'Lili');
-INSERT INTO `pet_name` VALUES (412, 'Lily');
-INSERT INTO `pet_name` VALUES (413, 'Line');
-INSERT INTO `pet_name` VALUES (414, 'Long');
-INSERT INTO `pet_name` VALUES (415, 'Lord');
-INSERT INTO `pet_name` VALUES (416, 'Luft');
-INSERT INTO `pet_name` VALUES (417, 'Luna');
-INSERT INTO `pet_name` VALUES (418, 'Lune');
-INSERT INTO `pet_name` VALUES (419, 'Mama');
-INSERT INTO `pet_name` VALUES (420, 'Mars');
-INSERT INTO `pet_name` VALUES (421, 'Miel');
-INSERT INTO `pet_name` VALUES (422, 'Miss');
-INSERT INTO `pet_name` VALUES (423, 'Momo');
-INSERT INTO `pet_name` VALUES (424, 'Mond');
-INSERT INTO `pet_name` VALUES (425, 'Moon');
-INSERT INTO `pet_name` VALUES (426, 'Nana');
-INSERT INTO `pet_name` VALUES (427, 'Nice');
-INSERT INTO `pet_name` VALUES (428, 'Noir');
-INSERT INTO `pet_name` VALUES (429, 'Nono');
-INSERT INTO `pet_name` VALUES (430, 'Nova');
-INSERT INTO `pet_name` VALUES (431, 'Nuit');
-INSERT INTO `pet_name` VALUES (432, 'Ocre');
-INSERT INTO `pet_name` VALUES (433, 'Olle');
-INSERT INTO `pet_name` VALUES (434, 'Papa');
-INSERT INTO `pet_name` VALUES (435, 'Pers');
-INSERT INTO `pet_name` VALUES (436, 'Phar');
-INSERT INTO `pet_name` VALUES (437, 'Pony');
-INSERT INTO `pet_name` VALUES (438, 'Pure');
-INSERT INTO `pet_name` VALUES (439, 'Rain');
-INSERT INTO `pet_name` VALUES (440, 'Rice');
-INSERT INTO `pet_name` VALUES (441, 'Rich');
-INSERT INTO `pet_name` VALUES (442, 'Road');
-INSERT INTO `pet_name` VALUES (443, 'Rose');
-INSERT INTO `pet_name` VALUES (444, 'Rote');
-INSERT INTO `pet_name` VALUES (445, 'Roux');
-INSERT INTO `pet_name` VALUES (446, 'Ruby');
-INSERT INTO `pet_name` VALUES (447, 'Sage');
-INSERT INTO `pet_name` VALUES (448, 'Snow');
-INSERT INTO `pet_name` VALUES (449, 'Star');
-INSERT INTO `pet_name` VALUES (450, 'Tail');
-INSERT INTO `pet_name` VALUES (451, 'Trot');
-INSERT INTO `pet_name` VALUES (452, 'Vega');
-INSERT INTO `pet_name` VALUES (453, 'Vent');
-INSERT INTO `pet_name` VALUES (454, 'Vert');
-INSERT INTO `pet_name` VALUES (455, 'VIII');
-INSERT INTO `pet_name` VALUES (456, 'Vive');
-INSERT INTO `pet_name` VALUES (457, 'Wave');
-INSERT INTO `pet_name` VALUES (458, 'West');
-INSERT INTO `pet_name` VALUES (459, 'Wild');
-INSERT INTO `pet_name` VALUES (460, 'Wind');
-INSERT INTO `pet_name` VALUES (461, 'Wing');
-INSERT INTO `pet_name` VALUES (462, 'XIII');
-INSERT INTO `pet_name` VALUES (463, 'Zero');
-INSERT INTO `pet_name` VALUES (464, 'Acier');
-INSERT INTO `pet_name` VALUES (465, 'Agate');
-INSERT INTO `pet_name` VALUES (466, 'Agile');
-INSERT INTO `pet_name` VALUES (467, 'Agnes');
-INSERT INTO `pet_name` VALUES (468, 'Ailee');
-INSERT INTO `pet_name` VALUES (469, 'Alpha');
-INSERT INTO `pet_name` VALUES (470, 'Amber');
-INSERT INTO `pet_name` VALUES (471, 'Ambre');
-INSERT INTO `pet_name` VALUES (472, 'Angel');
-INSERT INTO `pet_name` VALUES (473, 'Ardie');
-INSERT INTO `pet_name` VALUES (474, 'Arkie');
-INSERT INTO `pet_name` VALUES (475, 'Arrow');
-INSERT INTO `pet_name` VALUES (476, 'Avian');
-INSERT INTO `pet_name` VALUES (477, 'Azure');
-INSERT INTO `pet_name` VALUES (478, 'Baron');
-INSERT INTO `pet_name` VALUES (479, 'Belle');
-INSERT INTO `pet_name` VALUES (480, 'Beryl');
-INSERT INTO `pet_name` VALUES (481, 'Black');
-INSERT INTO `pet_name` VALUES (482, 'Blade');
-INSERT INTO `pet_name` VALUES (483, 'Blaue');
-INSERT INTO `pet_name` VALUES (484, 'Blaze');
-INSERT INTO `pet_name` VALUES (485, 'Bleue');
-INSERT INTO `pet_name` VALUES (486, 'Blitz');
-INSERT INTO `pet_name` VALUES (487, 'Blond');
-INSERT INTO `pet_name` VALUES (488, 'Blood');
-INSERT INTO `pet_name` VALUES (489, 'Bonne');
-INSERT INTO `pet_name` VALUES (490, 'Brave');
-INSERT INTO `pet_name` VALUES (491, 'Brian');
-INSERT INTO `pet_name` VALUES (492, 'Brise');
-INSERT INTO `pet_name` VALUES (493, 'Burst');
-INSERT INTO `pet_name` VALUES (494, 'Calme');
-INSERT INTO `pet_name` VALUES (495, 'Chaos');
-INSERT INTO `pet_name` VALUES (496, 'Clair');
-INSERT INTO `pet_name` VALUES (497, 'Cloud');
-INSERT INTO `pet_name` VALUES (498, 'Comet');
-INSERT INTO `pet_name` VALUES (499, 'Comte');
-INSERT INTO `pet_name` VALUES (500, 'Court');
-INSERT INTO `pet_name` VALUES (501, 'Craft');
-INSERT INTO `pet_name` VALUES (502, 'Crete');
-INSERT INTO `pet_name` VALUES (503, 'Crown');
-INSERT INTO `pet_name` VALUES (504, 'Dance');
-INSERT INTO `pet_name` VALUES (505, 'Dandy');
-INSERT INTO `pet_name` VALUES (506, 'Devil');
-INSERT INTO `pet_name` VALUES (507, 'Diana');
-INSERT INTO `pet_name` VALUES (508, 'Doree');
-INSERT INTO `pet_name` VALUES (509, 'Dream');
-INSERT INTO `pet_name` VALUES (510, 'Eager');
-INSERT INTO `pet_name` VALUES (511, 'Eagle');
-INSERT INTO `pet_name` VALUES (512, 'Ebony');
-INSERT INTO `pet_name` VALUES (513, 'Eisen');
-INSERT INTO `pet_name` VALUES (514, 'Ember');
-INSERT INTO `pet_name` VALUES (515, 'Engel');
-INSERT INTO `pet_name` VALUES (516, 'Fairy');
-INSERT INTO `pet_name` VALUES (517, 'Fatty');
-INSERT INTO `pet_name` VALUES (518, 'Feder');
-INSERT INTO `pet_name` VALUES (519, 'Feuer');
-INSERT INTO `pet_name` VALUES (520, 'Fiere');
-INSERT INTO `pet_name` VALUES (521, 'Fiery');
-INSERT INTO `pet_name` VALUES (522, 'Final');
-INSERT INTO `pet_name` VALUES (523, 'Flare');
-INSERT INTO `pet_name` VALUES (524, 'Fleet');
-INSERT INTO `pet_name` VALUES (525, 'Fleur');
-INSERT INTO `pet_name` VALUES (526, 'Flier');
-INSERT INTO `pet_name` VALUES (527, 'Flood');
-INSERT INTO `pet_name` VALUES (528, 'Flora');
-INSERT INTO `pet_name` VALUES (529, 'Flyer');
-INSERT INTO `pet_name` VALUES (530, 'Frais');
-INSERT INTO `pet_name` VALUES (531, 'Frost');
-INSERT INTO `pet_name` VALUES (532, 'Fuchs');
-INSERT INTO `pet_name` VALUES (533, 'Galop');
-INSERT INTO `pet_name` VALUES (534, 'Geist');
-INSERT INTO `pet_name` VALUES (535, 'Gelbe');
-INSERT INTO `pet_name` VALUES (536, 'Ghost');
-INSERT INTO `pet_name` VALUES (537, 'Glory');
-INSERT INTO `pet_name` VALUES (538, 'Grand');
-INSERT INTO `pet_name` VALUES (539, 'Great');
-INSERT INTO `pet_name` VALUES (540, 'Green');
-INSERT INTO `pet_name` VALUES (541, 'Guter');
-INSERT INTO `pet_name` VALUES (542, 'Gutes');
-INSERT INTO `pet_name` VALUES (543, 'Heart');
-INSERT INTO `pet_name` VALUES (544, 'Helle');
-INSERT INTO `pet_name` VALUES (545, 'Hiden');
-INSERT INTO `pet_name` VALUES (546, 'Hiten');
-INSERT INTO `pet_name` VALUES (547, 'Hiver');
-INSERT INTO `pet_name` VALUES (548, 'Hobby');
-INSERT INTO `pet_name` VALUES (549, 'Hyper');
-INSERT INTO `pet_name` VALUES (550, 'Ivory');
-INSERT INTO `pet_name` VALUES (551, 'Jaune');
-INSERT INTO `pet_name` VALUES (552, 'Jeune');
-INSERT INTO `pet_name` VALUES (553, 'Jinpu');
-INSERT INTO `pet_name` VALUES (554, 'Jolie');
-INSERT INTO `pet_name` VALUES (555, 'Jolly');
-INSERT INTO `pet_name` VALUES (556, 'Kluge');
-INSERT INTO `pet_name` VALUES (557, 'Knife');
-INSERT INTO `pet_name` VALUES (558, 'Komet');
-INSERT INTO `pet_name` VALUES (559, 'Kugel');
-INSERT INTO `pet_name` VALUES (560, 'Lahme');
-INSERT INTO `pet_name` VALUES (561, 'Leste');
-INSERT INTO `pet_name` VALUES (562, 'Light');
-INSERT INTO `pet_name` VALUES (563, 'Lilas');
-INSERT INTO `pet_name` VALUES (564, 'Lucky');
-INSERT INTO `pet_name` VALUES (565, 'Lunar');
-INSERT INTO `pet_name` VALUES (566, 'Lutin');
-INSERT INTO `pet_name` VALUES (567, 'Magic');
-INSERT INTO `pet_name` VALUES (568, 'Merry');
-INSERT INTO `pet_name` VALUES (569, 'Metal');
-INSERT INTO `pet_name` VALUES (570, 'Natsu');
-INSERT INTO `pet_name` VALUES (571, 'Neddy');
-INSERT INTO `pet_name` VALUES (572, 'Night');
-INSERT INTO `pet_name` VALUES (573, 'Ninja');
-INSERT INTO `pet_name` VALUES (574, 'Noble');
-INSERT INTO `pet_name` VALUES (575, 'Noire');
-INSERT INTO `pet_name` VALUES (576, 'Nuage');
-INSERT INTO `pet_name` VALUES (577, 'Ocree');
-INSERT INTO `pet_name` VALUES (578, 'Olive');
-INSERT INTO `pet_name` VALUES (579, 'Oller');
-INSERT INTO `pet_name` VALUES (580, 'Olles');
-INSERT INTO `pet_name` VALUES (581, 'Omega');
-INSERT INTO `pet_name` VALUES (582, 'Opale');
-INSERT INTO `pet_name` VALUES (583, 'Orage');
-INSERT INTO `pet_name` VALUES (584, 'Patte');
-INSERT INTO `pet_name` VALUES (585, 'Peace');
-INSERT INTO `pet_name` VALUES (586, 'Penne');
-INSERT INTO `pet_name` VALUES (587, 'Petit');
-INSERT INTO `pet_name` VALUES (588, 'Pfeil');
-INSERT INTO `pet_name` VALUES (589, 'Pluie');
-INSERT INTO `pet_name` VALUES (590, 'Plume');
-INSERT INTO `pet_name` VALUES (591, 'Pluto');
-INSERT INTO `pet_name` VALUES (592, 'Point');
-INSERT INTO `pet_name` VALUES (593, 'Pomme');
-INSERT INTO `pet_name` VALUES (594, 'Power');
-INSERT INTO `pet_name` VALUES (595, 'Quake');
-INSERT INTO `pet_name` VALUES (596, 'Queen');
-INSERT INTO `pet_name` VALUES (597, 'Queue');
-INSERT INTO `pet_name` VALUES (598, 'Reine');
-INSERT INTO `pet_name` VALUES (599, 'Reppu');
-INSERT INTO `pet_name` VALUES (600, 'Riche');
-INSERT INTO `pet_name` VALUES (601, 'Rieur');
-INSERT INTO `pet_name` VALUES (602, 'Roter');
-INSERT INTO `pet_name` VALUES (603, 'Rotes');
-INSERT INTO `pet_name` VALUES (604, 'Rouge');
-INSERT INTO `pet_name` VALUES (605, 'Royal');
-INSERT INTO `pet_name` VALUES (606, 'Rubin');
-INSERT INTO `pet_name` VALUES (607, 'Rubis');
-INSERT INTO `pet_name` VALUES (608, 'Saure');
-INSERT INTO `pet_name` VALUES (609, 'Serre');
-INSERT INTO `pet_name` VALUES (610, 'Smalt');
-INSERT INTO `pet_name` VALUES (611, 'Snowy');
-INSERT INTO `pet_name` VALUES (612, 'Solar');
-INSERT INTO `pet_name` VALUES (613, 'Spark');
-INSERT INTO `pet_name` VALUES (614, 'Speed');
-INSERT INTO `pet_name` VALUES (615, 'Steed');
-INSERT INTO `pet_name` VALUES (616, 'Stern');
-INSERT INTO `pet_name` VALUES (617, 'Stone');
-INSERT INTO `pet_name` VALUES (618, 'Storm');
-INSERT INTO `pet_name` VALUES (619, 'Sturm');
-INSERT INTO `pet_name` VALUES (620, 'Stute');
-INSERT INTO `pet_name` VALUES (621, 'Super');
-INSERT INTO `pet_name` VALUES (622, 'Sweep');
-INSERT INTO `pet_name` VALUES (623, 'Sweet');
-INSERT INTO `pet_name` VALUES (624, 'Swift');
-INSERT INTO `pet_name` VALUES (625, 'Talon');
-INSERT INTO `pet_name` VALUES (626, 'Teioh');
-INSERT INTO `pet_name` VALUES (627, 'Titan');
-INSERT INTO `pet_name` VALUES (628, 'Turbo');
-INSERT INTO `pet_name` VALUES (629, 'Ultra');
-INSERT INTO `pet_name` VALUES (630, 'Urara');
-INSERT INTO `pet_name` VALUES (631, 'Venus');
-INSERT INTO `pet_name` VALUES (632, 'Verte');
-INSERT INTO `pet_name` VALUES (633, 'Verve');
-INSERT INTO `pet_name` VALUES (634, 'Vivid');
-INSERT INTO `pet_name` VALUES (635, 'Vogel');
-INSERT INTO `pet_name` VALUES (636, 'Young');
-INSERT INTO `pet_name` VALUES (637, 'Zippy');
-INSERT INTO `pet_name` VALUES (638, 'Airain');
-INSERT INTO `pet_name` VALUES (639, 'Ambree');
-INSERT INTO `pet_name` VALUES (640, 'Amiral');
-INSERT INTO `pet_name` VALUES (641, 'Arashi');
-INSERT INTO `pet_name` VALUES (642, 'Archer');
-INSERT INTO `pet_name` VALUES (643, 'Ardent');
-INSERT INTO `pet_name` VALUES (644, 'Argent');
-INSERT INTO `pet_name` VALUES (645, 'Audace');
-INSERT INTO `pet_name` VALUES (646, 'Autumn');
-INSERT INTO `pet_name` VALUES (647, 'Battle');
-INSERT INTO `pet_name` VALUES (648, 'Beaute');
-INSERT INTO `pet_name` VALUES (649, 'Beauty');
-INSERT INTO `pet_name` VALUES (650, 'Beetle');
-INSERT INTO `pet_name` VALUES (651, 'Blauer');
-INSERT INTO `pet_name` VALUES (652, 'Blaues');
-INSERT INTO `pet_name` VALUES (653, 'Bleuet');
-INSERT INTO `pet_name` VALUES (654, 'Blonde');
-INSERT INTO `pet_name` VALUES (655, 'Bonbon');
-INSERT INTO `pet_name` VALUES (656, 'Breeze');
-INSERT INTO `pet_name` VALUES (657, 'Bronze');
-INSERT INTO `pet_name` VALUES (658, 'Brumby');
-INSERT INTO `pet_name` VALUES (659, 'Bucker');
-INSERT INTO `pet_name` VALUES (660, 'Caesar');
-INSERT INTO `pet_name` VALUES (661, 'Carmin');
-INSERT INTO `pet_name` VALUES (662, 'Cerise');
-INSERT INTO `pet_name` VALUES (663, 'Cerule');
-INSERT INTO `pet_name` VALUES (664, 'Chance');
-INSERT INTO `pet_name` VALUES (665, 'Cinder');
-INSERT INTO `pet_name` VALUES (666, 'Citron');
-INSERT INTO `pet_name` VALUES (667, 'Claire');
-INSERT INTO `pet_name` VALUES (668, 'Cobalt');
-INSERT INTO `pet_name` VALUES (669, 'Corail');
-INSERT INTO `pet_name` VALUES (670, 'Courte');
-INSERT INTO `pet_name` VALUES (671, 'Cuivre');
-INSERT INTO `pet_name` VALUES (672, 'Dancer');
-INSERT INTO `pet_name` VALUES (673, 'Daring');
-INSERT INTO `pet_name` VALUES (674, 'Desert');
-INSERT INTO `pet_name` VALUES (675, 'Dobbin');
-INSERT INTO `pet_name` VALUES (676, 'Dunkle');
-INSERT INTO `pet_name` VALUES (677, 'Elance');
-INSERT INTO `pet_name` VALUES (678, 'Emblem');
-INSERT INTO `pet_name` VALUES (679, 'Enzian');
-INSERT INTO `pet_name` VALUES (680, 'Esprit');
-INSERT INTO `pet_name` VALUES (681, 'Etoile');
-INSERT INTO `pet_name` VALUES (682, 'Filant');
-INSERT INTO `pet_name` VALUES (683, 'Flamme');
-INSERT INTO `pet_name` VALUES (684, 'Fleche');
-INSERT INTO `pet_name` VALUES (685, 'Flight');
-INSERT INTO `pet_name` VALUES (686, 'Flinke');
-INSERT INTO `pet_name` VALUES (687, 'Flower');
-INSERT INTO `pet_name` VALUES (688, 'Flurry');
-INSERT INTO `pet_name` VALUES (689, 'Flying');
-INSERT INTO `pet_name` VALUES (690, 'Forest');
-INSERT INTO `pet_name` VALUES (691, 'Freeze');
-INSERT INTO `pet_name` VALUES (692, 'Freund');
-INSERT INTO `pet_name` VALUES (693, 'Friend');
-INSERT INTO `pet_name` VALUES (694, 'Frosty');
-INSERT INTO `pet_name` VALUES (695, 'Frozen');
-INSERT INTO `pet_name` VALUES (696, 'Fubuki');
-INSERT INTO `pet_name` VALUES (697, 'Galaxy');
-INSERT INTO `pet_name` VALUES (698, 'Ganger');
-INSERT INTO `pet_name` VALUES (699, 'Gelber');
-INSERT INTO `pet_name` VALUES (700, 'Gelbes');
-INSERT INTO `pet_name` VALUES (701, 'Ginger');
-INSERT INTO `pet_name` VALUES (702, 'Gloire');
-INSERT INTO `pet_name` VALUES (703, 'Glorie');
-INSERT INTO `pet_name` VALUES (704, 'Goemon');
-INSERT INTO `pet_name` VALUES (705, 'Grande');
-INSERT INTO `pet_name` VALUES (706, 'Grenat');
-INSERT INTO `pet_name` VALUES (707, 'Groove');
-INSERT INTO `pet_name` VALUES (708, 'Grosse');
-INSERT INTO `pet_name` VALUES (709, 'Gruene');
-INSERT INTO `pet_name` VALUES (710, 'Gustav');
-INSERT INTO `pet_name` VALUES (711, 'Hayate');
-INSERT INTO `pet_name` VALUES (712, 'Heldin');
-INSERT INTO `pet_name` VALUES (713, 'Heller');
-INSERT INTO `pet_name` VALUES (714, 'Helles');
-INSERT INTO `pet_name` VALUES (715, 'Hengst');
-INSERT INTO `pet_name` VALUES (716, 'Hermes');
-INSERT INTO `pet_name` VALUES (717, 'Herzog');
-INSERT INTO `pet_name` VALUES (718, 'Himmel');
-INSERT INTO `pet_name` VALUES (719, 'Humble');
-INSERT INTO `pet_name` VALUES (720, 'Idaten');
-INSERT INTO `pet_name` VALUES (721, 'Impact');
-INSERT INTO `pet_name` VALUES (722, 'Indigo');
-INSERT INTO `pet_name` VALUES (723, 'Jagger');
-INSERT INTO `pet_name` VALUES (724, 'Jasmin');
-INSERT INTO `pet_name` VALUES (725, 'Joyeux');
-INSERT INTO `pet_name` VALUES (726, 'Jungle');
-INSERT INTO `pet_name` VALUES (727, 'Kaiser');
-INSERT INTO `pet_name` VALUES (728, 'Keffel');
-INSERT INTO `pet_name` VALUES (729, 'Kleine');
-INSERT INTO `pet_name` VALUES (730, 'Kluger');
-INSERT INTO `pet_name` VALUES (731, 'Kluges');
-INSERT INTO `pet_name` VALUES (732, 'Koloss');
-INSERT INTO `pet_name` VALUES (733, 'Lahmer');
-INSERT INTO `pet_name` VALUES (734, 'Lahmes');
-INSERT INTO `pet_name` VALUES (735, 'Lancer');
-INSERT INTO `pet_name` VALUES (736, 'Lander');
-INSERT INTO `pet_name` VALUES (737, 'Laurel');
-INSERT INTO `pet_name` VALUES (738, 'Leaper');
-INSERT INTO `pet_name` VALUES (739, 'Legend');
-INSERT INTO `pet_name` VALUES (740, 'Limber');
-INSERT INTO `pet_name` VALUES (741, 'Longue');
-INSERT INTO `pet_name` VALUES (742, 'Melody');
-INSERT INTO `pet_name` VALUES (743, 'Meteor');
-INSERT INTO `pet_name` VALUES (744, 'Mirage');
-INSERT INTO `pet_name` VALUES (745, 'Mister');
-INSERT INTO `pet_name` VALUES (746, 'Motion');
-INSERT INTO `pet_name` VALUES (747, 'Muguet');
-INSERT INTO `pet_name` VALUES (748, 'Nature');
-INSERT INTO `pet_name` VALUES (749, 'Nebula');
-INSERT INTO `pet_name` VALUES (750, 'Nether');
-INSERT INTO `pet_name` VALUES (751, 'Nimble');
-INSERT INTO `pet_name` VALUES (752, 'Olympe');
-INSERT INTO `pet_name` VALUES (753, 'Orchid');
-INSERT INTO `pet_name` VALUES (754, 'Outlaw');
-INSERT INTO `pet_name` VALUES (755, 'Passer');
-INSERT INTO `pet_name` VALUES (756, 'Pastel');
-INSERT INTO `pet_name` VALUES (757, 'Pelter');
-INSERT INTO `pet_name` VALUES (758, 'Pensee');
-INSERT INTO `pet_name` VALUES (759, 'Petite');
-INSERT INTO `pet_name` VALUES (760, 'Piment');
-INSERT INTO `pet_name` VALUES (761, 'Poetic');
-INSERT INTO `pet_name` VALUES (762, 'Poulet');
-INSERT INTO `pet_name` VALUES (763, 'Preste');
-INSERT INTO `pet_name` VALUES (764, 'Pretty');
-INSERT INTO `pet_name` VALUES (765, 'Prince');
-INSERT INTO `pet_name` VALUES (766, 'Purete');
-INSERT INTO `pet_name` VALUES (767, 'Quartz');
-INSERT INTO `pet_name` VALUES (768, 'Quasar');
-INSERT INTO `pet_name` VALUES (769, 'Rafale');
-INSERT INTO `pet_name` VALUES (770, 'Raging');
-INSERT INTO `pet_name` VALUES (771, 'Raiden');
-INSERT INTO `pet_name` VALUES (772, 'Ramage');
-INSERT INTO `pet_name` VALUES (773, 'Rapide');
-INSERT INTO `pet_name` VALUES (774, 'Reiche');
-INSERT INTO `pet_name` VALUES (775, 'Remige');
-INSERT INTO `pet_name` VALUES (776, 'Rieuse');
-INSERT INTO `pet_name` VALUES (777, 'Rising');
-INSERT INTO `pet_name` VALUES (778, 'Robust');
-INSERT INTO `pet_name` VALUES (779, 'Royale');
-INSERT INTO `pet_name` VALUES (780, 'Rudolf');
-INSERT INTO `pet_name` VALUES (781, 'Runner');
-INSERT INTO `pet_name` VALUES (782, 'Saddle');
-INSERT INTO `pet_name` VALUES (783, 'Safran');
-INSERT INTO `pet_name` VALUES (784, 'Sakura');
-INSERT INTO `pet_name` VALUES (785, 'Saphir');
-INSERT INTO `pet_name` VALUES (786, 'Saturn');
-INSERT INTO `pet_name` VALUES (787, 'Schuss');
-INSERT INTO `pet_name` VALUES (788, 'Sekito');
-INSERT INTO `pet_name` VALUES (789, 'Selene');
-INSERT INTO `pet_name` VALUES (790, 'Senden');
-INSERT INTO `pet_name` VALUES (791, 'Serein');
-INSERT INTO `pet_name` VALUES (792, 'Shadow');
-INSERT INTO `pet_name` VALUES (793, 'Shiden');
-INSERT INTO `pet_name` VALUES (794, 'Shinpu');
-INSERT INTO `pet_name` VALUES (795, 'Sieger');
-INSERT INTO `pet_name` VALUES (796, 'Silber');
-INSERT INTO `pet_name` VALUES (797, 'Silent');
-INSERT INTO `pet_name` VALUES (798, 'Silver');
-INSERT INTO `pet_name` VALUES (799, 'Silver');
-INSERT INTO `pet_name` VALUES (800, 'Soleil');
-INSERT INTO `pet_name` VALUES (801, 'Sombre');
-INSERT INTO `pet_name` VALUES (802, 'Sorrel');
-INSERT INTO `pet_name` VALUES (803, 'Sphene');
-INSERT INTO `pet_name` VALUES (804, 'Spirit');
-INSERT INTO `pet_name` VALUES (805, 'Spring');
-INSERT INTO `pet_name` VALUES (806, 'Stream');
-INSERT INTO `pet_name` VALUES (807, 'Strike');
-INSERT INTO `pet_name` VALUES (808, 'Summer');
-INSERT INTO `pet_name` VALUES (809, 'Tekiro');
-INSERT INTO `pet_name` VALUES (810, 'Terror');
-INSERT INTO `pet_name` VALUES (811, 'Ticket');
-INSERT INTO `pet_name` VALUES (812, 'Timide');
-INSERT INTO `pet_name` VALUES (813, 'Topaze');
-INSERT INTO `pet_name` VALUES (814, 'Tulipe');
-INSERT INTO `pet_name` VALUES (815, 'Tycoon');
-INSERT INTO `pet_name` VALUES (816, 'Ultime');
-INSERT INTO `pet_name` VALUES (817, 'Uranus');
-INSERT INTO `pet_name` VALUES (818, 'Veloce');
-INSERT INTO `pet_name` VALUES (819, 'Velvet');
-INSERT INTO `pet_name` VALUES (820, 'Victor');
-INSERT INTO `pet_name` VALUES (821, 'Violet');
-INSERT INTO `pet_name` VALUES (822, 'Walker');
-INSERT INTO `pet_name` VALUES (823, 'Weisse');
-INSERT INTO `pet_name` VALUES (824, 'Winged');
-INSERT INTO `pet_name` VALUES (825, 'Winner');
-INSERT INTO `pet_name` VALUES (826, 'Winner');
-INSERT INTO `pet_name` VALUES (827, 'Winter');
-INSERT INTO `pet_name` VALUES (828, 'Wonder');
-INSERT INTO `pet_name` VALUES (829, 'Xanthe');
-INSERT INTO `pet_name` VALUES (830, 'Yellow');
-INSERT INTO `pet_name` VALUES (831, 'Zephyr');
-INSERT INTO `pet_name` VALUES (832, 'Ardente');
-INSERT INTO `pet_name` VALUES (833, 'Automne');
-INSERT INTO `pet_name` VALUES (834, 'Avenger');
-INSERT INTO `pet_name` VALUES (835, 'Baronne');
-INSERT INTO `pet_name` VALUES (836, 'Battant');
-INSERT INTO `pet_name` VALUES (837, 'Blazing');
-INSERT INTO `pet_name` VALUES (838, 'Blitzer');
-INSERT INTO `pet_name` VALUES (839, 'Camelia');
-INSERT INTO `pet_name` VALUES (840, 'Candide');
-INSERT INTO `pet_name` VALUES (841, 'Caramel');
-INSERT INTO `pet_name` VALUES (842, 'Celeste');
-INSERT INTO `pet_name` VALUES (843, 'Cerulee');
-INSERT INTO `pet_name` VALUES (844, 'Charbon');
-INSERT INTO `pet_name` VALUES (845, 'Charger');
-INSERT INTO `pet_name` VALUES (846, 'Chariot');
-INSERT INTO `pet_name` VALUES (847, 'Clipper');
-INSERT INTO `pet_name` VALUES (848, 'Coureur');
-INSERT INTO `pet_name` VALUES (849, 'Crimson');
-INSERT INTO `pet_name` VALUES (850, 'Cristal');
-INSERT INTO `pet_name` VALUES (851, 'Crystal');
-INSERT INTO `pet_name` VALUES (852, 'Cuivree');
-INSERT INTO `pet_name` VALUES (853, 'Cyclone');
-INSERT INTO `pet_name` VALUES (854, 'Dancing');
-INSERT INTO `pet_name` VALUES (855, 'Danseur');
-INSERT INTO `pet_name` VALUES (856, 'Diamant');
-INSERT INTO `pet_name` VALUES (857, 'Diamond');
-INSERT INTO `pet_name` VALUES (858, 'Drafter');
-INSERT INTO `pet_name` VALUES (859, 'Dunkler');
-INSERT INTO `pet_name` VALUES (860, 'Dunkles');
-INSERT INTO `pet_name` VALUES (861, 'Eastern');
-INSERT INTO `pet_name` VALUES (862, 'Einhorn');
-INSERT INTO `pet_name` VALUES (863, 'Elancee');
-INSERT INTO `pet_name` VALUES (864, 'Elegant');
-INSERT INTO `pet_name` VALUES (865, 'Emperor');
-INSERT INTO `pet_name` VALUES (866, 'Empress');
-INSERT INTO `pet_name` VALUES (867, 'Express');
-INSERT INTO `pet_name` VALUES (868, 'Farceur');
-INSERT INTO `pet_name` VALUES (869, 'Feather');
-INSERT INTO `pet_name` VALUES (870, 'Fighter');
-INSERT INTO `pet_name` VALUES (871, 'Filante');
-INSERT INTO `pet_name` VALUES (872, 'Flinker');
-INSERT INTO `pet_name` VALUES (873, 'Flinkes');
-INSERT INTO `pet_name` VALUES (874, 'Fortune');
-INSERT INTO `pet_name` VALUES (875, 'Fraiche');
-INSERT INTO `pet_name` VALUES (876, 'Gagnant');
-INSERT INTO `pet_name` VALUES (877, 'Galaxie');
-INSERT INTO `pet_name` VALUES (878, 'Gallant');
-INSERT INTO `pet_name` VALUES (879, 'Genesis');
-INSERT INTO `pet_name` VALUES (880, 'Geoelte');
-INSERT INTO `pet_name` VALUES (881, 'Grosser');
-INSERT INTO `pet_name` VALUES (882, 'Grosses');
-INSERT INTO `pet_name` VALUES (883, 'Gruener');
-INSERT INTO `pet_name` VALUES (884, 'Gruenes');
-INSERT INTO `pet_name` VALUES (885, 'Harmony');
-INSERT INTO `pet_name` VALUES (886, 'Heroine');
-INSERT INTO `pet_name` VALUES (887, 'Ikezuki');
-INSERT INTO `pet_name` VALUES (888, 'Impulse');
-INSERT INTO `pet_name` VALUES (889, 'Javelin');
-INSERT INTO `pet_name` VALUES (890, 'Joyeuse');
-INSERT INTO `pet_name` VALUES (891, 'Jumping');
-INSERT INTO `pet_name` VALUES (892, 'Jupiter');
-INSERT INTO `pet_name` VALUES (893, 'Justice');
-INSERT INTO `pet_name` VALUES (894, 'Kleiner');
-INSERT INTO `pet_name` VALUES (895, 'Kleines');
-INSERT INTO `pet_name` VALUES (896, 'Lavande');
-INSERT INTO `pet_name` VALUES (897, 'Leaping');
-INSERT INTO `pet_name` VALUES (898, 'Legende');
-INSERT INTO `pet_name` VALUES (899, 'Liberty');
-INSERT INTO `pet_name` VALUES (900, 'Licorne');
-INSERT INTO `pet_name` VALUES (901, 'Majesty');
-INSERT INTO `pet_name` VALUES (902, 'Marquis');
-INSERT INTO `pet_name` VALUES (903, 'Maximal');
-INSERT INTO `pet_name` VALUES (904, 'Melodie');
-INSERT INTO `pet_name` VALUES (905, 'Mercury');
-INSERT INTO `pet_name` VALUES (906, 'Million');
-INSERT INTO `pet_name` VALUES (907, 'Miracle');
-INSERT INTO `pet_name` VALUES (908, 'Musashi');
-INSERT INTO `pet_name` VALUES (909, 'Mustang');
-INSERT INTO `pet_name` VALUES (910, 'Nacarat');
-INSERT INTO `pet_name` VALUES (911, 'Natural');
-INSERT INTO `pet_name` VALUES (912, 'Nemesis');
-INSERT INTO `pet_name` VALUES (913, 'Neptune');
-INSERT INTO `pet_name` VALUES (914, 'Oeillet');
-INSERT INTO `pet_name` VALUES (915, 'Optimal');
-INSERT INTO `pet_name` VALUES (916, 'Orageux');
-INSERT INTO `pet_name` VALUES (917, 'Ouragan');
-INSERT INTO `pet_name` VALUES (918, 'Paprika');
-INSERT INTO `pet_name` VALUES (919, 'Parfait');
-INSERT INTO `pet_name` VALUES (920, 'Partner');
-INSERT INTO `pet_name` VALUES (921, 'Patient');
-INSERT INTO `pet_name` VALUES (922, 'Paturon');
-INSERT INTO `pet_name` VALUES (923, 'Pegasus');
-INSERT INTO `pet_name` VALUES (924, 'Pensive');
-INSERT INTO `pet_name` VALUES (925, 'Perfect');
-INSERT INTO `pet_name` VALUES (926, 'Peureux');
-INSERT INTO `pet_name` VALUES (927, 'Phoenix');
-INSERT INTO `pet_name` VALUES (928, 'Plumage');
-INSERT INTO `pet_name` VALUES (929, 'Pourpre');
-INSERT INTO `pet_name` VALUES (930, 'Poussin');
-INSERT INTO `pet_name` VALUES (931, 'Prancer');
-INSERT INTO `pet_name` VALUES (932, 'Premium');
-INSERT INTO `pet_name` VALUES (933, 'Quantum');
-INSERT INTO `pet_name` VALUES (934, 'Radiant');
-INSERT INTO `pet_name` VALUES (935, 'Rainbow');
-INSERT INTO `pet_name` VALUES (936, 'Rattler');
-INSERT INTO `pet_name` VALUES (937, 'Reicher');
-INSERT INTO `pet_name` VALUES (938, 'Reiches');
-INSERT INTO `pet_name` VALUES (939, 'Roughie');
-INSERT INTO `pet_name` VALUES (940, 'Samurai');
-INSERT INTO `pet_name` VALUES (941, 'Sautant');
-INSERT INTO `pet_name` VALUES (942, 'Scarlet');
-INSERT INTO `pet_name` VALUES (943, 'Schweif');
-INSERT INTO `pet_name` VALUES (944, 'Sereine');
-INSERT INTO `pet_name` VALUES (945, 'Sergent');
-INSERT INTO `pet_name` VALUES (946, 'Shinden');
-INSERT INTO `pet_name` VALUES (947, 'Shining');
-INSERT INTO `pet_name` VALUES (948, 'Shooter');
-INSERT INTO `pet_name` VALUES (949, 'Smoking');
-INSERT INTO `pet_name` VALUES (950, 'Souffle');
-INSERT INTO `pet_name` VALUES (951, 'Special');
-INSERT INTO `pet_name` VALUES (952, 'Stylish');
-INSERT INTO `pet_name` VALUES (953, 'Sumpter');
-INSERT INTO `pet_name` VALUES (954, 'Tempest');
-INSERT INTO `pet_name` VALUES (955, 'Tempete');
-INSERT INTO `pet_name` VALUES (956, 'Thunder');
-INSERT INTO `pet_name` VALUES (957, 'Tornado');
-INSERT INTO `pet_name` VALUES (958, 'Torpedo');
-INSERT INTO `pet_name` VALUES (959, 'Tristan');
-INSERT INTO `pet_name` VALUES (960, 'Trooper');
-INSERT INTO `pet_name` VALUES (961, 'Trotter');
-INSERT INTO `pet_name` VALUES (962, 'Typhoon');
-INSERT INTO `pet_name` VALUES (963, 'Unicorn');
-INSERT INTO `pet_name` VALUES (964, 'Vengeur');
-INSERT INTO `pet_name` VALUES (965, 'Vermeil');
-INSERT INTO `pet_name` VALUES (966, 'Victory');
-INSERT INTO `pet_name` VALUES (967, 'Warrior');
-INSERT INTO `pet_name` VALUES (968, 'Weisser');
-INSERT INTO `pet_name` VALUES (969, 'Weisses');
-INSERT INTO `pet_name` VALUES (970, 'Western');
-INSERT INTO `pet_name` VALUES (971, 'Whisper');
-INSERT INTO `pet_name` VALUES (972, 'Winning');
-INSERT INTO `pet_name` VALUES (973, 'Zetsuei');
-INSERT INTO `pet_name` VALUES (974, 'Zillion');
-INSERT INTO `pet_name` VALUES (975, 'Baroness');
-INSERT INTO `pet_name` VALUES (976, 'Battante');
-INSERT INTO `pet_name` VALUES (977, 'Blizzard');
-INSERT INTO `pet_name` VALUES (978, 'Cannelle');
-INSERT INTO `pet_name` VALUES (979, 'Capucine');
-INSERT INTO `pet_name` VALUES (980, 'Cerulean');
-INSERT INTO `pet_name` VALUES (981, 'Chanceux');
-INSERT INTO `pet_name` VALUES (982, 'Charisma');
-INSERT INTO `pet_name` VALUES (983, 'Charmant');
-INSERT INTO `pet_name` VALUES (984, 'Chocolat');
-INSERT INTO `pet_name` VALUES (985, 'Claybank');
-INSERT INTO `pet_name` VALUES (986, 'Comtesse');
-INSERT INTO `pet_name` VALUES (987, 'Coureuse');
-INSERT INTO `pet_name` VALUES (988, 'Danseuse');
-INSERT INTO `pet_name` VALUES (989, 'Duchesse');
-INSERT INTO `pet_name` VALUES (990, 'Ecarlate');
-INSERT INTO `pet_name` VALUES (991, 'Elegante');
-INSERT INTO `pet_name` VALUES (992, 'Emeraude');
-INSERT INTO `pet_name` VALUES (993, 'Farceuse');
-INSERT INTO `pet_name` VALUES (994, 'Farfadet');
-INSERT INTO `pet_name` VALUES (995, 'Fringant');
-INSERT INTO `pet_name` VALUES (996, 'Gagnante');
-INSERT INTO `pet_name` VALUES (997, 'Galloper');
-INSERT INTO `pet_name` VALUES (998, 'Galopant');
-INSERT INTO `pet_name` VALUES (999, 'Geoelter');
-INSERT INTO `pet_name` VALUES (1000, 'Geoeltes');
-INSERT INTO `pet_name` VALUES (1001, 'Geschoss');
-INSERT INTO `pet_name` VALUES (1002, 'Gorgeous');
-INSERT INTO `pet_name` VALUES (1003, 'Hanakaze');
-INSERT INTO `pet_name` VALUES (1004, 'Highland');
-INSERT INTO `pet_name` VALUES (1005, 'Hyperion');
-INSERT INTO `pet_name` VALUES (1006, 'Illusion');
-INSERT INTO `pet_name` VALUES (1007, 'Immortal');
-INSERT INTO `pet_name` VALUES (1008, 'Imperial');
-INSERT INTO `pet_name` VALUES (1009, 'Incarnat');
-INSERT INTO `pet_name` VALUES (1010, 'Infinity');
-INSERT INTO `pet_name` VALUES (1011, 'Innocent');
-INSERT INTO `pet_name` VALUES (1012, 'Jacinthe');
-INSERT INTO `pet_name` VALUES (1013, 'Kaiserin');
-INSERT INTO `pet_name` VALUES (1014, 'Kristall');
-INSERT INTO `pet_name` VALUES (1015, 'Maharaja');
-INSERT INTO `pet_name` VALUES (1016, 'Maharani');
-INSERT INTO `pet_name` VALUES (1017, 'Marquise');
-INSERT INTO `pet_name` VALUES (1018, 'Mataemon');
-INSERT INTO `pet_name` VALUES (1019, 'Meilleur');
-INSERT INTO `pet_name` VALUES (1020, 'Mercedes');
-INSERT INTO `pet_name` VALUES (1021, 'Myosotis');
-INSERT INTO `pet_name` VALUES (1022, 'Nebulous');
-INSERT INTO `pet_name` VALUES (1023, 'Negative');
-INSERT INTO `pet_name` VALUES (1024, 'Nenuphar');
-INSERT INTO `pet_name` VALUES (1025, 'Northern');
-INSERT INTO `pet_name` VALUES (1026, 'Northern');
-INSERT INTO `pet_name` VALUES (1027, 'Obsidian');
-INSERT INTO `pet_name` VALUES (1028, 'Orageuse');
-INSERT INTO `pet_name` VALUES (1029, 'Orchidee');
-INSERT INTO `pet_name` VALUES (1030, 'Parfaite');
-INSERT INTO `pet_name` VALUES (1031, 'Patiente');
-INSERT INTO `pet_name` VALUES (1032, 'Peureuse');
-INSERT INTO `pet_name` VALUES (1033, 'Positive');
-INSERT INTO `pet_name` VALUES (1034, 'Princely');
-INSERT INTO `pet_name` VALUES (1035, 'Princess');
-INSERT INTO `pet_name` VALUES (1036, 'Prodigue');
-INSERT INTO `pet_name` VALUES (1037, 'Puissant');
-INSERT INTO `pet_name` VALUES (1038, 'Restless');
-INSERT INTO `pet_name` VALUES (1039, 'Rhapsody');
-INSERT INTO `pet_name` VALUES (1040, 'Roadster');
-INSERT INTO `pet_name` VALUES (1041, 'Rutilant');
-INSERT INTO `pet_name` VALUES (1042, 'Sautante');
-INSERT INTO `pet_name` VALUES (1043, 'Schwarze');
-INSERT INTO `pet_name` VALUES (1044, 'Shooting');
-INSERT INTO `pet_name` VALUES (1045, 'Silberne');
-INSERT INTO `pet_name` VALUES (1046, 'Southern');
-INSERT INTO `pet_name` VALUES (1047, 'Speciale');
-INSERT INTO `pet_name` VALUES (1048, 'Stallion');
-INSERT INTO `pet_name` VALUES (1049, 'Stardust');
-INSERT INTO `pet_name` VALUES (1050, 'Surusumi');
-INSERT INTO `pet_name` VALUES (1051, 'Tonnerre');
-INSERT INTO `pet_name` VALUES (1052, 'Trotteur');
-INSERT INTO `pet_name` VALUES (1053, 'Ultimate');
-INSERT INTO `pet_name` VALUES (1054, 'Universe');
-INSERT INTO `pet_name` VALUES (1055, 'Vaillant');
-INSERT INTO `pet_name` VALUES (1056, 'Vengeuse');
-INSERT INTO `pet_name` VALUES (1057, 'Xanthous');
-INSERT INTO `pet_name` VALUES (1058, 'Zeppelin');
-INSERT INTO `pet_name` VALUES (1059, 'Ambitious');
-INSERT INTO `pet_name` VALUES (1060, 'Audacieux');
-INSERT INTO `pet_name` VALUES (1061, 'Ballistic');
-INSERT INTO `pet_name` VALUES (1062, 'Beautiful');
-INSERT INTO `pet_name` VALUES (1063, 'Brilliant');
-INSERT INTO `pet_name` VALUES (1064, 'Campanule');
-INSERT INTO `pet_name` VALUES (1065, 'Capitaine');
-INSERT INTO `pet_name` VALUES (1066, 'Chanceuse');
-INSERT INTO `pet_name` VALUES (1067, 'Charmante');
-INSERT INTO `pet_name` VALUES (1068, 'Clematite');
-INSERT INTO `pet_name` VALUES (1069, 'Clochette');
-INSERT INTO `pet_name` VALUES (1070, 'Coriandre');
-INSERT INTO `pet_name` VALUES (1071, 'Crackling');
-INSERT INTO `pet_name` VALUES (1072, 'Destroyer');
-INSERT INTO `pet_name` VALUES (1073, 'Excellent');
-INSERT INTO `pet_name` VALUES (1074, 'Fantastic');
-INSERT INTO `pet_name` VALUES (1075, 'Feathered');
-INSERT INTO `pet_name` VALUES (1076, 'Fringante');
-INSERT INTO `pet_name` VALUES (1077, 'Galopante');
-INSERT INTO `pet_name` VALUES (1078, 'Gingembre');
-INSERT INTO `pet_name` VALUES (1079, 'Hurricane');
-INSERT INTO `pet_name` VALUES (1080, 'Ichimonji');
-INSERT INTO `pet_name` VALUES (1081, 'Impetueux');
-INSERT INTO `pet_name` VALUES (1082, 'Incarnate');
-INSERT INTO `pet_name` VALUES (1083, 'Lightning');
-INSERT INTO `pet_name` VALUES (1084, 'Matsukaze');
-INSERT INTO `pet_name` VALUES (1085, 'Meilleure');
-INSERT INTO `pet_name` VALUES (1086, 'Menestrel');
-INSERT INTO `pet_name` VALUES (1087, 'Merciless');
-INSERT INTO `pet_name` VALUES (1088, 'Pendragon');
-INSERT INTO `pet_name` VALUES (1089, 'Princesse');
-INSERT INTO `pet_name` VALUES (1090, 'Printemps');
-INSERT INTO `pet_name` VALUES (1091, 'Puissante');
-INSERT INTO `pet_name` VALUES (1092, 'Quadrille');
-INSERT INTO `pet_name` VALUES (1093, 'Rosinante');
-INSERT INTO `pet_name` VALUES (1094, 'Rutilante');
-INSERT INTO `pet_name` VALUES (1095, 'Schwarzer');
-INSERT INTO `pet_name` VALUES (1096, 'Schwarzes');
-INSERT INTO `pet_name` VALUES (1097, 'Silberner');
-INSERT INTO `pet_name` VALUES (1098, 'Silbernes');
-INSERT INTO `pet_name` VALUES (1099, 'Sparkling');
-INSERT INTO `pet_name` VALUES (1100, 'Speedster');
-INSERT INTO `pet_name` VALUES (1101, 'Tournesol');
-INSERT INTO `pet_name` VALUES (1102, 'Transient');
-INSERT INTO `pet_name` VALUES (1103, 'Trotteuse');
-INSERT INTO `pet_name` VALUES (1104, 'Turbulent');
-INSERT INTO `pet_name` VALUES (1105, 'Twinkling');
-INSERT INTO `pet_name` VALUES (1106, 'Vaillante');
-INSERT INTO `pet_name` VALUES (1107, 'Valentine');
-INSERT INTO `pet_name` VALUES (1108, 'Velocious');
-INSERT INTO `pet_name` VALUES (1109, 'Vermeille');
-INSERT INTO `pet_name` VALUES (1110, 'Wonderful');
-INSERT INTO `pet_name` VALUES (1111, 'Amatsukaze');
-INSERT INTO `pet_name` VALUES (1112, 'Audacieuse');
-INSERT INTO `pet_name` VALUES (1113, 'Benevolent');
-INSERT INTO `pet_name` VALUES (1114, 'Blistering');
-INSERT INTO `pet_name` VALUES (1115, 'Brilliance');
-INSERT INTO `pet_name` VALUES (1116, 'Bucephalus');
-INSERT INTO `pet_name` VALUES (1117, 'Challenger');
-INSERT INTO `pet_name` VALUES (1118, 'Excellente');
-INSERT INTO `pet_name` VALUES (1119, 'Impetueuse');
-INSERT INTO `pet_name` VALUES (1120, 'Invincible');
-INSERT INTO `pet_name` VALUES (1121, 'Malevolent');
-INSERT INTO `pet_name` VALUES (1122, 'Millennium');
-INSERT INTO `pet_name` VALUES (1123, 'Tranquille');
-INSERT INTO `pet_name` VALUES (1124, 'Turbulente');
-INSERT INTO `pet_name` VALUES (1125, 'Destruction');
-INSERT INTO `pet_name` VALUES (1126, 'Firecracker');
+-- Dumping data for table tpzdb.pet_name: 1,127 rows
+/*!40000 ALTER TABLE `pet_name` DISABLE KEYS */;
+INSERT INTO `pet_name` (`id`, `name`) VALUES
+	(0, ''),
+	(1, 'Azure'),
+	(2, 'Cerulean'),
+	(3, 'Rygor'),
+	(4, 'Firewing'),
+	(5, 'Delphyne'),
+	(6, 'Ember'),
+	(7, 'Rover'),
+	(8, 'Max'),
+	(9, 'Buster'),
+	(10, 'Duke'),
+	(11, 'Oscar'),
+	(12, 'Maggie'),
+	(13, 'Jessie'),
+	(14, 'Lady'),
+	(15, 'Hien'),
+	(16, 'Raiden'),
+	(17, 'Lumiere'),
+	(18, 'Eisenzahn'),
+	(19, 'Pfeil'),
+	(20, 'Wuffi'),
+	(21, 'George'),
+	(22, 'Donryu'),
+	(23, 'Qiqiru'),
+	(24, 'Karav-Marav'),
+	(25, 'Oboro'),
+	(26, 'Darug-Borug'),
+	(27, 'Mikan'),
+	(28, 'Vhiki'),
+	(29, 'Sasavi'),
+	(30, 'Tatang'),
+	(31, 'Nanaja'),
+	(32, 'Khocha'),
+	(33, 'Dino'),
+	(34, 'Chomper'),
+	(35, 'Huffy'),
+	(36, 'Pouncer'),
+	(37, 'Fido'),
+	(38, 'Lucy'),
+	(39, 'Jake'),
+	(40, 'Rocky'),
+	(41, 'Rex'),
+	(42, 'Rusty'),
+	(43, 'Himmelskralle'),
+	(44, 'Gizmo'),
+	(45, 'Spike'),
+	(46, 'Sylvester'),
+	(47, 'Milo'),
+	(48, 'Tom'),
+	(49, 'Toby'),
+	(50, 'Felix'),
+	(51, 'Komet'),
+	(52, 'Bo'),
+	(53, 'Molly'),
+	(54, 'Unryu'),
+	(55, 'Daisy'),
+	(56, 'Baron'),
+	(57, 'Ginger'),
+	(58, 'Muffin'),
+	(59, 'Lumineux'),
+	(60, 'Quatrevents'),
+	(61, 'Toryu'),
+	(62, 'Tataba'),
+	(63, 'Etoilazuree'),
+	(64, 'Grisnuage'),
+	(65, 'Belorage'),
+	(66, 'Centonnerre'),
+	(67, 'Nouvellune'),
+	(68, 'Missy'),
+	(69, 'Amedeo'),
+	(70, 'Tranchevent'),
+	(71, 'Soufflefeu'),
+	(72, 'Etoile'),
+	(73, 'Tonnerre'),
+	(74, 'Nuage'),
+	(75, 'Foudre'),
+	(76, 'Hyuh'),
+	(77, 'Orage'),
+	(78, 'Lune'),
+	(79, 'Astre'),
+	(80, 'Waffenzahn'),
+	(81, 'Soleil'),
+	(82, 'Courageux'),
+	(83, 'Koffla-Paffla'),
+	(84, 'Venteuse'),
+	(85, 'Lunaire'),
+	(86, 'Tora'),
+	(87, 'Celeste'),
+	(88, 'Galja-Mogalja'),
+	(89, 'Gaboh'),
+	(90, 'Vhyun'),
+	(91, 'Orageuse'),
+	(92, 'Stellaire'),
+	(93, 'Solaire'),
+	(94, 'Wirbelwind'),
+	(95, 'Blutkralle'),
+	(96, 'Bogen'),
+	(97, 'Junker'),
+	(98, 'Flink'),
+	(99, 'Knirps'),
+	(100, 'Bodo'),
+	(101, 'Soryu'),
+	(102, 'Wawaro'),
+	(103, 'Totona'),
+	(104, 'Levian-Movian'),
+	(105, 'Kagero'),
+	(106, 'Joseph'),
+	(107, 'Paparal'),
+	(108, 'Coco'),
+	(109, 'Ringo'),
+	(110, 'Nonomi'),
+	(111, 'Teter'),
+	(112, 'Gigima'),
+	(113, 'Gogodavi'),
+	(114, 'Rurumo'),
+	(115, 'Tupah'),
+	(116, 'Jyubih'),
+	(117, 'Majha'),
+	(118, 'Luron'),
+	(119, 'Drille'),
+	(120, 'Tournefoux'),
+	(121, 'Chafouin'),
+	(122, 'Plaisantin'),
+	(123, 'Loustic'),
+	(124, 'Histrion'),
+	(125, 'Bobeche'),
+	(126, 'Bougrion'),
+	(127, 'Rouleteau'),
+	(128, 'Allouette'),
+	(129, 'Serenade'),
+	(130, 'Ficelette'),
+	(131, 'Tocadie'),
+	(132, 'Caprice'),
+	(133, 'Foucade'),
+	(134, 'Capillotte'),
+	(135, 'Quenotte'),
+	(136, 'Pacotille'),
+	(137, 'Comedie'),
+	(138, 'Kagekiyo'),
+	(139, 'Toraoh'),
+	(140, 'Genta'),
+	(141, 'Kintoki'),
+	(142, 'Koumei'),
+	(143, 'Pamama'),
+	(144, 'Lobo'),
+	(145, 'Tsukushi'),
+	(146, 'Oniwaka'),
+	(147, 'Kenbishi'),
+	(148, 'Hannya'),
+	(149, 'Mashira'),
+	(150, 'Nadeshiko'),
+	(151, 'E100'),
+	(152, 'Koume'),
+	(153, 'X-32'),
+	(154, 'Poppo'),
+	(155, 'Asuka'),
+	(156, 'Sakura'),
+	(157, 'Tao'),
+	(158, 'Mao'),
+	(159, 'Gadget'),
+	(160, 'Marion'),
+	(161, 'Widget'),
+	(162, 'Quirk'),
+	(163, 'Sprocket'),
+	(164, 'Cogette'),
+	(165, 'Lecter'),
+	(166, 'Coppelia'),
+	(167, 'Sparky'),
+	(168, 'Clank'),
+	(169, 'Calcobrena'),
+	(170, 'Crackle'),
+	(171, 'Ricochet'),
+	(172, 'Josette'),
+	(173, 'Fritz'),
+	(174, 'Skippy'),
+	(175, 'Pino'),
+	(176, 'Mandarin'),
+	(177, 'Jackstraw'),
+	(178, 'Guignol'),
+	(179, 'Moppet'),
+	(180, 'Nutcracker'),
+	(181, 'Erwin'),
+	(182, 'Otto'),
+	(183, 'Gustav'),
+	(184, 'Muffin'),
+	(185, 'Xaver'),
+	(186, 'Toni'),
+	(187, 'Ina'),
+	(188, 'Gerda'),
+	(189, 'Petra'),
+	(190, 'Verena'),
+	(191, 'Rosi'),
+	(192, 'Schatzi'),
+	(193, 'Warashi'),
+	(194, 'Klingel'),
+	(195, 'Clochette'),
+	(196, 'Campanello'),
+	(197, 'Kaiserin'),
+	(198, 'Principessa'),
+	(199, 'Butler'),
+	(200, 'Graf'),
+	(201, 'Caro'),
+	(202, 'Cara'),
+	(203, 'Mademoiselle'),
+	(204, 'Herzog'),
+	(205, 'Tramp'),
+	(206, 'V-1000'),
+	(207, 'Hikozaemon'),
+	(208, 'Nine'),
+	(209, 'Acht'),
+	(210, 'Quattro'),
+	(211, 'Zero'),
+	(212, 'Dreizehn'),
+	(213, 'Seize'),
+	(214, 'Fukusuke'),
+	(215, 'Mataemon'),
+	(216, 'Kansuke'),
+	(217, 'Polichinelle'),
+	(218, 'Tobisuke'),
+	(219, 'Sasuke'),
+	(220, 'Shijimi'),
+	(221, 'Chobi'),
+	(222, 'Aurelie'),
+	(223, 'Magalie'),
+	(224, 'Aurore'),
+	(225, 'Caroline'),
+	(226, 'Andrea'),
+	(227, 'Machinette'),
+	(228, 'Clarine'),
+	(229, 'Armelle'),
+	(230, 'Reinette'),
+	(231, 'Dorlote'),
+	(232, 'Turlupin'),
+	(233, 'Klaxon'),
+	(234, 'Bambino'),
+	(235, 'Potiron'),
+	(236, 'Fustige'),
+	(237, 'Amidon'),
+	(238, 'Machin'),
+	(239, 'Bidulon'),
+	(240, 'Tandem'),
+	(241, 'Prestidige'),
+	(242, 'Purute-Porute'),
+	(243, 'Bito-Rabito'),
+	(244, 'Cocoa'),
+	(245, 'Totomo'),
+	(246, 'Centurion'),
+	(247, 'A7V'),
+	(248, 'Scipio'),
+	(249, 'Sentinel'),
+	(250, 'Pioneer'),
+	(251, 'Seneschal'),
+	(252, 'Ginjin'),
+	(253, 'Amagatsu'),
+	(254, 'Dolly'),
+	(255, 'Fantoccini'),
+	(256, 'Joe'),
+	(257, 'Kikizaru'),
+	(258, 'Whippet'),
+	(259, 'Punchinello'),
+	(260, 'Charlie'),
+	(261, 'Midge'),
+	(262, 'Petrouchka'),
+	(263, 'Schneider'),
+	(264, 'Ushabti'),
+	(265, 'Noel'),
+	(266, 'Yajirobe'),
+	(267, 'Hina'),
+	(268, 'Nora'),
+	(269, 'Shoki'),
+	(270, 'Kobina'),
+	(271, 'Kokeshi'),
+	(272, 'Mame'),
+	(273, 'Bishop'),
+	(274, 'Marvin'),
+	(275, 'Dora'),
+	(276, 'Data'),
+	(277, 'Robin'),
+	(278, 'Robby'),
+	(279, 'Porlo-Moperlo'),
+	(280, 'Paroko-Puronko'),
+	(281, 'Pipima'),
+	(282, 'Gagaja'),
+	(283, 'Mobil'),
+	(284, 'Donzel'),
+	(285, 'Archer'),
+	(286, 'Shooter'),
+	(287, 'Stephen'),
+	(288, 'Mk.IV'),
+	(289, 'Conjurer'),
+	(290, 'Footman'),
+	(291, 'Tokotoko'),
+	(292, 'Sancho'),
+	(293, 'Sarumaro'),
+	(294, 'Picket'),
+	(295, 'Mushroom'),
+	(296, 'G'),
+	(297, 'I'),
+	(298, 'Q'),
+	(299, 'V'),
+	(300, 'X'),
+	(301, 'Z'),
+	(302, 'II'),
+	(303, 'IV'),
+	(304, 'IX'),
+	(305, 'Or'),
+	(306, 'VI'),
+	(307, 'XI'),
+	(308, 'Ace'),
+	(309, 'Air'),
+	(310, 'Aki'),
+	(311, 'Ayu'),
+	(312, 'Bat'),
+	(313, 'Bec'),
+	(314, 'Bel'),
+	(315, 'Big'),
+	(316, 'Bon'),
+	(317, 'Boy'),
+	(318, 'Cap'),
+	(319, 'Coq'),
+	(320, 'Cry'),
+	(321, 'Dom'),
+	(322, 'Duc'),
+	(323, 'Dun'),
+	(324, 'End'),
+	(325, 'Ete'),
+	(326, 'Eye'),
+	(327, 'Fat'),
+	(328, 'Fee'),
+	(329, 'Fer'),
+	(330, 'Feu'),
+	(331, 'Fog'),
+	(332, 'Fox'),
+	(333, 'Hot'),
+	(334, 'Ice'),
+	(335, 'Ice'),
+	(336, 'Icy'),
+	(337, 'III'),
+	(338, 'Jet'),
+	(339, 'Joy'),
+	(340, 'Leg'),
+	(341, 'Max'),
+	(342, 'Neo'),
+	(343, 'One'),
+	(344, 'Pur'),
+	(345, 'Ray'),
+	(346, 'Red'),
+	(347, 'Roi'),
+	(348, 'Sea'),
+	(349, 'Sky'),
+	(350, 'Sui'),
+	(351, 'Sun'),
+	(352, 'Ten'),
+	(353, 'Vif'),
+	(354, 'VII'),
+	(355, 'XII'),
+	(356, 'Aile'),
+	(357, 'Ange'),
+	(358, 'Ardi'),
+	(359, 'Beak'),
+	(360, 'Beau'),
+	(361, 'Best'),
+	(362, 'Bleu'),
+	(363, 'Blue'),
+	(364, 'Bone'),
+	(365, 'Cart'),
+	(366, 'Chic'),
+	(367, 'Ciel'),
+	(368, 'Claw'),
+	(369, 'Cool'),
+	(370, 'Dame'),
+	(371, 'Dark'),
+	(372, 'Dore'),
+	(373, 'Dray'),
+	(374, 'Duke'),
+	(375, 'Easy'),
+	(376, 'Edel'),
+	(377, 'Face'),
+	(378, 'Fast'),
+	(379, 'Fier'),
+	(380, 'Fine'),
+	(381, 'Fire'),
+	(382, 'Foot'),
+	(383, 'Fury'),
+	(384, 'Fuyu'),
+	(385, 'Gale'),
+	(386, 'Girl'),
+	(387, 'Goer'),
+	(388, 'Gold'),
+	(389, 'Good'),
+	(390, 'Graf'),
+	(391, 'Gray'),
+	(392, 'Gust'),
+	(393, 'Gute'),
+	(394, 'Haoh'),
+	(395, 'Haru'),
+	(396, 'Held'),
+	(397, 'Hero'),
+	(398, 'Hope'),
+	(399, 'Idol'),
+	(400, 'Iris'),
+	(401, 'Iron'),
+	(402, 'Jack'),
+	(403, 'Jade'),
+	(404, 'Joli'),
+	(405, 'Jung'),
+	(406, 'Kiku'),
+	(407, 'King'),
+	(408, 'Kopf'),
+	(409, 'Lady'),
+	(410, 'Last'),
+	(411, 'Lili'),
+	(412, 'Lily'),
+	(413, 'Line'),
+	(414, 'Long'),
+	(415, 'Lord'),
+	(416, 'Luft'),
+	(417, 'Luna'),
+	(418, 'Lune'),
+	(419, 'Mama'),
+	(420, 'Mars'),
+	(421, 'Miel'),
+	(422, 'Miss'),
+	(423, 'Momo'),
+	(424, 'Mond'),
+	(425, 'Moon'),
+	(426, 'Nana'),
+	(427, 'Nice'),
+	(428, 'Noir'),
+	(429, 'Nono'),
+	(430, 'Nova'),
+	(431, 'Nuit'),
+	(432, 'Ocre'),
+	(433, 'Olle'),
+	(434, 'Papa'),
+	(435, 'Pers'),
+	(436, 'Phar'),
+	(437, 'Pony'),
+	(438, 'Pure'),
+	(439, 'Rain'),
+	(440, 'Rice'),
+	(441, 'Rich'),
+	(442, 'Road'),
+	(443, 'Rose'),
+	(444, 'Rote'),
+	(445, 'Roux'),
+	(446, 'Ruby'),
+	(447, 'Sage'),
+	(448, 'Snow'),
+	(449, 'Star'),
+	(450, 'Tail'),
+	(451, 'Trot'),
+	(452, 'Vega'),
+	(453, 'Vent'),
+	(454, 'Vert'),
+	(455, 'VIII'),
+	(456, 'Vive'),
+	(457, 'Wave'),
+	(458, 'West'),
+	(459, 'Wild'),
+	(460, 'Wind'),
+	(461, 'Wing'),
+	(462, 'XIII'),
+	(463, 'Zero'),
+	(464, 'Acier'),
+	(465, 'Agate'),
+	(466, 'Agile'),
+	(467, 'Agnes'),
+	(468, 'Ailee'),
+	(469, 'Alpha'),
+	(470, 'Amber'),
+	(471, 'Ambre'),
+	(472, 'Angel'),
+	(473, 'Ardie'),
+	(474, 'Arkie'),
+	(475, 'Arrow'),
+	(476, 'Avian'),
+	(477, 'Azure'),
+	(478, 'Baron'),
+	(479, 'Belle'),
+	(480, 'Beryl'),
+	(481, 'Black'),
+	(482, 'Blade'),
+	(483, 'Blaue'),
+	(484, 'Blaze'),
+	(485, 'Bleue'),
+	(486, 'Blitz'),
+	(487, 'Blond'),
+	(488, 'Blood'),
+	(489, 'Bonne'),
+	(490, 'Brave'),
+	(491, 'Brian'),
+	(492, 'Brise'),
+	(493, 'Burst'),
+	(494, 'Calme'),
+	(495, 'Chaos'),
+	(496, 'Clair'),
+	(497, 'Cloud'),
+	(498, 'Comet'),
+	(499, 'Comte'),
+	(500, 'Court'),
+	(501, 'Craft'),
+	(502, 'Crete'),
+	(503, 'Crown'),
+	(504, 'Dance'),
+	(505, 'Dandy'),
+	(506, 'Devil'),
+	(507, 'Diana'),
+	(508, 'Doree'),
+	(509, 'Dream'),
+	(510, 'Eager'),
+	(511, 'Eagle'),
+	(512, 'Ebony'),
+	(513, 'Eisen'),
+	(514, 'Ember'),
+	(515, 'Engel'),
+	(516, 'Fairy'),
+	(517, 'Fatty'),
+	(518, 'Feder'),
+	(519, 'Feuer'),
+	(520, 'Fiere'),
+	(521, 'Fiery'),
+	(522, 'Final'),
+	(523, 'Flare'),
+	(524, 'Fleet'),
+	(525, 'Fleur'),
+	(526, 'Flier'),
+	(527, 'Flood'),
+	(528, 'Flora'),
+	(529, 'Flyer'),
+	(530, 'Frais'),
+	(531, 'Frost'),
+	(532, 'Fuchs'),
+	(533, 'Galop'),
+	(534, 'Geist'),
+	(535, 'Gelbe'),
+	(536, 'Ghost'),
+	(537, 'Glory'),
+	(538, 'Grand'),
+	(539, 'Great'),
+	(540, 'Green'),
+	(541, 'Guter'),
+	(542, 'Gutes'),
+	(543, 'Heart'),
+	(544, 'Helle'),
+	(545, 'Hiden'),
+	(546, 'Hiten'),
+	(547, 'Hiver'),
+	(548, 'Hobby'),
+	(549, 'Hyper'),
+	(550, 'Ivory'),
+	(551, 'Jaune'),
+	(552, 'Jeune'),
+	(553, 'Jinpu'),
+	(554, 'Jolie'),
+	(555, 'Jolly'),
+	(556, 'Kluge'),
+	(557, 'Knife'),
+	(558, 'Komet'),
+	(559, 'Kugel'),
+	(560, 'Lahme'),
+	(561, 'Leste'),
+	(562, 'Light'),
+	(563, 'Lilas'),
+	(564, 'Lucky'),
+	(565, 'Lunar'),
+	(566, 'Lutin'),
+	(567, 'Magic'),
+	(568, 'Merry'),
+	(569, 'Metal'),
+	(570, 'Natsu'),
+	(571, 'Neddy'),
+	(572, 'Night'),
+	(573, 'Ninja'),
+	(574, 'Noble'),
+	(575, 'Noire'),
+	(576, 'Nuage'),
+	(577, 'Ocree'),
+	(578, 'Olive'),
+	(579, 'Oller'),
+	(580, 'Olles'),
+	(581, 'Omega'),
+	(582, 'Opale'),
+	(583, 'Orage'),
+	(584, 'Patte'),
+	(585, 'Peace'),
+	(586, 'Penne'),
+	(587, 'Petit'),
+	(588, 'Pfeil'),
+	(589, 'Pluie'),
+	(590, 'Plume'),
+	(591, 'Pluto'),
+	(592, 'Point'),
+	(593, 'Pomme'),
+	(594, 'Power'),
+	(595, 'Quake'),
+	(596, 'Queen'),
+	(597, 'Queue'),
+	(598, 'Reine'),
+	(599, 'Reppu'),
+	(600, 'Riche'),
+	(601, 'Rieur'),
+	(602, 'Roter'),
+	(603, 'Rotes'),
+	(604, 'Rouge'),
+	(605, 'Royal'),
+	(606, 'Rubin'),
+	(607, 'Rubis'),
+	(608, 'Saure'),
+	(609, 'Serre'),
+	(610, 'Smalt'),
+	(611, 'Snowy'),
+	(612, 'Solar'),
+	(613, 'Spark'),
+	(614, 'Speed'),
+	(615, 'Steed'),
+	(616, 'Stern'),
+	(617, 'Stone'),
+	(618, 'Storm'),
+	(619, 'Sturm'),
+	(620, 'Stute'),
+	(621, 'Super'),
+	(622, 'Sweep'),
+	(623, 'Sweet'),
+	(624, 'Swift'),
+	(625, 'Talon'),
+	(626, 'Teioh'),
+	(627, 'Titan'),
+	(628, 'Turbo'),
+	(629, 'Ultra'),
+	(630, 'Urara'),
+	(631, 'Venus'),
+	(632, 'Verte'),
+	(633, 'Verve'),
+	(634, 'Vivid'),
+	(635, 'Vogel'),
+	(636, 'Young'),
+	(637, 'Zippy'),
+	(638, 'Airain'),
+	(639, 'Ambree'),
+	(640, 'Amiral'),
+	(641, 'Arashi'),
+	(642, 'Archer'),
+	(643, 'Ardent'),
+	(644, 'Argent'),
+	(645, 'Audace'),
+	(646, 'Autumn'),
+	(647, 'Battle'),
+	(648, 'Beaute'),
+	(649, 'Beauty'),
+	(650, 'Beetle'),
+	(651, 'Blauer'),
+	(652, 'Blaues'),
+	(653, 'Bleuet'),
+	(654, 'Blonde'),
+	(655, 'Bonbon'),
+	(656, 'Breeze'),
+	(657, 'Bronze'),
+	(658, 'Brumby'),
+	(659, 'Bucker'),
+	(660, 'Caesar'),
+	(661, 'Carmin'),
+	(662, 'Cerise'),
+	(663, 'Cerule'),
+	(664, 'Chance'),
+	(665, 'Cinder'),
+	(666, 'Citron'),
+	(667, 'Claire'),
+	(668, 'Cobalt'),
+	(669, 'Corail'),
+	(670, 'Courte'),
+	(671, 'Cuivre'),
+	(672, 'Dancer'),
+	(673, 'Daring'),
+	(674, 'Desert'),
+	(675, 'Dobbin'),
+	(676, 'Dunkle'),
+	(677, 'Elance'),
+	(678, 'Emblem'),
+	(679, 'Enzian'),
+	(680, 'Esprit'),
+	(681, 'Etoile'),
+	(682, 'Filant'),
+	(683, 'Flamme'),
+	(684, 'Fleche'),
+	(685, 'Flight'),
+	(686, 'Flinke'),
+	(687, 'Flower'),
+	(688, 'Flurry'),
+	(689, 'Flying'),
+	(690, 'Forest'),
+	(691, 'Freeze'),
+	(692, 'Freund'),
+	(693, 'Friend'),
+	(694, 'Frosty'),
+	(695, 'Frozen'),
+	(696, 'Fubuki'),
+	(697, 'Galaxy'),
+	(698, 'Ganger'),
+	(699, 'Gelber'),
+	(700, 'Gelbes'),
+	(701, 'Ginger'),
+	(702, 'Gloire'),
+	(703, 'Glorie'),
+	(704, 'Goemon'),
+	(705, 'Grande'),
+	(706, 'Grenat'),
+	(707, 'Groove'),
+	(708, 'Grosse'),
+	(709, 'Gruene'),
+	(710, 'Gustav'),
+	(711, 'Hayate'),
+	(712, 'Heldin'),
+	(713, 'Heller'),
+	(714, 'Helles'),
+	(715, 'Hengst'),
+	(716, 'Hermes'),
+	(717, 'Herzog'),
+	(718, 'Himmel'),
+	(719, 'Humble'),
+	(720, 'Idaten'),
+	(721, 'Impact'),
+	(722, 'Indigo'),
+	(723, 'Jagger'),
+	(724, 'Jasmin'),
+	(725, 'Joyeux'),
+	(726, 'Jungle'),
+	(727, 'Kaiser'),
+	(728, 'Keffel'),
+	(729, 'Kleine'),
+	(730, 'Kluger'),
+	(731, 'Kluges'),
+	(732, 'Koloss'),
+	(733, 'Lahmer'),
+	(734, 'Lahmes'),
+	(735, 'Lancer'),
+	(736, 'Lander'),
+	(737, 'Laurel'),
+	(738, 'Leaper'),
+	(739, 'Legend'),
+	(740, 'Limber'),
+	(741, 'Longue'),
+	(742, 'Melody'),
+	(743, 'Meteor'),
+	(744, 'Mirage'),
+	(745, 'Mister'),
+	(746, 'Motion'),
+	(747, 'Muguet'),
+	(748, 'Nature'),
+	(749, 'Nebula'),
+	(750, 'Nether'),
+	(751, 'Nimble'),
+	(752, 'Olympe'),
+	(753, 'Orchid'),
+	(754, 'Outlaw'),
+	(755, 'Passer'),
+	(756, 'Pastel'),
+	(757, 'Pelter'),
+	(758, 'Pensee'),
+	(759, 'Petite'),
+	(760, 'Piment'),
+	(761, 'Poetic'),
+	(762, 'Poulet'),
+	(763, 'Preste'),
+	(764, 'Pretty'),
+	(765, 'Prince'),
+	(766, 'Purete'),
+	(767, 'Quartz'),
+	(768, 'Quasar'),
+	(769, 'Rafale'),
+	(770, 'Raging'),
+	(771, 'Raiden'),
+	(772, 'Ramage'),
+	(773, 'Rapide'),
+	(774, 'Reiche'),
+	(775, 'Remige'),
+	(776, 'Rieuse'),
+	(777, 'Rising'),
+	(778, 'Robust'),
+	(779, 'Royale'),
+	(780, 'Rudolf'),
+	(781, 'Runner'),
+	(782, 'Saddle'),
+	(783, 'Safran'),
+	(784, 'Sakura'),
+	(785, 'Saphir'),
+	(786, 'Saturn'),
+	(787, 'Schuss'),
+	(788, 'Sekito'),
+	(789, 'Selene'),
+	(790, 'Senden'),
+	(791, 'Serein'),
+	(792, 'Shadow'),
+	(793, 'Shiden'),
+	(794, 'Shinpu'),
+	(795, 'Sieger'),
+	(796, 'Silber'),
+	(797, 'Silent'),
+	(798, 'Silver'),
+	(799, 'Silver'),
+	(800, 'Soleil'),
+	(801, 'Sombre'),
+	(802, 'Sorrel'),
+	(803, 'Sphene'),
+	(804, 'Spirit'),
+	(805, 'Spring'),
+	(806, 'Stream'),
+	(807, 'Strike'),
+	(808, 'Summer'),
+	(809, 'Tekiro'),
+	(810, 'Terror'),
+	(811, 'Ticket'),
+	(812, 'Timide'),
+	(813, 'Topaze'),
+	(814, 'Tulipe'),
+	(815, 'Tycoon'),
+	(816, 'Ultime'),
+	(817, 'Uranus'),
+	(818, 'Veloce'),
+	(819, 'Velvet'),
+	(820, 'Victor'),
+	(821, 'Violet'),
+	(822, 'Walker'),
+	(823, 'Weisse'),
+	(824, 'Winged'),
+	(825, 'Winner'),
+	(826, 'Winner'),
+	(827, 'Winter'),
+	(828, 'Wonder'),
+	(829, 'Xanthe'),
+	(830, 'Yellow'),
+	(831, 'Zephyr'),
+	(832, 'Ardente'),
+	(833, 'Automne'),
+	(834, 'Avenger'),
+	(835, 'Baronne'),
+	(836, 'Battant'),
+	(837, 'Blazing'),
+	(838, 'Blitzer'),
+	(839, 'Camelia'),
+	(840, 'Candide'),
+	(841, 'Caramel'),
+	(842, 'Celeste'),
+	(843, 'Cerulee'),
+	(844, 'Charbon'),
+	(845, 'Charger'),
+	(846, 'Chariot'),
+	(847, 'Clipper'),
+	(848, 'Coureur'),
+	(849, 'Crimson'),
+	(850, 'Cristal'),
+	(851, 'Crystal'),
+	(852, 'Cuivree'),
+	(853, 'Cyclone'),
+	(854, 'Dancing'),
+	(855, 'Danseur'),
+	(856, 'Diamant'),
+	(857, 'Diamond'),
+	(858, 'Drafter'),
+	(859, 'Dunkler'),
+	(860, 'Dunkles'),
+	(861, 'Eastern'),
+	(862, 'Einhorn'),
+	(863, 'Elancee'),
+	(864, 'Elegant'),
+	(865, 'Emperor'),
+	(866, 'Empress'),
+	(867, 'Express'),
+	(868, 'Farceur'),
+	(869, 'Feather'),
+	(870, 'Fighter'),
+	(871, 'Filante'),
+	(872, 'Flinker'),
+	(873, 'Flinkes'),
+	(874, 'Fortune'),
+	(875, 'Fraiche'),
+	(876, 'Gagnant'),
+	(877, 'Galaxie'),
+	(878, 'Gallant'),
+	(879, 'Genesis'),
+	(880, 'Geoelte'),
+	(881, 'Grosser'),
+	(882, 'Grosses'),
+	(883, 'Gruener'),
+	(884, 'Gruenes'),
+	(885, 'Harmony'),
+	(886, 'Heroine'),
+	(887, 'Ikezuki'),
+	(888, 'Impulse'),
+	(889, 'Javelin'),
+	(890, 'Joyeuse'),
+	(891, 'Jumping'),
+	(892, 'Jupiter'),
+	(893, 'Justice'),
+	(894, 'Kleiner'),
+	(895, 'Kleines'),
+	(896, 'Lavande'),
+	(897, 'Leaping'),
+	(898, 'Legende'),
+	(899, 'Liberty'),
+	(900, 'Licorne'),
+	(901, 'Majesty'),
+	(902, 'Marquis'),
+	(903, 'Maximal'),
+	(904, 'Melodie'),
+	(905, 'Mercury'),
+	(906, 'Million'),
+	(907, 'Miracle'),
+	(908, 'Musashi'),
+	(909, 'Mustang'),
+	(910, 'Nacarat'),
+	(911, 'Natural'),
+	(912, 'Nemesis'),
+	(913, 'Neptune'),
+	(914, 'Oeillet'),
+	(915, 'Optimal'),
+	(916, 'Orageux'),
+	(917, 'Ouragan'),
+	(918, 'Paprika'),
+	(919, 'Parfait'),
+	(920, 'Partner'),
+	(921, 'Patient'),
+	(922, 'Paturon'),
+	(923, 'Pegasus'),
+	(924, 'Pensive'),
+	(925, 'Perfect'),
+	(926, 'Peureux'),
+	(927, 'Phoenix'),
+	(928, 'Plumage'),
+	(929, 'Pourpre'),
+	(930, 'Poussin'),
+	(931, 'Prancer'),
+	(932, 'Premium'),
+	(933, 'Quantum'),
+	(934, 'Radiant'),
+	(935, 'Rainbow'),
+	(936, 'Rattler'),
+	(937, 'Reicher'),
+	(938, 'Reiches'),
+	(939, 'Roughie'),
+	(940, 'Samurai'),
+	(941, 'Sautant'),
+	(942, 'Scarlet'),
+	(943, 'Schweif'),
+	(944, 'Sereine'),
+	(945, 'Sergent'),
+	(946, 'Shinden'),
+	(947, 'Shining'),
+	(948, 'Shooter'),
+	(949, 'Smoking'),
+	(950, 'Souffle'),
+	(951, 'Special'),
+	(952, 'Stylish'),
+	(953, 'Sumpter'),
+	(954, 'Tempest'),
+	(955, 'Tempete'),
+	(956, 'Thunder'),
+	(957, 'Tornado'),
+	(958, 'Torpedo'),
+	(959, 'Tristan'),
+	(960, 'Trooper'),
+	(961, 'Trotter'),
+	(962, 'Typhoon'),
+	(963, 'Unicorn'),
+	(964, 'Vengeur'),
+	(965, 'Vermeil'),
+	(966, 'Victory'),
+	(967, 'Warrior'),
+	(968, 'Weisser'),
+	(969, 'Weisses'),
+	(970, 'Western'),
+	(971, 'Whisper'),
+	(972, 'Winning'),
+	(973, 'Zetsuei'),
+	(974, 'Zillion'),
+	(975, 'Baroness'),
+	(976, 'Battante'),
+	(977, 'Blizzard'),
+	(978, 'Cannelle'),
+	(979, 'Capucine'),
+	(980, 'Cerulean'),
+	(981, 'Chanceux'),
+	(982, 'Charisma'),
+	(983, 'Charmant'),
+	(984, 'Chocolat'),
+	(985, 'Claybank'),
+	(986, 'Comtesse'),
+	(987, 'Coureuse'),
+	(988, 'Danseuse'),
+	(989, 'Duchesse'),
+	(990, 'Ecarlate'),
+	(991, 'Elegante'),
+	(992, 'Emeraude'),
+	(993, 'Farceuse'),
+	(994, 'Farfadet'),
+	(995, 'Fringant'),
+	(996, 'Gagnante'),
+	(997, 'Galloper'),
+	(998, 'Galopant'),
+	(999, 'Geoelter'),
+	(1000, 'Geoeltes'),
+	(1001, 'Geschoss'),
+	(1002, 'Gorgeous'),
+	(1003, 'Hanakaze'),
+	(1004, 'Highland'),
+	(1005, 'Hyperion'),
+	(1006, 'Illusion'),
+	(1007, 'Immortal'),
+	(1008, 'Imperial'),
+	(1009, 'Incarnat'),
+	(1010, 'Infinity'),
+	(1011, 'Innocent'),
+	(1012, 'Jacinthe'),
+	(1013, 'Kaiserin'),
+	(1014, 'Kristall'),
+	(1015, 'Maharaja'),
+	(1016, 'Maharani'),
+	(1017, 'Marquise'),
+	(1018, 'Mataemon'),
+	(1019, 'Meilleur'),
+	(1020, 'Mercedes'),
+	(1021, 'Myosotis'),
+	(1022, 'Nebulous'),
+	(1023, 'Negative'),
+	(1024, 'Nenuphar'),
+	(1025, 'Northern'),
+	(1026, 'Northern'),
+	(1027, 'Obsidian'),
+	(1028, 'Orageuse'),
+	(1029, 'Orchidee'),
+	(1030, 'Parfaite'),
+	(1031, 'Patiente'),
+	(1032, 'Peureuse'),
+	(1033, 'Positive'),
+	(1034, 'Princely'),
+	(1035, 'Princess'),
+	(1036, 'Prodigue'),
+	(1037, 'Puissant'),
+	(1038, 'Restless'),
+	(1039, 'Rhapsody'),
+	(1040, 'Roadster'),
+	(1041, 'Rutilant'),
+	(1042, 'Sautante'),
+	(1043, 'Schwarze'),
+	(1044, 'Shooting'),
+	(1045, 'Silberne'),
+	(1046, 'Southern'),
+	(1047, 'Speciale'),
+	(1048, 'Stallion'),
+	(1049, 'Stardust'),
+	(1050, 'Surusumi'),
+	(1051, 'Tonnerre'),
+	(1052, 'Trotteur'),
+	(1053, 'Ultimate'),
+	(1054, 'Universe'),
+	(1055, 'Vaillant'),
+	(1056, 'Vengeuse'),
+	(1057, 'Xanthous'),
+	(1058, 'Zeppelin'),
+	(1059, 'Ambitious'),
+	(1060, 'Audacieux'),
+	(1061, 'Ballistic'),
+	(1062, 'Beautiful'),
+	(1063, 'Brilliant'),
+	(1064, 'Campanule'),
+	(1065, 'Capitaine'),
+	(1066, 'Chanceuse'),
+	(1067, 'Charmante'),
+	(1068, 'Clematite'),
+	(1069, 'Clochette'),
+	(1070, 'Coriandre'),
+	(1071, 'Crackling'),
+	(1072, 'Destroyer'),
+	(1073, 'Excellent'),
+	(1074, 'Fantastic'),
+	(1075, 'Feathered'),
+	(1076, 'Fringante'),
+	(1077, 'Galopante'),
+	(1078, 'Gingembre'),
+	(1079, 'Hurricane'),
+	(1080, 'Ichimonji'),
+	(1081, 'Impetueux'),
+	(1082, 'Incarnate'),
+	(1083, 'Lightning'),
+	(1084, 'Matsukaze'),
+	(1085, 'Meilleure'),
+	(1086, 'Menestrel'),
+	(1087, 'Merciless'),
+	(1088, 'Pendragon'),
+	(1089, 'Princesse'),
+	(1090, 'Printemps'),
+	(1091, 'Puissante'),
+	(1092, 'Quadrille'),
+	(1093, 'Rosinante'),
+	(1094, 'Rutilante'),
+	(1095, 'Schwarzer'),
+	(1096, 'Schwarzes'),
+	(1097, 'Silberner'),
+	(1098, 'Silbernes'),
+	(1099, 'Sparkling'),
+	(1100, 'Speedster'),
+	(1101, 'Tournesol'),
+	(1102, 'Transient'),
+	(1103, 'Trotteuse'),
+	(1104, 'Turbulent'),
+	(1105, 'Twinkling'),
+	(1106, 'Vaillante'),
+	(1107, 'Valentine'),
+	(1108, 'Velocious'),
+	(1109, 'Vermeille'),
+	(1110, 'Wonderful'),
+	(1111, 'Amatsukaze'),
+	(1112, 'Audacieuse'),
+	(1113, 'Benevolent'),
+	(1114, 'Blistering'),
+	(1115, 'Brilliance'),
+	(1116, 'Bucephalus'),
+	(1117, 'Challenger'),
+	(1118, 'Excellente'),
+	(1119, 'Impetueuse'),
+	(1120, 'Invincible'),
+	(1121, 'Malevolent'),
+	(1122, 'Millennium'),
+	(1123, 'Tranquille'),
+	(1124, 'Turbulente'),
+	(1125, 'Destruction'),
+	(1126, 'Firecracker');
+/*!40000 ALTER TABLE `pet_name` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
