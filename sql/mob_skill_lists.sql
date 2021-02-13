@@ -3186,7 +3186,12 @@ INSERT INTO `mob_skill_lists` (`skill_list_name`, `skill_list_id`, `mob_skill_id
 	('Jug_Snapweed', 1152, 771),
 	('Avatar-Atomos', 1149, 3997),
 	('Jug_Mosquito', 1154, 781),
-	('Jug_Mosquito', 1154, 782);
+	('Jug_Mosquito', 1154, 782),
+	('Gerjis', 1155, 1322),
+	('Gerjis', 1155, 270),
+	('Gerjis', 1155, 271),
+	('Gerjis', 1155, 273),
+	('Gerjis', 1155, 2033);
 /*!40000 ALTER TABLE `mob_skill_lists` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

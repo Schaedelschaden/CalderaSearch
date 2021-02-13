@@ -12,11 +12,14 @@ end
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1) -- has a bug during flight, like Tiamat
     mob:setTP(3000) -- opens fight with a skill
+	mob:addMod(tpz.mod.MACC, 800)
+	mob:addMod(tpz.mod.MATT, 700)
+	mob:addMod(tpz.mod.REFRESH, 100)
 end
 
 function onMobEngaged(mob, target)
     mob:setMod(tpz.mod.REGAIN, 100) -- very close to the capture by comparing stop watch measures
-    mob:setMod(tpz.mod.REGEN, 100) -- might be higher: capture showed no change in HP with Poison II and Bio III procced
+    mob:setMod(tpz.mod.REGEN, 500) -- might be higher: capture showed no change in HP with Poison II and Bio III procced
 end
 
 local function notBusy(mob)
@@ -33,6 +36,23 @@ local function notBusy(mob)
 end
 
 function onMobFight(mob, target)
+
+-- Return the selected spell ID.
+function onMonsterMagicPrepare(mob, target)
+    -- Suzaku uses     Burn, Fire IV, Firaga III, Flare
+    -- Let's give -ga3 a higher distribution than the others.
+    local rnd = math.random()
+
+    if rnd < 0.5 then
+        return 176 -- firaga 3
+    elseif rnd < 0.7 then
+        return 147 -- fire 4
+    elseif rnd < 0.9 then
+        return 204 -- flare
+    else
+        return 235 -- burn
+    end
+end
 
     -- Return to ground at 33% HP
     if
@@ -66,6 +86,8 @@ function onMobFight(mob, target)
         mob:setBehaviour(0) -- face target while flying
     end
 end
+
+
 
 function onMobDeath(mob, player, isKiller)
 end

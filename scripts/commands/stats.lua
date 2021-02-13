@@ -13,6 +13,20 @@ cmdprops =
 };
 
 function onTrigger(player)
+	local shieldBaseBlockRate = 0
+	
+	if (player:getShieldSize() ~= 0) then
+		if (player:getShieldSize() == 1) then
+			shieldBaseBlockRate = 55
+		elseif (player:getShieldSize() == 2) then
+			shieldBaseBlockRate = 40
+		elseif (player:getShieldSize() == 3) then
+			shieldBaseBlockRate = 45
+		elseif (player:getShieldSize() == 4) then
+			shieldBaseBlockRate = 30
+		end
+	end
+
 	local DLTrait = player:getMod(tpz.mod.DAMAGE_LIMIT_TRAIT)
 	local DLGear = player:getMod(tpz.mod.DAMAGE_LIMIT_GEAR)
 	local MainDMG = player:getMod(tpz.mod.MAIN_DMG_RATING)
@@ -81,7 +95,7 @@ function onTrigger(player)
 	local WSDMG = player:getMod(tpz.mod.ALL_WSDMG_ALL_HITS) + player:getMod(tpz.mod.YAEGASUMI_WS_BONUS)
 	local SCBonus = player:getMod(tpz.mod.SKILLCHAINBONUS)
 	local SCDMG = player:getMod(tpz.mod.SKILLCHAINDMG)
-	local Block = player:getMod(tpz.mod.SHIELDBLOCKRATE)
+	local Block = player:getMod(tpz.mod.SHIELDBLOCKRATE) + shieldBaseBlockRate
 	local Guard = player:getMod(tpz.mod.GUARD)
 	local Counter = player:getMod(tpz.mod.COUNTER)
 	local CounterDMG = player:getMod(tpz.mod.COUNTER_DMG)
@@ -109,9 +123,9 @@ function onTrigger(player)
 	local CPotII = player:getMod(tpz.mod.CURE_POTENCY_II)
 	local CRPot = player:getMod(tpz.mod.CURE_POTENCY_RCVD)
 	local SID = player:getMod(tpz.mod.SPELLINTERRUPT)
-	local HasteMag = utils.clamp(player:getMod(tpz.mod.HASTE_MAGIC)/100, 0, 44)
-	local HasteAbil = utils.clamp(player:getMod(tpz.mod.HASTE_ABILITY)/100, 0, 25)
-	local HasteGear = utils.clamp(player:getMod(tpz.mod.HASTE_GEAR)/100, 0, 25)
+	local HasteMag = utils.clamp(player:getMod(tpz.mod.HASTE_MAGIC) / 100, 0, 44)
+	local HasteAbil = utils.clamp(player:getMod(tpz.mod.HASTE_ABILITY) / 100, 0, 25)
+	local HasteGear = utils.clamp(player:getMod(tpz.mod.HASTE_GEAR) / 100, 0, 25)
 	local BlitzerRoll = player:getMod(tpz.mod.DELAYP)
 	local FastCast = player:getMod(tpz.mod.FASTCAST)
 	local UFastCast = player:getMod(tpz.mod.UFASTCAST)
@@ -190,6 +204,6 @@ function onTrigger(player)
 	player:PrintToPlayer(string.format("  Ninjutsu Damage: [%i]  Daken Chance: [%i%%]  Tool Expertise: [%i%%]  Utsusemi Cast Time: [%i%%]  Blood Boon: [%i%%]", NinjutsuDMG, Daken, ToolExpertise, UtsusemiCast, BloodBoon),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  BP Delay I: [-%i]  BP Delay II: [-%i]  Favor BP Delay: [-%i]  Perp:[%i]  Damage Limit Trait: [%i]  Damage Limit Gear: [%i%%]", BPDelay, BPDelayII, FavorBPDelay, Perpetuation, DLTrait, DLGear),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("------------------------------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
-	-- player:PrintToPlayer(string.format("  Occ Augment Blue Magic Spells: [%i%%]", AugmentBlueMagic),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("  Shield Skill: [%i]", ShieldSkill),tpz.msg.channel.SYSTEM_3)
 	-- player:PrintToPlayer(string.format("  Water MAB: [%i]  Water ACC: [%i]", WaterMAB, WaterACC),tpz.msg.channel.SYSTEM_3)
 end

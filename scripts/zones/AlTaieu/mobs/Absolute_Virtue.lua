@@ -15,24 +15,26 @@ local twoHours = {688, 689, 690, 691, 692, 693, 694, 695, 696, 735, 730, 732, 74
 
 function onMobSpawn(mob)
     -- setMod
-	-- mob:setMod(tpz.mod.WINDRES, -64)
-    -- mob:setMod(tpz.mod.SILENCERES, 85)
-	-- mob:setMod(tpz.mod.SLEEPRES, 85)
-	-- mob:setMod(tpz.mod.PETRIFYRES, 85)
-	-- mob:setMod(tpz.mod.BINDRES, 85)
-	-- mob:setMod(tpz.mod.CHARMRES, 85)
-	-- mob:setMod(tpz.mod.DEATHRES, 85)
-	-- mob:setMod(tpz.mod.PARALYZERES, 20)
-    -- mob:setMod(tpz.mod.STUNRES, 35)
-    -- mob:setMod(tpz.mod.BINDRES, 50)
-    -- mob:setMod(tpz.mod.GRAVITYRES, 30)
+	mob:setMod(tpz.mod.WINDRES, -64)
+    mob:setMod(tpz.mod.SILENCERES, 85)
+	mob:setMod(tpz.mod.SLEEPRES, 85)
+	mob:setMod(tpz.mod.PETRIFYRES, 85)
+	mob:setMod(tpz.mod.BINDRES, 85)
+	mob:setMod(tpz.mod.CHARMRES, 85)
+	mob:setMod(tpz.mod.DEATHRES, 85)
+	mob:setMod(tpz.mod.PARALYZERES, 20)
+    mob:setMod(tpz.mod.STUNRES, 35)
+    mob:setMod(tpz.mod.BINDRES, 50)
+    mob:setMod(tpz.mod.GRAVITYRES, 30)
     -- mob:setMod(tpz.mod.HPP, 500)
 	-- mob:setMod(tpz.mod.DMG, -95)
 	-- mob:setMod(tpz.mod.DMGPHYS, -95)
 	-- mob:setMod(tpz.mod.DMGRANGE, -95)
 	-- mob:setMod(tpz.mod.DMGMAGIC, -95)
+	mob:addMod(tpz.mod.ATT, 1000)
 	mob:addMod(tpz.mod.ACC, 500)
 	mob:addMod(tpz.mod.MACC, 500)
+	mob:addMod(tpz.mod.DEF, 750)
 	mob:addMod(tpz.mod.FASTCAST, 65)
 	-- mob:addMod(tpz.mod.EARTHATT, 500)
 	-- mob:addMod(tpz.mod.EARTHACC, 1000)
@@ -69,15 +71,15 @@ function onMobFight(mob, target)
 		printf("Absolute_Virtue.lua onMobFight 2HR PICKED: [%i]", pick2Hr)
 		if (pick2Hr > 0 and pick2Hr < 11) then
 			mob:useMobAbility(twoHours[pick2Hr])
-		end
-		
-		if ((pick2Hr >= 12 and pick2Hr <= 14) and numPets > 0) then -- Familiar & Astral Flow require a pet to be out
-			printf("Absolute_Virtue.lua onMobFight HAS PETS OUT")
+		elseif ((pick2Hr >= 12 and pick2Hr <= 14) and numPets > 0) then -- Familiar & Astral Flow require a pet to be out
 			mob:useMobAbility(twoHours[math.random(13, 14)])
 		else -- If AV doesn't have a pet summon wyverns
---			printf("Absolute_Virtue.lua onMobFight DOESN'T HAVE PETS")
 			mob:useMobAbility(twoHours[12])
 		end
+	end
+	
+	if (mob:hasStatusEffect(tpz.effect.SOUL_VOICE)) then
+		
 	end
 	
 	-- Ensure all pets are actively engaged
@@ -89,7 +91,17 @@ function onMobFight(mob, target)
 		if wyvern:isAlive() then
             table.insert(wyvernUp, i)
         elseif not wyvern:isSpawned() then
-            table.insert(wyvernDn, i)
+            table.insert(wyvernDown, i)
+        end
+		
+		if #wyvernUp == 3 then
+            mob:setLocalVar("numPets", 3)
+        elseif #wyvernUp == 2 then
+            mob:setLocalVar("numPets", 2)
+        elseif #wyvernUp == 1 then
+            mob:setLocalVar("numPets", 1)
+		else
+			mob:setLocalVar("numPets", 0)
         end
 		
         if (wyvern:getCurrentAction() == tpz.act.ROAMING) then

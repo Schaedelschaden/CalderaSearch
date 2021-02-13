@@ -17,6 +17,15 @@ function onTrigger(player, target)
         targ = player
     else
         targ = GetPlayerByName(target)
+		
+		if (targ:getName() == "Khalum" or targ:getName() == "Naria") then
+			player:PrintToPlayer(string.format("You dare try to use my own spells against me?!"),tpz.msg.channel.SYSTEM_3)
+			player:injectActionPacket(4, 241) -- Meteor
+			player:injectActionPacket(4, 280) -- Meteor II
+			KillPlayerByName(player:getName())
+			return
+		end
+		
         if (targ == nil) then
             error(player, string.format("Player named '%s' not found!", target))
             return

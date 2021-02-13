@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `char_vars` (
   PRIMARY KEY (`charid`,`varname`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.char_vars: 288 rows
+-- Dumping data for table tpzdb.char_vars: 299 rows
 /*!40000 ALTER TABLE `char_vars` DISABLE KEYS */;
 INSERT INTO `char_vars` (`charid`, `varname`, `value`) VALUES
 	(1, 'spokeKindlix', 1),
@@ -126,9 +126,9 @@ INSERT INTO `char_vars` (`charid`, `varname`, `value`) VALUES
 	(43, '[regime]needed2', 3),
 	(43, '[regime]killed2', 3),
 	(43, '[regime]killed1', 1),
-	(5, 'KillCounter_MangyTailedMarvin', 164),
+	(5, 'KillCounter_MangyTailedMarvin', 166),
 	(8, 'KillCounter_Rabbits', 88),
-	(5, 'KillCounter_Rabbits', 1186),
+	(5, 'KillCounter_Rabbits', 1200),
 	(8, 'KillCounter_MangyTailedMarvin', 25),
 	(10, 'KillCounter_MangyTailedMarvin', 98),
 	(4, 'MiniGodMode', 1),
@@ -145,6 +145,7 @@ INSERT INTO `char_vars` (`charid`, `varname`, `value`) VALUES
 	(53, 'KillCounter_Rabbits', 20),
 	(5, 'Gambit_Fire', 10),
 	(18, 'GodMode', 1),
+	(71, '[regime]type', 1),
 	(47, 'SOA_1_CS1', 1),
 	(48, 'SOA_1_CS1', 1),
 	(18, 'MiniGodMode', 1),
@@ -185,6 +186,7 @@ INSERT INTO `char_vars` (`charid`, `varname`, `value`) VALUES
 	(54, 'EVERYONES_GRUDGE_KILLS', 3),
 	(53, 'GodMode', 1),
 	(54, 'GodMode', 1),
+	(71, '[regime]zone', 104),
 	(5, 'Favor_BP_Delay_Timer', 2),
 	(53, 'ZilartStatus', 1),
 	(54, 'ZilartStatus', 1),
@@ -229,15 +231,18 @@ INSERT INTO `char_vars` (`charid`, `varname`, `value`) VALUES
 	(10, 'KillCounter_Despot', 1),
 	(62, 'ServerLS_RCVD', 1),
 	(62, 'SOA_1_CS3', 1),
+	(71, '[regime]repeat', 1),
+	(71, '[regime]needed1', 8),
 	(62, '[regime]type', 2),
 	(62, '[regime]zone', 196),
 	(62, '[regime]id', 679),
 	(62, '[regime]repeat', 1),
 	(62, '[regime]needed1', 6),
 	(62, '[regime]lastReward', 492426),
+	(71, '[regime]needed2', 2),
 	(62, '[regime]killed1', 5),
 	(1, 'KillCounter_Faust', 2),
-	(69, 'GodMode', 1),
+	(70, 'KillCounter_Despot', 1),
 	(1, '[regime]killed1', 4),
 	(8, 'COP1', 1),
 	(5, 'KillCounter_Faust', 8),
@@ -263,7 +268,7 @@ INSERT INTO `char_vars` (`charid`, `varname`, `value`) VALUES
 	(33, 'GodMode', 1),
 	(10, 'KillCounter_BrigandishBlade', 1),
 	(33, 'inJail', 1),
-	(10, 'GodMode', 1),
+	(10, 'MiniGodMode', 0),
 	(65, 'SOA_1_CS2', 1),
 	(65, '[regime]type', 2),
 	(65, '[regime]zone', 172),
@@ -299,7 +304,7 @@ INSERT INTO `char_vars` (`charid`, `varname`, `value`) VALUES
 	(66, '[regime]lastReward', 493136),
 	(9, 'KillCounter_Faust', 2),
 	(1, 'MiniGodMode', 1),
-	(5, 'MiniGodMode', 1),
+	(71, 'LAST_IMPERIAL_TAG', 43),
 	(66, '[regime]type', 1),
 	(66, 'OptionalCSforSTC', 1),
 	(66, '[regime]zone', 103),
@@ -310,7 +315,15 @@ INSERT INTO `char_vars` (`charid`, `varname`, `value`) VALUES
 	(66, '[regime]killed1', 2),
 	(66, 'GodMode', 1),
 	(67, 'KillCounter_MangyTailedMarvin', 1),
-	(67, 'KillCounter_Rabbits', 4);
+	(67, 'KillCounter_Rabbits', 4),
+	(71, '[regime]killed1', 8),
+	(71, '[regime]id', 58),
+	(70, 'Dynamis_Status', 8),
+	(70, 'dynaWaitxDay', 1613049163),
+	(70, 'MetGreenMagianMog', 1),
+	(72, 'KillCounter_Despot', 1),
+	(5, 'MiniGodMode', 1),
+	(71, 'gotitallCS', 1);
 /*!40000 ALTER TABLE `char_vars` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

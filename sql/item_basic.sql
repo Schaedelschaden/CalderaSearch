@@ -21693,7 +21693,7 @@ INSERT INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `f
 	(28645, 0, 'ogapepo_cape_+1', 'ogapepo_cape_+1', 1, 2080, 26, 0, 0),
 	(28646, 0, 'radical_mantle', 'radical_mantle', 1, 2084, 26, 0, 0),
 	(28647, 0, 'radical_mantle_+1', 'radical_mantle_+1', 1, 2080, 26, 0, 0),
-	(28648, 0, 'priwen', 'priwen', 1, 63556, 0, 0, 0),
+	(28648, 0, 'priwen', 'priwen', 1, 2048, 0, 0, 0),
 	(28649, 0, 'rinda_shield', 'rinda_shield', 1, 30804, 0, 0, 0),
 	(28650, 0, 'she-slime_shield', 'she-slime_shield', 1, 63552, 0, 0, 0),
 	(28651, 0, 'metal_slime_shield', 'metal_slime_shield', 1, 63552, 0, 0, 0),

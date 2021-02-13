@@ -17,9 +17,17 @@ function onSpellCast(caster, target, spell)
     local duration = calculateDuration(1800, spell:getSkillType(), spell:getSpellGroup(), caster, target, false)
     duration = calculateDurationForLvl(duration, spelllevel, target:getMainLvl())
     local buff = 0
+	
     if target:getMod(tpz.mod.ENHANCES_PROT_SHELL_RCVD) > 0 then
         buff = 2 -- 2x Tier from MOD
     end
+	
+	-- Add Shield Barrier to base power if the target has a shield equipped
+	if (target:hasTrait(26) and target:getShieldSize() ~= 0) then
+		local shieldItemID = target:getEquipID(tpz.slot.SUB)
+		local shieldDEF = caster:getItemMod(shieldItemID, 1) -- Check for shield's DEF
+		power = power + shieldDEF
+	end
 
     local power = power + (buff * tier)
 

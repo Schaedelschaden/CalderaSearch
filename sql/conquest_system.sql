@@ -26,12 +26,12 @@ CREATE TABLE IF NOT EXISTS `conquest_system` (
 -- Dumping data for table tpzdb.conquest_system: 19 rows
 /*!40000 ALTER TABLE `conquest_system` DISABLE KEYS */;
 INSERT INTO `conquest_system` (`region_id`, `region_control`, `region_control_prev`, `sandoria_influence`, `bastok_influence`, `windurst_influence`, `beastmen_influence`) VALUES
-	(0, 0, 1, 5000, 0, 0, 0),
-	(1, 1, 1, 1486, 1555, 920, 39),
-	(2, 0, 1, 3830, 0, 0, 1170),
-	(3, 1, 1, 0, 5000, 0, 0),
+	(0, 0, 1, 4760, 0, 0, 240),
+	(1, 1, 1, 2307, 1044, 619, 30),
+	(2, 0, 1, 4325, 0, 0, 675),
+	(3, 1, 1, 0, 4980, 0, 20),
 	(4, 0, 0, 5000, 0, 0, 0),
-	(5, 2, 0, 0, 0, 5000, 0),
+	(5, 2, 0, 0, 0, 4810, 190),
 	(6, 0, 0, 5000, 0, 0, 0),
 	(7, 2, 0, 0, 0, 2850, 2150),
 	(8, 3, 0, 0, 0, 0, 5000),

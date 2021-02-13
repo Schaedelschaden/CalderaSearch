@@ -12178,6 +12178,35 @@ inline int32 CLuaBaseEntity::getItemSkillType(lua_State* L)
 }
 
 /************************************************************************
+*  Function: getItemMod()
+*  Purpose : Checks the provided item ID for the specified mod and returns the mod value.
+*  Example : player:getItemMod(10806, 1) Checks the Adamas Shield for DEF
+*  Notes   : Primarily used for PLD Job Trait Shield Barrier
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getItemMod(lua_State* L)
+{
+	TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+	
+	TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+	
+	uint32 itemID = (uint32)lua_tointeger(L, 1);
+	uint32 modID = (uint32)lua_tointeger(L, 2);
+	
+	uint8 ret = Sql_Query(SqlHandle, "SELECT item_mods.value FROM item_mods WHERE item_mods.itemID = %u AND item_mods.modID = %u;", itemID, modID);
+	
+	if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+    {
+		lua_pushstring(L, (const char*)Sql_GetData(SqlHandle, 0));
+		return 1;
+	}
+	
+	return 0;
+}
+
+/************************************************************************
 *  Function: addBardSong()
 *  Purpose : Adds a song effect to Player(s') Status Effect Container(s); returns true if sucess
 *  Example : target:addBardSong(caster,EFFECT_BALLAD,power,0,duration,caster:getID(), 0, 1)
@@ -15715,6 +15744,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,createWornItem),
 	
 	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getItemSkillType),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getItemMod),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,createShop),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addShopItem),

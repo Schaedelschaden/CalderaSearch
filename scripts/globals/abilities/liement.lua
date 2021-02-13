@@ -48,36 +48,36 @@ function onUseAbility(player, target, ability)
 	end
 	
 	if (player:hasStatusEffect(RuneEnhancement[1])) then
-		target:addMod(tpz.mod.FIRE_ABSORB, power + RuneCounter[1])
-		target:setCharVar("Liement_Fire", power + RuneCounter[1])
+		target:addMod(tpz.mod.ICE_ABSORB, power + RuneCounter[1])
+		target:setCharVar("Liement_Ice", power + RuneCounter[1])
 	end
 	if (player:hasStatusEffect(RuneEnhancement[2])) then
-		target:addMod(tpz.mod.ICE_ABSORB, power + RuneCounter[2])
-		target:setCharVar("Liement_Ice", power + RuneCounter[2])
+	target:addMod(tpz.mod.WIND_ABSORB, power + RuneCounter[2])
+		target:setCharVar("Liement_Wind", power + RuneCounter[2])
 	end
 	if (player:hasStatusEffect(RuneEnhancement[3])) then
-		target:addMod(tpz.mod.WIND_ABSORB, power + RuneCounter[3])
-		target:setCharVar("Liement_Wind", power + RuneCounter[3])
+	target:addMod(tpz.mod.EARTH_ABSORB, power + RuneCounter[3])
+		target:setCharVar("Liement_Earth", power + RuneCounter[3])
 	end
 	if (player:hasStatusEffect(RuneEnhancement[4])) then
-		target:addMod(tpz.mod.EARTH_ABSORB, power + RuneCounter[4])
-		target:setCharVar("Liement_Earth", power + RuneCounter[4])
+		target:addMod(tpz.mod.LTNG_ABSORB, power + RuneCounter[4])
+		target:setCharVar("Liement_Lightning", power + RuneCounter[4])
 	end
 	if (player:hasStatusEffect(RuneEnhancement[5])) then
-		target:addMod(tpz.mod.LTNG_ABSORB, power + RuneCounter[5])
-		target:setCharVar("Liement_Lightning", power + RuneCounter[5])
+		target:addMod(tpz.mod.WATER_ABSORB, power + RuneCounter[5])
+		target:setCharVar("Liement_Water", power + RuneCounter[5])
 	end
 	if (player:hasStatusEffect(RuneEnhancement[6])) then
-		target:addMod(tpz.mod.WATER_ABSORB, power + RuneCounter[6])
-		target:setCharVar("Liement_Water", power + RuneCounter[6])
+		target:addMod(tpz.mod.FIRE_ABSORB, power + RuneCounter[6])
+		target:setCharVar("Liement_Fire", power + RuneCounter[6])
 	end
 	if (player:hasStatusEffect(RuneEnhancement[7])) then
-		target:addMod(tpz.mod.LIGHT_ABSORB, power + RuneCounter[7])
-		target:setCharVar("Liement_Light", power + RuneCounter[7])
+		target:addMod(tpz.mod.DARK_ABSORB, power + RuneCounter[7])
+		target:setCharVar("Liement_Dark", power + RuneCounter[7])
 	end
 	if (player:hasStatusEffect(RuneEnhancement[8])) then
-		target:addMod(tpz.mod.DARK_ABSORB, power + RuneCounter[8])
-		target:setCharVar("Liement_Dark", power + RuneCounter[8])
+		target:addMod(tpz.mod.LIGHT_ABSORB, power + RuneCounter[8])
+		target:setCharVar("Liement_Light", power + RuneCounter[8])
 	end
 	
 --	printf("Liement.lua FIRE: [%i]  ICE: [%i]  WIND: [%i]  EARTH: [%i]  THUNDER: [%i]  WATER: [%i]  LIGHT: [%i]  DARK: [%i]", RuneCounter[1], RuneCounter[2], RuneCounter[3], RuneCounter[4], RuneCounter[5], RuneCounter[6], RuneCounter[7], RuneCounter[8])

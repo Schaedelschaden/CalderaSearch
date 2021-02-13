@@ -2172,9 +2172,39 @@ namespace battleutils
 
             if (giveTPtoVictim)
             {
+				CBattleEntity* PMaster = nullptr;
+				CBattleEntity* PPet = nullptr;
+				uint16 valueTandemBlow;
+				
+				if (PAttacker->objtype == TYPE_PET)
+				{
+					PMaster = PAttacker->PMaster;
+				}
+				
+				if (PAttacker->objtype == TYPE_PC)
+				{
+					PPet = PAttacker->PPet;
+				}
+			
+				// Handle Tandem Blow job trait
+				if (PPet != nullptr && PAttacker->objtype == TYPE_PC && charutils::hasTrait((CCharEntity*)PAttacker, TRAIT_TANDEM_BLOW) && PAttacker->GetBattleTarget() == PPet->GetBattleTarget() ||
+				PMaster != nullptr && PMaster->objtype == TYPE_PC && charutils::hasTrait((CCharEntity*)PMaster, TRAIT_TANDEM_BLOW) && PMaster->GetBattleTarget() == PAttacker->GetBattleTarget())
+				{
+					if (PAttacker->objtype == TYPE_PET)
+					{
+						PMaster = PAttacker->PMaster;
+						valueTandemBlow = PMaster->getMod(Mod::TANDEM_BLOW);
+					}
+					if (PAttacker->objtype == TYPE_PC)
+					{
+						PPet = PAttacker->PPet;
+						valueTandemBlow = PAttacker->getMod(Mod::TANDEM_BLOW);
+					}
+				}
+				
                 //account for attacker's subtle blow which reduces the baseTP gain for the defender
                 float sBlow1 = std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW), -50.0f, 50.0f);
-                float sBlow2 = std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW_II), -50.0f, 50.0f);
+                float sBlow2 = std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW_II) + (float)valueTandemBlow, -50.0f, 50.0f);
                 float sBlowMult = ((100.0f - std::clamp((float)(sBlow1 + sBlow2), -75.0f, 75.0f)) / 100.0f);
 
                 //mobs hit get basetp+30 whereas pcs hit get basetp/3
@@ -2299,9 +2329,37 @@ namespace battleutils
                 standbyTp = ((int16)(((tpMultiplier * baseTp) + bonusTP) * (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker))))));
             }
 
+			CBattleEntity* PMaster = nullptr;
+			CBattleEntity* PPet = nullptr;
+			uint16 valueTandemBlow;
+			
+			if (PAttacker->objtype == TYPE_PET)
+			{
+				PMaster = PAttacker->PMaster;
+			}
+			
+			if (PAttacker->objtype == TYPE_PC)
+			{
+				PPet = PAttacker->PPet;
+			}
+			
+			// Handle Tandem Blow job trait
+			if (PPet != nullptr && PAttacker->objtype == TYPE_PC && charutils::hasTrait((CCharEntity*)PAttacker, TRAIT_TANDEM_BLOW) && PAttacker->GetBattleTarget() == PPet->GetBattleTarget() ||
+			PMaster != nullptr && PMaster->objtype == TYPE_PC && charutils::hasTrait((CCharEntity*)PMaster, TRAIT_TANDEM_BLOW) && PMaster->GetBattleTarget() == PAttacker->GetBattleTarget())
+			{
+				if (PAttacker->objtype == TYPE_PET)
+				{
+					valueTandemBlow = PMaster->getMod(Mod::TANDEM_BLOW);
+				}
+				if (PAttacker->objtype == TYPE_PC)
+				{
+					valueTandemBlow = PAttacker->getMod(Mod::TANDEM_BLOW);
+				}
+			}
+
             //account for attacker's subtle blow which reduces the baseTP gain for the defender
             float sBlow1 = std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW), -50.0f, 50.0f);
-            float sBlow2 = std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW_II), -50.0f, 50.0f);
+            float sBlow2 = std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW_II) + (float)valueTandemBlow, -50.0f, 50.0f);
             float sBlowMult = ((100.0f - std::clamp((float)(sBlow1 + sBlow2), -75.0f, 75.0f)) / 100.0f);
 
             //mobs hit get basetp+30 whereas pcs hit get basetp/3
@@ -2475,6 +2533,27 @@ namespace battleutils
 		
 				attackerAcc += correlationBonus;
 //				printf("battleutils.cpp GetDamageRatio ADJUSTED ACC: [%i]\n", attackerAcc);
+			}
+			
+			CBattleEntity* PMaster = nullptr;
+			CBattleEntity* PPet = nullptr;
+			uint16 valueTandemStrike;
+			if (PAttacker->objtype == TYPE_PET)
+			{
+				PMaster = PAttacker->PMaster;
+				valueTandemStrike = PMaster->getMod(Mod::TANDEM_STRIKE);
+			}
+			if (PAttacker->objtype == TYPE_PC)
+			{
+				PPet = PAttacker->PPet;
+				valueTandemStrike = PAttacker->getMod(Mod::TANDEM_STRIKE);
+			}
+			
+			// Handle Tandem Strike job trait
+			if (PPet != nullptr && PAttacker->objtype == TYPE_PC && charutils::hasTrait((CCharEntity*)PAttacker, TRAIT_TANDEM_STRIKE) && PAttacker->GetBattleTarget() == PPet->GetBattleTarget() ||
+			PMaster != nullptr && PMaster->objtype == TYPE_PC && charutils::hasTrait((CCharEntity*)PMaster, TRAIT_TANDEM_STRIKE) && PMaster->GetBattleTarget() == PAttacker->GetBattleTarget())
+			{
+				attackerAcc += valueTandemStrike;
 			}
 
             // Enlight gives an ACC bonus not a hit rate bonus, ACC bonus is equal to damage dealt
@@ -4776,7 +4855,17 @@ namespace battleutils
             damage = HandleSevereDamage(PDefender, damage, false);
             int16 absorbedMP = (int16)(damage * PDefender->getMod(Mod::ABSORB_DMG_TO_MP) / 100);
             if (absorbedMP > 0)
+			{
                 PDefender->addMP(absorbedMP);
+			}
+				
+			//Calculate Convert Damage to TP
+			if (PDefender->getMod(Mod::CONVERT_DMG_TO_TP) > 0)
+			{
+				int16 absorbedTP = static_cast<int16>(damage * (float)(PDefender->getMod(Mod::CONVERT_DMG_TO_TP) / 100.0));
+				printf("battleutils.cpp MagicDmgTaken CONVERT DMG TO TP: [%i]\n", absorbedTP);
+				PDefender->addTP(absorbedTP);
+			}
         }
 
         //ShowDebug(CL_CYAN"MagicDmgTaken: Element = %d\n" CL_RESET, element);
@@ -4812,6 +4901,14 @@ namespace battleutils
             damage = HandleSevereDamage(PDefender, damage, true);
             
             ConvertDmgToMP(PDefender, damage, IsCovered);
+			
+			//Calculate Convert Damage to TP
+			if (PDefender->getMod(Mod::CONVERT_DMG_TO_TP) > 0)
+			{
+				int16 absorbedTP = static_cast<int16>(damage * (float)(PDefender->getMod(Mod::CONVERT_DMG_TO_TP) / 100.0));
+				printf("battleutils.cpp PhysicalDmgTaken CONVERT DMG TO TP: [%i]\n", absorbedTP);
+				PDefender->addTP(absorbedTP);
+			}
 
             damage = HandleFanDance(PDefender, damage);
         }
@@ -4847,6 +4944,14 @@ namespace battleutils
             damage = HandleSevereDamage(PDefender, damage, true);
 
             ConvertDmgToMP(PDefender, damage, IsCovered);
+			
+			//Calculate Convert Damage to TP
+			if (PDefender->getMod(Mod::CONVERT_DMG_TO_TP) > 0)
+			{
+				int16 absorbedTP = static_cast<int16>(damage * (float)(PDefender->getMod(Mod::CONVERT_DMG_TO_TP) / 100.0));
+				printf("battleutils.cpp RangedDmgTaken CONVERT DMG TO TP: [%i]\n", absorbedTP);
+				PDefender->addTP(absorbedTP);
+			}
 
             damage = HandleFanDance(PDefender, damage);
         }
@@ -6436,7 +6541,9 @@ namespace battleutils
 
         //If attack was covered, get cover ability user's COVER_TO_MP mod
         if (IsCovered)
+		{
             dmgToMPMods += PDefender->getMod(Mod::COVER_TO_MP);
+		}
 
         //Get ABSORB_DMG_TO_MP mod
         dmgToMPMods += PDefender->getMod(Mod::ABSORB_DMG_TO_MP);
@@ -6448,6 +6555,8 @@ namespace battleutils
         int16 absorbedMP = static_cast<int16>(damage * (dmgToMPMods / 100.0));
 
         if (absorbedMP > 0)
+		{
             PDefender->addMP(absorbedMP);
+		}
     }
 };

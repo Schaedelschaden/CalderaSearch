@@ -955,9 +955,9 @@ function addBonuses(caster, spell, target, dmg, params)
     end
 	
 	if (caster:getMod(tpz.mod.ENH_KLIMAFORM) > 0 and (weather == tpz.magic.singleWeatherStrong[ele] or weather == tpz.magic.doubleWeatherStrong[ele])) then
-		printf("magic.lua addBonuses KLIMAFORM WEATHER BEFORE BONUS: [%i]", dayWeatherBonus)
+--		printf("magic.lua addBonuses KLIMAFORM WEATHER BEFORE BONUS: [%i]", dayWeatherBonus)
 		dayWeatherBonus = dayWeatherBonus + (caster:getMod(tpz.mod.ENH_KLIMAFORM) / 100)
-		printf("magic.lua addBonuses KLIMAFORM WEATHER AFTER BONUS: [%i]", dayWeatherBonus)
+--		printf("magic.lua addBonuses KLIMAFORM WEATHER AFTER BONUS: [%i]", dayWeatherBonus)
 	end
 
     if dayWeatherBonus > 1.4 then
@@ -1370,7 +1370,9 @@ function doElementalNuke(caster, spell, target, spellParams)
 
     --add in target adjustment
     local ele = spell:getElement()
+	printf("magic.lua doElementalNuke DMG BEFORE ABSORB: [%i]", DMG)
     DMG = adjustForTarget(target, DMG, ele)
+	printf("magic.lua doElementalNuke DMG AFTER ABSORB: [%i]", DMG)
 
     --add in final adjustments
     DMG = finalMagicAdjustments(caster, target, spell, DMG)
@@ -1532,6 +1534,8 @@ function calculateDuration(duration, magicSkill, spellGroup, caster, target, use
 
         -- After Saboteur according to bg-wiki
         duration = duration + caster:getMerit(tpz.merit.ENFEEBLING_MAGIC_DURATION)
+	elseif magicSkill == tpz.skill.DARK_MAGIC then -- Dark Magic
+		duration = duration * (1 + (caster:getMod(tpz.mod.DARK_MAGIC_DURATION) / 100))
     end
 
     return math.floor(duration)

@@ -36,12 +36,14 @@ function onSpellCast(caster,target,spell)
 			caster:delStatusEffect(tpz.effect.NETHER_VOID)
 		end
 		
+		local duration = calculateDuration(90, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+		
         if (resist <= 0.125) then
             spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_ABSORB_AGI)
-            caster:addStatusEffect(tpz.effect.AGI_BOOST, Absorb, ABSORB_SPELL_TICK, 90) -- caster gains AGI
-            target:addStatusEffect(tpz.effect.AGI_DOWN, Absorb, ABSORB_SPELL_TICK, 90) -- target loses AGI
+            caster:addStatusEffect(tpz.effect.AGI_BOOST, Absorb, ABSORB_SPELL_TICK, duration) -- caster gains AGI
+            target:addStatusEffect(tpz.effect.AGI_DOWN, Absorb, ABSORB_SPELL_TICK, duration) -- target loses AGI
         end
     end
     return tpz.effect.AGI_DOWN

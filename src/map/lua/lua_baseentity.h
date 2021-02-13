@@ -199,6 +199,7 @@ public:
     int32 createWornItem(lua_State*);        // Update this item in worn item (player:createWornItem(itemid))
 	
 	int32 getItemSkillType(lua_State* L);
+	int32 getItemMod(lua_State* L);          // Checks the provided item ID for the specified mod and returns its value if found
 
     int32 createShop(lua_State*);            // Prepare the container for work of shop ??
     int32 addShopItem(lua_State*);           // Adds item to shop container (16 max)

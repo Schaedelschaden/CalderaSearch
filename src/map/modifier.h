@@ -831,6 +831,10 @@ enum class Mod
 	// Caldera custom Mod IDs
 	ENEMY_TP_ACCUM                  = 2800, // Reduces enemy TP accumulation by % when player takes physical damage
 	WALTZ_POTENCY_RCVD              = 2801, // Increases the potency of Waltz's received
+	DARK_MAGIC_DURATION             = 2802, // Increases the duration of Dark Magic spells
+	CONVERT_DMG_TO_TP               = 2803, // Converts damage taken to TP
+	TANDEM_STRIKE                   = 2804, // Grants a bonus to your and your pet's accuracy and magic accuracy when you and your pet are attacking the same target.
+	TANDEM_BLOW                     = 2805, // Reduces amount of TP gained by enemies when striking them if you and your pet are attacking the same target.
 	
 	ENH_KLIMAFORM                   = 2940, // Enhances "Klimaform" effect (Increases damage of spells under matching weather while Klimaform is active)
 	ENH_PARSIMONY                   = 2941, // Enhances "Parsimony" effect (Further reduces MP cost by % of associated Black Magic spell)

@@ -15,6 +15,10 @@ local SELF_STUN_CHANCE = 0.25  -- 25%
 -- Mobs sync/mimic TP moves.
 
 function onMobInitialize(mob)
+	mob:setMod(tpz.mod.ACC, 400)
+    mob:setMod(tpz.mod.EVA, 200)
+	mob:setMod(tpz.mod.DOUBLE_ATTACK, 20)
+	mob:setMod(tpz.mod.TRIPLE_ATTACK, 12)
     mob:addListener("WEAPONSKILL_STATE_ENTER", "SCORP_MIMIC_START", function(mob, skillID)
         local hpp = mob:getHPP()
 

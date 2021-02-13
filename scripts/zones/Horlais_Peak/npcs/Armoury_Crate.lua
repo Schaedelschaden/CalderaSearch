@@ -370,33 +370,36 @@ local loot =
     [11] =
     {
         {
-            {itemid = 1441, droprate = 169},  -- Libation Abjuration
-            {itemid = 17939, droprate = 268}, -- Kriegsbeil
-            {itemid = 17823, droprate = 99},  -- Shinsoku
-            {itemid = 18173, droprate = 85},  -- Nokizaru Shuriken
-            {itemid = 17694, droprate = 70},  -- Guespiere
-            {itemid = 17464, droprate = 85},  -- Purgatory Mace
-            {itemid = 18351, droprate = 225}, -- Meteor Cesti
+            {itemid = 20854, droprate = 200},  -- Aizkora +1
+            {itemid = 20607, droprate = 200}, -- Anathema Harpe +1
+            {itemid = 20807, droprate = 200},  -- Buramgh +1
+            {itemid = 20967, droprate = 200},  -- Combuster +1
+            {itemid = 20508, droprate = 200},  -- Comeuppnaces +1
         },
         {
-            {itemid = 1442, droprate = 169},  -- Oblation Abjuration
-            {itemid = 17789, droprate = 14},  -- Unsho
-            {itemid = 17838, droprate = 239}, -- Harlequins Horn
-            {itemid = 18088, droprate = 85},  -- Dreizack
-            {itemid = 18211, droprate = 254}, -- Gawains Axe
-            {itemid = 17578, droprate = 183}, -- Zen Pole
-            {itemid = 17695, droprate = 70},  -- Bayards Sword
+            {itemid = 20943, droprate = 200},  -- Gae Derg +1
+            {itemid = 20609, droprate = 200},  -- Jugo Kukri +1
+            {itemid = 21035, droprate = 200}, -- Kunimune +1
+            {itemid = 20800, droprate = 200},  -- Mdomo Axe +1
+            {itemid = 21696, droprate = 200}, -- Nullis +1
         },
         {
-            {itemid = 703, droprate = 563},   -- Petrified Log
-            {itemid = 1446, droprate = 296},  -- Lacquer Tree Log
-            {itemid = 831, droprate = 14},    -- Square Of Shining Cloth
-            {itemid = 722, droprate = 141},   -- Divine Log
+            {itemid = 26175, droprate = 145},   -- Adorned Helm +1
+            {itemid = 26787, droprate = 145}, -- Alhazen Hat +1
+            {itemid = 25602, droprate = 145},    -- Blistering Sallet +1
+            {itemid = 26785, droprate = 145},   -- Hike Khat
+            {itemid = 26710, droprate = 145},   -- Imperial Wing Hairpin +1
+            {itemid = 25636, droprate = 130},   -- Loess Barabuta +1
+            {itemid = 26732, droprate = 145},   -- Stinger Helm +1
         },
         {
-            {itemid = 860, droprate = 535},   -- Behemoth Hide
-            {itemid = 883, droprate = 366},   -- Behemoth Horn
-            {itemid = 17108, droprate = 48},  -- Healing Staff
+            {itemid = 27107, droprate = 145},   -- Asteria Mitts +1
+            {itemid = 27151, droprate = 145}, -- Gazu Bracelets +1
+            {itemid = 27051, droprate = 145},    -- Kachimusha Kote +1
+            {itemid = 27109, droprate = 145},   -- Lamassu Mitts +1
+            {itemid = 27996, droprate = 145},   -- Shigure Tekko +1
+            {itemid = 27994, droprate = 130},   -- Macabre Gauntlets +1
+            {itemid = 27149, droprate = 145},   -- Tatenashi Gate +1
         },
         {
             {itemid = 902, droprate = 99},    -- Demon Horn
