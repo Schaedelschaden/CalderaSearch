@@ -244,7 +244,7 @@ local battlefields = {
         {10,   10, 1552},   -- Dropping Like Flies (BS30)
         {11,   11, 1553},   -- Horns of War (KS99) -- TODO: Chlevnik is unscripted
         {12,   12, 1131},   -- Under Observation (BS40)
-        {13,   13, 1177},   -- Eye of the Tiger (BS50) -- TODO: Crossthrash mobskill
+        {13,   13, 1178},   -- Eye of the Tiger (BS50) -- TODO: Crossthrash mobskill
      -- {14,   14, 1130},   -- Shots in the Dark (BS60) -- TODO: Warmachine combat behavior
         {15,   15, 1175},   -- Double Dragonian (KS30) -- TODO: Chaos Blade strengthens after 2hr
      -- {16,   16, 1178},   -- Today's Horoscope (KS30)
@@ -318,7 +318,7 @@ local battlefields = {
         { 9,  105, 1551},   -- Charming Trio (BS20)
         {10,  106, 1552},   -- Harem Scarem (BS30)
         {11,  107, 1553},   -- Early Bird Catches the Wyrm (KS99)
-        {12,  108, 1131},   -- Royal Succession (BS40)
+        {12,  108, 1178},   -- Royal Succession (BS40)
         {13,  109, 1177},   -- Rapid Raptors (BS50)
         {14,  110, 1130},   -- Wild Wild Whiskers (BS60) -- TODO: should use petrifactive breath more often than other mobskill. Message before spellcasting.
      -- {15,  111, 1175},   -- Seasons Greetings (KS30)

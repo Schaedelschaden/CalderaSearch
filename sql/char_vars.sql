@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `char_vars` (
   PRIMARY KEY (`charid`,`varname`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.char_vars: 299 rows
+-- Dumping data for table tpzdb.char_vars: 302 rows
 /*!40000 ALTER TABLE `char_vars` DISABLE KEYS */;
 INSERT INTO `char_vars` (`charid`, `varname`, `value`) VALUES
 	(1, 'spokeKindlix', 1),
@@ -316,6 +316,7 @@ INSERT INTO `char_vars` (`charid`, `varname`, `value`) VALUES
 	(66, 'GodMode', 1),
 	(67, 'KillCounter_MangyTailedMarvin', 1),
 	(67, 'KillCounter_Rabbits', 4),
+	(71, 'AssaultCap', 99),
 	(71, '[regime]killed1', 8),
 	(71, '[regime]id', 58),
 	(70, 'Dynamis_Status', 8),
@@ -323,7 +324,9 @@ INSERT INTO `char_vars` (`charid`, `varname`, `value`) VALUES
 	(70, 'MetGreenMagianMog', 1),
 	(72, 'KillCounter_Despot', 1),
 	(5, 'MiniGodMode', 1),
-	(71, 'gotitallCS', 1);
+	(71, 'AhtUrganStatus', 1),
+	(71, 'gotitallCS', 1),
+	(69, 'MiniGodMode', 1);
 /*!40000 ALTER TABLE `char_vars` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

@@ -368,34 +368,44 @@ local loot =
             {itemid = 3339, droprate = 1000}, -- Jug Of Honey Wine
         },
         {
-            {itemid = 1441, droprate = 312}, -- Libation Abjuration
-            {itemid = 17694, droprate = 182}, -- Guespiere
-            {itemid = 18047, droprate = 65}, -- Havoc Scythe
-            {itemid = 17937, droprate = 43}, -- Leopard Axe
-            {itemid = 18173, droprate = 181}, -- Nokizaru Shuriken
-            {itemid = 17823, droprate = 217}, -- Shinsoku
-            {itemid = 17575, droprate = 43}, -- Somnus Signa
+            {itemid = 21689, droprate = 180}, -- Montante +1
+            {itemid = 20528, droprate = 180}, -- Fists of Fury +1
+            {itemid = 20805, droprate = 180}, -- Perun +1
+            {itemid = 20614, droprate = 180}, -- Pukulatmuj +1
+            {itemid = 20981, droprate = 180}, -- Raicho +1
+            {itemid = 21163, droprate = 100}, -- Pouwhenua +1
         },
         {
-            {itemid = 722, droprate = 94},   -- Divine Log
-            {itemid = 1446, droprate = 196}, -- Lacquer Tree Log
-            {itemid = 703, droprate = 572},  -- Petrified Log
-            {itemid = 831, droprate = 43},   -- Square Of Shining Cloth
+            {itemid = 20612, droprate = 180},   -- Sangarius +1
+            {itemid = 20988, droprate = 180}, -- Tancho +1
+            {itemid = 20680, droprate = 180},  -- Tanmogayi +1
+            {itemid = 20604, droprate = 180},   -- Ternion Dagger +1
+            {itemid =  20691, droprate = 180}, -- Ushenzi +1
+            {itemid =  21076, droprate = 100}, -- Septoptic +1
         },
         {
-            {itemid = 1442, droprate = 159}, -- Oblation Abjuration
-            {itemid = 17695, droprate = 151}, -- Bayards Sword
-            {itemid = 18088, droprate = 167}, -- Dreizack
-            {itemid = 17576, droprate = 95}, -- Grim Staff
-            {itemid = 17245, droprate = 95}, -- Grosveneurs Bow
-            {itemid = 17996, droprate = 56}, -- Stylet
-            {itemid = 17789, droprate = 341}, -- Unsho
+            {itemid = 26942, droprate = 110}, -- Agony Jerkin +1
+            {itemid = 25681, droprate = 110}, -- Cohort Cloak +1
+            {itemid = 26871, droprate = 110}, -- Emet Harness +1
+            {itemid = 26873, droprate = 110}, -- Hime Domaru +1
+            {itemid = 26897, droprate = 110}, -- Lugra Cloak +1
+            {itemid = 25710, droprate = 110}, -- Obviation Cuirass +1
+            {itemid = 26869, droprate = 110}, -- Rosette Jaseran +1
+            {itemid = 26888, droprate = 110}, -- Shomonjijoe +1
+            {itemid = 27533, droprate = 120}, -- Tatenashi Haramaki +1
         },
         {
-            {itemid = 4486, droprate = 522}, -- Dragon Heart
-            {itemid = 4272, droprate = 346}, -- Slice Of Dragon Meat
-            {itemid = 17928, droprate = 82}, -- Juggernaut
-            {itemid = 13189, droprate = 59}, -- Speed Belt
+            {itemid = 21417, droprate = 100}, -- Refined Grip +1
+            {itemid = 21419, droprate = 100}, -- Rigorous Grip +1
+            {itemid = 27639, droprate = 100}, -- Ajax +1
+            {itemid = 27637, droprate = 100}, -- Evalach +1
+            {itemid = 27641, droprate = 100}, -- Deliverance +1
+            {itemid = 26402, droprate = 100}, -- Forfend +1
+            {itemid = 22121, droprate = 100}, -- Imati +1
+            {itemid = 21484, droprate = 100}, -- Malison +1
+            {itemid = 21220, droprate = 100}, -- Paloma +1
+            {itemid = 27637, droprate = 100}, -- Evalach +1
+            {itemid = 22267, droprate = 100}, -- Antitail +1
         },
         {
             {itemid = 887, droprate = 32},   -- Coral Fragment
@@ -469,41 +479,38 @@ local loot =
     [108] =
     {
         {
-            {itemid =  4596, droprate = 1000}, -- bunch_of_wild_pamamas
+            {itemid =  20853, droprate = 125}, -- Aizkora
+            {itemid =  20606, droprate = 125}, -- Anathema Harpe
+            {itemid =  20806, droprate = 125}, -- Buramgh
+            {itemid =  20942, droprate = 125}, -- Gae Derg
+            {itemid =  20608, droprate = 125}, -- Jugo Kurki
+            {itemid =  21035, droprate = 125}, -- Kunimune
+            {itemid =  22266, droprate = 125}, -- Antitail
+            {itemid =  20611, droprate = 125}, -- Sangarius
         },
         {
-            {itemid =     0, droprate =  300}, -- nothing
-            {itemid = 17572, droprate =  100}, -- dusky_staff
-            {itemid = 17995, droprate =  100}, -- jongleurs_dagger
-            {itemid = 17994, droprate =  100}, -- calveleys_dagger
-            {itemid = 17463, droprate =  100}, -- sealed_mace
-            {itemid = 17821, droprate =  100}, -- himmel_stock
-            {itemid = 17787, droprate =  100}, -- kagehide
-            {itemid = 17787, droprate =  100}, -- ohaguro
+            {itemid = 26714, droprate =  145}, -- Adorned Helm
+            {itemid = 26786, droprate =  145}, -- Alhazen Hat
+            {itemid = 25601, droprate =  145}, -- Blistering Sallet
+            {itemid = 26784, droprate =  145}, -- Hike Khat
+            {itemid = 26709, droprate =  145}, -- Imperial Wing Hairpin
+            {itemid = 25635, droprate =  130}, -- Loess Barbuta
+            {itemid = 26731, droprate =  145}, -- Stinger Helm
         },
         {
-            {itemid =     0, droprate =  100}, -- nothing
-            {itemid = 14736, droprate =  300}, -- genin_earring
-            {itemid = 13164, droprate =  300}, -- agile_gorget
-            {itemid = 13165, droprate =  300}, -- jagd_gorget
+            {itemid =     0, droprate =  1000}, -- nothing
+
         },
         {
-            {itemid =     0, droprate =  370}, -- nothing
-            {itemid =   798, droprate =  100}, -- turquoise
-            {itemid =  4468, droprate =  100}, -- bunch_of_pamamas
-            {itemid =   829, droprate =  110}, -- square_of_silk_cloth
-            {itemid =   701, droprate =  140}, -- rosewood_log
-            {itemid =   792, droprate =  180}, -- pearl
+            {itemid =     0, droprate =  1000}, -- nothing
+
         },
         {
-            {itemid =  4714, droprate =  250}, -- scroll_of_phalanx
-            {itemid =  4874, droprate =  250}, -- scroll_of_absorb
-            {itemid =  4717, droprate =  250}, -- scroll_of_refresh
-            {itemid =  4751, droprate =  250}, -- scroll_of_erase
+            {itemid =     0, droprate =  1000}, -- nothing
+
         },
         {
-            {itemid =     0, droprate =  600}, -- nothing
-            {itemid =   748, droprate =  400}, -- gold_beastcoin
+            {itemid =     0, droprate =  1000}, -- nothing
         },
     },
     -- BCNM Rapid Raptors

@@ -71,73 +71,41 @@ local loot =
     [198] =
     {
         {
-            {itemid = 1124, droprate = 1000}, -- Wyvern Wing
+            {itemid =  20942, droprate = 125}, -- Gae Derg
+            {itemid =  20608, droprate = 125}, -- Jugo Kukri
+            {itemid =  21034, droprate = 125}, -- Kunimune
+            {itemid =  20799, droprate = 125}, -- Mdomo Axe
+            {itemid =  21695, droprate = 125}, -- Nullis
+            {itemid =  22057, droprate = 125}, -- Contemplator
+            {itemid =  21483, droprate = 125}, -- Malison
+            {itemid =  21075, droprate = 125}, -- Septopic
         },
         {
-            {itemid = 1122, droprate = 1000}, -- Wyvern Skin
+            {itemid = 27106, droprate =  145}, -- Asteria Mitts
+            {itemid = 27150, droprate =  145}, -- Gaze Bracelets
+            {itemid = 27050, droprate =  145}, -- Kachimusha Kote
+            {itemid = 27108, droprate =  145}, -- Lamassu Mitts
+            {itemid = 27995, droprate =  145}, -- Shigure Tekko
+            {itemid = 27993, droprate =  130}, -- Macabre Gauntlets
+            {itemid = 27148, droprate =  145}, -- Tatenashi Gote
         },
+        {
+            {itemid =     0, droprate =  1000}, -- nothing
 
+        },
         {
-            {itemid = 65535, droprate = 1000, amount = 24000},  -- gil
+            {itemid =     0, droprate =  1000}, -- nothing
 
         },
         {
-            {itemid = 836, droprate = 216}, -- Damascene Cloth
-            {itemid = 658, droprate = 295}, -- Damascus Ingot
-            {itemid = 17938, droprate = 239}, -- Woodville's Axe
-            {itemid = 17998, droprate = 231}, -- Thanatos Baselard
-            {itemid = 17579, droprate = 231}, -- Wyvern Perch
-            {itemid = 18373, droprate = 231}, -- Balin's Sword
-            {itemid = 1110, droprate = 231}, -- Beetle Blood
-        },
-        {
-            {itemid = 18092, droprate = 104}, -- Bourdonasse
-            {itemid = 4175, droprate = 86}, -- Vile Elixir +1
-            {itemid = 4174, droprate = 22}, -- Vile Elixir
-            {itemid = 19025, droprate = 146}, -- Pole Grip
-            {itemid = 19024, droprate = 240}, -- Sword Strap
-        },
-        {
-            {itemid = 17246, droprate = 287}, -- Ziska's Crossbow
-            {itemid = 17790, droprate = 216}, -- Unji
-            {itemid = 17999, droprate = 198}, -- Taillifer's Dagger
-            {itemid = 18089, droprate = 287}, -- Schiltron Spear
-            {itemid = 4774, droprate = 287}, -- Thunder III
-        },
-        {
-            {itemid = 887, droprate = 52}, -- Coral Fragment
-            {itemid = 645, droprate = 56}, -- Chunk Of Darksteel Ore
-            {itemid = 902, droprate = 41}, -- Demon Horn
-            {itemid = 702, droprate = 63}, -- Ebony Log
-            {itemid = 737, droprate = 52}, -- Chunk Of Gold Ore
-            {itemid = 823, droprate = 26}, -- Spool Of Gold Thread
-            {itemid = 1465, droprate = 11}, -- Slab Of Granite
-            {itemid = 4173, droprate = 37}, -- Hi-reraiser
-            {itemid = 700, droprate = 101}, -- Mahogany Log
-            {itemid = 653, droprate = 30}, -- Mythril Ingot
-            {itemid = 644, droprate = 52}, -- Chunk Of Mythril Ore
-            {itemid = 703, droprate = 116}, -- Petrified Log
-            {itemid = 844, droprate = 15}, -- Phoenix Feather
-            {itemid = 942, droprate = 56}, -- Philosophers Stone
-            {itemid = 738, droprate = 45}, -- Chunk Of Platinum Ore
-            {itemid = 830, droprate = 22}, -- Square Of Rainbow Cloth
-            {itemid = 895, droprate = 67}, -- Ram Horn
-            {itemid = 1132, droprate = 119}, -- Square Of Raxa
-            {itemid = 4172, droprate = 45}, -- Reraiser
-            {itemid = 0, droprate = 400} -- Nothing
-        },
-        {
-            {itemid = 836, droprate = 56}, -- Square Of Damascene Cloth
-            {itemid = 658, droprate = 93}, -- Damascus Ingot
-            {itemid = 837, droprate = 56}, -- Spool Of Malboro Fiber
-            {itemid = 942, droprate = 157}, -- Philosophers Stone
-            {itemid = 844, droprate = 176}, -- Phoenix Feather
-            {itemid = 1132, droprate = 109}, -- Square Of Raxa
-            {itemid = 0, droprate = 500}, -- Nothing
-        }
-    }
+            {itemid =     0, droprate =  1000}, -- nothing
 
-}
+        },
+        {
+            {itemid =     0, droprate =  1000}, -- nothing
+        },
+    },
+	}
 
 function onTrade(player, npc, trade)
 end

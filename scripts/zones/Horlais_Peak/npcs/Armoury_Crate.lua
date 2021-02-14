@@ -558,56 +558,41 @@ local loot =
     [13] =
     {
         {
-            {itemid =   884, droprate = 1000}, -- black_tiger_fang
+            {itemid =  21688, droprate = 125}, -- Montante
+            {itemid =  20527, droprate = 125}, -- Fists of Fury
+            {itemid =  20804, droprate = 125}, -- Perun
+            {itemid =  20613, droprate = 125}, -- Pukulatmuj
+            {itemid =  20980, droprate = 125}, -- Raicho
+            {itemid =  21162, droprate = 125}, -- Pouwhenua
+            {itemid =  21416, droprate = 125}, -- Refined Grip
+            {itemid =  21690, droprate = 125}, -- Ushenzi
         },
         {
-            {itemid =   884, droprate = 1000}, -- black_tiger_fang
+            {itemid = 26941, droprate =  110}, -- Agony Jerkin
+            {itemid = 25680, droprate =  110}, -- Cohort Cloak
+            {itemid = 26870, droprate =  110}, -- Emet Harness
+            {itemid = 26872, droprate =  110}, -- Hime Domaru
+            {itemid = 26896, droprate =  110}, -- Lugra Cloak
+            {itemid = 25709, droprate =  110}, -- Obviation Cuirass
+            {itemid = 26868, droprate =  110}, -- Rosette Jaseran
+            {itemid = 26887, droprate =  110}, -- Shimonjijoe
+            {itemid = 27534, droprate =  120}, -- Tatenashi Haramaki
+
         },
         {
-            {itemid =     0, droprate =  700}, -- nothing
-            {itemid =  1012, droprate =  300}, -- nue_fang
+            {itemid =     0, droprate =  1000}, -- nothing
+
         },
         {
-            {itemid =     0, droprate =  125}, -- nothing
-            {itemid = 14842, droprate =  125}, -- ivory_mitts
-            {itemid = 15151, droprate =  125}, -- super_ribbon
-            {itemid = 15148, droprate =  125}, -- mana_circlet
-            {itemid = 15149, droprate =  125}, -- rival_ribbon
-            {itemid = 14845, droprate =  125}, -- sly_gauntlets
-            {itemid = 15150, droprate =  125}, -- shock_mask
-            {itemid = 14843, droprate =  125}, -- spiked_finger_gauntlets
+            {itemid =     0, droprate =  1000}, -- nothing
+
         },
         {
-            {itemid = 13168, droprate =  125}, -- intellect_torque
-            {itemid = 13677, droprate =  125}, -- esoteric_mantle
-            {itemid = 13679, droprate =  125}, -- templars_mantle
-            {itemid = 13678, droprate =  125}, -- snipers_mantle
-            {itemid = 13166, droprate =  125}, -- hateful_collar
-            {itemid = 13167, droprate =  125}, -- storm_gorget
-            {itemid = 13676, droprate =  125}, -- heavy_mantle
-            {itemid = 13169, droprate =  125}, -- benign_necklace
+            {itemid =     0, droprate =  1000}, -- nothing
+
         },
         {
-            {itemid =     0, droprate =  125}, -- nothing
-            {itemid =   745, droprate =  125}, -- gold_ingot
-            {itemid =   895, droprate =  125}, -- ram_horn
-            {itemid =  1122, droprate =  125}, -- wyvern_skin
-            {itemid =   702, droprate =  125}, -- ebony_log
-            {itemid =   653, droprate =  125}, -- mythril_ingot
-            {itemid =   859, droprate =  125}, -- ram_skin
-            {itemid =   887, droprate =  125}, -- coral_fragment
-        },
-        {
-            {itemid =     0, droprate =  400}, -- nothing
-            {itemid =  5152, droprate =  200}, -- slice_of_buffalo_meat
-            {itemid =  4272, droprate =  200}, -- slice_of_dragon_meat
-            {itemid =  4377, droprate =  200}, -- slice_of_coeurl_meat
-        },
-        {
-            {itemid =     0, droprate =  625}, -- nothing
-            {itemid =  4814, droprate =  125}, -- scroll_of_freeze
-            {itemid =  4621, droprate =  125}, -- scroll_of_raise_ii
-            {itemid =  4818, droprate =  125}, -- scroll_of_quake
+            {itemid =     0, droprate =  1000}, -- nothing
         },
     },
 
@@ -705,7 +690,47 @@ local loot =
             {itemid = 1110, droprate = 41},   -- Vial Of Black Beetle Blood
         },
     },
+    -- BCNM Today's Horoscope
+    [16] =
+    {
+        {
+            {itemid =  21688, droprate = 125}, -- Montante
+            {itemid =  20527, droprate = 125}, -- Fists of Fury
+            {itemid =  20804, droprate = 125}, -- Perun
+            {itemid =  20613, droprate = 125}, -- Pukulatmuj
+            {itemid =  20980, droprate = 125}, -- Raicho
+            {itemid =  21162, droprate = 125}, -- Pouwhenua
+            {itemid =  21416, droprate = 125}, -- Refined Grip
+            {itemid =  21690, droprate = 125}, -- Ushenzi
+        },
+        {
+            {itemid = 26941, droprate =  110}, -- Agony Jerkin
+            {itemid = 25680, droprate =  110}, -- Cohort Cloak
+            {itemid = 26870, droprate =  110}, -- Emet Harness
+            {itemid = 26872, droprate =  110}, -- Hime Domaru
+            {itemid = 26896, droprate =  110}, -- Lugra Cloak
+            {itemid = 25709, droprate =  110}, -- Obviation Cuirass
+            {itemid = 26868, droprate =  110}, -- Rosette Jaseran
+            {itemid = 26887, droprate =  110}, -- Shimonjijoe
+            {itemid = 27534, droprate =  120}, -- Tatenashi Haramaki
 
+        },
+        {
+            {itemid =     0, droprate =  1000}, -- nothing
+
+        },
+        {
+            {itemid =     0, droprate =  1000}, -- nothing
+
+        },
+        {
+            {itemid =     0, droprate =  1000}, -- nothing
+
+        },
+        {
+            {itemid =     0, droprate =  1000}, -- nothing
+        },
+    },
     -- KSNM Contaminated Colosseum
     [17] =
     {

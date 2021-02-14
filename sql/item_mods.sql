@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `item_mods` (
   PRIMARY KEY (`itemId`,`modId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=13 PACK_KEYS=1;
 
--- Dumping data for table tpzdb.item_mods: 55,585 rows
+-- Dumping data for table tpzdb.item_mods: 56,167 rows
 /*!40000 ALTER TABLE `item_mods` DISABLE KEYS */;
 INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
 	(10250, 1, 1),
@@ -56189,7 +56189,18 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
 	(25687, 384, 400),
 	(25687, 302, 4),
 	(25687, 27, -8),
-	(25687, 259, 6);
+	(25687, 259, 6),
+	(14062, 2809, 1),
+	(27106, 2809, 1),
+	(27107, 2809, 1),
+	(20807, 391, 11),
+	(20807, 304, 11),
+	(20807, 14, 10),
+	(21696, 25, 19),
+	(21696, 23, 34),
+	(21696, 288, 4),
+	(21696, 431, 1),
+	(21696, 8, 20);
 /*!40000 ALTER TABLE `item_mods` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

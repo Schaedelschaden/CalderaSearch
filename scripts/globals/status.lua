@@ -1629,6 +1629,10 @@ tpz.mod =
 	CONVERT_DMG_TO_TP               = 2803, -- Converts damage taken to TP
 	TANDEM_STRIKE                   = 2804, -- Grants a bonus to your and your pet's accuracy and magic accuracy when you and your pet are attacking the same target.
 	TANDEM_BLOW                     = 2805, -- Reduces amount of TP gained by enemies when striking them if you and your pet are attacking the same target.
+	THIRD_EYE_COUNTER_DMG           = 2806, -- Increases the damage dealt during a Third Eye counter
+	CARBUNCLE_ILVL                  = 2807, -- Increases Carbuncle's level when summoned
+	CAIT_SITH_ILVL                  = 2808, -- Increases Cait Sith's level when summoned
+	HALVE_CARBUNCLE_PERP            = 2809, -- Halves Carbuncle's Perpetuation cost
 	
 	ENH_KLIMAFORM                   = 2940, -- Enhances "Klimaform" effect (Increases damage of spells under matching weather while Klimaform is active)
 	ENH_PARSIMONY                   = 2941, -- Enhances "Parsimony" effect (Further reduces MP cost by % of associated Black Magic spell)

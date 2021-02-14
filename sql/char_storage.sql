@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `char_storage` (
   PRIMARY KEY (`charid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.char_storage: 65 rows
+-- Dumping data for table tpzdb.char_storage: 66 rows
 /*!40000 ALTER TABLE `char_storage` DISABLE KEYS */;
 INSERT INTO `char_storage` (`charid`, `inventory`, `safe`, `locker`, `satchel`, `sack`, `case`, `wardrobe`, `wardrobe2`, `wardrobe3`, `wardrobe4`) VALUES
 	(1, 80, 80, 0, 80, 80, 80, 80, 80, 80, 80),

@@ -262,48 +262,33 @@ local loot =
             {itemid =  3343, droprate = 1000}, -- Blue Pondweed
         },
         {
-            {itemid = 18047, droprate =  188}, -- Havoc Scythe
-            {itemid = 17939, droprate =   27}, -- Kriegsbeil
-            {itemid = 17937, droprate =  170}, -- Leopard Axe
-            {itemid =  1441, droprate =  295}, -- Libation Abjuration
-            {itemid = 18351, droprate =   27}, -- Meteor Cesti
-            {itemid = 17464, droprate =   71}, -- Purgatory Mace
-            {itemid = 17575, droprate =  196}, -- Somnus Signa
+            {itemid = 20854, droprate =  180}, -- Beheader +1
+            {itemid = 20522, droprate =  180}, -- Emeici +1
+            {itemid = 20709, droprate =  180}, -- Demersal Degen +1
+            {itemid = 20682, droprate =  180}, -- Flyssa +1
+            {itemid = 21746, droprate =  180}, -- Habilitator +1
+            {itemid = 21746, droprate =  100}, -- Magesmasher +1
         },
         {
-            {itemid = 18211, droprate =   45}, -- Gawains Axe
-            {itemid = 17576, droprate =  259}, -- Grim Staff
-            {itemid = 17245, droprate =  241}, -- Grosveneurs Bow
-            {itemid = 17838, droprate =  143}, -- Harlequins Horn
-            {itemid =  1442, droprate =  161}, -- Oblation Abjuration
-            {itemid = 17996, droprate =  143}, -- Stylet
-            {itemid = 17578, droprate =   36}, -- Zen Pole
+            {itemid = 21703, droprate =  180}, -- Kladenets +1
+            {itemid = 20581, droprate =  180}, -- Kustawi +1
+            {itemid = 21091, droprate =  180}, -- Loxotic Mace +1
+            {itemid = 20899, droprate =  180}, -- Triska Scythe +1
+            {itemid = 21030, droprate =  180}, -- Norifusa +1
+            {itemid = 21160, droprate =  100}, -- Marin Staff
         },
         {
-            {itemid =   683, droprate =  446}, -- Adaman Chain
-            {itemid =   908, droprate =  420}, -- Adamantoise Shell
-            {itemid =  1312, droprate =   71}, -- Piece Of Angel Skin
-            {itemid = 14080, droprate =   26}, -- Strider Boots
+            {itemid = 28134, droprate =  250}, -- Assiduity Pants +1
+            {itemid = 28136, droprate =  250}, -- Augury Cuisses +1
+            {itemid = 25856, droprate =  250}, -- Tatenashi Haidate +1
+            {itemid = 27231, droprate =  250}, -- Zoar Subligar +1
         },
         {
-            {itemid =   887, droprate =  116}, -- Coral Fragment
-            {itemid =   645, droprate =   89}, -- Chunk Of Darksteel Ore
-            {itemid =   902, droprate =   71}, -- Demon Horn
-            {itemid =   702, droprate =  152}, -- Ebony Log
-            {itemid =   737, droprate =  107}, -- Chunk Of Gold Ore
-            {itemid =   823, droprate =   89}, -- Spool Of Gold Thread
-            {itemid =  1465, droprate =   45}, -- Slab Of Granite
-            {itemid =  4173, droprate =   71}, -- Hi-reraiser
-            {itemid =   700, droprate =  107}, -- Mahogany Log
-            {itemid =   703, droprate =  223}, -- Petrified Log
-            {itemid =   738, droprate =  116}, -- Chunk Of Platinum Ore
-            {itemid =   830, droprate =   54}, -- Square Of Rainbow Cloth
-            {itemid =   895, droprate =   54}, -- Ram Horn
-            {itemid =  1132, droprate =   71}, -- Square Of Raxa
-            {itemid =  4172, droprate =   45}, -- Reraiser
-            {itemid =   866, droprate =   54}, -- Handful Of Wyvern Scales
-            {itemid =  4174, droprate =   63}, -- Vile Elixir
-            {itemid =  4175, droprate =   45}, -- Vile Elixir +1
+            {itemid = 27410, droprate =  200}, -- Hippomenes Socks +1
+            {itemid = 27408, droprate =  200}, -- Hygieia Clogs +1
+            {itemid = 28276, droprate =  200}, -- Jute Boots +1
+            {itemid = 28273, droprate =  200}, -- Regal Pumps
+            {itemid = 25924, droprate =  200}, -- Tatenashi Sune-Ate +1
         },
         {
             {itemid =   683, droprate =  268}, -- Adaman Chain
@@ -480,62 +465,36 @@ local loot =
     [81] =
     {
         {
-            {itemid = 1473, droprate = 813}, -- High-quality Scorpion Shell
-            {itemid = 13552, droprate = 55}, -- Serket Ring
-            {itemid = 901, droprate = 123}, -- Venomous Claw
+            {itemid =  21702, droprate = 125}, -- Kladenets
+            {itemid =  20580, droprate = 125}, -- Kustawi
+            {itemid =  21090, droprate = 125}, -- Loxotic Mace
+            {itemid =  21029, droprate = 125}, -- Norifusa
+            {itemid =  20898, droprate = 125}, -- Triska Scythe
+            {itemid =  21159, droprate = 125}, -- Marin Staff
+            {itemid =  21418, droprate = 125}, -- Rigorous Grip
+            {itemid =  20679, droprate = 125}, -- Tanmogayi
         },
         {
-            {itemid = 17207, droprate = 216}, -- Expunger
-            {itemid = 18005, droprate = 295}, -- Heart Snatcher
-            {itemid = 18217, droprate = 239}, -- Rampager
-            {itemid = 17793, droprate = 231}, -- Senjuinrikio
+            {itemid = 27409, droprate =  200}, -- Hippomenes Socks
+            {itemid = 27407, droprate =  200}, -- Hygieia Clogs
+            {itemid = 28275, droprate =  200}, -- Jute Boots
+            {itemid = 28723, droprate =  200}, -- Regal Pumps
+            {itemid = 25923, droprate =  200}, -- Tatenashi Sune-Ate
         },
         {
-            {itemid = 17624, droprate = 504}, -- Anubiss Knife
-            {itemid = 655, droprate = 4}, -- Adaman Ingot
-            {itemid = 19027, droprate = 86}, -- Claymore Grip
-            {itemid = 747, droprate = 22}, -- Orichalcum Ingot
-            {itemid = 19025, droprate = 146}, -- Pole Grip
-            {itemid = 19024, droprate = 22}, -- Sword Strap
+            {itemid =     0, droprate =  1000}, -- nothing
+
         },
         {
-            {itemid = 15295, droprate = 287}, -- Hierarch Belt
-            {itemid = 12407, droprate = 216}, -- Palmerins Shield
-            {itemid = 14871, droprate = 198}, -- Trainers Gloves
-            {itemid = 15294, droprate = 287}, -- Warwolf Belt
+            {itemid =     0, droprate =  1000}, -- nothing
+
         },
         {
-            {itemid = 887, droprate = 52}, -- Coral Fragment
-            {itemid = 645, droprate = 56}, -- Chunk Of Darksteel Ore
-            {itemid = 902, droprate = 41}, -- Demon Horn
-            {itemid = 702, droprate = 63}, -- Ebony Log
-            {itemid = 737, droprate = 52}, -- Chunk Of Gold Ore
-            {itemid = 823, droprate = 26}, -- Spool Of Gold Thread
-            {itemid = 1465, droprate = 11}, -- Slab Of Granite
-            {itemid = 4173, droprate = 37}, -- Hi-reraiser
-            {itemid = 700, droprate = 101}, -- Mahogany Log
-            {itemid = 653, droprate = 0}, -- Mythril Ingot
-            {itemid = 644, droprate = 52}, -- Chunk Of Mythril Ore
-            {itemid = 703, droprate = 116}, -- Petrified Log
-            {itemid = 844, droprate = 15}, -- Phoenix Feather
-            {itemid = 942, droprate = 56}, -- Philosophers Stone
-            {itemid = 738, droprate = 45}, -- Chunk Of Platinum Ore
-            {itemid = 830, droprate = 22}, -- Square Of Rainbow Cloth
-            {itemid = 895, droprate = 67}, -- Ram Horn
-            {itemid = 1132, droprate = 119}, -- Square Of Raxa
-            {itemid = 4172, droprate = 45}, -- Reraiser
-            {itemid = 4174, droprate = 19}, -- Vile Elixir
-            {itemid = 4175, droprate = 41}, -- Vile Elixir +1
-            {itemid = 866, droprate = 34}, -- Handful Of Wyvern Scales
+            {itemid =     0, droprate =  1000}, -- nothing
+
         },
         {
-            {itemid = 1110, droprate = 78}, -- Vial Of Black Beetle Blood
-            {itemid = 836, droprate = 56}, -- Square Of Damascene Cloth
-            {itemid = 658, droprate = 93}, -- Damascus Ingot
-            {itemid = 837, droprate = 56}, -- Spool Of Malboro Fiber
-            {itemid = 942, droprate = 157}, -- Philosophers Stone
-            {itemid = 844, droprate = 276}, -- Phoenix Feather
-            {itemid = 1132, droprate = 209}, -- Square Of Raxa
+            {itemid =     0, droprate =  1000}, -- nothing
         },
     },
 

@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `char_profile` (
   PRIMARY KEY (`charid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.char_profile: 67 rows
+-- Dumping data for table tpzdb.char_profile: 68 rows
 /*!40000 ALTER TABLE `char_profile` DISABLE KEYS */;
 INSERT INTO `char_profile` (`charid`, `rank_points`, `rank_sandoria`, `rank_bastok`, `rank_windurst`, `fame_sandoria`, `fame_bastok`, `fame_windurst`, `fame_norg`, `fame_jeuno`, `fame_aby_konschtat`, `fame_aby_tahrongi`, `fame_aby_latheine`, `fame_aby_misareaux`, `fame_aby_vunkerl`, `fame_aby_attohwa`, `fame_aby_altepa`, `fame_aby_grauberg`, `fame_aby_uleguerand`, `fame_adoulin`) VALUES
 	(1, 0, 1, 1, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),

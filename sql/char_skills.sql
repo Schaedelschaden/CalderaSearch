@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `char_skills` (
   PRIMARY KEY (`charid`,`skillid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=10;
 
--- Dumping data for table tpzdb.char_skills: 1,985 rows
+-- Dumping data for table tpzdb.char_skills: 2,030 rows
 /*!40000 ALTER TABLE `char_skills` DISABLE KEYS */;
 INSERT INTO `char_skills` (`charid`, `skillid`, `value`, `rank`) VALUES
 	(1, 36, 5000, 0),

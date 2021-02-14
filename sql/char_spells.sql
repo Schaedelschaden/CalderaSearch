@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `char_spells` (
   KEY `char_spells_spellid_index` (`spellid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table tpzdb.char_spells: ~34,363 rows (approximately)
+-- Dumping data for table tpzdb.char_spells: ~36,485 rows (approximately)
 /*!40000 ALTER TABLE `char_spells` DISABLE KEYS */;
 INSERT INTO `char_spells` (`charid`, `spellid`) VALUES
 	(1, 1),

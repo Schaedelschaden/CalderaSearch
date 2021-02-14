@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `char_look` (
   PRIMARY KEY (`charid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=24;
 
--- Dumping data for table tpzdb.char_look: 67 rows
+-- Dumping data for table tpzdb.char_look: 68 rows
 /*!40000 ALTER TABLE `char_look` DISABLE KEYS */;
 INSERT INTO `char_look` (`charid`, `face`, `race`, `size`, `head`, `body`, `hands`, `legs`, `feet`, `main`, `sub`, `ranged`) VALUES
 	(1, 10, 7, 2, 339, 339, 339, 339, 339, 762, 0, 0),
@@ -95,7 +95,7 @@ INSERT INTO `char_look` (`charid`, `face`, `race`, `size`, `head`, `body`, `hand
 	(69, 9, 7, 0, 95, 95, 95, 95, 95, 426, 61, 0),
 	(68, 7, 4, 0, 69, 69, 69, 69, 69, 330, 0, 0),
 	(67, 2, 5, 0, 77, 77, 77, 77, 77, 560, 656, 0),
-	(70, 7, 7, 1, 85, 180, 85, 62, 85, 91, 46, 134),
+	(70, 7, 7, 1, 102, 102, 102, 102, 102, 201, 0, 52),
 	(71, 8, 7, 2, 202, 67, 67, 67, 67, 497, 4593, 0),
 	(72, 7, 7, 1, 73, 73, 73, 73, 73, 558, 31, 0),
 	(73, 2, 7, 0, 87, 87, 86, 87, 87, 579, 0, 0);

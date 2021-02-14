@@ -1516,6 +1516,16 @@ namespace petutils
 			uint8 ilvl = PMaster->GetMLevel();
 			ilvl += PMaster->getMod(Mod::AVATAR_ILVL);
 			
+			if (PetID == PETID_CARBUNCLE)
+            {
+				ilvl += PMaster->getMod(Mod::CARBUNCLE_ILVL);
+			}
+			
+			if (PetID == PETID_CAIT_SITH)
+            {
+				ilvl += PMaster->getMod(Mod::CAIT_SITH_ILVL);
+			}
+			
 			uint16 mainLevelUpTo75 = (mlvl < 75 ? mlvl - 1 : 75);
 			uint16 mainLevelOver76andUnder99 = std::clamp(mlvl - 75, 0, 24); 
 			uint16 mainLevelOver99 = std::clamp(ilvl - 99, 0, 23);

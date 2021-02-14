@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `char_merit` (
   KEY `char_merits_charid_index` (`charid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table tpzdb.char_merit: ~112 rows (approximately)
+-- Dumping data for table tpzdb.char_merit: ~145 rows (approximately)
 /*!40000 ALTER TABLE `char_merit` DISABLE KEYS */;
 INSERT INTO `char_merit` (`charid`, `meritid`, `upgrades`) VALUES
 	(5, 64, 1),

@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `mob_spell_lists` (
   PRIMARY KEY (`spell_list_id`,`spell_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.mob_spell_lists: 3,646 rows
+-- Dumping data for table tpzdb.mob_spell_lists: 3,652 rows
 /*!40000 ALTER TABLE `mob_spell_lists` DISABLE KEYS */;
 INSERT INTO `mob_spell_lists` (`spell_list_name`, `spell_list_id`, `spell_id`, `min_level`, `max_level`) VALUES
 	('Beastmen_WHM', 1, 1, 1, 10),

@@ -1933,10 +1933,9 @@ void CStatusEffectContainer::TickRegen(time_point tick)
                     {
 
                         CPetEntity* PPet = (CPetEntity*)m_POwner->PPet;
-                        CItem* hands = PChar->getEquip(SLOT_HANDS);
 
-                        // carbuncle mitts only work on carbuncle
-                        if (hands && hands->getID() == 14062 && PPet->name == "Carbuncle") {
+                        // Carbuncle Mitts, Asteria Mitts, and Asteria Mitts +1 only work on Carbuncle
+                        if (m_POwner->getMod(Mod::HALVE_CARBUNCLE_PERP) > 0 && PPet->name == "Carbuncle") {
                             perpetuation /= 2;
                         }
                     }

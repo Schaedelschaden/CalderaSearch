@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `mob_skill_lists` (
   PRIMARY KEY (`skill_list_id`,`mob_skill_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.mob_skill_lists: 3,165 rows
+-- Dumping data for table tpzdb.mob_skill_lists: 3,170 rows
 /*!40000 ALTER TABLE `mob_skill_lists` DISABLE KEYS */;
 INSERT INTO `mob_skill_lists` (`skill_list_name`, `skill_list_id`, `mob_skill_id`) VALUES
 	('Adamantoise', 2, 804),

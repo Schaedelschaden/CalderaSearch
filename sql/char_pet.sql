@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `char_pet` (
   PRIMARY KEY (`charid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.char_pet: 38 rows
+-- Dumping data for table tpzdb.char_pet: 39 rows
 /*!40000 ALTER TABLE `char_pet` DISABLE KEYS */;
 INSERT INTO `char_pet` (`charid`, `wyvernid`, `automatonid`, `unlocked_attachments`, `equipped_attachments`, `adventuringfellowid`, `chocoboid`) VALUES
 	(1, 32, 180, NULL, NULL, 0, 0),

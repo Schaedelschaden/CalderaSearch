@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `account_ip_record` (
   PRIMARY KEY (`login_time`,`accid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.account_ip_record: ~63 rows (approximately)
+-- Dumping data for table tpzdb.account_ip_record: ~106 rows (approximately)
 /*!40000 ALTER TABLE `account_ip_record` DISABLE KEYS */;
 INSERT INTO `account_ip_record` (`login_time`, `accid`, `charid`, `client_ip`) VALUES
 	('2021-02-01 11:56:32', 1001, 5, '67.190.190.206'),
@@ -128,7 +128,13 @@ INSERT INTO `account_ip_record` (`login_time`, `accid`, `charid`, `client_ip`) V
 	('2021-02-13 08:08:40', 1055, 70, '165.120.105.114'),
 	('2021-02-13 10:56:23', 1055, 70, '165.120.105.114'),
 	('2021-02-13 11:00:28', 1001, 5, '67.190.190.206'),
-	('2021-02-13 14:05:24', 1056, 71, '73.65.148.220');
+	('2021-02-13 14:05:24', 1056, 71, '73.65.148.220'),
+	('2021-02-13 15:41:30', 1055, 70, '165.120.105.114'),
+	('2021-02-13 15:44:34', 1001, 5, '67.190.190.206'),
+	('2021-02-13 16:04:11', 1052, 67, '66.69.140.183'),
+	('2021-02-13 16:04:58', 1054, 69, '66.69.140.183'),
+	('2021-02-13 16:20:30', 1055, 70, '165.120.105.114'),
+	('2021-02-13 16:28:45', 1054, 69, '66.69.140.183');
 /*!40000 ALTER TABLE `account_ip_record` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

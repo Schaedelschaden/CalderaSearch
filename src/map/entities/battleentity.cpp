@@ -1739,6 +1739,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                     {
                         int16 naturalh2hDMG = 0;
 						int16 CounterBonusDMG = PTarget->getMod(Mod::COUNTER_DMG);
+						int16 ThirdEyeCounterDMG = PTarget->getMod(Mod::THIRD_EYE_COUNTER_DMG);
                         if (auto targ_weapon = dynamic_cast<CItemWeapon*>(PTarget->m_Weapons[SLOT_MAIN]);
                            (targ_weapon && targ_weapon->getSkillType() == SKILL_HAND_TO_HAND) || (PTarget->objtype == TYPE_MOB && PTarget->GetMJob() == JOB_MNK))
                         {
@@ -1746,7 +1747,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                         }
 
                         float DamageRatio = battleutils::GetDamageRatio(PTarget, this, attack.IsCritical(), 0.f);
-                        auto damage = (int32)((PTarget->GetMainWeaponDmg() + naturalh2hDMG + CounterBonusDMG + battleutils::GetFSTR(PTarget, this, SLOT_MAIN)) * DamageRatio);
+                        auto damage = (int32)((PTarget->GetMainWeaponDmg() + naturalh2hDMG + CounterBonusDMG + ThirdEyeCounterDMG + battleutils::GetFSTR(PTarget, this, SLOT_MAIN)) * DamageRatio);
                         actionTarget.spikesParam = battleutils::TakePhysicalDamage(PTarget, this, attack.GetAttackType(), damage, false, SLOT_MAIN, 1, nullptr, true, false, true);
                         actionTarget.spikesMessage = 33;
                         if (PTarget->objtype == TYPE_PC)

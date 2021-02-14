@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `char_style` (
   PRIMARY KEY (`charid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=20;
 
--- Dumping data for table tpzdb.char_style: 67 rows
+-- Dumping data for table tpzdb.char_style: 68 rows
 /*!40000 ALTER TABLE `char_style` DISABLE KEYS */;
 INSERT INTO `char_style` (`charid`, `head`, `body`, `hands`, `legs`, `feet`, `main`, `sub`, `ranged`) VALUES
 	(1, 0, 0, 0, 0, 0, 0, 0, 0),
