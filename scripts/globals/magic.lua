@@ -496,7 +496,7 @@ end
 -- target has to the given effect (stun, sleep, etc..)
 function getEffectResistance(target, effect)
     local effectres = 0
-    local statusres = target:getMod(tpz.mod.STATUSRES)
+    local statusres = target:getMod(tpz.mod.ALLSTATUSRES)
     if (effect == tpz.effect.SLEEP_I or effect == tpz.effect.SLEEP_II) then
         effectres = tpz.mod.SLEEPRES
     elseif (effect == tpz.effect.LULLABY) then
@@ -1370,9 +1370,9 @@ function doElementalNuke(caster, spell, target, spellParams)
 
     --add in target adjustment
     local ele = spell:getElement()
-	printf("magic.lua doElementalNuke DMG BEFORE ABSORB: [%i]", DMG)
+--	printf("magic.lua doElementalNuke DMG BEFORE ABSORB: [%i]", DMG)
     DMG = adjustForTarget(target, DMG, ele)
-	printf("magic.lua doElementalNuke DMG AFTER ABSORB: [%i]", DMG)
+--	printf("magic.lua doElementalNuke DMG AFTER ABSORB: [%i]", DMG)
 
     --add in final adjustments
     DMG = finalMagicAdjustments(caster, target, spell, DMG)
@@ -1517,6 +1517,7 @@ function calculateDuration(duration, magicSkill, spellGroup, caster, target, use
         -- Perpetuance
         if caster:hasStatusEffect(tpz.effect.PERPETUANCE) and spellGroup == tpz.magic.spellGroup.WHITE then
             duration = duration * (2 + (caster:getMod(tpz.mod.ENH_PERPETUANCE) / 100))
+			caster:delStatusEffect(tpz.effect.PERPETUANCE)
         end
         
         -- Embolden

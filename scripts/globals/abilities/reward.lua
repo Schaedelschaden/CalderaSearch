@@ -104,26 +104,21 @@ function onUseAbility(player,target,ability,action)
 
 --	(New System for getting Augment "Reward" bonuses based off mod level)
 	if (rewardAugment == 1) then
-	{
 		pet:delStatusEffect(tpz.effect.PARALYSIS)
 		pet:delStatusEffect(tpz.effect.POISON)
 		pet:delStatusEffect(tpz.effect.BLINDNESS)
-	}
 	elseif (rewardAugment == 2) then
-	{
 		pet:delStatusEffect(tpz.effect.WEIGHT)
 		pet:delStatusEffect(tpz.effect.SLOW)
 		pet:delStatusEffect(tpz.effect.SILENCE)
-	}
 	elseif (rewardAugment == 3) then
-	{
 		pet:delStatusEffect(tpz.effect.PARALYSIS)
 		pet:delStatusEffect(tpz.effect.POISON)
 		pet:delStatusEffect(tpz.effect.BLINDNESS)
 		pet:delStatusEffect(tpz.effect.WEIGHT)
 		pet:delStatusEffect(tpz.effect.SLOW)
 		pet:delStatusEffect(tpz.effect.SILENCE)
-	}
+	end
 
 --	(Previous system for getting Augment "Reward" bonuses) 
     -- Now calculating the bonus based on gear.

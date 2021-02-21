@@ -832,11 +832,11 @@ function onTrigger(player,npc)
 					28668,  100000,     -- (Shield) Matamata Shield +1
 					19785,	100000,		-- (Archery) Lanner Bow +1
 					6137,	11500,		-- (Ammunition) Chapuli Arrow Quiver
-					27743,	100000,		-- (Head) Temachtiani Headband
-					27884,	100000,		-- (Body) Temachtiani Shirt
-					28032,	100000,		-- (Hands) Temachtiani Gloves
-					28171,	100000,		-- (Legs) Temachtiani Pants
-					28309,	100000,		-- (Feet) Temachtiani Boots
+					10435,	100000,		-- (Head) Dux Visor +1
+					10273,	100000,		-- (Body) Dux Scale Mail +1
+					10317,	100000,		-- (Hands) Dux Finger Gauntlets +1
+					10347,	100000,		-- (Legs) Dux Cuisses +1
+					10364,	100000,		-- (Feet) Dux Greaves +1
 					11070,	50000,		-- (Head) Creed Armet +2
 					11090,	50000,		-- (Body) Creed Cuirass +2
 					11110,	50000,		-- (Hands) Creed Gauntlets +2
@@ -2522,11 +2522,11 @@ function onTrigger(player,npc)
 			stock_RUN =
 				{
 					20788,	100000,		-- (Great Sword) Hatzoaar Sword +1
-					27743,	100000,		-- (Head) Temachtiani Headband
-					27884,	100000,		-- (Body) Temachtiani Shirt
-					28032,	100000,		-- (Hands) Temachtiani Gloves
-					28171,	100000,		-- (Legs) Temachtiani Pants
-					28309,	100000,		-- (Feet) Temachtiani Boots
+					10435,	100000,		-- (Head) Dux Visor +1
+					10273,	100000,		-- (Body) Dux Scale Mail +1
+					10317,	100000,		-- (Hands) Dux Finger Gauntlets +1
+					10347,	100000,		-- (Legs) Dux Cuisses +1
+					10364,	100000,		-- (Feet) Dux Greaves +1
 					25543,	50000,		-- (Neck) Futhark Torque
 					10831,	50000,		-- (Waist) Paewr Belt
 					10992,	50000,		-- (Back) Vassal's Mantle

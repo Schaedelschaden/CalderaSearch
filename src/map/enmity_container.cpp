@@ -489,25 +489,25 @@ void CEnmityContainer::DecayEnmity()
 
 			if (playerLevel <= 50)
 			{
-				decayVE = 150;
+				decayVE = 100;
 //				printf("enmity_container.cpp DecayEnmity PLAYER LEVEL < 50\n");
 			}
 			else if (playerLevel >= 51 && playerLevel < 99)
 			{
-				decayVE = (int16)(playerLevel * 3.04);
-				decayCE = (int16)(playerLevel * 0.61);
+				decayVE = (int16)(playerLevel * 2.03);
+				decayCE = (int16)(playerLevel * 0.3);
 //				printf("enmity_container.cpp DecayEnmity PLAYER LEVEL < 99\n");
 
 				if (PEntity->GetMJob() == JOB_PLD || PEntity->GetMJob() == JOB_NIN || PEntity->GetMJob() == JOB_RUN)
 				{
 					decayVE = 90;
-					decayCE = 30;
+					decayCE = 20;
 				}
 			}
 			else if (playerLevel >= 99)
 			{
-				decayVE = 300;
-				decayCE = 60;
+				decayVE = 200;
+				decayCE = 30;
 			
 				if (PEntity->GetMJob() == JOB_PLD || PEntity->GetMJob() == JOB_NIN || PEntity->GetMJob() == JOB_RUN)
 				{

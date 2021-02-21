@@ -13,7 +13,7 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player, target, ability)
-	local TP = player:getTP()/100
+	local TP = player:getTP() / 10
 	player:addStatusEffect(tpz.effect.CASCADE, TP, 0, 60)
-	print(TP)
+	player:setTP(0)
 end

@@ -21,8 +21,10 @@ function onEffectGain(target, effect)
         target:addMod(tpz.mod.PHYS_ABSORB, 100)
     elseif power == 2 or power == 3 then
         target:addMod(tpz.mod.UDMGPHYS, -100)
+		target:addMod(tpz.mod.UDMGRANGE, -100)
     else
         target:addMod(tpz.mod.DMGPHYS, -50)
+		target:addMod(tpz.mod.DMGRANGE, -50)
     end
 end
 
@@ -32,7 +34,9 @@ function onEffectLose(target, effect)
         target:delMod(tpz.mod.PHYS_ABSORB, 100)
     elseif power == 2 or power == 3 then
         target:delMod(tpz.mod.UDMGPHYS, -100)
+		target:delMod(tpz.mod.UDMGRANGE, -100)
     else
         target:delMod(tpz.mod.DMGPHYS, -50)
+		target:delMod(tpz.mod.DMGRANGE, -50)
     end
 end

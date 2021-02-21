@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `delivery_box` (
   PRIMARY KEY (`charid`,`box`,`slot`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.delivery_box: ~24 rows (approximately)
+-- Dumping data for table tpzdb.delivery_box: ~19 rows (approximately)
 /*!40000 ALTER TABLE `delivery_box` DISABLE KEYS */;
 INSERT INTO `delivery_box` (`charid`, `charname`, `box`, `slot`, `itemid`, `itemsubid`, `quantity`, `extra`, `senderid`, `sender`, `received`, `sent`) VALUES
 	(8, 'Fujin', 2, 0, 65535, 0, 10000, _binary 0x000000000000000000000000000000000000000000000000, 5, 'Khalum', 1, 1),
@@ -43,18 +43,13 @@ INSERT INTO `delivery_box` (`charid`, `charname`, `box`, `slot`, `itemid`, `item
 	(59, 'Soso', 1, 10, 28032, 0, 1, _binary 0x000000000000000000000000000000000000000000000000, 58, 'Pro', 0, 0),
 	(59, 'Soso', 1, 11, 28171, 0, 1, _binary 0x000000000000000000000000000000000000000000000000, 58, 'Pro', 0, 0),
 	(59, 'Soso', 1, 12, 28309, 0, 1, _binary 0x000000000000000000000000000000000000000000000000, 58, 'Pro', 0, 0),
-	(66, 'Pumpkin', 1, 0, 65535, 4748, 200000, NULL, 0, 'AH-Jeuno', 0, 0),
-	(66, 'Pumpkin', 1, 1, 65535, 4818, 5000, NULL, 0, 'AH-Jeuno', 0, 0),
-	(66, 'Pumpkin', 1, 2, 65535, 894, 9600, NULL, 0, 'AH-Jeuno', 0, 0),
-	(66, 'Pumpkin', 1, 3, 65535, 658, 10000, NULL, 0, 'AH-Jeuno', 0, 0),
-	(66, 'Pumpkin', 1, 4, 65535, 5, 50000, NULL, 0, 'AH-Jeuno', 0, 0),
-	(66, 'Pumpkin', 1, 5, 65535, 831, 5000, NULL, 0, 'AH-Jeuno', 0, 0),
-	(66, 'Pumpkin', 1, 6, 65535, 831, 5000, NULL, 0, 'AH-Jeuno', 0, 0),
+	(66, 'Pumpkin', 1, 0, 747, 0, 1, NULL, 0, 'AH-Jeuno', 0, 0),
+	(66, 'Pumpkin', 1, 1, 321, 0, 1, NULL, 0, 'AH-Jeuno', 0, 0),
+	(66, 'Pumpkin', 1, 2, 318, 0, 1, NULL, 0, 'AH-Jeuno', 0, 0),
+	(66, 'Pumpkin', 1, 3, 321, 0, 1, NULL, 0, 'AH-Jeuno', 0, 0),
 	(66, 'Pumpkin', 1, 7, 318, 0, 1, NULL, 0, 'AH-Jeuno', 0, 0),
-	(66, 'Pumpkin', 1, 8, 747, 0, 1, NULL, 0, 'AH-Jeuno', 0, 0),
-	(66, 'Pumpkin', 1, 9, 321, 0, 1, NULL, 0, 'AH-Jeuno', 0, 0),
-	(66, 'Pumpkin', 1, 10, 318, 0, 1, NULL, 0, 'AH-Jeuno', 0, 0),
-	(66, 'Pumpkin', 1, 11, 321, 0, 1, NULL, 0, 'AH-Jeuno', 0, 0);
+	(66, 'Pumpkin', 1, 8, 65535, 0, 999999999, _binary 0x000000000000000000000000000000000000000000000000, 66, 'Pumpkin', 0, 0),
+	(66, 'Pumpkin', 2, 0, 65535, 0, 999999999, _binary 0x000000000000000000000000000000000000000000000000, 66, 'Pumpkin', 0, 1);
 /*!40000 ALTER TABLE `delivery_box` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

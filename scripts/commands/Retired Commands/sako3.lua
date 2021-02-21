@@ -29,10 +29,10 @@ function onTrigger(player, target, aug0, aug0val, aug1, aug1val, aug2, aug2val, 
         return
     end
 
-    -- Load needed text ids for target's current zone..
+    -- Load needed text ids for target's current zone
     local ID = zones[targ:getZoneID()]
 
-    -- Attempt to give the target the item..
+    -- Attempt to give the target the item
     if (targ:getFreeSlotsCount() < 5) then
         targ:messageSpecial( ID.text.ITEM_CANNOT_BE_OBTAINED, itemId )
         player:PrintToPlayer( string.format( "'%s' does not have free space for that set! Please clear 5 inventory slots and try again.", target ) )

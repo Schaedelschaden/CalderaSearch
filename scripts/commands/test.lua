@@ -6,10 +6,28 @@
 cmdprops =
 {
     permission = 1,
-    parameters = ""
+    parameters = "i"
 }
 
-function onTrigger(player)
+function onTrigger(player, modelId)
+---------------------------------------------------------------------------------------------------
+	-- local npc = player:getCursorTarget()
+	-- npc:setModelId(modelId)
+---------------------------------------------------------------------------------------------------
+	-- Code for testing listeners
+	-- player:addListener("ABILITY_USE", "TEST_LISTENER", function(player, ability)
+		-- printf("test.lua Ability Listener SETUP")
+		-- -- local enmityList = mob:getEnmityList()
+		-- -- local PlayerName = {}
+	   
+		-- -- for i,v in ipairs(enmityList) do
+			-- -- PlayerName[i] = v.entity:getName()
+			
+			-- if (player:getCurrentAction() == tpz.act.JOBABILITY_FINISH) then -- Player uses ability
+				-- printf("test.lua Ability Listener TRIGGERED")
+			-- end
+		-- -- end
+    -- end)
 ---------------------------------------------------------------------------------------------------
 
 -- Code for testing a pet's HP ratio

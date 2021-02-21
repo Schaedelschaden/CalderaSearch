@@ -692,7 +692,7 @@ enum EFFECT
 	EFFECT_NEGATE_SLEEP             = 626,
 	EFFECT_MOBILIZATION             = 627,
 	EFFECT_ZEALOUS_SNORT            = 628, // (None) DEBUG: Please report. Assigned to Zealous Snort
-//	EFFECT_NONE                     = 629, // (None) DEBUG: Please report.
+	EFFECT_FAMILIAR                 = 629, // (None) DEBUG: Please report. Assigned to Familiar
 //	EFFECT_NONE                     = 630, // (None) DEBUG: Please report.
 //	EFFECT_NONE                     = 631, // (None) DEBUG: Please report.
 //	EFFECT_NONE                     = 632, // (None) DEBUG: Please report.

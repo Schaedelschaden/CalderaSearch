@@ -11,19 +11,19 @@ function onTrade(player,npc,trade)
 end;
 
 function onTrigger(player,npc)
-    local offset = npc:getID() - ID.npc.SWIRLING_VORTEX_OFFSET;
+    local offset = npc:getID() - ID.npc.SWIRLING_VORTEX_OFFSET
     if (offset >= 0 and offset <= 1) then
-        player:startEvent(159 + offset);
+        player:startEvent(159 + offset)
     end
-end;
+end
 
 function onEventUpdate(player,csid,option)
-end;
+end
 
 function onEventFinish(player,csid,option)
     if (csid == 160 and option == 1 ) then
-        enterApollyon(player,APOLLYON_NW_SW);
+        tpz.limbus.enter(player,1)
     elseif (csid == 159 and option == 1 ) then
-        enterApollyon(player,APOLLYON_SE_NE);
+        tpz.limbus.enter(player,0)
     end
-end;
+end

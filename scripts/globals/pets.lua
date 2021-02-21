@@ -88,6 +88,7 @@ tpz.pet.id =
 
     --  Geomancer
     LUOPAN                = 75,
+	LEFTHANDED_YOKO        = 116,
 }
 
 -----------------------------------

@@ -30,7 +30,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.atk100 = 1; params.atk200 = 1; params.atk300 = 1;
 
     if USE_ADOULIN_WEAPON_SKILL_CHANGES then
-		params.ftp100 = 6.00 params.ftp200 = 7.50 params.ftp300 = 9.00
+		params.ftp100 = 3.00 params.ftp200 = 4.50 params.ftp300 = 6.00
         params.str_wsc = 0.5
     end
 

@@ -290,7 +290,7 @@ enum class Mod
     AMNESIARES                = 253, // Enhances "Resist Amnesia" effect
     LULLABYRES                = 254, // Enhances "Resist Lullaby" effect
     DEATHRES                  = 255, // Used by gear and ATMA that give resistance to instance KO
-    STATUSRES                 = 958, // "Resistance to All Status Ailments"
+    ALLSTATUSRES              = 958, // "Resistance to All Status Ailments"
 
     PARALYZE                  = 257, // Paralyze -- percent chance to proc
     MIJIN_RERAISE             = 258, // Augments Mijin Gakure
@@ -839,6 +839,7 @@ enum class Mod
 	CARBUNCLE_ILVL                  = 2807, // Increases Carbuncle's level when summoned
 	CAIT_SITH_ILVL                  = 2808, // Increases Cait Sith's level when summoned
 	HALVE_CARBUNCLE_PERP            = 2809, // Halves Carbuncle's Perpetuation cost
+	REDUCE_KNOCKBACK                = 2810, // Reduces the strength of knockback effects
 	
 	ENH_KLIMAFORM                   = 2940, // Enhances "Klimaform" effect (Increases damage of spells under matching weather while Klimaform is active)
 	ENH_PARSIMONY                   = 2941, // Enhances "Parsimony" effect (Further reduces MP cost by % of associated Black Magic spell)

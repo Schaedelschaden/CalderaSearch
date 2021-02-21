@@ -24,7 +24,7 @@ function onTrigger(player,npc)
 		player:PrintToPlayer(string.format("Makel-Pakel : *glances around suspiciously*"),tpz.msg.channel.NS_SAY)
 	elseif (trigger == 3) then
 --		player:PrintToPlayer(string.format("Makel-Pakel : No! Please!"),tpz.msg.channel.NS_SAY)
-		player:PrintToPlayer(string.format("Makel-Pakel : You haven't seen someone named Lmfaoo around have you?"),tpz.msg.channel.NS_SAY)
+		player:PrintToPlayer(string.format("Makel-Pakel : You haven't seen someone named Lmfaoo lurking around have you?"),tpz.msg.channel.NS_SAY)
 	elseif (trigger == 4) then
 --		player:PrintToPlayer(string.format("Makel-Pakel : W-w-where am I?"),tpz.msg.channel.NS_SAY)
 		player:PrintToPlayer(string.format("Makel-Pakel : Gah! You scared me!"),tpz.msg.channel.NS_SAY)

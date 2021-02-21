@@ -3667,15 +3667,15 @@ INSERT INTO `mob_spell_lists` (`spell_list_name`, `spell_list_id`, `spell_id`, `
 	('Guimauve', 170, 163, 1, 255),
 	('Guimauve', 170, 168, 1, 255),
 	('Guimauve', 170, 173, 1, 255),
-	('Absolute_Virtue', 430, 158, 1, 255),
-	('Absolute_Virtue', 430, 187, 1, 255),
-	('Absolute_Virtue', 430, 209, 1, 255),
-	('Absolute_Virtue_I', 431, 218, 1, 255),
+	('Absolute_Virtue_II', 432, 466, 1, 255),
 	('Absolute_Virtue_I', 431, 219, 1, 255),
-	('Absolute_Virtue_I', 431, 158, 1, 255),
 	('Absolute_Virtue_I', 431, 187, 1, 255),
+	('Absolute_Virtue', 430, 209, 1, 255),
+	('Absolute_Virtue_I', 431, 158, 1, 255),
+	('Absolute_Virtue', 430, 187, 1, 255),
+	('Absolute_Virtue_I', 431, 218, 1, 255),
 	('Absolute_Virtue_I', 431, 209, 1, 255),
-	('Absolute_Virtue_II', 432, 466, 1, 255);
+	('Absolute_Virtue', 430, 158, 1, 255);
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

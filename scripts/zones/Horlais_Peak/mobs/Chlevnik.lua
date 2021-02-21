@@ -15,6 +15,7 @@ function onMobSpawn(mob)
 	mob:addMod(tpz.mod.MATT, 500)
 	mob:addMod(tpz.mod.ACC, 500)
 	mob:addMod(tpz.mod.MACC, 500)
+	mob:addMod(tpz.mod.REGAIN, 300)
 	mob:addMod(tpz.mod.REFRESH, 25)
 end
 

@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `mob_droplist` (
   KEY `dropId` (`dropId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=9;
 
--- Dumping data for table tpzdb.mob_droplist: 16,907 rows
+-- Dumping data for table tpzdb.mob_droplist: 16,906 rows
 /*!40000 ALTER TABLE `mob_droplist` DISABLE KEYS */;
 INSERT INTO `mob_droplist` (`dropId`, `dropType`, `groupId`, `groupRate`, `itemId`, `itemRate`) VALUES
 	(1, 0, 0, 1000, 18856, 240),
@@ -16765,7 +16765,7 @@ INSERT INTO `mob_droplist` (`dropId`, `dropType`, `groupId`, `groupRate`, `itemI
 	(572, 0, 0, 1000, 139, 100),
 	(646, 0, 0, 1000, 139, 100),
 	(698, 0, 0, 1000, 139, 100),
-	(1853, 0, 0, 1000, 139, 100),
+	(1871, 0, 0, 1000, 2562, 280),
 	(2807, 0, 0, 1000, 139, 100),
 	(317, 0, 0, 1000, 139, 100),
 	(339, 0, 0, 1000, 139, 100),
@@ -16931,7 +16931,15 @@ INSERT INTO `mob_droplist` (`dropId`, `dropType`, `groupId`, `groupRate`, `itemI
 	(1536, 0, 0, 1000, 139, 100),
 	(1776, 0, 0, 1000, 139, 100),
 	(1960, 0, 0, 1000, 139, 100),
-	(2294, 0, 0, 1000, 139, 100);
+	(2294, 0, 0, 1000, 139, 100),
+	(2688, 0, 0, 1000, 2562, 200),
+	(2719, 0, 0, 1000, 2562, 210),
+	(2725, 0, 0, 1000, 2562, 220),
+	(2729, 0, 0, 1000, 2562, 140),
+	(2753, 0, 0, 1000, 2562, 210),
+	(2757, 0, 0, 1000, 2562, 190),
+	(2758, 0, 0, 1000, 2562, 260),
+	(2769, 0, 0, 1000, 2562, 340);
 /*!40000 ALTER TABLE `mob_droplist` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

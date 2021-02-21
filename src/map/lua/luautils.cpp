@@ -3636,17 +3636,20 @@ namespace luautils
         }
 
         lua_prepscript(filePath, PAbility->getName());
+		
+//		printf("luautils.cpp OnAbilityCheck ABILITY NAME: [%s]\n", PAbility->getName());
 
         lua_pushnil(LuaHandle);
         lua_setglobal(LuaHandle, "onAbilityCheck");
 
         auto ret = luaL_loadfile(LuaHandle, (const char*)File);
+//		printf("luautils.cpp OnAbilityCheck ret: [%i]\n", ret);
         if (ret)
         {
             if (ret != LUA_ERRFILE)
             {
                 lua_pop(LuaHandle, 1);
-                ShowError("luautils::%s: %s\n", "onAbilityCheck", lua_tostring(LuaHandle, -1));
+                ShowError("luautils::%s: %s 1\n", "onAbilityCheck", lua_tostring(LuaHandle, -1));
                 return 87;
             }
             else
@@ -3660,7 +3663,7 @@ namespace luautils
         ret = lua_pcall(LuaHandle, 0, 0, 0);
         if (ret)
         {
-            ShowError("luautils::%s: %s\n", "onAbilityCheck", lua_tostring(LuaHandle, -1));
+            ShowError("luautils::%s: %s 2\n", "onAbilityCheck", lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
             return 87;
         }
@@ -3684,7 +3687,7 @@ namespace luautils
 
         if (lua_pcall(LuaHandle, 3, 2, 0))
         {
-            ShowError("luautils::onAbilityCheck (%s): %s\n", PAbility->getName(), lua_tostring(LuaHandle, -1));
+            ShowError("luautils::onAbilityCheck (%s): %s 3\n", PAbility->getName(), lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
             return 87;
         }

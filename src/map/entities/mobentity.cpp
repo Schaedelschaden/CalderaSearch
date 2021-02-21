@@ -748,7 +748,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         if (target.speceffect & SPECEFFECT_HIT)
         {
             target.speceffect = SPECEFFECT_RECOIL;
-            target.knockback = PSkill->getKnockback();
+            target.knockback = PSkill->getKnockback() - PTarget->getMod(Mod::REDUCE_KNOCKBACK);
             if (first && (PSkill->getPrimarySkillchain() != 0))
             {
                 if (PSkill->getPrimarySkillchain())

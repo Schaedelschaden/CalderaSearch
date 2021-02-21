@@ -11,7 +11,7 @@ function isHalloweenEnabled()
     local month = tonumber(os.date("%m"))
     local day = tonumber(os.date("%d"))
     if (month == 10 and day >= 20 or month == 11 and day == 1 or HALLOWEEN_YEAR_ROUND ~= 0) then -- According to wiki Harvest Fest is Oct 20 - Nov 1.
-        if (HALLOWEEN_2005 == 1) then
+        if (HALLOWEEN_2005 == 1 or HALLOWEEN_YEAR_ROUND ~= 0) then
             option = 1
         elseif (HALLOWEEN_2008 == 1) then
             option = 2
@@ -227,7 +227,7 @@ function applyHalloweenNpcCostumes(zoneid)
             for id, skin in pairs(skins) do
                 local npc = GetNPCByID(id)
                 if npc then
-                    npc:changeSkin(skin)
+                    npc:setModelId(skin)
                 end
             end
         end

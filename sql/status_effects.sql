@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `status_effects` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.status_effects: 638 rows
+-- Dumping data for table tpzdb.status_effects: 639 rows
 /*!40000 ALTER TABLE `status_effects` DISABLE KEYS */;
 INSERT INTO `status_effects` (`id`, `name`, `flags`, `type`, `negative_id`, `overwrite`, `block_id`, `remove_id`, `element`, `min_duration`, `sort_key`) VALUES
 	(0, 'ko', 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -667,7 +667,8 @@ INSERT INTO `status_effects` (`id`, `name`, `flags`, `type`, `negative_id`, `ove
 	(625, 'sirens_favor', 32, 0, 0, 0, 0, 0, 0, 0, 0),
 	(626, 'negate_sleep', 32, 0, 0, 0, 0, 0, 0, 0, 0),
 	(627, 'mobilization', 32, 0, 0, 0, 0, 0, 0, 0, 0),
-	(628, 'zealous_snort', 32, 0, 0, 0, 0, 0, 0, 0, 0);
+	(628, 'zealous_snort', 32, 0, 0, 0, 0, 0, 0, 0, 0),
+	(629, 'familiar', 32, 0, 0, 0, 0, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `status_effects` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

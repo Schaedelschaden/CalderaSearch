@@ -11,7 +11,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!setmobflags {model ID}")
+    player:PrintToPlayer("!setmobmodel {model ID}")
 end
 
 function onTrigger(player, modelID)

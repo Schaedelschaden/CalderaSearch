@@ -220,7 +220,8 @@ INSERT INTO `blue_spell_list` (`spellid`, `mob_skill_id`, `set_points`, `trait_c
 	(750, 2667, 0, 0, 0, 0, 0),
 	(751, 3304, 0, 0, 0, 0, 0),
 	(752, 3372, 0, 0, 0, 5, 0),
-	(753, 3363, 0, 0, 0, 6, 0);
+	(753, 3363, 0, 0, 0, 6, 0),
+	(709, 2916, 7, 24, 8, 11, 0);
 /*!40000 ALTER TABLE `blue_spell_list` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

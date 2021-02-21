@@ -8,7 +8,7 @@ require("scripts/globals/bcnm")
 
 local loot =
 {
-    -- BCNM Tails of Woe
+    -- BCNM Tails of Woe -- Off
     [1] =
     {
         {
@@ -93,7 +93,7 @@ local loot =
         },
     },
 
-    -- BCNM Dismemberment Brigade
+    -- BCNM Dismemberment Brigade -- Off
     [2] =
     {
         {
@@ -133,7 +133,7 @@ local loot =
         },
     },
 
-    -- BCNM Hostile Herbivores
+    -- BCNM Hostile Herbivores -- Off
     [4] =
     {
         {
@@ -214,7 +214,7 @@ local loot =
         },
     },
 
-    -- BCNM Carapace Combatants
+    -- BCNM Carapace Combatants -- Off
     [8] =
     {
         {
@@ -273,7 +273,7 @@ local loot =
         },
     },
 
-    -- BCNM Shooting Fish
+    -- BCNM Shooting Fish -- Off
     [9] =
     {
         {
@@ -321,7 +321,7 @@ local loot =
         },
     },
 
-    -- BCNM Dropping Like Flies
+    -- BCNM Dropping Like Flies -- Off
     [10] =
     {
         {
@@ -401,86 +401,42 @@ local loot =
             {itemid = 27994, droprate = 130},   -- Macabre Gauntlets +1
             {itemid = 27149, droprate = 145},   -- Tatenashi Gate +1
         },
-        {
-            {itemid = 902, droprate = 99},    -- Demon Horn
-            {itemid = 703, droprate = 70},    -- Petrified Log
-            {itemid = 1132, droprate = 70},   -- Square Of Raxa
-            {itemid = 830, droprate = 28},    -- Square Of Rainbow Cloth
-            {itemid = 4173, droprate = 113},  -- Hi-reraiser
-            {itemid = 703, droprate = 211},   -- Petrified Log
-            {itemid = 942, droprate = 141},   -- Philosophers Stone
-            {itemid = 737, droprate = 56},    -- Chunk Of Gold Ore
-            {itemid = 644, droprate = 85},    -- Chunk Of Mythril Ore
-            {itemid = 887, droprate = 70},    -- Coral Fragment
-            {itemid = 700, droprate = 85},    -- Mahogany Log
-            {itemid = 866, droprate = 42},    -- Handful Of Wyvern Scales
-            {itemid = 645, droprate = 42},    -- Chunk Of Darksteel Ore
-            {itemid = 895, droprate = 70},    -- Ram Horn
-            {itemid = 702, droprate = 85},    -- Ebony Log
-            {itemid = 4172, droprate = 28},   -- Reraiser
-            {itemid = 738, droprate = 42},    -- Chunk Of Platinum Ore
-            {itemid = 4174, droprate = 42},   -- Vile Elixir
-            {itemid = 4175, droprate = 7},    -- Vile Elixir +1
-        },
-        {
-            {itemid = 1527, droprate = 208},  -- Behemoth Tongue
-            {itemid = 883, droprate = 296},   -- Behemoth Horn
-            {itemid = 4199, droprate = 155},  -- Strength Potion
-            {itemid = 4201, droprate = 70},   -- Dexterity Potion
-            {itemid = 4205, droprate = 141},  -- Agility Potion
-            {itemid = 4203, droprate = 113},  -- Vitality Potion
-        },
-        {
+		{
             {itemid = 3341, droprate = 1000}, -- Beastly Shank
         },
-        {
-            {itemid = 4209, droprate = 169},  -- Mind Potion
-            {itemid = 4207, droprate = 70},   -- Intelligence Potion
-            {itemid = 4211, droprate = 113},  -- Charisma Potion
-            {itemid = 4213, droprate = 155},  -- Icarus Wing
-            {itemid = 17840, droprate = 254}, -- Angel Lyre
-            {itemid = 785, droprate = 99},    -- Emerald
-            {itemid = 804, droprate = 42},    -- Spinel
-            {itemid = 786, droprate = 56},    -- Ruby
-            {itemid = 787, droprate = 28},    -- Diamond
+		{
+            {itemid = 4069, droprate = 150},   -- Rem Chapt 6
+            {itemid = 4070, droprate = 150},   -- Rem Chapt 7
+            {itemid = 4071, droprate = 150},   -- Rem Chapt 8
+            {itemid = 4072, droprate = 150},   -- Rem Chapt 9
+            {itemid = 4073, droprate = 150},   -- Rem Chapt 10
+			{itemid =    0, droprate = 250},   -- Nothing
         },
         {
-            {itemid = 4135, droprate = 296},  -- Hi-ether +3
-            {itemid = 4119, droprate = 225},  -- Hi-potion +3
-            {itemid = 4173, droprate = 197},  -- Hi-reraiser
-            {itemid = 4175, droprate = 282},  -- Vile Elixir +1
+            {itemid = 4069, droprate = 150},   -- Rem Chapt 6
+            {itemid = 4070, droprate = 150},   -- Rem Chapt 7
+            {itemid = 4071, droprate = 150},   -- Rem Chapt 8
+            {itemid = 4072, droprate = 150},   -- Rem Chapt 9
+            {itemid = 4073, droprate = 150},   -- Rem Chapt 10
+			{itemid =    0, droprate = 250},   -- Nothing
         },
         {
-            {itemid = 887, droprate = 141},   -- Coral Fragment
-            {itemid = 1132, droprate = 14},   -- Square Of Raxa
-            {itemid = 902, droprate = 113},   -- Demon Horn
-            {itemid = 737, droprate = 28},    -- Chunk Of Gold Ore
-            {itemid = 644, droprate = 85},    -- Chunk Of Mythril Ore
-            {itemid = 4174, droprate = 56},   -- Vile Elixir
-            {itemid = 895, droprate = 28},    -- Ram Horn
-            {itemid = 703, droprate = 296},   -- Petrified Log
-            {itemid = 738, droprate = 14},    -- Chunk Of Platinum Ore
-            {itemid = 700, droprate = 56},    -- Mahogany Log
-            {itemid = 866, droprate = 70},    -- Handful Of Wyvern Scales
-            {itemid = 1465, droprate = 42},   -- Slab Of Granite
-            {itemid = 645, droprate = 42},    -- Chunk Of Darksteel Ore
-            {itemid = 702, droprate = 42},    -- Ebony Log
-            {itemid = 4173, droprate = 42},   -- Hi-reraiser
-            {itemid = 823, droprate = 113},   -- Spool Of Gold Thread
-            {itemid = 830, droprate = 28},    -- Square Of Rainbow Cloth
+            {itemid = 8732, droprate = 1000},  -- Kupon I S-3
         },
         {
-            {itemid = 1132, droprate = 127},  -- Square Of Raxa
-            {itemid = 837, droprate = 56},    -- Spool Of Malboro Fiber
-            {itemid = 942, droprate = 225},   -- Philosophers Stone
-            {itemid = 844, droprate = 423},   -- Phoenix Feather
-            {itemid = 836, droprate = 70},    -- Square Of Damascene Cloth
-            {itemid = 658, droprate = 42},    -- Damascus Ingot
-            {itemid = 1110, droprate = 85},   -- Vial Of Black Beetle Blood
+            {itemid = 8732, droprate = 1000}, -- Kupon I S-3
+        },
+        {
+            {itemid = 8732, droprate = 333},   -- Kupon I S-3
+            {itemid = 3972, droprate = 333},   -- Kupon I S-2
+            {itemid = 8734, droprate = 334},   -- Kupon I S-1
+        },
+        {
+            {itemid =   0, droprate = 1000},  -- Placeholder Augment Kupon
         },
     },
 
-    -- BCNM Under Observation
+    -- BCNM Under Observation  -- Off
     [12] =
     {
         {
@@ -580,23 +536,23 @@ local loot =
 
         },
         {
-            {itemid =     0, droprate =  1000}, -- nothing
+            {itemid = 4073, droprate = 1000},   -- Rem Chapt 10
 
         },
         {
-            {itemid =     0, droprate =  1000}, -- nothing
+            {itemid = 4073, droprate = 1000},   -- Rem Chapt 10
 
         },
         {
-            {itemid =     0, droprate =  1000}, -- nothing
+            {itemid = 3972, droprate = 1000},   -- Kupon I S-2
 
         },
         {
-            {itemid =     0, droprate =  1000}, -- nothing
+            {itemid = 3972, droprate = 1000},   -- Kupon I S-2
         },
     },
 
-    -- BCNM Shots in the Dark
+    -- BCNM Shots in the Dark -- Off
     [14] =
     {
         {
@@ -627,70 +583,35 @@ local loot =
     [15] =
     {
         {
-            {itemid = 18378, droprate = 222}, -- Subduer
-            {itemid = 17699, droprate = 302}, -- Dissector
-            {itemid = 17509, droprate = 245}, -- Destroyers
-            {itemid = 18005, droprate = 208}, -- Heart Snatcher
+            {itemid =  0, droprate = 625}, -- Nothing
+			{itemid =  20538, droprate = 125}, -- Bhakazi Sainti +1
+			{itemid =  20622, droprate = 125}, -- Nanti Knife +1
+			{itemid =  28665, droprate = 125}, -- Killedar Shield +1
         },
         {
-            {itemid = 0, droprate = 638},     -- Nothing
-            {itemid = 1133, droprate = 10},   -- Vial Of Dragon Blood
-            {itemid = 4486, droprate = 176},  -- Dragon Heart
-            {itemid = 4272, droprate = 176},  -- Slice Of Dragon Meat
+            {itemid =  0, droprate = 625}, -- Nothing
+			{itemid =  27751, droprate = 125}, -- Haru. Hat +1
+			{itemid =  27749, droprate = 125}, -- Shanti Armet +1
+			{itemid =  27747, droprate = 125}, -- Aeto Hat +1
         },
         {
-            {itemid = 0, droprate = 638},     -- Nothing
-            {itemid = 1133, droprate = 10},   -- Vial Of Dragon Blood
-            {itemid = 4486, droprate = 176},  -- Dragon Heart
-            {itemid = 4272, droprate = 176},  -- Slice Of Dragon Meat
+            {itemid = 0, droprate = 900}, -- Nothing
+            {itemid = 1178, droprate = 100},   -- Lachesis Orb
         },
         {
-            {itemid = 0, droprate = 392},     -- Nothing
-            {itemid = 19026, droprate = 354}, -- Spear Strap
-            {itemid = 19024, droprate = 165}, -- Sword Strap
-            {itemid = 19025, droprate = 89},  -- Pole Grip
+            {itemid = 8734, droprate = 1000},   -- Kupon I S-1
         },
         {
-            {itemid = 14764, droprate = 586}, -- Minuet Earring
-            {itemid = 655, droprate = 184},   -- Adaman Ingot
-            {itemid = 747, droprate = 207},   -- Orichalcum Ingot
+            {itemid = 8734, droprate = 1000},   -- Kupon I S-1
         },
         {
-            {itemid = 17842, droprate = 238}, -- Sorrowful Harp
-            {itemid = 14762, droprate = 250}, -- Attilas Earring
-            {itemid = 17700, droprate = 225}, -- Durandal
-            {itemid = 18006, droprate = 275}, -- Hoplites Harpe
+            {itemid = 4067, droprate = 1000},    -- Rems Chapt 4
         },
-        {
-            {itemid = 737, droprate = 122},   -- Chunk Of Gold Ore
-            {itemid = 4172, droprate = 54},   -- Reraiser
-            {itemid = 644, droprate = 41},    -- Chunk Of Mythril Ore
-            {itemid = 902, droprate = 81},    -- Demon Horn
-            {itemid = 702, droprate = 149},   -- Ebony Log
-            {itemid = 866, droprate = 54},    -- Handful Of Wyvern Scales
-            {itemid = 4175, droprate = 27},   -- Vile Elixir +1
-            {itemid = 700, droprate = 41},    -- Mahogany Log
-            {itemid = 887, droprate = 95},    -- Coral Fragment
-            {itemid = 703, droprate = 108},   -- Petrified Log
-            {itemid = 844, droprate = 135},   -- Phoenix Feather
-            {itemid = 738, droprate = 54},    -- Chunk Of Platinum Ore
-            {itemid = 895, droprate = 14},    -- Ram Horn
-            {itemid = 830, droprate = 14},    -- Square Of Rainbow Cloth
-            {itemid = 645, droprate = 68},    -- Chunk Of Darksteel Ore
-            {itemid = 4173, droprate = 14},   -- Hi-reraiser
-            {itemid = 1132, droprate = 135},  -- Square Of Raxa
-        },
-        {
-            {itemid = 836, droprate = 96},    -- Square Of Damascene Cloth
-            {itemid = 658, droprate = 27},    -- Damascus Ingot
-            {itemid = 942, droprate = 164},   -- Philosophers Stone
-            {itemid = 844, droprate = 260},   -- Phoenix Feather
-            {itemid = 837, droprate = 96},    -- Spool Of Malboro Fiber
-            {itemid = 1132, droprate = 288},  -- Square Of Raxa
-            {itemid = 1110, droprate = 41},   -- Vial Of Black Beetle Blood
+		        {
+            {itemid = 4067, droprate = 1000},    -- Rems Chapt 4
         },
     },
-    -- BCNM Today's Horoscope
+    -- BCNM Today's Horoscope  -- Off
     [16] =
     {
         {
@@ -731,7 +652,7 @@ local loot =
             {itemid =     0, droprate =  1000}, -- nothing
         },
     },
-    -- KSNM Contaminated Colosseum
+    -- KSNM Contaminated Colosseum -- Off
     [17] =
     {
         {

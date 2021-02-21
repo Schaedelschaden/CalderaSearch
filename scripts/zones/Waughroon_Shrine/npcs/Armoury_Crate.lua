@@ -291,64 +291,34 @@ local loot =
             {itemid = 25924, droprate =  200}, -- Tatenashi Sune-Ate +1
         },
         {
-            {itemid =   683, droprate =  268}, -- Adaman Chain
-            {itemid =  1525, droprate =  121}, -- Adamantoise Egg
-            {itemid =  4205, droprate =   80}, -- Agility Potion
-            {itemid =  4201, droprate =  143}, -- Dexterity Potion
-            {itemid =  4199, droprate =  214}, -- Strength Potion
-            {itemid =  4203, droprate =  196}, -- Vitality Potion
+            {itemid = 4069, droprate = 150},   -- Rem Chapt 6
+            {itemid = 4070, droprate = 150},   -- Rem Chapt 7
+            {itemid = 4071, droprate = 150},   -- Rem Chapt 8
+            {itemid = 4072, droprate = 150},   -- Rem Chapt 9
+            {itemid = 4073, droprate = 150},   -- Rem Chapt 10
+			{itemid =    0, droprate = 250},   -- Nothing
         },
         {
-            {itemid =   646, droprate =  107}, -- Chunk Of Adaman Ore
-            {itemid =  4211, droprate =   89}, -- Charisma Potion
-            {itemid =   645, droprate =  179}, -- Chunk Of Darksteel Ore
-            {itemid =  4213, droprate =  134}, -- Icarus Wing
-            {itemid =  4207, droprate =  152}, -- Intelligence Potion
-            {itemid =  4209, droprate =   80}, -- Mind Potion
-            {itemid =   739, droprate =   80}, -- Chunk Of Orichalcum Ore
-            {itemid =   738, droprate =  107}, -- Chunk Of Platinum Ore
-            {itemid = 17698, droprate =  152}, -- Princely Sword
+            {itemid = 4069, droprate = 150},   -- Rem Chapt 6
+            {itemid = 4070, droprate = 150},   -- Rem Chapt 7
+            {itemid = 4071, droprate = 150},   -- Rem Chapt 8
+            {itemid = 4072, droprate = 150},   -- Rem Chapt 9
+            {itemid = 4073, droprate = 150},   -- Rem Chapt 10
+			{itemid =    0, droprate = 250},   -- Nothing
         },
         {
-            {itemid =  4135, droprate =  295},  -- Hi-ether +3
-            {itemid =  4119, droprate =  250},  -- Hi-potion +3
-            {itemid =  4173, droprate =  196},  -- Hi-reraiser
-            {itemid =  4175, droprate =  214},  -- Vile Elixir +1
+            {itemid = 8732, droprate = 1000},  -- Kupon I S-3
         },
         {
-            {itemid =   887, droprate =  139}, -- Coral Fragment
-            {itemid =   645, droprate =   59}, -- Chunk Of Darksteel Ore
-            {itemid =   902, droprate =   50}, -- Demon Horn
-            {itemid =   702, droprate =  109}, -- Ebony Log
-            {itemid =   737, droprate =   69}, -- Chunk Of Gold Ore
-            {itemid =  1465, droprate =   99}, -- Slab Of Granite
-            {itemid =  4173, droprate =   79}, -- Hi-reraiser
-            {itemid =   700, droprate =  129}, -- Mahogany Log
-            {itemid =   644, droprate =  119}, -- Chunk Of Mythril Ore
-            {itemid =   844, droprate =   69}, -- Phoenix Feather
-            {itemid =   703, droprate =  168}, -- Petrified Log
-            {itemid =   738, droprate =  129}, -- Chunk Of Platinum Ore
-            {itemid =   895, droprate =  109}, -- Ram Horn
-            {itemid =  1132, droprate =   79}, -- Square Of Raxa
-            {itemid =  4174, droprate =   69}, -- Vile Elixir
-            {itemid =   866, droprate =   79}, -- Handful Of Wyvern Scales
-            {itemid =  4172, droprate =   50}, -- Reraiser
-            {itemid =   823, droprate =   89}, -- Spool Of Gold Thread
+            {itemid = 8732, droprate = 1000}, -- Kupon I S-3
         },
         {
-            {itemid =  1110, droprate =  109}, -- Vial Of Black Beetle Blood
-            {itemid =   836, droprate =   89}, -- Square Of Damascene Cloth
-            {itemid =   658, droprate =   79}, -- Damascus Ingot
-            {itemid =   837, droprate =   99}, -- Spool Of Malboro Fiber
-            {itemid =   942, droprate =  188}, -- Philosophers Stone
-            {itemid =   844, droprate =  238}, -- Phoenix Feather
-            {itemid =  1132, droprate =  109}, -- Square Of Raxa
+            {itemid = 8732, droprate = 333},   -- Kupon I S-3
+            {itemid = 3972, droprate = 333},   -- Kupon I S-2
+            {itemid = 8734, droprate = 334},   -- Kupon I S-1
         },
         {
-            {itemid =   722, droprate =   79}, -- Divine Log
-            {itemid =  1446, droprate =  257}, -- Lacquer Tree Log
-            {itemid =   703, droprate =  337}, -- Petrified Log
-            {itemid =   831, droprate =  149}, -- Square Of Shining Cloth
+            {itemid = 0, droprate = 1000},  -- Placeholder Augment Kupon
         },
     },
 
@@ -400,64 +370,32 @@ local loot =
     [79] =
     {
         {
-            {itemid = 65535, droprate = 1000, amount = 15000}, -- Gil
+            {itemid =  0, droprate = 625}, -- Nothing
+			{itemid =  20815, droprate = 125}, -- Budliqa +1
+			{itemid =  20875, droprate = 125}, -- Razorfury +1
+			{itemid =  21201, droprate = 125}, -- Atinian Staff +1
         },
         {
-            {itemid = 793, droprate = 1000}, -- Black Pearl
+            {itemid =  0, droprate = 625}, -- Nothing
+			{itemid =  28037, droprate = 125}, -- Aeto. Gloves +1
+			{itemid =  28041, droprate = 125}, -- Haruspex Cuff +1
+			{itemid =  28039, droprate = 125}, -- Shab. Gauntlets +1
         },
         {
-            {itemid = 792, droprate = 1000}, -- Pearl
+            {itemid = 0, droprate = 900}, -- Nothing
+            {itemid = 1178, droprate = 100},   -- Lachesis Orb
         },
         {
-            {itemid = 792, droprate = 1000}, -- Pearl
+            {itemid = 8734, droprate = 1000},   -- Kupon I S-1
         },
         {
-            {itemid = 1311, droprate = 1000}, -- Piece Of Oxblood
+            {itemid = 8734, droprate = 1000},   -- Kupon I S-1
         },
         {
-            {itemid = 1311, droprate = 1000}, -- Piece Of Oxblood
+            {itemid = 4067, droprate = 1000},    -- Rems Chapt 4
         },
-        {
-            {itemid = 1311, droprate = 1000}, -- Piece Of Oxblood
-        },
-        {
-            {itemid = 14666, droprate = 447}, -- Teleport Ring Altep
-            {itemid = 14662, droprate = 487}, -- Teleport Ring Dem
-        },
-        {
-            {itemid = 13175, droprate = 494}, -- Ajari Bead Necklace
-            {itemid = 13176, droprate = 449}, -- Philomath Stole
-        },
-        {
-            {itemid = 791, droprate = 51},   -- Aquamarine
-            {itemid = 801, droprate = 32},   -- Chrysoberyl
-            {itemid = 654, droprate = 39},   -- Darksteel Ingot
-            {itemid = 702, droprate = 21},   -- Ebony Log
-            {itemid = 4173, droprate = 32},  -- Hi-reraiser
-            {itemid = 745, droprate = 55},   -- Gold Ingot
-            {itemid = 784, droprate = 62},   -- Jadeite
-            {itemid = 653, droprate = 81},   -- Mythril Ingot
-            {itemid = 802, droprate = 56},   -- Moonstone
-            {itemid = 797, droprate = 195},  -- Painite
-            {itemid = 652, droprate = 58},   -- Steel Ingot
-            {itemid = 803, droprate = 38},   -- Sunstone
-            {itemid = 773, droprate = 11},   -- Translucent Rock
-            {itemid = 4175, droprate = 21},  -- Vile Elixir +1
-            {itemid = 771, droprate = 15},   -- Yellow Rock
-            {itemid = 805, droprate = 26},   -- Zircon
-            {itemid = 769, droprate = 21},   -- Red Rock
-            {itemid = 700, droprate = 17},   -- Mahogany Log
-            {itemid = 770, droprate = 9},    -- Blue Rock
-            {itemid = 810, droprate = 62},   -- Fluorite
-            {itemid = 774, droprate = 11},   -- Purple Rock
-            {itemid = 775, droprate = 11},   -- Black Rock
-            {itemid = 772, droprate = 11},   -- Green Rock
-            {itemid = 776, droprate = 9},    -- White Rock
-        },
-        {
-            {itemid =     0, droprate =  932}, -- Nothing
-            {itemid = 17440, droprate =   13}, -- Kraken Club
-            {itemid = 15185, droprate =   55}, -- Walkure Mask
+		        {
+            {itemid = 4067, droprate = 1000},    -- Rems Chapt 4
         },
     },
 
@@ -482,19 +420,19 @@ local loot =
             {itemid = 25923, droprate =  200}, -- Tatenashi Sune-Ate
         },
         {
-            {itemid =     0, droprate =  1000}, -- nothing
+            {itemid = 4073, droprate = 1000},   -- Rem Chapt 10
 
         },
         {
-            {itemid =     0, droprate =  1000}, -- nothing
+            {itemid = 4073, droprate = 1000},   -- Rem Chapt 10
 
         },
         {
-            {itemid =     0, droprate =  1000}, -- nothing
+            {itemid = 3972, droprate = 1000},   -- Kupon I S-2
 
         },
         {
-            {itemid =     0, droprate =  1000}, -- nothing
+            {itemid = 3972, droprate = 1000},   -- Kupon I S-2
         },
     },
 

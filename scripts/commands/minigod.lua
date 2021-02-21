@@ -17,9 +17,9 @@ function onTrigger(player)
         -- Add bonus effects to the player..
         player:addStatusEffect(tpz.effect.PHYSICAL_SHIELD,2,0,0)
         player:addStatusEffect(tpz.effect.MAGIC_SHIELD,2,0,0)
-        player:addStatusEffect(tpz.effect.REGAIN,10,0,0)
+        player:addStatusEffect(tpz.effect.REGAIN,30,0,0)
         player:addStatusEffect(tpz.effect.REFRESH,100,0,0)
-        player:addStatusEffect(tpz.effect.REGEN,1000,0,0)
+        player:addStatusEffect(tpz.effect.REGEN,2000,0,0)
     else
         -- Toggle GodMode off..
         player:setCharVar("MiniGodMode", 0)

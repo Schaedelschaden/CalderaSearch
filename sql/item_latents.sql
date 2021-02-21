@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `item_latents` (
   PRIMARY KEY (`itemId`,`modId`,`value`,`latentId`,`latentParam`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=13 PACK_KEYS=1;
 
--- Dumping data for table tpzdb.item_latents: 1,579 rows
+-- Dumping data for table tpzdb.item_latents: 1,591 rows
 /*!40000 ALTER TABLE `item_latents` DISABLE KEYS */;
 INSERT INTO `item_latents` (`itemId`, `modId`, `value`, `latentId`, `latentParam`) VALUES
 	(10293, 25, 50, 50, 31),
@@ -1533,12 +1533,24 @@ INSERT INTO `item_latents` (`itemId`, `modId`, `value`, `latentId`, `latentParam
 	(20837, 288, 3, 13, 56),
 	(20838, 165, 14, 13, 56),
 	(20838, 288, 3, 13, 56),
+	(21090, 23, 30, 0, 50),
+	(21090, 25, 30, 0, 50),
+	(21091, 23, 31, 0, 50),
+	(21091, 25, 31, 0, 50),
 	(21558, 11, 5, 56, 0),
 	(21558, 73, 5, 56, 0),
 	(21558, 369, -3, 56, 0),
 	(21661, 10, 5, 56, 0),
 	(21661, 369, -3, 56, 0),
 	(21661, 840, 1, 56, 0),
+	(21748, 366, 2, 16, 3),
+	(21748, 366, 2, 16, 4),
+	(21748, 366, 2, 16, 5),
+	(21748, 366, 2, 16, 6),
+	(21749, 366, 2, 16, 3),
+	(21749, 366, 2, 16, 4),
+	(21749, 366, 2, 16, 5),
+	(21749, 366, 2, 16, 6),
 	(21757, 165, 14, 13, 56),
 	(21757, 288, 3, 13, 56),
 	(21817, 2, 10, 56, 0),

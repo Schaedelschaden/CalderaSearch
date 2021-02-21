@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `item_equipment` (
   PRIMARY KEY (`itemId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=37 PACK_KEYS=1 CHECKSUM=1;
 
--- Dumping data for table tpzdb.item_equipment: 14,175 rows
+-- Dumping data for table tpzdb.item_equipment: 14,177 rows
 /*!40000 ALTER TABLE `item_equipment` DISABLE KEYS */;
 INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`, `shieldSize`, `scriptType`, `slot`, `rslot`) VALUES
 	(10240, 'hexed_haubert', 99, 0, 8641, 5, 0, 0, 32, 0),
@@ -14203,7 +14203,9 @@ INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`
 	(21489, 'truly_pristine_sap', 99, 0, 256, 0, 0, 0, 8, 0),
 	(26515, 'poroggo_fleece_+1', 1, 0, 4194303, 460, 0, 0, 32, 16),
 	(26514, 'poroggo_fleece', 1, 0, 4194303, 460, 0, 0, 32, 16),
-	(20672, 'ice_brand', 99, 119, 32848, 283, 0, 0, 3, 0);
+	(20672, 'ice_brand', 99, 119, 32848, 283, 0, 0, 3, 0),
+	(26114, 'balder_earring', 99, 0, 4194303, 0, 0, 1, 6144, 0),
+	(26115, 'balder_earring_+1', 99, 0, 4194303, 0, 0, 1, 6144, 0);
 /*!40000 ALTER TABLE `item_equipment` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

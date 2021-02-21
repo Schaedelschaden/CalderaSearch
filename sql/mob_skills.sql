@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `mob_skills` (
   PRIMARY KEY (`mob_skill_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.mob_skills: 1,662 rows
+-- Dumping data for table tpzdb.mob_skills: 1,667 rows
 /*!40000 ALTER TABLE `mob_skills` DISABLE KEYS */;
 INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_skill_aoe`, `mob_skill_distance`, `mob_anim_time`, `mob_prepare_time`, `mob_valid_targets`, `mob_skill_flag`, `mob_skill_param`, `knockback`, `primary_sc`, `secondary_sc`, `tertiary_sc`) VALUES
 	(32, 1, 'fast_blade', 0, 7.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0),
@@ -1687,14 +1687,20 @@ INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_
 	(1263, 948, 'cryo_jet', 4, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(1264, 949, 'turbofan', 4, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(3132, 2276, 'zealous_snort', 0, 10.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0),
-	(3260, 1938, 'infected_leech', 4, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
-	(3262, 1938, 'gloom_spray', 4, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
+	(3516, 1938, 'infected_leech', 4, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
+	(3517, 1938, 'gloom_spray', 4, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(1472, 3259, 'clarsach_call', 1, 10.0, 175, 1500, 4, 0, 0, 0, 4, 0, 0),
 	(42, 11, 'savage_blade', 0, 7.0, 2000, 0, 4, 0, 0, 0, 12, 4, 0),
 	(3189, 2328, 'king_cobra_clamp', 4, 18.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
 	(1519, 1219, 'provoke', 0, 18.5, 2000, 0, 4, 0, 0, 0, 0, 0, 0),
 	(1891, 1219, 'provoke', 0, 18.5, 2000, 0, 4, 0, 0, 0, 0, 0, 0),
-	(707, 438, 'sentinel', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
+	(707, 438, 'sentinel', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0),
+	(1403, 1056, 'explosive_impulse', 0, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
+	(603, 432, 'lateral_slash', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
+	(954, 656, 'touchdown', 1, 18.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
+	(950, 652, 'flame_blast', 1, 20.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0),
+	(955, 657, 'flame_blast', 1, 20.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0),
+	(2916, 2085, 'thrashing_assault', 0, 6.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `mob_skills` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

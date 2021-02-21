@@ -72,10 +72,10 @@ TABS_RATE       = 1.000 -- Multiplies tabs earned from fov.
 ROE_EXP_RATE    = 1.000 -- Multiplies exp earned from records of eminence.
 SPARKS_RATE     = 1.000 -- Multiplies sparks earned from records of eminence.
 CURE_POWER      = 1.000 -- Multiplies amount healed from Healing Magic, including the relevant Blue Magic.
-ELEMENTAL_POWER = 1.000 -- Multiplies damage dealt by Elemental and non-drain Dark Magic.
+ELEMENTAL_POWER = 1.250 -- Multiplies damage dealt by Elemental and non-drain Dark Magic.
 DIVINE_POWER    = 1.000 -- Multiplies damage dealt by Divine Magic.
 NINJUTSU_POWER  = 1.000 -- Multiplies damage dealt by Ninjutsu Magic.
-BLUE_POWER      = 1.000 -- Multiplies damage dealt by Blue Magic.
+BLUE_POWER      = 0.900 -- Multiplies damage dealt by Blue Magic.
 DARK_POWER      = 1.000 -- Multiplies amount drained by Dark Magic.
 ITEM_POWER      = 1.000 -- Multiplies the effect of items such as Potions and Ethers.
 WEAPON_SKILL_POWER  = 1.000 -- Multiplies damage dealt by Weapon Skills.
@@ -150,6 +150,9 @@ USE_OLD_MAGIC_DAMAGE = false -- True/false. if true, uses older magic damage for
 -- CELEBRATIONS
 EXPLORER_MOOGLE_LV = 10 -- Enables Explorer Moogle teleports and sets required level. Zero to disable.
 HALLOWEEN_2005 = 0 -- Set to 1 to Enable the 2005 version of Harvest Festival, will start on Oct. 20 and end Nov. 1.
+HALLOWEEN_2008 = 0
+HALLOWEEN_2009 = 0
+HALLOWEEN_2010 = 0
 HALLOWEEN_YEAR_ROUND = 0 -- Set to 1 to have Harvest Festival initialize outside of normal times.
 
 -- MISC

@@ -1950,8 +1950,7 @@ namespace battleutils
                 {
                     if (PDefender->objtype == TYPE_PC)
                     {
-                        absorb = std::clamp(100 - PDefender->m_Weapons[SLOT_SUB]->getShieldAbsorption(), 0, 100);
-                        absorb -= PDefender->getMod(Mod::SHIELD_DEF_BONUS); // Include Shield Defense Bonus in absorb amount
+						absorb = std::clamp(100 - PDefender->m_Weapons[SLOT_SUB]->getShieldAbsorption() - PDefender->getMod(Mod::SHIELD_DEF_BONUS), 0, 100);
 
                         // Shield Mastery
                         if ((std::max(damage - (PDefender->getMod(Mod::PHALANX) + PDefender->getMod(Mod::STONESKIN)), 0) > 0)
@@ -1998,7 +1997,7 @@ namespace battleutils
                     }
                 }
 
-                damage = (damage * absorb) / 100;
+                damage = (int32)(damage * (absorb / 100.0f));
             }
         }
 		

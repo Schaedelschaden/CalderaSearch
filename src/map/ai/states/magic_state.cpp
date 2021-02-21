@@ -373,7 +373,6 @@ void CMagicState::ApplyEnmity(CBattleEntity* PTarget, int ce, int ve)
 	if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_CASCADE) && m_PSpell->getSpellGroup() == SPELLGROUP_BLACK)
 	{
 		m_PEntity->StatusEffectContainer->DelStatusEffect(EFFECT_CASCADE);
-		m_PEntity->health.tp = 0;
 	}
 }
 

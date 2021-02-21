@@ -99,63 +99,32 @@ local loot =
     [521] =
     {
         {
-            {itemid = 16655, droprate = 1000}, -- rusty_pick
+            {itemid =  0, droprate = 625}, -- Nothing
+			{itemid =  20724, droprate = 125}, -- Diha Sword +1
+			{itemid =  20780, droprate = 125}, -- Senbaak Nagan +1
+			{itemid =  21130, droprate = 125}, -- Sharur +1
         },
         {
-            {itemid = 14735, droprate =   71}, -- ashigaru_earring
-            {itemid = 14730, droprate =   71}, -- esquires_earring
-            {itemid = 14738, droprate =   72}, -- magicians_earring
-            {itemid = 13435, droprate =   72}, -- mercenarys_earring
-            {itemid = 14729, droprate =   72}, -- pilferers_earring
-            {itemid = 14733, droprate =   71}, -- singers_earring
-            {itemid = 14732, droprate =   71}, -- trimmers_earring
-            {itemid = 13439, droprate =   72}, -- warlocks_earring
-            {itemid = 13438, droprate =   72}, -- wizards_earring
-            {itemid = 13436, droprate =   72}, -- wrestlers_earring
-            {itemid = 14737, droprate =   71}, -- wyvern_earring
-            {itemid = 14734, droprate =   71}, -- beaters_earring
-            {itemid = 14736, droprate =   71}, -- genin_earring
-            {itemid = 14731, droprate =   71}, -- killer_earring
+            {itemid =  0, droprate = 625}, -- Nothing
+			{itemid =  27890, droprate = 125}, -- Aeto. Jerkin +1
+			{itemid =  27894, droprate = 125}, -- Haruspex Coat +1
+			{itemid =  27892, droprate = 125}, -- Shab. Cuirass +1
         },
         {
-            {itemid = 15285, droprate =   71}, -- avatar_belt
-            {itemid = 15271, droprate =   71}, -- axe_belt
-            {itemid = 15272, droprate =   72}, -- cestus_belt
-            {itemid = 15276, droprate =   72}, -- dagger_belt
-            {itemid = 15281, droprate =   72}, -- gun_belt
-            {itemid = 15282, droprate =   71}, -- katana_obi
-            {itemid = 15284, droprate =   71}, -- lance_belt
-            {itemid = 15283, droprate =   72}, -- sarashi
-            {itemid = 15278, droprate =   72}, -- scythe_belt
-            {itemid = 15277, droprate =   72}, -- shield_belt
-            {itemid = 15280, droprate =   71}, -- song_belt
-            {itemid = 15274, droprate =   71}, -- staff_belt
-            {itemid = 15279, droprate =   71}, -- pick_belt
-            {itemid = 15275, droprate =   71}, -- rapier_belt
+            {itemid = 0, droprate = 900}, -- Nothing
+            {itemid = 1178, droprate = 100},   -- Lachesis Orb
         },
         {
-            {itemid =  4751, droprate =  200}, -- scroll_of_erase
-            {itemid =  4715, droprate =  200}, -- scroll_of_reprisal
-            {itemid =  4868, droprate =  200}, -- scroll_of_dispel
-            {itemid =  5070, droprate =  200}, -- scroll_of_magic_finale
-            {itemid =  4947, droprate =  200}, -- gscroll_of_utsusemi_nin_belt
+            {itemid = 8734, droprate = 1000},   -- Kupon I S-1
         },
         {
-            {itemid =     0, droprate =  775}, -- nothing
-            {itemid =   745, droprate =   50}, -- gold_ingot
-            {itemid =   746, droprate =   50}, -- platinum_ingot
-            {itemid =   703, droprate =   50}, -- petrified_log
-            {itemid = 16606, droprate =   75}, -- rusty_greatsword
+            {itemid = 8734, droprate = 1000},   -- Kupon I S-1
         },
         {
-            {itemid =     0, droprate =  250}, -- nothing
-            {itemid =  1601, droprate =  250}, -- mannequin_head
-            {itemid =  1602, droprate =  250}, -- mannequin_body
-            {itemid =  1603, droprate =  250}, -- mannequin_hands
+            {itemid = 4067, droprate = 1000},    -- Rems Chapt 4
         },
-        {
-            {itemid =     0, droprate =  667}, -- nothing
-            {itemid =  4132, droprate =  333}, -- hi-ether
+		        {
+            {itemid = 4067, droprate = 1000},    -- Rems Chapt 4
         },
     },
 
@@ -218,19 +187,19 @@ local loot =
             {itemid = 27401, droprate =  100}, -- Forfend
         },
         {
-            {itemid =     0, droprate =  1000}, -- nothing
+            {itemid = 4073, droprate = 1000},   -- Rem Chapt 10
 
         },
         {
-            {itemid =     0, droprate =  1000}, -- nothing
+            {itemid = 4073, droprate = 1000},   -- Rem Chapt 10
 
         },
         {
-            {itemid =     0, droprate =  1000}, -- nothing
+            {itemid = 3972, droprate = 1000},   -- Kupon I S-2
 
         },
         {
-            {itemid =     0, droprate =  1000}, -- nothing
+            {itemid = 3972, droprate = 1000},   -- Kupon I S-2
         },
     },
 
