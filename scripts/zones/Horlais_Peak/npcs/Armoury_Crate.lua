@@ -404,7 +404,7 @@ local loot =
 		{
             {itemid = 3341, droprate = 1000}, -- Beastly Shank
         },
-		{
+        {
             {itemid = 4069, droprate = 150},   -- Rem Chapt 6
             {itemid = 4070, droprate = 150},   -- Rem Chapt 7
             {itemid = 4071, droprate = 150},   -- Rem Chapt 8
@@ -432,7 +432,7 @@ local loot =
             {itemid = 8734, droprate = 334},   -- Kupon I S-1
         },
         {
-            {itemid =   0, droprate = 1000},  -- Placeholder Augment Kupon
+            {itemid = 0, droprate = 1000},  -- Placeholder Augment Kupon
         },
     },
 
@@ -524,7 +524,7 @@ local loot =
             {itemid =  21690, droprate = 125}, -- Ushenzi
         },
         {
-            {itemid = 26941, droprate =  110}, -- Agony Jerkin
+            {itemid = 26942, droprate =  110}, -- Agony Jerkin
             {itemid = 25680, droprate =  110}, -- Cohort Cloak
             {itemid = 26870, droprate =  110}, -- Emet Harness
             {itemid = 26872, droprate =  110}, -- Hime Domaru

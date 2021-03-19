@@ -18,6 +18,5 @@ function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.WEIGHT
         MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 50, 0, 120)
 
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
     return dmg
 end

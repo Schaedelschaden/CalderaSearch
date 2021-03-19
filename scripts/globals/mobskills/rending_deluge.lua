@@ -16,6 +16,5 @@ function onMobWeaponSkill(target, mob, skill)
 
     target:dispelStatusEffect()
 
-    target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.WATER)
     return dmg
 end

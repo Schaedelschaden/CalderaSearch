@@ -14,7 +14,7 @@ function onTrigger(player, spell)
     local target = player:getCursorTarget()
 	
 	if (spell == 0 or spell == nil) then
-		player:PrintToPlayer(string.format("You must specify a monster spell!\n!mobusability <spell #>"), tpz.msg.channel.SYSTEM_3)
+		player:PrintToPlayer(string.format("You must specify a monster spell!\n!mobcastspell <spell #>"), tpz.msg.channel.SYSTEM_3)
 		return 0
 	end
 

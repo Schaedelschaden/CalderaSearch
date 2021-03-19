@@ -13,71 +13,37 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAbilityCheck(player, target, ability)
-	if (player:hasStatusEffect(tpz.effect.IGNIS) or
-		player:hasStatusEffect(tpz.effect.GELUS) or
-		player:hasStatusEffect(tpz.effect.FLABRA) or
-		player:hasStatusEffect(tpz.effect.TELLUS) or
-		player:hasStatusEffect(tpz.effect.SULPOR) or
-		player:hasStatusEffect(tpz.effect.UNDA) or
-		player:hasStatusEffect(tpz.effect.LUX) or
-		player:hasStatusEffect(tpz.effect.TENEBRAE)) then
+	if (player:hasStatusEffect(tpz.effect.IGNIS) or player:hasStatusEffect(tpz.effect.GELUS) or player:hasStatusEffect(tpz.effect.FLABRA) or
+		player:hasStatusEffect(tpz.effect.TELLUS) or player:hasStatusEffect(tpz.effect.SULPOR) or player:hasStatusEffect(tpz.effect.UNDA) or
+		player:hasStatusEffect(tpz.effect.LUX) or player:hasStatusEffect(tpz.effect.TENEBRAE)) then
 		return 0,0
 	else
-		return tpz.msg.basic.UNABLE_TO_USE_JA
+		return tpz.msg.basic.REQUIRES_RUNES
 	end
 end
 
 function onUseAbility(player, target, ability, action)	
 	local RuneEnhancement = {tpz.effect.IGNIS, tpz.effect.GELUS, tpz.effect.FLABRA, tpz.effect.TELLUS, tpz.effect.SULPOR, tpz.effect.UNDA, tpz.effect.LUX, tpz.effect.TENEBRAE}
-	local RuneCounter = {0, 0, 0, 0, 0, 0, 0, 0}
+	local sdtPower = {"Gambit_Fire", "Gambit_Ice", "Gambit_Wind", "Gambit_Earth", "Gambit_Lightning", "Gambit_Water", "Gambit_Light", "Gambit_Dark"}
+	
 	local power = 10
+	local RuneCounter = 0
 	local duration = 60 + player:getMod(tpz.mod.GAMBIT_DURATION)
 	
 	for i,v in ipairs(RuneEnhancement) do
+		RuneCounter = 0
+		
 		if (player:hasStatusEffect(RuneEnhancement[i])) then
-			RuneCounter[i] = player:countEffect(RuneEnhancement[i])
---			printf("gambit.lua onUseAbility GAMBIT RUNE COUNTER: [%i]", RuneCounter[i])
+			RuneCounter = player:countEffect(RuneEnhancement[i])
+			power = power * RuneCounter
+			target:setLocalVar(sdtPower[i], power)
+--			printf("gambit.lua onUseAbility GAMBIT RUNE COUNTER: [%i]", RuneCounter)
 		end
-	end
-	
-	if (player:hasStatusEffect(RuneEnhancement[1])) then
-		target:addMod(tpz.mod.SDT_FIRE, power * RuneCounter[1])
-		target:setCharVar("Gambit_Fire", power * RuneCounter[1])
-	end
-	if (player:hasStatusEffect(RuneEnhancement[2])) then
-		target:addMod(tpz.mod.SDT_ICE, power * RuneCounter[2])
-		target:setCharVar("Gambit_Ice", power * RuneCounter[2])
-	end
-	if (player:hasStatusEffect(RuneEnhancement[3])) then
-		target:addMod(tpz.mod.SDT_WIND, power * RuneCounter[3])
-		target:setCharVar("Gambit_Wind", power * RuneCounter[3])
-	end
-	if (player:hasStatusEffect(RuneEnhancement[4])) then
-		target:addMod(tpz.mod.SDT_EARTH, power * RuneCounter[4])
-		target:setCharVar("Gambit_Earth", power * RuneCounter[4])
-	end
-	if (player:hasStatusEffect(RuneEnhancement[5])) then
-		target:addMod(tpz.mod.SDT_LIGHTNING, power * RuneCounter[5])
-		target:setCharVar("Gambit_Lightning", power * RuneCounter[5])
-	end
-	if (player:hasStatusEffect(RuneEnhancement[6])) then
-		target:addMod(tpz.mod.SDT_WATER, power * RuneCounter[6])
-		target:setCharVar("Gambit_Water", power * RuneCounter[6])
-	end
-	if (player:hasStatusEffect(RuneEnhancement[7])) then
-		target:addMod(tpz.mod.SDT_LIGHT, power * RuneCounter[7])
-		target:setCharVar("Gambit_Light", power * RuneCounter[7])
-	end
-	if (player:hasStatusEffect(RuneEnhancement[8])) then
-		target:addMod(tpz.mod.SDT_DARK, power * RuneCounter[8])
-		target:setCharVar("Gambit_Dark", power * RuneCounter[8])
 	end
 	
 	player:removeAllRunes()
 	
 	target:addStatusEffect(tpz.effect.GAMBIT, 1, 0, duration)
-	
---	ability:setMsg(tpz.msg.basic.SKILL_ENFEEB)
 	
 	return tpz.effect.GAMBIT
 end

@@ -40,7 +40,7 @@ function onUseAbility(player, target, ability, action)
 		StepACC = StepACC + 50
 	end
 
-    if math.random() <= getHitRate(player, target, true, StepACC) then
+    if math.random() <= player:getHitRate(target, 0, StepACC) then
         hit = 5
         local mjob = player:getMainJob()
         local daze = 1

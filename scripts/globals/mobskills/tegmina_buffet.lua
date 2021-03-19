@@ -31,7 +31,5 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
 --	printf("tegmina_buffet.cpp onMobWeaponSkill FINAL DMG: [%i]\n", dmg);
 	
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
-	
     return dmg
 end

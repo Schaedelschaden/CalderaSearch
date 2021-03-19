@@ -40,7 +40,7 @@ function onUseAbility(player, target, ability, action)
 		StepACC = StepACC + 50
 	end
 
-    if math.random() <= getHitRate(player, target, true, StepACC) then
+    if math.random() <= player:getHitRate(target, 0, StepACC) then
         hit = 5
         local mjob = player:getMainJob()
         local daze = 1
@@ -175,12 +175,12 @@ function onUseAbility(player, target, ability, action)
             player:addStatusEffect(tpz.effect.FINISHING_MOVE_1 - 1 + daze, 1, 0, 7200)
         end
 	
-		ability:setMsg(tpz.msg.basic.NONE)
-		local playerName = player:getName()
-		local mobName = target:getName()
-		local fixedMobName = string.gsub(mobName, "_", " ")
+		-- ability:setMsg(tpz.msg.basic.NONE)
+		-- local playerName = player:getName()
+		-- local mobName = target:getName()
+		-- local fixedMobName = string.gsub(mobName, "_", " ")
 	
-		player:PrintToPlayer(string.format("The %s is afflicted with Bewildered Daze (lv.%i).", fixedMobName, effect),tpz.msg.channel.NS_SAY)
+		-- player:PrintToPlayer(string.format("The %s is afflicted with Bewildered Daze (lv.%i).", fixedMobName, effect),tpz.msg.channel.NS_SAY)
     else
         ability:setMsg(tpz.msg.basic.JA_MISS)
     end

@@ -23,7 +23,5 @@ function onMobWeaponSkill(target, mob, skill)
 
     local dmg = MobFinalAdjustments(needles, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.WATER, MOBPARAM_WIPE_SHADOWS)
 
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.WATER)
-
     return dmg
 end

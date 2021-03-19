@@ -20,6 +20,6 @@ function onMobWeaponSkill(target, mob, skill)
     local accmod = 1
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*4, tpz.magic.ele.THUNDER, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.THUNDER, MOBPARAM_WIPE_SHADOWS)
-    target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.THUNDER)
-    return dmg
+    
+	return dmg
 end

@@ -55,7 +55,7 @@ function onUseAbility(player, target, ability, action)
     end
 	
     local pdif = generatePdif (cratio[1], cratio[2], true)
-    local hitrate = getHitRate(player,target,true)
+    local hitrate = player:getHitRate(target)
 
     if (math.random() <= hitrate or isSneakValid) then
         hit = 3

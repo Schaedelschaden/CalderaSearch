@@ -44,6 +44,5 @@ function onMobWeaponSkill(target, mob, skill)
     MobStatusEffectMove(mob, target, tpz.effect.PARALYSIS, 40, 0, 60)
     MobStatusEffectMove(mob, target, tpz.effect.STUN, 1, 0, 4)
 
-    target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.LIGHTNING)
     return dmg
 end

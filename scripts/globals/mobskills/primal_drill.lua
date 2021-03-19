@@ -17,7 +17,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     local numhits = math.random(2, 3)
     local accmod = 1
     local dmgmod = .8
@@ -27,6 +26,5 @@ function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.BIND
     MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 1, 0, 45)
 
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
     return dmg
 end

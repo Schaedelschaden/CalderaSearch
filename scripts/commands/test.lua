@@ -9,7 +9,63 @@ cmdprops =
     parameters = "i"
 }
 
-function onTrigger(player, modelId)
+function onTrigger(player, int)
+---------------------------------------------------------------------------------------------------
+
+-- Code for testing arrays
+	-- local test =
+	-- {
+		-- {mod = {"tpz.mod.PARALYZERES", "tpz.mod.BINDRES"}},
+		-- {mod = {"tpz.mod.SILENCERES", "tpz.mod.GRAVITYRES"}},
+		-- {mod = {"tpz.mod.PETRIFYRES", "tpz.mod.SLOWRES"}},
+		-- {mod = {"tpz.mod.STUN"}},
+		-- {mod = {"tpz.mod.POISONRES", "tpz.mod.VIRUSRES"}},
+		-- {mod = {"tpz.mod.AMNESIARES"}},
+		-- {mod = {"tpz.mod.SLEEPRES", "tpz.mod.BLINDRES", "tpz.mod.CURSERES"}},
+		-- {mod = {"tpz.mod.CHARMRES", "tpz.mod.LULLABYRES", "tpz.mod.DEATHRES"}}
+	-- }
+	-- for i = 1, #test[int].mod do
+		-- printf("test.lua OnTrigger ENTRY: [%i]  MOD: [%s]", int, test[int].mod[i])
+	-- end
+
+---------------------------------------------------------------------------------------------------
+
+-- Code for testing combat messages
+	-- targ:messageCombat(actor, actionID, value, message)
+	local actor = player:getCursorTarget()
+	local actionID = 344
+	local value = 1000
+--	local message = 101 -- From scripts/globals/msg.lua
+	
+	-- for i = id1, id2 do
+	-- player:messageCombat(actor, i, value, message)
+	-- end
+	
+	player:messageCombat(actor, actionID, value, int)
+	
+
+---------------------------------------------------------------------------------------------------
+
+-- Code for checking if player is behind the target
+	-- local targ = player:getCursorTarget()
+	
+	-- if (player:isBehind(targ, 45) == true) then
+		-- printf("test.lua onTrigger PLAYER IS BEHIND TARGET")
+	-- else
+		-- printf("test.lua onTrigger NOT BEHIND TARGET")
+	-- end
+
+---------------------------------------------------------------------------------------------------
+
+-- Code for testing print to area
+	-- local targ = player:getCursorTarget()
+	-- targ:PrintToArea("horn begins charging for an attack!",tpz.msg.channel.EMOTION, tpz.msg.area.SAY, "Dark Ixion's")
+
+---------------------------------------------------------------------------------------------------
+
+-- Code for checking current Vana'diel Hour and Minutes
+
+--	printf("test.lua CURRENT HOUR: [%s]  CURRENT MINUTE: [%s]  COMBINED: [%s]", VanadielHour(), VanadielMinute(), (VanadielHour() * 60) + VanadielMinute())
 ---------------------------------------------------------------------------------------------------
 	-- local npc = player:getCursorTarget()
 	-- npc:setModelId(modelId)

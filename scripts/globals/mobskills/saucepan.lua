@@ -23,6 +23,5 @@ function onMobWeaponSkill(target, mob, skill)
         target:delStatusEffectSilent(tpz.effect.FIELD_SUPPORT_FOOD)
     end
     target:addStatusEffectEx(tpz.effect.FIELD_SUPPORT_FOOD, tpz.effect.FOOD, 255, 0, 1800)
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
     return dmg
 end

@@ -24,8 +24,5 @@ function onMobWeaponSkill(target, mob, skill)
         target:addStatusEffect(tpz.effect.PARALYSIS, 50, 0, 90)
     end
 
-    target:takeDamage(totaldamage, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
-
     return totaldamage
-
 end

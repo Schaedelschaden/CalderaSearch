@@ -30,11 +30,12 @@ CREATE TABLE IF NOT EXISTS `accounts_sessions` (
   UNIQUE KEY `accid` (`accid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.accounts_sessions: ~2 rows (approximately)
+-- Dumping data for table tpzdb.accounts_sessions: ~4 rows (approximately)
 /*!40000 ALTER TABLE `accounts_sessions` DISABLE KEYS */;
 INSERT INTO `accounts_sessions` (`accid`, `charid`, `targid`, `linkshellid1`, `linkshellrank1`, `linkshellid2`, `linkshellrank2`, `session_key`, `server_addr`, `server_port`, `client_addr`, `client_port`, `version_mismatch`) VALUES
-	(1005, 8, 1025, 1, 1, 3, 3, _binary 0x000000000000000000000000000000005AE05DAD, 3468607043, 54230, 1121325432, 54090, 1),
-	(1052, 67, 1024, 1, 2, 3, 3, _binary 0x000000000000000000000000000000005AE05DAD, 3468607043, 54230, 1111856868, 54090, 1);
+	(1001, 5, 1024, 1, 2, 3, 2, _binary 0x000000000000000000000000000000005AE05DAD, 3468607043, 54230, 1136574158, 54090, 1),
+	(1052, 67, 1024, 1, 2, 3, 3, _binary 0x000000000000000000000000000000005AE05DAD, 3468607043, 54230, 1111856868, 54090, 1),
+	(1059, 74, 1024, 0, 0, 0, 0, _binary 0x000000000000000000000000000000005CE05DAD, 3468607043, 54230, 1111856868, 54346, 1);
 /*!40000 ALTER TABLE `accounts_sessions` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

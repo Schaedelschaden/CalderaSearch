@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `delivery_box` (
   PRIMARY KEY (`charid`,`box`,`slot`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.delivery_box: ~19 rows (approximately)
+-- Dumping data for table tpzdb.delivery_box: ~22 rows (approximately)
 /*!40000 ALTER TABLE `delivery_box` DISABLE KEYS */;
 INSERT INTO `delivery_box` (`charid`, `charname`, `box`, `slot`, `itemid`, `itemsubid`, `quantity`, `extra`, `senderid`, `sender`, `received`, `sent`) VALUES
 	(8, 'Fujin', 2, 0, 65535, 0, 10000, _binary 0x000000000000000000000000000000000000000000000000, 5, 'Khalum', 1, 1),
@@ -49,7 +49,10 @@ INSERT INTO `delivery_box` (`charid`, `charname`, `box`, `slot`, `itemid`, `item
 	(66, 'Pumpkin', 1, 3, 321, 0, 1, NULL, 0, 'AH-Jeuno', 0, 0),
 	(66, 'Pumpkin', 1, 7, 318, 0, 1, NULL, 0, 'AH-Jeuno', 0, 0),
 	(66, 'Pumpkin', 1, 8, 65535, 0, 999999999, _binary 0x000000000000000000000000000000000000000000000000, 66, 'Pumpkin', 0, 0),
-	(66, 'Pumpkin', 2, 0, 65535, 0, 999999999, _binary 0x000000000000000000000000000000000000000000000000, 66, 'Pumpkin', 0, 1);
+	(66, 'Pumpkin', 2, 0, 65535, 0, 999999999, _binary 0x000000000000000000000000000000000000000000000000, 66, 'Pumpkin', 0, 1),
+	(66, 'Pumpkin', 2, 1, 3503, 0, 36, _binary 0x000000000000000000000000000000000000000000000000, 84, 'Goodkitty', 0, 1),
+	(84, 'Goodkitty', 1, 8, 3503, 0, 36, _binary 0x000000000000000000000000000000000000000000000000, 66, 'Pumpkin', 0, 0),
+	(99, 'Mrsk', 1, 8, 65535, 510, 5000, NULL, 0, 'AH-Jeuno', 0, 0);
 /*!40000 ALTER TABLE `delivery_box` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

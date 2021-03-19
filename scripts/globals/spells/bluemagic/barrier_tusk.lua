@@ -21,7 +21,19 @@ function onMagicCastingCheck(caster,target,spell)
 end
 
 function onSpellCast(caster,target,spell)
-	target:addStatusEffect(tpz.effect.PHALANX, 15, 0, 180)
+	local duration = 180
+	
+	if (caster:hasStatusEffect(tpz.effect.DIFFUSION)) then
+        local diffMerit = caster:getMerit(tpz.merit.DIFFUSION)
+
+        if (diffMerit > 0) then
+            duration = (duration + (duration * (diffMerit / 100)))
+        end
+
+        caster:delStatusEffect(tpz.effect.DIFFUSION)
+    end
+	
+	target:addStatusEffect(tpz.effect.PHALANX, 15, 0, duration)
 
     return tpz.effect.PHALANX
 end

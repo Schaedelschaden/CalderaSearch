@@ -25,7 +25,5 @@ function onMobWeaponSkill(target, mob, skill)
 
     MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 10, 3, 120)
 
-    target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.DARK)
-
     return dmg
 end

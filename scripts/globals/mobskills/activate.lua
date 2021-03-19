@@ -16,7 +16,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     mob:spawnPet()
 
     skill:setMsg(tpz.msg.basic.NONE)

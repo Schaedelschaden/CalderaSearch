@@ -195,6 +195,7 @@ void CItemEquipment::addModifier(CModifier modifier)
                 break;
         }
         m_absorption = std::min<uint8>(pdt, 100);
+//		printf("item_equipment.cpp addModifier SHIELD PDT: [%i]\n", pdt);
     }
     modList.push_back(modifier);
 }

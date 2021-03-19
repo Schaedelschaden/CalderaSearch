@@ -5,9 +5,17 @@
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
+local resistPower = {"Rayke_Fire", "Rayke_Ice", "Rayke_Wind", "Rayke_Earth", "Rayke_Lightning", "Rayke_Water", "Rayke_Light", "Rayke_Dark"}
+local resistMod = {tpz.mod.FIRERES, tpz.mod.ICERES, tpz.mod.WINDRES, tpz.mod.EARTHRES, tpz.mod.THUNDERRES, tpz.mod.WATERRES, tpz.mod.LIGHTRES, tpz.mod.DARKRES}
 
 function onEffectGain(target, effect)
-	
+	for i = 1, 8 do
+		if (target:getLocalVar(resistPower[i]) > 0) then
+			local power = target:getLocalVar(resistPower[i])
+			
+			target:addMod(resistMod[i], -power)
+		end
+	end
 end
 
 function onEffectTick(target, effect)
@@ -15,45 +23,12 @@ function onEffectTick(target, effect)
 end
 
 function onEffectLose(target, effect)
-	local PowerFire = target:getCharVar("Rayke_Fire")
-	local PowerIce = target:getCharVar("Rayke_Ice")
-	local PowerWind = target:getCharVar("Rayke_Wind")
-	local PowerEarth = target:getCharVar("Rayke_Earth")
-	local PowerLightning = target:getCharVar("Rayke_Lightning")
-	local PowerWater = target:getCharVar("Rayke_Water")
-	local PowerLight = target:getCharVar("Rayke_Light")
-	local PowerDark = target:getCharVar("Rayke_Dark")
-	
-	if (PowerFire > 0) then
-		target:addMod(tpz.mod.FIRERES, PowerFire)
-		target:setCharVar("Rayke_Fire", 0)
-	end
-	if (PowerIce > 0) then
-		target:addMod(tpz.mod.ICERES, PowerIce)
-		target:setCharVar("Rayke_Ice", 0)
-	end
-	if (PowerWind > 0) then
-		target:addMod(tpz.mod.WINDRES, PowerWind)
-		target:setCharVar("Rayke_Wind", 0)
-	end
-	if (PowerEarth > 0) then
-		target:addMod(tpz.mod.EARTHRES, PowerEarth)
-		target:setCharVar("Rayke_Earth", 0)
-	end
-	if (PowerLightning > 0) then
-		target:addMod(tpz.mod.THUNDERRES, PowerLightning)
-		target:setCharVar("Rayke_Lightning", 0)
-	end
-	if (PowerWater > 0) then
-		target:addMod(tpz.mod.WATERRES, PowerWater)
-		target:setCharVar("Rayke_Water", 0)
-	end
-	if (PowerLight > 0) then
-		target:addMod(tpz.mod.LIGHTRES, PowerLight)
-		target:setCharVar("Rayke_Light", 0)
-	end
-	if (PowerDark > 0) then
-		target:addMod(tpz.mod.DARKRES, PowerDark)
-		target:setCharVar("Rayke_Dark", 0)
+	for i = 1, 8 do
+		if (target:getLocalVar(resistPower[i]) > 0) then
+			local power = target:getLocalVar(resistPower[i])
+			
+			target:delMod(resistMod[i], -power)
+			target:setLocalVar(resistPower[i], 0)
+		end
 	end
 end

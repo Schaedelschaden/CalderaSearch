@@ -27,6 +27,5 @@ function onMobWeaponSkill(target, mob, skill)
        mob:addTP(80)
     end
 
-    target:takeDamage(dmg, mob, tpz.attackType.RANGED, tpz.damageType.PIERCING)
     return dmg
 end

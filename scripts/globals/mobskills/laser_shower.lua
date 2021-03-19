@@ -32,6 +32,5 @@ function onMobWeaponSkill(target, mob, skill)
 
     MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.DEFENSE_DOWN, 25, 0, 60)
 
-    target:takeDamage(dmg, mob, tpz.attackType.BREATH, tpz.damageType.LIGHT)
     return dmg
 end

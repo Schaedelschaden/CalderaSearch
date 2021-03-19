@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `mob_spell_lists` (
   PRIMARY KEY (`spell_list_id`,`spell_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.mob_spell_lists: 3,652 rows
+-- Dumping data for table tpzdb.mob_spell_lists: 3,670 rows
 /*!40000 ALTER TABLE `mob_spell_lists` DISABLE KEYS */;
 INSERT INTO `mob_spell_lists` (`spell_list_name`, `spell_list_id`, `spell_id`, `min_level`, `max_level`) VALUES
 	('Beastmen_WHM', 1, 1, 1, 10),
@@ -724,9 +724,9 @@ INSERT INTO `mob_spell_lists` (`spell_list_name`, `spell_list_id`, `spell_id`, `
 	('Mammet', 29, 199, 40, 40),
 	('Mammet', 29, 200, 60, 60),
 	('Mammet', 29, 201, 75, 75),
-	('Yagudo_SMN', 30, 288, 1, 255),
-	('Yagudo_SMN', 30, 290, 1, 255),
-	('Yagudo_SMN', 30, 291, 1, 255),
+	('Yagudo_SMN', 30, 294, 1, 255),
+	('Yagudo_SMN', 30, 293, 1, 255),
+	('Yagudo_SMN', 30, 292, 1, 255),
 	('Kindred_SMN', 31, 289, 1, 255),
 	('Kindred_SMN', 31, 292, 1, 255),
 	('Kindred_SMN', 31, 295, 1, 255),
@@ -3675,7 +3675,25 @@ INSERT INTO `mob_spell_lists` (`spell_list_name`, `spell_list_id`, `spell_id`, `
 	('Absolute_Virtue', 430, 187, 1, 255),
 	('Absolute_Virtue_I', 431, 218, 1, 255),
 	('Absolute_Virtue_I', 431, 209, 1, 255),
-	('Absolute_Virtue', 430, 158, 1, 255);
+	('Absolute_Virtue', 430, 158, 1, 255),
+	('Ramuh_Prime', 433, 167, 1, 255),
+	('Ramuh_Prime', 433, 168, 1, 255),
+	('Ramuh_Prime', 433, 212, 1, 255),
+	('Ramuh_Prime', 433, 213, 1, 255),
+	('Leviathan_Prime', 434, 335, 1, 255),
+	('Leviathan_Prime', 434, 336, 1, 255),
+	('Leviathan_Prime', 434, 337, 1, 255),
+	('Leviathan_Prime', 434, 340, 1, 255),
+	('Yagudo_SMN', 30, 291, 1, 255),
+	('Yagudo_SMN', 30, 290, 1, 255),
+	('Yagudo_SMN', 30, 289, 1, 255),
+	('Yagudo_SMN', 30, 288, 1, 255),
+	('Yagudo_SMN', 30, 295, 1, 255),
+	('Dark_Ixion', 435, 167, 1, 255),
+	('Dark_Ixion', 435, 168, 1, 255),
+	('Dark_Ixion', 435, 212, 1, 255),
+	('Dark_Ixion', 435, 197, 1, 255),
+	('Dark_Ixion', 435, 198, 1, 255);
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

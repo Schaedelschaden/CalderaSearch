@@ -25,9 +25,9 @@ function onSpellCast(caster, target, spell)
 	end
 	
 	if not (caster:hasStatusEffect(tpz.effect.ENTRUST)) then
-		power = (skill / 45.2261) + (GeomancyPotency(caster) * 4)
+		power = (skill / 45.2262) + (GeomancyPotency(caster) * 4)
 	else
-		power = (skill / 45.2261)
+		power = (skill / 45.2262)
 	end
 	
     if power < 1 then

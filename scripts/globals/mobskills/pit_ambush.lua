@@ -34,6 +34,5 @@ function onMobWeaponSkill(target, mob, skill)
     mob:AnimationSub(1)
     mob:setLocalVar("AMBUSH", 1) -- Used it for the last time!
 
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
     return dmg
 end

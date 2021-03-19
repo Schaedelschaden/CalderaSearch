@@ -13,6 +13,14 @@ cmdprops =
 };
 
 function onTrigger(player)
+	local jobMagic = {tpz.job.WHM, tpz.job.BLM, tpz.job.RDM, tpz.job.PLD, tpz.job.DRK, tpz.job.NIN, tpz.job.BLU, tpz.job.SCH, tpz.job.GEO}
+	local jobMagicSkill = {tpz.skill.DIVINE_MAGIC, tpz.skill.ELEMENTAL_MAGIC, tpz.skill.ENFEEBLING_MAGIC, tpz.skill.DIVINE_MAGIC, tpz.skill.ELEMENTAL_MAGIC, tpz.skill.NINJUTSU, tpz.skill.BLUE_MAGIC, tpz.skill.ELEMENTAL_MAGIC, tpz.skill.ELEMENTAL_MAGIC}
+	local mainHandWeapons = {tpz.skill.HAND_TO_HAND, tpz.skill.DAGGER, tpz.skill.SWORD, tpz.skill.AXE, tpz.skill.CLUB, tpz.skill.KATANA, tpz.skill.GREAT_SWORD, tpz.skill.GREAT_AXE, tpz.skill.SCYTHE, tpz.skill.POLEARM, tpz.skill.GREAT_KATANA, tpz.skill.STAFF}
+	local weapons = {tpz.skill.DAGGER, tpz.skill.SWORD, tpz.skill.AXE, tpz.skill.CLUB, tpz.skill.KATANA, tpz.skill.GREAT_SWORD, tpz.skill.GREAT_AXE, tpz.skill.SCYTHE, tpz.skill.POLEARM, tpz.skill.GREAT_KATANA, tpz.skill.STAFF}
+	local rangedWeapons = {tpz.skill.ARCHERY, tpz.skill.MARKSMANSHIP, tpz.skill.THROWING}
+
+	local weaponType = player:getWeaponSkillType(tpz.slot.MAIN)
+	local rangedWeaponType = player:getWeaponSkillType(tpz.slot.RANGED)
 	local shieldBaseBlockRate = 0
 	
 	if (player:getShieldSize() ~= 0) then
@@ -42,17 +50,96 @@ function onTrigger(player)
 	local Regen = player:getMod(tpz.mod.REGEN)
 	local Refresh = player:getMod(tpz.mod.REFRESH)
 	local Regain = player:getMod(tpz.mod.REGAIN)
-	local ATT = player:getMod(tpz.mod.ATT)
-	local RATT = player:getMod(tpz.mod.RATT)
+	
+	local weaponATT = 0
+	if (weaponType ~= tpz.skill.HAND_TO_HAND) then
+		for i = 1, 11 do
+			if (weaponType == weapons[i]) then
+				weaponATT = ((player:getStat(tpz.mod.STR) * 3) / 4) + player:getSkillLevel(weapons[i]) + player:getILvlSkill(tpz.slot.MAIN)
+			end
+		end
+	else
+		weaponATT = ((player:getStat(tpz.mod.STR) * 5) / 8) + player:getSkillLevel(tpz.skill.HAND_TO_HAND) + player:getILvlSkill(tpz.slot.MAIN)
+	end
+	
+	local ATT = math.floor(8 + player:getMod(tpz.mod.ATT) + weaponATT)
+	ATT = ATT + (math.min(ATT * (player:getMod(tpz.mod.FOOD_ATTP) / 100), player:getMod(tpz.mod.FOOD_ATT_CAP)))
+	
+	local rangedWeaponATT = 0
+	for i = 1, 3 do
+		if (rangedWeaponType == rangedWeapons[i]) then
+			rangedWeaponATT = (player:getStat(tpz.mod.STR) / 2) + player:getSkillLevel(rangedWeapons[i]) + player:getILvlSkill(tpz.slot.RANGED)
+		end
+	end
+	
+	local RATT = math.floor(8 + player:getMod(tpz.mod.RATT) + rangedWeaponATT)
+	RATT = RATT + (math.min(RATT * (player:getMod(tpz.mod.FOOD_RATTP) / 100), player:getMod(tpz.mod.FOOD_RATT_CAP)))
+	
 	local MATT = player:getMod(tpz.mod.MATT)
 	local MDMG = player:getMod(tpz.mod.MAGIC_DAMAGE)
 	local MBurst = player:getMod(tpz.mod.MAG_BURST_BONUS)
 	local MCritRate = player:getMod(tpz.mod.MAGIC_CRITHITRATE)
-	local MCritDMG = player:getMod(tpz.mod.MAGIC_CRIT_DMG_INCREASE)	
-	local ACC = player:getMod(tpz.mod.ACC)
-	local RACC = player:getMod(tpz.mod.RACC)
-	local MACC = player:getMod(tpz.mod.MACC)
-	local EVA = player:getMod(tpz.mod.EVA)
+	local MCritDMG = player:getMod(tpz.mod.MAGIC_CRIT_DMG_INCREASE)
+	
+	local weaponACC = 0
+	for i = 1, 12 do
+		if (weaponType == i) then
+			weaponACC = player:getSkillLevel(i) + player:getILvlSkill(tpz.slot.MAIN)
+			
+			if (weaponACC >= 201 and weaponACC <= 400) then
+				weaponACC = ((weaponACC - 200) * 0.9) + 200
+			elseif (weaponACC >= 401 and weaponACC <= 600) then
+				weaponACC = ((weaponACC - 400) * 0.8) + 380
+			elseif (weaponACC >= 601) then
+				weaponACC = ((weaponACC - 600) * 0.9) + 540
+			end
+		end
+	end
+	
+	local ACC = math.floor((player:getStat(tpz.mod.DEX) * 0.75) + player:getMod(tpz.mod.ACC) + weaponACC)
+	ACC = ACC + (math.min(ACC * (player:getMod(tpz.mod.FOOD_ACCP) / 100), player:getMod(tpz.mod.FOOD_ACC_CAP)))
+	
+	local rangedWeaponACC = 0
+	for i = 1, 3 do
+		if (rangedWeaponType == rangedWeapons[i]) then
+			rangedWeaponACC = player:getSkillLevel(rangedWeapons[i]) + player:getILvlSkill(tpz.slot.RANGED)
+			
+			if (rangedWeaponACC >= 201 and rangedWeaponACC <= 400) then
+				rangedWeaponACC = ((rangedWeaponACC - 200) * 0.9) + 200
+			elseif (rangedWeaponACC >= 401 and rangedWeaponACC <= 600) then
+				rangedWeaponACC = ((rangedWeaponACC - 400) * 0.8) + 380
+			elseif (rangedWeaponACC >= 601) then
+				rangedWeaponACC = ((rangedWeaponACC - 600) * 0.9) + 540
+			end
+		end
+	end
+	
+	local RACC = math.floor(((player:getStat(tpz.mod.AGI) * 3) / 4) + player:getMod(tpz.mod.RACC) + rangedWeaponACC)
+	RACC = RACC + (math.min(RACC * (player:getMod(tpz.mod.FOOD_RACCP) / 100), player:getMod(tpz.mod.FOOD_RACC_CAP)))
+	
+	local MACC = player:getMod(tpz.mod.MACC) + player:getILvlMacc()
+	for i = 1, 9 do
+		if (player:getMainJob() == jobMagic[i]) then
+			MACC = MACC + player:getSkillLevel(jobMagicSkill[i])
+		end
+	end
+	
+	if (player:getMainJob() == tpz.job.BRD) then
+		if (rangedWeaponType ~= tpz.skill.STRING or rangedWeaponType ~= tpz.skill.WIND) then
+			MACC = MACC + player:getSkillLevel(tpz.skill.SINGING)
+		elseif (rangedWeaponType == tpz.skill.STRING) then
+			MACC = MACC + (player:getSkillLevel(tpz.skill.SINGING) + player:getSkillLevel(tpz.skill.STRING)) / 2
+		elseif (rangedWeaponType == tpz.skill.WIND) then
+			MACC = MACC + (player:getSkillLevel(tpz.skill.SINGING) + player:getSkillLevel(tpz.skill.WIND)) / 2
+		end
+	end
+	
+	local EVA = player:getSkillLevel(tpz.skill.EVASION)
+	if (EVA > 200) then
+		EVA = ((EVA - 200) * 0.9) + 200
+	end
+	
+	EVA = math.floor((player:getStat(tpz.mod.AGI) / 2) + player:getMod(tpz.mod.EVA) + EVA)
 	local MEVA = player:getMod(tpz.mod.MEVA)
 	local MEVAII = player:getMod(tpz.mod.MAGIC_EVASION_BOOST_II)
 	local MDEF = player:getMod(tpz.mod.MDEF)
@@ -62,14 +149,14 @@ function onTrigger(player)
 	local MDT = player:getMod(tpz.mod.DMGMAGIC)
 	local MDTII = player:getMod(tpz.mod.DMGMAGIC_II)
 	local BDT = player:getMod(tpz.mod.DMGBREATH)
-	local SDTFire = -player:getMod(tpz.mod.SDT_FIRE)
-	local SDTIce = -player:getMod(tpz.mod.SDT_ICE)
-	local SDTWind = -player:getMod(tpz.mod.SDT_WIND)
-	local SDTEarth = -player:getMod(tpz.mod.SDT_EARTH)
-	local SDTLightning = -player:getMod(tpz.mod.SDT_LIGHTNING)
-	local SDTWater = -player:getMod(tpz.mod.SDT_WATER)
-	local SDTLight = -player:getMod(tpz.mod.SDT_LIGHT)
-	local SDTDark = -player:getMod(tpz.mod.SDT_DARK)
+	local SDTFire = player:getMod(tpz.mod.SDT_FIRE)
+	local SDTIce = player:getMod(tpz.mod.SDT_ICE)
+	local SDTWind = player:getMod(tpz.mod.SDT_WIND)
+	local SDTEarth = player:getMod(tpz.mod.SDT_EARTH)
+	local SDTLightning = player:getMod(tpz.mod.SDT_LIGHTNING)
+	local SDTWater = player:getMod(tpz.mod.SDT_WATER)
+	local SDTLight = player:getMod(tpz.mod.SDT_LIGHT)
+	local SDTDark = player:getMod(tpz.mod.SDT_DARK)
 	local AbsorbFire = player:getMod(tpz.mod.FIRE_ABSORB)
 	local AbsorbIce = player:getMod(tpz.mod.ICE_ABSORB)
 	local AbsorbWind = player:getMod(tpz.mod.WIND_ABSORB)
@@ -168,6 +255,12 @@ function onTrigger(player)
 	local SpiritLinkPotency = player:getMod(tpz.mod.SPIRIT_LINK_POTENCY)
 	local AugmentBlueMagic = player:getMod(tpz.mod.AUGMENT_BLUE_MAGIC)
 	
+	local RedLotusBladeDMG = player:getMod(tpz.mod.RED_LOTUS_BLADE_DMG)
+	local AsuranFistsDMG = player:getMod(tpz.mod.ASURAN_FISTS_DMG)
+	local SeraphStrikeDMG = player:getMod(tpz.mod.SERAPH_STRIKE_DMG)
+	local SteelCycloneDMG = player:getMod(tpz.mod.STEEL_CYCLONE_DMG)
+	local BlastShotDMG = player:getMod(tpz.mod.BLAST_SHOT_DMG)
+	
 	local WaterACC = player:getMod(tpz.mod.WATERACC)
 	local WaterMAB = player:getMod(tpz.mod.WATERATT)
 	
@@ -182,28 +275,28 @@ function onTrigger(player)
 		CharmRES = 0
 	end
 	
-	player:PrintToPlayer(string.format("PLAYER STATISTICS ---------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  LVL: [%i]  STR: [%i]  DEX: [%i]  VIT: [%i]  AGI: [%i]  INT: [%i]  MND: [%i]  CHR: [%i]  Regen: [%i]  Refresh: [%i]  Regain: [%i]", LVL, STR, DEX, VIT, AGI, INT, MND, CHR, Regen, Refresh, Regain),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  Enmity: [%i%%]  Gear Haste: [%2.2f%%]  Magic Haste: [%2.2f%%]  Ability Haste: [%2.2f%%]  Blitzer's Roll: [%i%%]  Movement Speed: [%i%%]  Treasure Hunter: [%i]", Enmity, HasteGear, HasteMag, HasteAbil, BlitzerRoll, MoveSPD, TreasureHunter),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("PLAYER STATISTICS ---------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("  LVL: [%i]  STR: [%i]  DEX: [%i]  VIT: [%i]  AGI: [%i]  INT: [%i]  MND: [%i]  CHR: [%i]  Regen: [%i]  Refresh: [%i]  Regain: [%i]", LVL, STR, DEX, VIT, AGI, INT, MND, CHR, Regen, Refresh, Regain),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("  Enmity: [%i%%]  Gear Haste: [%2.2f%%]  Magic Haste: [%2.2f%%]  Ability Haste: [%2.2f%%]  Blitzer's Roll: [%i%%]  Movement Speed: [%i%%]  Treasure Hunter: [%i]", Enmity, HasteGear, HasteMag, HasteAbil, BlitzerRoll, MoveSPD, TreasureHunter),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  Paralyze RES: [%i]  Bind RES: [%i]  Silence RES: [%i]  Gravity RES: [%i]  Petrify RES: [%i]  Slow RES: [%i]  Stun RES: [%i]  Poison RES: [%i]", ParalyzeRES, BindRES, SilenceRES, GravityRES, PetrifyRES, SlowRES, StunRES, PoisonRES),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  Virus RES: [%i]  Amnesia RES: [%i]  Sleep RES: [%i]  Blind RES: [%i]  Curse RES: [%i]  Charm RES: [%i]  Lullaby RES: [%i]  Death RES: [%i]", VirusRES, AmnesiaRES, SleepRES, BlindRES, CurseRES, CharmRES, LullabyRES, DeathRES),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("COMBAT STATISTICS ---------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  ATK: [%i]  R.ATK: [%i]  Crit Hit Rate: [%i%%]  Crit Hit DMG: [%i%%]  MAB: [%i]  M.DMG: [%i]  M.Burst DMG: [%i]  M.Crit Rate: [%i]  M.Crit DMG: [%i]" , ATT, RATT, CritHitRate, CritHitDamage, MATT, MDMG, MBurst, MCritRate, MCritDMG),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  Accuracy: [%i]  Ranged Accuracy: [%i]  Magic Accuracy: [%i]  Evasion: [%i]  Magic EVA: [%i]  Magic EVA II: [%i]  Magic DEF: [%i]", ACC, RACC, MACC, EVA, MEVA, MEVAII, MDEF),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  Damage Taken: [%i%%]  Physical DT: [%i%%]  Physical DT II: [%i%%]  Magic DT: [%i%%]  Magic DT II: [%i%%]  Breath DT: [%i%%]  Crit Hit EVA: [%i%%]", DT, PDT, PDTII, MDT, MDTII, BDT, CritHitEVA),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("COMBAT STATISTICS ---------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("  ATK: [%i]  R.ATK: [%i]  Crit Hit Rate: [%i%%]  Crit Hit DMG: [%i%%]  MAB: [%i]  M.DMG: [%i]  M.Burst DMG: [%i]  M.Crit Rate: [%i]  M.Crit DMG: [%i]" , ATT, RATT, CritHitRate, CritHitDamage, MATT, MDMG, MBurst, MCritRate, MCritDMG),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("  Accuracy: [%i]  Ranged Accuracy: [%i]  Magic Accuracy: [%i]  Evasion: [%i]  Magic EVA: [%i]  Magic EVA II: [%i]  Magic DEF: [%i]", ACC, RACC, MACC, EVA, MEVA, MEVAII, MDEF),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("  Damage Taken: [%i%%]  Physical DT: [%i%%]  Physical DT II: [%i%%]  Magic DT: [%i%%]  Magic DT II: [%i%%]  Breath DT: [%i%%]  Crit Hit EVA: [%i%%]", DT, PDT, PDTII, MDT, MDTII, BDT, CritHitEVA),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  SDT Fire: [%i%%]  Ice: [%i%%]  Wind: [%i%%]  Earth: [%i%%]  Lightning: [%i%%]  Water: [%i%%]  Light: [%i%%]  Dark: [%i%%]", SDTFire, SDTIce, SDTWind, SDTEarth, SDTLightning, SDTWater, SDTLight, SDTDark),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  Absorb Fire: [%i%%]  Ice: [%i%%]  Wind: [%i%%]  Earth: [%i%%]  Lightning: [%i%%]  Water: [%i%%]  Light: [%i%%]  Dark: [%i%%]", AbsorbFire, AbsorbIce, AbsorbWind, AbsorbEarth, AbsorbLightning, AbsorbWater, AbsorbLight, AbsorbDark),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  Parry: [%i%%]  Block: [%i%%]  Guard: [%i%%]  Counter: [%i%%]  Counter DMG: [%i]  Counter Crit Hit Rate: [%i%%]  Conserve MP: [%i%%]", Parry, Block, Guard, Counter, CounterDMG, CounterCHR, ConserveMP),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  Weaponskill Damage: [%i%%]  Skillchain Damage: [%i%%]  Skillchain Bonus: [%i%%]  TP Bonus: [%i]  Store TP: [%i]  Save TP: [%i]", WSDMG, SCDMG, SCBonus, TPBonus, StoreTP, SaveTP),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("TRAIT/ABILITY STATISTICS --------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  Double Attack: [%i%%]  Triple Attack: [%i%%]  Quad Attack: [%i%%]  Kick Attack: [%i%%]  Dual Wield: [%i]", DoubleAttack, TripleAttack, QuadAttack, KickAttack, DualWield),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  Subtle Blow: [%i]  Subtle Blow II: [%i]", SubtleBlow, SubtleBlowII),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  Cure Potency: [%i%%]  Cure Potency II: [%i%%]  Cure Rec. Potency: [%i%%]  Spell Interrupt Down: [%i%%]  Fast Cast: [%i%%]  UFast Cast: [%i]", CPot, CPotII, CRPot, SID, FastCast, UFastCast),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  Recycle: [%i%%]  Rapid Shot: [%i%%]  Snapshot: [%i%%]  True Shot: [%i%%]  Dbl Shot: [%i%%]  Tpl Shot: [%i%%]", Recycle, RapidShot, Snapshot, TrueShot, DoubleShot, TripleShot),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  Charm Chance: [%i]  All Killer Effects: [%i]  Augment Reward: [%i]  Call Beast Level: [%i]  Tactical Parry: [%i]", CharmChance, AllKiller, RewardAug, CallBeast, TacticalParry),tpz.msg.channel.SYSTEM_3)	
-	player:PrintToPlayer(string.format("  Ninjutsu Damage: [%i]  Daken Chance: [%i%%]  Tool Expertise: [%i%%]  Utsusemi Cast Time: [%i%%]  Blood Boon: [%i%%]", NinjutsuDMG, Daken, ToolExpertise, UtsusemiCast, BloodBoon),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  BP Delay I: [-%i]  BP Delay II: [-%i]  Favor BP Delay: [-%i]  Perp:[%i]  Damage Limit Trait: [%i]  Damage Limit Gear: [%i%%]", BPDelay, BPDelayII, FavorBPDelay, Perpetuation, DLTrait, DLGear),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("------------------------------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
-	-- player:PrintToPlayer(string.format("  Shield Skill: [%i]", ShieldSkill),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("  Parry: [%i%%]  Block: [%i%%]  Guard: [%i%%]  Counter: [%i%%]  Counter DMG: [%i]  Counter Crit Hit Rate: [%i%%]  Conserve MP: [%i%%]", Parry, Block, Guard, Counter, CounterDMG, CounterCHR, ConserveMP),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("  Weaponskill Damage: [%i%%]  Skillchain Damage: [%i%%]  Skillchain Bonus: [%i%%]  TP Bonus: [%i]  Store TP: [%i]  Save TP: [%i]", WSDMG, SCDMG, SCBonus, TPBonus, StoreTP, SaveTP),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("TRAIT/ABILITY STATISTICS --------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("  Double Attack: [%i%%]  Triple Attack: [%i%%]  Quad Attack: [%i%%]  Kick Attack: [%i%%]  Dual Wield: [%i]", DoubleAttack, TripleAttack, QuadAttack, KickAttack, DualWield),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("  Subtle Blow: [%i]  Subtle Blow II: [%i]", SubtleBlow, SubtleBlowII),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("  Cure Potency: [%i%%]  Cure Potency II: [%i%%]  Cure Rec. Potency: [%i%%]  Spell Interrupt Down: [%i%%]  Fast Cast: [%i%%]  UFast Cast: [%i]", CPot, CPotII, CRPot, SID, FastCast, UFastCast),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("  Recycle: [%i%%]  Rapid Shot: [%i%%]  Snapshot: [%i%%]  True Shot: [%i%%]  Dbl Shot: [%i%%]  Tpl Shot: [%i%%]", Recycle, RapidShot, Snapshot, TrueShot, DoubleShot, TripleShot),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("  Charm Chance: [%i]  All Killer Effects: [%i]  Augment Reward: [%i]  Call Beast Level: [%i]  Tactical Parry: [%i]", CharmChance, AllKiller, RewardAug, CallBeast, TacticalParry),tpz.msg.channel.SYSTEM_3)	
+	-- player:PrintToPlayer(string.format("  Ninjutsu Damage: [%i]  Daken Chance: [%i%%]  Tool Expertise: [%i%%]  Utsusemi Cast Time: [%i%%]  Blood Boon: [%i%%]", NinjutsuDMG, Daken, ToolExpertise, UtsusemiCast, BloodBoon),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("  BP Delay I: [-%i]  BP Delay II: [-%i]  Favor BP Delay: [-%i]  Perp: [%i]  Damage Limit Trait: [%i]  Damage Limit Gear: [%i%%]", BPDelay, BPDelayII, FavorBPDelay, Perpetuation, DLTrait, DLGear),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("------------------------------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
+	-- player:PrintToPlayer(string.format("  Red Lotus Blade DMG: [%i]", RedLotusBladeDMG),tpz.msg.channel.SYSTEM_3)
 	-- player:PrintToPlayer(string.format("  Water MAB: [%i]  Water ACC: [%i]", WaterMAB, WaterACC),tpz.msg.channel.SYSTEM_3)
 end

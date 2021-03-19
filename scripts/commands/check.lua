@@ -34,6 +34,9 @@ function onTrigger(player, mobId)
     end
 
     -- Provide mob information.
+	local weaponType = targ:getWeaponSkillType(tpz.slot.MAIN)
+	local mainHandWeapons = {tpz.skill.HAND_TO_HAND, tpz.skill.DAGGER, tpz.skill.SWORD, tpz.skill.AXE, tpz.skill.CLUB, tpz.skill.KATANA, tpz.skill.GREAT_SWORD, tpz.skill.GREAT_AXE, tpz.skill.SCYTHE, tpz.skill.POLEARM, tpz.skill.GREAT_KATANA, tpz.skill.STAFF}
+	
 	local Name = targ:getName()
 	local fixedName = string.gsub(Name, "_", " ")
 	local ID = targ:getID()
@@ -52,17 +55,52 @@ function onTrigger(player, mobId)
 	local CHR = targ:getStat(tpz.mod.CHR)
 	local Regen = targ:getMod(tpz.mod.REGEN)
 	local ATTP = targ:getMod(tpz.mod.ATTP)
-	local ATT = targ:getMod(tpz.mod.ATT)
-	local DEF = targ:getMod(tpz.mod.DEF)
+	
+	local weaponATT = 0
+	for i = 1, 12 do
+		if (weaponType == mainHandWeapons[i]) then
+			weaponATT = targ:getSkillLevel(mainHandWeapons[i])
+			
+			if (weaponATT > 200) then
+				weaponATT = ((weaponATT - 200) * 0.9) + 200
+			end
+		end
+	end
+	
+	local ATT = 8 + targ:getMod(tpz.mod.ATT) + ((targ:getStat(tpz.mod.STR) * 3) / 4) + weaponATT
+	local DEF = 8 + targ:getMod(tpz.mod.DEF) + (targ:getStat(tpz.mod.VIT) / 2)
 	local DEFP = targ:getMod(tpz.mod.DEFP)
 	local MDEF = targ:getMod(tpz.mod.MDEF)
-	local ACC = targ:getMod(tpz.mod.ACC)
-	local EVA = targ:getMod(tpz.mod.EVA)
+	
+	local weaponACC = 0
+	for i = 1, 12 do
+		if (weaponType == mainHandWeapons[i]) then
+			weaponACC = targ:getSkillLevel(mainHandWeapons[i])
+			
+			if (weaponACC > 200) then
+				weaponACC = ((weaponACC - 200) * 0.9) + 200
+			end
+		end
+	end
+	
+	local ACC = math.floor((targ:getStat(tpz.mod.DEX) * 0.75) + targ:getMod(tpz.mod.ACC) + weaponACC)
+	
+	local EVA = targ:getSkillLevel(tpz.skill.EVASION)
+	if (EVA > 200) then
+		EVA = ((EVA - 200) * 0.9) + 200
+	end
+	
+	EVA = math.floor((targ:getStat(tpz.mod.AGI) / 2) + targ:getMod(tpz.mod.EVA) + EVA)
 	local MEVA = targ:getMod(tpz.mod.MEVA)
 	local MACC = targ:getMod(tpz.mod.MACC)
 	local MATT = targ:getMod(tpz.mod.MATT)
 	local StoreTP = targ:getMod(tpz.mod.STORETP)
 	local CritHitEVA = -targ:getMod(tpz.mod.CRIT_HIT_EVASION)
+	local DT = targ:getMod(tpz.mod.DMG)
+	local PDT = targ:getMod(tpz.mod.DMGPHYS)
+	local RDT = targ:getMod(tpz.mod.DMGRANGE)
+	local MDT = targ:getMod(tpz.mod.DMGMAGIC)
+	local BDT = targ:getMod(tpz.mod.DMGBREATH)
 	local FireRES = targ:getMod(tpz.mod.FIRERES)
 	local IceRES = targ:getMod(tpz.mod.ICERES)
 	local WindRES = targ:getMod(tpz.mod.WINDRES)
@@ -91,9 +129,9 @@ function onTrigger(player, mobId)
 	local AmorphKiller = targ:getMod(tpz.mod.AMORPH_KILLER)
 	local BirdKiller = targ:getMod(tpz.mod.BIRD_KILLER)
 	
-	local strBonus = (STR / 1.78) -- STR bonus for one-handed weapon ATT
+	-- local strBonus = (STR / 1.78) -- STR bonus for one-handed weapon ATT
 	
-	ATT = ATT + strBonus
+	-- ATT = ATT + strBonus
 --	printf("check.lua Base ATT: [%i]\n", ATT)
 	local bonus = ATT * (ATTP / 100)
 --	printf("check.lua ATTP Bonus: [%f]\n", bonus)
@@ -108,9 +146,10 @@ function onTrigger(player, mobId)
 	local Haste = (HasteGear + HasteMagic + HasteAbility) / 100
 	
     player:PrintToPlayer(string.format("Mob Name: %s  ID: %i  Level: %i  HP: %i/%i  MP: %i  TP: %i  Respawn: %i minutes", fixedName, ID, MainLvl, HP, MaxHP, MP, TP, Respawn),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("STR: [%i]  DEX: [%i]  VIT: [%i]  AGI: [%i]  INT: [%i]  MND: [%i] CHR: [%i]  Regen: [%i]  Haste: [%i%%]  Move Spd: [%i%%]", STR, DEX, VIT, AGI, INT, MND, CHR, Regen, Haste, MoveSpd),tpz.msg.channel.SYSTEM_3)
+	player:PrintToPlayer(string.format("STR: [%i]  DEX: [%i]  VIT: [%i]  AGI: [%i]  INT: [%i]  MND: [%i]  CHR: [%i]  Regen: [%i]  Haste: [%i%%]  Move Spd: [%i%%]", STR, DEX, VIT, AGI, INT, MND, CHR, Regen, Haste, MoveSpd),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("ATK: [%i]  DEF: [%i]  MDEF: [%i]  ACC: [%i]  EVA: [%i]  MEVA: [%i]  MACC: [%i]  MATT: [%i]  Store TP: [%i]  Crit Hit EVA: [%i%%]", ATT, DEF, MDEF, ACC, EVA, MEVA, MACC, MATT, StoreTP, CritHitEVA),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("Resist - Fire: [%i%%]  Ice: [%i%%]  Wind: [%i%%]  Earth: [%i%%]  Lightning: [%i%%]  Water: [%i%%]  Light: [%i%%]  Dark: [%i%%]", FireRES, IceRES, WindRES, EarthRES, ThunderRES, WaterRES, LightRES, DarkRES),tpz.msg.channel.SYSTEM_3)
+	player:PrintToPlayer(string.format("DMG Taken - All: [%i%%]  Physical: [%i%%]  Ranged: [%i%%]  Magic: [%i%%]  Breath: [%i%%]", DT, PDT, RDT, MDT, BDT),tpz.msg.channel.SYSTEM_3)
+	player:PrintToPlayer(string.format("Resist - Fire: [%i]  Ice: [%i]  Wind: [%i]  Earth: [%i]  Lightning: [%i]  Water: [%i]  Light: [%i]  Dark: [%i]", FireRES, IceRES, WindRES, EarthRES, ThunderRES, WaterRES, LightRES, DarkRES),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("SDT - Fire: [%i%%]  Ice: [%i%%]  Wind: [%i%%]  Earth: [%i%%]  Lightning: [%i%%]  Water: [%i%%]  Light: [%i%%]  Dark: [%i%%]", SDTFire, SDTIce, SDTWind, SDTEarth, SDTLightning, SDTWater, SDTLight, SDTDark),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("Killer Effects - Beast: [%i%%]  Lizard: [%i%%]  Vermin: [%i%%]  Plantoid: [%i%%]  Aquan: [%i%%]  Amorph: [%i%%]  Bird: [%i%%]", BeastKiller, LizardKiller, VerminKiller, PlantoidKiller, AquanKiller, AmorphKiller, BirdKiller),tpz.msg.channel.SYSTEM_3)
 end

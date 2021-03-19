@@ -29,8 +29,8 @@ function onSpellCast(caster, target, spell)
     if caster:hasStatusEffect(tpz.effect.DIFFUSION) then
         local diffMerit = caster:getMerit(tpz.merit.DIFFUSION)
 
-        if diffMerit > 0 then
-            duration = duration + (duration / 100) * diffMerit
+        if (diffMerit > 0) then
+            duration = (duration + (duration * (diffMerit / 100)))
         end
 
         caster:delStatusEffect(tpz.effect.DIFFUSION)

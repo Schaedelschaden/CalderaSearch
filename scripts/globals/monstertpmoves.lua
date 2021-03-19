@@ -477,6 +477,14 @@ function MobBreathMove(mob, target, percent, base, element, cap)
 end
 
 function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, shadowbehav)
+	local element = {tpz.magic.ele.FIRE, tpz.magic.ele.ICE, tpz.magic.ele.WIND, tpz.magic.ele.EARTH, tpz.magic.ele.THUNDER, tpz.magic.ele.WATER, tpz.magic.ele.LIGHT, tpz.magic.ele.DARK}
+	local damageElement = 0
+	
+	for i = 1, 8 do
+		if (damageType - 5 == element[i]) then
+			damageElement = element[i]
+		end
+	end
 
     -- physical attack missed, skip rest
     if (skill:hasMissMsg()) then
@@ -546,7 +554,7 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 
     elseif (attackType == tpz.attackType.MAGICAL) then
 
-        dmg = target:magicDmgTaken(dmg)
+        dmg = target:magicDmgTaken(dmg, damageElement)
 
     elseif (attackType == tpz.attackType.BREATH) then
 
@@ -565,18 +573,22 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 --		printf("monstertpmoves.cpp MobFinalAdjustments PetRandom: [%i]  DMG: [%i]", PetRandom, dmg)
 	end
 
-    --handling phalanx
+    -- Handle Phalanx
     dmg = dmg - target:getMod(tpz.mod.PHALANX)
 
-    if (dmg < 0) then
-        return 0
-    end
-
+	-- Handle Stoneskin
     dmg = utils.stoneskin(target, dmg)
 
-    if (dmg > 0) then
+	if (dmg < 0) then
+		-- Turn damage positive for correct health restoral and message display
+		target:addHP(-dmg)
+        skill:setMsg(tpz.msg.basic.SKILL_RECOVERS_HP)
+		
+		return -dmg
+    else
+		target:takeDamage(dmg, mob, attackType, damageType)
+		target:handleAfflatusMiseryDamage(dmg)
         target:updateEnmityFromDamage(mob, dmg)
-        target:handleAfflatusMiseryDamage(dmg)
     end
 
     return dmg

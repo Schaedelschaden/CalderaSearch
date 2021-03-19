@@ -27,6 +27,5 @@ function onMobWeaponSkill(target, mob, skill)
 
     MobStatusEffectMove(mob, target, tpz.effect.MAGIC_DEF_DOWN, 20, 0, 60) -- Needs adjusted to retail values for power/duration
 
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
     return dmg
 end

@@ -789,29 +789,37 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
 				(StatusEffectContainer->HasStatusEffect(EFFECT_IMMANENCE)))
 			{
  				SUBEFFECT effect = SUBEFFECT_NONE;
-				if (PSpell->getSpellFamily() == SPELLFAMILY_STONE)
+				if (PSpell->getSpellFamily() == SPELLFAMILY_STONE || PSpell->getSpellFamily() == SPELLFAMILY_GEOHELIX)
 				{
 					effect = battleutils::GetSkillChainEffect(PTarget, 4, 0, 0);
 				}
-				else if (PSpell->getSpellFamily() == SPELLFAMILY_WATER)
+				else if (PSpell->getSpellFamily() == SPELLFAMILY_WATER || PSpell->getSpellFamily() == SPELLFAMILY_HYDROHELIX)
 				{
 					effect = battleutils::GetSkillChainEffect(PTarget, 5, 0, 0);
 				}
-				else if (PSpell->getSpellFamily() == SPELLFAMILY_AERO)
+				else if (PSpell->getSpellFamily() == SPELLFAMILY_AERO || PSpell->getSpellFamily() == SPELLFAMILY_ANEMOHELIX)
 				{
 					effect = battleutils::GetSkillChainEffect(PTarget, 6, 0, 0);
 				}
-				else if (PSpell->getSpellFamily() == SPELLFAMILY_FIRE)
+				else if (PSpell->getSpellFamily() == SPELLFAMILY_FIRE || PSpell->getSpellFamily() == SPELLFAMILY_PYROHELIX)
 				{
 					effect = battleutils::GetSkillChainEffect(PTarget, 3, 0, 0);
 				}
-				else if (PSpell->getSpellFamily() == SPELLFAMILY_BLIZZARD)
+				else if (PSpell->getSpellFamily() == SPELLFAMILY_BLIZZARD || PSpell->getSpellFamily() == SPELLFAMILY_CRYOHELIX)
 				{
 					effect = battleutils::GetSkillChainEffect(PTarget, 7, 0, 0);
 				}
-				else if (PSpell->getSpellFamily() == SPELLFAMILY_THUNDER)
+				else if (PSpell->getSpellFamily() == SPELLFAMILY_THUNDER || PSpell->getSpellFamily() == SPELLFAMILY_IONOHELIX)
 				{
 					effect = battleutils::GetSkillChainEffect(PTarget, 8, 0, 0);
+				}
+				else if (PSpell->getSpellFamily() == SPELLFAMILY_LUMINOHELIX)
+				{
+					effect = battleutils::GetSkillChainEffect(PTarget, 1, 0, 0);
+				}
+				else if (PSpell->getSpellFamily() == SPELLFAMILY_NOCTOHELIX)
+				{
+					effect = battleutils::GetSkillChainEffect(PTarget, 2, 0, 0);
 				}
 				
 				if (effect != SUBEFFECT_NONE)

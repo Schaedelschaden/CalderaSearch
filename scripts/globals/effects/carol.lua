@@ -11,7 +11,7 @@ local element = {tpz.magic.ele.FIRE, tpz.magic.ele.EARTH, tpz.magic.ele.WATER, t
 local stats = {tpz.mod.STR, tpz.mod.VIT, tpz.mod.MND, tpz.mod.AGI, tpz.mod.INT, tpz.mod.DEX, tpz.mod.CHR, tpz.mod.MP}
 
 function onEffectGain(target,effect)
-	power = effect:getPower()
+	local power = effect:getPower()
 	setBonus = 0
 	addedStat = 0
 	
@@ -40,12 +40,16 @@ function onEffectGain(target,effect)
 			addedStat = stats[i]
 		end
 	end
+	
+	effect:setPower(power)
 end
 
 function onEffectTick(target,effect)
 end
 
 function onEffectLose(target,effect)
+	local power = effect:getPower()
+	
     target:delMod(tpz.magic.resistMod[effect:getSubPower()], power)
 	if (setBonus > 0) then
 		target:delMod(addedStat, setBonus)

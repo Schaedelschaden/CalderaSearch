@@ -21,7 +21,6 @@ function onMobWeaponSkill(target, mob, skill)
     skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 1, 0, 90))
 
     mob:takeDamage(dmg1)
-    target:takeDamage(dmg2, mob, tpz.attackType.MAGICAL, tpz.damageType.ELEMENTAL)
-
+    
     return dmg2
 end

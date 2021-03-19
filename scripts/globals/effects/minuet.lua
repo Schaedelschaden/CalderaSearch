@@ -7,7 +7,7 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onEffectGain(target,effect)
-	power = effect:getPower()
+	local power = effect:getPower()
 	setBonus = 0
 	
 	if (power >= 2000 and power < 3000) then
@@ -30,12 +30,15 @@ function onEffectGain(target,effect)
 	
     target:addMod(tpz.mod.ATT, power)
     target:addMod(tpz.mod.RATT, power)
+	effect:setPower(power)
 end
 
 function onEffectTick(target,effect)
 end
 
 function onEffectLose(target,effect)
+	local power = effect:getPower()
+	
     target:delMod(tpz.mod.ATT, power)
     target:delMod(tpz.mod.RATT, power)
 	

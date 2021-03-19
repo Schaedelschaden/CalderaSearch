@@ -159,7 +159,7 @@ bool CAbilityState::CanUseAbility()
         std::unique_ptr<CBasicPacket> errMsg;
 		
 		// Turns Liement into an AoE when Epeolatry is equipped
-		if ((PWeapon->getID() == 20753 || PWeapon->getID() == 21685) && (PAbility->getID() == 357))
+		if ((PWeapon->getID() == 20753 || PWeapon->getID() == 21685) && (PAbility->getID() == ABILITY_LIEMENT))
 		{
 			PAbility->setAOE(1);
 			PAbility->setRange(20);

@@ -18,7 +18,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     local numhits = 1
     local accmod = 1
     local dmgmod = 2.5
@@ -29,6 +28,5 @@ function onMobWeaponSkill(target, mob, skill)
    MobStatusEffectMove(mob, target, tpz.effect.PETRIFICATION, 1, 0, math.random(8, 15) + mob:getMainLvl()/3)
    MobStatusEffectMove(mob, target, tpz.effect.POISON, math.ceil(mob:getMainLvl() / 5), 3, 60)
 
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
     return dmg
 end

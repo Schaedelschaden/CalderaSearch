@@ -22,8 +22,10 @@ CREATE TABLE IF NOT EXISTS `accounts_parties` (
   CONSTRAINT `accounts_parties_ibfk_1` FOREIGN KEY (`charid`) REFERENCES `accounts_sessions` (`charid`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.accounts_parties: ~2 rows (approximately)
+-- Dumping data for table tpzdb.accounts_parties: ~4 rows (approximately)
 /*!40000 ALTER TABLE `accounts_parties` DISABLE KEYS */;
+INSERT INTO `accounts_parties` (`charid`, `partyid`, `partyflag`, `allianceid`, `timestamp`) VALUES
+	(74, 74, 4, 0, '2021-03-19 08:13:10');
 /*!40000 ALTER TABLE `accounts_parties` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

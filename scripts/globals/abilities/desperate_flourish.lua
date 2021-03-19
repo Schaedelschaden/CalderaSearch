@@ -35,7 +35,7 @@ function onUseAbility(player, target, ability, action)
         isSneakValid = false
     end
 
-    local hitrate = getHitRate(player,target,true)
+    local hitrate = player:getHitRate(target)
 
     if (math.random() <= hitrate or isSneakValid) then
         local spell = getSpell(216)

@@ -27,6 +27,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.canCrit = false
     params.acc100 = 0.0 params.acc200= 0.0 params.acc300= 0.0
     params.atk100 = 1.66; params.atk200 = 1.66; params.atk300 = 1.66
+	params.specialWSDMG = player:getMod(tpz.mod.STEEL_CYCLONE_DMG)
 
     if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
         params.ftp200 = 2.5 params.ftp300 = 4

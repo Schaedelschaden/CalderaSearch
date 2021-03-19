@@ -5,9 +5,17 @@
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
+local absorbPower = {"Liement_Fire", "Liement_Ice", "Liement_Wind", "Liement_Earth", "Liement_Lightning", "Liement_Water", "Liement_Light", "Liement_Dark"}
+local absorbMod = {tpz.mod.FIRE_ABSORB, tpz.mod.ICE_ABSORB, tpz.mod.WIND_ABSORB, tpz.mod.EARTH_ABSORB, tpz.mod.LTNG_ABSORB, tpz.mod.WATER_ABSORB, tpz.mod.LIGHT_ABSORB, tpz.mod.DARK_ABSORB}
 
 function onEffectGain(target, effect)
-	
+	for i = 1, 8 do
+		if (target:getCharVar(absorbPower[i]) > 0) then
+			local power = target:getCharVar(absorbPower[i])
+			
+			target:addMod(absorbMod[i], power)
+		end
+	end
 end
 
 function onEffectTick(target, effect)
@@ -15,47 +23,12 @@ function onEffectTick(target, effect)
 end
 
 function onEffectLose(target, effect)
-	local PowerFire = target:getCharVar("Liement_Fire")
-	local PowerIce = target:getCharVar("Liement_Ice")
-	local PowerWind = target:getCharVar("Liement_Wind")
-	local PowerEarth = target:getCharVar("Liement_Earth")
-	local PowerLightning = target:getCharVar("Liement_Lightning")
-	local PowerWater = target:getCharVar("Liement_Water")
-	local PowerLight = target:getCharVar("Liement_Light")
-	local PowerDark = target:getCharVar("Liement_Dark")
-	
---	printf("liement.lua FIRE: [%i%%]  ICE: [%i%%]  WIND: [%i%%]  EARTH: [%i%%]  THUNDER: [%i%%]  WATER: [%i%%]  LIGHT: [%i%%]  DARK: [%i%%]", PowerFire, PowerIce, PowerWind, PowerEarth, PowerLightning, PowerWater, PowerLight, PowerDark)
-	
-	if (PowerFire > 0) then
-		target:delMod(tpz.mod.FIRE_ABSORB, PowerFire)
-		target:setCharVar("Liement_Fire", 0)
-	end
-	if (PowerIce > 0) then
-		target:delMod(tpz.mod.ICE_ABSORB, PowerIce)
-		target:setCharVar("Liement_Ice", 0)
-	end
-	if (PowerWind > 0) then
-		target:delMod(tpz.mod.WIND_ABSORB, PowerWind)
-		target:setCharVar("Liement_Wind", 0)
-	end
-	if (PowerEarth > 0) then
-		target:delMod(tpz.mod.EARTH_ABSORB, PowerEarth)
-		target:setCharVar("Liement_Earth", 0)
-	end
-	if (PowerLightning > 0) then
-		target:delMod(tpz.mod.LTNG_ABSORB, PowerLightning)
-		target:setCharVar("Liement_Lightning", 0)
-	end
-	if (PowerWater > 0) then
-		target:delMod(tpz.mod.WATER_ABSORB, PowerWater)
-		target:setCharVar("Liement_Water", 0)
-	end
-	if (PowerLight > 0) then
-		target:delMod(tpz.mod.LIGHT_ABSORB, PowerLight)
-		target:setCharVar("Liement_Light", 0)
-	end
-	if (PowerDark > 0) then
-		target:delMod(tpz.mod.DARK_ABSORB, PowerDark)
-		target:setCharVar("Liement_Dark", 0)
+	for i = 1, 8 do
+		if (target:getCharVar(absorbPower[i]) > 0) then
+			local power = target:getCharVar(absorbPower[i])
+			
+			target:delMod(absorbMod[i], power)
+			target:setCharVar(absorbPower[i], 0)
+		end
 	end
 end

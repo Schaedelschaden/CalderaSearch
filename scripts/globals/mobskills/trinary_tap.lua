@@ -45,7 +45,7 @@ function onMobWeaponSkill(target, mob, skill)
         dmg = MobFinalAdjustments(power, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.DARK, MOBPARAM_IGNORE_SHADOWS)
 
         skill:setMsg(MobPhysicalDrainMove(mob, target, skill, MOBDRAIN_HP, dmg))
-        return dmg
+    return dmg
     end
 
 end

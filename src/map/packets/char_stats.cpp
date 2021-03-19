@@ -28,6 +28,7 @@
 
 #include "../entities/charentity.h"
 #include "../utils/charutils.h"
+#include "../utils/battleutils.h"
 #include "../modifier.h"
 
 
@@ -74,11 +75,18 @@ CCharStatsPacket::CCharStatsPacket(CCharEntity * PChar)
 	ref<uint16>(0x48) = PChar->profile.rankpoints;
     ref<uint16>(0x4A) = PChar->profile.home_point.destination;
 	ref<uint8>(0x50) = PChar->profile.nation;
-    ref<uint8>(0x52) = PChar->GetMLevel () == 99? 5: 0;
+    ref<uint8>(0x52) = PChar->GetMLevel () == 99 ? 5: 0; // Superior level (1 through 5)
+	ref<uint16>(0x55) = battleutils::GetPlayerItemLevel(PChar); // Item level over 99 (Displays total item level + 99 in equipment window)
+	
+	// Unlocks Superior Level 1 after killing Absolute Virtue once
+/* 	if (charutils::GetCharVar(PChar, "KillCounter_AbsoluteVirtue") >= 1)
+	{
+		ref<uint8>(0x52) = PChar->GetMLevel () == 99 ? 1: 0;
+	} */
 	
 	//0x51 = New character has this as 0x01, 0x03 on seasoned 99
 	//0x52 = superior level (1 through 5)
     //0x54 = maximum item level
-    //0x55 = itemlevel over 99
+    //0x55 = itemlevel over 99 (Displays total item level + 99 in equipment window)
     //0x56 = main weapon item level
 }

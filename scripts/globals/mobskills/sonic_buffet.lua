@@ -19,7 +19,5 @@ function onMobWeaponSkill(target, mob, skill)
         target:dispelStatusEffect(tpz.effectFlag.DISPELABLE)
     end
 
-    target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.WIND)
-
     return dmg
 end

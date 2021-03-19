@@ -17,7 +17,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     local numhits = 1
     local accmod = 1
     local dmgmod = 2.5
@@ -28,6 +27,5 @@ function onMobWeaponSkill(target, mob, skill)
     local power = mob:getMainLvl()/10 + 10
     MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, power, 3, 60)
 
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
     return dmg
 end

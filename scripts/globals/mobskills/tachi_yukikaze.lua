@@ -26,6 +26,5 @@ function onMobWeaponSkill(target, mob, skill)
     MobStatusEffectMove(mob, target, tpz.effect.BLINDNESS, 25, 0, 60)
 
     -- Never actually got a good damage sample.  Putting it between Gekko and Kasha.
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
     return dmg
 end

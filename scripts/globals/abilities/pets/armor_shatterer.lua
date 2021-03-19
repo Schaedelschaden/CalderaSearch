@@ -15,7 +15,7 @@ end
 function onPetAbility(target, automaton, skill, master, action)
     local params = {
         numHits = 4,
-        atkmulti = 2.25,
+        atkmulti = 0.65,
         accBonus = 50,
         ftp100 = 6.0,
         ftp200 = 6.0,

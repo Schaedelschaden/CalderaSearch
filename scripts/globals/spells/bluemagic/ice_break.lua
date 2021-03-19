@@ -42,7 +42,7 @@ function onSpellCast(caster, target, spell)
     damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
-    if (damage > 0 and resist > 0.0625) then
+    if (damage > 0) then
         local typeEffect = tpz.effect.BIND
         target:addStatusEffect(typeEffect, 1, 0, duration)
     end

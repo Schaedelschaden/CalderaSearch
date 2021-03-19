@@ -25,6 +25,11 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.ele = tpz.magic.ele.ICE
     params.skill = tpz.skill.GREAT_SWORD
     params.includemab = true
+	params.specialWSDMG = player:getMod(tpz.mod.HERCULEAN_SLASH_DMG)
+	
+	if (player:getEquipID(tpz.slot.MAIN) == 20757) then
+		params.bonusmab = 300
+	end
 
     if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
         params.vit_wsc = 0.8

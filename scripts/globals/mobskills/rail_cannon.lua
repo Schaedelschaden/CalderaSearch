@@ -13,7 +13,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     local typeEffect = tpz.effect.BIND
     MobStatusEffectMove(mob, target, typeEffect, 1, 0, 30)
 

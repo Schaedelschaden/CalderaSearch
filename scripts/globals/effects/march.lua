@@ -9,7 +9,7 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onEffectGain(target, effect)
-	power = effect:getPower()
+	local power = effect:getPower()
 	setBonus = 0
 	
 	if (power >= 20000 and power < 30000) then
@@ -31,12 +31,15 @@ function onEffectGain(target, effect)
 	end
 
     target:addMod(tpz.mod.HASTE_MAGIC, power)
+	effect:setPower(power)
 end
 
 function onEffectTick(target, effect)
 end
 
 function onEffectLose(target, effect)
+	local power = effect:getPower()
+	
     target:delMod(tpz.mod.HASTE_MAGIC, power)
 	
 	if (setBonus > 0) then

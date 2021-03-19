@@ -5,9 +5,17 @@
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
+local sdtPower = {"Valiance_Fire", "Valiance_Ice", "Valiance_Wind", "Valiance_Earth", "Valiance_Lightning", "Valiance_Water", "Valiance_Light", "Valiance_Dark"}
+local sdtMod = {tpz.mod.SDT_FIRE, tpz.mod.SDT_ICE, tpz.mod.SDT_WIND, tpz.mod.SDT_EARTH, tpz.mod.SDT_LIGHTNING, tpz.mod.SDT_WATER, tpz.mod.SDT_LIGHT, tpz.mod.SDT_DARK}
 
 function onEffectGain(target, effect)
-	
+	for i = 1, 8 do
+		if (target:getCharVar(sdtPower[i]) > 0) then
+			local power = target:getCharVar(sdtPower[i])
+			
+			target:addMod(sdtMod[i], -power)
+		end
+	end
 end
 
 function onEffectTick(target, effect)
@@ -15,21 +23,12 @@ function onEffectTick(target, effect)
 end
 
 function onEffectLose(target, effect)
-	local SDTFire = target:getMod(tpz.mod.SDT_FIRE)
-	local SDTIce = target:getMod(tpz.mod.SDT_ICE)
-	local SDTWind = target:getMod(tpz.mod.SDT_WIND)
-	local SDTEarth = target:getMod(tpz.mod.SDT_EARTH)
-	local SDTLightning = target:getMod(tpz.mod.SDT_LIGHTNING)
-	local SDTWater = target:getMod(tpz.mod.SDT_WATER)
-	local SDTLight = target:getMod(tpz.mod.SDT_LIGHT)
-	local SDTDark = target:getMod(tpz.mod.SDT_DARK)
-	
-    target:delMod(tpz.mod.SDT_FIRE, SDTFire)
-	target:delMod(tpz.mod.SDT_ICE, SDTIce)
-	target:delMod(tpz.mod.SDT_WIND, SDTWind)
-	target:delMod(tpz.mod.SDT_EARTH, SDTEarth)
-	target:delMod(tpz.mod.SDT_LIGHTNING, SDTLightning)
-	target:delMod(tpz.mod.SDT_WATER, SDTWater)
-	target:delMod(tpz.mod.SDT_LIGHT, SDTLight)
-	target:delMod(tpz.mod.SDT_DARK, SDTDark)
+	for i = 1, 8 do
+		if (target:getCharVar(sdtPower[i]) > 0) then
+			local power = target:getCharVar(sdtPower[i])
+			
+			target:delMod(sdtMod[i], -power)
+			target:setCharVar(sdtPower[i], 0)
+		end
+	end
 end

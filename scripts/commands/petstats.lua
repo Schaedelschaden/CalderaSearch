@@ -15,6 +15,8 @@ cmdprops =
 function onTrigger(player)
 	if (player:hasPet() == true) then
 		local pet = player:getPet()
+		local weaponType = pet:getWeaponSkillType(tpz.slot.MAIN)
+		
 		local PetLvl = pet:getMainLvl()
 		local PetCurrentHP = pet:getHP()
 		local PetMaxHP = pet:getMaxHP()
@@ -28,7 +30,23 @@ function onTrigger(player)
 		local PetATT = pet:getMod(tpz.mod.ATT)
 		local PetATTP = pet:getMod(tpz.mod.ATTP)
 		local PetFoodATTP = pet:getMod(tpz.mod.FOOD_ATTP)
-		local PetACC = pet:getMod(tpz.mod.ACC)
+		
+		local weaponACC = 0
+		for i = 1, 12 do
+			if (weaponType == i) then
+				weaponACC = pet:getSkillLevel(i) + pet:getILvlSkill(tpz.slot.MAIN)
+				
+				if (weaponACC >= 201 and weaponACC <= 400) then
+					weaponACC = ((weaponACC - 200) * 0.9) + 200
+				elseif (weaponACC >= 401 and weaponACC <= 600) then
+					weaponACC = ((weaponACC - 400) * 0.8) + 380
+				elseif (weaponACC >= 601) then
+					weaponACC = ((weaponACC - 600) * 0.9) + 540
+				end
+			end
+		end
+	
+		local PetACC = math.floor(((pet:getStat(tpz.mod.DEX) * 0.75) / 2) + pet:getMod(tpz.mod.ACC) + weaponACC)
 		local PetFoodACCP = pet:getMod(tpz.mod.FOOD_ACCP)
 		local PetRACC = pet:getMod(tpz.mod.RACC)
 		local PetFoodRACCP = pet:getMod(tpz.mod.FOOD_RACCP)

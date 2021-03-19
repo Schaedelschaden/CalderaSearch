@@ -27,7 +27,5 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.WIND, MOBPARAM_IGNORE_SHADOWS)
 --	printf("molting_plumage.cpp onMobWeaponSkill FINAL DMG: [%i]\n", dmg);
 	
-    target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.WIND)
-	
     return dmg
 end

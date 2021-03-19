@@ -27,6 +27,5 @@ function onMobWeaponSkill(target, mob, skill)
     MobStatusEffectMove(mob, target, tpz.effect.BLINDNESS, 15, 3, 120)
     MobStatusEffectMove(mob, target, tpz.effect.SILENCE, 1, 0, 60)
 
-    target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.LIGHT)
     return dmg
 end

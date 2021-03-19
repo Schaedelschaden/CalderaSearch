@@ -293,7 +293,7 @@ end
 function AffinityBonusAcc(caster, ele)
 
     local affinity = caster:getMod(strongAffinityAcc[ele])
-    local bonus = 0 + affinity * 10 -- 10 acc per level of affinity
+    local bonus = 0 + (affinity * 10) -- 10 acc per level of affinity
     -- print(bonus)
     return bonus
 end
@@ -417,6 +417,7 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
     local resMod = 0 -- Some spells may possibly be non elemental, but have status effects.
     if (element ~= tpz.magic.ele.NONE) then
         resMod = target:getMod(tpz.magic.resistMod[element])
+--		printf("magic.lua getMagicHitRate RES: [%i]",  resMod)
 
         -- Add acc for elemental affinity accuracy and element specific accuracy
         local affinityBonus = AffinityBonusAcc(caster, element)
@@ -440,6 +441,7 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
     local maccFood = magicacc * (caster:getMod(tpz.mod.FOOD_MACCP)/100)
     magicacc = magicacc + utils.clamp(maccFood, 0, caster:getMod(tpz.mod.FOOD_MACC_CAP))
 
+--	printf("magic.lua getMagicHitRate CASTER:[%s]  TARGET: [%s]", caster:getName(), target:getName())
     return calculateMagicHitRate(magicacc, magiceva, percentBonus, caster:getMainLvl(), target:getMainLvl())
 end
 
@@ -449,6 +451,8 @@ function calculateMagicHitRate(magicacc, magiceva, percentBonus, casterLvl, targ
     local levelDiff = utils.clamp(casterLvl - targetLvl, -5, 5)
 
     p = 70 - 0.5 * (magiceva - magicacc) + levelDiff * 3 + percentBonus
+	
+--	printf("magic.lua calculateMagicHitRate CASTER MACC: [%i]  TARGET MEVA: [%i]  p: [%i]  CAPPED p: [%i]", magicacc, magiceva, p, utils.clamp(p, 5, 95))
 
     return utils.clamp(p, 5, 95)
 end
@@ -474,19 +478,19 @@ function getMagicResist(magicHitRate)
     -- Determine final resist based on which thresholds have been crossed.
     if (resvar <= sixteenth) then
         resist = 0.0625
-        --printf("Spell resisted to 1/16!!!  Threshold = %u", sixteenth)
+--        printf("magic.lua getMagicResist Spell resisted to 1/16!!!  Threshold = %u", sixteenth)
     elseif (resvar <= eighth) then
         resist = 0.125
-        --printf("Spell resisted to 1/8!  Threshold = %u", eighth)
+--        printf("magic.lua getMagicResist Spell resisted to 1/8!  Threshold = %u", eighth)
     elseif (resvar <= quart) then
         resist = 0.25
-        --printf("Spell resisted to 1/4.  Threshold = %u", quart)
+--        printf("magic.lua getMagicResist Spell resisted to 1/4.  Threshold = %u", quart)
     elseif (resvar <= half) then
         resist = 0.5
-        --printf("Spell resisted to 1/2.  Threshold = %u", half)
+--        printf("magic.lua getMagicResist Spell resisted to 1/2.  Threshold = %u", half)
     else
         resist = 1.0
-        --printf("1.0")
+--        printf("magic.lua getMagicResist 1.0")
     end
 
     return resist
@@ -679,18 +683,21 @@ end
 
     dmg = target:magicDmgTaken(dmg, spell:getElement())
 
+	-- Handle Phalanx
     if (dmg > 0) then
         dmg = dmg - target:getMod(tpz.mod.PHALANX)
         dmg = utils.clamp(dmg, 0, 99999)
     end
 
-    --handling stoneskin
+    -- Handle Stoneskin
     dmg = utils.stoneskin(target, dmg)
     dmg = utils.clamp(dmg, -99999, 99999)
 
     if (dmg < 0) then
-        dmg = target:addHP(-dmg)
+        target:addHP(-dmg)
         spell:setMsg(tpz.msg.basic.MAGIC_RECOVERS_HP)
+
+		return -dmg
     else
         target:takeSpellDamage(caster, spell, dmg, tpz.attackType.MAGICAL, tpz.damageType.ELEMENTAL + spell:getElement())
         target:handleAfflatusMiseryDamage(dmg)
@@ -732,10 +739,22 @@ function finalMagicNonSpellAdjustments(caster, target, ele, dmg)
 end
 
 function adjustForTarget(target, dmg, ele)
-    if (dmg > 0 and math.random(0, 99) < target:getMod(tpz.magic.absorbMod[ele])) then
+	local absorbElement = target:getMod(tpz.magic.absorbMod[ele])
+	local absorbRandom = math.random(0, 99)
+	local nullRandom = math.random(0, 99)
+
+    if (dmg > 0 and absorbRandom < absorbElement) then
+--		printf("magic.lua adjustForTarget ABSORB RANDOM: [%i]", absorbRandom)
+		if (absorbElement > 100) then
+			dmg = dmg * (absorbElement / 100)
+			printf("magic.lua adjustForTarget ELEMENT: [%i]  ABSORB ELEMENT: [%f]  DAMAGE: [%i]", ele, absorbElement / 100, dmg)
+		end
+
         return -dmg
     end
-    if (math.random(0, 99) < target:getMod(nullMod[ele])) then
+	
+    if (nullRandom < target:getMod(nullMod[ele])) then
+--		printf("magic.lua adjustForTarget NULL RANDOM: [%i]", nullRandom)
         return 0
     end
     --Moved non element specific absorb and null mod checks to core
@@ -954,7 +973,7 @@ function addBonuses(caster, spell, target, dmg, params)
         end
     end
 	
-	if (caster:getMod(tpz.mod.ENH_KLIMAFORM) > 0 and (weather == tpz.magic.singleWeatherStrong[ele] or weather == tpz.magic.doubleWeatherStrong[ele])) then
+	if (caster:hasStatusEffect(tpz.effect.KLIMAFORM) and caster:getMod(tpz.mod.ENH_KLIMAFORM) > 0 and (weather == tpz.magic.singleWeatherStrong[ele] or weather == tpz.magic.doubleWeatherStrong[ele])) then
 --		printf("magic.lua addBonuses KLIMAFORM WEATHER BEFORE BONUS: [%i]", dayWeatherBonus)
 		dayWeatherBonus = dayWeatherBonus + (caster:getMod(tpz.mod.ENH_KLIMAFORM) / 100)
 --		printf("magic.lua addBonuses KLIMAFORM WEATHER AFTER BONUS: [%i]", dayWeatherBonus)
@@ -1106,12 +1125,12 @@ function addBonusesAbility(caster, ele, target, dmg, params)
     end
 
     dmg = math.floor(dmg * dayWeatherBonus)
-    
+	
     if (params.canBurst == true) then
         local burst = calculateLungeMagicBurst(caster, target, params)
 
         if (burst > 1.0) then
-            caster:PrintToPlayer(string.format("Magic Burst!"),tpz.msg.channel.NS_SAY) -- Swipe/Lunge Magic Burst message
+			caster:setCharVar("SwipeLungeHasMB", 1)
         end
         
         dmg = math.floor(dmg * burst)
@@ -1282,6 +1301,7 @@ function canOverwrite(target, effect, power, mod)
 end
 
 function doElementalNuke(caster, spell, target, spellParams)
+--	printf("magic.lua doElementalNuke CASTER: [%s]  SPELL: [%i]  TARGET: [%s]", caster:getName(), spell:getID(), target:getName())
     local DMG = 0
     local dINT = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     local V = 0
@@ -1361,6 +1381,7 @@ function doElementalNuke(caster, spell, target, spellParams)
     params.resistBonus = resistBonus
 
     local resist = applyResistance(caster, target, spell, params)
+--	printf("magic.lua doElementalNuke RESIST: [%1.2f]\n", resist)
 
     --get the resisted damage
     DMG = DMG * resist
@@ -1371,11 +1392,15 @@ function doElementalNuke(caster, spell, target, spellParams)
     --add in target adjustment
     local ele = spell:getElement()
 --	printf("magic.lua doElementalNuke DMG BEFORE ABSORB: [%i]", DMG)
-    DMG = adjustForTarget(target, DMG, ele)
---	printf("magic.lua doElementalNuke DMG AFTER ABSORB: [%i]", DMG)
+--  DMG = adjustForTarget(target, DMG, ele)
+--	printf("magic.lua doElementalNuke DMG AFTER ABSORB: [%i]\n", DMG)
 
     --add in final adjustments
     DMG = finalMagicAdjustments(caster, target, spell, DMG)
+	
+	if (DMG < 0) then
+		spell:setMsg(tpz.msg.basic.MAGIC_RECOVERS_HP)
+	end
 	
 	-- Checks for and applies Augments "Conserve MP" set bonus
 	local conMPReduction = spell:getMPCost()
@@ -1458,7 +1483,7 @@ function doNuke(caster, target, spell, params)
     --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
     dmg = addBonuses(caster, spell, target, dmg, params)
     --add in target adjustment
-    dmg = adjustForTarget(target, dmg, spell:getElement())
+--    dmg = adjustForTarget(target, dmg, spell:getElement())
     --add in final adjustments
     dmg = finalMagicAdjustments(caster, target, spell, dmg)
     return dmg
@@ -1478,7 +1503,7 @@ function doDivineBanishNuke(caster, target, spell, params)
     --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
     dmg = addBonuses(caster, spell, target, dmg, params)
     --add in target adjustment
-    dmg = adjustForTarget(target, dmg, spell:getElement())
+--    dmg = adjustForTarget(target, dmg, spell:getElement())
     --handling afflatus misery
     dmg = handleAfflatusMisery(caster, spell, dmg)
     --add in final adjustments
@@ -1599,7 +1624,8 @@ end
 
 local geoCardinalTierStat =
 {
-    [1] = {8.0,  5.0},
+    [0] = {0, 0},
+	[1] = {8.0,  5.0},
     [2] = {10.0, 7.0},
     [3] = {14.0, 10.0},
     [4] = {17.0, 13.0},
@@ -1607,6 +1633,7 @@ local geoCardinalTierStat =
 
 local geoBurstBonus =
 {
+	[0] = {0, 0},
     [1] = {15.0, 10.0},
     [2] = {19.0, 14.0},
     [3] = {24.0, 18.0},
@@ -1617,7 +1644,7 @@ function getCardinalStats(caster, target, is_araSpell, spell)
     local targ = target
     local spellID = spell:getID()
     local cardinalQuadrant = caster:getCardinalQuadrant(targ)
-    local modTier = caster:getMod(tpz.mod.CARDINAL_CHANT)
+    local modTier = caster:getMod(tpz.mod.CARDINAL_CHANT) or 0
     local MAG_BURST_BONUS = caster:getMod(tpz.mod.MAG_BURST_BONUS)
     local MAGIC_CRITHITRATE = caster:getMod(tpz.mod.MAGIC_CRITHITRATE)
     local base = 0.0

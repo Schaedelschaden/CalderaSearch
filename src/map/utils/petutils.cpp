@@ -1785,12 +1785,13 @@ namespace petutils
     void LoadWyvernStatistics(CBattleEntity* PMaster, CPetEntity* PPet, bool finalize)
     {
 		uint8 mlvl = PMaster->GetMLevel() + PMaster->getMod(Mod::WYVERN_ILVL);
+		uint16 masterWeaponDmg = ((CItemWeapon*)PMaster->m_Weapons[SLOT_MAIN])->getDamage();
 		uint8 weaponlevel = PMaster->m_Weapons[SLOT_MAIN]->getILvl();
 		uint16 mainLevelUpTo75 = (mlvl < 75 ? mlvl - 1 : 75);
 		uint16 mainLevelOver76andUnder99 = std::clamp(mlvl - 75, 0, 24); 
 		uint16 mainLevelOver99 = std::clamp(weaponlevel - 99, 0, 23);
-		uint16 calcatt = (uint16)((4.413 * mainLevelUpTo75) + (5.92 * mainLevelOver76andUnder99) + (15.3 * mainLevelOver99));
-		uint16 calcacc = (uint16)((4.83 * mainLevelUpTo75) + (5.96 * mainLevelOver76andUnder99) + (19.85 * mainLevelOver99));
+		uint16 calcatt = (uint16)((4.413 * mainLevelUpTo75) + (6.81 * mainLevelOver76andUnder99) + (21.57 * mainLevelOver99));
+		uint16 calcacc = (uint16)((4.60 * mainLevelUpTo75) + (6.70 * mainLevelOver76andUnder99) + (19.85 * mainLevelOver99));
 		uint16 calcdef = (uint16)((4.653 * mainLevelUpTo75) + (5.792 * mainLevelOver76andUnder99) + (20.8 * mainLevelOver99));
 		
         //set the wyvern job based on master's SJ
@@ -1802,7 +1803,7 @@ namespace petutils
 			PPet->SetMLevel(mlvl);
 			LoadAvatarStats(PPet); // Follows PC calcs (w/o SJ)
 			((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f * (320.0f / 60.0f)))); // 320 delay (5.3s)
-			((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(1 + floor(mlvl * 1.2f)));
+			((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(1 + floor(masterWeaponDmg * 0.35f)));
 			PPet->setModifier(Mod::ATT, calcatt);
 			PPet->setModifier(Mod::ACC, calcacc);
 			PPet->setModifier(Mod::DEF, calcdef);
@@ -1813,7 +1814,7 @@ namespace petutils
 			PPet->SetMLevel(weaponlevel);
 			LoadAvatarStats(PPet); // Follows PC calcs (w/o SJ)
 			((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f * (240.0f / 60.0f)))); // 240 delay (4s)
-			((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(1 + floor(weaponlevel * 1.2f)));
+			((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(1 + floor(masterWeaponDmg * 0.35f)));		
 			PPet->setModifier(Mod::ATT, (calcatt));
 			PPet->setModifier(Mod::ACC, (calcacc));
 			PPet->setModifier(Mod::DEF, (calcdef));

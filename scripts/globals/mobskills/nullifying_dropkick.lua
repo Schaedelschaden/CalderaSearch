@@ -17,7 +17,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     local numhits = 1
     local accmod = 1
     local dmgmod = 2.0
@@ -27,6 +26,5 @@ function onMobWeaponSkill(target, mob, skill)
     target:delStatusEffect(tpz.effect.PHYSICAL_SHIELD)
     target:delStatusEffect(tpz.effect.MAGIC_SHIELD)
 
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
     return dmg
 end

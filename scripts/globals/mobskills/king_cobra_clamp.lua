@@ -22,6 +22,5 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
 
 	target:addStatusEffect(tpz.effect.STUN, 1, 0, math.random(3,5))
-    target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.SLASHING)
     return dmg
 end

@@ -33,8 +33,8 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     skill:setMsg(MobStatusEffectMove(mob, target, tpz.effect.CURSE_I, 50, 0, 420))
     MobStatusEffectMove(mob, target, tpz.effect.POISON, 20, 3, 60)
-    return tpz.effect.CURSE_I
+    
+	return tpz.effect.CURSE_I
 end

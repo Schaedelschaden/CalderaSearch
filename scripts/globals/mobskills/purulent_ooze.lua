@@ -25,6 +25,5 @@ function onMobWeaponSkill(target, mob, skill)
     MobStatusEffectMove(mob, target, tpz.effect.BIO, 5, 3, 120, 0, 10)
     MobStatusEffectMove(mob, target, tpz.effect.MAX_HP_DOWN, 10, 0, 120)
 
-    target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.WATER)
     return dmg
 end

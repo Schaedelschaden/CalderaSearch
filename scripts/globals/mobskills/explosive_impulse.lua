@@ -27,6 +27,5 @@ function onMobWeaponSkill(target, mob, skill)
 		target:addStatusEffect(typeEffect, 1, 0, math.random(3, 6))
 	end
 
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
     return dmg
 end

@@ -29,6 +29,5 @@ function onMobWeaponSkill(target, mob, skill)
     distance = utils.clamp(distance, 0, 40)
     dmg = dmg * ((50 - distance) / 50)
 
-    target:takeDamage(dmg, mob, tpz.attackType.RANGED, tpz.damageType.SLASHING)
     return dmg
 end

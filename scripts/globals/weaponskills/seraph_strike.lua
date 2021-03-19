@@ -24,6 +24,11 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.ele = tpz.magic.ele.LIGHT
     params.skill = tpz.skill.CLUB
     params.includemab = true
+	params.specialWSDMG = player:getMod(tpz.mod.SERAPH_STRIKE_DMG)
+	
+	if (player:getEquipID(tpz.slot.MAIN) == 21102) then
+		params.bonusmab = 350
+	end
 
     if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
         params.ftp100 = 2.125 params.ftp200 = 3.675 params.ftp300 = 6.125

@@ -13,7 +13,6 @@ require("scripts/globals/status")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-
     local mobhp = mob:getHPP()
     if (mobhp <= 25) then -- She's under 25%, it's okay to use this.
         return 0

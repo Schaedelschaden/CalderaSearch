@@ -639,7 +639,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         else if (PSkill->isConal())
         {
 			// printf("mobentity.cpp OnMobSkillFinished MOBSKILL CONAL\n");
-            float angle = 45.0f;
+            float angle = 60.0f;
             PAI->TargetFind->findWithinCone(PTarget, distance, angle, findFlags);
         }
         else

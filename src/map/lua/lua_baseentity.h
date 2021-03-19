@@ -573,12 +573,17 @@ public:
     int32 addBurden(lua_State* L);
     int32 setStatDebilitation(lua_State* L);
 
+	// Hit Rate Calculation
+	int32 getHitRate(lua_State*);               // Calculates Melee Hit Rate based off attacker accuracy and defender evasion
+    int32 getRangedHitRate(lua_State*);         // Calculates Ranged Hit Rate based off attacker accuracy and defender evasion
+
     // Damage Calculation
     int32 getStat(lua_State*);                  // STR,DEX,VIT,AGI,INT,MND,CHR,ATT,DEF
     int32 getACC(lua_State*);                   // Get total ACC
     int32 getEVA(lua_State*);                   // Get total EVA
     int32 getRACC(lua_State*);                  // Get total r.acc
     int32 getRATT(lua_State*);                  // Get total r.attack
+	int32 getILvlSkill(lua_State *L);           // Get char ILvl Weapon skill of specified weapon slot
     int32 getILvlMacc(lua_State *L);            // Get char ILvl MACC skill of all items currently equipped
     int32 getILvlParry(lua_State*);             // Get char ILvl Parry skill of all items currently equipped
     int32 isSpellAoE(lua_State* L);

@@ -30,10 +30,8 @@ function onMobWeaponSkill(target, mob, skill)
         total = total+1
     end
 
-    target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.WIND)
-
     if (total == 0) then
-        return dmg
+		return dmg
     else
         skill:setMsg(tpz.msg.basic.DISAPPEAR_NUM)
         return total

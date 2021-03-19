@@ -32,6 +32,5 @@ function onMobWeaponSkill(target, mob, skill)
 
     MobBuffMove(mob, tpz.effect.HASTE, 2998, 0, 300) -- There is no message for the self buff aspect, only dmg.
 
-    target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.FIRE)
     return dmg
 end

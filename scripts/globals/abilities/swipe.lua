@@ -12,17 +12,12 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAbilityCheck(player, target, ability)
-	if (player:hasStatusEffect(tpz.effect.IGNIS) or
-		player:hasStatusEffect(tpz.effect.GELUS) or
-		player:hasStatusEffect(tpz.effect.FLABRA) or
-		player:hasStatusEffect(tpz.effect.TELLUS) or
-		player:hasStatusEffect(tpz.effect.SULPOR) or
-		player:hasStatusEffect(tpz.effect.UNDA) or
-		player:hasStatusEffect(tpz.effect.LUX) or
-		player:hasStatusEffect(tpz.effect.TENEBRAE)) then
+	if (player:hasStatusEffect(tpz.effect.IGNIS) or player:hasStatusEffect(tpz.effect.GELUS) or player:hasStatusEffect(tpz.effect.FLABRA) or
+		player:hasStatusEffect(tpz.effect.TELLUS) or player:hasStatusEffect(tpz.effect.SULPOR) or player:hasStatusEffect(tpz.effect.UNDA) or
+		player:hasStatusEffect(tpz.effect.LUX) or player:hasStatusEffect(tpz.effect.TENEBRAE)) then
 		return 0,0
 	else
-		return tpz.msg.basic.UNABLE_TO_USE_JA
+		return tpz.msg.basic.REQUIRES_RUNES
 	end
 end
 
@@ -58,9 +53,14 @@ function onUseAbility(player, target, ability, action)
     dmg = adjustForTarget(target, dmg, Ele)
 	dmg = takeAbilityDamage(target, player, params, true, dmg, tpz.attackType.MAGICAL, Ele, tpz.slot.MAIN, 1, 0, 0, 0, action, nil)
 	
-	ability:setMsg(tpz.msg.basic.JA_DAMAGE)
-	
 	player:removeOldestRune()
+	
+	if (player:getCharVar("SwipeLungeHasMB") > 0) then
+		ability:setMsg(tpz.msg.basic.SWIPE_LUNGE_MB)
+		player:setCharVar("SwipeLungeHasMB", 0)
+	else
+		ability:setMsg(tpz.msg.basic.JA_DAMAGE)
+	end
 	
 	return dmg
 end

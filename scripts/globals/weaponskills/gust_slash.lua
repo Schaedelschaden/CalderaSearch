@@ -25,6 +25,11 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.ele = tpz.magic.ele.WIND
     params.skill = tpz.skill.DAGGER
     params.includemab = true
+	params.specialWSDMG = player:getMod(tpz.mod.GUST_SLASH_DMG)
+	
+	if (player:getEquipID(tpz.slot.MAIN) == 20615) then
+		params.bonusmab = 800
+	end
 
     if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
         params.dex_wsc = 0.4 params.int_wsc = 0.4

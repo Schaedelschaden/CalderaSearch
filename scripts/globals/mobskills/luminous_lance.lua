@@ -20,7 +20,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     mob:showText(mob, ID.text.SELHTEUS_TEXT + 1)
 
     local numhits = 1
@@ -39,6 +38,5 @@ function onMobWeaponSkill(target, mob, skill)
     -- Cannot be resisted
     target:addStatusEffect(tpz.effect.STUN, 0, 0, 20)
 
-    target:takeDamage(dmg, mob, tpz.attackType.RANGED, tpz.damageType.PIERCING)
     return dmg
 end

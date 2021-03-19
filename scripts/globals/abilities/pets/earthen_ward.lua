@@ -13,9 +13,15 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
-    target:delStatusEffect(tpz.effect.STONESKIN)
+	target:delStatusEffect(tpz.effect.STONESKIN)
 	
     local amount = pet:getMainLvl() * 2 + 50
+	
+	local master = pet:getMaster()
+	
+	if (master:getEquipID(tpz.slot.MAIN) == 21167) then
+		amount = amount * 2
+	end
 	
     target:addStatusEffect(tpz.effect.STONESKIN, amount, 0, 900, 0, 0, 3)
     skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)

@@ -15,7 +15,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     MobStatusEffectMove(mob, target, tpz.effect.SLOW, 1250, 0, 60)
     MobStatusEffectMove(mob, target, tpz.effect.POISON, mob:getMainLvl() / 10, 3, 60)
     MobStatusEffectMove(mob, target, tpz.effect.SILENCE, 1, 0, 60)
@@ -26,7 +25,6 @@ function onMobWeaponSkill(target, mob, skill)
 
     local dmgmod = MobBreathMove(mob, target, 0.15, 3, tpz.magic.ele.EARTH, 500)
     local dmg = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.BREATH, tpz.damageType.EARTH, MOBPARAM_IGNORE_SHADOWS)
-    target:takeDamage(dmg, mob, tpz.attackType.BREATH, tpz.damageType.EARTH)
-
+    
     return dmg
 end

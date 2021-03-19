@@ -24,6 +24,11 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.ele = tpz.magic.ele.LIGHTNING
     params.skill = tpz.skill.POLEARM
     params.includemab = true
+	params.specialWSDMG = player:getMod(tpz.mod.RAIDEN_THRUST_DMG)
+	
+	if (player:getEquipID(tpz.slot.MAIN) == 20944) then
+		params.bonusmab = 450
+	end
 
     if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
         params.str_wsc = 0.4 params.int_wsc = 0.4

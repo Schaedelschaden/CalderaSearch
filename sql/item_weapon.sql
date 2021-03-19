@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `item_weapon` (
   PRIMARY KEY (`itemId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=54 PACK_KEYS=1 CHECKSUM=1;
 
--- Dumping data for table tpzdb.item_weapon: 4,746 rows
+-- Dumping data for table tpzdb.item_weapon: 4,747 rows
 /*!40000 ALTER TABLE `item_weapon` DISABLE KEYS */;
 INSERT INTO `item_weapon` (`itemId`, `name`, `skill`, `subskill`, `ilvl_skill`, `ilvl_parry`, `ilvl_macc`, `dmgType`, `hit`, `delay`, `dmg`, `unlock_points`) VALUES
 	(16385, 'cesti', 1, 0, 0, 0, 0, 4, 1, 528, 1, 0),
@@ -4776,7 +4776,8 @@ INSERT INTO `item_weapon` (`itemId`, `name`, `skill`, `subskill`, `ilvl_skill`, 
 	(21490, 'aged_humus', 0, 78, 0, 0, 0, 0, 1, 2261, 4643, 0),
 	(21488, 'pristine_sap', 0, 98, 0, 0, 0, 0, 1, 0, 1857, 0),
 	(21489, 'truly_pristine_sap', 0, 99, 0, 0, 0, 0, 1, 0, 1857, 0),
-	(20672, 'ice_brand', 3, 0, 269, 269, 269, 2, 1, 264, 187, 0);
+	(20672, 'ice_brand', 3, 0, 269, 269, 269, 2, 1, 264, 187, 0),
+	(21568, 'acrontica', 2, 0, 247, 247, 234, 1, 1, 201, 138, 0);
 /*!40000 ALTER TABLE `item_weapon` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

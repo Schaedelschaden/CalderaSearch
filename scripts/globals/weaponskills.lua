@@ -213,10 +213,14 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     -- We've now accounted for any crit from SA/TA, or damage bonus for a Hybrid WS, so nullify them
     calcParams.forcedFirstCrit = false
     calcParams.hybridHit = false
+	
+	-- Add in individual weaponskill damage on the first hit
+	calcParams.specialWSDMG = wsParams.specialWSDMG or 0
 
     -- For items that apply bonus damage to the first hit of a weaponskill (but not later hits),
     -- store bonus damage for first hit, for use after other calculations are done
-    local firstHitBonus = ((finaldmg * attacker:getMod(tpz.mod.ALL_WSDMG_FIRST_HIT))/100)
+    local firstHitBonus = ((finaldmg * attacker:getMod(tpz.mod.ALL_WSDMG_FIRST_HIT) + calcParams.specialWSDMG)/100)
+--	printf("weaponskills.lua calculateRawWSDmg firstHitBonus: [%f]", firstHitBonus)
 
     -- Reset fTP if it's not supposed to carry over across all hits for this WS
     if not wsParams.multiHitfTP then ftp = 1 end -- We'll recalculate our mainhand damage after doing offhand
@@ -259,7 +263,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     end
 
     -- Factor in "all hits" bonus damage mods
-    local bonusdmg = attacker:getMod(tpz.mod.ALL_WSDMG_ALL_HITS) -- For any WS
+    local bonusdmg = attacker:getMod(tpz.mod.ALL_WSDMG_ALL_HITS) -- ALL_WS_DMG_ALL_HITS for all WS's
     if (attacker:getMod(tpz.mod.WEAPONSKILL_DAMAGE_BASE + wsID) > 0) then -- For specific WS
         bonusdmg = bonusdmg + attacker:getMod(tpz.mod.WEAPONSKILL_DAMAGE_BASE + wsID)
     end
@@ -322,7 +326,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     calcParams.bonusfTP = gorgetBeltFTP or 0
     calcParams.bonusAcc = (gorgetBeltAcc or 0) + attacker:getMod(tpz.mod.WSACC)
     calcParams.bonusWSmods = wsParams.bonusWSmods or 0
-    calcParams.hitRate = getHitRate(attacker, target, false, calcParams.bonusAcc)
+    calcParams.hitRate = attacker:getHitRate(target, 0, calcParams.bonusAcc)
 
     -- Send our wsParams off to calculate our raw WS damage, hits landed, and shadows absorbed
     calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
@@ -336,7 +340,23 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
 
     -- Calculate reductions
     if not wsParams.formless then
-        finaldmg = target:physicalDmgTaken(finaldmg, attack.damageType)
+		-- Check for special damage reduction based on whether the mob is attacked from the front or behind
+		if (target:getMod(tpz.mod.FRONTAL_DMG_REDUCTION) > 0 and attacker:isInfront(target, 64)) then
+--			printf("weaponskills.lua doPhysicalWeaponskill FRONTAL DMG WS REDUCTION TRIGGERED  DAMAGE BEFORE: [%i]", finaldmg)
+			finaldmg = finaldmg - (finaldmg * (target:getMod(tpz.mod.FRONTAL_DMG_REDUCTION) / 100))
+--			printf("weaponskills.lua doPhysicalWeaponskill FRONTAL DMG WS REDUCTION TRIGGERED  DAMAGE AFTER: [%i]", finaldmg)
+		elseif (target:getMod(tpz.mod.SIDE_DMG_REDUCTION) > 0 and not (attacker:isBehind(target, 64) or attacker:isInfront(target, 64))) then
+--			printf("weaponskills.lua doPhysicalWeaponskill SIDE DMG WS REDUCTION TRIGGERED  DAMAGE BEFORE: [%i]", finaldmg)
+			finaldmg = finaldmg - (finaldmg * (target:getMod(tpz.mod.SIDE_DMG_REDUCTION) / 100))
+--			printf("weaponskills.lua doPhysicalWeaponskill SIDE DMG WS REDUCTION TRIGGERED  DAMAGE AFTER: [%i]", finaldmg)
+		elseif (target:getMod(tpz.mod.REAR_DMG_REDUCTION) > 0 and attacker:isBehind(target, 64)) then
+--			printf("weaponskills.lua doPhysicalWeaponskill REAR DMG WS REDUCTION TRIGGERED  DAMAGE BEFORE: [%i]", finaldmg)
+			finaldmg = finaldmg - (finaldmg * (target:getMod(tpz.mod.REAR_DMG_REDUCTION) / 100))
+--			printf("weaponskills.lua doPhysicalWeaponskill REAR DMG WS REDUCTION TRIGGERED  DAMAGE AFTER: [%i]", finaldmg)
+		else
+			finaldmg = target:physicalDmgTaken(finaldmg, attack.damageType)
+		end
+		
         if (attack.weaponType == tpz.skill.HAND_TO_HAND) then
             finaldmg = finaldmg * target:getMod(tpz.mod.HTHRES) / 1000
         elseif (attack.weaponType == tpz.skill.DAGGER or attack.weaponType == tpz.skill.POLEARM) then
@@ -365,7 +385,6 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     finaldmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end
-
 
 -- Sets up the necessary calcParams for a ranged WS before passing it to calculateRawWSDmg. When the raw
 -- damage is returned, handles reductions based on target resistances and passes off to takeWeaponskillDamage.
@@ -409,7 +428,7 @@ end
         bonusAcc = (gorgetBeltAcc or 0) + attacker:getMod(tpz.mod.WSACC),
         bonusWSmods = wsParams.bonusWSmods or 0
     }
-    calcParams.hitRate = getRangedHitRate(attacker, target, false, calcParams.bonusAcc)
+    calcParams.hitRate = attacker:getRangedHitRate(target, bonusAcc)
 
     -- Send our params off to calculate our raw WS damage, hits landed, and shadows absorbed
     calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
@@ -509,8 +528,10 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
 
         dmg = dmg * ftp
 
+		wsParams.specialWSDMG = wsParams.specialWSDMG or 0
+
         -- Factor in "all hits" bonus damage mods
-        local bonusdmg = attacker:getMod(tpz.mod.ALL_WSDMG_ALL_HITS) -- For any WS
+        local bonusdmg = attacker:getMod(tpz.mod.ALL_WSDMG_ALL_HITS) -- ALL_WS_DMG_ALL_HITS for all WS's
         if (attacker:getMod(tpz.mod.WEAPONSKILL_DAMAGE_BASE + wsID) > 0) then -- For specific WS
             bonusdmg = bonusdmg + attacker:getMod(tpz.mod.WEAPONSKILL_DAMAGE_BASE + wsID)
         end
@@ -521,7 +542,7 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
 
         -- Add in bonusdmg
         dmg = dmg * ((100 + bonusdmg) / 100) -- Apply our "all hits" WS dmg bonuses
-        dmg = dmg + ((dmg * attacker:getMod(tpz.mod.ALL_WSDMG_FIRST_HIT)) / 100) -- Add in our "first hit" WS dmg bonus
+        dmg = dmg + ((dmg * attacker:getMod(tpz.mod.ALL_WSDMG_FIRST_HIT) + wsParams.specialWSDMG) / 100) -- Add in our "first hit" WS dmg bonus
 
         -- Calculate magical bonuses and reductions
         dmg = addBonusesAbility(attacker, wsParams.ele, target, dmg, wsParams)
@@ -669,108 +690,6 @@ function getMeleeDmg(attacker, weaponType, kick)
     end
 
     return {mainhandDamage, offhandDamage}
-end
-
-function getHitRate(attacker, target, capHitRate, bonus)
-    local flourisheffect = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
-    if flourisheffect ~= nil and flourisheffect:getPower() > 1 then
-        attacker:addMod(tpz.mod.ACC, 20 + flourisheffect:getSubPower())
-    end
-    local acc = attacker:getACC()
-    local eva = target:getEVA()
-    if flourisheffect ~= nil and flourisheffect:getPower() > 1 then
-        attacker:delMod(tpz.mod.ACC, 20 + flourisheffect:getSubPower())
-    end
-    if (bonus == nil) then
-        bonus = 0
-    end
-    if (attacker:hasStatusEffect(tpz.effect.INNIN) and attacker:isBehind(target, 23)) then -- Innin acc boost if attacker is behind target
-        bonus = bonus + attacker:getStatusEffect(tpz.effect.INNIN):getPower()
-    end
-    if (target:hasStatusEffect(tpz.effect.YONIN) and attacker:isFacing(target, 23)) then -- Yonin evasion boost if attacker is facing target
-        bonus = bonus - target:getStatusEffect(tpz.effect.YONIN):getPower()
-    end
-    if (attacker:hasTrait(76) and attacker:isBehind(target, 23)) then --TRAIT_AMBUSH
-        bonus = bonus + attacker:getMerit(tpz.merit.AMBUSH)
-    end
-
-    acc = acc + bonus
-
-    if (attacker:getMainLvl() > target:getMainLvl()) then -- acc bonus!
-        acc = acc + ((attacker:getMainLvl() - target:getMainLvl()) * 4)
-    elseif (attacker:getMainLvl() < target:getMainLvl()) then -- acc penalty :(
-        acc = acc - ((target:getMainLvl() - attacker:getMainLvl()) * 4)
-    end
-
-    local hitdiff = 0
-    local hitrate = 75
-    if (acc > eva) then
-		hitdiff = (acc - eva) / 2
-    end
-    if (eva > acc) then
-		hitdiff = ((-1) * (eva-acc)) / 2
-    end
-
-    hitrate = hitrate + hitdiff
-    hitrate = hitrate / 100
-
-
-    -- Applying hitrate caps
-    if (capHitRate) then -- this isn't capped for when acc varies with tp, as more penalties are due
-        if (hitrate > 0.95) then
-            hitrate = 0.95
-        end
-        if (hitrate < 0.2) then
-            hitrate = 0.2
-        end
-    end
-    return hitrate
-end
-
-function getRangedHitRate(attacker, target, capHitRate, bonus)
-    local acc = attacker:getRACC()
-    local eva = target:getEVA()
-
-    if (bonus == nil) then
-        bonus = 0
-    end
-    if (target:hasStatusEffect(tpz.effect.YONIN) and target:isFacing(attacker, 23)) then -- Yonin evasion boost if defender is facing attacker
-        bonus = bonus - target:getStatusEffect(tpz.effect.YONIN):getPower()
-    end
-    if (attacker:hasTrait(76) and attacker:isBehind(target, 23)) then --TRAIT_AMBUSH
-        bonus = bonus + attacker:getMerit(tpz.merit.AMBUSH)
-    end
-
-    acc = acc + bonus
-
-    if (attacker:getMainLvl() > target:getMainLvl()) then -- acc bonus!
-        acc = acc + ((attacker:getMainLvl()-target:getMainLvl())*4)
-    elseif (attacker:getMainLvl() < target:getMainLvl()) then -- acc penalty :(
-        acc = acc - ((target:getMainLvl()-attacker:getMainLvl())*4)
-    end
-
-    local hitdiff = 0
-    local hitrate = 75
-    if (acc > eva) then
-    hitdiff = (acc - eva) / 2
-    end
-    if (eva>acc) then
-    hitdiff = ((-1) * (eva - acc)) / 2
-    end
-
-    hitrate = hitrate + hitdiff
-    hitrate = hitrate / 100
-
-    -- Applying hitrate caps
-    if (capHitRate) then -- this isn't capped for when acc varies with tp, as more penalties are due
-        if (hitrate > 0.95) then
-            hitrate = 0.95
-        end
-        if (hitrate < 0.2) then
-            hitrate = 0.2
-        end
-    end
-    return hitrate
 end
 
 function fTP(tp, ftp1, ftp2, ftp3)

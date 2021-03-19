@@ -19,7 +19,6 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded)
 
     MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.CHARM_I, 0, 0, 60)
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
-
+    
     return dmg
 end

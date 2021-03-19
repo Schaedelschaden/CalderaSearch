@@ -1381,6 +1381,8 @@ namespace battleutils
     {
         int acc = 0;
         int hitrate = 75;
+		uint16 attackerMLvl = PAttacker->GetMLevel();
+		uint16 defenderMLvl = PDefender->GetMLevel();
 
         if (PAttacker->objtype == TYPE_PC)
         {
@@ -1402,6 +1404,13 @@ namespace battleutils
             if ((charutils::hasTrait((CCharEntity*)PAttacker, TRAIT_AMBUSH)) && behind(PAttacker->loc.p, PDefender->loc.p, 64)) {
                 acc += ((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_AMBUSH, (CCharEntity*)PAttacker);
             }
+			
+			uint16 playerILvl = GetPlayerItemLevel(PChar);
+			
+			if (playerILvl > 0)
+			{
+				attackerMLvl = attackerMLvl + playerILvl;
+			}
 
         }
         else if (PAttacker->objtype == TYPE_PET && ((CPetEntity*)PAttacker)->getPetType() == PETTYPE_AUTOMATON)
@@ -1426,9 +1435,10 @@ namespace battleutils
         acc += accBonus;
 
         int eva = PDefender->EVA();
-        hitrate = hitrate + (acc - eva) / 2 + (PAttacker->GetMLevel() - PDefender->GetMLevel()) * 2;
+        hitrate = (int)(hitrate + std::floor((acc - eva) / 2) - ((defenderMLvl - attackerMLvl) * 2));
 
         uint8 finalhitrate = std::clamp(hitrate, 20, 95);
+//		printf("battleutils.cpp GetRangedHitRate RANGED FINAL HIT RATE: [%i]\n", finalhitrate);
         return finalhitrate;
     }
 
@@ -1440,28 +1450,29 @@ namespace battleutils
     //todo: need to penalise attacker's RangedAttack depending on distance from mob. (% decrease)
     float GetRangedDamageRatio(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool isCritical)
     {
+		CItemWeapon* PWeapon = GetEntityWeapon(PAttacker, SLOT_RANGED);
+		
         //get ranged attack value
         uint16 rAttack = 1;
 
         if (PAttacker->objtype == TYPE_PC)
         {
             CCharEntity* PChar = (CCharEntity*)PAttacker;
-            CItemWeapon* PItem = (CItemWeapon*)PChar->getEquip(SLOT_RANGED);
 
-            if (PItem != nullptr && PItem->isType(ITEM_WEAPON))
+            if (PWeapon != nullptr && PWeapon->isType(ITEM_WEAPON))
             {
-                rAttack = PChar->RATT(PItem->getSkillType(), PItem->getILvlSkill());
+                rAttack = PChar->RATT(PWeapon->getSkillType(), PWeapon->getILvlSkill());
             }
             else
             {
-                PItem = (CItemWeapon*)PChar->getEquip(SLOT_AMMO);
+                PWeapon = (CItemWeapon*)PChar->getEquip(SLOT_AMMO);
 
-                if (PItem == nullptr || !PItem->isType(ITEM_WEAPON) || (PItem->getSkillType() != SKILL_THROWING)) {
+                if (PWeapon == nullptr || !PWeapon->isType(ITEM_WEAPON) || (PWeapon->getSkillType() != SKILL_THROWING)) {
                     ShowDebug("battleutils::GetRangedPDIF Cannot find a valid ranged weapon to calculate PDIF for. \n");
                 }
                 else
                 {
-                    rAttack = PChar->RATT(PItem->getSkillType(), PItem->getILvlSkill());
+                    rAttack = PChar->RATT(PWeapon->getSkillType(), PWeapon->getILvlSkill());
                 }
             }
         }
@@ -1477,59 +1488,205 @@ namespace battleutils
 
         //get ratio (not capped for RAs)
         float ratio = (float)rAttack / (float)PDefender->DEF();
+		float cRatioMax = 0;
+        float cRatioMin = 0;
+        float ratioCap = 3.2375f; // Archery and Throwing
+		
+		// Marksmanship
+		if (PWeapon->getSkillType() == SKILL_MARKSMANSHIP)
+		{
+			ratioCap = 3.475f;
+		}
+		
+/* 		if (PAttacker->objtype == TYPE_PC)
+        {
+			printf("battleutils.cpp GetRangedDamageRatio 1 RATT: [%1.2f]  DEF: [%1.2f]  RAW RATIO: [%1.4f]\n", (float)rAttack, (float)PDefender->DEF(), ratio);
+		} */
 
-        ratio = std::clamp<float>(ratio, 0, 3);
+		if (PAttacker->objtype == TYPE_PC)
+        {
+            ratioCap = isCritical ? ratioCap * 1.25f : ratioCap; // When isCritical = true then ratioCap = ratioCap + 1. When isCritical = false then ratioCap = ratioCap
+//			printf("battleutils.cpp GetRangedDamageRatio 2 IS CRITICAL RATIOCAP: [%1.4f]\n", ratioCap);
+		}
 
-        //level correct (0.025 not 0.05 like for melee)
-        if (PDefender->GetMLevel() > PAttacker->GetMLevel()) {
-            ratio -= 0.025f * (PDefender->GetMLevel() - PAttacker->GetMLevel());
+        ratio = std::clamp<float>(ratio, 0, ratioCap);
+		float cRatio = ratio;
+		
+/* 		if (PAttacker->objtype == TYPE_PC)
+        {
+			printf("battleutils.cpp GetRangedDamageRatio 3 CRATIO: [%1.4f]\n", cRatio);
+		} */
+
+		// Level Correction
+		uint16 attackerMLvl = PAttacker->GetMLevel();
+		uint16 defenderMLvl = PDefender->GetMLevel();
+		
+        if (PAttacker->objtype == TYPE_PC)
+        {
+			CCharEntity* PChar = (CCharEntity*)PAttacker;
+			
+			uint16 playerILvl = GetPlayerItemLevel(PChar);
+			
+			if (playerILvl > 0)
+			{
+				attackerMLvl = attackerMLvl + playerILvl;
+			}
+//			printf("battleutils.cpp GetDamageRatio 4 CRATIO: [%1.4f]  PLAYER LEVEL: [%i]  PLAYER ITEM LEVEL: [%i]\n", cRatio, attackerMLvl, playerILvl);
+        }
+		
+		if (attackerMLvl < defenderMLvl)
+		{
+			cRatio -= 0.025f * (defenderMLvl - attackerMLvl);
+		}
+        else if (attackerMLvl > defenderMLvl)
+        {
+            cRatio += 0.025f * (attackerMLvl - defenderMLvl);
+        }
+		
+/* 		if (PAttacker->objtype == TYPE_PC)
+        {
+			printf("battleutils.cpp GetRangedDamageRatio 5 CRATIO: [%1.4f]  DEF LVL: [%i]  ATK LVL: [%i]\n", cRatio, defenderMLvl, attackerMLvl);
+		} */
+
+		// wRatio
+        if (isCritical)
+        {
+            cRatio *= 1.25f;
+/* 			if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetRangedDamageRatio 6 IS CRITICAL cRatio: [%1.4f]\n", cRatio);
+			} */
         }
 
-        //calculate min/max PDIF
+        cRatio = std::clamp<float>(cRatio, 0, ratioCap);
+/* 		if (PAttacker->objtype == TYPE_PC)
+		{
+			printf("battleutils.cpp GetRangedDamageRatio 7 CRATIO: [%1.4f]\n", cRatio);
+		} */
+
+        // Calculate min/max pdif
+		float maxPdif = 0;
         float minPdif = 0;
-        float maxPdif = 0;
 
-        if (ratio < 0.9)
+        if (cRatio >= 0 && cRatio < 0.9)
         {
-            minPdif = ratio;
-            maxPdif = ((10.0f / 9.0f) * ratio);
+			maxPdif = std::clamp<float>(cRatio * (10.0f / 9.0f), 0, 1);
+			minPdif = std::clamp<float>(cRatio, 0, 0.9f);
+			
+/* 			if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetRangedDamageRatio 8a MIN PDIF: [%1.4f]  MAX PDIF: [%1.4f]\n", minPdif, maxPdif);
+			} */
         }
-        else if (ratio <= 1.1)
+        else if (cRatio >= 0.9 && cRatio < 1.1)
         {
+			maxPdif = 1;
             minPdif = 1;
-            maxPdif = 1;
+			
+/* 			if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetRangedDamageRatio 8b MIN PDIF: [%1.4f]  MAX PDIF: [%1.4f]\n", minPdif, maxPdif);
+			} */
         }
-        else
+        else if (cRatio >= 1.1)
         {
-            minPdif = (-3.0f / 19.0f) + ((20.0f / 19.0f) * ratio);
-            maxPdif = ratio;
+			maxPdif = std::clamp<float>((cRatio * (20.0f / 19.0f)) - (3.0f / 19.0f), 1.1f, ratioCap);
+			minPdif = std::clamp<float>(cRatio, 1.1f, ratioCap);
+			
+/* 			if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetRangedDamageRatio 8c MIN PDIF: [%1.4f]  MAX PDIF: [%1.4f]\n", minPdif, maxPdif);
+			} */
         }
 
-        minPdif = std::clamp<float>(minPdif, 0, 3);
-        maxPdif = std::clamp<float>(maxPdif, 0, 3);
+        minPdif = std::clamp<float>(minPdif, 0, 3.5f);
+        maxPdif = std::clamp<float>(maxPdif, 0, 3.5f);
 
         // Return random number between the two
         float pdif = tpzrand::GetRandomNumber(minPdif, maxPdif);
+		
+		// Archery and Throwing
+		if (PWeapon->getSkillType() != SKILL_MARKSMANSHIP && pdif > 3.25)
+		{
+			if (isCritical)
+			{
+				pdif = 3.25f * 1.25f;
+			}
+			else
+			{
+				pdif = 3.25f;
+			}
+/* 			if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetRangedDamageRatio 9a ARCHERY/THROWING CAP TRIGGERED\n");
+			} */
+		}
+		else if (PWeapon->getSkillType() == SKILL_MARKSMANSHIP && pdif > 3.50)
+		{
+			if (isCritical)
+			{
+				pdif = 3.50f * 1.25f;
+			}
+			else
+			{
+				pdif = 3.50f;
+			}
+/* 			if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetRangedDamageRatio 9b MARKSMANSHIP CAP TRIGGERED\n");
+			} */
+		}
 		
 		//Adjust for Flashy Shot
 		if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_FLASHY_SHOT))
 		{
 			pdif += 0.5f;
+/* 			if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetRangedDamageRatio 10 FLASHY SHOT BONUS pDIF: [%1.4f]\n", pdif);
+			} */
 		}
 
 		// Adjust for Damage Limit+ Job Trait and Physical Damage Limit +% Gear
-		float dmgLimitTrait = (float)((PAttacker->getMod(Mod::DAMAGE_LIMIT_TRAIT)) / 10);
-		float dmgLimitGear = (float)((100 + PAttacker->getMod(Mod::DAMAGE_LIMIT_GEAR)) / 100);
+		float dmgLimitTrait = (float)((PAttacker->getMod(Mod::DAMAGE_LIMIT_TRAIT)) / 10.0f);
+		float dmgLimitGear = (float)((100.0f + PAttacker->getMod(Mod::DAMAGE_LIMIT_GEAR)) / 100.0f);
+		
+/* 		if (PAttacker->objtype == TYPE_PC)
+        {
+			printf("battleutils.cpp GetRangedDamageRatio 11 pDIF: [%1.4f]  DMG LIMIT TRAIT: [%1.4f]  DMG LIMIT GEAR: [%1.4f]\n", pdif, dmgLimitTrait, dmgLimitGear);
+		} */
 
 		pdif = ((pdif + dmgLimitTrait) * dmgLimitGear);
-
-        if (isCritical)
+		
+/* 		if (PAttacker->objtype == TYPE_PC)
         {
-            pdif *= 1.25;
-            int16 criticaldamage = PAttacker->getMod(Mod::CRIT_DMG_INCREASE) + PAttacker->getMod(Mod::RANGED_CRIT_DMG_INCREASE) - PDefender->getMod(Mod::CRIT_DEF_BONUS);
-            criticaldamage = std::clamp<int16>(criticaldamage, 0, 100);
-            pdif *= ((100 + criticaldamage) / 100.0f);
-        }
+			printf("battleutils.cpp GetRangedDamageRatio 12 AFTER DMG LIMIT pDIF: [%1.4f]\n", pdif);
+		} */
+		
+		// Distance Correction/Penalty
+		if (PAttacker->objtype == TYPE_PC)
+        {
+			float rangedDistance = distance(PAttacker->loc.p, PDefender->loc.p);
+			float distanceCorrection = 0;
+			
+			if (rangedDistance <= 3.5f && PWeapon->getSkillType() == SKILL_THROWING)
+			{
+				distanceCorrection = 1.0f - ((3.5f - rangedDistance) / 10.0f);
+				pdif = pdif * distanceCorrection;
+			}
+			else if (rangedDistance <= 8.5f && PWeapon->getSkillType() == SKILL_MARKSMANSHIP)
+			{
+				distanceCorrection = 1.0f - ((8.5f - rangedDistance) / 15.0f);
+				pdif = pdif * distanceCorrection;
+			}
+			else if (rangedDistance <= 10.5f && PWeapon->getSkillType() == SKILL_ARCHERY)
+			{
+				distanceCorrection = 1.0f - ((10.5f - rangedDistance) / 20.0f);
+				pdif = pdif * distanceCorrection;
+			}
+			
+//			printf("battleutils.cpp GetRangedDamageRatio 13 DISTANCE CORRECTION - RANGED DISTANCE: [%1.1f]  DISTANCE CORRECTION: [%1.2f] pDIF: [%1.4f]\n\n", rangedDistance, distanceCorrection, pdif);
+		}
 
         return pdif;
     }
@@ -1670,7 +1827,7 @@ namespace battleutils
     {
         int8 shieldSize = 3;
         int32 base = 0;
-        float blockRateMod = (100.0f + PDefender->getMod(Mod::SHIELDBLOCKRATE)) / 100.0f;
+        int16 blockRateMod = PDefender->getMod(Mod::SHIELDBLOCKRATE);
         auto weapon = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_MAIN]);
         uint16 attackskill = PAttacker->GetSkill((SKILLTYPE)(weapon ? weapon->getSkillType() : 0));
         uint16 blockskill = PDefender->GetSkill(SKILL_SHIELD);
@@ -1725,8 +1882,10 @@ namespace battleutils
                 return 0;
         }
 
-        float skillmodifier = (blockskill - attackskill) * 0.215f;
-        return (int8)std::clamp((int32)((base + (int32)skillmodifier) * blockRateMod), 5, (shieldSize == 6 ? 100 : std::max<int32>((int32)(65 * blockRateMod), 100)));
+        float skillmodifier = (blockskill - attackskill) * 0.2325f;
+		int8 blockRate = (int8)(base + (int32)skillmodifier + blockRateMod);
+//		printf("battleutils.cpp GetBlockRate ATTACKER SKILL: [%i]  DEFENDER SHIELD SKILL: [%i]  SKILL MODIFIER: [%f]  BLOCK RATE: [%i]\n", attackskill, blockskill, skillmodifier, (int8)std::clamp((int32)blockRate, 5, (shieldSize == 6 ? 100 : std::max<int32>((int32)(65 + blockRateMod), 100))));
+        return (int8)std::clamp((int32)blockRate, 5, (shieldSize == 6 ? 100 : std::max<int32>((int32)(65 + blockRateMod), 100)));
     }
 
     uint8 GetParryRate(CBattleEntity* PAttacker, CBattleEntity* PDefender)
@@ -1912,11 +2071,70 @@ namespace battleutils
             if (isRanged)
             {
                 attackType = ATTACK_RANGED;
-                damage = RangedDmgTaken(PDefender, damage, damageType, isCovered);
+				
+				int32 rotation = abs(PDefender->loc.p.rotation - PAttacker->loc.p.rotation);
+				if (PDefender->objtype == TYPE_MOB && PDefender->getMod(Mod::FRONTAL_DMG_REDUCTION) > 0 &&
+				   (rotation >= 90 && rotation <= 169))
+				{
+					// Rotation = 90-169
+//					printf("battleutils.cpp TakePhysicalDamage FRONTAL DMG RANGED REDUCTION TRIGGERED  ROTATION: [%i]  DAMAGE BEFORE: [%i]\n", rotation, damage);
+					damage = damage - (int32)(damage * (float)(PDefender->getMod(Mod::FRONTAL_DMG_REDUCTION) / 100.0f));
+//					printf("battleutils.cpp TakePhysicalDamage FRONTAL DMG RANGED REDUCTION TRIGGERED  DAMAGE AFTER: [%i]\n", damage);
+				}
+				else if (PDefender->objtype == TYPE_MOB && PDefender->getMod(Mod::SIDE_DMG_REDUCTION) > 0 &&
+				        ((rotation >= 31 && rotation <= 89) || (rotation >= 170 && rotation <= 229)))
+				{
+					// Rotation = 31-89, 170-229
+//					printf("battleutils.cpp TakePhysicalDamage SIDE DMG RANGED REDUCTION TRIGGERED  ROTATION: [%i]  DAMAGE BEFORE: [%i]\n", rotation, damage);
+					damage = damage - (int32)(damage * (float)(PDefender->getMod(Mod::SIDE_DMG_REDUCTION) / 100.0f));
+//					printf("battleutils.cpp TakePhysicalDamage SIDE DMG RANGED REDUCTION TRIGGERED  DAMAGE AFTER: [%i]\n", damage);
+				}
+				else if (PDefender->objtype == TYPE_MOB && PDefender->getMod(Mod::REAR_DMG_REDUCTION) > 0 &&
+				        ((rotation >= 0 && rotation <= 30) || (rotation >= 230 && rotation <= 255)))
+				{
+					// Rotation = 0-30, 230-255
+//					printf("battleutils.cpp TakePhysicalDamage REAR DMG RANGED REDUCTION TRIGGERED  ROTATION: [%i]  DAMAGE BEFORE: [%i]\n", rotation, damage);
+					damage = damage - (int32)(damage * (float)(PDefender->getMod(Mod::REAR_DMG_REDUCTION) / 100.0f));
+//					printf("battleutils.cpp TakePhysicalDamage REAR DMG RANGED REDUCTION TRIGGERED  DAMAGE AFTER: [%i]\n", damage);
+				}
+				else
+				{
+//					printf("battleutils.cpp TakePhysicalDamage RANGED DMG TAKEN TRIGGERED  DAMAGE BEFORE: [%i]\n", damage);
+					damage = RangedDmgTaken(PDefender, damage, damageType, isCovered);
+//					printf("battleutils.cpp TakePhysicalDamage RANGED DMG TAKEN TRIGGERED  DAMAGE AFTER: [%i]\n", damage);
+				}
             }
             else
             {
-                damage = PhysicalDmgTaken(PDefender, damage, damageType, isCovered);
+				int32 rotation = abs(PDefender->loc.p.rotation - PAttacker->loc.p.rotation);
+				if (PDefender->objtype == TYPE_MOB && PDefender->getMod(Mod::FRONTAL_DMG_REDUCTION) > 0 &&
+				   (rotation >= 90 && rotation <= 169))
+				{
+					// Rotation = 90-169
+//					printf("battleutils.cpp TakePhysicalDamage FRONTAL DMG MELEE REDUCTION TRIGGERED  ROTATION: [%i]  DAMAGE BEFORE: [%i]\n", rotation, damage);
+					damage = damage - (int32)(damage * (float)(PDefender->getMod(Mod::FRONTAL_DMG_REDUCTION) / 100.0f));
+//					printf("battleutils.cpp TakePhysicalDamage FRONTAL DMG MELEE REDUCTION TRIGGERED  DAMAGE AFTER: [%i]\n", damage);
+				}
+				else if (PDefender->objtype == TYPE_MOB && PDefender->getMod(Mod::SIDE_DMG_REDUCTION) > 0 &&
+				        ((rotation >= 31 && rotation <= 89) || (rotation >= 170 && rotation <= 229)))
+				{
+					// Rotation = 31-89, 170-229
+//					printf("battleutils.cpp TakePhysicalDamage SIDE DMG MELEE REDUCTION TRIGGERED  ROTATION: [%i]  DAMAGE BEFORE: [%i]\n", rotation, damage);
+					damage = damage - (int32)(damage * (float)(PDefender->getMod(Mod::SIDE_DMG_REDUCTION) / 100.0f));
+//					printf("battleutils.cpp TakePhysicalDamage SIDE DMG MELEE REDUCTION TRIGGERED  DAMAGE AFTER: [%i]\n", damage);
+				}
+				else if (PDefender->objtype == TYPE_MOB && PDefender->getMod(Mod::REAR_DMG_REDUCTION) > 0 &&
+				        ((rotation >= 0 && rotation <= 30) || (rotation >= 230 && rotation <= 255)))
+				{
+					// Rotation = 0-30, 230-255
+//					printf("battleutils.cpp TakePhysicalDamage REAR DMG MELEE REDUCTION TRIGGERED  ROTATION: [%i]  DAMAGE BEFORE: [%i]\n", rotation, damage);
+					damage = damage - (int32)(damage * (float)(PDefender->getMod(Mod::REAR_DMG_REDUCTION) / 100.0f));
+//					printf("battleutils.cpp TakePhysicalDamage REAR DMG MELEE REDUCTION TRIGGERED  DAMAGE AFTER: [%i]\n", damage);
+				}
+				else
+				{
+					damage = PhysicalDmgTaken(PDefender, damage, damageType, isCovered);
+				}
             }
 
             //absorb mods are handled in the above functions, but they do not affect counters
@@ -2068,6 +2286,11 @@ namespace battleutils
 
             // Check for bind breaking
             BindBreakCheck(PAttacker, PDefender);
+			
+			if (PDefender->objtype == TYPE_MOB && PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_PETRIFICATION))
+			{
+				PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_PETRIFICATION);
+			}
 
             switch (PDefender->objtype)
             {
@@ -2266,6 +2489,11 @@ namespace battleutils
 
             // Check for bind breaking
             BindBreakCheck(PAttacker, PDefender);
+			
+			if (PDefender->objtype == TYPE_MOB && PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_PETRIFICATION))
+			{
+				PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_PETRIFICATION);
+			}
 
             switch (PDefender->objtype)
             {
@@ -2402,6 +2630,11 @@ namespace battleutils
             PDefender->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DAMAGE);
             // Check for bind breaking
             BindBreakCheck(PAttacker, PDefender);
+			
+			if (PDefender->objtype == TYPE_MOB && PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_PETRIFICATION))
+			{
+				PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_PETRIFICATION);
+			}
 			
 			if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_SCARLET_DELIRIUM) && !PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_SCARLET_DELIRIUM_1))
 			{
@@ -2562,6 +2795,11 @@ namespace battleutils
             }
 			
 			hitrate += static_cast<int32>(std::floor((attackerAcc - PDefender->EVA()) / 2));
+			
+/* 			if (PAttacker->objtype == TYPE_PC || PAttacker->objtype == TYPE_PET)
+			{
+				printf("battleutils.cpp GetHitRateEx ATTACKER BASE ACC: [%i]  DEFENDER EVA: [%i]  BASE HIT RATE: [%i]\n", attackerAcc, PDefender->EVA(), hitrate);
+			} */
 
             // Level correction does not happen in Adoulin zones, Legion, or zones in Escha/Reisenjima
             // https://www.bg-wiki.com/bg/PDIF#Level_Correction_Function_.28cRatio.29
@@ -2574,7 +2812,23 @@ namespace battleutils
 
             if (shouldApplyLevelCorrection)
 			{
-                int16 dLvl = PAttacker->GetMLevel() - PDefender->GetMLevel();
+				// Level Correction
+				uint16 attackerMLvl = PAttacker->GetMLevel();
+				uint16 defenderMLvl = PDefender->GetMLevel();
+				
+				if (PAttacker->objtype == TYPE_PC)
+				{
+					CCharEntity* PChar = (CCharEntity*)PAttacker;
+					
+					uint16 playerILvl = GetPlayerItemLevel(PChar);
+					
+					if (playerILvl > 0)
+					{
+						attackerMLvl = attackerMLvl + playerILvl;
+					}
+				}
+				
+                int16 dLvl = defenderMLvl - attackerMLvl;
                 // Skip penalties for avatars, this should likely be all pets and mobs but I have no proof
                 // of this for ACC, ATT level correction for Pets/Avatars is the same as mobs though.
                 bool isPet = PAttacker->objtype == TYPE_PET;
@@ -2590,13 +2844,13 @@ namespace battleutils
                     if (dLvl > 0)
                     {
                         // Avatars have a known level difference cap of 38
-                        hitrate += static_cast<int16>(std::min(dLvl, (int16)38) * 2);
+                        hitrate -= static_cast<int16>(std::min(dLvl, (int16)38) * 2);
                     }
                 }
                 else
                 {
                     // Everything else has no known caps, though it's likely 38 like avatars
-                    hitrate += static_cast<int16>(dLvl * 2);
+                    hitrate -= static_cast<int16>(dLvl * 2);
                 }
 			}
 
@@ -2624,6 +2878,11 @@ namespace battleutils
             }
 
             hitrate = std::clamp(hitrate, 20, maxHitRate);
+			
+/* 			if (PAttacker->objtype == TYPE_PC || PAttacker->objtype == TYPE_PET)
+			{
+				printf("battleutils.cpp GetHitRateEx MELEE FINAL HIT RATE: [%i]  ATTACKER NAME: [%s]\n\n", hitrate, PAttacker->GetName());
+			} */
         }
         return static_cast<uint8>(hitrate);
     }
@@ -2699,7 +2958,7 @@ namespace battleutils
 
             if (PDefender->objtype == TYPE_PC)
             {
-                crithitrate -= ((CCharEntity*)PDefender)->PMeritPoints->GetMeritValue(MERIT_ENEMY_CRIT_RATE, (CCharEntity*)PDefender);
+                crithitrate -= ((CCharEntity*)PDefender)->PMeritPoints->GetMeritValue(MERIT_ENEMY_CRIT_RATE, (CCharEntity*)PDefender) + PDefender->getMod(Mod::CRIT_HIT_EVASION);
             }
 			
 			// Check for Feather Step (Bewildered Daze) on the target
@@ -2740,12 +2999,130 @@ namespace battleutils
 
     /************************************************************************
     *                                                                       *
+    *   Formula for calculating average player item level                   *
+    *                                                                       *
+    ************************************************************************/
+	
+	uint16 GetPlayerItemLevel(CCharEntity* PChar)
+	{
+		uint16 playerILvl = 0;
+		uint16 playerWeaponILvl = 0;
+		
+		uint16 mainWeapon = 0;
+		uint16 subWeapon = 0;
+		uint16 rangedWeapon = 0;
+		uint16 rangedAmmo = 0;
+		uint16 equipHead = 0;
+		uint16 equipBody = 0;
+		uint16 equipHands = 0;
+		uint16 equipLegs = 0;
+		uint16 equipFeet = 0;
+		
+		if (PChar->getEquip(SLOT_MAIN) && PChar->getEquip(SLOT_MAIN)->isType(ITEM_WEAPON))
+		{
+			mainWeapon = PChar->m_Weapons[SLOT_MAIN]->getILvl();
+			if (mainWeapon > 0)
+			{
+				mainWeapon = (mainWeapon - 99) / 2;
+			}
+		}
+		if (PChar->getEquip(SLOT_SUB) && PChar->getEquip(SLOT_SUB)->isType(ITEM_WEAPON))
+		{
+			subWeapon = PChar->m_Weapons[SLOT_SUB]->getILvl();
+			if (subWeapon > 0)
+			{
+				subWeapon = (subWeapon - 99) / 2;
+			}
+		}
+		if (PChar->getEquip(SLOT_RANGED) && PChar->getEquip(SLOT_RANGED)->isType(ITEM_WEAPON))
+		{
+			rangedWeapon = PChar->m_Weapons[SLOT_RANGED]->getILvl();
+			if (rangedWeapon > 0)
+			{
+				rangedWeapon = (rangedWeapon - 99) / 2;
+			}
+		}
+		if (PChar->getEquip(SLOT_AMMO) && PChar->getEquip(SLOT_AMMO)->isType(ITEM_WEAPON))
+		{
+			rangedAmmo = PChar->m_Weapons[SLOT_AMMO]->getILvl();
+			if (rangedAmmo > 0)
+			{
+				rangedAmmo = (rangedAmmo - 99) / 2;
+			}
+		}
+		if (PChar->getEquip(SLOT_HEAD) && PChar->getEquip(SLOT_HEAD)->isType(ITEM_EQUIPMENT))
+		{
+			equipHead = PChar->getEquip(SLOT_HEAD)->getILvl();
+			if (equipHead > 0)
+			{
+				equipHead = (equipHead - 99) / 10;
+			}
+		}
+		if (PChar->getEquip(SLOT_BODY) && PChar->getEquip(SLOT_BODY)->isType(ITEM_EQUIPMENT))
+		{
+			equipBody = PChar->getEquip(SLOT_BODY)->getILvl();
+			if (equipBody > 0)
+			{
+				equipBody = (equipBody - 99) / 10;
+			}
+		}
+		if (PChar->getEquip(SLOT_HANDS) && PChar->getEquip(SLOT_HANDS)->isType(ITEM_EQUIPMENT))
+		{
+			equipHands = PChar->getEquip(SLOT_HANDS)->getILvl();
+			if (equipHands > 0)
+			{
+				equipHands = (equipHands - 99) / 10;
+			}
+		}
+		if (PChar->getEquip(SLOT_LEGS) && PChar->getEquip(SLOT_LEGS)->isType(ITEM_EQUIPMENT))
+		{
+			equipLegs = PChar->getEquip(SLOT_LEGS)->getILvl();
+			if (equipLegs > 0)
+			{
+				equipLegs = (equipLegs - 99) / 10;
+			}
+		}
+		if (PChar->getEquip(SLOT_FEET) && PChar->getEquip(SLOT_FEET)->isType(ITEM_EQUIPMENT))
+		{
+			equipFeet = PChar->getEquip(SLOT_FEET)->getILvl();
+			if (equipFeet > 0)
+			{
+				equipFeet = (equipFeet - 99) / 10;
+			}
+		}
+		
+		if (mainWeapon >= subWeapon && mainWeapon >= rangedWeapon && mainWeapon >= rangedAmmo)
+		{
+			playerWeaponILvl = mainWeapon;
+		}
+		else if (subWeapon >= mainWeapon && subWeapon >= rangedWeapon && subWeapon >= rangedAmmo)
+		{
+			playerWeaponILvl = subWeapon;
+		}
+		else if (rangedWeapon >= mainWeapon && rangedWeapon >= subWeapon && rangedWeapon >= rangedAmmo)
+		{
+			playerWeaponILvl = rangedWeapon;
+		}
+		else if (rangedAmmo >= mainWeapon && rangedAmmo >= subWeapon && rangedAmmo >= rangedWeapon)
+		{
+			playerWeaponILvl = rangedAmmo;
+		}
+		
+		playerILvl = playerWeaponILvl + equipHead + equipBody + equipHands + equipLegs + equipFeet;
+		
+		return playerILvl;
+	}
+
+    /************************************************************************
+    *                                                                       *
     *   Formula for calculating damage ratio                                *
     *                                                                       *
     ************************************************************************/
 
     float GetDamageRatio(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool isCritical, float bonusAttPercent)
     {
+		CItemWeapon* PWeapon = GetEntityWeapon(PAttacker, SLOT_MAIN);
+		
 		int32 ATT = PAttacker->ATT();
 		
         // used to apply a % of attack bonus
@@ -2813,104 +3190,275 @@ namespace battleutils
 //			printf("battleutils.cpp GetDamageRatio ADJUSTED ATT: [%i]\n", ATT);
 		}
 
-        //wholly possible for DEF to be near 0 with the amount of debuffs/effects now.
+        // Wholly possible for DEF to be near 0 with the amount of debuffs/effects now.
         float ratio = (float)(ATT + attPercentBonus) / (float)((PDefender->DEF() == 0) ? 1 : PDefender->DEF());
-        float cRatioMax = 0;
-        float cRatioMin = 0;
-        float ratioCap = 2.0f;
+        float ratioCap = 3.625f; // One handed weapons
+		
+		// Hand-to-Hand & Great Katana
+		if (PWeapon->getSkillType() == SKILL_HAND_TO_HAND || PWeapon->getSkillType() == SKILL_GREAT_KATANA)
+		{
+			ratioCap = 3.875f;
+		}
+		// Two handed weapons
+		else if (PWeapon->isTwoHanded() && PWeapon->getSkillType() != SKILL_GREAT_KATANA)
+		{
+			ratioCap = 4.125f;
+		}
+		
+/* 		if (PAttacker->objtype == TYPE_PC)
+        {
+			printf("battleutils.cpp GetDamageRatio 1 RATIO: [%1.4f]  RATIOCAP: [%1.4f]\n", ratio, ratioCap);
+		} */
 
+		// Critical ratio cap is ratio + 1
         if (PAttacker->objtype == TYPE_PC)
         {
-            ratioCap = isCritical ? 3 : 2.25f;
-        }
+            ratioCap = isCritical ? ratioCap + 1 : ratioCap; // When isCritical = true then ratioCap = ratioCap + 1. When isCritical = false then ratioCap = ratioCap
+//			printf("battleutils.cpp GetDamageRatio 2 IS CRITICAL RATIOCAP: [%1.4f]\n", ratioCap);
+		}
         if (PAttacker->objtype == TYPE_MOB)
         {
-            ratioCap = 4.f;
+            ratioCap = 4.0f;
         }
 
         ratio = std::clamp<float>(ratio, 0, ratioCap);
         float cRatio = ratio;
-        if (PAttacker->objtype == TYPE_PC)
-        {
-            if (PAttacker->GetMLevel() < PDefender->GetMLevel())
-            {
-                cRatio -= 0.050f * (PDefender->GetMLevel() - PAttacker->GetMLevel());
-            }
-        }
-        else
-        {
-            if (PAttacker->GetMLevel() > PDefender->GetMLevel())
-            {
-                cRatio += 0.050f * (PAttacker->GetMLevel() - PDefender->GetMLevel());
-            }
-        }
-
-        if (isCritical)
-        {
-            cRatio += 1;
-        }
-
-        cRatio = std::clamp<float>(cRatio, 0, ratioCap);
-
-        if ((0 <= cRatio) && (cRatio < 0.5)) {
-            cRatioMax = cRatio + 0.5f;
-        }
-        else if ((0.5 <= cRatio) && (cRatio <= 0.7)) {
-            cRatioMax = 1;
-        }
-        else if ((0.7 < cRatio) && (cRatio <= 1.2)) {
-            cRatioMax = cRatio + 0.3f;
-        }
-        else if ((1.2 < cRatio) && (cRatio <= 1.5)) {
-            cRatioMax = (cRatio * 0.25f) + cRatio;
-        }
-        else if ((1.5 < cRatio) && (cRatio <= 2.625)) {
-            cRatioMax = cRatio + 0.375f;
-        }
-        else if ((2.625 < cRatio) && (cRatio <= 3.25)) {
-            cRatioMax = 3;
-        }
-        else {
-            cRatioMax = cRatio;
-        }
-
-        if ((0 <= cRatio) && (cRatio < 0.38)) {
-            cRatioMin = 0;
-        }
-        else if ((0.38 <= cRatio) && (cRatio <= 1.25)) {
-            cRatioMin = cRatio * (float)(1176 / 1024) - (float)(448 / 1024);
-        }
-        else if ((1.25 < cRatio) && (cRatio <= 1.51)) {
-            cRatioMin = 1;
-        }
-        else if ((1.51 < cRatio) && (cRatio <= 2.44)) {
-            cRatioMin = cRatio * (float)(1176 / 1024) - (float)(775 / 1024);
-        }
-        else {
-            cRatioMin = cRatio - 0.375f;
-        }
-
-        float pDIF = tpzrand::GetRandomNumber(cRatioMin, cRatioMax);
-		
-		float dmgLimitTrait = (float)((PAttacker->getMod(Mod::DAMAGE_LIMIT_TRAIT)) / 10);
-		float dmgLimitGear = (float)((100 + PAttacker->getMod(Mod::DAMAGE_LIMIT_GEAR)) / 100);
-
-		pDIF = ((pDIF + dmgLimitTrait) * dmgLimitGear);
-
-        if (isCritical)
-        {
-            int16 criticaldamage = PAttacker->getMod(Mod::CRIT_DMG_INCREASE) - PDefender->getMod(Mod::CRIT_DEF_BONUS);
-            criticaldamage = std::clamp<int16>(criticaldamage, 0, 100);
-            pDIF *= ((100 + criticaldamage) / 100.0f);
-        }
 		
 /* 		if (PAttacker->objtype == TYPE_PC)
         {
-			printf("battleutils.cpp ATT: [%i]  pDIF: [%f]  cRatioMin: [%f]  cRatioMax: [%f]\n", ATT, pDIF, cRatioMin, cRatioMax);
+			printf("battleutils.cpp GetDamageRatio 3 CRATIO: [%1.4f]\n", cRatio);
+		} */
+		
+		// Level Correction
+		uint16 attackerMLvl = PAttacker->GetMLevel();
+		uint16 defenderMLvl = PDefender->GetMLevel();
+		
+        if (PAttacker->objtype == TYPE_PC)
+        {
+			CCharEntity* PChar = (CCharEntity*)PAttacker;
+			
+			uint16 playerILvl = GetPlayerItemLevel(PChar);
+			
+			if (playerILvl > 0)
+			{
+				attackerMLvl = attackerMLvl + playerILvl;
+			}
+//			printf("battleutils.cpp GetDamageRatio 4 CRATIO: [%1.4f]  PLAYER LEVEL: [%i]  PLAYER ITEM LEVEL: [%i]\n", cRatio, attackerMLvl, playerILvl);
+        }
+		
+		if (attackerMLvl < defenderMLvl)
+		{
+			cRatio -= 0.050f * (defenderMLvl - attackerMLvl);
+		}
+        else if (attackerMLvl > defenderMLvl)
+        {
+            cRatio += 0.050f * (attackerMLvl - defenderMLvl);
+        }
+
+/* 		if (PAttacker->objtype == TYPE_PC)
+        {
+			printf("battleutils.cpp GetDamageRatio 5 CRATIO: [%1.4f]  DEF LVL: [%i]  ATK LVL: [%i]\n", cRatio, defenderMLvl, attackerMLvl);
 		} */
 
-        //x1.00 ~ x1.05 final multiplier, giving max value 3*1.05 -> 3.15
-        return pDIF * tpzrand::GetRandomNumber(1.f, 1.05f);
+		// wRatio
+        if (isCritical)
+        {
+            cRatio += 1;
+			/* if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetDamageRatio 6 IS CRITICAL cRatio: [%1.4f]\n", cRatio);
+			} */
+        }
+
+        cRatio = std::clamp<float>(cRatio, 0, ratioCap);
+		/* if (PAttacker->objtype == TYPE_PC)
+		{
+			printf("battleutils.cpp GetDamageRatio 7 CRATIO: [%1.4f]\n", cRatio);
+		} */
+
+		float cRatioMax = 0;
+        float cRatioMin = 0;
+
+		// wRatio Upper Limits
+        if ((cRatio >= 0) && (cRatio < 0.5)) // (0 <= cRatio) && (cRatio < 0.5)
+		{
+            cRatioMax = std::clamp<float>(cRatio + 0.5f, 0.5f, 0.99f); //std::clamp<float>(ratio, 0, ratioCap);
+			/* if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetDamageRatio 8a CRATIOMAX: [%1.4f]\n", cRatioMax);
+			} */
+        }
+        else if ((cRatio >= 0.5) && (cRatio < 0.7)) // (0.5 <= cRatio) && (cRatio < 0.7)
+		{
+            cRatioMax = 1;
+			/* if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetDamageRatio 8b CRATIOMAX: [%1.4f]\n", cRatioMax);
+			} */
+        }
+        else if ((cRatio >= 0.7) && (cRatio < 1.2)) // (0.7 <= cRatio) && (cRatio < 1.2)
+		{
+            cRatioMax = std::clamp<float>(cRatio + 0.3f, 1, 1.49f);
+			/* if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetDamageRatio 8c CRATIOMAX: [%1.4f]\n", cRatioMax);
+			} */
+        }
+        else if ((cRatio >= 1.2) && (cRatio < 1.5)) // (1.2 <= cRatio) && (cRatio < 1.5)
+		{
+            cRatioMax = std::clamp<float>((cRatio * 0.25f) + cRatio, 1.5f, 1.874f);
+			/* if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetDamageRatio 8d CRATIOMAX: [%1.4f]\n", cRatioMax);
+			} */
+        }
+        else if (cRatio >= 1.5) // 1.5 <= cRatio
+		{
+            cRatioMax = std::clamp<float>(cRatio + 0.375f, 1.875f, ratioCap);
+			/* if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetDamageRatio 8e CRATIOMAX: [%1.4f]\n", cRatioMax);
+			} */
+        }
+
+		// wRatio Lower Limits
+        if ((cRatio >= 0) && (cRatio < 0.38)) // (0 <= cRatio) && (cRatio < 0.38)
+		{
+            cRatioMin = std::clamp<float>(cRatioMin, 0.5f, 1);
+			/* if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetDamageRatio 9a CRATIOMIN: [%1.4f]\n", cRatioMin);
+			} */
+        }
+        else if ((cRatio >= 0.38) && (cRatio < 1.25)) // (0.38 <= cRatio) && (cRatio < 1.25)
+		{
+            cRatioMin = std::clamp<float>(cRatio * (float)(1176 / 1024) - (float)(448 / 1024), 0, (float)(4083 / 4096));
+			/* if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetDamageRatio 9b CRATIOMIN: [%1.4f]\n", cRatioMin);
+			} */
+        }
+        else if ((cRatio > 1.25) && (cRatio < 1.51)) // (1.25 < cRatio) && (cRatio < 1.51)
+		{
+            cRatioMin = 1;
+			/* if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetDamageRatio 9c CRATIOMIN: [%1.4f]\n", cRatioMin);
+			} */
+        }
+        else if ((cRatio > 1.51) && (cRatio < 2.44)) // (1.51 < cRatio) && (cRatio < 2.44)
+		{
+            cRatioMin = std::clamp<float>(cRatio * (float)(1176 / 1024) - (float)(775 / 1024), (float)(4083 / 4096), float(8457.75f / 4096));
+			/* if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetDamageRatio 9d CRATIOMIN: [%1.4f]\n", cRatioMin);
+			} */
+        }
+        else if (cRatio >= 2.44) // 2.44 <= cRatio
+		{
+            cRatioMin = std::clamp<float>(cRatio - 0.375f, 2.065f, ratioCap - 0.375f);
+			/* if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetDamageRatio 9e CRATIOMIN: [%1.4f]\n", cRatioMin);
+			} */
+        }
+
+		// Select a random value between min and max
+        float pDIF = tpzrand::GetRandomNumber(cRatioMin, cRatioMax);
+		
+		// One handed weapons
+		if (!PWeapon->isTwoHanded() && !PWeapon->isHandToHand() && pDIF > 3.25)
+		{
+			if (isCritical)
+			{
+				pDIF = 4.25f;
+			}
+			else
+			{
+				pDIF = 3.25f;
+			}
+/* 			if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetDamageRatio 10a ONE HANDED CAP TRIGGERED\n");
+			} */
+		}
+		// Hand-to-Hand
+		else if (PWeapon->isHandToHand() && pDIF > 3.50)
+		{
+			if (isCritical)
+			{
+				pDIF = 4.50f;
+			}
+			else
+			{
+				pDIF = 3.50f;
+			}
+/* 			if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetDamageRatio 10b HAND-TO-HAND CAP TRIGGERED\n");
+			} */
+		}
+		// Two handed weapons excluding Scythe
+		else if (PWeapon->isTwoHanded() && pDIF > 3.75 && PWeapon->getSkillType() != SKILL_SCYTHE)
+		{
+			if (isCritical)
+			{
+				pDIF = 4.75f;
+			}
+			else
+			{
+				pDIF = 3.75f;
+			}
+/* 			if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetDamageRatio 10c TWO HANDED CAP TRIGGERED\n");
+			} */
+		}
+		// Scythe
+		else if (PWeapon->isTwoHanded() && pDIF > 4.00 && PWeapon->getSkillType() == SKILL_SCYTHE)
+		{
+			if (isCritical)
+			{
+				pDIF = 5.00f;
+			}
+			else
+			{
+				pDIF = 4.00f;
+			}
+/* 			if (PAttacker->objtype == TYPE_PC)
+			{
+				printf("battleutils.cpp GetDamageRatio 10d SCYTHE CAP TRIGGERED\n");
+			} */
+		}
+		
+/* 		if (PAttacker->objtype == TYPE_PC)
+        {
+			printf("battleutils.cpp GetDamageRatio 11 RATIO MIN: [%1.4f]  RATIO MAX: [%1.4f]  pDIF: [%1.4f]\n\n", cRatioMin, cRatioMax, pDIF);
+		} */
+		
+		// Add Damage Limit trait & gear modifiers
+		float dmgLimitTrait = (float)((PAttacker->getMod(Mod::DAMAGE_LIMIT_TRAIT)) / 10.0f);
+		float dmgLimitGear = (float)((100.0f + PAttacker->getMod(Mod::DAMAGE_LIMIT_GEAR)) / 100.0f);
+
+/* 		if (PAttacker->objtype == TYPE_PC)
+        {
+			printf("battleutils.cpp GetDamageRatio 12a pDIF: [%1.4f]  DMG LIMIT TRAIT: [%1.4f]  DMG LIMIT GEAR: [%1.4f]\n", pDIF, dmgLimitTrait, dmgLimitGear);
+		} */
+
+		pDIF = ((pDIF + dmgLimitTrait) * dmgLimitGear);
+		
+/* 		if (PAttacker->objtype == TYPE_PC)
+        {
+			printf("battleutils.cpp GetDamageRatio 12b AFTER DMG LIMIT pDIF: [%1.4f]\n\n", pDIF);
+		} */
+		
+		/* if (PAttacker->objtype == TYPE_PC)
+        {
+			printf("battleutils.cpp GetDamageRatio 13 ATT: [%i]  pDIF: [%f]  cRatioMin: [%f]  cRatioMax: [%f]\n\n", ATT, pDIF, cRatioMin, cRatioMax);
+		} */
+
+        // Multiply the final result by x1.00 ~ x1.05 to randomize
+        return pDIF * tpzrand::GetRandomNumber(1.0f, 1.05f);
     }
 
     /************************************************************************
@@ -3402,10 +3950,13 @@ namespace battleutils
                         resonanceProperties.push_back(SC_FUSION);
                     }
                     resonanceProperties.push_back(SC_LIQUEFACTION);
-                    resonanceProperties.push_back(SC_INDURATION);
-                    resonanceProperties.push_back(SC_REVERBERATION);
-                    resonanceProperties.push_back(SC_IMPACTION);
-                    resonanceProperties.push_back(SC_COMPRESSION);
+					resonanceProperties.push_back(SC_SCISSION);
+					resonanceProperties.push_back(SC_INDURATION);
+					resonanceProperties.push_back(SC_REVERBERATION);
+					resonanceProperties.push_back(SC_DETONATION);
+					resonanceProperties.push_back(SC_IMPACTION);
+					resonanceProperties.push_back(SC_TRANSFIXION);
+					resonanceProperties.push_back(SC_COMPRESSION);
 
                     skillchain = FormSkillchain(resonanceProperties, skillProperties);
                 }
@@ -4809,7 +5360,10 @@ namespace battleutils
     {		
         Mod absorb[8] = { Mod::FIRE_ABSORB, Mod::ICE_ABSORB, Mod::WIND_ABSORB, Mod::EARTH_ABSORB, Mod::LTNG_ABSORB, Mod::WATER_ABSORB, Mod::LIGHT_ABSORB, Mod::DARK_ABSORB };
         Mod nullarray[8] = { Mod::FIRE_NULL, Mod::ICE_NULL, Mod::WIND_NULL, Mod::EARTH_NULL, Mod::LTNG_NULL, Mod::WATER_NULL, Mod::LIGHT_NULL, Mod::DARK_NULL };
-		Mod sdt[8] = { Mod::SDT_FIRE, Mod::SDT_EARTH, Mod::SDT_WATER, Mod::SDT_WIND, Mod::SDT_ICE, Mod::SDT_LIGHTNING, Mod::SDT_LIGHT, Mod::SDT_DARK };
+		Mod sdt[8] = { Mod::SDT_FIRE, Mod::SDT_ICE, Mod::SDT_WIND, Mod::SDT_EARTH, Mod::SDT_LIGHTNING, Mod::SDT_WATER, Mod::SDT_LIGHT, Mod::SDT_DARK };
+
+//		printf("battleutils.cpp MagicDmgTaken ELEMENT: [%i]  ABSORB: [%i]\n", element, PDefender->getMod(absorb[element - 1]));
+//		printf("battleutils.cpp MagicDmgTaken ELEMENT: [%i]  SDT: [%i]  DAMAGE: [%i]\n", element, PDefender->getMod(sdt[element - 1]), damage);
 
         float resist = 1.f + PDefender->getMod(Mod::UDMGMAGIC) / 100.f;
         resist = std::max(resist, 0.f);
@@ -4831,6 +5385,8 @@ namespace battleutils
 		{
             damage += (int32)((float)damage * ((float)PDefender->getMod(sdt[element - 1]) / 100.f));
 			
+//			printf("battleutils.cpp MagicDmgTaken DAMAGE: [%i]\n\n", damage);
+			
 			if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_MAGIC_DEF_DOWN) &&
 				PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_MAGIC_DEF_DOWN)->GetSubPower() > 0)
 			{
@@ -4839,9 +5395,10 @@ namespace battleutils
 		}
 
         if (tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::ABSORB_DMG_CHANCE) ||
-            (element && tpzrand::GetRandomNumber(100) < PDefender->getMod(absorb[element - 1])) ||
+            (tpzrand::GetRandomNumber(100) < PDefender->getMod(absorb[element - 1])) ||
             tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::MAGIC_ABSORB))
 		{
+//			printf("battleutils.cpp MagicDmgTaken ELEMENTAL ABSORB DAMAGE: [%i]\n\n", damage);
             damage = -damage;
 		}
         else if ((element && tpzrand::GetRandomNumber(100) < PDefender->getMod(nullarray[element - 1])) ||
@@ -4862,7 +5419,7 @@ namespace battleutils
 			if (PDefender->getMod(Mod::CONVERT_DMG_TO_TP) > 0)
 			{
 				int16 absorbedTP = static_cast<int16>(damage * (float)(PDefender->getMod(Mod::CONVERT_DMG_TO_TP) / 100.0));
-				printf("battleutils.cpp MagicDmgTaken CONVERT DMG TO TP: [%i]\n", absorbedTP);
+//				printf("battleutils.cpp MagicDmgTaken CONVERT DMG TO TP: [%i]\n", absorbedTP);
 				PDefender->addTP(absorbedTP);
 			}
         }
@@ -5186,20 +5743,6 @@ namespace battleutils
 
             //ShowDebug(CL_CYAN"HandleSevereDamageEffect: Severe Damage Occurred! Damage = %d, Threshold = %f, Damage Threshold = %f\n" CL_RESET, damage, threshold, damageThreshold);
 			uint16 YaegasumiBonus = PDefender->getMod(Mod::YAEGASUMI_WS_BONUS);
-
-            // Severe Damage is when the Attack's Damage Exceeds a Certain Threshold
-            if (damage > damageThreshold)
-			{
-                uint16 severeReduction = PDefender->StatusEffectContainer->GetStatusEffect(effect)->GetSubPower();
-                severeReduction = std::clamp((100 - severeReduction), 0, 100) / 100;
-				damage = damage * severeReduction;
-				
-				if (removeEffect)
-				{
-                    PDefender->StatusEffectContainer->DelStatusEffect(effect);
-                }
-                //ShowDebug(CL_CYAN"HandleSevereDamageEffect: Reducing Severe Damage!\n" CL_RESET);
-            }
 			
 			if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_YAEGASUMI))
 			{
@@ -5213,9 +5756,42 @@ namespace battleutils
 			
 			if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_SWORDPLAY))
 			{
-				PDefender->delModifier(Mod::ACC, PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SWORDPLAY)->GetPower());
-				PDefender->delModifier(Mod::EVA, PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SWORDPLAY)->GetPower());
+				threshold = 0.75f;
+				damageThreshold = maxHp * threshold;
+				
+				if (damage > damageThreshold)
+				{
+//					printf("battleutils.cpp HandleSevereDamageEffect SWORDPLAY TRIGGERED\n");
+					PDefender->delModifier(Mod::ACC, PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SWORDPLAY)->GetPower());
+					PDefender->delModifier(Mod::EVA, PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SWORDPLAY)->GetPower());
+					
+					if (PDefender->GetMJob() != JOB_RUN)
+					{
+						PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SWORDPLAY)->SetPower(3);
+					}
+					else
+					{
+						PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SWORDPLAY)->SetPower(6 * PDefender->getMod(Mod::SWORDPLAY));
+					}
+				}
+				
+				return damage;
 			}
+			
+			// Severe Damage is when the Attack's Damage Exceeds a Certain Threshold
+            if (damage > damageThreshold)
+			{
+//				printf("battleutils.cpp HandleSevereDamageEffect NORMAL THRESHOLD TRIGGERED\n");
+                uint16 severeReduction = PDefender->StatusEffectContainer->GetStatusEffect(effect)->GetSubPower();
+                severeReduction = std::clamp((100 - severeReduction), 0, 100) / 100;
+				damage = damage * severeReduction;
+				
+				if (removeEffect)
+				{
+                    PDefender->StatusEffectContainer->DelStatusEffect(effect);
+                }
+                //ShowDebug(CL_CYAN"HandleSevereDamageEffect: Reducing Severe Damage!\n" CL_RESET);
+            }
         }
 
         //ShowDebug(CL_CYAN"HandleSevereDamageEffect: NOT Reducing Severe Damage!\n" CL_RESET);
@@ -5897,6 +6473,8 @@ namespace battleutils
 		
         else if (PSpell->getSpellGroup() == SPELLGROUP_WHITE)
         {
+			uint16 spellID = static_cast<uint16>(PSpell->getID());
+			
             if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_CELERITY))
             {
                 uint16 bonus = 0;
@@ -5920,6 +6498,10 @@ namespace battleutils
                     cast = (uint32)(cast * (1.0f + PEntity->getMod(Mod::WHITE_MAGIC_CAST) / 100.0f));
                 }
             }
+			else if (spellID == 54 && PEntity->getMod(Mod::STONESKIN_CAST) > 0)
+			{
+				cast = (uint32)(cast * (1.0f + PEntity->getMod(Mod::STONESKIN_CAST) / 100.0f));
+			}
         }
 		
         else if (PSpell->getSpellGroup() == SPELLGROUP_SONG)
@@ -6030,9 +6612,9 @@ namespace battleutils
             }
             if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_PARSIMONY))
             {
-				printf("battletutils.cpp CalculateSpellCost BEFORE PARSIMONY COST: [%i]\n", cost);
+//				printf("battletutils.cpp CalculateSpellCost BEFORE PARSIMONY COST: [%i]\n", cost);
                 cost /= (int16)(2 + ((float)PEntity->getMod(Mod::ENH_PARSIMONY) / 100.0f));
-				printf("battletutils.cpp CalculateSpellCost AFTER PARSIMONY COST: [%i]\n", cost);
+//				printf("battletutils.cpp CalculateSpellCost AFTER PARSIMONY COST: [%i]\n", cost);
                 applyArts = false;
             }
             else if (applyArts)

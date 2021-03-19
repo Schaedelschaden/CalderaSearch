@@ -19,7 +19,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     local numhits = 1
     local accmod = 0.8
     local dmgmod = 2.5
@@ -30,6 +29,5 @@ function onMobWeaponSkill(target, mob, skill)
 
     MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 20, 0, 60)
 
-    target:takeDamage(dmg, mob, tpz.attackType.RANGED, tpz.damageType.BLUNT)
     return dmg
 end

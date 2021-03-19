@@ -28,12 +28,18 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.canCrit = false
     params.acc100 = 0.8 params.acc200= 0.9 params.acc300= 1
     params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+	params.specialWSDMG = player:getMod(tpz.mod.ASURAN_FISTS_WS_DMG)
 
     if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
         params.str_wsc = 0.15 params.vit_wsc = 0.15
     end
+	
+	if (player:getEquipID(tpz.slot.MAIN) == 20529) then
+		params.acc100 = 1.3 params.acc200= 1.4 params.acc300= 1.5
+	end
 
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+	
     return tpHits, extraHits, criticalHit, damage
 
 end

@@ -8,6 +8,8 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
 
+local statusAilments = {tpz.effect.BLINDNESS, tpz.effect.POISON, tpz.effect.PARALYSIS, tpz.effect.SILENCE, tpz.effect.CURSE, tpz.effect.DISEASE, tpz.effect.PLAGUE}
+
 function onAbilityCheck(player, target, ability)
 	if (player:hasStatusEffect(tpz.effect.IGNIS) or
 		player:hasStatusEffect(tpz.effect.GELUS) or

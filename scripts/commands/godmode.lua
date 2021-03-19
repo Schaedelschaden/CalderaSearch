@@ -5,7 +5,7 @@
 
 cmdprops =
 {
-    permission = 1,
+    permission = 2,
     parameters = ""
 }
 
@@ -25,8 +25,8 @@ function onTrigger(player)
         player:addStatusEffect(tpz.effect.ELEMENTAL_SFORZO, 1, 0, 0)
         player:addStatusEffect(tpz.effect.MANAFONT, 1, 0, 0)
         player:addStatusEffect(tpz.effect.REGAIN, 300, 0, 0)
-        player:addStatusEffect(tpz.effect.REFRESH, 99, 0, 0)
-        player:addStatusEffect(tpz.effect.REGEN, 99, 0, 0)
+        player:addStatusEffect(tpz.effect.REFRESH, 3000, 0, 0)
+        player:addStatusEffect(tpz.effect.REGEN, 3000, 0, 0)
 
         -- Add bonus mods to the player..
         player:addMod(tpz.mod.RACC, 2500)

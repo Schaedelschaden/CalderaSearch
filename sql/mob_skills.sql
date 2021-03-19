@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `mob_skills` (
   PRIMARY KEY (`mob_skill_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.mob_skills: 1,667 rows
+-- Dumping data for table tpzdb.mob_skills: 1,669 rows
 /*!40000 ALTER TABLE `mob_skills` DISABLE KEYS */;
 INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_skill_aoe`, `mob_skill_distance`, `mob_anim_time`, `mob_prepare_time`, `mob_valid_targets`, `mob_skill_flag`, `mob_skill_param`, `knockback`, `primary_sc`, `secondary_sc`, `tertiary_sc`) VALUES
 	(32, 1, 'fast_blade', 0, 7.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0),
@@ -365,7 +365,7 @@ INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_
 	(638, 382, 'blastbomb', 2, 13.5, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(639, 383, 'fountain', 4, 9.5, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(641, 973, 'recoil_dive', 4, 9.5, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
-	(642, 386, 'flame_breath', 4, 12.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
+	(642, 134, 'flame_breath', 4, 12.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(643, 387, 'poison_breath', 4, 12.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(644, 388, 'wind_breath', 4, 12.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(645, 389, 'body_slam', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
@@ -517,7 +517,7 @@ INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_
 	(845, 531, 'fire_iv', 0, 10.0, 533, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(846, 532, 'flaming_crush', 0, 10.0, 534, 1500, 4, 4, 0, 0, 11, 5, 0),
 	(847, 533, 'meteor_strike', 0, 10.0, 535, 1500, 4, 0, 0, 0, 0, 0, 0),
-	(848, 534, 'inferno', 1, 10.0, 536, 0, 4, 0, 0, 0, 0, 0, 0),
+	(848, 534, 'inferno', 1, 20.0, 536, 0, 4, 0, 0, 0, 0, 0, 0),
 	(849, 539, 'rock_throw', 0, 20.0, 544, 1500, 4, 4, 0, 0, 4, 0, 0),
 	(850, 540, 'stone_ii', 0, 10.0, 545, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(851, 541, 'rock_buster', 0, 10.0, 546, 1500, 4, 4, 0, 0, 5, 0, 0),
@@ -526,7 +526,7 @@ INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_
 	(854, 544, 'stone_iv', 0, 10.0, 549, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(855, 545, 'mountain_buster', 0, 10.0, 550, 1500, 4, 4, 0, 0, 9, 7, 0),
 	(856, 546, 'geocrush', 0, 10.0, 551, 1500, 4, 0, 0, 0, 0, 0, 0),
-	(857, 547, 'earthen_fury', 1, 10.0, 552, 0, 4, 0, 0, 0, 0, 0, 0),
+	(857, 547, 'earthen_fury', 1, 20.0, 552, 0, 4, 0, 0, 0, 0, 0, 0),
 	(858, 552, 'barracuda_dive', 0, 10.0, 560, 1500, 4, 4, 0, 0, 5, 0, 0),
 	(859, 553, 'water_ii', 0, 10.0, 561, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(860, 554, 'tail_whip', 0, 10.0, 562, 1500, 4, 4, 0, 0, 6, 0, 0),
@@ -544,7 +544,7 @@ INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_
 	(872, 570, 'aero_iv', 0, 10.0, 581, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(873, 571, 'predator_claws', 0, 10.0, 582, 1500, 4, 4, 0, 0, 12, 4, 0),
 	(874, 572, 'wind_blade', 0, 10.0, 583, 1500, 4, 0, 0, 0, 0, 0, 0),
-	(875, 573, 'aerial_blast', 1, 10.0, 584, 0, 4, 0, 0, 0, 0, 0, 0),
+	(875, 573, 'aerial_blast', 1, 20.0, 584, 0, 4, 0, 0, 0, 0, 0, 0),
 	(876, 578, 'axe_kick', 0, 10.0, 592, 1500, 4, 4, 0, 0, 7, 0, 0),
 	(877, 579, 'blizzard_ii', 0, 10.0, 593, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(878, 580, 'frost_armor', 1, 10.0, 594, 1500, 3, 0, 0, 0, 0, 0, 0),
@@ -553,7 +553,7 @@ INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_
 	(881, 583, 'blizzard_iv', 0, 10.0, 597, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(882, 584, 'rush', 0, 10.0, 598, 1500, 4, 4, 0, 0, 10, 4, 0),
 	(883, 585, 'heavenly_strike', 0, 10.0, 599, 1500, 4, 0, 0, 0, 0, 0, 0),
-	(884, 586, 'diamond_dust', 1, 10.0, 600, 0, 4, 0, 0, 0, 0, 0, 0),
+	(884, 586, 'diamond_dust', 1, 20.0, 600, 0, 4, 0, 0, 0, 0, 0, 0),
 	(885, 591, 'shock_strike', 0, 10.0, 608, 1500, 4, 4, 0, 0, 8, 0, 0),
 	(886, 592, 'thunder_ii', 0, 10.0, 609, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(887, 593, 'rolling_thunder', 1, 10.0, 610, 1500, 3, 0, 0, 0, 0, 0, 0),
@@ -562,7 +562,7 @@ INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_
 	(890, 596, 'thunder_iv', 0, 10.0, 613, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(891, 597, 'chaotic_strike', 0, 10.0, 614, 1500, 4, 4, 0, 0, 12, 1, 0),
 	(892, 598, 'thunderstorm', 0, 10.0, 615, 1500, 4, 0, 0, 0, 0, 0, 0),
-	(893, 599, 'judgment_bolt', 1, 10.0, 616, 0, 4, 0, 0, 0, 0, 0, 0),
+	(893, 599, 'judgment_bolt', 1, 20.0, 616, 0, 4, 0, 0, 0, 0, 0, 0),
 	(894, 621, 'healing_breath_i', 0, 10.0, 2000, 2000, 3, 0, 0, 0, 0, 0, 0),
 	(895, 622, 'healing_breath_ii', 0, 10.0, 2000, 2000, 3, 0, 0, 0, 0, 0, 0),
 	(896, 623, 'healing_breath_iii', 0, 10.0, 2000, 2000, 3, 0, 0, 0, 0, 0, 0),
@@ -1253,11 +1253,11 @@ INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_
 	(2299, 1486, 'bone_crusher', 0, 7.0, 2000, 1, 4, 0, 245, 0, 12, 0, 0),
 	(2300, 1487, 'armor_piercer', 0, 15.0, 2000, 1, 4, 0, 245, 0, 9, 0, 0),
 	(2301, 1488, 'magic_mortar', 0, 10.0, 2000, 1, 4, 0, 225, 0, 11, 3, 0),
-	(2334, 1640, 'wrath_of_zeus', 4, 10.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
-	(2335, 1639, 'lightning_spear', 4, 10.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
-	(2336, 1642, 'acheron_kick', 4, 10.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
+	(2334, 1640, 'wrath_of_zeus', 1, 14.0, 2000, 5000, 4, 0, 0, 0, 0, 0, 0),
+	(2335, 1639, 'lightning_spear', 4, 14.0, 2000, 5000, 4, 0, 0, 0, 0, 0, 0),
+	(2336, 1642, 'acheron_kick', 4, 14.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
 	(2337, 1653, 'damsel_memento', 0, 7.0, 2000, 1000, 1, 0, 0, 0, 0, 0, 0),
-	(2338, 1641, 'rampant_stance', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
+	(2338, 1641, 'rampant_stance', 1, 10.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
 	(2359, 1201, 'strap_cutter', 0, 20.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(2360, 1195, 'wind_shear_znm', 1, 10.0, 2000, 1500, 4, 0, 0, 7, 0, 0, 0),
 	(2361, 1269, 'stave_toss', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
@@ -1289,7 +1289,7 @@ INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_
 	(2445, 1713, 'whirling_edge', 1, 18.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
 	(2446, 1716, 'rousing_samba', 1, 18.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
 	(2447, 1717, 'vivifying_waltz', 1, 18.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
-	(1277, 1596, 'inferno_howl', 1, 18.0, 532, 1500, 3, 0, 0, 0, 0, 0, 0),
+	(1277, 530, 'inferno_howl', 1, 18.0, 532, 1500, 3, 0, 0, 0, 0, 0, 0),
 	(1520, 1593, 'heavenward_howl', 1, 18.0, 522, 1500, 3, 0, 0, 0, 0, 0, 0),
 	(2450, 1944, 'eerie_eye', 4, 18.0, 507, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(2451, 1945, 'altanas_favor', 1, 18.0, 511, 0, 3, 0, 0, 0, 0, 0, 0),
@@ -1700,7 +1700,8 @@ INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_
 	(954, 656, 'touchdown', 1, 18.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(950, 652, 'flame_blast', 1, 20.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0),
 	(955, 657, 'flame_blast', 1, 20.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0),
-	(2916, 2085, 'thrashing_assault', 0, 6.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
+	(2916, 2085, 'thrashing_assault', 0, 6.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
+	(2370, 1653, 'grace_of_hera', 4, 20.0, 2000, 1500, 3, 0, 0, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `mob_skills` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

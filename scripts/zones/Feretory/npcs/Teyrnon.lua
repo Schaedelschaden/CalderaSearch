@@ -9,7 +9,7 @@ require("scripts/globals/keyitems")
 require("scripts/globals/status")
 -----------------------------------
 
-function onTrade(player,npc,trade)
+function onTrade(player, npc, trade)
 	local itemToAug = 0
 	local itemFound = false
 	local augments =

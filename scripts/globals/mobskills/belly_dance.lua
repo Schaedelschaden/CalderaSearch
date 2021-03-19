@@ -18,7 +18,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     --[[
     power = 1
     tic = 0

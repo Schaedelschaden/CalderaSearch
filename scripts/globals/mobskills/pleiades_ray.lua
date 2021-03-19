@@ -36,6 +36,5 @@ function onMobWeaponSkill(target, mob, skill)
     MobStatusEffectMove(mob, target, tpz.effect.SILENCE, 1, 0, duration)
     MobStatusEffectMove(mob, target, tpz.effect.SLOW, 1250, 0, duration)
 
-    target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.FIRE)
     return dmg
 end

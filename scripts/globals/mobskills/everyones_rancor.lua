@@ -29,7 +29,5 @@ function onMobWeaponSkill(target, mob, skill)
         realDmg = 50 * target:getCharVar("EVERYONES_GRUDGE_KILLS")
     end
 
-    target:takeDamage(realDmg, mob, tpz.attackType.MAGICAL, tpz.damageType.ELEMENTAL)
-
     return realDmg
 end

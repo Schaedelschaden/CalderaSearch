@@ -23,6 +23,5 @@ function onMobWeaponSkill(target, mob, skill)
     for i = tpz.slot.MAIN, tpz.slot.BACK do
         target:unequipItem(i)
     end
-    target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.WIND)
     return dmg
 end

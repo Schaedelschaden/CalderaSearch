@@ -241,7 +241,7 @@ function AvatarFinalAdjustments(dmg, mob, skill, target, skilltype, skillparam, 
         tpz.attackType.PHYSICAL then
         return 0
     end
-
+	
     -- Calculate Blood Pact Damage before stoneskin
     dmg = dmg + dmg * mob:getMod(tpz.mod.BP_DAMAGE) / 100
 	
@@ -252,8 +252,14 @@ function AvatarFinalAdjustments(dmg, mob, skill, target, skilltype, skillparam, 
 		local multBloodBoon = master:getMod(tpz.mod.AUGMENT_BLOOD_BOON) / 5
 		local dmgBoost = 1 + ((multBloodBoon * 25) / 100)
 		
-		finaldmg = finaldmg * dmgBoost
+		dmg = finaldmg * dmgBoost
 		master:setLocalVar("BloodBoonActivated", 0)
+	end
+	
+	-- Add extra Blood Pact Damage from Frazil Staff
+	if (master:getPetID() == 11 and master:getEquipID(tpz.slot.MAIN) == 21167) then
+--		printf("summon.lua AvatarFinalAdjustments FINAL DMG: [%i]  TITAN EXTRA BP DAMAGE: [75%%]  ADJUSTED DMG: [%i]", finaldmg, finaldmg * 1.75)
+		dmg = dmg * 1.75
 	end
 
     -- handling stoneskin

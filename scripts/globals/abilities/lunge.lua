@@ -12,17 +12,12 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAbilityCheck(player, target, ability)
-	if (player:hasStatusEffect(tpz.effect.IGNIS) or
-		player:hasStatusEffect(tpz.effect.GELUS) or
-		player:hasStatusEffect(tpz.effect.FLABRA) or
-		player:hasStatusEffect(tpz.effect.TELLUS) or
-		player:hasStatusEffect(tpz.effect.SULPOR) or
-		player:hasStatusEffect(tpz.effect.UNDA) or
-		player:hasStatusEffect(tpz.effect.LUX) or
-		player:hasStatusEffect(tpz.effect.TENEBRAE)) then
+	if (player:hasStatusEffect(tpz.effect.IGNIS) or player:hasStatusEffect(tpz.effect.GELUS) or player:hasStatusEffect(tpz.effect.FLABRA) or
+		player:hasStatusEffect(tpz.effect.TELLUS) or player:hasStatusEffect(tpz.effect.SULPOR) or player:hasStatusEffect(tpz.effect.UNDA) or
+		player:hasStatusEffect(tpz.effect.LUX) or player:hasStatusEffect(tpz.effect.TENEBRAE)) then
 		return 0,0
 	else
-		return tpz.msg.basic.UNABLE_TO_USE_JA
+		return tpz.msg.basic.REQUIRES_RUNES
 	end
 end
 
@@ -37,7 +32,8 @@ function onUseAbility(player, target, ability, action)
 	local RuneCounter = 0
 	local bonus = 1.0
 	local lungeBonus = player:getMod(tpz.mod.LUNGE_BONUS) / 100
-	local multiplier = 2
+	local multiplier = 3
+	local burst = 0
 	
 	for i,v in ipairs(RuneEnhancement) do
 		player:delStatusEffectSilent(RuneEnspell[i])
@@ -61,14 +57,19 @@ function onUseAbility(player, target, ability, action)
 	
 	local resist = applyResistanceAbility(player, target, Ele, tpz.skill.NONE, bonus)
 	
-	dmg = addBonusesAbility(player, Ele, target, dmg, params, ability)
+	dmg, burst = addBonusesAbility(player, Ele, target, dmg, params, ability)
 	dmg = dmg * resist
     dmg = adjustForTarget(target, dmg, Ele)
 	dmg = takeAbilityDamage(target, player, params, true, dmg, tpz.attackType.MAGICAL, Ele, tpz.slot.MAIN, 1, 0, 0, 0, action, nil)
 	
-	ability:setMsg(tpz.msg.basic.JA_DAMAGE)
-	
 	player:removeAllRunes()
+	
+	if (player:getCharVar("SwipeLungeHasMB") > 0) then
+		ability:setMsg(tpz.msg.basic.SWIPE_LUNGE_MB)
+		player:setCharVar("SwipeLungeHasMB", 0)
+	else
+		ability:setMsg(tpz.msg.basic.JA_DAMAGE)
+	end
 	
 	return dmg
 end

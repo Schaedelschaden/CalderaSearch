@@ -490,6 +490,11 @@ void CalculateStats(CMobEntity * PMob)
         uint16 maxSkill = battleutils::GetMaxSkill(3, mLvl > 99 ? 99 : mLvl);
         if (maxSkill != 0)
         {
+			if (mLvl > 99)
+			{
+				maxSkill += (uint16)((mLvl - 99) * 4.83f);
+			}
+			
             PMob->WorkingSkills.skill[i] = maxSkill;
         }
     }

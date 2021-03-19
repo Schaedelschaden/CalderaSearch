@@ -25,6 +25,11 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.canCrit = false
     params.acc100 = 0.8 params.acc200= 0.9 params.acc300= 1
     params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+	params.specialWSDMG = player:getMod(tpz.mod.BLAST_SHOT_DMG)
+	
+	if (player:getEquipID(tpz.slot.MAIN) == 21274) then
+		params.acc100 = 1.1 params.acc200= 1.2 params.acc300= 1.3
+	end
 
     if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
         params.agi_wsc = 0.7

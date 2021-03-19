@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `item_basic` (
   PRIMARY KEY (`itemid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=34 PACK_KEYS=1 CHECKSUM=1;
 
--- Dumping data for table tpzdb.item_basic: 21,843 rows
+-- Dumping data for table tpzdb.item_basic: 21,846 rows
 /*!40000 ALTER TABLE `item_basic` DISABLE KEYS */;
 INSERT INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `flags`, `aH`, `NoSale`, `BaseSell`) VALUES
 	(1, 0, 'pile_of_chocobo_bedding', 'chocobo_bedding', 1, 24660, 0, 0, 198),
@@ -21871,7 +21871,10 @@ INSERT INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `f
 	(26514, 0, 'poroggo_fleece', 'poroggo_fleece', 1, 30784, 0, 0, 0),
 	(20672, 0, 'ice_brand', 'ice_brand', 1, 63552, 0, 0, 0),
 	(26114, 0, 'balder_earring', 'balder_earring', 1, 63572, 0, 0, 0),
-	(26115, 0, 'balder_earring_+1', 'balder_earring_+1', 1, 63572, 0, 0, 0);
+	(26115, 0, 'balder_earring_+1', 'balder_earring_+1', 1, 63572, 0, 0, 0),
+	(26357, 0, 'skrymir_cord_+1', 'skrymir_cord_+1', 1, 2052, 23, 0, 13645),
+	(26356, 0, 'skrymir_cord', 'skrymir_cord', 1, 2052, 23, 0, 9874),
+	(21568, 0, 'acrontica', 'acrontica', 1, 30801, 0, 1, 0);
 /*!40000 ALTER TABLE `item_basic` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

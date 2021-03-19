@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `mob_pets` (
   PRIMARY KEY (`mob_mobid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.mob_pets: 1,199 rows
+-- Dumping data for table tpzdb.mob_pets: 1,201 rows
 /*!40000 ALTER TABLE `mob_pets` DISABLE KEYS */;
 INSERT INTO `mob_pets` (`mob_mobid`, `pet_offset`, `job`, `mobname`, `petname`) VALUES
 	(16781327, 1, 14, 'Stubborn_Dredvodd', 'Orcs_Wyvern'),
@@ -1222,7 +1222,9 @@ INSERT INTO `mob_pets` (`mob_mobid`, `pet_offset`, `job`, `mobname`, `petname`) 
 	(17961253, 1, 15, 'Eschan_Ilaern', 'Eschan_Ilaerns_Spirit'),
 	(17961257, 1, 15, 'Eschan_Ilaern', 'Eschan_Ilaerns_Spirit'),
 	(17961267, 1, 15, 'Eschan_Ilaern', 'Eschan_Ilaerns_Spirit'),
-	(17961277, 1, 15, 'Eschan_Ilaern', 'Eschan_Ilaerns_Spirit');
+	(17961277, 1, 15, 'Eschan_Ilaern', 'Eschan_Ilaerns_Spirit'),
+	(17396139, 1, 15, 'Tzee_Xicu_the_Manifest', 'Yagudos_Avatar'),
+	(17396136, 1, 15, 'Yagudo_Avatar', 'Yagudos_Avatar');
 /*!40000 ALTER TABLE `mob_pets` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

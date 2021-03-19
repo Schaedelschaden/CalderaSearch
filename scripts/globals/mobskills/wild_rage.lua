@@ -44,6 +44,5 @@ function onMobWeaponSkill(target, mob, skill)
         MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, power, 3, 60)
     end
 
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
     return dmg
 end

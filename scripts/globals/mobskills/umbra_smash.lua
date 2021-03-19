@@ -22,6 +22,5 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 3
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, 0)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.H2H, info.hitslanded)
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.H2H)
     return dmg
 end

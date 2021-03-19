@@ -66,8 +66,7 @@ function onUseAbility(player,target,ability,action)
 --		printf("Damage 1: [%i] All Jumps DMG: [%i]\n", damage, alljumpsdmg)
 		damage = damage + alljumpsdmg
 --		printf("Damage 2: [%i]\n", damage)
-		return damage	
-	else
-		return damage
 	end
+	
+	return damage
 end

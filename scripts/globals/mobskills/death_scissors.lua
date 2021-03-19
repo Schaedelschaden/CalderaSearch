@@ -26,6 +26,5 @@ function onMobWeaponSkill(target, mob, skill)
         dmg = dmg * 0.7
     end
 
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
     return dmg
 end

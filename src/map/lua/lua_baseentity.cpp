@@ -569,7 +569,8 @@ int32 CLuaBaseEntity::messageCombat(lua_State* L)
     auto p1 = (int32)lua_tointeger(L, 3);
     auto message = (int16)lua_tointeger(L, 4);
 
-    PChar->pushPacket(new CMessageCombatPacket(PSpeaker, PChar, p0, p1, message));
+//    PChar->pushPacket(new CMessageCombatPacket(PSpeaker, PChar, p0, p1, message));
+	PChar->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE_SELF, new CMessageCombatPacket(PSpeaker, PChar, p0, p1, message));
 
     return 0;
 }
@@ -12334,6 +12335,65 @@ int32 CLuaBaseEntity::setStatDebilitation(lua_State* L)
 }
 
 /************************************************************************
+*  Function: getHitRate()
+*  Purpose : Calculates and returns the Melee Hit Rate of a Weapon equipped in the Main or Sub slot
+*  Example : player:getHitRate(defender, attackNumber, bonusACC) // attackNumber = Main: 0, Sub: 1, Kick: 2
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getHitRate(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr || m_PBaseEntity->objtype == TYPE_NPC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+	int attackNumber = 0;
+	int bonusACC = 0;
+	
+	if ((int)lua_tointeger(L, 2) > 0)
+	{
+		attackNumber = (int)lua_tointeger(L, 2);
+	}
+	
+	if ((int)lua_tointeger(L, 3) > 0)
+	{
+		bonusACC = (int)lua_tointeger(L, 3);
+	}
+
+    auto PAttacker = static_cast<CBattleEntity*>(m_PBaseEntity);
+    auto PDefender = static_cast<CBattleEntity*>(PLuaBaseEntity->GetBaseEntity());
+
+    int meleeHitRate = battleutils::GetHitRate(PAttacker, PDefender, attackNumber, bonusACC);
+
+    lua_pushinteger(L, meleeHitRate);
+    return 1;
+}
+
+/************************************************************************
+*  Function: getRangedHitRate()
+*  Purpose : Calculates and returns the Ranged Hit Rate of a Weapon equipped in the Ranged slot
+*  Example : player:getRangedHitRate(defender, isBarrage, accBonus)
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getRangedHitRate(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr || m_PBaseEntity->objtype == TYPE_NPC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+	int bonusACC = (int)lua_tointeger(L, 2);
+
+    auto PAttacker = static_cast<CBattleEntity*>(m_PBaseEntity);
+    auto PDefender = static_cast<CBattleEntity*>(PLuaBaseEntity->GetBaseEntity());
+
+    int rangedHitRate = battleutils::GetRangedHitRate(PAttacker, PDefender, false, bonusACC);
+
+    lua_pushinteger(L, rangedHitRate);
+    return 1;
+}
+
+/************************************************************************
 *  Function: getStat()
 *  Purpose : Returns a particular stat for an Entity
 *  Example : caster:getStat(MOD_INT)
@@ -12411,7 +12471,7 @@ inline int32 CLuaBaseEntity::getEVA(lua_State *L)
 *  Function: getRACC()
 *  Purpose : Calculates and returns the Ranged Accuracy of a Weapon euipped in the Ranged slot
 *  Example : player:getRACC()
-*  Notes   : To Do: The calculation is already a public member of battleentity, shouldn't have two calculations, just call (CBattleEntity*)m_PBaseEntity)->RACC and return result
+*  Notes   : 
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::getRACC(lua_State *L)
@@ -12428,15 +12488,9 @@ inline int32 CLuaBaseEntity::getRACC(lua_State *L)
     CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
 
     int skill = PEntity->GetSkill(weapon->getSkillType());
-    int acc = skill;
-    if (skill > 200) {
-        acc = (int)(200 + (skill - 200) * 0.9);
-    }
-    acc += PEntity->getMod(Mod::RACC);
-    acc += PEntity->AGI() / 2;
-    acc = acc + std::min<int16>(((100 + PEntity->getMod(Mod::FOOD_RACCP)) * acc / 100), PEntity->getMod(Mod::FOOD_RACC_CAP));
+    int rACC = PEntity->RACC(skill);
 
-    lua_pushinteger(L, acc);
+    lua_pushinteger(L, rACC);
     return 1;
 }
 
@@ -12461,6 +12515,40 @@ inline int32 CLuaBaseEntity::getRATT(lua_State *L)
     }
 
     lua_pushinteger(L, ((CBattleEntity*)m_PBaseEntity)->RATT(weapon->getSkillType(), weapon->getILvlSkill()));
+    return 1;
+}
+
+/************************************************************************
+*  Function: getILvlSkill()
+*  Purpose : Returns the weapon skill value of an equipped weapon
+*  Example : player:getILvlSkill()
+*  Notes   : Value of m_iLvlMacc (private member of CItemWeapon)
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getILvlSkill(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+	TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+	
+	if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+		uint8 SLOT = (uint8)lua_tointeger(L, 1);
+		
+		TPZ_DEBUG_BREAK_IF(SLOT > 3);
+		
+		CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
+
+		if (auto weapon = dynamic_cast<CItemWeapon*>(PEntity->m_Weapons[SLOT]))
+		{
+			lua_pushinteger(L, weapon->getILvlSkill());
+			return 1;
+		}
+		else
+		{
+			lua_pushinteger(L, 0);
+		}
+	}
+
     return 1;
 }
 
@@ -16120,12 +16208,17 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addBurden),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setStatDebilitation),
 
+	// Hit Rate Calculation
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getHitRate),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRangedHitRate),
+
     // Damage Calculation
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getStat),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getACC),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getEVA),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRACC),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRATT),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getILvlSkill),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getILvlMacc),
 	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getILvlParry),
 

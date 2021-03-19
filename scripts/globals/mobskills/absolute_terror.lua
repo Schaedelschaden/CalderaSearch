@@ -34,6 +34,6 @@ function onMobWeaponSkill(target, mob, skill)
     end
 
     skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, power, 0, duration))
-    return typeEffect
-
+    
+	return typeEffect
 end

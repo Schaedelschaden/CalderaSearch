@@ -24,6 +24,11 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.ele = tpz.magic.ele.LIGHTNING
     params.skill = tpz.skill.AXE
     params.includemab = true
+	params.specialWSDMG = player:getMod(tpz.mod.CLOUDSPLITTER_DMG)
+	
+	if (player:getEquipID(tpz.slot.MAIN) == 20808) then
+		params.bonusmab = 300
+	end
 
     if USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.ftp200 = 6.7 params.ftp300 = 8.5

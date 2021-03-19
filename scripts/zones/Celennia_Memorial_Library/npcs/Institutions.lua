@@ -83,15 +83,15 @@ local ValidRolls = {
 
 -- Automaton Attachments
 local ValidAttachments = {
-  8193, 8194, 8195, 8196, 8197, 8198, 8224, 8225, 8226, 8227,
-  8449, 8450, 8451, 8452, 8453, 8454, 8455, 8456, 8457, 8458,
-  8481, 8482, 8483, 8484, 8485, 8486, 8487, 8488, 8489, 8490,
-  8513, 8514, 8515, 8516, 8517, 8518, 8519, 8520, 8521, 8522,
-  8523, 8545, 8546, 8547, 8548, 8549, 8550, 8551, 8552, 8553,
-  8554, 8577, 8578, 8579, 8580, 8581, 8582, 8583, 8584, 8585,
-  8586, 8609, 8610, 8611, 8612, 8613, 8614, 8615, 8616, 8617,
-  8618, 8641, 8642, 8643, 8644, 8645, 8646, 8648, 8649, 8650,
-  8673, 8674, 8675, 8676, 8677, 8678, 8680, 8681
+	8193, 8194, 8195, 8196, 8197, 8198, 8224, 8225, 8226, 8227,
+	8449, 8450, 8451, 8452, 8453, 8454, 8455, 8456, 8457, 8458, 8459, 8460, 8461,
+	8462, 8465, 8466, 8481, 8482, 8483, 8484, 8485, 8486, 8487, 8488, 8489, 8490,
+	8513, 8514, 8515, 8516, 8517, 8518, 8519, 8520, 8521, 8522,
+	8523, 8524, 8528, 8545, 8546, 8547, 8548, 8549, 8550, 8551, 8552, 8553,
+	8554, 8577, 8578, 8579, 8580, 8581, 8582, 8583, 8584, 8585,
+	8586, 8609, 8610, 8611, 8612, 8613, 8614, 8615, 8616, 8617,
+	8618, 8641, 8642, 8643, 8644, 8645, 8646, 8648, 8649, 8650, 8654,
+	8673, 8674, 8675, 8676, 8677, 8678, 8680, 8681, 9230
 }
 
 local function AddAllSpells(player)
@@ -125,17 +125,43 @@ local function AddAllChairs(player)
 end
 
 function onTrigger(player, target)
-	player:unlockJob(tpz.job.DRG)
-	player:setPetName(tpz.pet.type.WYVERN, math.random(1,32))
-	player:unlockJob(tpz.job.PUP)
-	player:setPetName(tpz.pet.type.AUTOMATON, math.random(118, 149))
-	player:capAllSkills()
-	AddAllSpells(player)
-	AddAllRolls(player)
-    AddAllAttachments(player)
-	AddAllMounts(player)
-	AddAllChairs(player)
-	player:PrintToPlayer(string.format("Institutions : Capped all skills. Added all spells/songs, COR rolls, and PUP attachments. Unlocked all mounts and chairs."),tpz.msg.channel.NS_SAY)
-	player:PrintToPlayer(string.format("Institutions : DRG and PUP pet names have been randomized. Visit Fouvia(DRG) or Abda-Lurabda (PUP) to change them."),tpz.msg.channel.NS_SAY)
-	player:PrintToPlayer(string.format("Institutions : Please zone for all changes to display properly."),tpz.msg.channel.NS_SAY)
+	if (player:getCharVar("HasTriggeredInstitutions") == 0) then
+		player:unlockJob(tpz.job.DRG)
+		player:setPetName(tpz.pet.type.WYVERN, math.random(1,32))
+		player:unlockJob(tpz.job.PUP)
+		player:setPetName(tpz.pet.type.AUTOMATON, math.random(118, 149))
+		player:capAllSkills()
+		AddAllSpells(player)
+		AddAllRolls(player)
+		AddAllAttachments(player)
+		AddAllMounts(player)
+		AddAllChairs(player)
+		player:PrintToPlayer(string.format("Institutions : Capped all skills. Added all spells/songs, COR rolls, and PUP attachments. Unlocked all mounts and chairs."),tpz.msg.channel.NS_SAY)
+		player:PrintToPlayer(string.format("Institutions : DRG and PUP pet names have been randomized. Visit Fouvia (DRG) or Abda-Lurabda (PUP) to change them."),tpz.msg.channel.NS_SAY)
+		player:PrintToPlayer(string.format("Institutions : Please zone for all changes to display properly."),tpz.msg.channel.NS_SAY)
+		player:setCharVar("HasTriggeredInstitutions", 1)
+	else
+		player:PrintToPlayer(string.format("Institutions : Looks like you've already had everything unlocked! Visit Fouvia (DRG) or Abda-Lurabda (PUP) to change your pet's name."),tpz.msg.channel.NS_SAY)
+		player:PrintToPlayer(string.format("Institutions : You can trade me EXP rings to have them refilled in exchange for conquest points!"),tpz.msg.channel.NS_SAY)
+	end
+end
+
+function onTrade(player, npc, trade)
+	local ringID = {10796, 11666, 14671, 15761, 15762, 15763, 15793, 15840, 26164, 27556, 28528, 28562, 28568, 28569}
+	local ringCPCost = {500, 450, 1500, 500, 750, 1500, 500, 1500, 1500, 1500, 600, 650, 1500, 1500}
+
+	local itemToReplenish = 0
+	local itemFound = false
+	local currentCP = player:getCP()
+	
+	for i = 1, 14 do
+		if (trade:hasItemQty(ringID[i], 1) and currentCP >= ringCPCost[i]) then
+			player:tradeComplete()
+			
+			player:delCP(ringCPCost[i])
+			player:addItem(ringID[i], 1)
+			player:PrintToPlayer(string.format("You exchanged %i Conquest Points to recharge your ring.", ringCPCost[i]),tpz.msg.channel.SYSTEM_3)
+			player:messageSpecial(ID.text.ITEM_OBTAINED, ringID[i])
+		end
+	end
 end

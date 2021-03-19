@@ -31,5 +31,4 @@ function onMobWeaponSkill(target, mob, skill)
     end
 
     return num
-
 end

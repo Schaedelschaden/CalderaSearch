@@ -24,7 +24,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     mob:eraseAllStatusEffect()
     local typeEffect = tpz.effect.REGEN
 

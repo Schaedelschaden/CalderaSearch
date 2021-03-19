@@ -30,6 +30,11 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.hybridWS = true
     params.ele = tpz.magic.ele.FIRE
     params.skill = tpz.skill.GREAT_KATANA
+	params.includemab = true
+	
+	if (player:getEquipID(tpz.slot.MAIN) == 21036) then
+		params.bonusmab = 600
+	end
 
     if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
         params.ftp100 = 0.5 params.ftp200 = 0.75 params.ftp300 = 1

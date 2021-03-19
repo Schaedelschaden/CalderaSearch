@@ -122,6 +122,11 @@ CCharJobExtraPacket::CCharJobExtraPacket(CCharEntity* PChar, bool mjob)
         ref<uint16>(0x9A) = PChar->PAutomaton->getMod(Mod::CHR);
 
         ref<uint8>(0x9C) = 0; //extra elemental capacity from gifts
+		
+		// Increases automaton elemental capacity based on number of Automaton Skills merits
+		if (PChar->PMeritPoints->GetMeritValue(MERIT_AUTOMATON_SKILLS, PChar) > 2)
+		{
+			ref<uint8>(0x9C) = (PChar->PMeritPoints->GetMeritValue(MERIT_AUTOMATON_SKILLS, PChar) - 2) / 2;
+		}
     }
-
 }

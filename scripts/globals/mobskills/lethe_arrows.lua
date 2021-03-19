@@ -26,6 +26,5 @@ function onMobWeaponSkill(target, mob, skill)
     MobStatusEffectMove(mob, target, tpz.effect.BIND, 1, 0, 120)
     MobStatusEffectMove(mob, target, tpz.effect.AMNESIA, 1, 0, 120)
 
-    target:takeDamage(dmg, mob, tpz.attackType.RANGED, tpz.damageType.PIERCING)
     return dmg
 end

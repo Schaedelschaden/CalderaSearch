@@ -29,6 +29,5 @@ function onMobWeaponSkill(target, mob, skill)
         target:dispelStatusEffect()
     end
 
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
     return dmg
 end

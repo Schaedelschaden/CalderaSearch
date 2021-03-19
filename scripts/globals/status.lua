@@ -1591,6 +1591,7 @@ tpz.mod =
     CURE2MP_PERCENT                 = 860, -- Converts % of "Cure" amount to MP
     DIVINE_BENISON                  = 910, -- Adds fast cast and enmity reduction to -Na spells (includes Erase). Enmity reduction is half of the fast cast amount
     SAVETP                          = 880, -- SAVETP Effect for Miser's Roll / ATMA / Hagakure.
+	CONSERVE_TP                     = 944, -- Conserve TP trait, random chance between 10 and 200 TP
     SMITE                           = 898, -- Att increase with H2H or 2H weapons
     TACTICAL_GUARD                  = 899, -- Tp gain increase when guarding
     GUARD_PERCENT                   = 976, -- Guard Percent
@@ -1623,6 +1624,10 @@ tpz.mod =
     -- 570 - 825 used by WS DMG mods these are not spares.
 
 	-- Caldera custom Mod IDs
+	FRONTAL_DMG_REDUCTION           = 2000, -- Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the front
+	REAR_DMG_REDUCTION              = 2001, -- Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the rear
+	SIDE_DMG_REDUCTION              = 2002, -- Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the side
+	
 	ENEMY_TP_ACCUM                  = 2800, -- Reduces enemy TP accumulation by % when player takes physical damage
 	WALTZ_POTENCY_RCVD              = 2801, -- Increases the potency of Waltz's received
 	DARK_MAGIC_DURATION             = 2802, -- Increases the duration of Dark Magic spells
@@ -1634,7 +1639,13 @@ tpz.mod =
 	CAIT_SITH_ILVL                  = 2808, -- Increases Cait Sith's level when summoned
 	HALVE_CARBUNCLE_PERP            = 2809, -- Halves Carbuncle's Perpetuation cost
 	REDUCE_KNOCKBACK                = 2810, -- Reduces the strength of knockback effects
+	PARRY_RECOVER_HP                = 2811, -- Player recovers HP when parrying attacks
+	ZANSHIN_DOUBLE_ATTACK           = 2812, -- Allows Zanshin to occasionally Double Attack
+	AUTOMATON_ELE_CAPACITY          = 2813, -- Increases Automaton Attachment Elemental Capacity
+	REFRESH_DURATION_RCVD           = 2814, -- Increases the duration of Refresh effects received
+	STONESKIN_CAST                  = 2815, -- Reduces the cast time of "Stoneskin"
 	
+	AUGMENT_VIVACIOUS_PULSE         = 2939, -- Augments "Vivacious Pulse" (Grants Vivacious Pulse the ability to remove status ailments associated with a -na spell)
 	ENH_KLIMAFORM                   = 2940, -- Enhances "Klimaform" effect (Increases damage of spells under matching weather while Klimaform is active)
 	ENH_PARSIMONY                   = 2941, -- Enhances "Parsimony" effect (Further reduces MP cost by % of associated Black Magic spell)
 	ENH_PENURY                      = 2942, -- Enhances "Penury" effect (Further reduces MP cost by % of associated White Magic spell)
@@ -1778,20 +1789,29 @@ tpz.mod =
 	ENH_ENFEEBLE                    = 3210, -- Increases Enfeebling magic potency + (Duelist's Torque/+1/+2)
 	UTSU_ATK_SHADOWS                = 3211, -- Adds Attack for each Utsusemi Shadow Image present
 	
-	ASURAN_FISTS_WS_DMG             = 3300, -- Main Hand: Asuran Fists Damage (H2H)
-	EVISCERATION_WS_DMG             = 3301, -- Main Hand: Evisceration Damage (Dagger)
-	SAVAGE_BLADE_WS_DMG             = 3302, -- Main Hand: Savage Blade Damage (Sword)
-	GROUND_STRIKE_WS_DMG            = 3303, -- Main Hand: Ground Strike Damage (GSword)
-	DECIMATION_WS_DMG               = 3304, -- Main Hand: Decimation Damage (Axe)
-	STEEL_CYCLONE_WS_DMG            = 3305, -- Main Hand: Steel Cycle Damage (GAxe)
-	SPIRAL_HELL_WS_DMG              = 3306, -- Main Hand: Spiral Hell Damage (Scythe)
-	IMPULSE_DRIVE_WS_DMG            = 3307, -- Main Hand: Impulse Drive Damage (Polearm)
-	BLADE_KU_WS_DMG                 = 3308, -- Main Hand: Blade: Ku Damage (Katana)
-	TACHI_KASHA_WS_DMG              = 3309, -- Main Hand: Tachi: Kasha Damage (GKatana)
-	BLACK_HALO_WS_DMG               = 3310, -- Main Hand: Black Halo Damage (Club)
-	RETRIBUTION_WS_DMG              = 3311, -- Main Hand: Retribution Damage (Staff)
-	EMPYREAL_ARROW_WS_DMG           = 3312, -- Main Hand: Empyreal Arrow Damage (Archery)
-	DETONATOR_WS_DMG                = 3313, -- Main Hand: Detonator Damage (Marksmanship)
+	ASURAN_FISTS_DMG                = 3300, -- Asuran Fists Damage (H2H)
+	EVISCERATION_DMG                = 3301, -- Evisceration Damage (Dagger)
+	SAVAGE_BLADE_DMG                = 3302, -- Savage Blade Damage (Sword)
+	GROUND_STRIKE_DMG               = 3303, -- Ground Strike Damage (GSword)
+	DECIMATION_DMG                  = 3304, -- Decimation Damage (Axe)
+	STEEL_CYCLONE_DMG               = 3305, -- Steel Cycle Damage (GAxe)
+	SPIRAL_HELL_DMG                 = 3306, -- Spiral Hell Damage (Scythe)
+	IMPULSE_DRIVE_DMG               = 3307, -- Impulse Drive Damage (Polearm)
+	BLADE_KU_DMG                    = 3308, -- Blade: Ku Damage (Katana)
+	TACHI_KASHA_DMG                 = 3309, -- Tachi: Kasha Damage (GKatana)
+	BLACK_HALO_DMG                  = 3310, -- Black Halo Damage (Club)
+	RETRIBUTION_DMG                 = 3311, -- Retribution Damage (Staff)
+	EMPYREAL_ARROW_DMG              = 3312, -- Empyreal Arrow Damage (Archery)
+	DETONATOR_DMG                   = 3313, -- Detonator Damage (Marksmanship)
+	SPINNING_SLASH_DMG              = 3314, -- Spinning Slash Damage (Great Sword)
+	RED_LOTUS_BLADE_DMG             = 3315, -- Red Lotus Blade Damage (Sword)
+	HERCULEAN_SLASH_DMG             = 3316, -- Herculean Slash Damage (Great Sword)
+	GUST_SLASH_DMG                  = 3317, -- Gust Slash Damage (Dagger)
+	CLOUDSPLITTER_DMG				= 3318, -- Cloudsplitter Damage (Axe)
+	SERAPH_STRIKE_DMG               = 3319, -- Seraph Strike Damage (Club)
+	BLAST_SHOT_DMG                  = 3320, -- Blast Shot Damage (Marksmanship)
+	RAIDEN_THRUST_DMG               = 3321, -- Raiden Thrust Damage (Polearm)
+	TACHI_KAGERO_DMG                = 3322, -- Tachi: Kagero Damage (Great Katana)
 }
 
 tpz.latent =

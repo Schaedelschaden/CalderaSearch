@@ -28,6 +28,5 @@ function onMobWeaponSkill(target, mob, skill)
         mob:resetEnmity(target)
     end
 
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
     return dmg
 end

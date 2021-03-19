@@ -14,9 +14,13 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.STONESKIN
     local base = mob:getMainLvl()*2 + 50
+	
+	-- Adjust Trial By Earth Titan's Earthen Ward damage
+	if (mob:getID() == 17633281) then
+		base = 3000
+	end
 
     skill:setMsg(MobBuffMove(mob, typeEffect, base, 0, 180))
 
     return tpz.effect.STONESKIN
-
 end

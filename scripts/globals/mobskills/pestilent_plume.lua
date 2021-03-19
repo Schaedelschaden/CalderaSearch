@@ -34,7 +34,5 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.DARK, MOBPARAM_IGNORE_SHADOWS)
 --	printf("pestilent_plume.cpp onMobWeaponSkill FINAL DMG: [%i]\n", dmg);
 	
-    target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.DARK)
-	
     return dmg
 end

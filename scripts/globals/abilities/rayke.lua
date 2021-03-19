@@ -13,71 +13,37 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAbilityCheck(player, target, ability)
-	if (player:hasStatusEffect(tpz.effect.IGNIS) or
-		player:hasStatusEffect(tpz.effect.GELUS) or
-		player:hasStatusEffect(tpz.effect.FLABRA) or
-		player:hasStatusEffect(tpz.effect.TELLUS) or
-		player:hasStatusEffect(tpz.effect.SULPOR) or
-		player:hasStatusEffect(tpz.effect.UNDA) or
-		player:hasStatusEffect(tpz.effect.LUX) or
-		player:hasStatusEffect(tpz.effect.TENEBRAE)) then
+	if (player:hasStatusEffect(tpz.effect.IGNIS) or player:hasStatusEffect(tpz.effect.GELUS) or player:hasStatusEffect(tpz.effect.FLABRA) or
+		player:hasStatusEffect(tpz.effect.TELLUS) or player:hasStatusEffect(tpz.effect.SULPOR) or player:hasStatusEffect(tpz.effect.UNDA) or
+		player:hasStatusEffect(tpz.effect.LUX) or player:hasStatusEffect(tpz.effect.TENEBRAE)) then
 		return 0,0
 	else
-		return tpz.msg.basic.UNABLE_TO_USE_JA
+		return tpz.msg.basic.REQUIRES_RUNES
 	end
 end
 
 function onUseAbility(player, target, ability, action)	
 	local RuneEnhancement = {tpz.effect.IGNIS, tpz.effect.GELUS, tpz.effect.FLABRA, tpz.effect.TELLUS, tpz.effect.SULPOR, tpz.effect.UNDA, tpz.effect.LUX, tpz.effect.TENEBRAE}
-	local RuneCounter = {0, 0, 0, 0, 0, 0, 0, 0}
+	local resistPower = {"Rayke_Fire", "Rayke_Ice", "Rayke_Wind", "Rayke_Earth", "Rayke_Lightning", "Rayke_Water", "Rayke_Light", "Rayke_Dark"}
+	
 	local power = 100
+	local RuneCounter = 0
 	local duration = 30
 	
 	for i,v in ipairs(RuneEnhancement) do
+		RuneCounter = 0
+	
 		if (player:hasStatusEffect(RuneEnhancement[i])) then
-			RuneCounter[i] = player:countEffect(RuneEnhancement[i])
+			RuneCounter = player:countEffect(RuneEnhancement[i])
+			power = power * RuneCounter
+			target:setLocalVar(resistPower[i], power)
 --			printf("rayke.lua onUseAbility Rayke RUNE COUNTER: [%i]", RuneCounter[i])
 		end
-	end
-	
-	if (player:hasStatusEffect(RuneEnhancement[1])) then
-		target:delMod(tpz.mod.FIRERES, power * RuneCounter[1])
-		target:setCharVar("Rayke_Fire", power * RuneCounter[1])
-	end
-	if (player:hasStatusEffect(RuneEnhancement[2])) then
-		target:delMod(tpz.mod.ICERES, power * RuneCounter[2])
-		target:setCharVar("Rayke_Ice", power * RuneCounter[2])
-	end
-	if (player:hasStatusEffect(RuneEnhancement[3])) then
-		target:delMod(tpz.mod.WINDRES, power * RuneCounter[3])
-		target:setCharVar("Rayke_Wind", power * RuneCounter[3])
-	end
-	if (player:hasStatusEffect(RuneEnhancement[4])) then
-		target:delMod(tpz.mod.EARTHRES, power * RuneCounter[4])
-		target:setCharVar("Rayke_Earth", power * RuneCounter[4])
-	end
-	if (player:hasStatusEffect(RuneEnhancement[5])) then
-		target:delMod(tpz.mod.THUNDERRES, power * RuneCounter[5])
-		target:setCharVar("Rayke_Lightning", power * RuneCounter[5])
-	end
-	if (player:hasStatusEffect(RuneEnhancement[6])) then
-		target:delMod(tpz.mod.WATERRES, power * RuneCounter[6])
-		target:setCharVar("Rayke_Water", power * RuneCounter[6])
-	end
-	if (player:hasStatusEffect(RuneEnhancement[7])) then
-		target:delMod(tpz.mod.LIGHTRES, power * RuneCounter[7])
-		target:setCharVar("Rayke_Light", power * RuneCounter[7])
-	end
-	if (player:hasStatusEffect(RuneEnhancement[8])) then
-		target:delMod(tpz.mod.DARKRES, power * RuneCounter[8])
-		target:setCharVar("Rayke_Dark", power * RuneCounter[8])
 	end
 	
 	player:removeAllRunes()
 	
 	target:addStatusEffect(tpz.effect.RAYKE, 1, 0, duration)
-	
---	ability:setMsg(tpz.msg.basic.SKILL_ENFEEB)
 	
 	return tpz.effect.RAYKE
 end

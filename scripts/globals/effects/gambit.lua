@@ -5,9 +5,17 @@
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
+local sdtPower = {"Gambit_Fire", "Gambit_Ice", "Gambit_Wind", "Gambit_Earth", "Gambit_Lightning", "Gambit_Water", "Gambit_Light", "Gambit_Dark"}
+local sdtMod = {tpz.mod.SDT_FIRE, tpz.mod.SDT_ICE, tpz.mod.SDT_WIND, tpz.mod.SDT_EARTH, tpz.mod.SDT_LIGHTNING, tpz.mod.SDT_WATER, tpz.mod.SDT_LIGHT, tpz.mod.SDT_DARK}
 
 function onEffectGain(target, effect)
-	
+	for i = 1, 8 do
+		if (target:getLocalVar(sdtPower[i]) > 0) then
+			local power = target:getLocalVar(sdtPower[i])
+			
+			target:addMod(sdtMod[i], power)
+		end
+	end
 end
 
 function onEffectTick(target, effect)
@@ -15,45 +23,12 @@ function onEffectTick(target, effect)
 end
 
 function onEffectLose(target, effect)
-	local PowerFire = target:getCharVar("Gambit_Fire")
-	local PowerIce = target:getCharVar("Gambit_Ice")
-	local PowerWind = target:getCharVar("Gambit_Wind")
-	local PowerEarth = target:getCharVar("Gambit_Earth")
-	local PowerLightning = target:getCharVar("Gambit_Lightning")
-	local PowerWater = target:getCharVar("Gambit_Water")
-	local PowerLight = target:getCharVar("Gambit_Light")
-	local PowerDark = target:getCharVar("Gambit_Dark")
-	
-	if (PowerFire > 0) then
-		target:delMod(tpz.mod.SDT_FIRE, PowerFire)
-		target:setCharVar("Gambit_Fire", 0)
-	end
-	if (PowerIce > 0) then
-		target:delMod(tpz.mod.SDT_ICE, PowerIce)
-		target:setCharVar("Gambit_Ice", 0)
-	end
-	if (PowerWind > 0) then
-		target:delMod(tpz.mod.SDT_WIND, PowerWind)
-		target:setCharVar("Gambit_Wind", 0)
-	end
-	if (PowerEarth > 0) then
-		target:delMod(tpz.mod.SDT_EARTH, PowerEarth)
-		target:setCharVar("Gambit_Earth", 0)
-	end
-	if (PowerLightning > 0) then
-		target:delMod(tpz.mod.SDT_LIGHTNING, PowerLightning)
-		target:setCharVar("Gambit_Lightning", 0)
-	end
-	if (PowerWater > 0) then
-		target:delMod(tpz.mod.SDT_WATER, PowerWater)
-		target:setCharVar("Gambit_Water", 0)
-	end
-	if (PowerLight > 0) then
-		target:delMod(tpz.mod.SDT_LIGHT, PowerLight)
-		target:setCharVar("Gambit_Light", 0)
-	end
-	if (PowerDark > 0) then
-		target:delMod(tpz.mod.SDT_DARK, PowerDark)
-		target:setCharVar("Gambit_Dark", 0)
+	for i = 1, 8 do
+		if (target:getLocalVar(sdtPower[i]) > 0) then
+			local power = target:getLocalVar(sdtPower[i])
+			
+			target:delMod(sdtMod[i], power)
+			target:setLocalVar(sdtPower[i], 0)
+		end
 	end
 end

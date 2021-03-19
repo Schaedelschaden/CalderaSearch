@@ -25,8 +25,10 @@ function onUseAbility(player,target,ability,action)
     else
         ability:setMsg(tpz.msg.basic.JA_NO_EFFECT)
     end
+	
     local skill = player:getWeaponSkillType(tpz.slot.MAIN)
     local anim = 36
+	
     if skill <= 1 then
         anim = 37
     elseif skill <= 3 then
@@ -50,7 +52,9 @@ function onUseAbility(player,target,ability,action)
     else
         anim = 36
     end
+	
     action:animation(target:getID(), anim)
     action:speceffect(target:getID(), 1)
+	
     return 0
 end

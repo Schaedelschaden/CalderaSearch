@@ -671,7 +671,7 @@ uint16 CBattleEntity::ATT()
 uint16 CBattleEntity::RATT(uint8 skill, uint16 bonusSkill)
 {
     // Determines character, pet, and mod RATT stat
-	// Base 8 RATT + Ranged Skill + Bonus Skill + RATT Mod + RATT Bonus + (STR / 2)
+	// Base 8 RATT + Ranged Skill + iLvl Skill + RATT Mod + RATT Bonus + (STR / 2)
     auto PWeakness = StatusEffectContainer->GetStatusEffect(EFFECT_WEAKNESS);
     if (PWeakness && PWeakness->GetPower() >= 2)
     {
@@ -680,7 +680,14 @@ uint16 CBattleEntity::RATT(uint8 skill, uint16 bonusSkill)
     
 	int32 RATTP = 0;
 	int32 foodRATTP = 0;
-	int32 RATT = 8 + GetSkill(skill) + bonusSkill + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + STR() / 2;
+	int32 iLvlSkill = 0;
+	
+	if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_RANGED]))
+	{
+		iLvlSkill = weapon->getILvlSkill();
+	}
+	
+	int32 RATT = 8 + GetSkill(skill) + iLvlSkill + bonusSkill + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + STR() / 2;
 	
 	// Get RATTP Mod from buffs/debuffs/gear and determine percent of RATT Mod
 	RATTP += static_cast<int32>(RATT * (m_modStat[Mod::RATTP] / 100.00f));
@@ -701,15 +708,38 @@ uint16 CBattleEntity::RACC(uint8 skill, uint16 bonusSkill)
     {
         return 0;
     }
-    int skill_level = GetSkill(skill) + bonusSkill;
+	
+	uint16 iLvlSkill = 0;
+	
+	if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_RANGED]))
+	{
+		iLvlSkill = weapon->getILvlSkill();
+	}
+	
+	uint16 skill_level = GetSkill(skill) + iLvlSkill + bonusSkill;
     uint16 acc = skill_level;
-    if (skill_level > 200)
+
+	if (skill_level <= 200)
+	{
+		acc = skill_level;
+	}
+    else if (skill_level >= 201 && skill_level <= 400)
     {
-        acc = (uint16)(200 + (skill_level - 200) * 0.9);
+        acc = (uint16)(((skill_level - 200) * 0.9) + 200);
     }
+	else if (skill_level >= 401 && skill_level <= 600)
+    {
+        acc = (uint16)(((skill_level - 400) * 0.8) + 380);
+    }
+	else if (skill_level >= 601)
+    {
+        acc = (uint16)(((skill_level - 600) * 0.9) + 540);
+    }
+	
     acc += getMod(Mod::RACC);
     acc += battleutils::GetRangedAccuracyBonuses(this);
     acc += (AGI() * 3) / 4;
+	
     return acc + std::min<int16>(((100 + getMod(Mod::FOOD_RACCP) * acc) / 100), getMod(Mod::FOOD_RACC_CAP));
 }
 
@@ -717,7 +747,7 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
 {
 	// Determines character, pet, and mod ACC stat
     if (this->objtype & TYPE_PC) {
-        uint8 skill = 0;
+        uint16 skill = 0;
         uint16 iLvlSkill = 0;
         if (attackNumber == 0)
         {
@@ -751,8 +781,23 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
             }
             skill = SKILL_HAND_TO_HAND;
         }
-        int16 ACC = GetSkill(skill) + iLvlSkill;
-        ACC = (ACC > 200 ? (int16)(((ACC - 200) * 0.9) + 200) : ACC);
+		
+		uint16 skill_level = GetSkill(skill) + iLvlSkill;
+        int16 ACC = skill_level;
+		
+		if (skill_level >= 201 && skill_level <= 400)
+		{
+			ACC = (uint16)(((skill_level - 200) * 0.9) + 200);
+		}
+		else if (skill_level >= 401 && skill_level <= 600)
+		{
+			ACC = (uint16)(((skill_level - 400) * 0.8) + 380);
+		}
+		else if (skill_level >= 601)
+		{
+			ACC = (uint16)(((skill_level - 600) * 0.9) + 540);
+		}
+		
         if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]); weapon && weapon->isTwoHanded() == true)
         {
             ACC += (int16)(DEX() * 0.75);
@@ -1695,6 +1740,12 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 actionTarget.speceffect = SPECEFFECT_NONE;
                 battleutils::HandleTacticalParry(PTarget);
                 battleutils::HandleIssekiganEnmityBonus(PTarget, this);
+
+				if (PTarget->getMod(Mod::PARRY_RECOVER_HP) > 0)
+				{
+//					printf("battleentity.cpp OnAttack PARRY RECOVER HP: [%i]\n", PTarget->getMod(Mod::PARRY_RECOVER_HP));
+					PTarget->addHP(PTarget->getMod(Mod::PARRY_RECOVER_HP));
+				}
 				
 				if (PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BATTUTA))
 				{
@@ -1900,6 +1951,13 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
             {
                 attack.SetAttackType(PHYSICAL_ATTACK_TYPE::ZANSHIN);
                 attack.SetAsFirstSwing(false);
+
+				if (tpzrand::GetRandomNumber(100) < this->getMod(Mod::ZANSHIN_DOUBLE_ATTACK))
+				{
+					attack.SetAttackType(PHYSICAL_ATTACK_TYPE::ZANSHIN);
+					attack.SetAsFirstSwing(true);
+//					printf("battleentity.cpp OnAttack ZANSHIN DOUBLE ATTACK TRIGGERED\n");
+				}
             }
             else
                 attackRound.DeleteAttackSwing();

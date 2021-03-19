@@ -8,7 +8,7 @@ require("scripts/globals/magic")
 -----------------------------------
 
 function onEffectGain(target,effect)
-	power = effect:getPower()
+	local power = effect:getPower()
 	setBonus = 0
 	
 	if (power >= 2000 and power < 3000) then
@@ -30,6 +30,7 @@ function onEffectGain(target,effect)
 	end
 
     target:addMod(effect:getSubPower(), power)
+	effect:setPower(power)
 end
 
 function onEffectTick(target,effect)
@@ -37,6 +38,8 @@ function onEffectTick(target,effect)
 end
 
 function onEffectLose(target,effect)
+	local power = effect:getPower()
+	
     target:delMod(effect:getSubPower(), power)
 	
 	if (setBonus > 0) then

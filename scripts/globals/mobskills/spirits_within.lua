@@ -56,6 +56,5 @@ function onMobWeaponSkill(target, mob, skill)
         target:updateEnmityFromDamage(mob, dmg)
     end
 
-    target:takeDamage(dmg, mob, tpz.attackType.BREATH, tpz.damageType.ELEMENTAL)
     return dmg
 end

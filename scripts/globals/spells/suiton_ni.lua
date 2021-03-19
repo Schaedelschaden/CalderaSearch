@@ -21,6 +21,11 @@ function onSpellCast(caster, target, spell)
     params.dmg = 138
 
     params.multiplier = 1
+	
+	if (caster:getID() == 17641473) then
+		params.dmg = 560
+		params.multiplier = 1.0
+	end
 
     params.hasMultipleTargetReduction = false
 

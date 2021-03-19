@@ -25,7 +25,5 @@ function onMobWeaponSkill(target, mob, skill)
         end
     end
 
-    target:takeDamage(realDmg, mob, tpz.attackType.MAGICAL, tpz.damageType.ELEMENTAL)
-
     return realDmg
 end

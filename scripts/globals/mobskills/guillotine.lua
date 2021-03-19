@@ -26,6 +26,5 @@ function onMobWeaponSkill(target, mob, skill)
     MobStatusEffectMove(mob, target, tpz.effect.SILENCE, 1, 0, (skill:getTP()*30/1000)+30)
 
     -- 242 to a NIN, but shadows ate some hits...
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
     return dmg
 end

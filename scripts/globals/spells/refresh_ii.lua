@@ -13,7 +13,8 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local duration = calculateDuration(150, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = 150 + target:getMod(tpz.mod.REFRESH_DURATION_RCVD)
+    duration = calculateDuration(duration, spell:getSkillType(), spell:getSpellGroup(), caster, target)
     duration = calculateDurationForLvl(duration, 82, target:getMainLvl())
 
     local mp = 6 + caster:getMod(tpz.mod.ENHANCES_REFRESH)

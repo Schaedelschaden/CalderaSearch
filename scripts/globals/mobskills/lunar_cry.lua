@@ -13,7 +13,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     local moon = VanadielMoonPhase()
     local buffvalue = 1
 
@@ -34,6 +33,6 @@ function onMobWeaponSkill(target, mob, skill)
     target:addStatusEffect(tpz.effect.ACCURACY_DOWN, buffvalue, 0, 180)
     target:addStatusEffect(tpz.effect.EVASION_DOWN, 32-buffvalue, 0, 180)
     skill:setMsg(tpz.msg.basic.SKILL_ENFEEB_2)
+	
     return 0
-
 end

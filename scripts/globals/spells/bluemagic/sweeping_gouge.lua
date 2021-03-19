@@ -34,10 +34,10 @@ function onSpellCast(caster, target, spell)
 		params.attbonus = 90 -- +90% Attack
 		params.isACrit = true
         params.numhits = 2
-        params.multiplier = 6.00 -- 1.00
-        params.tp150 = 7.00 -- 2.00
-        params.tp300 = 8.00 -- 3.00
-        params.azuretp = 10.00 -- 5.00
+        params.multiplier = 9.00 -- 1.00
+        params.tp150 = 10.00 -- 2.00
+        params.tp300 = 11.00 -- 3.00
+        params.azuretp = 12.00 -- 5.00
         params.duppercap = 136
         params.str_wsc = 0.0
         params.dex_wsc = 0.0

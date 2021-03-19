@@ -25,7 +25,7 @@ function onTrigger(player, arg1, arg2, arg3, arg4)
     end
 
     if varValue == nil then
-        error(player, "No varaiable value given for target.")
+        error(player, "No variable value given for target.")
         return
     end
 

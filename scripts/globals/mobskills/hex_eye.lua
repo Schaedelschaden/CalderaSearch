@@ -24,5 +24,4 @@ function onMobWeaponSkill(target, mob, skill)
     skill:setMsg(MobGazeMove(mob, target, typeEffect, 25, 0, 120))
 
     return typeEffect
-
 end

@@ -93,7 +93,7 @@ local GearSets =  {
              {id = 75, items = {27414, 27413, 27240, 27239, 27055, 27054, 26901, 26900, 26743, 26742}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.EXTRA_KICK_ATTACK, extraAttackChance, 0, 0}} }, -- MNK 109/119 af3
              {id = 76, items = {26740, 26741, 27411, 27412, 27238, 27237, 27053, 27052, 26899, 26898}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.DA_DOUBLE_DAMAGE, extraDamageChance, 0, 0}} }, -- 109/119 WAR AF3
              {id = 77, items = {26750, 26751, 27421, 27422, 27247, 27248, 27063, 27062, 26908, 26909}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.TA_TRIPLE_DAMAGE, extraDamageChance, 0, 0}} }, -- 109/119 THF AF3
-             {id = 78, items = {26918, 26919, 26761, 26762, 27431, 27432, 27257, 27258, 27072, 27073}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.RAPID_SHOT_DOUBLE_DAMAGE, extraDamageChance, 0, 0}} }, -- 109/119 RNG AF3
+             {id = 78, items = {26918, 26919, 26761, 26760, 27431, 27432, 27257, 27258, 27072, 27073}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.RAPID_SHOT_DOUBLE_DAMAGE, extraDamageChance, 0, 0}} }, -- 109/119 RNG AF3
              {id = 79, items = {26910, 26911, 26752, 26753, 27424, 27423, 27064, 27065, 27249, 27250}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.ABSORB_DMG_CHANCE, nullDamageChance, 0, 0}} }, -- 109/119 PLD AF3
              {id = 80, items = {26922, 26923, 26764, 26765, 27076, 27077, 27261, 27262, 27435, 27436}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.EXTRA_DUAL_WIELD_ATTACK, extraAttackChance, 0, 0}} }, -- 109/119 NIN AF3
              {id = 81, items = {27443, 27444, 26772, 26773, 26930, 26931, 27084, 27085, 27269, 27270}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.QUICK_DRAW_TRIPLE_DAMAGE, extraDamageChance, 0, 0}} }, -- 109/119 COR AF3
@@ -163,6 +163,7 @@ local GearSets =  {
 			 {id = 210, items = {26671, 26847, 27023, 27199, 27375}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.DMG, -4, -2, 0}} },                                                   -- Souveran Armor +1 Set. Reduces Damage Taken by -2% per armor piece.
 			 {id = 211, items = {25614, 25687, 27118, 27303, 27474}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.CRITHITRATE, 4, -2, 0}} },                                            -- Adhemar Attire +1 Set. Increases rate of critical hits by 2% per armor piece.
 			 {id = 212, items = {26679, 26855, 27031, 27207, 27383}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.ACC, 20, 10, 0}} },                                                   -- Carmine Armor +1 Set. Increases Accuracy by 10 per armor piece.
+			 {id = 213, items = {25612, 25685, 27116, 27301, 27472}, matches = 2, matchType = matchtype.any, mods = {{tpz.mod.ATT, 20, 10, 0}} },                                                   -- Ryuo Armor +1 Set. Increases Attack by 10 per armor piece.		
 		}
 
              -- increment id by (number of mods in previous gearset - 1)

@@ -27,7 +27,5 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.DARK, MOBPARAM_IGNORE_SHADOWS)
 --	printf("gloom_spray.cpp onMobWeaponSkill FINAL DMG: [%i]\n", dmg);
 	
-    target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.DARK)
-	
     return dmg
 end
