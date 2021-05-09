@@ -34,9 +34,9 @@ function onPetAbility(target, automaton, skill, master, action)
     }
 
     if USE_ADOULIN_WEAPON_SKILL_CHANGES then
-        params.ftp100 = 6.0
-        params.ftp200 = 8.5
-        params.ftp300 = 11.0
+        params.ftp100 = 3.0
+        params.ftp200 = 4.5
+        params.ftp300 = 6.0
     end
 
     local damage = doAutoPhysicalWeaponskill(automaton, target, 0, skill:getTP(), true, action, false, params, skill, action)

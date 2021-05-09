@@ -26,7 +26,7 @@ function onSpellCast(caster, target, spell)
     end
 
     -- TODO: Investigate rumor that Temper is no longer hard capped at 500 skill
-    power = math.min(power, 20)
+--    power = math.min(power, 20)
 
     if target:addStatusEffect(effect, power, 0, duration) then
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)

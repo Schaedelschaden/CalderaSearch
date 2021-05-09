@@ -7,6 +7,7 @@ local ID = require("scripts/zones/Celennia_Memorial_Library/IDs")
 require("scripts/globals/settings")
 require("scripts/globals/keyitems")
 require("scripts/globals/status")
+require("scripts/globals/missions")
 -----------------------------------
 
 -- All white, black, blue spells and BRD songs
@@ -20,12 +21,12 @@ local ValidSpells =
     157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182,
     183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208,
     209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234,
-    235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260,
+    235, 236, 237, 238, 239, 240, 241, 242, 243, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260,
     261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286,
     287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312,
     313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338,
-    339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358, 359, 361, 362, 363, 364,
-    365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 387, 388, 389, 390,
+    339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355,
+    367, 368, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 387, 388, 389, 390,
     391, 392, 393, 394, 395, 396, 397, 398, 399, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416,
     417, 418, 419, 420, 421, 422, 423, 424, 425, 426, 427, 428, 429, 430, 431, 432, 433, 434, 435, 436, 437, 438, 439, 440, 441, 442,
     443, 444, 445, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462, 463, 464, 465, 466, 467, 468,
@@ -84,14 +85,19 @@ local ValidRolls = {
 -- Automaton Attachments
 local ValidAttachments = {
 	8193, 8194, 8195, 8196, 8197, 8198, 8224, 8225, 8226, 8227,
-	8449, 8450, 8451, 8452, 8453, 8454, 8455, 8456, 8457, 8458, 8459, 8460, 8461,
-	8462, 8465, 8466, 8481, 8482, 8483, 8484, 8485, 8486, 8487, 8488, 8489, 8490,
-	8513, 8514, 8515, 8516, 8517, 8518, 8519, 8520, 8521, 8522,
-	8523, 8524, 8528, 8545, 8546, 8547, 8548, 8549, 8550, 8551, 8552, 8553,
-	8554, 8577, 8578, 8579, 8580, 8581, 8582, 8583, 8584, 8585,
-	8586, 8609, 8610, 8611, 8612, 8613, 8614, 8615, 8616, 8617,
-	8618, 8641, 8642, 8643, 8644, 8645, 8646, 8648, 8649, 8650, 8654,
-	8673, 8674, 8675, 8676, 8677, 8678, 8680, 8681, 9230
+	8449, 8450, 8451, 8452, 8453, 8454, 8455, 8456, 8458,
+	8462, 8481, 8482, 8483, 8484, 8485, 8486, 8487, 8488, 8489, 8490, 8491, 8493, 8497,
+	8513, 8514, 8515, 8516, 8517, 8518, 8519, 8520,
+	8523, 8524, 8526, 8528, 8545, 8546, 8547, 8548, 8549, 8550, 8551,
+	8555, 8577, 8578, 8579, 8580, 8581, 8582, 8583, 8584, 8585,
+	8587, 8609, 8610, 8611, 8612, 8613, 8614, 8615, 8616,
+	8619, 8641, 8642, 8643, 8644, 8645, 8646, 8648, 8651,
+	8673, 8674, 8675, 8676, 8677, 8678, 8680, 8682, 9138, 9143, 9230,
+}
+
+local ValidTrusts = {
+	896, 898, 899, 900, 901, 902, 903, 904, 905, 908, 909, 910, 911, 913, 917, 933,
+	940, 951, 952, 968, 1010, 1019
 }
 
 local function AddAllSpells(player)
@@ -124,8 +130,53 @@ local function AddAllChairs(player)
     end
 end
 
+local function AddAllTrusts(player)
+	for i = 1, #ValidTrusts do
+		player:addSpell(ValidTrusts[i], true, true)
+	end
+end
+
+local function SetZilart(player)
+	local missionZM = {0, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 23, 24, 26, 27, 28, 30}
+
+	for i = 1, #missionZM do
+--		player:completeMission(3, 0)
+--		player:delMission(3, missionZM[i])
+		player:completeMission(3, missionZM[i])
+		player:addMission(3, missionZM[i] + 1)
+	end
+	
+	player:addMission(3, 31) -- RoZ: Awakening
+	player:addKeyItem(238) -- Sacrifical Chamber Key
+	player:addKeyItem(247) -- Prismatic Fragment
+	player:addKeyItem(452) -- Cerulean Crystal
+end
+
+local function SetCoP(player)
+	local missionCoP = {101, 110, 118, 128, 138, 218, 228, 238, 248, 257, 258, 318, 325, 335, 341, 350, 358, 368, 418, 428, 438, 448,
+	                    518, 530, 543, 552, 560, 568, 578, 618, 628, 638, 648, 718, 728, 738, 748, 758, 800, 818, 828, 840, 850}
+						
+	for i = 1, #missionCoP do
+		player:addMission(3, missionCoP[i])
+		player:completeMission(3, missionCoP[i])
+	end
+
+	player:addMission(6, 850) -- CoP: The Last Verse
+	player:addKeyItem(708) -- Mysterious Amulet
+	player:addKeyItem(591) -- Light of Dem
+	player:addKeyItem(590) -- Light of Holla
+	player:addKeyItem(592) -- Light of Mea
+	player:addKeyItem(604) -- Pso'Xja Pass
+	player:addKeyItem(593) -- Light of Vahzl
+	player:addKeyItem(594) -- Light of Al'Taieu
+	player:addItem(14657) -- Ducal Guard's Ring
+	player:addItem(14672) -- Tavnazian Ring
+end
+
 function onTrigger(player, target)
 	if (player:getCharVar("HasTriggeredInstitutions") == 0) then
+		player:PrintToPlayer(string.format("Institutions : Please wait. This will take a moment."),tpz.msg.channel.NS_SAY)
+		player:unlockJob(0)
 		player:unlockJob(tpz.job.DRG)
 		player:setPetName(tpz.pet.type.WYVERN, math.random(1,32))
 		player:unlockJob(tpz.job.PUP)
@@ -136,11 +187,22 @@ function onTrigger(player, target)
 		AddAllAttachments(player)
 		AddAllMounts(player)
 		AddAllChairs(player)
-		player:PrintToPlayer(string.format("Institutions : Capped all skills. Added all spells/songs, COR rolls, and PUP attachments. Unlocked all mounts and chairs."),tpz.msg.channel.NS_SAY)
+		AddAllTrusts(player)
+		SetZilart(player)
+		SetCoP(player)
+		player:PrintToPlayer(string.format("Institutions : Capped all skills. Added all spells/songs, COR rolls, and PUP starter attachments. Unlocked all mounts and chairs."),tpz.msg.channel.NS_SAY)
 		player:PrintToPlayer(string.format("Institutions : DRG and PUP pet names have been randomized. Visit Fouvia (DRG) or Abda-Lurabda (PUP) to change them."),tpz.msg.channel.NS_SAY)
+		player:PrintToPlayer(string.format("Institutions : All Rise of the Zilart and Chains of Promathia missions completed."),tpz.msg.channel.NS_SAY)
 		player:PrintToPlayer(string.format("Institutions : Please zone for all changes to display properly."),tpz.msg.channel.NS_SAY)
 		player:setCharVar("HasTriggeredInstitutions", 1)
+		player:setCharVar("HasTriggeredRoZCoP", 1)
 	else
+		-- if (player:getCharVar("HasTriggeredRoZCoP") == 0) then
+			-- SetZilart(player)
+			-- SetCoP(player)
+			-- player:setCharVar("HasTriggeredRoZCoP", 1)
+		-- end
+--		AddAllAttachments(player)
 		player:PrintToPlayer(string.format("Institutions : Looks like you've already had everything unlocked! Visit Fouvia (DRG) or Abda-Lurabda (PUP) to change your pet's name."),tpz.msg.channel.NS_SAY)
 		player:PrintToPlayer(string.format("Institutions : You can trade me EXP rings to have them refilled in exchange for conquest points!"),tpz.msg.channel.NS_SAY)
 	end

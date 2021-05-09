@@ -13,12 +13,14 @@ end
 
 function onTrigger(player, npc)
 	local cruor = player:getCurrency("cruor")
+	
     player:startEvent(2132, 4456448, 4456520, 6815836, 5505104, 255, 0, 1, cruor)
 end
 
 function onEventUpdate(player, csid, option)
 --	printf("Aby-LaTheine veridical_conflux_01.cpp onEventUpdate CSID: [%i]  OPTION: [%i]\n", csid, option)
 	local cruor = player:getCurrency("cruor")
+	
 	if (option == 131073 and cruor >= 68) then -- Veridical Conflux #02
 		player:updateEvent(1, 0, 0, 32, 355, 601, 532908, cruor)
 		player:delCurrency("cruor", 68)

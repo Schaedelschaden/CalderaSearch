@@ -369,11 +369,14 @@ local loot =
     -- KSNM Horns of War
     [11] =
     {
+	    -- {
+            -- {itemid = 65535, droprate = 1000, amount = 1800000}, -- gil
+        -- },
         {
-            {itemid = 20854, droprate = 200},  -- Aizkora +1
+            {itemid = 20852, droprate = 200},  -- Aizkora +1
             {itemid = 20607, droprate = 200}, -- Anathema Harpe +1
             {itemid = 20807, droprate = 200},  -- Buramgh +1
-            {itemid = 20967, droprate = 200},  -- Combuster +1
+            {itemid = 20697, droprate = 200},  -- Combuster +1
             {itemid = 20508, droprate = 200},  -- Comeuppnaces +1
         },
         {
@@ -384,10 +387,10 @@ local loot =
             {itemid = 21696, droprate = 200}, -- Nullis +1
         },
         {
-            {itemid = 26175, droprate = 145},   -- Adorned Helm +1
+            {itemid = 26715, droprate = 145},   -- Adorned Helm +1
             {itemid = 26787, droprate = 145}, -- Alhazen Hat +1
             {itemid = 25602, droprate = 145},    -- Blistering Sallet +1
-            {itemid = 26785, droprate = 145},   -- Hike Khat
+            {itemid = 26785, droprate = 145},   -- Hike Khat +1
             {itemid = 26710, droprate = 145},   -- Imperial Wing Hairpin +1
             {itemid = 25636, droprate = 130},   -- Loess Barabuta +1
             {itemid = 26732, droprate = 145},   -- Stinger Helm +1
@@ -424,15 +427,28 @@ local loot =
             {itemid = 8732, droprate = 1000},  -- Kupon I S-3
         },
         {
-            {itemid = 8732, droprate = 1000}, -- Kupon I S-3
+            {itemid = 8747, droprate = 111},  -- Ra'Kaznar Ore
+			{itemid = 4077, droprate = 111},  -- Moonbow Steel
+			{itemid = 4079, droprate = 111},  -- Moonbow Leather
+			{itemid = 4080, droprate = 111},  -- Moonbow Urushi
+			{itemid = 4081, droprate = 111},  -- Moonbow Stone
+			{itemid = 4078, droprate = 111},  -- Moonbow CLoth
+			{itemid = 9251, droprate = 111},  -- Khoma Thread
+			{itemid = 9255, droprate = 111},  -- Cyan Coral
+			{itemid = 4082, droprate = 112},  -- Moonlight Coral
+			
         },
         {
-            {itemid = 8732, droprate = 333},   -- Kupon I S-3
-            {itemid = 3972, droprate = 333},   -- Kupon I S-2
-            {itemid = 8734, droprate = 334},   -- Kupon I S-1
-        },
-        {
-            {itemid = 0, droprate = 1000},  -- Placeholder Augment Kupon
+            {itemid = 8747, droprate = 111},  -- Ra'Kaznar Ore
+			{itemid = 4077, droprate = 111},  -- Moonbow Steel
+			{itemid = 4079, droprate = 111},  -- Moonbow Leather
+			{itemid = 4080, droprate = 111},  -- Moonbow Urushi
+			{itemid = 4081, droprate = 111},  -- Moonbow Stone
+			{itemid = 4078, droprate = 111},  -- Moonbow CLoth
+			{itemid = 9251, droprate = 111},  -- Khoma Thread
+			{itemid = 9255, droprate = 111},  -- Cyan Coral
+			{itemid = 4082, droprate = 112},  -- Moonlight Coral
+			
         },
     },
 
@@ -513,6 +529,9 @@ local loot =
     -- BCNM Eye of the Tiger
     [13] =
     {
+	    -- {
+            -- {itemid = 65535, droprate = 1000, amount = 1000000}, -- gil
+        -- },
         {
             {itemid =  21688, droprate = 125}, -- Montante
             {itemid =  20527, droprate = 125}, -- Fists of Fury
@@ -532,7 +551,7 @@ local loot =
             {itemid = 25709, droprate =  110}, -- Obviation Cuirass
             {itemid = 26868, droprate =  110}, -- Rosette Jaseran
             {itemid = 26887, droprate =  110}, -- Shimonjijoe
-            {itemid = 27534, droprate =  120}, -- Tatenashi Haramaki
+            {itemid = 27532, droprate =  120}, -- Tatenashi Haramaki
 
         },
         {
@@ -549,6 +568,14 @@ local loot =
         },
         {
             {itemid = 3972, droprate = 1000},   -- Kupon I S-2
+        },
+		{
+            {itemid = 4080, droprate =  175}, -- Moonbow Urushi
+            {itemid = 4079, droprate =  165}, -- Moonbow Leather
+            {itemid = 4078, droprate =  165}, -- Moonbow Cloth
+            {itemid = 4077, droprate =  165}, -- Moonbow Steel
+            {itemid = 4081, droprate =  165}, -- Moonbow Stone
+			{itemid = 4082, droprate =  165}, -- Moonlight Coral
         },
     },
 
@@ -582,17 +609,26 @@ local loot =
     -- KSNM Double Dragonian
     [15] =
     {
-        {
-            {itemid =  0, droprate = 625}, -- Nothing
-			{itemid =  20538, droprate = 125}, -- Bhakazi Sainti +1
-			{itemid =  20622, droprate = 125}, -- Nanti Knife +1
-			{itemid =  28665, droprate = 125}, -- Killedar Shield +1
+	    -- {
+            -- {itemid = 65535, droprate = 1000, amount = 500000}, -- gil
+        -- },
+		{
+            {itemid =  0, droprate = 100}, -- Nothing
+			{itemid =  20545, droprate = 300}, -- Camaraderie Knuckles
+			{itemid =  20823, droprate = 300}, -- Camaraderie Axe
+			{itemid =  20869, droprate = 300}, -- Camaraderie Reaver
         },
         {
-            {itemid =  0, droprate = 625}, -- Nothing
-			{itemid =  27751, droprate = 125}, -- Haru. Hat +1
-			{itemid =  27749, droprate = 125}, -- Shanti Armet +1
-			{itemid =  27747, droprate = 125}, -- Aeto Hat +1
+            {itemid =  0, droprate = 100}, -- Nothing
+			{itemid =  28534, droprate = 300}, -- Lifestorm Earring
+			{itemid =  28525, droprate = 300}, -- Psystorm Earring
+			{itemid =  28403, droprate = 300}, -- Inquisitor Bead Necklace
+        },
+        {
+            {itemid =  0, droprate = 100}, -- Nothing
+			{itemid =  27778, droprate = 300}, -- Bokwus Circlet
+			{itemid =  27776, droprate = 300}, -- Mikinaak Helm
+			{itemid =  27777, droprate = 300}, -- Manibozho Beret
         },
         {
             {itemid = 0, droprate = 900}, -- Nothing

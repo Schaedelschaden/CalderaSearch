@@ -15,6 +15,10 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
+	if (mob:getID() == 17957301 or mob:getID() == 17957302) then
+		mob:setVE(target, 0)
+	end
+	
     MobStatusEffectMove(mob, target, tpz.effect.SLOW, 1250, 0, 60)
     MobStatusEffectMove(mob, target, tpz.effect.POISON, mob:getMainLvl() / 10, 3, 60)
     MobStatusEffectMove(mob, target, tpz.effect.SILENCE, 1, 0, 60)

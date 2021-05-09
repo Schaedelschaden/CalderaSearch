@@ -112,8 +112,8 @@ local battlefields = {
 
     [tpz.zone.SEALIONS_DEN] =
     {
-        { 0,  992,    0},   -- One to Be Feared (PM6-4)
-        { 1,  993,    0},   -- The Warrior's Path (PM7-5)
+        { 0,  992, 2987},   -- One to Be Feared (PM6-4)
+        { 1,  993, 2546},   -- The Warrior's Path (PM7-5)
      -- { 2,    ?,    0},   -- *The Warrior's Path (HTMBF)
      -- { 3,    ?,    0},   -- *One to Be Feared (HTMBF)
     },
@@ -288,10 +288,10 @@ local battlefields = {
         {12,   76, 1553},   -- The Hills are Alive (KS99) -- TODO: Tartaruga Gigante is not coded
      -- {13,   77, 1131},   -- Royal Jelly (BS40) -- TODO: all combat mechanics, loot
         {14,   78, 1177},   -- The Final Bout (BS50) -- TODO: mobskills Big Blow and Counterstance
-        {15,   79, 1130},   -- Up in Arms (BS60)
+     -- {15,   79, 1175},   -- Up in Arms (BS60)
      -- {16,   80, 1175},   -- Copycat (KS30)
         {17,   81, 1178},   -- Operation Desert Swarm (KS30) -- TODO: Wild Rage gets stronger as they die. Build sleep resistance.
-     -- {18,   82, 1180},   -- Prehistoric Pigeons (KS30) -- TODO: Build resistance to sleep quickly. When one dies, remaining ones become more powerful.
+        {18,   82, 1175},   -- Prehistoric Pigeons (KS30) -- TODO: Build resistance to sleep quickly. When one dies, remaining ones become more powerful.
      -- {19,   83, 3351},   -- The Palborough Project (KC30)
      -- {20,   84, 3352},   -- Shell Shocked (KC50)
         {21,   85,    0},   -- Beyond Infinity (Quest)
@@ -357,7 +357,7 @@ local battlefields = {
 
     [tpz.zone.THRONE_ROOM] =
     {
-        { 0,  160,    0},   -- The Shadow Lord Battle (Mission 5-2)
+        { 0,  160, 2468},   -- The Shadow Lord Battle (Mission 5-2)
         { 1,  161,    0},   -- Where Two Paths Converge (Basty 9-2)
      -- { 2,  162, 1130},   -- Kindred Spirits (BS60)
         { 3,  163, 2557},   -- Survival of the Wisest (SCH LB5)
@@ -371,11 +371,11 @@ local battlefields = {
     [tpz.zone.CHAMBER_OF_ORACLES] =
     {
         { 0,  192,    0},   -- Through the Quicksand Caves (ZM6)
-        { 1,  193, 1130},   -- Legion XI Comitatensis (BS60)
+        { 1,  193, 1175},   -- Legion XI Comitatensis (BS60)
         { 2,  194, 1437},   -- Shattering Stars (SAM LB5)
         { 3,  195, 1438},   -- Shattering Stars (NIN LB5)
         { 4,  196, 1439},   -- Shattering Stars (DRG LB5)
-     -- { 5,  197, 1175},   -- Cactuar Suave (KS30)
+     -- { 5,  197,    0},   -- Cactuar Suave (KS30)
         { 6,  198, 1178},   -- Eye of the Storm (KS30)
      -- { 7,  199, 1180},   -- The Scarlet King (KS30)
      -- { 8,  200,    0},   -- Roar! A Cat Burglar Bares Her Fangs (MKD10)
@@ -478,8 +478,8 @@ local battlefields = {
         { 6,  518, 1433},   -- Shattering Stars (DRK LB5)
         { 7,  519, 1435},   -- Shattering Stars (BRD LB5)
         { 8,  520, 1130},   -- Demolition Squad (BS60)
-     -- { 9,  521, 1552},   -- Die by the Sword (BS30) -- TODO: mob damage type rotation mobskills furious flurry, smite of fury, whispers of ire
-        {10,  522, 1552},   -- Let Sleeping Dogs Die (BS30)
+     -- { 9,  521, 1175},   -- Die by the Sword (BS30) -- TODO: mob damage type rotation mobskills furious flurry, smite of fury, whispers of ire
+        {10,  522, 1175},   -- Let Sleeping Dogs Die (BS30)
         {11,  523, 1178},   -- Brothers D'Aurphe (BS60)
         {12,  524, 1131},   -- Undying Promise (BS40) -- TODO: model size increases with each reraise
         {13,  525, 1131},   -- Factory Rejects (BS40) -- TODO: dolls grow size/power based on hidden timer. (wikis disagree on TP moves? factory immune? factory model?)
@@ -590,12 +590,12 @@ function checkReqs(player, npc, bfid, registrant)
         [ 196] = function() return ( mjob == tpz.job.DRG and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (DRG LB5)
         [ 224] = function() return ( player:hasKeyItem(tpz.ki.MOON_BAUBLE)                                                                                                  ) end, -- Quest: The Moonlit Path
         [ 225] = function() return ( windy == mi.windurst.MOON_READING and natStat == 2                                                                                     ) end, -- Windy 9-2: Moon Reading
-        [ 256] = function() return ( roz == mi.zilart.RETURN_TO_DELKFUTTS_TOWER and rozStat == 3                                                                            ) end, -- ZM8: Return to Delkfutt's Tower
-        [ 288] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(0) and not player:hasKeyItem(tpz.ki.SHARD_OF_APATHY)       ) end, -- ZM14: Ark Angels (Hume)
-        [ 289] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(1) and not player:hasKeyItem(tpz.ki.SHARD_OF_COWARDICE)    ) end, -- ZM14: Ark Angels (Tarutaru)
-        [ 290] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(2) and not player:hasKeyItem(tpz.ki.SHARD_OF_ENVY)         ) end, -- ZM14: Ark Angels (Mithra)
-        [ 291] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(3) and not player:hasKeyItem(tpz.ki.SHARD_OF_ARROGANCE)    ) end, -- ZM14: Ark Angels (Elvaan)
-        [ 292] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(4) and not player:hasKeyItem(tpz.ki.SHARD_OF_RAGE)         ) end, -- ZM14: Ark Angels (Galka)
+        [ 256] = function() return ( player:hasKeyItem(tpz.ki.STELLAR_FULCRUM_PHANTOM_GEM)                                                                                  ) end, -- ZM8: Return to Delkfutt's Tower
+        [ 288] = function() return ( npcid == getEntranceOffset(0) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_APATHY)                                                      ) end, -- ZM14: Ark Angels (Hume)
+        [ 289] = function() return ( npcid == getEntranceOffset(1) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_COWARDICE)                                                   ) end, -- ZM14: Ark Angels (Tarutaru)
+        [ 290] = function() return ( npcid == getEntranceOffset(2) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_ENVY)                                                        ) end, -- ZM14: Ark Angels (Mithra)
+        [ 291] = function() return ( npcid == getEntranceOffset(3) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_ARROGANCE)                                                   ) end, -- ZM14: Ark Angels (Elvaan)
+        [ 292] = function() return ( npcid == getEntranceOffset(4) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_RAGE)                                                        ) end, -- ZM14: Ark Angels (Galka)
         [ 293] = function() return ( dm1 == QUEST_ACCEPTED or dm2 == QUEST_ACCEPTED                                                                                         ) end, -- ZM14 Divine Might
         [ 320] = function() return ( roz == mi.zilart.THE_CELESTIAL_NEXUS                                                                                                   ) end, -- ZM16: The Celestial Nexus
         [ 416] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_WIND)                                                                                          ) end, -- Quest: Trial by Wind
@@ -695,7 +695,19 @@ function checkReqs(player, npc, bfid, registrant)
     -- requirements to enter a battlefield already registered by a party member
     local enterReqs =
     {
-        [ 641] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                   ) end, -- ENM: Follow the White Rabbit
+		[ 256] = function() return ( player:hasKeyItem(tpz.ki.STELLAR_FULCRUM_PHANTOM_GEM)                                                                  ) end, -- ZM8: Return to Delkfutt's Tower
+        [ 288] = function() return ( npcid == getEntranceOffset(0) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_APATHY)                                      ) end, -- ZM14: Ark Angels (Hume)
+        [ 289] = function() return ( npcid == getEntranceOffset(1) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_COWARDICE)                                   ) end, -- ZM14: Ark Angels (Tarutaru)
+        [ 290] = function() return ( npcid == getEntranceOffset(2) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_ENVY)                                        ) end, -- ZM14: Ark Angels (Mithra)
+        [ 291] = function() return ( npcid == getEntranceOffset(3) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_ARROGANCE)                                   ) end, -- ZM14: Ark Angels (Elvaan)
+        [ 292] = function() return ( npcid == getEntranceOffset(4) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_RAGE)                                        ) end, -- ZM14: Ark Angels (Galka)
+        [ 416] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_WIND)                                                                          ) end, -- Quest: Trial by Wind
+		[ 448] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_LIGHTNING)                                                                     ) end, -- Quest: Trial by Lightning
+		[ 480] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_ICE)                                                                           ) end, -- Quest: Trial by Ice
+		[ 544] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_FIRE)                                                                          ) end, -- Quest: Trial by Fire
+		[ 576] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_EARTH)                                                                         ) end, -- Quest: Trial by Earth
+		[ 608] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_WATER)                                                                         ) end, -- Quest: Trial by Water
+		[ 641] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                   ) end, -- ENM: Follow the White Rabbit
         [ 642] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                   ) end, -- ENM: When Hell Freezes Over
         [ 643] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                   ) end, -- ENM: Brothers
         [ 644] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                   ) end, -- ENM: Holy Cow
@@ -967,6 +979,7 @@ end
 function EventTriggerBCNM(player, npc)
     -- player is in battlefield and clicks to leave
     if player:getBattlefield() then
+		printf("bcnm.lua EventTriggerBCNM START")
         player:startEvent(32003)
         return true
 
@@ -1004,6 +1017,7 @@ function EventUpdateBCNM(player, csid, option, extras)
 
     -- requesting a battlefield
     if csid == 32000 then
+		printf("bcnm.lua EventUpdateBCNM START")
         if option == 0 then
             -- todo: check if battlefields full, check party member requiremenst
             return 0
@@ -1079,6 +1093,7 @@ function EventUpdateBCNM(player, csid, option, extras)
 
                     -- set other traded item to worn
                     elseif player:hasItem(item) and player:getName() == initiatorName then
+						printf("bcnm.lua EventUpdateBCNM ITEM [%i] SET TO WORN", item)
                         player:createWornItem(item)
                     end
                 end
@@ -1098,9 +1113,11 @@ function EventUpdateBCNM(player, csid, option, extras)
     -- leaving a battlefield
     elseif csid == 32003 and option == 2 then
         player:updateEvent(3)
+		printf("bcnm.lua EventUpdateBCNM LEAVING BATTLEFIELD OPTION 2")
         return true
     elseif csid == 32003 and option == 3 then
         player:updateEvent(0)
+		printf("bcnm.lua EventUpdateBCNM LEAVING BATTLEFIELD OPTION 3")
         return true
     end
 
@@ -1112,7 +1129,8 @@ end
 -----------------------------------------------
 
 function EventFinishBCNM(player, csid, option)
-    -- player:PrintToPlayer(string.format("EventFinishBCNM csid=%i option=%i", csid, option))
+	printf("EventFinishBCNM CSID: [%i] OPTION: [%i]", csid, option)
+    player:PrintToPlayer(string.format("EventFinishBCNM csid=%i option=%i", csid, option))
     player:setLocalVar("[battlefield]area", 0)
     if player:hasStatusEffect(tpz.effect.BATTLEFIELD) then
         if csid == 32003 and option == 4 then

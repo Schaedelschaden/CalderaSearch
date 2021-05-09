@@ -24,6 +24,11 @@ function onUseAbility(player,target,ability,action)
 	local ftp = 1
 	local params = {}
 		params.numHits = 1
+		
+		if (math.random(100) < player:getMod(tpz.mod.ALL_JUMPS_DOUBLE_ATTACK)) then
+			params.numHits = 2
+		end
+		
 		params.ftp100 = ftp params.ftp200 = ftp params.ftp300 = ftp
 		params.str_wsc = 0.0 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
 		params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0

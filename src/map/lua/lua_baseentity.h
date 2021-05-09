@@ -583,6 +583,7 @@ public:
     int32 getEVA(lua_State*);                   // Get total EVA
     int32 getRACC(lua_State*);                  // Get total r.acc
     int32 getRATT(lua_State*);                  // Get total r.attack
+	int32 getItemLevel(lua_State *L);           // Get char average Item Level
 	int32 getILvlSkill(lua_State *L);           // Get char ILvl Weapon skill of specified weapon slot
     int32 getILvlMacc(lua_State *L);            // Get char ILvl MACC skill of all items currently equipped
     int32 getILvlParry(lua_State*);             // Get char ILvl Parry skill of all items currently equipped

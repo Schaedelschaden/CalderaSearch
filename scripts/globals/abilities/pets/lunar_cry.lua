@@ -48,10 +48,12 @@ function onPetAbility(target, pet, skill)
 	buffvalue = buffvalue * buffmultiplier
 	contrabuff = contrabuff * buffmultiplier
 	
+	printf("lunar_cry.lua onPetAbility Moon Phase: [%i]  BuffValue: [%i]  ContraBuff: [%i]", moon, buffvalue, contrabuff)
+	
     target:delStatusEffect(tpz.effect.ACCURACY_DOWN)
     target:delStatusEffect(tpz.effect.EVASION_DOWN)
-    target:addStatusEffect(tpz.effect.ACCURACY_DOWN,buffvalue,0,180)
-    target:addStatusEffect(tpz.effect.EVASION_DOWN,contrabuff-buffvalue,0,180)
+    target:addStatusEffect(tpz.effect.ACCURACY_DOWN, buffvalue, 0, 180)
+    target:addStatusEffect(tpz.effect.EVASION_DOWN, contrabuff - buffvalue, 0, 180)
     skill:setMsg(tpz.msg.basic.NONE)
     return 0
 end

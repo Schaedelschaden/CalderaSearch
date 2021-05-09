@@ -14,6 +14,10 @@ function onInitialize(zone)
         UpdateNMSpawnPoint(ID.mob.FAFNIR)
         GetMobByID(ID.mob.FAFNIR):setRespawnTime(900 + math.random(0, 6) * 1800)
     end
+	
+	-- Fafnir/Nidhogg QM spawn location
+	local HNMQM = GetNPCByID(17408033)
+	HNMQM:setPos(82, 6.8, 42, 0, 178)
 end
 
 function onZoneIn(player, prevZone)

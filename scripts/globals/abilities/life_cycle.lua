@@ -30,7 +30,8 @@ function onUseAbility(player,target,ability)
     local luopan       = player:getPet()
     local luopanMaxHP  = luopan:getMaxHP()
     local hp_remaining = player:getHP()
-    local hpAmount     = 0.25 * hp_remaining
+	local hp_restored  = 0.25 + (player:getMod(tpz.mod.LIFE_CYCLE_HP) / 100)
+    local hpAmount     = hp_restored * hp_remaining
     local hp_transfer  = math.floor(utils.clamp(hpAmount, 0, luopanMaxHP - luopan:getHP()))
     
     luopan:restoreHP(hp_transfer)

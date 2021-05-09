@@ -7,6 +7,7 @@
 --  2 -100% UDMGPHYS (e.g. Carnal Incense, Pyric Bulwark)
 --  3 -100% UDMGPHYS (e.g. Fanatics Drink)
 --  8 100% PHYS_ABSORB (e.g. Transmogrification)
+--  10 -100% DMGPHYS from the front
 --
 -- subPower Notes: --TODO plumb in logic for special use cases.
 --  0 - DMG Reduction applies to Physical Damage and Physical WS/TP Moves
@@ -17,7 +18,10 @@ require("scripts/globals/status")
 
 function onEffectGain(target, effect)
     local power = effect:getPower()
-    if power == 8 then
+	
+	if power == 10 then
+		target:addMod(tpz.mod.FRONTAL_DMG_REDUCTION, 100)
+    elseif power == 8 then
         target:addMod(tpz.mod.PHYS_ABSORB, 100)
     elseif power == 2 or power == 3 then
         target:addMod(tpz.mod.UDMGPHYS, -100)
@@ -30,7 +34,10 @@ end
 
 function onEffectLose(target, effect)
     local power = effect:getPower()
-    if power == 8 then
+	
+	if power == 10 then
+		target:delMod(tpz.mod.FRONTAL_DMG_REDUCTION, 100)
+    elseif power == 8 then
         target:delMod(tpz.mod.PHYS_ABSORB, 100)
     elseif power == 2 or power == 3 then
         target:delMod(tpz.mod.UDMGPHYS, -100)

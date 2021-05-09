@@ -19,6 +19,25 @@ function onMobSpawn(mob)
             {id = tpz.jsa.MIJIN_GAKURE},
         },
     })
+	mob:setMod(tpz.mod.PARALYZERES, 100) -- Resistance to Silence
+    mob:setMod(tpz.mod.STUNRES, 1000) -- Resistance to Stun
+    mob:setMod(tpz.mod.BINDRES, 30) -- Resistance to Bind
+    mob:setMod(tpz.mod.SLOWRES, 100) -- Resistance to Slow
+    mob:setMod(tpz.mod.SILENCERES, 100) -- Resistance to Silence
+    mob:setMod(tpz.mod.SLEEPRES, 30) -- Resistance to Sleep
+    mob:setMod(tpz.mod.LULLABYRES, 30) -- Resistance to Lullaby
+    mob:setMod(tpz.mod.PETRIFYRES, 30) -- Resistance to Pertrify
+    mob:setMod(tpz.mod.POISONRES, 30) -- Resistance to Poison
+	mob:setMod(tpz.mod.ATT, 1500) -- Attack Stat (Compare to DEF)
+	mob:setMod(tpz.mod.MATT, 150) -- Magic Attack (Compare to MDEF)
+    mob:setMod(tpz.mod.ACC, 800) -- Accuracy (compare to EVA)
+	mob:setMod(tpz.mod.MACC, 700) -- Magic ACC (Compare to MEVA)
+	mob:setMod(tpz.mod.EVA, 1000) -- Evasion (Compare to ACC)
+	mob:setMod(tpz.mod.DEF, 750) -- Defense (Compart to ATT)
+	mob:setMod(tpz.mod.MEVA, 200) -- Magic Evasion (Compare to MACC)
+	mob:setMod(tpz.mod.MDEF, 400) -- Magic Defense (Compare to MATT)
+	mob:setMod(tpz.mod.DOUBLE_ATTACK, 35) -- Double Attack in %
+	mob:setMod(tpz.mod.TRIPLE_ATTACK, 10) -- Triple Attack in %
 end
 
 function onMobEngaged(mob, target)

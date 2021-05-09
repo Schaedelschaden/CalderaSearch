@@ -164,7 +164,8 @@ function onTrigger(player,npc)
 					12823,  2000,       -- (Legs) Bronze Subligar +1
 					12951,	2000,		-- (Feet) Bronze Leggings +1
 					13060,	2000,		-- (Neck) Feather Collar +1
-					13226,	2000,		-- (Waist) Blood Stone +1
+					13184,  5000,       -- (Waist) White Belt
+					13201,  12000,       -- (Waist) Purple Belt
 					13599,	2000,		-- (Back) Rabbit Mantle +1
 					14695,	2000,		-- (Earring) Hope Earring +1
 					13492,	2000,		-- (Ring) Copper Ring +1
@@ -181,7 +182,7 @@ function onTrigger(player,npc)
 					12905,  10000,      -- (Legs) Soil Sitabaki +1
 					13035,  10000,      -- (Feet) Soil Kyahan +1
 					13102,	5000,		-- (Neck) Paisley Scarf
-					13233,	5000,		-- (Waist) Gold Obi +1
+					13202,	30000,		-- (Waist) Brown Belt
 					13575,	5000,		-- (Back) Ram Mantle +1
 					14703,	5000,		-- (Earring) Loyalty Earring +1
 					13519,	5000,		-- (Ring) Mythril Ring +1
@@ -200,6 +201,7 @@ function onTrigger(player,npc)
 					15523,	10000,		-- (Neck) Chivalrous Chain
 					15524,	10000,		-- (Neck) Fortified Chain
 					15521,	10000,		-- (Neck) Tempered Chain
+					13186,  75000,      -- (Waist) Black Belt
 					15884,	10000,		-- (Waist) Potent Belt
 					15493,	10000,		-- (Back) Bushido Cape
 					13369,	10000,		-- (Earring) Spike Earring
@@ -225,6 +227,7 @@ function onTrigger(player,npc)
 					13146,	30000,		-- (Neck) Tern Necklace
 					15922,	30000,		-- (Waist) Tern Stone
 					13619,	30000,		-- (Back) Tern Cape
+					13186,  75000,      -- (Waist) Black Belt
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
 					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
@@ -250,6 +253,7 @@ function onTrigger(player,npc)
 					10711,	50000,		-- (Legs) Melee Hose +2
 					10731,	50000,		-- (Feet) Melee Gaiters +2
 					25423,	50000,		-- (Neck) Monk's Nodowa
+					13186,  75000,      -- (Waist) Black Belt
 					10831,	50000,		-- (Waist) Paewr Belt
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
@@ -1746,6 +1750,7 @@ function onTrigger(player,npc)
 					11564,	30000,		-- (Back) Tiresias' Cape
 					11685,	30000,		-- (Earring) Darkness Earring
 					14644,	30000,		-- (Ring) Dark Ring
+					14625,  100000,		-- (Ring) Evoker's Ring
 					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
@@ -1773,6 +1778,7 @@ function onTrigger(player,npc)
 					27607,	50000,		-- (Back) Thaumaturge's Cape
 					11021,	30000,		-- (Earring) Darkness Pearl
 					27578,	30000,		-- (Ring) Fenrir Ring
+					14625,  100000,		-- (Ring) Evoker's Ring
 					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
@@ -2522,6 +2528,7 @@ function onTrigger(player,npc)
 			stock_RUN =
 				{
 					20788,	100000,		-- (Great Sword) Hatzoaar Sword +1
+					20786,	100000,		-- (Great Sword) Thurisaz Blade +1
 					10435,	100000,		-- (Head) Dux Visor +1
 					10273,	100000,		-- (Body) Dux Scale Mail +1
 					10317,	100000,		-- (Hands) Dux Finger Gauntlets +1

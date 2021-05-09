@@ -45,5 +45,5 @@ function onUpdate(pet, maneuvers)
     if maneuvers > 0 then
         power = math.floor(6 + 3 * maneuvers + (pet:getMaxHP() * (1.2 + 0.6 * maneuvers) / 100))
     end
-    updateModPerformance(pet, tpz.mod.REGEN, 'autorepair_kit_ii_mod', power)
+    updateModPerformance(pet, tpz.mod.REGEN, 'autorepair_kit_iii_mod', power)
 end

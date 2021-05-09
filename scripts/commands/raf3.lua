@@ -5,7 +5,7 @@
 
 cmdprops =
 {
-    permission = 1,
+    permission = 2,
     parameters = "siiiiiiii"
 }
 
@@ -122,261 +122,295 @@ function onTrigger(player, target, aug0, aug0val, aug1, aug1val, aug2, aug2val, 
 			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
 			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
 			player:PrintToPlayer( string.format( "Gave '%s' the Atrophy +3 set.", target ) )
-		-- elseif (targ:getMainJob() == tpz.job.THF) then
-			-- itemId = 23403 -- Pillager's Bonnet +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23470 -- Pillager's Vest +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23537 -- Pillager's Armlets +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23604 -- Pillager's Culottes +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23671 -- Pillager's Poulaines +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- player:PrintToPlayer( string.format( "Gave '%s' the Pillager's +3 set.", target ) )
-		-- elseif (targ:getMainJob() == tpz.job.PLD) then
-			-- itemId = 23404 -- Reverence Coronet +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23471 -- Reverence Surcoat +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23538 -- Reverence Gauntlets +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23605 -- Reverence Breeches +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23672 -- Reverence Leggings +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- player:PrintToPlayer( string.format( "Gave '%s' the Reverence +3 set.", target ) )
-		-- elseif (targ:getMainJob() == tpz.job.DRK) then
-			-- itemId = 23405 -- Ignominy Burgeonet +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23472 -- Ignominy Cuirass +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23539 -- Ignominy Finger Gauntlets +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23606 -- Ignominy Flanchard +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23673 -- Ignominy Sollerets +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- player:PrintToPlayer( string.format( "Gave '%s' the Ignominy +3 set.", target ) )
-		-- elseif (targ:getMainJob() == tpz.job.BST) then
-			-- itemId = 23406 -- Totemic Helm +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23473 -- Totemic Jackcoat +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23540 -- Totemic Gloves +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23607 -- Totemic Trousers +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23674 -- Totemic Gaiters +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- player:PrintToPlayer( string.format( "Gave '%s' the Totemic +3 set.", target ) )
-		-- elseif (targ:getMainJob() == tpz.job.BRD) then
-			-- itemId = 23407 -- Brioso Roundlet +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23474 -- Brioso Justaucorps +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23541 -- Brioso Cuffs +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23608 -- Brioso Cannions +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23675 -- Brioso Slippers +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- player:PrintToPlayer( string.format( "Gave '%s' the Brioso +3 set.", target ) )
-		-- elseif (targ:getMainJob() == tpz.job.RNG) then
-			-- itemId = 23408 -- Orion Beret +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23475 -- Orion Jerkin +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23542 -- Orion Bracer +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23609 -- Orion Braccae +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23676 -- Orion Socks +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- player:PrintToPlayer( string.format( "Gave '%s' the Orion +3 set.", target ) )
-		-- elseif (targ:getMainJob() == tpz.job.SAM) then
-			-- itemId = 23409 -- Wakido Kabuto +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23476 -- Wakido Domaru +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23543 -- Wakido Kote +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23610 -- Wakido Haidate +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23677 -- Wakido Sune-Ate +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- player:PrintToPlayer( string.format( "Gave '%s' the Wakido +3 set.", target ) )
-		-- elseif (targ:getMainJob() == tpz.job.NIN) then
-			-- itemId = 23410 -- Hachiya Hatsuburi +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23477 -- Hachiya Chainmail +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23544 -- Hachiya Tekko +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23611 -- Hachiya Hakama +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23678 -- Hachiya Kyahan +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- player:PrintToPlayer( string.format( "Gave '%s' the Hachiya +3 set.", target ) )
-		-- elseif (targ:getMainJob() == tpz.job.DRG) then
-			-- itemId = 23411 -- Vishap Armet +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23478 -- Vishap Mail +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23545 -- Vishap Finger Gauntlets +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23612 -- Vishap Brais +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23679 -- Vishap Greaves +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- player:PrintToPlayer( string.format( "Gave '%s' the Vishap +3 set.", target ) )
-		-- elseif (targ:getMainJob() == tpz.job.SMN) then
-			-- itemId = 23412 -- Convoker's Horn +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23479 -- Convoker's Doublet +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23546 -- Convoker's Bracers +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23613 -- Convoker's Spats +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23680 -- Convoker's Pigaches +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- player:PrintToPlayer( string.format( "Gave '%s' the Convoker's +3 set.", target ) )
-		-- elseif (targ:getMainJob() == tpz.job.BLU) then
-			-- itemId = 23413 -- Assimilator's Keffiyeh +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23480 -- Assimilator's Jubbah +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23547 -- Assimilator's Bazubands +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23614 -- Assimilator's Shalwar +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23681 -- Assimilator's Charuqs +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- player:PrintToPlayer( string.format( "Gave '%s' the Assimilator's +3 set.", target ) )
-		-- elseif (targ:getMainJob() == tpz.job.COR) then
-			-- itemId = 23414 -- Laksamana's Tricorne +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23481 -- Laksamana's Frac +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23548 -- Laksamana's Gants +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23615 -- Laksamana's Trews +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23682 -- Laksamana's Bottes +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- player:PrintToPlayer( string.format( "Gave '%s' the Laksamana's +3 set.", target ) )
-		-- elseif (targ:getMainJob() == tpz.job.PUP) then
-			-- itemId = 23415 -- Foire Taj +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23482 -- Foire Tobe +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23549 -- Foire Dastanas +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23616 -- Foire Churidars +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23683 -- Foire Babouches +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- player:PrintToPlayer( string.format( "Gave '%s' the Foire +3 set.", target ) )
-		-- elseif (targ:getMainJob() == tpz.job.DNC) then
-			-- itemId = 23416 -- Maxixi Tiara +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23483 -- Maxixi Casaque +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23550 -- Maxixi Bangles +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23617 -- Maxixi Tights +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23684 -- Maxixi Toe Shoes +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- player:PrintToPlayer( string.format( "Gave '%s' the Maxixi +3 set.", target ) )
-		-- elseif (targ:getMainJob() == tpz.job.SCH) then
-			-- itemId = 23417 -- Academic's Mortarboard +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23484 -- Academic's Gown +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23551 -- Academic's Bracers +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23618 -- Academic's Pants +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- itemId = 23685 -- Academic's Loafers +3
-			-- targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
-			-- targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
-			-- player:PrintToPlayer( string.format( "Gave '%s' the Academic's +3 set.", target ) )
+		elseif (targ:getMainJob() == tpz.job.THF) then
+			itemId = 23380 -- Pillager's Bonnet +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23447 -- Pillager's Vest +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23514 -- Pillager's Armlets +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23581 -- Pillager's Culottes +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23648 -- Pillager's Poulaines +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			player:PrintToPlayer( string.format( "Gave '%s' the Pillager's +3 set.", target ) )
+		elseif (targ:getMainJob() == tpz.job.PLD) then
+			itemId = 23381 -- Reverence Coronet +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23448 -- Reverence Surcoat +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23515 -- Reverence Gauntlets +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23582 -- Reverence Breeches +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23649 -- Reverence Leggings +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			player:PrintToPlayer( string.format( "Gave '%s' the Reverence +3 set.", target ) )
+		elseif (targ:getMainJob() == tpz.job.DRK) then
+			itemId = 23382 -- Ignominy Burgeonet +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23449 -- Ignominy Cuirass +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23516 -- Ignominy Finger Gauntlets +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23583 -- Ignominy Flanchard +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23650 -- Ignominy Sollerets +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			player:PrintToPlayer( string.format( "Gave '%s' the Ignominy +3 set.", target ) )
+		elseif (targ:getMainJob() == tpz.job.BST) then
+			itemId = 23383 -- Totemic Helm +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23450 -- Totemic Jackcoat +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23517 -- Totemic Gloves +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23584 -- Totemic Trousers +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23651 -- Totemic Gaiters +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			player:PrintToPlayer( string.format( "Gave '%s' the Totemic +3 set.", target ) )
+		elseif (targ:getMainJob() == tpz.job.BRD) then
+			itemId = 23384 -- Brioso Roundlet +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23451 -- Brioso Justaucorps +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23518 -- Brioso Cuffs +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23585 -- Brioso Cannions +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23652 -- Brioso Slippers +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			player:PrintToPlayer( string.format( "Gave '%s' the Brioso +3 set.", target ) )
+		elseif (targ:getMainJob() == tpz.job.RNG) then
+			itemId = 23385 -- Orion Beret +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23452 -- Orion Jerkin +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23519 -- Orion Bracer +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23586 -- Orion Braccae +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23653 -- Orion Socks +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			player:PrintToPlayer( string.format( "Gave '%s' the Orion +3 set.", target ) )
+		elseif (targ:getMainJob() == tpz.job.SAM) then
+			itemId = 23386 -- Wakido Kabuto +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23453 -- Wakido Domaru +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23520 -- Wakido Kote +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23587 -- Wakido Haidate +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23654 -- Wakido Sune-Ate +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			player:PrintToPlayer( string.format( "Gave '%s' the Wakido +3 set.", target ) )
+		elseif (targ:getMainJob() == tpz.job.NIN) then
+			itemId = 23387 -- Hachiya Hatsuburi +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23454 -- Hachiya Chainmail +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23521 -- Hachiya Tekko +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23588 -- Hachiya Hakama +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23655 -- Hachiya Kyahan +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			player:PrintToPlayer( string.format( "Gave '%s' the Hachiya +3 set.", target ) )
+		elseif (targ:getMainJob() == tpz.job.DRG) then
+			itemId = 23388 -- Vishap Armet +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23455 -- Vishap Mail +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23522 -- Vishap Finger Gauntlets +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23589 -- Vishap Brais +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23656 -- Vishap Greaves +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			player:PrintToPlayer( string.format( "Gave '%s' the Vishap +3 set.", target ) )
+		elseif (targ:getMainJob() == tpz.job.SMN) then
+			itemId = 23389 -- Convoker's Horn +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23456 -- Convoker's Doublet +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23523 -- Convoker's Bracers +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23590 -- Convoker's Spats +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23657 -- Convoker's Pigaches +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			player:PrintToPlayer( string.format( "Gave '%s' the Convoker's +3 set.", target ) )
+		elseif (targ:getMainJob() == tpz.job.BLU) then
+			itemId = 23390 -- Assimilator's Keffiyeh +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23457 -- Assimilator's Jubbah +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23524 -- Assimilator's Bazubands +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23591 -- Assimilator's Shalwar +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23658 -- Assimilator's Charuqs +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			player:PrintToPlayer( string.format( "Gave '%s' the Assimilator's +3 set.", target ) )
+		elseif (targ:getMainJob() == tpz.job.COR) then
+			itemId = 23391 -- Laksamana's Tricorne +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23458 -- Laksamana's Frac +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23525 -- Laksamana's Gants +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23592 -- Laksamana's Trews +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23659 -- Laksamana's Bottes +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			player:PrintToPlayer( string.format( "Gave '%s' the Laksamana's +3 set.", target ) )
+		elseif (targ:getMainJob() == tpz.job.PUP) then
+			itemId = 23392 -- Foire Taj +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23459 -- Foire Tobe +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23526 -- Foire Dastanas +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23593 -- Foire Churidars +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23660 -- Foire Babouches +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			player:PrintToPlayer( string.format( "Gave '%s' the Foire +3 set.", target ) )
+		elseif (targ:getMainJob() == tpz.job.DNC) then
+			itemId = 23393 -- Maxixi Tiara +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23460 -- Maxixi Casaque +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23527 -- Maxixi Bangles +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23594 -- Maxixi Tights +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23661 -- Maxixi Toe Shoes +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			player:PrintToPlayer( string.format( "Gave '%s' the Maxixi +3 set.", target ) )
+		elseif (targ:getMainJob() == tpz.job.SCH) then
+			itemId = 23395 -- Academic's Mortarboard +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23462 -- Academic's Gown +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23529 -- Academic's Bracers +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23596 -- Academic's Pants +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23663 -- Academic's Loafers +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			player:PrintToPlayer( string.format( "Gave '%s' the Academic's +3 set.", target ) )
+		elseif (targ:getMainJob() == tpz.job.GEO) then
+			itemId = 23396 -- Geomancy Galero +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23463 -- Geomancy Tunic +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23530 -- Geomancy Mitaines +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23597 -- Geomancy Pants +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23664 -- Geomancy Sandals +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			player:PrintToPlayer( string.format( "Gave '%s' the Geomancy +3 set.", target ) )
+		elseif (targ:getMainJob() == tpz.job.RUN) then
+			itemId = 23397 -- Runeist Bandeau +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23464 -- Runeist Coat +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23531 -- Runeist Mitons +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23598 -- Runeist Trousers +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			itemId = 23665 -- Runeist Boots +3
+			targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+			targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+			player:PrintToPlayer( string.format( "Gave '%s' the Runeist +3 set.", target ) )
 		end
 	end
 end

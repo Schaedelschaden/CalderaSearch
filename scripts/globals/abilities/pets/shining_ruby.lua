@@ -19,7 +19,6 @@ function onPetAbility(target, pet, skill, player)
 
     target:delStatusEffect(tpz.effect.SHINING_RUBY)
     target:addStatusEffect(tpz.effect.SHINING_RUBY, 1, 0, duration)
-    target:messageBasic(tpz.msg.basic.GAINS_EFFECT_OF_STATUS, tpz.effect.SHINING_RUBY)
-	
-    return tpz.effect.SHINING_RUBY
+    target:messageBasic(tpz.msg.basic.GAINS_EFFECT_OF_STATUS, tpz.effect.PROTECT)
+	target:messageBasic(tpz.msg.basic.GAINS_EFFECT_OF_STATUS, tpz.effect.SHELL)
 end

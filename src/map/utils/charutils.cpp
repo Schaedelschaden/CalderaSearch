@@ -4000,6 +4000,39 @@ namespace charutils
                     charutils::AddPoints(PChar, "cruor", Cruor);
                 }
             }
+			
+			// Add Escha Silt on kill
+			if (Pzone == ZONE_ESCHA_ZITAH || Pzone == ZONE_ESCHA_RUAUN)
+			{
+				uint16 TextID = 0;
+				uint32 Total = 0;
+                uint32 Silt = 0;
+				uint8 Bead = 0;
+				
+				if (PCurrentMob->m_Type & MOBTYPE_NOTORIOUS)
+				{
+					Bead = tpzrand::GetRandomNumber(3, 10);
+				}
+				else
+				{
+					Silt = (uint32)(exp * 0.02f);
+				}
+				
+				if (Silt >= 1)
+                {
+					uint16 TextID = luautils::GetTextIDVariable(Pzone, "SILT_OBTAINED");
+					Total = charutils::GetPoints(PChar, "escha_silt");
+                    PChar->pushPacket(new CMessageSpecialPacket(PChar, TextID, Silt, Total + Silt, 0, 0));
+					charutils::AddPoints(PChar, "escha_silt", Silt);
+                }
+				if (Bead >= 1)
+				{
+					uint16 TextID = luautils::GetTextIDVariable(Pzone, "BEAD_OBTAINED");
+					Total = charutils::GetPoints(PChar, "escha_bead");
+                    PChar->pushPacket(new CMessageSpecialPacket(PChar, TextID, Bead, Total + Bead, 0, 0));
+					charutils::AddPoints(PChar, "escha_bead", Bead);
+				}
+			}
         }
 
         PChar->PAI->EventHandler.triggerListener("EXPERIENCE_POINTS", PChar, exp);

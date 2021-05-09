@@ -45,7 +45,7 @@ function onTrigger(player, keyId, target)
     if (targ:hasKeyItem(keyId)) then
         local ID = zones[targ:getZoneID()]
         targ:delKeyItem( keyId )
-        targ:messageSpecial(ID.text.KEYITEM_OBTAINED + 1, keyId)
+--        targ:messageSpecial(ID.text.KEYITEM_OBTAINED + 1, keyId)
         player:PrintToPlayer(string.format("Key item %i deleted from %s.", keyId, targ:getName()))
     else
         player:PrintToPlayer(string.format("%s does not have key item %i.", targ:getName(), keyId))

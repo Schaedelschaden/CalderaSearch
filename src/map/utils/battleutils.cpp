@@ -3008,15 +3008,15 @@ namespace battleutils
 		uint16 playerILvl = 0;
 		uint16 playerWeaponILvl = 0;
 		
-		uint16 mainWeapon = 0;
-		uint16 subWeapon = 0;
-		uint16 rangedWeapon = 0;
-		uint16 rangedAmmo = 0;
-		uint16 equipHead = 0;
-		uint16 equipBody = 0;
-		uint16 equipHands = 0;
-		uint16 equipLegs = 0;
-		uint16 equipFeet = 0;
+		float mainWeapon = 0;
+		float subWeapon = 0;
+		float rangedWeapon = 0;
+		float rangedAmmo = 0;
+		float equipHead = 0;
+		float equipBody = 0;
+		float equipHands = 0;
+		float equipLegs = 0;
+		float equipFeet = 0;
 		
 		if (PChar->getEquip(SLOT_MAIN) && PChar->getEquip(SLOT_MAIN)->isType(ITEM_WEAPON))
 		{
@@ -3093,22 +3093,22 @@ namespace battleutils
 		
 		if (mainWeapon >= subWeapon && mainWeapon >= rangedWeapon && mainWeapon >= rangedAmmo)
 		{
-			playerWeaponILvl = mainWeapon;
+			playerWeaponILvl = (uint16)mainWeapon;
 		}
 		else if (subWeapon >= mainWeapon && subWeapon >= rangedWeapon && subWeapon >= rangedAmmo)
 		{
-			playerWeaponILvl = subWeapon;
+			playerWeaponILvl = (uint16)subWeapon;
 		}
 		else if (rangedWeapon >= mainWeapon && rangedWeapon >= subWeapon && rangedWeapon >= rangedAmmo)
 		{
-			playerWeaponILvl = rangedWeapon;
+			playerWeaponILvl = (uint16)rangedWeapon;
 		}
 		else if (rangedAmmo >= mainWeapon && rangedAmmo >= subWeapon && rangedAmmo >= rangedWeapon)
 		{
-			playerWeaponILvl = rangedAmmo;
+			playerWeaponILvl = (uint16)rangedAmmo;
 		}
 		
-		playerILvl = playerWeaponILvl + equipHead + equipBody + equipHands + equipLegs + equipFeet;
+		playerILvl = (uint16)(playerWeaponILvl + equipHead + equipBody + equipHands + equipLegs + equipFeet);
 		
 		return playerILvl;
 	}
@@ -6631,9 +6631,9 @@ namespace battleutils
             }
             if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_PENURY))
             {
-				printf("battletutils.cpp CalculateSpellCost BEFORE PENURY COST: [%i]\n", cost);
+//				printf("battletutils.cpp CalculateSpellCost BEFORE PENURY COST: [%i]\n", cost);
                 cost /= (int16)(2 + ((float)PEntity->getMod(Mod::ENH_PENURY) / 100.0f));
-				printf("battletutils.cpp CalculateSpellCost AFTER PENURY COST: [%i]\n", cost);
+//				printf("battletutils.cpp CalculateSpellCost AFTER PENURY COST: [%i]\n", cost);
                 applyArts = false;
             }
             else if (applyArts)
@@ -6641,10 +6641,19 @@ namespace battleutils
                 cost += (int16)(base * (PEntity->getMod(Mod::WHITE_MAGIC_COST) / 100.0f));
             }
         }
+		else if (PSpell->getSpellGroup() == SPELLGROUP_GEOMANCY)
+		{
+			if (tpzrand::GetRandomNumber(100) < (PEntity->getMod(Mod::GEO_NO_SPELL_MP_DEPLETION)))
+			{
+				cost = 0;
+			}
+		}
+		
         if (tpzrand::GetRandomNumber(100) < (PEntity->getMod(Mod::NO_SPELL_MP_DEPLETION)))
         {
             cost = 0;
         }
+		
         return std::clamp<int16>(cost, 0, 9999);
     }
     uint32 CalculateSpellRecastTime(CBattleEntity* PEntity, CSpell* PSpell)
@@ -6750,6 +6759,15 @@ namespace battleutils
                     recast = (int32)(recast * (1.0f + PEntity->getMod(Mod::BLACK_MAGIC_RECAST) / 100.0f));
                 }
             }
+			// Elemental Magic Recast
+			if (PSpell->getSpellFamily() >= SPELLFAMILY_FIRE && PSpell->getSpellFamily() <= SPELLFAMILY_FLOOD ||
+				PSpell->getSpellFamily() == SPELLFAMILY_METEOR || PSpell->getSpellFamily() == SPELLFAMILY_ELE_DOT ||
+				PSpell->getSpellFamily() >= SPELLFAMILY_GEOHELIX && PSpell->getSpellFamily() <= SPELLFAMILY_LUMINOHELIX ||
+				PSpell->getSpellFamily() == SPELLFAMILY_JA ||
+				PSpell->getSpellFamily() >= SPELLFAMILY_FIRA && PSpell->getSpellFamily() <= SPELLFAMILY_WATERA)
+			{
+				recast = (int32)(recast * (1.0f + PEntity->getMod(Mod::ELEMENTAL_MAGIC_RECAST) / 100.0f));
+			}
         }
         else if (PSpell->getSpellGroup() == SPELLGROUP_WHITE)
         {

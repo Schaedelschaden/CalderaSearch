@@ -25,6 +25,7 @@
 #include "status_effect_container.h"
 #include "ai/ai_container.h"
 #include "mob_modifier.h"
+#include "utils/battleutils.h"
 
 /************************************************************************
 *																		*
@@ -457,10 +458,16 @@ void CAttackRound::CreateDakenAttack()
         if (PAmmo && PAmmo->isShuriken())
         {
             uint16 daken = m_attacker->getMod(Mod::DAKEN);
-             if (tpzrand::GetRandomNumber(100) < daken)
-             {
-                AddAttackSwing(PHYSICAL_ATTACK_TYPE::DAKEN, RIGHTATTACK, 1);
-             }
+            if (tpzrand::GetRandomNumber(100) < daken)
+            {
+				AddAttackSwing(PHYSICAL_ATTACK_TYPE::DAKEN, RIGHTATTACK, 1);
+            }
+			if (m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_SANGE))
+			{
+				CCharEntity* PChar = (CCharEntity*)m_attacker;
+//				printf("attackround.cpp CreateDakenAttack HAS SANGE\n");
+				battleutils::RemoveAmmo(PChar, 1);
+			}
         }
     }
 }

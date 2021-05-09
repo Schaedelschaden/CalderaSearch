@@ -946,6 +946,7 @@ end
 --------------------------------------------------------------------
 function checkEcosystem(caster, target, params)
 	local merits = caster:getMerit(tpz.merit.MONSTER_CORRELATION)
+	local mobCorrelation = caster:getMod(tpz.mod.ENH_MONSTER_CORRELATION)
 	local mobSystem = target:getSystem()
 	local spellSystem = tpz.eco.UNCLASSIFIED
 	
@@ -1018,7 +1019,7 @@ function checkEcosystem(caster, target, params)
 		ecoBonus = 25
 	end
 	
-	ecoBonus = ecoBonus + merits
+	ecoBonus = ecoBonus + merits + mobCorrelation
 	ecoBonus = 1 + (ecoBonus / 100)
 	
 	-- printf("bluemagic.lua checkEcosystem SPELL ECOSYSTEM: [%s]    MOB ECOSYSTEM: [%s]    ECO BONUS: [%1.2f]", spellSystem, mobSystem, ecoBonus)

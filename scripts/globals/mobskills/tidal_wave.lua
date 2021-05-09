@@ -16,7 +16,7 @@ function onMobWeaponSkill(target, mob, skill)
 	
 	-- Adjust Trial By Water Leviathan's Tidal Wave damage
 	if (mob:getID() == 17641473) then
-		dmgmod = 2
+		dmgmod = 3
 	end
 	
     info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg() * 9, tpz.magic.ele.WATER, dmgmod, TP_NO_EFFECT, 1)

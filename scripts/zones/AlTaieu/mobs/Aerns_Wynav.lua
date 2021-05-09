@@ -16,6 +16,8 @@ local Lightsday = {31, 41} -- Banish IV, Banishga IV
 local Darksday = {255, 219} -- Break, Comet
 
 function onMobSpawn(mob)
+	mob:setMod(tpz.mod.REFRESH, 50)
+
     local mobID = mob:getID()
 	local wyvern = GetMobByID(mobID)
 	-- Absolute Virtue's pet HP are modified in the database
@@ -23,7 +25,7 @@ function onMobSpawn(mob)
 		wyvern:setMobLevel(115)
 		wyvern:addMod(tpz.mod.INT, 75)
 		wyvern:addMod(tpz.mod.ATT, 400)
-		wyvern:addMod(tpz.mod.MATT, math.random(300, 450))
+		wyvern:addMod(tpz.mod.MATT, math.random(100, 200))
 		wyvern:addMod(tpz.mod.DEF, 250)
 		wyvern:addMod(tpz.mod.ACC, 250)
 		wyvern:addMod(tpz.mod.MACC, math.random(750, 900))

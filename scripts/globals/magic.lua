@@ -323,6 +323,7 @@ function applyResistanceEffect(caster, target, spell, params)
     local skill = params.skillType
     local bonus = params.bonus
     local effect = params.effect
+--	printf("magic.lua applyResistanceEffect EFFECT: [%s]", effect)
 
     -- If Stymie is active, as long as the mob is not immune then the effect is not resisted
     if (effect ~= nil) then -- Dispel's script doesn't have an "effect" to send here, nor should it.
@@ -357,6 +358,10 @@ function applyResistanceEffect(caster, target, spell, params)
     end
 
     local p = getMagicHitRate(caster, target, skill, element, percentBonus, magicaccbonus)
+	
+	-- if (caster:getName() == "Khalum") then
+		-- printf("magic.lua applyResistanceEffect RESISTANCE: [%i]  MAGIC HIT RATE: [%i]", getEffectResistance(target, effect), p)
+	-- end
 
     return getMagicResist(p)
 end
@@ -441,7 +446,10 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
     local maccFood = magicacc * (caster:getMod(tpz.mod.FOOD_MACCP)/100)
     magicacc = magicacc + utils.clamp(maccFood, 0, caster:getMod(tpz.mod.FOOD_MACC_CAP))
 
---	printf("magic.lua getMagicHitRate CASTER:[%s]  TARGET: [%s]", caster:getName(), target:getName())
+	-- if (caster:getName() == "Khalum") then
+		-- printf("magic.lua getMagicHitRate CASTER:[%s]  TARGET: [%s]", caster:getName(), target:getName())
+	-- end
+	
     return calculateMagicHitRate(magicacc, magiceva, percentBonus, caster:getMainLvl(), target:getMainLvl())
 end
 
@@ -449,10 +457,15 @@ function calculateMagicHitRate(magicacc, magiceva, percentBonus, casterLvl, targ
     local p = 0
     --add a scaling bonus or penalty based on difference of targets level from caster
     local levelDiff = utils.clamp(casterLvl - targetLvl, -5, 5)
-
-    p = 70 - 0.5 * (magiceva - magicacc) + levelDiff * 3 + percentBonus
+	local adjustedPercent = 1
 	
---	printf("magic.lua calculateMagicHitRate CASTER MACC: [%i]  TARGET MEVA: [%i]  p: [%i]  CAPPED p: [%i]", magicacc, magiceva, p, utils.clamp(p, 5, 95))
+	if (percentBonus <= 100) then
+		adjustedPercent = 1 + (percentBonus / 100)
+	end
+
+    p = (70 - 0.5 * (magiceva - magicacc) + levelDiff * 3) * adjustedPercent
+	
+--	printf("magic.lua calculateMagicHitRate CASTER MACC: [%i]  TARGET MEVA: [%i]  PERCENTBONUS: [%1.2f]  p: [%i]  CAPPED p: [%i]", magicacc, magiceva, adjustedPercent, p, utils.clamp(p, 5, 95))
 
     return utils.clamp(p, 5, 95)
 end
@@ -499,37 +512,51 @@ end
 -- Returns the amount of resistance the
 -- target has to the given effect (stun, sleep, etc..)
 function getEffectResistance(target, effect)
-    local effectres = 0
+    local effectres
     local statusres = target:getMod(tpz.mod.ALLSTATUSRES)
     if (effect == tpz.effect.SLEEP_I or effect == tpz.effect.SLEEP_II) then
         effectres = tpz.mod.SLEEPRES
-    elseif (effect == tpz.effect.LULLABY) then
+	end
+    if (effect == tpz.effect.LULLABY) then
         effectres = tpz.mod.LULLABYRES
-    elseif (effect == tpz.effect.POISON) then
+	end
+    if (effect == tpz.effect.POISON) then
         effectres = tpz.mod.POISONRES
-    elseif (effect == tpz.effect.PARALYSIS) then
+	end
+    if (effect == tpz.effect.PARALYSIS) then
         effectres = tpz.mod.PARALYZERES
-    elseif (effect == tpz.effect.BLINDNESS) then
+    end
+    if (effect == tpz.effect.BLINDNESS) then
         effectres = tpz.mod.BLINDRES
-    elseif (effect == tpz.effect.SILENCE) then
+    end
+    if (effect == tpz.effect.SILENCE) then
         effectres = tpz.mod.SILENCERES
-    elseif (effect == tpz.effect.PLAGUE or effect == tpz.effect.DISEASE) then
+    end
+    if (effect == tpz.effect.PLAGUE or effect == tpz.effect.DISEASE) then
         effectres = tpz.mod.VIRUSRES
-    elseif (effect == tpz.effect.PETRIFICATION) then
+    end
+    if (effect == tpz.effect.PETRIFICATION) then
         effectres = tpz.mod.PETRIFYRES
-    elseif (effect == tpz.effect.BIND) then
+    end
+    if (effect == tpz.effect.BIND) then
         effectres = tpz.mod.BINDRES
-    elseif (effect == tpz.effect.CURSE_I or effect == tpz.effect.CURSE_II or effect == tpz.effect.BANE) then
+    end
+    if (effect == tpz.effect.CURSE_I or effect == tpz.effect.CURSE_II or effect == tpz.effect.BANE) then
         effectres = tpz.mod.CURSERES
-    elseif (effect == tpz.effect.WEIGHT or tpz.effect.GEO_WEIGHT) then
+    end
+    if (effect == tpz.effect.WEIGHT or tpz.effect.GEO_WEIGHT) then
         effectres = tpz.mod.GRAVITYRES
-    elseif (effect == tpz.effect.SLOW or effect == tpz.effect.ELEGY) then
+    end
+    if (effect == tpz.effect.SLOW or effect == tpz.effect.ELEGY) then
         effectres = tpz.mod.SLOWRES
-    elseif (effect == tpz.effect.STUN) then
+    end
+    if (effect == tpz.effect.STUN) then
         effectres = tpz.mod.STUNRES
-    elseif (effect == tpz.effect.CHARM) then
+    end
+    if (effect == tpz.effect.CHARM) then
         effectres = tpz.mod.CHARMRES
-    elseif (effect == tpz.effect.AMNESIA) then
+    end
+    if (effect == tpz.effect.AMNESIA) then
         effectres = tpz.mod.AMNESIARES
     end
 

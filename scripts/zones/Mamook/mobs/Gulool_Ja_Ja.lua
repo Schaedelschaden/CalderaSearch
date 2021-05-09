@@ -41,10 +41,12 @@ function onMobFight(mob, target)
 	if act == tpz.act.MOBABILITY_START or act == tpz.act.MOBABILITY_USING or act == tpz.act.MOBABILITY_FINISH or act == tpz.act.MAGIC_START or act == tpz.act.MAGIC_CASTING or act == tpz.act.MAGIC_START then
         isBusy = true -- Set to true if Seiryu is in any stage of using a mobskill or casting a spell
     end
+	
    	if (mob:getHPP() <= 50 and isBusy == false and has2Hrd ~= 1) then
 		mob:useMobAbility(731) -- Mijin Gakure
  		mob:setLocalVar("has2Hrd", 1)
 	end
+	
     if (mob:getBattleTime() % 60 < 2 and mob:getBattleTime() > 10) then
         if (not GetMobByID(ID.mob.GULOOL_JA_JA + 1):isSpawned()) then
             GetMobByID(ID.mob.GULOOL_JA_JA + 1):setSpawn(mob:getXPos()+math.random(1, 5), mob:getYPos(), mob:getZPos()+math.random(1, 5))
@@ -60,6 +62,7 @@ function onMobFight(mob, target)
             SpawnMob(ID.mob.GULOOL_JA_JA + 4):updateEnmity(target)
         end
     end
+	
     for i = ID.mob.GULOOL_JA_JA + 1, ID.mob.GULOOL_JA_JA + 4 do
         local pet = GetMobByID(i)
         if (pet:getCurrentAction() == tpz.act.ROAMING) then

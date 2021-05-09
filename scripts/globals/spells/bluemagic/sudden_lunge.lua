@@ -50,9 +50,9 @@ function onSpellCast(caster,target,spell)
         params.chr_wsc = 0.0
     local damage = BluePhysicalSpell(caster, target, spell, params)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
-
+	
     if (resist > 0.25) then -- This line may need adjusting for retail accuracy.
-        target:addStatusEffect(tpz.effect.STUN, 1, 0, 20 * resist) -- Wiki says duration of "up to" 20 second..
+        target:addStatusEffect(tpz.effect.STUN, 1, 0, 5 * resist) -- Wiki says duration of "up to" 20 second..
     end
 
     return damage

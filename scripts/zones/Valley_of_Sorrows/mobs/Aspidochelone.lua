@@ -10,11 +10,15 @@ require("scripts/globals/titles")
 -----------------------------------
 
 function onMobSpawn(mob)
-    if LandKingSystem_NQ > 0 or LandKingSystem_HQ > 0 then
-        GetNPCByID(ID.npc.ADAMANTOISE_QM):setStatus(tpz.status.DISAPPEAR)
-    end
+    -- if LandKingSystem_NQ > 0 or LandKingSystem_HQ > 0 then
+        -- GetNPCByID(ID.npc.ADAMANTOISE_QM):setStatus(tpz.status.DISAPPEAR)
+    -- end
 
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
+	
+	mob:addMod(tpz.mod.DEF, 700)
+	mob:addMod(tpz.mod.EVA, 800)
+	mob:addMod(tpz.mod.MACC, 900)
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -36,6 +40,6 @@ function onMobDespawn(mob)
         SetServerVariable("[PH]Aspidochelone", 0)
         DisallowRespawn(ID.mob.ADAMANTOISE, false)
         UpdateNMSpawnPoint(ID.mob.ADAMANTOISE)
-        GetMobByID(ID.mob.ADAMANTOISE):setRespawnTime(75600 + math.random(0, 6) * 1800) -- 21 - 24 hours with half hour windows
+        GetMobByID(ID.mob.ADAMANTOISE):setRespawnTime(28800 + math.random(0, 8) * 1800) -- 8-12 hours with half hour windows
     end
 end

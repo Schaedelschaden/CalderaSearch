@@ -20,6 +20,9 @@ function onConquestUpdate(zone, updatetype)
 end
 
 function onZoneIn(player, prevZone)
+	if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
+        player:setPos(-519, 1, -13, 190)
+    end
 
     local cs = -1
 

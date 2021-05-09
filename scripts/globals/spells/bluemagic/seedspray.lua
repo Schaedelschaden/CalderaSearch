@@ -46,6 +46,8 @@ function onSpellCast(caster, target, spell)
         params.chr_wsc = 0.0
     damage = BluePhysicalSpell(caster, target, spell, params)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+	
+	local tp = caster:getTP()
 
     --           0 TP = No TP bonus
 	--    1 - 1499 TP = Tier 1 bonus

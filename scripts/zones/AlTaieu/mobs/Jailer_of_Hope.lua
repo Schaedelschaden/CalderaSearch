@@ -41,4 +41,13 @@ function onAdditionalEffect(mob, target, damage)
 end
 
 function onMobDeath(mob, player, isKiller)
-end;
+	local KillCounter = player:getCharVar("KillCounter_JailOfHope")
+	local playerName = player:getName()
+	local mobName = mob:getName()
+	local fixedMobName = string.gsub(mobName, "_", " ")
+	
+	KillCounter = KillCounter + 1
+	
+	player:setCharVar("KillCounter_JailOfHope", KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+end

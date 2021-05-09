@@ -308,22 +308,11 @@ CTrustEntity* LoadTrust(CCharEntity* PMaster, uint32 TrustID)
 
     // assume level matches master
 	uint8 mLvl = PMaster->GetMLevel();
-	uint8 iLvl = PMaster->m_Weapons[SLOT_MAIN]->getILvl();
-	uint8 riLvl = 0;
+	uint16 iLvl = battleutils::GetPlayerItemLevel(PMaster);
 	
-	if (PMaster->getEquip(SLOT_RANGED) && PMaster->getEquip(SLOT_RANGED)->isType(ITEM_WEAPON))
+	if (iLvl > 0)
 	{
-		riLvl = PMaster->m_Weapons[SLOT_RANGED]->getILvl();
-	}
-
-	if (iLvl > mLvl)
-	{
-		mLvl = iLvl;
-	}
-		
-	if (riLvl > mLvl && riLvl > iLvl)
-	{
-		mLvl = riLvl;
+		mLvl = (uint8)(mLvl + iLvl);
 	}
 	
 	PTrust->SetMLevel(mLvl);
@@ -487,6 +476,8 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
     PTrust->UpdateHealth();
     PTrust->health.hp = PTrust->GetMaxHP();
     PTrust->health.mp = PTrust->GetMaxMP();
+	
+	uint8 dexRank = PTrust->dexRank;
 
     // Stats ========================
     uint16 fSTR = mobutils::GetBaseToRank(PTrust->strRank, mLvl);
@@ -534,14 +525,6 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
         sVIT = 0;
     }
 
-    PTrust->stats.STR = static_cast<uint16>((fSTR + mSTR + sSTR) * map_config.alter_ego_stat_multiplier);
-    PTrust->stats.DEX = static_cast<uint16>((fDEX + mDEX + sDEX) * map_config.alter_ego_stat_multiplier);
-    PTrust->stats.VIT = static_cast<uint16>((fVIT + mVIT + sVIT) * map_config.alter_ego_stat_multiplier);
-    PTrust->stats.AGI = static_cast<uint16>((fAGI + mAGI + sAGI) * map_config.alter_ego_stat_multiplier);
-    PTrust->stats.INT = static_cast<uint16>((fINT + mINT + sINT) * map_config.alter_ego_stat_multiplier);
-    PTrust->stats.MND = static_cast<uint16>((fMND + mMND + sMND) * map_config.alter_ego_stat_multiplier);
-    PTrust->stats.CHR = static_cast<uint16>((fCHR + mCHR + sCHR) * map_config.alter_ego_stat_multiplier);
-
     // Skills =======================
     for (int i = SKILL_DIVINE_MAGIC; i <= SKILL_BLUE_MAGIC; i++)
     {
@@ -571,16 +554,49 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
         }
     }
 
-    PTrust->addModifier(Mod::DEF, mobutils::GetBase(PTrust, PTrust->defRank));
-    PTrust->addModifier(Mod::EVA, mobutils::GetEvasion(PTrust));
-    PTrust->addModifier(Mod::ATT, mobutils::GetBase(PTrust, PTrust->attRank));
-    PTrust->addModifier(Mod::ACC, mobutils::GetBase(PTrust, PTrust->accRank));
+	if (mLvl < 100)
+	{
+		PTrust->stats.STR = static_cast<uint16>((fSTR + mSTR + sSTR));
+		PTrust->stats.DEX = static_cast<uint16>((fDEX + mDEX + sDEX));
+		PTrust->stats.VIT = static_cast<uint16>((fVIT + mVIT + sVIT));
+		PTrust->stats.AGI = static_cast<uint16>((fAGI + mAGI + sAGI));
+		PTrust->stats.INT = static_cast<uint16>((fINT + mINT + sINT));
+		PTrust->stats.MND = static_cast<uint16>((fMND + mMND + sMND));
+		PTrust->stats.CHR = static_cast<uint16>((fCHR + mCHR + sCHR));
+		
+		PTrust->addModifier(Mod::DEF, (uint16)(mobutils::GetBase(PTrust, PTrust->defRank)));
+		PTrust->addModifier(Mod::EVA, (uint16)(mobutils::GetEvasion(PTrust)));
+		PTrust->addModifier(Mod::ATT, (uint16)(mobutils::GetBase(PTrust, PTrust->attRank)));
+		PTrust->addModifier(Mod::ACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank)));
 
-    PTrust->addModifier(Mod::RATT, mobutils::GetBase(PTrust, PTrust->attRank));
-    PTrust->addModifier(Mod::RACC, mobutils::GetBase(PTrust, PTrust->accRank));
+		PTrust->addModifier(Mod::RATT, (uint16)(mobutils::GetBase(PTrust, PTrust->attRank)));
+		PTrust->addModifier(Mod::RACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank)));
 
-    // Natural magic evasion
-    PTrust->addModifier(Mod::MEVA, mobutils::GetMagicEvasion(PTrust));
+		// Natural magic evasion
+		PTrust->addModifier(Mod::MEVA, (uint16)(mobutils::GetMagicEvasion(PTrust)));
+	}
+	else
+	{
+		PTrust->stats.STR = static_cast<uint16>((fSTR + mSTR + sSTR) * map_config.alter_ego_stat_multiplier);
+		PTrust->stats.DEX = static_cast<uint16>((fDEX + mDEX + sDEX) * map_config.alter_ego_stat_multiplier);
+		PTrust->stats.VIT = static_cast<uint16>((fVIT + mVIT + sVIT) * map_config.alter_ego_stat_multiplier);
+		PTrust->stats.AGI = static_cast<uint16>((fAGI + mAGI + sAGI) * map_config.alter_ego_stat_multiplier);
+		PTrust->stats.INT = static_cast<uint16>((fINT + mINT + sINT) * map_config.alter_ego_stat_multiplier);
+		PTrust->stats.MND = static_cast<uint16>((fMND + mMND + sMND) * map_config.alter_ego_stat_multiplier);
+		PTrust->stats.CHR = static_cast<uint16>((fCHR + mCHR + sCHR) * map_config.alter_ego_stat_multiplier);
+		
+		PTrust->addModifier(Mod::DEF, (uint16)(mobutils::GetBase(PTrust, PTrust->defRank) * map_config.alter_ego_stat_multiplier));
+		PTrust->addModifier(Mod::EVA, (uint16)(mobutils::GetEvasion(PTrust) * map_config.alter_ego_stat_multiplier));
+		PTrust->addModifier(Mod::ATT, (uint16)(mobutils::GetBase(PTrust, PTrust->attRank) * map_config.alter_ego_stat_multiplier));
+		PTrust->addModifier(Mod::ACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank) * map_config.alter_ego_stat_multiplier));
+
+		PTrust->addModifier(Mod::RATT, (uint16)(mobutils::GetBase(PTrust, PTrust->attRank) * map_config.alter_ego_stat_multiplier));
+		PTrust->addModifier(Mod::RACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank) * map_config.alter_ego_stat_multiplier));
+
+		// Natural magic evasion
+		PTrust->addModifier(Mod::MEVA, (uint16)(mobutils::GetMagicEvasion(PTrust) * map_config.alter_ego_stat_multiplier));
+	}
+	
 
     // Add traits for sub and main
     battleutils::AddTraits(PTrust, traits::GetTraits(mJob), mLvl);

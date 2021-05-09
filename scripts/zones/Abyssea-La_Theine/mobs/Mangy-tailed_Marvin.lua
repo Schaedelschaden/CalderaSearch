@@ -17,6 +17,11 @@ function onMobSpawn(mob)
 	mob:setHP(999999999)
 end
 
+function onMobFight(mob)
+	-- mob:setMod(tpz.mod.STUNRES, 10)
+	-- mob:setMod(tpz.mod.MEVA, 1000)
+end
+
 function onMobDeath(mob, player, isKiller)
 	local KillCounter = player:getCharVar("KillCounter_MangyTailedMarvin")
 	local playerName = player:getName()

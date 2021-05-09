@@ -13,6 +13,10 @@ function onInitialize(zone)
         UpdateNMSpawnPoint(ID.mob.BEHEMOTH)
         GetMobByID(ID.mob.BEHEMOTH):setRespawnTime(900 + math.random(0, 6) * 1800)
     end
+	
+	-- Behemoth/King Behemoth QM spawn location
+	local HNMQM = GetNPCByID(17297459)
+	HNMQM:setPos(-267, -19.7, 74, 0, 127)
 end
 
 function onConquestUpdate(zone, updatetype)

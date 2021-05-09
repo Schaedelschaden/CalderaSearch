@@ -11,19 +11,19 @@ require("scripts/globals/shop")
 require("scripts/globals/quests")
 require("scripts/globals/pathfind")
 
-local path =
-{
-    {-126.185, -2.000, 14.758},
-    {-121.511, -2.000, 14.814},
-}
+-- local path =
+-- {
+    -- {-126.185, -2.000, 14.758},
+    -- {-121.511, -2.000, 14.814},
+-- }
 
 function onSpawn(npc)
-    npc:initNpcPathing(path[2][1], path[2][2], path[2][3])
-    onPath(npc)
+    -- npc:initNpcPathing(path[2][1], path[2][2], path[2][3])
+    -- onPath(npc)
 end
 
 function onPath(npc)
-    tpz.path.pingPong(npc, path, tpz.path.flag.NONE)
+    -- tpz.path.pingPong(npc, path, tpz.path.flag.NONE)
 end
 
 function onTrade(player,npc,trade)
@@ -35,7 +35,7 @@ function onTrade(player,npc,trade)
     elseif (player:getQuestStatus(SANDORIA,tpz.quest.id.sandoria.A_SENTRY_S_PERIL) == QUEST_ACCEPTED and
         trade:hasItemQty(601,1) and count == 1) then
             player:startEvent(513)
-            npc:pathStop()
+--            npc:pathStop()
     end
 end
 
@@ -44,18 +44,18 @@ function onTrigger(player,npc)
 
     if (aSentrysPeril == QUEST_AVAILABLE) then
         player:startEvent(510)
-        npc:pathStop()
+--        npc:pathStop()
     elseif (aSentrysPeril == QUEST_ACCEPTED) then
         if (player:hasItem(600) == true or player:hasItem(601) == true) then
             player:startEvent(520)
-            npc:pathStop()
+--            npc:pathStop()
         else
             player:startEvent(644)
-            npc:pathStop()
+--            npc:pathStop()
         end
     elseif (aSentrysPeril == QUEST_COMPLETED) then
         player:startEvent(521)
-        npc:pathStop()
+--        npc:pathStop()
     end
 end
 
@@ -91,5 +91,5 @@ function onEventFinish(player,csid,option,npc)
         end
     end
 
-    npc:pathResume()
+--    npc:pathResume()
 end

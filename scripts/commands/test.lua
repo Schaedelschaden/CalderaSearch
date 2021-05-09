@@ -6,10 +6,65 @@
 cmdprops =
 {
     permission = 1,
-    parameters = "i"
+    parameters = ""
 }
 
-function onTrigger(player, int)
+function onTrigger(player)
+	local target = player:getCursorTarget()
+	local pet = player:getPet()
+	local petCE = target:getCE(pet)
+	local petVE = target:getVE(pet)
+	
+	printf("test.lua onTrigger PET CE: [%i]  VE: [%i]", petCE, petVE)
+
+---------------------------------------------------------------------------------------------------
+-- local missionZM = {0, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 23, 24, 26, 27, 28, 30}
+
+	-- for i = 1, #missionZM do
+-- --		player:completeMission(3, 0)
+-- --		player:delMission(3, missionZM[i])
+		-- player:addMission(3, missionZM[i] + 1)
+		-- player:completeMission(3, missionZM[i])
+	-- end
+	
+	-- player:addMission(3, 31) -- RoZ: Awakening
+
+---------------------------------------------------------------------------------------------------
+
+-- Outputs the current os.time
+--	printf("Time: [%i]", os.time())
+
+---------------------------------------------------------------------------------------------------
+-- Checks the targets Physical Damage Type Resistances
+
+	-- validate mobId
+    -- local targ
+    -- if (mobId == nil) then
+        -- targ = player:getCursorTarget()
+        -- if (targ == nil or not targ:isMob()) then
+            -- error(player,"You must target a mob.")
+            -- return
+        -- end
+    -- else
+        -- targ = GetMobByID(mobId)
+        -- if (targ == nil) then
+            -- error(player,"Invalid mobID.")
+            -- return
+        -- end
+    -- end
+	
+	-- local H2HRes = targ:getMod(tpz.mod.HTHRES)
+	-- local BluntRES = targ:getMod(tpz.mod.IMPACTRES)
+	-- local PierceRES = targ:getMod(tpz.mod.PIERCERES)
+	-- local SlashRES = targ:getMod(tpz.mod.SLASHRES)
+	
+	-- player:PrintToPlayer(string.format("H2H RES: [%i]  Blunt RES: [%i]  Pierce RES: [%i]  Slash RES: [%i]", H2HRes, BluntRES, PierceRES, SlashRES),tpz.msg.channel.SYSTEM_3)
+
+---------------------------------------------------------------------------------------------------
+
+	-- local ilvl = player:getItemLevel()
+	-- printf("test.lua onTrigger Item Level: [%i]", ilvl)
+
 ---------------------------------------------------------------------------------------------------
 
 -- Code for testing arrays
@@ -32,16 +87,16 @@ function onTrigger(player, int)
 
 -- Code for testing combat messages
 	-- targ:messageCombat(actor, actionID, value, message)
-	local actor = player:getCursorTarget()
-	local actionID = 344
-	local value = 1000
+	-- local actor = player:getCursorTarget()
+	-- local actionID = 344
+	-- local value = 1000
 --	local message = 101 -- From scripts/globals/msg.lua
 	
 	-- for i = id1, id2 do
 	-- player:messageCombat(actor, i, value, message)
 	-- end
 	
-	player:messageCombat(actor, actionID, value, int)
+--	player:messageCombat(actor, actionID, value, int)
 	
 
 ---------------------------------------------------------------------------------------------------

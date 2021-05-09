@@ -12,15 +12,24 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    if player:getCurrentMission(ROV) == tpz.mission.id.rov.AT_THE_HEAVENS_DOOR then
-        player:startEvent(63)
-    elseif player:getCurrentMission(ROV) == tpz.mission.id.rov.THE_LIONS_ROAR then
-        npcUtil.popFromQM(player, npc, ID.mob.OPHIOTAURUS, { look=true, hide=0 })
-    elseif player:getCurrentMission(ROV) == tpz.mission.id.rov.EDDIES_OF_DESPAIR_I then
-        player:startEvent(64)
-    elseif player:getCurrentMission(ROV) >= tpz.mission.id.rov.SET_FREE then
-        player:startEvent(65)
-    end
+	if (player:getCharVar("KillCounter_Kirin") > 0 and player:getCharVar("KillCounter_JailofLove") > 0) then
+		-- if player:getCurrentMission(ROV) == tpz.mission.id.rov.AT_THE_HEAVENS_DOOR then
+			-- player:startEvent(63)
+		-- elseif player:getCurrentMission(ROV) == tpz.mission.id.rov.THE_LIONS_ROAR then
+			-- npcUtil.popFromQM(player, npc, ID.mob.OPHIOTAURUS, { look=true, hide=0 })
+		-- elseif player:getCurrentMission(ROV) == tpz.mission.id.rov.EDDIES_OF_DESPAIR_I then
+			-- player:startEvent(64)
+		-- elseif player:getCurrentMission(ROV) >= tpz.mission.id.rov.SET_FREE then
+			-- player:startEvent(65)
+		-- end
+		player:setPos(-338, 6, -225, 172, 288)
+	elseif (player:getCharVar("KillCounter_Kirin") == 0 and player:getCharVar("KillCounter_JailofLove") == 0) then
+		player:PrintToPlayer(string.format("You sense that the power of Kirin and the Jailer of Love is preventing you from entering the confluence!"),tpz.msg.channel.SYSTEM_3)
+	elseif (player:getCharVar("KillCounter_Kirin") > 0 and player:getCharVar("KillCounter_JailofLove") == 0) then
+		player:PrintToPlayer(string.format("You sense that the power of the Jailer of Love is preventing you from entering the confluence!"),tpz.msg.channel.SYSTEM_3)
+	elseif (player:getCharVar("KillCounter_Kirin") == 0 and player:getCharVar("KillCounter_JailofLove") > 0) then
+		player:PrintToPlayer(string.format("You sense that the power of Kirin is preventing you from entering the confluence!"),tpz.msg.channel.SYSTEM_3)
+	end
 end
 
 function onEventUpdate(player, csid, option)

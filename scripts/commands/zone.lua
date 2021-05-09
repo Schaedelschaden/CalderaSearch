@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 cmdprops =
 {
-    permission = 1,
+    permission = 0,
     parameters = "b"
 }
 
@@ -298,57 +298,68 @@ end
 -- desc: Called when this command is invoked.
 ---------------------------------------------------------------------------------------------------
 function onTrigger(player, bytes)
-    local x = 0
-    local y = 0
-    local z = 0
-    local rot = 0
-    local zone
+	local zoneId = player:getZoneID()
 
-    if (bytes == nil) then
-        error(player, "You must provide a zone ID or autotranslate phrase.")
-        return
-    end
-    bytes = string.sub(bytes, 6)
-    local atpos = getBytePos(bytes, 253)
+	if (zoneId == 255 or zoneId == 146 or zoneId == 6 or zoneId == 8 or zoneId == 207 or zoneId == 203 or zoneId == 201 or zoneId == 202 or zoneId == 211 or
+		zoneId == 209 or zoneId == 36 or zoneId == 170 or zoneId == 139 or zoneId == 180 or zoneId == 31 or zoneId == 206 or zoneId == 277 or zoneId == 163 or
+		zoneId == 32 or zoneId == 179 or zoneId == 10 or zoneId == 165 or zoneId == 156 or zoneId == 144) then
+		player:PrintToPlayer(string.format("That command cannot be used in this zone. Please exit the area and try again."),tpz.msg.channel.SYSTEM_3)
+		return
+	else
+		if (player:getGMLevel() > 0 or player:getMentor() > 0) then
+			local x = 0
+			local y = 0
+			local z = 0
+			local rot = 0
+			local zone
 
-    -- validate destination
-    if (atpos ~= nil) then
-        -- destination is an auto-translate phrase
-        local groupId = string.byte(bytes, atpos + 3)
-        local messageId = string.byte(bytes, atpos + 4)
-        for k, v in pairs(zone_list) do
-            if (v[1] == groupId and v[2] == messageId) then
-                x = v[4] or 0
-                y = v[5] or 0
-                z = v[6] or 0
-                rot = 0
-                zone = v[3]
-                break
-            end
-        end
-        if (zone == nil) then
-            error(player, "Auto-translated phrase is not a zone.")
-            return
-        end
-    else
-        -- destination is a zone ID.
-        zone = tonumber(bytes)
-        if (zone == nil or zone < 0 or zone >= tpz.zone.MAX_ZONE) then
-            error(player, "Invalid zone ID.")
-            return
-        end
-        for k, v in pairs(zone_list) do
-            if (v[3] == zone) then
-                x = v[4] or 0
-                y = v[5] or 0
-                z = v[6] or 0
-                rot = 0
-                zone = v[3]
-                break
-            end
-        end
-    end
+			if (bytes == nil) then
+				error(player, "You must provide a zone ID or autotranslate phrase.")
+				return
+			end
+			bytes = string.sub(bytes, 6)
+			local atpos = getBytePos(bytes, 253)
 
-    -- send player to destination
-    player:setPos(x, y, z, rot, zone)
+			-- validate destination
+			if (atpos ~= nil) then
+				-- destination is an auto-translate phrase
+				local groupId = string.byte(bytes, atpos + 3)
+				local messageId = string.byte(bytes, atpos + 4)
+				for k, v in pairs(zone_list) do
+					if (v[1] == groupId and v[2] == messageId) then
+						x = v[4] or 0
+						y = v[5] or 0
+						z = v[6] or 0
+						rot = 0
+						zone = v[3]
+						break
+					end
+				end
+				if (zone == nil) then
+					error(player, "Auto-translated phrase is not a zone.")
+					return
+				end
+			else
+				-- destination is a zone ID.
+				zone = tonumber(bytes)
+				if (zone == nil or zone < 0 or zone >= tpz.zone.MAX_ZONE) then
+					error(player, "Invalid zone ID.")
+					return
+				end
+				for k, v in pairs(zone_list) do
+					if (v[3] == zone) then
+						x = v[4] or 0
+						y = v[5] or 0
+						z = v[6] or 0
+						rot = 0
+						zone = v[3]
+						break
+					end
+				end
+			end
+
+			-- send player to destination
+			player:setPos(x, y, z, rot, zone)
+		end
+	end
 end

@@ -8,9 +8,9 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onMobSpawn (mob)
-	mob:addMod(tpz.mod.ACC, 800)
-	mob:addMod(tpz.mod.ATT, 500)
-	mob:addMod(tpz.mod.MATT, 700)
+--	mob:addMod(tpz.mod.ACC, 800)
+--	mob:addMod(tpz.mod.ATT, 500)
+	mob:addMod(tpz.mod.MATT, 100)
 	mob:addMod(tpz.mod.REFRESH, 100)
 	mob:addMod(tpz.mod.REGAIN, 100)
 	mob:addMod(tpz.mod.DEF, 500)

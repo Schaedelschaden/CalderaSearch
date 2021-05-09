@@ -18,7 +18,7 @@ local cantUse2Hr = {"AV_CANT_USE_MIGHTY_STRIKES", "AV_CANT_USE_HUNDRED_FISTS", "
 					"AV_CANT_USE_PERFECT_DODGE", "AV_CANT_USE_INVINCIBLE", "AV_CANT_USE_BLOOD_WEAPON", "AV_CANT_USE_SOUL_VOICE", "AV_CANT_USE_EES", "AV_CANT_USE_MEIKYO",
 					"AV_CANT_USE_FAMILIAR", "AV_CANT_USE_ASTRAL_FLOW", "AV_CANT_USE_CALL_WYVERN"}
 
-function onMobSpawn(mob)	
+function onMobSpawn(mob)
 	-- Reset spell list from last spawn
 	mob:setSpellList(430)
 	
@@ -31,7 +31,7 @@ function onMobSpawn(mob)
 	mob:setMod(tpz.mod.CHARMRES, 85)
 	mob:setMod(tpz.mod.DEATHRES, 85)
 	mob:setMod(tpz.mod.PARALYZERES, 20)
-    mob:setMod(tpz.mod.STUNRES, 35)
+    mob:setMod(tpz.mod.STUNRES, 5000)
     mob:setMod(tpz.mod.BINDRES, 50)
     mob:setMod(tpz.mod.GRAVITYRES, 30)
 	mob:setMod(tpz.mod.MOVE, 50)
@@ -247,6 +247,21 @@ function onMobFight(mob, target)
 			SetServerVariable("AV_NEXT_2HR_TIME", os.time() + math.random(45, 90))
 		end
 	end
+	
+	if (mob:getHPP() <= 60 and mob:getLocalVar("AV_RAGE") ~= 1) then
+		mob:AnimationSub(2)
+		mob:setLocalVar("AV_RAGE", 1)
+		
+		mob:addMod(tpz.mod.DMG, -50)
+		mob:addMod(tpz.mod.ATT, 250)
+		mob:addMod(tpz.mod.ACC, 250)
+		mob:addMod(tpz.mod.MACC, 250)
+		mob:addMod(tpz.mod.EVA, 250)
+		mob:addMod(tpz.mod.MEVA, 250)
+		mob:addMod(tpz.mod.DEF, 250)
+		mob:addMod(tpz.mod.MATT, 150)
+		printf("Absolute_Virtue.lua onMobFight RAGE")
+	end
 end
 
 function onSpellPrecast(mob, spell)
@@ -276,6 +291,16 @@ function onMagicHit(caster, target, spell)
 end
 
 function onMobDeath(mob, player, isKiller)
+	local KillCounter = player:getCharVar("KillCounter_AbsoluteVirtue")
+	local playerName = player:getName()
+	local mobName = mob:getName()
+	local fixedMobName = string.gsub(mobName, "_", " ")
+	
+	KillCounter = KillCounter + 1
+	
+	player:setCharVar("KillCounter_AbsoluteVirtue", KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+	
     player:addTitle(tpz.title.VIRTUOUS_SAINT)
 	
 	for i = ID.mob.ABSOLUTE_VIRTUE + 1, ID.mob.ABSOLUTE_VIRTUE + 3 do
@@ -283,6 +308,7 @@ function onMobDeath(mob, player, isKiller)
     end
 	
 	-- Clean up listeners and variables
+	mob:AnimationSub(1)
 	mob:removeListener("AV_2HR_LISTENER")
 	player:removeListener("PLAYER_USE_2HRS")
 	player:setLocalVar("AV_Listener", 0)

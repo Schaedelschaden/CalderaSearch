@@ -27,7 +27,7 @@ function onZoneIn(player, prevZone)
     end
 
     if player:getCurrentMission(ROV) == tpz.mission.id.rov.FATES_CALL and player:getCurrentMission(player:getNation()) > 15 then
---        cs = 30036
+        cs = 30036
     end
 
     -- San d'Oria Rank 10 Epilogue

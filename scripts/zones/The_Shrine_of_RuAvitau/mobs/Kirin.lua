@@ -84,6 +84,15 @@ function onAdditionalEffect(mob, target, damage)
 end
 
 function onMobDeath(mob, player, isKiller)
+	local KillCounter = player:getCharVar("KillCounter_Kirin")
+	local playerName = player:getName()
+	local mobName = mob:getName()
+	
+	KillCounter = KillCounter + 1
+	
+	player:setCharVar("KillCounter_Kirin", KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", mobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+
     player:addTitle( tpz.title.KIRIN_CAPTIVATOR )
 	player:addKeyItem( tpz.ki.KIRINS_FERVOR )
 	player:messageSpecial( ID.text.KEYITEM_OBTAINED, tpz.ki.KIRINS_FERVOR )

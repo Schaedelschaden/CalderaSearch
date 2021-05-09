@@ -57,6 +57,7 @@ function onMobDeath(mob, player, isKiller)
         local mobId = mob:getID()
         local nm    = GetMobByID(ID.mob.JAILER_OF_TEMPERANCE)
         local ph    = nm:getLocalVar("ph")
+		local phTable = ID.mob.JAILER_OF_TEMPERANCE_PH
 
         if (ph == mobId and os.time() > nm:getLocalVar("pop")) then
             local pos = mob:getSpawnPos()
@@ -65,5 +66,11 @@ function onMobDeath(mob, player, isKiller)
             nm:setLocalVar("ph", ph)
             DisallowRespawn(mobId, true)
         end
+		
+		if (nm:getLocalVar("ph") == 0 or nm:getLocalVar("ph") == nil) then
+			nm:setLocalVar("ph", phTable[math.random(#phTable)])
+		end
+		
+--		printf("Eozdei.lua onMobDeath JAILER OF TEMPERANCE PH: [%i]", nm:getLocalVar("ph"))
     end
 end

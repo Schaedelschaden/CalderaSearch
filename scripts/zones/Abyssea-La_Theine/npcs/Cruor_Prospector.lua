@@ -34,7 +34,7 @@ function onEventFinish(player, csid, option)
 	local Price = 0
     local ItemID = 0
     local Quantity = 1
-	printf("Aby-LaTheine Cruor_Prospector.cpp onEventFinish CSID: [%i]  OPTION: [%i]\n", csid, option)
+--	printf("Aby-LaTheine Cruor_Prospector.cpp onEventFinish CSID: [%i]  OPTION: [%i]\n", csid, option)
 	
 	-- Item Exchanges - Page 1
     if option == 65537 then -- Perle Salade

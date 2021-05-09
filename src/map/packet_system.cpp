@@ -200,8 +200,11 @@ void PrintPacket(CBasicPacket data)
 
 void SmallPacket0x000(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
-    ShowWarning(CL_YELLOW"parse: Unhandled game packet %03hX from user: %s\n" CL_RESET, (data.ref<uint16>(0) & 0x1FF), PChar->GetName());
-    return;
+	// 0x0C0 = Packet spam from Ashita Duration addon
+    if ((data.ref<uint16>(0) & 0x1FF) != 0x0C0)
+	{
+		ShowWarning(CL_YELLOW"parse: Unhandled game packet %03hX from user: %s\n" CL_RESET, (data.ref<uint16>(0) & 0x1FF), PChar->GetName());
+	}
 }
 
 /************************************************************************

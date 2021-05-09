@@ -2,7 +2,8 @@
 -- Area: Behemoth's Dominion
 --  NPC: qm2 (???)
 -- Spawns Behemoth or King Behemoth
--- !pos -267 -19 74 127
+-- !pos -267 -19.7 74 127
+-- ID: 17297459
 -----------------------------------
 local ID = require("scripts/zones/Behemoths_Dominion/IDs")
 require("scripts/globals/npc_util")
@@ -11,9 +12,10 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onSpawn(npc)
-    if LandKingSystem_NQ < 1 and LandKingSystem_HQ < 1 then
-        npc:setStatus(tpz.status.DISAPPEAR)
-    end
+    -- if LandKingSystem_NQ < 1 and LandKingSystem_HQ < 1 then
+        -- npc:setStatus(tpz.status.DISAPPEAR)
+    -- end
+	npc:setPos(-267, -19.7, 74, 0, 127)
 end
 
 function onTrade(player, npc, trade)

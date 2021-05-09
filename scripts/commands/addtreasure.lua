@@ -40,8 +40,9 @@ function onTrigger(player, itemId, target, dropper)
     if (dropper ~= nil) then
         dropper = GetNPCByID(dropper)
         if (dropper == nil) then
-            error(player, "Invalid npcID.")
-            return
+			dropper = GetNPCByID(player:getCursorTarget())
+--            error(player, "Invalid npcID.")
+--            return
         end
     end
 

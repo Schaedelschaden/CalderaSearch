@@ -11,6 +11,12 @@ function onMobSpawn(mob)
     mob:AnimationSub(0)
     mob:setLocalVar("roamTime", os.time())
     mob:setModelId(1168) -- Dark
+	
+	mob:addMod(tpz.mod.DEF, math.random(375, 525))
+	mob:addMod(tpz.mod.MDEF, math.random(35, 55))
+	mob:addMod(tpz.mod.EVA, math.random(325, 550))
+	mob:addMod(tpz.mod.MACC, math.random(700, 850))
+	mob:addMod(tpz.mod.REFRESH, 15)
 end
 
 function onMobRoam(mob)

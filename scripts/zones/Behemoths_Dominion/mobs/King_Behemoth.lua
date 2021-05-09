@@ -17,11 +17,19 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
-    if LandKingSystem_NQ > 0 or LandKingSystem_HQ > 0 then
-        GetNPCByID(ID.npc.BEHEMOTH_QM):setStatus(tpz.status.DISAPPEAR)
-    end
+    -- if LandKingSystem_NQ > 0 or LandKingSystem_HQ > 0 then
+        -- GetNPCByID(ID.npc.BEHEMOTH_QM):setStatus(tpz.status.DISAPPEAR)
+    -- end
 
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
+	
+	mob:addMod(tpz.mod.DEF, 700)
+	mob:addMod(tpz.mod.EVA, 500)
+	mob:addMod(tpz.mod.MACC, 900)
+end
+
+function onMobFight(mob)
+	
 end
 
 function onAdditionalEffect(mob, target, damage)
@@ -57,6 +65,6 @@ function onMobDespawn(mob)
         SetServerVariable("[PH]King_Behemoth", 0)
         DisallowRespawn(ID.mob.BEHEMOTH, false)
         UpdateNMSpawnPoint(ID.mob.BEHEMOTH)
-        GetMobByID(ID.mob.BEHEMOTH):setRespawnTime(75600 + math.random(0, 6) * 1800) -- 21 - 24 hours with half hour windows
+        GetMobByID(ID.mob.BEHEMOTH):setRespawnTime(28800 + math.random(0, 8) * 1800) -- 8-12 hours with half hour windows
     end
 end

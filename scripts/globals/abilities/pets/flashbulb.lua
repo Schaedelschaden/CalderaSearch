@@ -29,7 +29,7 @@ function onPetAbility(target, automaton, skill, master, action)
     if resist > 0.0625 then
         if target:addStatusEffect(tpz.effect.FLASH, 200, 0, duration) then
             skill:setMsg(tpz.msg.basic.SKILL_ENFEEB)
-			target:addEnmity(automaton, 1800, 5400)
+			target:addEnmity(automaton, 1200, 4800)
         else
             skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
         end

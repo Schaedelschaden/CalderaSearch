@@ -65,10 +65,10 @@ function onEventFinish(player, csid, option)
         ShadyBusiness = player:getQuestStatus(BASTOK, tpz.quest.id.bastok.SHADY_BUSINESS)
 
         if (ShadyBusiness == QUEST_ACCEPTED) then
-            player:addFame(NORG, 100)
+            player:addFame(NORG, 200)
             player:completeQuest(BASTOK, tpz.quest.id.bastok.SHADY_BUSINESS)
         else
-            player:addFame(NORG, 80)
+            player:addFame(NORG, 160)
         end
 
         player:tradeComplete()

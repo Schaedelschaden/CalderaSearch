@@ -13,7 +13,7 @@ require("scripts/globals/weaponskillids")
 
 function getQuestId(mainJobId)
 
-    return tpz.quest.jeuno.UNLOCKING_A_MYTH_WARRIOR - 1 + mainJobId
+    return tpz.quest.JEUNO.UNLOCKING_A_MYTH_WARRIOR - 1 + mainJobId
 
 end
 

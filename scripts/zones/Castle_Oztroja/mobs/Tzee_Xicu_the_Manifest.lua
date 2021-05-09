@@ -108,13 +108,13 @@ function onMobFight(mob, target)
         end
 	end
 	
-	for i = 1, 19 do
-		local link = GetMobByID(assistMobs[i])
+	-- for i = 1, 19 do
+		-- local link = GetMobByID(assistMobs[i])
 		
-		if (link:getCurrentAction() == tpz.act.ROAMING) then
-            link:updateEnmity(target)
-        end
-	end
+		-- if (link:getCurrentAction() == tpz.act.ROAMING) then
+            -- link:updateEnmity(target)
+        -- end
+	-- end
 end
 
 function onAdditionalEffect(mob, target, damage)

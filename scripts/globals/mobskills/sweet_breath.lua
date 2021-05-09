@@ -15,6 +15,10 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
+	if (mob:getID() == 17957301 or mob:getID() == 17957302) then
+		mob:setVE(target, 0)
+	end
+	
     local typeEffect = tpz.effect.SLEEP_I
     MobStatusEffectMove(mob, target, typeEffect, 1, 0, 30)
 

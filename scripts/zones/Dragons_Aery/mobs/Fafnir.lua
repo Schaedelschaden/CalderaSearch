@@ -10,14 +10,18 @@ require("scripts/globals/titles")
 -----------------------------------
 
 function onMobSpawn(mob)
-    if LandKingSystem_NQ > 0 or LandKingSystem_HQ > 0 then
-        GetNPCByID(ID.npc.FAFNIR_QM):setStatus(tpz.status.DISAPPEAR)
-    end
+    -- if LandKingSystem_NQ > 0 or LandKingSystem_HQ > 0 then
+        -- GetNPCByID(ID.npc.FAFNIR_QM):setStatus(tpz.status.DISAPPEAR)
+    -- end
     if LandKingSystem_HQ == 0 then
         SetDropRate(918, 3340, 0) -- do not drop cup_of_sweet_tea
     end
 
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
+	
+	mob:addMod(tpz.mod.DEF, 600)
+	mob:addMod(tpz.mod.EVA, 400)
+	mob:addMod(tpz.mod.MACC, 800)
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -37,11 +41,11 @@ function onMobDespawn(mob)
 
         DisallowRespawn(ID.mob.NIDHOGG, false)
         UpdateNMSpawnPoint(ID.mob.NIDHOGG)
-        GetMobByID(ID.mob.NIDHOGG):setRespawnTime(75600 + math.random(0, 6) * 1800) -- 21 - 24 hours with half hour windows
+        GetMobByID(ID.mob.NIDHOGG):setRespawnTime(28800 + math.random(0, 8) * 1800) -- 8-12 hours with half hour windows
     else
         if LandKingSystem_NQ ~= 1 then
             UpdateNMSpawnPoint(ID.mob.FAFNIR)
-            GetMobByID(ID.mob.FAFNIR):setRespawnTime(75600 + math.random(0, 6) * 1800) -- 21 - 24 hours with half hour windows
+            GetMobByID(ID.mob.FAFNIR):setRespawnTime(28800 + math.random(0, 8) * 1800) -- 8-12 hours with half hour windows
             SetServerVariable("[PH]Nidhogg", kills + 1)
         end
     end

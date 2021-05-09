@@ -137,6 +137,22 @@ function AvatarFinalAdjustments(dmg, mob, skill, target, skilltype, skillparam, 
     if skilltype == tpz.attackType.PHYSICAL and dmg == 0 then
         return 0
     end
+	
+	if skillparam == tpz.damageType.HTH and target:getMod(tpz.mod.HTHRES) == 0 then
+        return 0
+    end
+	
+	if skillparam == tpz.damageType.BLUNT and target:getMod(tpz.mod.IMPACTRES) == 0 then
+        return 0
+    end
+	
+	if skillparam == tpz.damageType.PIERCING and target:getMod(tpz.mod.PIERCERES) == 0 then
+        return 0
+    end
+	
+	if skillparam == tpz.damageType.SLASHING and target:getMod(tpz.mod.SLASHRES) == 0 then
+        return 0
+    end
 
     -- set message to damage
     -- this is for AoE because its only set once

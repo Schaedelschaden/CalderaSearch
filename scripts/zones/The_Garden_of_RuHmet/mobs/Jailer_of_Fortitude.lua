@@ -20,6 +20,10 @@ function onMobSpawn(mob)
     -- Change animation to humanoid w/ prismatic core
     mob:AnimationSub(1)
     mob:setModelId(1169)
+	
+	mob:addMod(tpz.mod.EVA, math.random(350, 475))
+	mob:addMod(tpz.mod.MDEF, math.random(45, 75))
+	mob:addMod(tpz.mod.REFRESH, 15)
 end
 
 function onMobFight(mob, target)
@@ -58,6 +62,16 @@ function onMagicHit(caster, target, spell)
 end
 
 function onMobDeath(mob, player, isKiller)
+	local KillCounter = player:getCharVar("KillCounter_JailOfFort")
+	local playerName = player:getName()
+	local mobName = mob:getName()
+	local fixedMobName = string.gsub(mobName, "_", " ")
+	
+	KillCounter = KillCounter + 1
+	
+	player:setCharVar("KillCounter_JailOfFort", KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+	
     -- Despawn the pets if alive
     DespawnMob(ID.mob.KFGHRAH_WHM)
     DespawnMob(ID.mob.KFGHRAH_BLM)

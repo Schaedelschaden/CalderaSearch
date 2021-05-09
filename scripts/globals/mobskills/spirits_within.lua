@@ -38,6 +38,12 @@ function onMobWeaponSkill(target, mob, skill)
     end
 
     dmg = dmg * 2.5
+	
+	local targetMaxHP = target:getMaxHP() - 1
+	
+	if (dmg > targetMaxHP) then
+		dmg = targetMaxHP
+	end
 
     -- Believe it or not, it's been proven to be breath damage.
     dmg = target:breathDmgTaken(dmg)
@@ -55,6 +61,12 @@ function onMobWeaponSkill(target, mob, skill)
         target:wakeUp()
         target:updateEnmityFromDamage(mob, dmg)
     end
+	
+	-- if (target:isPC()) then
+		target:setHP(1)
+	-- else
+		-- target:setHP(-dmg)
+	-- end
 
     return dmg
 end

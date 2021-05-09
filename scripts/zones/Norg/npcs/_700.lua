@@ -100,7 +100,7 @@ function onEventFinish(player, csid, option)
     elseif csid == 276 then
         -- Clear 1-3 flag
         player:setCharVar("RhapsodiesStatus", 0)
-        npcUtil.giveKeyItem(player, tpz.ki.RHAPSODY_IN_WHITE)
+--        npcUtil.giveKeyItem(player, tpz.ki.RHAPSODY_IN_WHITE)
         player:completeMission(ROV, tpz.mission.id.rov.THE_BEGINNING)
         player:addMission(ROV, tpz.mission.id.rov.FLAMES_OF_PRAYER)
     elseif csid == 277 then

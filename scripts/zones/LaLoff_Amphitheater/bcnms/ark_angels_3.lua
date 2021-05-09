@@ -33,6 +33,8 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 32001 then
+		player:delKeyItem(tpz.ki.PHANTOM_GEM_OF_ENVY)
+	
         if player:getCurrentMission(ZILART) == tpz.mission.id.zilart.ARK_ANGELS and player:getCharVar("ZilartStatus") == 1 then
             player:addKeyItem(tpz.ki.SHARD_OF_ENVY)
             player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.SHARD_OF_ENVY)

@@ -24,6 +24,15 @@ function onAdditionalEffect(mob, target, damage)
 end
 
 function onMobDeath(mob, player, isKiller)
+	local KillCounter = player:getCharVar("KillCounter_Byakko")
+	local playerName = player:getName()
+	local mobName = mob:getName()
+	
+	KillCounter = KillCounter + 1
+	
+	player:setCharVar("KillCounter_Byakko", KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", mobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+
 	player:addKeyItem( tpz.ki.BYAKKOS_PRIDE )
 	player:messageSpecial( ID.text.KEYITEM_OBTAINED, tpz.ki.BYAKKOS_PRIDE )
     player:showText(mob, ID.text.SKY_GOD_OFFSET + 12)

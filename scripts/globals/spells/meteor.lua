@@ -32,13 +32,13 @@ function onSpellCast(caster, target, spell)
     if (caster:isPC()) then
         dmg = ((100+caster:getMod(tpz.mod.MATT))/(100+target:getMod(tpz.mod.MDEF))) * (caster:getStat(tpz.mod.INT) + caster:getSkillLevel(tpz.skill.ELEMENTAL_MAGIC)/6) * 3.5
     else
-        dmg = ((100+caster:getMod(tpz.mod.MATT))/(100+target:getMod(tpz.mod.MDEF))) * (caster:getStat(tpz.mod.INT) + (caster:getMaxSkillLevel(caster:getMainLvl(), tpz.job.BLM, tpz.skill.ELEMENTAL_MAGIC))/6) * 9.4
+        dmg = ((100+caster:getMod(tpz.mod.MATT))/(100+target:getMod(tpz.mod.MDEF))) * (caster:getStat(tpz.mod.INT) + (caster:getMaxSkillLevel(caster:getMainLvl(), tpz.job.BLM, tpz.skill.ELEMENTAL_MAGIC))/6) * 8
     end
 
     --add in target adjustment
     dmg = adjustForTarget(target, dmg, spell:getElement())
     --add in final adjustments
     dmg = finalMagicAdjustments(caster, target, spell, dmg)
+	
     return dmg
-
 end

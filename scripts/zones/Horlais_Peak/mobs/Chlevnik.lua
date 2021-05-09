@@ -11,6 +11,7 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
+    mob:setMod(tpz.mod.STUNRES, 1000)
 	mob:addMod(tpz.mod.ATK, 500)
 	mob:addMod(tpz.mod.MATT, 500)
 	mob:addMod(tpz.mod.ACC, 500)

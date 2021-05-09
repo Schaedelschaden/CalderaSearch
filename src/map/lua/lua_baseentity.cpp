@@ -12519,6 +12519,28 @@ inline int32 CLuaBaseEntity::getRATT(lua_State *L)
 }
 
 /************************************************************************
+*  Function: getItemLevel()
+*  Purpose : Returns the average item level of all gear the player is currently wearing
+*  Example : player:getItemLevel()
+*  Notes   : Calculates average item level using the battleutils function GetPlayerItemLevel
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getItemLevel(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+	TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+	
+	if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+		CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+		
+		lua_pushinteger(L, battleutils::GetPlayerItemLevel(PChar));
+	}
+
+    return 1;
+}
+
+/************************************************************************
 *  Function: getILvlSkill()
 *  Purpose : Returns the weapon skill value of an equipped weapon
 *  Example : player:getILvlSkill()
@@ -16218,6 +16240,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getEVA),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRACC),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRATT),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getItemLevel),
 	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getILvlSkill),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getILvlMacc),
 	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getILvlParry),

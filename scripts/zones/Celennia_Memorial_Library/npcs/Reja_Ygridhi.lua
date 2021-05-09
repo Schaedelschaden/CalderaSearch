@@ -18,13 +18,22 @@ function onTrigger(player,npc)
 	local trigger = math.random(1)
 	
 	if (trigger == 1) then
-		player:PrintToPlayer(string.format("Reja Ygridhi : You want to learn the secrets of DA FLIPS? Buy all my wares and you too can be a master of DA FLIPS!!!"),tpz.msg.channel.NS_SAY)
+		player:PrintToPlayer(string.format("Reja Ygridhi : Get your Rise of the Zilart and Chains of Promathia accessories here!"),tpz.msg.channel.NS_SAY)
     local stock =
     {
-        18633, 50000,     -- Chatoyant Staff
-        20694, 1000000,   -- Fermion Sword
-        21693, 1000000,   -- Irradiance Blade
-        27590, 100000,     -- Shneddick Ring
+        14739, 50000,-- Suppanomimi
+		14740, 50000,-- Knight's Earring
+		14741, 50000,-- Abyssal Earring
+        14742, 50000,-- Beastly Earring
+        14743, 50000,-- Bushinomimi
+		15543, 50000,-- Rajas Ring
+		15544, 50000,-- Sattva Ring
+		15545, 50000,-- Tamas Ring
+		15962, 50000,-- Static Earring
+		15963, 50000,-- Magnetic Earring
+		15964, 50000,-- Hollow Earring
+		15965, 50000,-- Ethereal Earring
+		15840, 75000,-- Kupofried's Ring
     }
 
     tpz.shop.general(player, stock)

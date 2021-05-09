@@ -532,7 +532,7 @@ void CAttack::ProcessDamage()
             m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE) ||
             m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_DOUBT)))
     {
-        m_trickAttackDamage += m_attacker->DEX() * (1 + m_attacker->getMod(Mod::SNEAK_ATK_DEX) / 100);
+        m_trickAttackDamage += m_attacker->DEX() * (2 + m_attacker->getMod(Mod::SNEAK_ATK_DEX) / 100);
     }
 
     // Trick attack.
@@ -540,10 +540,12 @@ void CAttack::ProcessDamage()
         m_isFirstSwing &&
         m_attackRound->GetTAEntity() != nullptr)
     {
-        m_trickAttackDamage += m_attacker->AGI() * (1 + m_attacker->getMod(Mod::TRICK_ATK_AGI) + m_attacker->getMod(Mod::TRICK_ATK_DMG) / 100);
+        m_trickAttackDamage += m_attacker->AGI() * (2 + m_attacker->getMod(Mod::TRICK_ATK_AGI) / 100);
     }
 
     SLOTTYPE slot = (SLOTTYPE)GetWeaponSlot();
+	auto mainWeapon = dynamic_cast<CItemWeapon*>(m_attacker->m_Weapons[SLOT_MAIN]);
+	auto subWeapon = dynamic_cast<CItemWeapon*>(m_attacker->m_Weapons[SLOT_SUB]);
 	
     if (m_attackRound->IsH2H())
     {
@@ -571,6 +573,12 @@ void CAttack::ProcessDamage()
     {
         m_damage = (uint32)((m_attacker->GetRangedWeaponDmg() + battleutils::GetFSTR(m_attacker, m_victim, slot)) * m_damageRatio);
     }
+	
+	// Caldera Dagger base damage adjustment
+	if (m_attacker->objtype == TYPE_PC && (mainWeapon != nullptr && mainWeapon->getSkillType() == SKILL_DAGGER || subWeapon != nullptr && subWeapon->getSkillType() == SKILL_DAGGER))
+	{
+		m_damage = (uint32)(m_damage * 1.60f);
+	}
 
     // Soul eater.
     if (m_attacker->objtype == TYPE_PC)

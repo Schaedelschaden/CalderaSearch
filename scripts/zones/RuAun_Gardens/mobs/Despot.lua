@@ -37,7 +37,7 @@ function onMobFight(mob, target)
 	mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
 	
 	-- Uses Panzerfaust 2-3 times every 30 seconds
-	if (mob:getBattleTime() > 0 and mob:getBattleTime() % 30 == 0) then
+	if (mob:getBattleTime() > 0 and mob:getBattleTime() % 30 == 0 and mob:checkDistance(target) < 30) then
 		mob:useMobAbility(536)
 	end
 end

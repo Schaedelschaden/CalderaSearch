@@ -32,6 +32,8 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 32001 then
+		player:delKeyItem(tpz.ki.STELLAR_FULCRUM_PHANTOM_GEM)
+	
         if player:getCurrentMission(ZILART) == tpz.mission.id.zilart.RETURN_TO_DELKFUTTS_TOWER then
             player:completeMission(ZILART, tpz.mission.id.zilart.RETURN_TO_DELKFUTTS_TOWER)
             player:addMission(ZILART, tpz.mission.id.zilart.ROMAEVE)

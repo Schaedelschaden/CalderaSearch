@@ -480,9 +480,11 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 	local element = {tpz.magic.ele.FIRE, tpz.magic.ele.ICE, tpz.magic.ele.WIND, tpz.magic.ele.EARTH, tpz.magic.ele.THUNDER, tpz.magic.ele.WATER, tpz.magic.ele.LIGHT, tpz.magic.ele.DARK}
 	local damageElement = 0
 	
-	for i = 1, 8 do
-		if (damageType - 5 == element[i]) then
-			damageElement = element[i]
+	if (damageType ~= nil and damageType >= 5) then
+		for i = 1, 8 do
+			if (damageType - 5 == element[i]) then
+				damageElement = element[i]
+			end
 		end
 	end
 

@@ -583,6 +583,13 @@ function tpz.sparkshop.onEventUpdate(player,csid,option)
         qty = 99
         cost = 7000
     end
+	
+	-- TODO: Unlock access to these purchases again once players have progressed through a certain level of content.
+	-- Players must progress through at least Sea (ilvl 115 weapons) and probably through ToAU to unlock these.
+	if (item.cost > 2000) then
+		player:PrintToPlayer(string.format("We're sorry, that option is currently unavailable for purchase. Please check back after progressing through some content!"),tpz.msg.channel.SYSTEM_3)
+		return
+	end
 
     -- verifies and finishes transaction
     if sparks >= cost then

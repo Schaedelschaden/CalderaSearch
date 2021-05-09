@@ -7,6 +7,26 @@ require("scripts/globals/status")
 require("scripts/globals/titles")
 -----------------------------------
 
+function onMobSpawn(mob) -- When mob spawns (either forced or time)
+	mob:setMod(tpz.mod.PARALYZERES, 50) -- Resistance to Silence
+    mob:setMod(tpz.mod.STUNRES, 100) -- Resistance to Stun
+    mob:setMod(tpz.mod.BINDRES, 100) -- Resistance to Bind
+    mob:setMod(tpz.mod.SLOWRES, 50) -- Resistance to Slow
+    mob:setMod(tpz.mod.SLEEPRES, 50) -- Resistance to Sleep
+    mob:setMod(tpz.mod.LULLABYRES, 50) -- Resistance to Lullaby
+    mob:setMod(tpz.mod.PETRIFYRES, 50) -- Resistance to Pertrify
+    mob:setMod(tpz.mod.POISONRES, 50) -- Resistance to Poison
+	mob:setMod(tpz.mod.ATT, 1200) -- Attack Stat (Compare to DEF)
+	mob:setMod(tpz.mod.MATT, 200) -- Magic Attack (Compare to MDEF)
+    mob:setMod(tpz.mod.ACC, 850) -- Accuracy (compare to EVA)
+	mob:setMod(tpz.mod.MACC, 600) -- Magic ACC (Compare to MEVA)
+	mob:setMod(tpz.mod.EVA, 800) -- Evasion (Compare to ACC)
+	mob:setMod(tpz.mod.DEF, 1000) -- Defense (Compart to ATT)
+	mob:setMod(tpz.mod.MEVA, 100) -- Magic Evasion (Compare to MACC)
+	mob:setMod(tpz.mod.MDEF, 300) -- Magic Defense (Compare to MATT)
+	mob:setMod(tpz.mod.REGAIN, 150)
+end
+
 local skillToAbsorb =
 {
     [823] = tpz.mod.FIRE_ABSORB,  -- fire_blade

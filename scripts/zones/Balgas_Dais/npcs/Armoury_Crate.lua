@@ -364,6 +364,9 @@ local loot =
     -- KSNM Early Bird Catches the Wyrm
     [107] =
     {
+	    -- {
+            -- {itemid = 65535, droprate = 1000, amount = 1800000}, -- gil
+        -- },
         {
             {itemid = 3339, droprate = 1000}, -- Jug Of Honey Wine
         },
@@ -392,7 +395,7 @@ local loot =
             {itemid = 25710, droprate = 110}, -- Obviation Cuirass +1
             {itemid = 26869, droprate = 110}, -- Rosette Jaseran +1
             {itemid = 26888, droprate = 110}, -- Shomonjijoe +1
-            {itemid = 27533, droprate = 120}, -- Tatenashi Haramaki +1
+            {itemid = 25733, droprate = 120}, -- Tatenashi Haramaki +1
         },
         {
             {itemid = 21417, droprate = 100}, -- Refined Grip +1
@@ -404,7 +407,6 @@ local loot =
             {itemid = 22121, droprate = 100}, -- Imati +1
             {itemid = 21484, droprate = 100}, -- Malison +1
             {itemid = 21220, droprate = 100}, -- Paloma +1
-            {itemid = 27637, droprate = 100}, -- Evalach +1
             {itemid = 22267, droprate = 100}, -- Antitail +1
         },
         {
@@ -427,27 +429,43 @@ local loot =
             {itemid = 8732, droprate = 1000},  -- Kupon I S-3
         },
         {
-            {itemid = 8732, droprate = 1000}, -- Kupon I S-3
+            {itemid = 8747, droprate = 111},  -- Ra'Kaznar Ore
+			{itemid = 4077, droprate = 111},  -- Moonbow Steel
+			{itemid = 4079, droprate = 111},  -- Moonbow Leather
+			{itemid = 4080, droprate = 111},  -- Moonbow Urushi
+			{itemid = 4081, droprate = 111},  -- Moonbow Stone
+			{itemid = 4078, droprate = 111},  -- Moonbow CLoth
+			{itemid = 9251, droprate = 111},  -- Khoma Thread
+			{itemid = 9255, droprate = 111},  -- Cyan Coral
+			{itemid = 4082, droprate = 112},  -- Moonlight Coral
+			
         },
         {
-            {itemid = 8732, droprate = 333},   -- Kupon I S-3
-            {itemid = 3972, droprate = 333},   -- Kupon I S-2
-            {itemid = 8734, droprate = 334},   -- Kupon I S-1
-        },
-        {
-            {itemid = 0, droprate = 1000},  -- Placeholder Augment Kupon
+            {itemid = 8747, droprate = 111},  -- Ra'Kaznar Ore
+			{itemid = 4077, droprate = 111},  -- Moonbow Steel
+			{itemid = 4079, droprate = 111},  -- Moonbow Leather
+			{itemid = 4080, droprate = 111},  -- Moonbow Urushi
+			{itemid = 4081, droprate = 111},  -- Moonbow Stone
+			{itemid = 4078, droprate = 111},  -- Moonbow CLoth
+			{itemid = 9251, droprate = 111},  -- Khoma Thread
+			{itemid = 9255, droprate = 111},  -- Cyan Coral
+			{itemid = 4082, droprate = 112},  -- Moonlight Coral
+			
         },
     },
     -- BCNM Royal Succession
     [108] =
     {
+	    -- {
+            -- {itemid = 65535, droprate = 1000, amount = 1000000}, -- gil
+        -- },
         {
-            {itemid =  20853, droprate = 125}, -- Aizkora
+            {itemid =  20851, droprate = 125}, -- Aizkora
             {itemid =  20606, droprate = 125}, -- Anathema Harpe
             {itemid =  20806, droprate = 125}, -- Buramgh
             {itemid =  20942, droprate = 125}, -- Gae Derg
             {itemid =  20608, droprate = 125}, -- Jugo Kurki
-            {itemid =  21035, droprate = 125}, -- Kunimune
+            {itemid =  21034, droprate = 125}, -- Kunimune
             {itemid =  22266, droprate = 125}, -- Antitail
             {itemid =  20611, droprate = 125}, -- Sangarius
         },
@@ -474,6 +492,14 @@ local loot =
         },
         {
             {itemid = 4069, droprate = 150},   -- Rem Chapt 6
+        },
+		{
+            {itemid = 4080, droprate =  175}, -- Moonbow Urushi
+            {itemid = 4079, droprate =  165}, -- Moonbow Leather
+            {itemid = 4078, droprate =  165}, -- Moonbow Cloth
+            {itemid = 4077, droprate =  165}, -- Moonbow Steel
+            {itemid = 4081, droprate =  165}, -- Moonbow Stone
+			{itemid = 4082, droprate =  165}, -- Moonlight Coral
         },
     },
     -- BCNM Rapid Raptors
@@ -518,17 +544,26 @@ local loot =
     -- BCNM Wild Wild Whiskers
     [110] =
     {
-        {
-            {itemid =  0, droprate = 625}, -- Nothing
-			{itemid =  20920, droprate = 125}, -- Lacryma Sickle +1
-			{itemid =  20951, droprate = 125}, -- Terebrokath +1
-			{itemid =  21290, droprate = 125}, -- Donderbuss +1
+	    -- {
+            -- {itemid = 65535, droprate = 1000, amount = 500000}, -- gil
+        -- },
+		{
+            {itemid =  0, droprate = 100}, -- Nothing
+			{itemid =  21285, droprate = 300}, -- Camaraderie Gun
+			{itemid =  21003, droprate = 300}, -- Camaraderie Katana
+			{itemid =  21050, droprate = 300}, -- Camaraderie Tachi
         },
         {
-            {itemid =  0, droprate = 625}, -- Nothing
-			{itemid =  28177, droprate = 125}, -- Aeto. Trousers +1
-			{itemid =  28181, droprate = 125}, -- Haru. Slops +1
-			{itemid =  28179, droprate = 125}, -- Shabti Cuisses +1
+            {itemid =  0, droprate = 100}, -- Nothing
+			{itemid =  28642, droprate = 300}, -- Contriver's Cape
+			{itemid =  28582, droprate = 300}, -- Locus Ring
+			{itemid =  21388, droprate = 300}, -- Dashavatara Sachet
+        },
+        {
+            {itemid =  0, droprate = 100}, -- Nothing
+			{itemid =  28199, droprate = 300}, -- Manibozho Brais
+			{itemid =  28200, droprate = 300}, -- Bokwus Slops
+			{itemid =  28198, droprate = 300}, -- Mikinaak Cuisses
         },
         {
             {itemid =  4064, droprate = 1000}, -- Rems Chapt 1

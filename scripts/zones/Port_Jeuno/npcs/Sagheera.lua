@@ -234,6 +234,20 @@ local relicArmorPlusOne =
 }
 
 -----------------------------------
+-- High Tier AA & Kam'lanaut fights
+-- [combinationId] = {trade = {flower}, reward = keyItem},
+-----------------------------------
+local highTierKIs = {
+	[1] = {trade = {636}, reward = 2470}, -- Chamomile -> Stellar Fulcrum Phantom Gem
+	[2] = {trade = {941}, reward = 2473}, -- Red Rose -> Phantom Gem of Envy
+	[3] = {trade = {949}, reward = 2471}, -- Rain Lily -> Phantom Gem of Apathy
+	[4] = {trade = {956}, reward = 2474}, -- Lilac -> Phantom Gem of Cowardice
+	[5] = {trade = {957}, reward = 2475}, -- Amaryllis -> Phantom Gem of Rage
+	[6] = {trade = {948}, reward = 2472}, -- Carnation -> Phantom Gem of Arrogance
+	[7] = {trade = {957}, reward = 2468}, -- Amaryllis -> Shadow Lord Phantom Gem
+}
+
+-----------------------------------
 -- ancient beastcoin purchases
 -- [menu option] = {item = itemId, abc = costInABCs}
 -----------------------------------
@@ -274,6 +288,51 @@ end
 function onTrade(player, npc, trade)
     local count = trade:getItemCount()
     local afUpgrade = player:getCharVar("AFupgrade")
+	
+	local lastHighTierKITrade = {
+		"Stellar_Fulcrum_TIME",
+		"Gem_Envy_TIME",
+		"Gem_Apathy_TIME",
+		"Gem_Cowardice_TIME",
+		"Gem_Rage_TIME",
+		"Gem_Arrogance_TIME"
+	}
+	
+	local tradedCombo = 0
+	
+	-- Check for High Tier KI Trades
+	if tradedCombo == 0 then
+		for k, v in pairs(highTierKIs) do
+			if npcUtil.tradeHasExactly(trade, v.trade) then
+				tradedCombo = k
+				break
+			end
+		end
+	end
+	
+	-- Found a match
+	if tradedCombo > 0 and player:getCharVar(lastHighTierKITrade[tradedCombo]) <= os.time() and not player:hasKeyItem(highTierKIs[tradedCombo].reward) then
+		local ID = zones[player:getZoneID()]
+		local reward = highTierKIs[tradedCombo].reward
+	
+		player:confirmTrade()
+		player:addKeyItem(reward)
+		player:messageSpecial(ID.text.KEYITEM_OBTAINED, reward)
+		player:setCharVar(lastHighTierKITrade[tradedCombo], os.time() + 86400)
+	elseif (player:hasKeyItem(highTierKIs[tradedCombo].reward)) then
+		player:messageSpecial(ID.text.CANNOT_OBTAIN_MORE)
+	else
+		local timeRemaining = ((player:getCharVar(lastHighTierKITrade[tradedCombo]) - os.time()) / 60)
+		
+		if (timeRemaining <= 60) then
+			player:PrintToPlayer(string.format("Sagheera : You must wait %i minutes until you can receive that key item.", timeRemaining),tpz.msg.channel.NS_SAY)
+		else
+			timeRemaining = timeRemaining / 60
+			player:PrintToPlayer(string.format("Sagheera : You must wait %i hours until you can receive that key item.", timeRemaining),tpz.msg.channel.NS_SAY)
+		end
+		
+		return
+	end
 
     -- store ancient beastcoins
     if trade:hasItemQty(1875, count) then

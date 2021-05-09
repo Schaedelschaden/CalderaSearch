@@ -1034,6 +1034,20 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
     {
         return true;
     }
+	
+	if (PTarget->objtype == TYPE_PC && PTarget != nullptr)
+	{
+		CCharEntity* PChar = (CCharEntity*)PTarget;
+		
+		uint16 playerLvl = PChar->GetMLevel() + battleutils::GetPlayerItemLevel(PChar);
+		uint16 mobLvl = PMob->GetMLevel();
+		
+		// Don't aggro, you're too high level for me
+		if (playerLvl - mobLvl >= 20)
+		{
+			return false;
+		}
+	}
 
     return false;
 }

@@ -92,6 +92,7 @@ function onTrigger(player,page)
 			11862,   10000,        -- Himegami Yukata
 			11965,   10000,        -- Dream Trousers
 			11967,   10000,        -- Dream Pants
+			10811,   10000,        -- Chocobo Shield
 			10810,   10000,        -- Moogle Guard +1
 			10807,   10000,        -- Mandraguard
 			10429,   10000,        -- Moogle Masque

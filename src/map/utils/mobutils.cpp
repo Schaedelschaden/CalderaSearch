@@ -655,7 +655,7 @@ void SetupJob(CMobEntity* PMob)
             }
             else if (PMob->m_Family == 3) // Aern
             {
-                PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 1388);
+                PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 1214);
             }
             else
             {
@@ -671,7 +671,7 @@ void SetupJob(CMobEntity* PMob)
             if (PMob->m_Family == 3)
             {
                 // aern
-                PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 1388);
+                PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 1214);
 	            PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 12);
             }
             else if (PMob->m_Family != 335) // exclude NIN Maat

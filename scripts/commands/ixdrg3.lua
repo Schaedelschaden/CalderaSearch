@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
--- func: !ixdrk2
--- desc: Teleports the player to the Ix'DRK's spawn point.
+-- func: !ixdrg3
+-- desc: Teleports the player to the Ix'DRG's spawn point.
 ---------------------------------------------------------------------------------------------------
 
 cmdprops =
@@ -10,5 +10,5 @@ cmdprops =
 }
 
 function onTrigger(player)
-    player:setPos(-333, 4, -506, 34, 35)
+    player:setPos(-506, 4, -506, 98, 35)
 end

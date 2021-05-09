@@ -10,14 +10,18 @@ require("scripts/globals/titles")
 -----------------------------------
 
 function onMobSpawn(mob)
-    if LandKingSystem_NQ > 0 or LandKingSystem_HQ > 0 then
-        GetNPCByID(ID.npc.BEHEMOTH_QM):setStatus(tpz.status.DISAPPEAR)
-    end
+    -- if LandKingSystem_NQ > 0 or LandKingSystem_HQ > 0 then
+        -- GetNPCByID(ID.npc.BEHEMOTH_QM):setStatus(tpz.status.DISAPPEAR)
+    -- end
     if LandKingSystem_HQ == 0 then
         SetDropRate(270, 3342, 0) -- do not drop savory_shank
     end
 
     mob:setLocalVar("[rage]timer", 1800) -- 30 minutes
+	
+	mob:addMod(tpz.mod.DEF, 600)
+	mob:addMod(tpz.mod.EVA, 400)
+	mob:addMod(tpz.mod.MACC, 800)
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -37,11 +41,11 @@ function onMobDespawn(mob)
 
         DisallowRespawn(ID.mob.KING_BEHEMOTH, false)
         UpdateNMSpawnPoint(ID.mob.KING_BEHEMOTH)
-        GetMobByID(ID.mob.KING_BEHEMOTH):setRespawnTime(75600 + math.random(0, 6) * 1800) -- 21 - 24 hours with half hour windows
+        GetMobByID(ID.mob.KING_BEHEMOTH):setRespawnTime(28800 + math.random(0, 8) * 1800) -- 8-12 hours with half hour windows
     else
         if LandKingSystem_NQ ~= 1 then
             UpdateNMSpawnPoint(ID.mob.BEHEMOTH)
-            GetMobByID(ID.mob.BEHEMOTH):setRespawnTime(75600 + math.random(0, 6) * 1800) -- 21 - 24 hours with half hour windows
+            GetMobByID(ID.mob.BEHEMOTH):setRespawnTime(28800 + math.random(0, 8) * 1800) -- 8-12 hours with half hour windows
             SetServerVariable("[PH]King_Behemoth", kills + 1)
         end
     end

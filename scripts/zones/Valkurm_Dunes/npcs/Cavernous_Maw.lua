@@ -15,17 +15,17 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    if (ENABLE_ABYSSEA == 1 and player:getMainLvl() >= 30) then
-        local HasStone = tpz.abyssea.getTravStonesTotal(player)
-        if (HasStone >= 1 and player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.DAWN_OF_DEATH) == QUEST_ACCEPTED
-        and player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.A_DELECTABLE_DEMON) == QUEST_AVAILABLE) then
-            player:startEvent(56)
-        else
-            player:startEvent(55, 0, 1) -- No param = no entry.
-        end
-    else
+    -- if (ENABLE_ABYSSEA == 1 and player:getMainLvl() >= 30) then
+        -- local HasStone = tpz.abyssea.getTravStonesTotal(player)
+        -- if (HasStone >= 1 and player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.DAWN_OF_DEATH) == QUEST_ACCEPTED
+        -- and player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.A_DELECTABLE_DEMON) == QUEST_AVAILABLE) then
+            -- player:startEvent(56)
+        -- else
+            -- player:startEvent(55, 0, 1) -- No param = no entry.
+        -- end
+    -- else
         player:messageSpecial(ID.text.NOTHING_HAPPENS)
-    end
+    -- end
 end
 
 function onEventUpdate(player, csid, option)

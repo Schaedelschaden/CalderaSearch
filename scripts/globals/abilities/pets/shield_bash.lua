@@ -52,7 +52,7 @@ function onPetAbility(target, automaton, skill, master, action)
     damage = utils.stoneskin(target, damage)
     target:takeDamage(damage, automaton, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
     target:updateEnmityFromDamage(automaton, damage)
-    target:addEnmity(automaton, 450, 900)
+    target:addEnmity(automaton, 1200, 4800)
 
     return damage
 end

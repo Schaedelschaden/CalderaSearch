@@ -40,6 +40,15 @@ function onAdditionalEffect(mob, target, damage)
 end
 
 function onMobDeath(mob, player, isKiller)
+	local KillCounter = player:getCharVar("KillCounter_Seiryu")
+	local playerName = player:getName()
+	local mobName = mob:getName()
+	
+	KillCounter = KillCounter + 1
+	
+	player:setCharVar("KillCounter_Seiryu", KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", mobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+
 	player:addKeyItem(tpz.ki.SEIRYUS_NOBILITY)
 	player:messageSpecial( ID.text.KEYITEM_OBTAINED, tpz.ki.SEIRYUS_NOBILITY )
     player:showText(mob, ID.text.SKY_GOD_OFFSET + 10)

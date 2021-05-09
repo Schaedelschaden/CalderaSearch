@@ -104,9 +104,9 @@ tpz.trust.canCast = function(caster, spell, not_allowed_trust_ids)
     end
 
     -- Trusts only allowed in certain zones (Remove this for trusts everywhere)
-    -- if not caster:canUseMisc(tpz.zoneMisc.TRUST) then
-        -- return tpz.msg.basic.TRUST_NO_CALL_AE
-    -- end
+    if not caster:canUseMisc(tpz.zoneMisc.TRUST) then
+        return tpz.msg.basic.TRUST_NO_CALL_AE
+    end
 
     -- You can only summon trusts if you are the party leader or solo
     local leader = caster:getPartyLeader()
@@ -121,9 +121,9 @@ tpz.trust.canCast = function(caster, spell, not_allowed_trust_ids)
         return -1
     end
 
-    -- Block summoning trusts if someone recently joined party (120s)
+    -- Block summoning trusts if someone recently joined party (20s)
     local last_party_member_added_time = caster:getPartyLastMemberJoinedTime()
-    if os.time() - last_party_member_added_time < 120 then
+    if os.time() - last_party_member_added_time < 20 then
         caster:messageSystem(tpz.msg.system.TRUST_DELAY_NEW_PARTY_MEMBER)
         return -1
     end

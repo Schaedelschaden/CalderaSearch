@@ -62,6 +62,15 @@ end
 --]]
 
 function onMobDeath(mob, player, isKiller)
+	local KillCounter = player:getCharVar("KillCounter_JailOfPrud")
+	local playerName = player:getName()
+	local mobName = mob:getName()
+	local fixedMobName = string.gsub(mobName, "_", " ")
+	
+	KillCounter = KillCounter + 1
+	
+	player:setCharVar("KillCounter_JailOfPrud", KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
 end;
 
 function onMobDespawn(mob)

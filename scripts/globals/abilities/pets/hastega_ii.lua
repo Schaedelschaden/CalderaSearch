@@ -14,7 +14,7 @@ end
 
 function onPetAbility(target, pet, skill, player)
     local bonusTime = utils.clamp(player:getSkillLevel(tpz.skill.SUMMONING_MAGIC) - 300, 0, 200)
-    local duration = 180 + bonusTime
+    local duration = 300 + bonusTime
 
 	target:delStatusEffectSilent(tpz.effect.HASTE)
     target:addStatusEffect(tpz.effect.HASTE, 3008, 0, duration) -- 308/1024 ~30.08%

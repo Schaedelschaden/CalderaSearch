@@ -15,7 +15,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
-	local dmgmod = MobBreathMove(pet, target, 2.25, 3.50, tpz.magic.ele.FIRE, 10000)
+	local dmgmod = MobBreathMove(pet, target, 2.00, 3.25, tpz.magic.ele.FIRE, math.random(1500, 2000))
 	local dmg = MobFinalAdjustments(dmgmod,pet,skill,target,tpz.attackType.BREATH,tpz.damageType.FIRE,MOBPARAM_IGNORE_SHADOWS)
 	
 	if (target:hasStatusEffect(tpz.effect.DROWN) == false) then

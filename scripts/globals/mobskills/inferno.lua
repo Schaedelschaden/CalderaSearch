@@ -16,7 +16,7 @@ function onMobWeaponSkill(target, mob, skill)
 
 	-- Adjust Trial By Fire Ifrit's Inferno damage
 	if (mob:getID() == 17625089) then
-		dmgmod = 1.75
+		dmgmod = 1.8
 	end
 
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg() * 9, tpz.magic.ele.FIRE, dmgmod, TP_NO_EFFECT, 1)

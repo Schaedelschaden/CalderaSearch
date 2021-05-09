@@ -571,10 +571,6 @@ enum class Mod
     SAVETP                    = 880, // SAVETP Effect for Miser's Roll / ATMA / Hagakure.
     CONSERVE_TP               = 944, // Conserve TP trait, random chance between 10 and 200 TP
 
-    // Rune Fencer
-
-    INQUARTATA                = 963, // increases parry rate by a flat %.
-
     // Stores the amount of elemental affinity (elemental staves mostly) - damage, acc, and perpetuation is all handled separately
     FIRE_AFFINITY_DMG         = 347, // They're stored separately due to Magian stuff - they can grant different levels of
     ICE_AFFINITY_DMG          = 348, // the damage/acc/perp affinity on the same weapon, so they must be separated.
@@ -849,7 +845,13 @@ enum class Mod
 	AUTOMATON_ELE_CAPACITY          = 2813, // Increases Automaton Attachment Elemental Capacity
 	REFRESH_DURATION_RCVD           = 2814, // Increases the duration of Refresh effects received
 	STONESKIN_CAST                  = 2815, // Reduces the cast time of "Stoneskin"
+	GEO_NO_SPELL_MP_DEPLETION       = 2816, // % to not deplete MP on Geomancy spellcast
+	LAST_RESORT_DURATION            = 2817, // Increases Last Resort duration
+	ABSORB_EFFECT_DURATION          = 2818, // Increases "Absorb" spell durations
+	ALL_JUMPS_DOUBLE_ATTACK         = 2819, // Adds % chance to Double Attack to Jump, High Jump, Spirit Jump, and Soul Jump
+	LIFE_CYCLE_HP                   = 2820, // Adds % to HP restored by Life Cycle
 	
+	ELEMENTAL_MAGIC_RECAST          = 2938, // Reduces the recast of elemental magic spells
 	AUGMENT_VIVACIOUS_PULSE         = 2939, // Augments "Vivacious Pulse" (Grants Vivacious Pulse the ability to remove status ailments associated with a -na spell)
 	ENH_KLIMAFORM                   = 2940, // Enhances "Klimaform" effect (Increases damage of spells under matching weather while Klimaform is active)
 	ENH_PARSIMONY                   = 2941, // Enhances "Parsimony" effect (Further reduces MP cost by % of associated Black Magic spell)
@@ -917,8 +919,8 @@ enum class Mod
     POT_BANISH_UNDEAD               = 3004, // Potency of "Banish" on Undead
     ELEM_DOT_EFFECT                 = 3005, // Potency of Black Magic Elemental DOT
     GAIN_MAGIC_EFFECT               = 3006, // Potency of White Magic Gain Spells
-    TRICK_ATK_DMG                   = 3007, // Increases Trick Attack Damage
-
+//	SNEAK_ATK_DMG                   = 3007, // Increases Sneak Attack Damage
+//	TRICK_ATK_DMG                   = 3008, // Increases Trick Attack Damage
     SHIELD_BASH_DISPEL              = 3009, // Shield Bash: Adds Dispel
 	DIVINE_ENMITY_BONUS             = 3010, // Divine Magic Special Enmity Bonus
 	DARK_MAGIC_CAST                 = 3011, // Dark Magic Casting Time -%

@@ -36,7 +36,7 @@ function onSpellCast(caster,target,spell)
 			caster:delStatusEffect(tpz.effect.NETHER_VOID)
 		end
 		
-		local duration = calculateDuration(90, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+		local duration = calculateDuration(90 + caster:getMod(tpz.mod.ABSORB_EFFECT_DURATION), spell:getSkillType(), spell:getSpellGroup(), caster, target)
 		
         if (resist <= 0.125) then
             spell:setMsg(tpz.msg.basic.MAGIC_RESIST)

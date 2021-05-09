@@ -20,6 +20,10 @@ GRAND_PALACE_OF_HUXZOI = {
                 end
             end)
         end
+		
+		if (nm:getLocalVar("ph") == 0 or nm:getLocalVar("ph") == nil) then
+			nm:setLocalVar("ph", phTable[math.random(#phTable)])
+		end
     end
 }
 

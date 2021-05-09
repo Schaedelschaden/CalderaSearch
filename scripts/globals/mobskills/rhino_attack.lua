@@ -1,5 +1,5 @@
 ---------------------------------------------
--- Rhino_Attack
+-- Rhino Attack
 -- Deals damage to a single target. Additional effect: Knockback
 -- Utsusemi/Blink absorb: 1 shadow
 ---------------------------------------------
@@ -11,7 +11,14 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    return 0
+    local result = 0
+    local mobhp = mob:getHPP()
+
+    if (mob:getID() == 17957329 and mobhp <= 25) then
+        result = 1
+    end
+
+    return result
 end
 
 function onMobWeaponSkill(target, mob, skill)

@@ -18,14 +18,16 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
 	local typeEffect = tpz.effect.BERSERK
+	local power = 25
 	local duration = 60
 	local master = mob:getMaster()
 	
 	if (master ~= nil) then
-		master:addStatusEffect(typeEffect, 1, 0, duration)
+		power = 50
+		master:addStatusEffect(typeEffect, power, 0, duration)
 	end
 	
-    skill:setMsg(MobBuffMove(mob, typeEffect, 1, 0, duration))
+    skill:setMsg(MobBuffMove(mob, typeEffect, power, 0, duration))
 	
     return typeEffect
 end

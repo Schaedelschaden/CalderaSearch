@@ -31,12 +31,12 @@ local startingNationInfo =
 
 local startingJobGear =
 {
-    [tpz.job.WAR] = {16610, 16646, 16716, 10812, 11811, 10293, 13496, 13497, 15840}, -- Wax Sword +1, Bronze Axe +1, Butterfly Axe +1, Chocobo Shield +1, Destrier Beret, Chocobo Shirt, Windurstian Ring, Bastokan Ring, Kupofried's Ring 
-    [tpz.job.MNK] = {16690, 13184, 11811, 10293, 13496, 13497, 15840}, -- Cesti +1, White Belt, Destrier Beret, Chocobo Shirt, Windurstian Ring, Bastokan Ring, Kupofried's Ring
-    [tpz.job.WHM] = {17087, 10812, 4606, 4608, 11811, 10293, 13496, 13497, 15840}, -- Maple Wand +1, Chocobo Shield +1, Scroll of Dia, Scroll of Cure, Destrier Beret, Chocobo Shirt, Windurstian Ring, Bastokan Ring, Kupofried's Ring
-    [tpz.job.BLM] = {17087, 4607, 4828, 11811, 10293, 13496, 13497, 15840}, -- Maple Wand +1, Scroll of Stone, Scroll of Poison, Destrier Beret, Chocobo Shirt, Windurstian Ring, Bastokan Ring, Kupofried's Ring
-    [tpz.job.RDM] = {16610, 10812, 4606, 4608, 11811, 10293, 13496, 13497, 15840}, -- Wax Sword +1, Chocobo Shield +1, Scroll of Dia, Scroll of Cure, Destrier Beret, Chocobo Shirt, Windurstian Ring, Bastokan Ring, Kupofried's Ring
-    [tpz.job.THF] = {16690, 16491, 16610, 11811, 10293, 13496, 13497, 15840}, -- Cesti +1, Bronze Knife +1, Wax Sword +1, Destrier Beret, Chocobo Shirt, Windurstian Ring, Bastokan Ring, Kupofried's Ring
+    [tpz.job.WAR] = {16610, 16646, 16716, 10812, 11811, 10293, 13495, 13496, 13497, 15840}, -- Wax Sword +1, Bronze Axe +1, Butterfly Axe +1, Chocobo Shield +1, Destrier Beret, Chocobo Shirt, San d'Orian Ring, Windurstian Ring, Bastokan Ring, Kupofried's Ring 
+    [tpz.job.MNK] = {16690, 13184, 11811, 10293, 13495, 13496, 13497, 15840}, -- Cesti +1, White Belt, Destrier Beret, Chocobo Shirt, San d'Orian Ring, Windurstian Ring, Bastokan Ring, Kupofried's Ring
+    [tpz.job.WHM] = {17087, 10812, 4606, 4608, 11811, 10293, 13495, 13496, 13497, 15840}, -- Maple Wand +1, Chocobo Shield +1, Scroll of Dia, Scroll of Cure, Destrier Beret, Chocobo Shirt, San d'Orian Ring, Windurstian Ring, Bastokan Ring, Kupofried's Ring
+    [tpz.job.BLM] = {17087, 4607, 4828, 11811, 10293, 13495, 13496, 13497, 15840}, -- Maple Wand +1, Scroll of Stone, Scroll of Poison, Destrier Beret, Chocobo Shirt, San d'Orian Ring, Windurstian Ring, Bastokan Ring, Kupofried's Ring
+    [tpz.job.RDM] = {16610, 10812, 4606, 4608, 11811, 10293, 13495, 13496, 13497, 15840}, -- Wax Sword +1, Chocobo Shield +1, Scroll of Dia, Scroll of Cure, Destrier Beret, Chocobo Shirt, San d'Orian Ring, Windurstian Ring, Bastokan Ring, Kupofried's Ring
+    [tpz.job.THF] = {16690, 16491, 16610, 11811, 10293, 13495, 13496, 13497, 15840}, -- Cesti +1, Bronze Knife +1, Wax Sword +1, Destrier Beret, Chocobo Shirt, San d'Orian Ring, Windurstian Ring, Bastokan Ring, Kupofried's Ring
 }
 
 -----------------------------------

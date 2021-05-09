@@ -27,6 +27,16 @@ function onMobFight(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
+	local KillCounter = player:getCharVar("KillCounter_IxAernDRG")
+	local playerName = player:getName()
+	local mobName = mob:getName()
+	local fixedMobName = string.gsub(mobName, "_", " ")
+	
+	KillCounter = KillCounter + 1
+	
+	player:setCharVar("KillCounter_IxAernDRG", KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+	
     -- despawn pets
     local mobId = mob:getID()
     for i = mobId + 1, mobId + 3 do

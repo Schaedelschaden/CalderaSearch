@@ -10,18 +10,18 @@ zones[tpz.zone.THE_GARDEN_OF_RUHMET] =
 {
     text =
     {
-        ITEM_CANNOT_BE_OBTAINED = 6383, -- You cannot obtain the <item>. Come back after sorting your inventory.
-        ITEM_OBTAINED           = 6388, -- Obtained: <item>.
-        GIL_OBTAINED            = 6389, -- Obtained <number> gil.
-        KEYITEM_OBTAINED        = 6391, -- Obtained key item: <keyitem>.
-        CONQUEST_BASE           = 7439, -- Tallying conquest results...
-        NO_NEED_INVESTIGATE     = 7618, -- There is no need to investigate further.
-        PORTAL_SEALED           = 7647, -- The portal is firmly sealed by a mysterious energy.
-        UNKNOWN_PRESENCE        = 7755, -- You sense some unknown presence...
-        NONE_HOSTILE            = 7756, -- You sense some unknown presence, but it does not seem hostile.
-        MENACING_CREATURES      = 7757, -- Menacing creatures appear out of nowhere!
-        SHEER_ANIMOSITY         = 7758, -- <name> is enveloped in sheer animosity!
-        HOMEPOINT_SET           = 7763, -- Home point set!
+        ITEM_CANNOT_BE_OBTAINED = 6384, -- You cannot obtain the <item>. Come back after sorting your inventory.
+        ITEM_OBTAINED           = 6389, -- Obtained: <item>.
+        GIL_OBTAINED            = 6390, -- Obtained <number> gil.
+        KEYITEM_OBTAINED        = 6392, -- Obtained key item: <keyitem>.
+        CONQUEST_BASE           = 7440, -- Tallying conquest results...
+        NO_NEED_INVESTIGATE     = 7619, -- There is no need to investigate further.
+        PORTAL_SEALED           = 7648, -- The portal is firmly sealed by a mysterious energy.
+        UNKNOWN_PRESENCE        = 7756, -- You sense some unknown presence...
+        NONE_HOSTILE            = 7757, -- You sense some unknown presence, but it does not seem hostile.
+        MENACING_CREATURES      = 7758, -- Menacing creatures appear out of nowhere!
+        SHEER_ANIMOSITY         = 7759, -- <name> is enveloped in sheer animosity!
+        HOMEPOINT_SET           = 7764, -- Home point set!
     },
     mob =
     {

@@ -8,7 +8,7 @@ require("scripts/globals/bcnm")
 
 local loot =
 {
-    -- BCNM E-vase-ive Action
+    -- BCNM E-vase-ive Action -- off
     [514] =
     {
         {
@@ -33,15 +33,12 @@ local loot =
         },
         {
             {itemid =     0, droprate =  1000}, -- nothing
-
         },
         {
             {itemid =     0, droprate =  1000}, -- nothing
-
         },
         {
             {itemid =     0, droprate =  1000}, -- nothing
-
         },
         {
             {itemid =     0, droprate =  1000}, -- nothing
@@ -98,108 +95,127 @@ local loot =
     -- BCNM Die by the Sword
     [521] =
     {
+	    -- {
+            -- {itemid = 65535, droprate = 1000, amount = 500000}, -- gil
+        -- },
         {
-            {itemid =  0, droprate = 625}, -- Nothing
-			{itemid =  20724, droprate = 125}, -- Diha Sword +1
-			{itemid =  20780, droprate = 125}, -- Senbaak Nagan +1
-			{itemid =  21130, droprate = 125}, -- Sharur +1
+            {itemid =  0,     droprate = 100}, -- Nothing
+			{itemid =  28522, droprate = 300}, -- Dudgeon Earring
+			{itemid =  28523, droprate = 300}, -- Heartseeker Earring
+			{itemid =  21389, droprate = 300}, -- Honed Tathlum
         },
         {
-            {itemid =  0, droprate = 625}, -- Nothing
-			{itemid =  27890, droprate = 125}, -- Aeto. Jerkin +1
-			{itemid =  27894, droprate = 125}, -- Haruspex Coat +1
-			{itemid =  27892, droprate = 125}, -- Shab. Cuirass +1
+            {itemid =  0,     droprate = 100}, -- Nothing
+			{itemid =  27918, droprate = 300}, -- Manibozho Jerkin
+			{itemid =  27919, droprate = 300}, -- Bokwus Robe
+			{itemid =  27917, droprate = 300}, -- Mikinaak Breastplate
         },
         {
-            {itemid = 0, droprate = 900}, -- Nothing
-            {itemid = 1178, droprate = 100},   -- Lachesis Orb
+            {itemid = 0,      droprate = 900}, -- Nothing
+            {itemid = 1178,   droprate = 100}, -- Lachesis Orb
         },
         {
-            {itemid = 8734, droprate = 1000},   -- Kupon I S-1
+            {itemid = 8734,  droprate = 1000}, -- Kupon I S-1
         },
         {
-            {itemid = 8734, droprate = 1000},   -- Kupon I S-1
+            {itemid = 8734,  droprate = 1000}, -- Kupon I S-1
         },
         {
-            {itemid = 4067, droprate = 1000},    -- Rems Chapt 4
+            {itemid = 4067,  droprate = 1000}, -- Rems Chapt 4
         },
 		        {
-            {itemid = 4067, droprate = 1000},    -- Rems Chapt 4
+            {itemid = 4067,  droprate = 1000}, -- Rems Chapt 4
         },
     },
 
     -- BCNM Let Sleeping Dogs Die
     [522] =
     {
-        {
-            {itemid =   858, droprate = 1000}, -- wolf_hide
+	    -- {
+            -- {itemid = 65535, droprate = 1000, amount = 500000}, -- gil
+        -- },
+		{
+            {itemid =  0, droprate = 100}, -- Nothing
+			{itemid =  20914, droprate = 300}, -- Camaraderie Scythe
+			{itemid =  20960, droprate = 300}, -- Camaraderie Lance
+			{itemid =  21235, droprate = 300}, -- Camaraderie Bow
         },
         {
-            {itemid =   940, droprate = 1000}, -- revival_tree_root
+            {itemid =  0,     droprate = 100}, -- Nothing
+			{itemid =  28522, droprate = 300}, -- Dudgeon Earring
+			{itemid =  28523, droprate = 300}, -- Heartseeker Earring
+			{itemid =  21389, droprate = 300}, -- Honed Tathlum
         },
         {
-            {itemid =     0, droprate =  100}, -- nothing
-            {itemid =  1601, droprate =  300}, -- mannequin_head
-            {itemid =  1602, droprate =  300}, -- mannequin_body
-            {itemid =  1603, droprate =  300}, -- mannequin_hands
+            {itemid =  0,     droprate = 100}, -- Nothing
+			{itemid =  27918, droprate = 300}, -- Manibozho Jerkin
+			{itemid =  27919, droprate = 300}, -- Bokwus Robe
+			{itemid =  27917, droprate = 300}, -- Mikinaak Breastplate
         },
         {
-            {itemid =     0, droprate =  250}, -- nothing
-            {itemid =  4877, droprate =  125}, -- scroll_of_absorb-agi
-            {itemid =  4878, droprate =  125}, -- scroll_of_absorb-int
-            {itemid =  4876, droprate =  125}, -- scroll_of_absorb-vit
-            {itemid =  4751, droprate =  125}, -- scroll_of_erase
-            {itemid =  4947, droprate =  125}, -- scroll_of_utsusemi_ni
-            {itemid =  4868, droprate =  125}, -- scroll_of_dispel
+            {itemid = 0,      droprate = 900}, -- Nothing
+            {itemid = 1178,   droprate = 100}, -- Lachesis Orb
         },
         {
-            {itemid =     0, droprate =  100}, -- nothing
-            {itemid = 12398, droprate =  150}, -- singers_shield
-            {itemid = 12393, droprate =  150}, -- warlocks_shield
-            {itemid = 12403, droprate =  150}, -- magicians_shield
-            {itemid = 13670, droprate =  150}, -- ashigaru_mantle
-            {itemid = 13662, droprate =  150}, -- wizards_mantle
-            {itemid = 13666, droprate =  150}, -- killer_mantle
+            {itemid = 8734,  droprate = 1000}, -- Kupon I S-1
+        },
+        {
+            {itemid = 8734,  droprate = 1000}, -- Kupon I S-1
+        },
+        {
+            {itemid = 4067,  droprate = 1000}, -- Rems Chapt 4
+        },
+		{
+            {itemid = 4067,  droprate = 1000}, -- Rems Chapt 4
         },
     },
 
     -- BCNM Brothers D'Aurphe
     [523] =
-     {
+    {
+	    -- {
+            -- {itemid = 65535, droprate = 1000, amount = 1000000}, -- gil
+        -- },
         {
             {itemid =  20853, droprate = 125}, -- Beheader
             {itemid =  20521, droprate = 125}, -- Emeici
             {itemid =  20708, droprate = 125}, -- Demersal Degen
             {itemid =  20681, droprate = 125}, -- Flyssa
-            {itemid =  21745, droprate = 125}, -- Habilitator
+            {itemid =  21748, droprate = 125}, -- Habilitator
             {itemid =  21099, droprate = 125}, -- Magesmasher
             {itemid =  22120, droprate = 125}, -- Imati
             {itemid =  20987, droprate = 125}, -- Tancho
         },
         {
-            {itemid = 28133, droprate =  150}, -- Assiduity Pants
-            {itemid = 28135, droprate =  150}, -- Augury Cuisses
+            {itemid = 28134, droprate =  150}, -- Assiduity Pants
+            {itemid = 28136, droprate =  150}, -- Augury Cuisses
             {itemid = 25855, droprate =  150}, -- Tatenashi Haidate
             {itemid = 27230, droprate =  150}, -- Zoar Subligar
             {itemid = 27638, droprate =  100}, -- Ajax
             {itemid = 27636, droprate =  100}, -- Evalach
             {itemid = 27640, droprate =  100}, -- Deliverance
-            {itemid = 27401, droprate =  100}, -- Forfend
+            {itemid = 26401, droprate =  100}, -- Forfend
         },
         {
-            {itemid = 4073, droprate = 1000},   -- Rem Chapt 10
+            {itemid = 4073,  droprate = 1000}, -- Rem Chapt 10
+        },
+        {
+            {itemid = 4073,  droprate = 1000}, -- Rem Chapt 10
+        },
+        {
+            {itemid = 3972,  droprate = 1000}, -- Kupon I S-2
 
         },
         {
-            {itemid = 4073, droprate = 1000},   -- Rem Chapt 10
-
+            {itemid = 3972,  droprate = 1000}, -- Kupon I S-2
         },
-        {
-            {itemid = 3972, droprate = 1000},   -- Kupon I S-2
-
-        },
-        {
-            {itemid = 3972, droprate = 1000},   -- Kupon I S-2
+		{
+            {itemid = 4080,  droprate =  175}, -- Moonbow Urushi
+            {itemid = 4079,  droprate =  165}, -- Moonbow Leather
+            {itemid = 4078,  droprate =  165}, -- Moonbow Cloth
+            {itemid = 4077,  droprate =  165}, -- Moonbow Steel
+            {itemid = 4081,  droprate =  165}, -- Moonbow Stone
+			{itemid = 4082,  droprate =  165}, -- Moonlight Coral
         },
     },
 
@@ -435,6 +451,7 @@ end
 
 function onTrigger(player, npc)
     local battlefield = player:getBattlefield()
+	
     if battlefield then
         tpz.battlefield.HandleLootRolls(battlefield, loot[battlefield:getID()], nil, npc)
     end

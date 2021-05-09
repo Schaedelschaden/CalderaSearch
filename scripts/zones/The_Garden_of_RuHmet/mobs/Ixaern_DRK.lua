@@ -16,7 +16,7 @@ require("scripts/globals/status")
 function onMobInitialize(mob)
     mob:addListener("DEATH", "AERN_DEATH", function(mob)
         local timesReraised = mob:getLocalVar("AERN_RERAISES")
-        if(math.random (1, 10) < 10) then
+        if (math.random (1, 10) < 4 and timesReraised < 3) then
             -- reraise
             local target = mob:getTarget()
             local targetid = 0
@@ -73,6 +73,15 @@ function onMobSpawn(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
+	local KillCounter = player:getCharVar("KillCounter_IxAernDRK")
+	local playerName = player:getName()
+	local mobName = mob:getName()
+	local fixedMobName = string.gsub(mobName, "_", " ")
+	
+	KillCounter = KillCounter + 1
+	
+	player:setCharVar("KillCounter_IxAernDRK", KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
 end
 
 function onMobDespawn(mob)

@@ -26,6 +26,10 @@ function onTrigger(player, target)
 			return
 		end
 		
+		if (targ:getName() == "Tierkaintwo") then
+			return
+		end
+		
         if (targ == nil) then
             error(player, string.format("Player named '%s' not found!", target))
             return

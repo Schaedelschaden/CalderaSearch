@@ -47,7 +47,7 @@ function onSpellCast(caster, target, spell)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 	
 	local resist = applyResistanceEffect(caster, target, spell, params)
-	duration = duration * resist
+	local duration = 4 * resist
 
     if (resist > 0.5) then
         target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)

@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Grand Palace of HuXzoi
 --  Mob: Ix'aern MNK
+-- !pos  34
 -----------------------------------
 local ID = require("scripts/zones/Grand_Palace_of_HuXzoi/IDs")
 require("scripts/globals/settings")
@@ -8,15 +9,17 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onMobSpawn(mob)
+	mob:addMod(tpz.mod.EVA, 270)
+
     -- adjust drops based on number of HQ Aern Organs traded to QM
     local qm = GetNPCByID(ID.npc.IXAERN_MNK_QM)
     local chance = qm:getLocalVar("[SEA]IxAern_DropRate")
     if (math.random(0, 1) > 0) then
-        SetDropRate(4398, 1851, chance * 10) -- Deed Of Placidity
-        SetDropRate(4398, 1901, 0)
+        SetDropRate(2845, 1851, chance * 10) -- Deed Of Placidity
+        SetDropRate(2845, 1901, 0)
     else
-        SetDropRate(4398, 1851, 0)
-        SetDropRate(4398, 1901, chance * 10) -- Vice of Antipathy
+        SetDropRate(2845, 1851, 0)
+        SetDropRate(2845, 1901, chance * 10) -- Vice of Antipathy
     end
     qm:setLocalVar("[SEA]IxAern_DropRate", 0)
 
@@ -24,6 +27,7 @@ function onMobSpawn(mob)
 end
 
 function onMobFight(mob, target)
+	mob:setMod(tpz.mod.EVA, 750)
     -- The mob gains a huge boost when it 2hours to attack speed and attack.
     -- It forces the minions to 2hour as well. Wiki says 50% but all videos show 60%.
     if (mob:getLocalVar("BracerMode") == 0) then
@@ -47,6 +51,16 @@ function onMobFight(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
+	local KillCounter = player:getCharVar("KillCounter_IxAernMNK")
+	local playerName = player:getName()
+	local mobName = mob:getName()
+	local fixedMobName = string.gsub(mobName, "_", " ")
+	
+	KillCounter = KillCounter + 1
+	
+	player:setCharVar("KillCounter_IxAernMNK", KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+
     DespawnMob(mob:getID()+1)
     DespawnMob(mob:getID()+2)
 end

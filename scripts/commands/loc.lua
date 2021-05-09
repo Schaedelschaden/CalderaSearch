@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
--- func: !ixdrk1
--- desc: Teleports the player to the Ix'DRK's spawn point.
+-- func: !loc
+-- desc: Prints out the player's position.
 ---------------------------------------------------------------------------------------------------
 
 cmdprops =
@@ -10,5 +10,6 @@ cmdprops =
 }
 
 function onTrigger(player)
-    player:setPos(-334, 4, -374, 224, 35)
+	local pos = player:getPos()
+	player:PrintToPlayer(string.format("X: %.4f  Y: %.4f  Z: %.4f  Rotation: %i  Zone: %i", pos.x, pos.y, pos.z, pos.rot,player:getZoneID()),tpz.msg.channel.SYSTEM_3)
 end

@@ -12,9 +12,12 @@ end
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1) -- has a bug during flight, like Tiamat
     mob:setTP(3000) -- opens fight with a skill
-	mob:addMod(tpz.mod.DMGMAGIC, -50)
+	mob:setMod(tpz.mod.DMGMAGIC, -50)
+	mob:setMod(tpz.mod.STUNRES, 1000)
 	mob:addMod(tpz.mod.MACC, 800)
-	mob:addMod(tpz.mod.MATT, 700)
+	mob:addMod(tpz.mod.MATT, 350)
+	mob:addMod(tpz.mod.MEVA, 250)
+	mob:addMod(tpz.mod.MDEF, 250)
 	mob:addMod(tpz.mod.REFRESH, 100)
 end
 
@@ -71,7 +74,7 @@ end
         mob:addStatusEffect(tpz.effect.MAGIC_DEF_BOOST, 75, 0, 0)
         mob:setMobMod(tpz.mobMod.SKILL_LIST, 262) -- restore standard ground skill set
         mob:setBehaviour(1024) -- reset behavior to not face target
-		mob:addMod(tpz.mod.DMGMAGIC, -50)
+		mob:setMod(tpz.mod.DMGMAGIC, 0)
 
     -- Go airborne at 66% HP, gets only called once
     -- TODO: Should move physically to center/origin before taking off; maybe with pathTo()?

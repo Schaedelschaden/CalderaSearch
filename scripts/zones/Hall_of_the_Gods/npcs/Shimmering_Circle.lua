@@ -16,24 +16,24 @@ function onTrigger(player, npc)
     local rozStat = player:getCharVar("ZilartStatus")
 
     if player:getZPos() < 200 then
-        if roz == tpz.mission.id.zilart.THE_GATE_OF_THE_GODS and rozStat == 0 then
-            player:startEvent(3) -- First time.
-        elseif
-            roz ~= tpz.mission.id.zilart.NONE and
-            (
-                roz > tpz.mission.id.zilart.THE_GATE_OF_THE_GODS or
-                (
-                    roz == tpz.mission.id.zilart.THE_GATE_OF_THE_GODS and
-                    rozStat > 0
-                )
-             )
-        then
+        -- if roz == tpz.mission.id.zilart.THE_GATE_OF_THE_GODS and rozStat == 0 then
+            -- player:startEvent(3) -- First time.
+        -- elseif
+            -- roz ~= tpz.mission.id.zilart.NONE and
+            -- (
+                -- roz > tpz.mission.id.zilart.THE_GATE_OF_THE_GODS or
+                -- (
+                    -- roz == tpz.mission.id.zilart.THE_GATE_OF_THE_GODS and
+                    -- rozStat > 0
+                -- )
+            -- )
+        -- then
             player:startEvent(10)
-        else
-            player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
-        end
-    else
-        player:startEvent(11)
+        -- else
+            -- player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
+        -- end
+    -- else
+        --player:startEvent(11)
     end
 end
 

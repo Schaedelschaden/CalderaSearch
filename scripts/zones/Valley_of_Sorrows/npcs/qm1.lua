@@ -1,8 +1,8 @@
 -----------------------------------
 -- Area: Valley of Sorrows
---  NPC: qm1 (???)
+--  NPC: qm0 (???)
 -- Spawns Adamantoise or Aspidochelone
--- !pos 0 0 -37 59
+-- !pos 0 0 -37 128
 -----------------------------------
 local ID = require("scripts/zones/Valley_of_Sorrows/IDs")
 require("scripts/globals/npc_util")
@@ -11,9 +11,9 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onSpawn(npc)
-    if LandKingSystem_NQ < 1 and LandKingSystem_HQ < 1 then
-        npc:setStatus(tpz.status.DISAPPEAR)
-    end
+    -- if LandKingSystem_NQ < 1 and LandKingSystem_HQ < 1 then
+        -- npc:setStatus(tpz.status.DISAPPEAR)
+    -- end
 end
 
 function onTrade(player, npc, trade)
@@ -27,7 +27,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
+    player:messageSpecial(ID.text.IRREPRESSIBLE_MIGHT)
 end
 
 function onEventUpdate(player, csid, option)

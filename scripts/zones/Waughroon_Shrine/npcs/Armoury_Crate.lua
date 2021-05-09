@@ -258,6 +258,9 @@ local loot =
     -- KSNM The Hills are Alive
     [76] =
     {
+	    -- {
+            -- {itemid = 65535, droprate = 1000, amount = 1800000}, -- gil
+        -- },
         {
             {itemid =  3343, droprate = 1000}, -- Blue Pondweed
         },
@@ -266,8 +269,8 @@ local loot =
             {itemid = 20522, droprate =  180}, -- Emeici +1
             {itemid = 20709, droprate =  180}, -- Demersal Degen +1
             {itemid = 20682, droprate =  180}, -- Flyssa +1
-            {itemid = 21746, droprate =  180}, -- Habilitator +1
-            {itemid = 21746, droprate =  100}, -- Magesmasher +1
+            {itemid = 21749, droprate =  180}, -- Habilitator +1
+            {itemid = 21100, droprate =  100}, -- Magesmasher +1
         },
         {
             {itemid = 21703, droprate =  180}, -- Kladenets +1
@@ -278,8 +281,8 @@ local loot =
             {itemid = 21160, droprate =  100}, -- Marin Staff
         },
         {
-            {itemid = 28134, droprate =  250}, -- Assiduity Pants +1
-            {itemid = 28136, droprate =  250}, -- Augury Cuisses +1
+            {itemid = 28135, droprate =  250}, -- Assiduity Pants +1
+            {itemid = 28137, droprate =  250}, -- Augury Cuisses +1
             {itemid = 25856, droprate =  250}, -- Tatenashi Haidate +1
             {itemid = 27231, droprate =  250}, -- Zoar Subligar +1
         },
@@ -287,7 +290,7 @@ local loot =
             {itemid = 27410, droprate =  200}, -- Hippomenes Socks +1
             {itemid = 27408, droprate =  200}, -- Hygieia Clogs +1
             {itemid = 28276, droprate =  200}, -- Jute Boots +1
-            {itemid = 28273, droprate =  200}, -- Regal Pumps
+            {itemid = 28274, droprate =  200}, -- Regal Pumps +1
             {itemid = 25924, droprate =  200}, -- Tatenashi Sune-Ate +1
         },
         {
@@ -310,15 +313,28 @@ local loot =
             {itemid = 8732, droprate = 1000},  -- Kupon I S-3
         },
         {
-            {itemid = 8732, droprate = 1000}, -- Kupon I S-3
+            {itemid = 8747, droprate = 111},  -- Ra'Kaznar Ore
+			{itemid = 4077, droprate = 111},  -- Moonbow Steel
+			{itemid = 4079, droprate = 111},  -- Moonbow Leather
+			{itemid = 4080, droprate = 111},  -- Moonbow Urushi
+			{itemid = 4081, droprate = 111},  -- Moonbow Stone
+			{itemid = 4078, droprate = 111},  -- Moonbow CLoth
+			{itemid = 9251, droprate = 111},  -- Khoma Thread
+			{itemid = 9255, droprate = 111},  -- Cyan Coral
+			{itemid = 4082, droprate = 112},  -- Moonlight Coral
+			
         },
         {
-            {itemid = 8732, droprate = 333},   -- Kupon I S-3
-            {itemid = 3972, droprate = 333},   -- Kupon I S-2
-            {itemid = 8734, droprate = 334},   -- Kupon I S-1
-        },
-        {
-            {itemid = 0, droprate = 1000},  -- Placeholder Augment Kupon
+            {itemid = 8747, droprate = 111},  -- Ra'Kaznar Ore
+			{itemid = 4077, droprate = 111},  -- Moonbow Steel
+			{itemid = 4079, droprate = 111},  -- Moonbow Leather
+			{itemid = 4080, droprate = 111},  -- Moonbow Urushi
+			{itemid = 4081, droprate = 111},  -- Moonbow Stone
+			{itemid = 4078, droprate = 111},  -- Moonbow CLoth
+			{itemid = 9251, droprate = 111},  -- Khoma Thread
+			{itemid = 9255, droprate = 111},  -- Cyan Coral
+			{itemid = 4082, droprate = 112},  -- Moonlight Coral
+			
         },
     },
 
@@ -369,17 +385,20 @@ local loot =
     -- BCNM Up In Arms
     [79] =
     {
+	    -- {
+            -- {itemid = 65535, droprate = 1000, amount = 500000}, -- gil
+        -- },
         {
-            {itemid =  0, droprate = 625}, -- Nothing
-			{itemid =  20815, droprate = 125}, -- Budliqa +1
-			{itemid =  20875, droprate = 125}, -- Razorfury +1
-			{itemid =  21201, droprate = 125}, -- Atinian Staff +1
+            {itemid =  0, droprate = 100}, -- Nothing
+			{itemid =  21455, droprate = 300}, -- Alternator
+			{itemid =  28643, droprate = 300}, -- Refraction Cape
+			{itemid =  28402, droprate = 300}, -- Asperity Necklace
         },
         {
-            {itemid =  0, droprate = 625}, -- Nothing
-			{itemid =  28037, droprate = 125}, -- Aeto. Gloves +1
-			{itemid =  28041, droprate = 125}, -- Haruspex Cuff +1
-			{itemid =  28039, droprate = 125}, -- Shab. Gauntlets +1
+            {itemid =  0, droprate = 100}, -- Nothing
+			{itemid =  28058, droprate = 300}, -- Manibozho Gloves
+			{itemid =  28059, droprate = 300}, -- Bokwus Gloves
+			{itemid =  28057, droprate = 300}, -- Mikinaak Gauntlets 
         },
         {
             {itemid = 0, droprate = 900}, -- Nothing
@@ -394,7 +413,7 @@ local loot =
         {
             {itemid = 4067, droprate = 1000},    -- Rems Chapt 4
         },
-		        {
+		{
             {itemid = 4067, droprate = 1000},    -- Rems Chapt 4
         },
     },
@@ -402,6 +421,9 @@ local loot =
     -- KSNM Operation Desert Swarm
     [81] =
     {
+	    -- {
+            -- {itemid = 65535, droprate = 1000, amount = 1000000}, -- gil
+        -- },
         {
             {itemid =  21702, droprate = 125}, -- Kladenets
             {itemid =  20580, droprate = 125}, -- Kustawi
@@ -416,7 +438,7 @@ local loot =
             {itemid = 27409, droprate =  200}, -- Hippomenes Socks
             {itemid = 27407, droprate =  200}, -- Hygieia Clogs
             {itemid = 28275, droprate =  200}, -- Jute Boots
-            {itemid = 28723, droprate =  200}, -- Regal Pumps
+            {itemid = 28273, droprate =  200}, -- Regal Pumps
             {itemid = 25923, droprate =  200}, -- Tatenashi Sune-Ate
         },
         {
@@ -434,57 +456,55 @@ local loot =
         {
             {itemid = 3972, droprate = 1000},   -- Kupon I S-2
         },
+		{
+            {itemid = 4080, droprate =  175}, -- Moonbow Urushi
+            {itemid = 4079, droprate =  165}, -- Moonbow Leather
+            {itemid = 4078, droprate =  165}, -- Moonbow Cloth
+            {itemid = 4077, droprate =  165}, -- Moonbow Steel
+            {itemid = 4081, droprate =  165}, -- Moonbow Stone
+			{itemid = 4082, droprate =  165}, -- Moonlight Coral
+        },
     },
 
     -- KSNM Prehistoric Pigeons
     [82] =
     {
-        {
-            {itemid = 17827, droprate = 217}, -- Michishiba-no-tsuyu
-            {itemid = 17699, droprate = 174}, -- Dissector
-            {itemid = 17275, droprate = 333}, -- Coffinmaker
-            {itemid = 18053, droprate = 174}, -- Gravedigger
+	    -- {
+            -- {itemid = 65535, droprate = 1000, amount = 500000}, -- gil
+        -- },
+		{
+            {itemid =  0, droprate = 100}, -- Nothing
+			{itemid =  20774, droprate = 300}, -- Voay Sworrd +1
+			{itemid =  20735, droprate = 300}, -- Camaraderie Blade
+			{itemid =  20633, droprate = 300}, -- Camaraderie Dagger
         },
         {
-            {itemid = 19027, droprate = 144}, -- Claymore Grip
-            {itemid = 658, droprate = 275},   -- Damascus Ingot
-            {itemid = 843, droprate = 275},   -- Giant Bird Plume
-            {itemid = 19025, droprate = 203}, -- Pole Grip
-            {itemid = 19026, droprate = 116}, -- Spear Strap
+            {itemid =  0, droprate = 100}, -- Nothing
+			{itemid =  21455, droprate = 300}, -- Alternator
+			{itemid =  28643, droprate = 300}, -- Refraction Cape
+			{itemid =  28402, droprate = 300}, -- Asperity Necklace
         },
         {
-            {itemid = 655, droprate = 159},   -- Adaman Ingot
-            {itemid = 747, droprate = 290},   -- Orichalcum Ingot
-            {itemid = 14765, droprate = 406}, -- Titanis Earring
+            {itemid =  0, droprate = 100}, -- Nothing
+			{itemid =  28058, droprate = 300}, -- Manibozho Gloves
+			{itemid =  28059, droprate = 300}, -- Bokwus Gloves
+			{itemid =  28057, droprate = 300}, -- Mikinaak Gauntlets 
         },
         {
-            {itemid = 15325, droprate = 159}, -- Evokers Boots
-            {itemid = 14872, droprate = 217}, -- Ostreger Mitts
-            {itemid = 15181, droprate = 145}, -- Pineal Hat
-            {itemid = 15387, droprate = 159}, -- Trackers Kecks
+            {itemid = 0, droprate = 900}, -- Nothing
+            {itemid = 1178, droprate = 100},   -- Lachesis Orb
         },
         {
-            {itemid = 887, droprate = 101},   -- Coral Fragment
-            {itemid = 645, droprate = 29},    -- Chunk Of Darksteel Ore
-            {itemid = 902, droprate = 29},    -- Demon Horn
-            {itemid = 702, droprate = 29},    -- Ebony Log
-            {itemid = 745, droprate = 101},   -- Gold Ingot
-            {itemid = 823, droprate = 29},    -- Spool Of Gold Thread
-            {itemid = 644, droprate = 29},    -- Chunk Of Mythril Ore
-            {itemid = 703, droprate = 58},    -- Petrified Log
-            {itemid = 738, droprate = 14},    -- Chunk Of Platinum Ore
-            {itemid = 830, droprate = 58},    -- Square Of Rainbow Cloth
-            {itemid = 895, droprate = 14},    -- Ram Horn
-            {itemid = 1132, droprate = 159},  -- Square Of Raxa
-            {itemid = 837, droprate = 72},    -- Spool Of Malboro Fiber
+            {itemid = 8734, droprate = 1000},   -- Kupon I S-1
         },
         {
-            {itemid = 1110, droprate = 87},   -- Vial Of Black Beetle Blood
-            {itemid = 658, droprate = 14},    -- Damascus Ingot
-            {itemid = 836, droprate = 29},    -- Square Of Damascene Cloth
-            {itemid = 942, droprate = 174},   -- Philosophers Stone
-            {itemid = 844, droprate = 246},   -- Phoenix Feather
-            {itemid = 1132, droprate = 159},  -- Square Of Raxa
+            {itemid = 8734, droprate = 1000},   -- Kupon I S-1
+        },
+        {
+            {itemid = 4067, droprate = 1000},    -- Rems Chapt 4
+        },
+		{
+            {itemid = 4067, droprate = 1000},    -- Rems Chapt 4
         },
     },
 }
@@ -494,6 +514,7 @@ end
 
 function onTrigger(player, npc)
     local battlefield = player:getBattlefield()
+	
     if battlefield then
         tpz.battlefield.HandleLootRolls(battlefield, loot[battlefield:getID()], nil, npc)
     end

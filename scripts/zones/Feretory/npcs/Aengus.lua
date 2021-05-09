@@ -17,7 +17,7 @@ function onTrade(player,npc,trade)
 	--	{"aug1", "aug1 value", "aug2", "aug2 value", "aug3", "aug3 value", "aug4", "aug4 value"}
 		{"1", "4", "23", "1", "25", "1", "31", "1"}, -- HP +5, ACC +2, ATK +2, EVA +2
 		{"9", "4", "35", "1", "133", "0", "31", "1"}, -- MP +5, MACC +2, MAB +1, EVA +2
-		{"25","4","143","0"}, -- ATK +5, Double Attack +1
+		{"25","4","143","1"}, -- ATK +5, Double Attack +2%
 	}
 	
 	-- Checks all 8 slots of the trade window and restricts the augmentable item to ID's between 10249 and 28671 (Armor & Weapons)
@@ -89,7 +89,7 @@ function onTrigger(player,npc)
 	player:PrintToPlayer(string.format("Aengus : Select an augment set from the list below:"),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Aengus : 12x Hare Meat = HP +5, ACC +2, ATK +2, EVA +2"),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Aengus : 12x Rock Salt = MP +5, MACC +2, MAB +1, EVA +2"),tpz.msg.channel.NS_SAY)
-	player:PrintToPlayer(string.format("Aengus : 1x Ochimusha Kote = ATK +5, Double Attack +1%%"),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Aengus : 1x Ochimusha Kote = ATK +5, Double Attack +2%%"),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Aengus : Trade 1 piece of level 1-30 gear, 1 Bronze Rose (furniture), and the item/stack from above."),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Aengus : Trade me EXACTLY the ingredients requested. Any additional items included will be lost in the trade."),tpz.msg.channel.NS_SAY)
 	-- player:PrintToPlayer(string.format("Aengus : 1x Four-Leaf Mandragora Bud =     12x Rabbit Hide = +5 HP    12x Flint Stone = +5 DEF"),tpz.msg.channel.NS_SAY)

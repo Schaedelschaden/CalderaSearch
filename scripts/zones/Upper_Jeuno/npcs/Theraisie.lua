@@ -36,8 +36,8 @@ function onTrigger(player, npc)
         19252,  250,    -- Pet Poultice
     }
 
-    player:showText(npc, ID.text.MP_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    -- player:showText(npc, ID.text.MP_SHOP_DIALOG)
+    -- tpz.shop.general(player, stock)
 end
 
 function onEventUpdate(player, csid, option)

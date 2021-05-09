@@ -6,6 +6,7 @@
 -- Faust will use Typhoon 2-3 times in a row every 30s regardless of his TP.
 
 function onMobSpawn(mob)
+	mob:addMod(tpz.mod.ATT, 500)
 	mob:setMod(tpz.mod.MOBMOD_TP_USE_CHANCE, 1000)
 end
 

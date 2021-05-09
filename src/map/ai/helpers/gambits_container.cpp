@@ -515,38 +515,38 @@ bool CGambitsContainer::TryTrustSkill()
 
         switch (tp_trigger)
         {
-        case G_TP_TRIGGER::ASAP:
-        {
-            return true;
-            break;
-        }
-        case G_TP_TRIGGER::OPENER:
-        {
-            bool result = false;
-            static_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&result](CBattleEntity* PMember)
-            {
-                if (PMember->health.tp >= 1000)
-                {
-                    result = true;
-                }
-            });
-            return result;
-            break;
-        }
-        case G_TP_TRIGGER::CLOSER:
-        {
-            auto PSCEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
+			case G_TP_TRIGGER::ASAP:
+			{
+				return true;
+				break;
+			}
+			case G_TP_TRIGGER::OPENER:
+			{
+				bool result = false;
+				static_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&result](CBattleEntity* PMember)
+				{
+					if (PMember->health.tp >= 1000)
+					{
+						result = true;
+					}
+				});
+				return result;
+				break;
+			}
+			case G_TP_TRIGGER::CLOSER:
+			{
+				auto PSCEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
 
-            // TODO: ...and has a valid WS...
+				// TODO: ...and has a valid WS...
 
-            return PSCEffect && PSCEffect->GetStartTime() + 3s < server_clock::now() && PSCEffect->GetTier() == 0;
-            break;
-        }
-        default:
-        {
-            return false;
-            break;
-        }
+				return PSCEffect && PSCEffect->GetStartTime() + 3s < server_clock::now() && PSCEffect->GetTier() == 0;
+				break;
+			}
+			default:
+			{
+				return false;
+				break;
+			}
         }
     };
 

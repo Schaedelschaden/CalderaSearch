@@ -3,7 +3,6 @@
 --   NM: Jailer of Temperance
 -----------------------------------
 require("scripts/zones/Grand_Palace_of_HuXzoi/globals")
-mixins = {require("scripts/mixins/job_special")}
 require("scripts/globals/status")
 require("scripts/globals/magic")
 -----------------------------------
@@ -19,6 +18,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.SLASHRES, 0)
     mob:setMod(tpz.mod.PIERCERES, 0)
     mob:setMod(tpz.mod.IMPACTRES, 1000)
+	mob:addMod(tpz.mod.EVA, math.random(100, 200))
     -- Set the magic resists. It always takes no damage from direct magic
     for n =1, #tpz.magic.resistMod, 1 do
         mob:setMod(tpz.magic.resistMod[n], 0)
@@ -29,9 +29,20 @@ function onMobSpawn(mob)
 end
 
 function onMobFight(mob)
-    -- Forms: 0 = Pot  1 = Pot  2 = Poles  3 = Rings
+    -- Forms: 0 = Pot (Blunt/H2H only) 1 = Pot (Blunt/H2H only) 2 = Poles (Piercing Only) 3 = Rings (Slashing only)
+	local PotAbilities = {1463, 1465} -- Reactor Cool, Optic Induration
+	local PolesAbilities = {1463, 1466, 1467} -- Reactor Cool, Static Filament, Decayed Filament
+	local RingsAbilities = {1463, 1468, 1469} -- Reactor Cool, Reactor Overload, Reactor Overheat
+	
     local randomTime = math.random(30, 180)
     local changeTime = mob:getLocalVar("changeTime")
+	local twoHours = mob:getLocalVar("2hrs")
+	local isBusy = false
+	
+	if act == tpz.act.MOBABILITY_START or act == tpz.act.MOBABILITY_USING or act == tpz.act.MOBABILITY_FINISH or act == tpz.act.MAGIC_START
+	   or act == tpz.act.MAGIC_CASTING or act == tpz.act.MAGIC_START then
+        isBusy = true -- Set to true if mob is in any stage of using a mobskill or casting a spell
+    end
 
     -- If we're in a pot form, but going to change to either Rings/Poles
     if ((mob:AnimationSub() == 0 or mob:AnimationSub() == 1) and mob:getBattleTime() - changeTime > randomTime) then
@@ -92,13 +103,57 @@ function onMobFight(mob)
             mob:setLocalVar("changeTime", mob:getBattleTime())
         end
     end
+	
+	if (mob:getHPP() <= 80 and twoHours == 0) then
+		mob:useMobAbility(730)
+		mob:setLocalVar("2hrs", 1)
+	elseif (mob:getHPP() <= 60 and twoHours == 1) then
+		mob:useMobAbility(730)
+		mob:setLocalVar("2hrs", 2)
+	elseif (mob:getHPP() <= 40 and twoHours == 2) then
+		mob:useMobAbility(730)
+		mob:setLocalVar("2hrs", 3)
+	elseif (mob:getHPP() <= 20 and twoHours == 3) then
+		mob:useMobAbility(730)
+		mob:setLocalVar("2hrs", 4)
+	end
+	
+	if (isBusy == false and mob:hasStatusEffect(tpz.effect.MEIKYO_SHISUI)) then		
+		-- Forms: 0 = Pot (Blunt/H2H only) 1 = Pot (Blunt/H2H only) 2 = Poles (Piercing Only) 3 = Rings (Slashing only)
+		if (mob:AnimationSub() == 0 or mob:AnimationSub() == 1) then
+			mob:useMobAbility(PotAbilities[math.random(#PotAbilities)])
+			mob:useMobAbility(PotAbilities[math.random(#PotAbilities)])
+			mob:useMobAbility(PotAbilities[math.random(#PotAbilities)])
+			mob:delStatusEffect(tpz.effect.MEIKYO_SHISUI)
+		elseif (mob:AnimationSub() == 2) then
+			mob:useMobAbility(PolesAbilities[math.random(#PolesAbilities)])
+			mob:useMobAbility(PolesAbilities[math.random(#PolesAbilities)])
+			mob:useMobAbility(PolesAbilities[math.random(#PolesAbilities)])
+			mob:delStatusEffect(tpz.effect.MEIKYO_SHISUI)
+		elseif (mob:AnimationSub() == 3) then
+			mob:useMobAbility(RingsAbilities[math.random(#RingsAbilities)])
+			mob:useMobAbility(RingsAbilities[math.random(#RingsAbilities)])
+			mob:useMobAbility(RingsAbilities[math.random(#RingsAbilities)])
+			mob:delStatusEffect(tpz.effect.MEIKYO_SHISUI)
+		end
+	end
 end
 
 function onMobDeath(mob, player, isKiller)
+	local KillCounter = player:getCharVar("KillCounter_JailOfTemp")
+	local playerName = player:getName()
+	local mobName = mob:getName()
+	local fixedMobName = string.gsub(mobName, "_", " ")
+	
+	KillCounter = KillCounter + 1
+	
+	player:setCharVar("KillCounter_JailOfTemp", KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
 end
 
 function onMobDespawn(mob)
     local ph = mob:getLocalVar("ph")
+	mob:setLocalVar("2hrs", 0)
     DisallowRespawn(mob:getID(), true)
     DisallowRespawn(ph, false)
     GetMobByID(ph):setRespawnTime(GetMobRespawnTime(ph))

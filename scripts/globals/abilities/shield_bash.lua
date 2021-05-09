@@ -22,7 +22,8 @@ function onUseAbility(player, target, ability)
 
     local shieldSize = player:getShieldSize()
     local damage = 0
-    local chance = 90
+    local chance = math.random(50, 90)
+	local stun = math.random(1, 100)
     damage = player:getMod(tpz.mod.SHIELD_BASH)
 
     if shieldSize == 1 then
@@ -46,11 +47,9 @@ function onUseAbility(player, target, ability)
     else
         damage = math.floor(damage * 3)
     end
-
-    -- Calculate stun proc chance
-    chance = chance + (player:getMainLvl() - target:getMainLvl()) * 5
-
-    if math.random()*100 < chance then
+	
+    -- Stun proc
+    if stun < chance then
         target:addStatusEffect(tpz.effect.STUN, 1, 0, 6)
     end
 

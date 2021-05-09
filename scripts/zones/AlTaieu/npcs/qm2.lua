@@ -2,13 +2,12 @@
 -- Area: Al'Taieu
 --  NPC: ??? (Jailer of Justice Spawn)
 -- Allows players to spawn the Jailer of Justice by trading the Second Virtue, Deed of Moderation, and HQ Xzomit Organ to a ???.
--- !pos , -278 0 -463
+-- !pos -278 0 -463
 -----------------------------------
-local ID = require("scripts/zones/AlTaieu/IDs");
+local ID = require("scripts/zones/AlTaieu/IDs")
 -----------------------------------
 
 function onTrade(player,npc,trade)
-    --[[
     -- JAILER OF JUSTICE
     if (
         not GetMobByID(ID.mob.JAILER_OF_JUSTICE):isSpawned() and
@@ -18,20 +17,19 @@ function onTrade(player,npc,trade)
         trade:getItemCount() == 3
     ) then
         player:tradeComplete();
-        SpawnMob(ID.mob.JAILER_OF_JUSTICE):updateClaim(player);
+        SpawnMob(ID.mob.JAILER_OF_JUSTICE):updateClaim(player)
     end
-    --]]
-end;
+end
 
 function onTrigger(player,npc)
-end;
+end
 
 function onEventUpdate(player,csid,option)
     -- printf("onUpdate CSID: %u",csid);
     -- printf("onUpdate RESULT: %u",option);
-end;
+end
 
 function onEventFinish(player,csid,option)
     -- printf("onFinish CSID: %u",csid);
     -- printf("onFinish RESULT: %u",option);
-end;
+end
