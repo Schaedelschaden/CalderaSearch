@@ -7,22 +7,20 @@ require("scripts/globals/msg")
 require("scripts/globals/status")
 -----------------------------------
 
-local chance =
-{
-    [19006] = 10, -- 75
-    [19075] = 15, -- 80
-    [19095] = 20, -- 85
-    [19627] = 25, -- 90
-    [19725] = 25, -- 95
-    [19834] = 30, -- 99
-    [19963] = 30, -- 99 AG
-    [20651] = 30, -- 119
-    [20652] = 30, -- 119 AG
-    [20688] = 30  -- 119 III
-}
+local weaponID = {19006, 19075, 19095, 19627, 19725, 19834, 19963, 20651, 20652, 20688}
+local chance = {10, 15, 20, 25, 25, 30, 30, 30, 30, 30}
 
 function onAdditionalEffect(player, target, damage)
-    if math.random(100) <= chance[player:getEquipID(tpz.slot.MAIN)] then
+	local mainWeapon = player:getEquipID(tpz.slot.MAIN)
+	local effectChance = 0
+	
+	for i = 1, #weaponID do
+		if (mainWeapon == weaponID[i]) then
+			effectChance = chance[i]
+		end
+	end
+
+    if math.random(100) <= effectChance then
         local drain = math.floor(damage * math.random(10, 20) / 100)
         player:addMP(drain)
 

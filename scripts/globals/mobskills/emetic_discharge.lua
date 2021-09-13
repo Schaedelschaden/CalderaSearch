@@ -1,6 +1,6 @@
 ---------------------------------------------
 -- Emetic Discharge
--- Family: Bloodlapper and Brummbar
+-- Family: Gnat
 -- Description: Transfers all ailments to target
 -- Type: Enfeebling
 -- Utsusemi/Blink absorb: 2-3 shadows
@@ -30,13 +30,15 @@ function onMobWeaponSkill(target, mob, skill)
     if (dmg > 0) then
         for i, effect in ipairs(removables) do
             if (mob:hasStatusEffect(effect)) then
+				mob:setLocalVar("EMETIC_DISCHARGE_"..i, effect)
+				mob:setLocalVar("EMETIC_DISCHARGE_TOTAL", mob:getLocalVar("EMETIC_DISCHARGE_TOTAL") + 1)
                 local statusEffect = mob:getStatusEffect(effect)
                 target:addStatusEffect(effect, statusEffect:getPower(), statusEffect:getTickCount(), statusEffect:getDuration())
-                mob:delStatusEffect(effect)
             end
         end
     end
 
-    skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT) -- no effect
+    skill:setMsg(tpz.msg.basic.NONE)
+	
     return 0
 end

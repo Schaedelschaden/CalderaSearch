@@ -33,7 +33,7 @@ function onTrigger(player, npc)
 		2358, 3600,			-- Lithic Wyvern Scale
 		2420, 2022,			-- Luminous Crab Shell
 		1718, 4455,			-- Megalobugard Tusk
-		1458, 7950,			-- Mammoth Tusk
+--		1458, 7950,			-- Mammoth Tusk
 		1123, 1890,			-- Manticore Fang
 		2147, 2226,			-- Marid Tusk
 		2146, 750,			-- Merrow Scale

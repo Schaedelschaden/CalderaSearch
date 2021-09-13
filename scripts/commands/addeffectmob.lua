@@ -43,12 +43,18 @@ function onTrigger(player, arg1, arg2, arg3)
 				error(player, "You must target a mob with your cursor.")
 				return
 			end
+			if (targ:isNPC()) then
+				error(player, "You cannot target an NPC with that.")
+			end
 --			printf("addeffectmob.lua onTrigger 1 ID: [%i]  Power: [%i]  Duration: [%i]", id, power, duration)
 		else
 			targ = player:getCursorTarget()
 			if (targ == nil) then
 				error(player, "You must target a mob with your cursor.")
 				return
+			end
+			if (targ:isNPC()) then
+				error(player, "You cannot target an NPC with that.")
 			end
 			id = tonumber(arg1) or tpz.effect[string.upper(arg1)]
 			power = tonumber(arg2) or 1

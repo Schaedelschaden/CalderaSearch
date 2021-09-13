@@ -25,11 +25,11 @@ function onZoneIn(player, prevZone)
     if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
         player:setPos(-19.238, -2.163, -63.964, 187)
     end
-    if (player:getCurrentMission(ZILART) == tpz.mission.id.zilart.THE_NEW_FRONTIER and player:getRank(player:getNation()) >= 6) then
-        cs = 1
-    elseif (player:getCurrentMission(ZILART) == tpz.mission.id.zilart.AWAKENING and player:getCharVar("ZilartStatus") == 0 or player:getCharVar("ZilartStatus") == 2) then
-        cs = 176
-    end
+    -- if (player:getCurrentMission(ZILART) == tpz.mission.id.zilart.THE_NEW_FRONTIER and player:getRank(player:getNation()) >= 6) then
+        -- cs = 1
+    -- elseif (player:getCurrentMission(ZILART) == tpz.mission.id.zilart.AWAKENING and player:getCharVar("ZilartStatus") == 0 or player:getCharVar("ZilartStatus") == 2) then
+        -- cs = 176
+    -- end
 
     return cs
 

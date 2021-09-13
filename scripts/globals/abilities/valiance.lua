@@ -34,10 +34,22 @@ function onUseAbility(player, target, ability)
 		if (player:hasStatusEffect(RuneEnhancement[i])) then
 			RuneCounter = player:countEffect(RuneEnhancement[i])
 			power = power * RuneCounter
-			player:setCharVar(sdtPower[i], power)
+			target:setCharVar(sdtPower[i], power)
 --			printf("vallation.lua onUseAbility VALLATION RUNE: [%i] COUNTER: [%i] POWER: [%i]", RuneEnhancement[i], RuneCounter, power)
 		end
 	end
 	
     target:addStatusEffect(tpz.effect.VALIANCE, power, 0, duration)
+	
+	local party = player:getParty()
+	local mob = player:getTarget()
+	
+	for i, v in ipairs(party) do
+		if (v:hasStatusEffect(tpz.effect.VALIANCE) and mob ~= nil) then
+			local currentCE = mob:getCE(player)
+			local currentVE = mob:getVE(player)
+			mob:setCE(player, currentCE + 450)
+			mob:setVE(player, currentVE + 900)
+		end
+	end
 end

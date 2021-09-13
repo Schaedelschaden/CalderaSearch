@@ -13,7 +13,7 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
-	mob:addMod(tpz.mod.ACC, 500)
+--	mob:addMod(tpz.mod.ACC, 500)
 	mob:addMod(tpz.mod.MACC, 500)
 	mob:addMod(tpz.mod.MATT, 100)
 	mob:addMod(tpz.mod.REFRESH, 25)

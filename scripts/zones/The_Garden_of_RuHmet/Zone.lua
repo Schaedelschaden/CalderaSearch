@@ -87,7 +87,7 @@ function afterZoneIn(player)
     player:entityVisualPacket("slp2")
     player:entityVisualPacket("slp3")
 	
-	player:PrintToPlayer(string.format("You can feel your communication with Trusts fade away."), tpz.msg.channel.NS_LINKSHELL3)
+	-- player:PrintToPlayer(string.format("You can feel your communication with Trusts fade away."), tpz.msg.channel.NS_LINKSHELL3)
 end
 
 function onGameHour(zone)

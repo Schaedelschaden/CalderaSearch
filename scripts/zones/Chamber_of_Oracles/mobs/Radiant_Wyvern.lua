@@ -11,9 +11,9 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.BINDRES, 35)
     mob:setMod(tpz.mod.GRAVITYRES, 35)
     mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 17)
-	mob:setMod(tpz.mod.ATT, 400)
-    mob:setMod(tpz.mod.ACC, 400)
-    mob:setMod(tpz.mod.EVA, 200)
+	-- mob:setMod(tpz.mod.ATT, 400)
+    -- mob:setMod(tpz.mod.ACC, 400)
+    -- mob:setMod(tpz.mod.EVA, 200)
 	mob:setMod(tpz.mod.DOUBLE_ATTACK, 10)
 end
 

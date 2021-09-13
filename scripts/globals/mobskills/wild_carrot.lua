@@ -21,6 +21,10 @@ function onMobWeaponSkill(target, mob, skill)
         potency = 13
     end
 
+	if (mob:isNM()) then
+		potency = 6
+	end
+
     potency = potency - math.random(0, potency/4)
 
     skill:setMsg(tpz.msg.basic.SELF_HEAL)

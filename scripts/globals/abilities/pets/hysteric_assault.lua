@@ -18,7 +18,7 @@ function onPetAbility(target, pet, skill, player)
 	local fixedMobName = string.gsub(mobName, "_", " ")
     local numhits = 3
     local accmod = 1
-    local dmgmod = 10
+    local dmgmod = 8
     local totaldamage = 0
     local damage = AvatarPhysicalMove(pet, target, skill, numhits, accmod, dmgmod, 0, TP_NO_EFFECT)
 	
@@ -28,9 +28,13 @@ function onPetAbility(target, pet, skill, player)
 	
 	pet:addHP(totaldamage)
 	
-	player:PrintToPlayer(string.format("%i HP drained from the %s.", totaldamage, fixedMobName),tpz.msg.channel.NS_SAY)
+	pet:PrintToArea(string.format("Hysteric Assault drains %i HP from the %s.", totaldamage, fixedMobName),tpz.msg.channel.NS_SAY, tpz.msg.area.SAY)
+	-- player:PrintToPlayer(string.format("%i HP drained from the %s.", totaldamage, fixedMobName),tpz.msg.channel.NS_SAY)
+	-- printf("hysteric_assault.lua onPetAbility DAMAGE: [%i]  MOB: [%s]", totaldamage, fixedMobName)
 	
 	PlayPetAnimation(pet, target, 13, animationID)
+	
+	skill:setMsg(tpz.msg.basic.SKILL_DRAIN_HP)
 
     return totaldamage
 end

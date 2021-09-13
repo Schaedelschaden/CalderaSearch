@@ -14,31 +14,32 @@ function onMobSpawn(mob)
             battlefield:setLocalVar("phaseChange", 0)
         end
     end
-	mob:setMod(tpz.mod.PARALYZERES, 1000) -- Resistance to Silence
-    mob:setMod(tpz.mod.STUNRES, 1000) -- Resistance to Stun
-    mob:setMod(tpz.mod.BINDRES, 1000) -- Resistance to Bind
-    mob:setMod(tpz.mod.SLOWRES, 1000) -- Resistance to Slow
-    mob:setMod(tpz.mod.SILENCERES, 1000) -- Resistance to Silence
-    mob:setMod(tpz.mod.SLEEPRES, 1000) -- Resistance to Sleep
-    mob:setMod(tpz.mod.LULLABYRES, 1000)
-    mob:setMod(tpz.mod.PETRIFYRES, 1000)
+	mob:setMod(tpz.mod.PARALYZERES, 30) -- Resistance to Silence
+    mob:setMod(tpz.mod.STUNRES, 100) -- Resistance to Stun
+    mob:setMod(tpz.mod.BINDRES, 100) -- Resistance to Bind
+    mob:setMod(tpz.mod.SLOWRES, 30) -- Resistance to Slow
+    mob:setMod(tpz.mod.SILENCERES, 30) -- Resistance to Silence
+    mob:setMod(tpz.mod.SLEEPRES, 100) -- Resistance to Sleep
+    mob:setMod(tpz.mod.LULLABYRES, 100)
+    mob:setMod(tpz.mod.PETRIFYRES, 100)
     mob:setMod(tpz.mod.POISONRES, 30) -- Resistance to Poison
-	mob:setMod(tpz.mod.ATT, 1500) -- Attack Stat (Compare to DEF)
-	mob:setMod(tpz.mod.MATT, 180) -- Magic Attack (Compare to MDEF)
-    mob:setMod(tpz.mod.ACC, 700) -- Accuracy (compare to EVA)
-	mob:setMod(tpz.mod.MACC, 500) -- Magic ACC (Compare to MEVA)
-	mob:setMod(tpz.mod.EVA, 600) -- Evasion (Compare to ACC)
-	mob:setMod(tpz.mod.DEF, 600) -- Defense (Compart to ATT)
-	mob:setMod(tpz.mod.MEVA, 200) -- Magic Evasion (Compare to MACC)
-	mob:setMod(tpz.mod.MDEF, 500) -- Magic Defense (Compare to MATT)
-	mob:setMod(tpz.mod.DOUBLE_ATTACK, 35) -- Double Attack in %
-	mob:setMod(tpz.mod.TRIPLE_ATTACK, 10) -- Triple Attack in %
+	-- mob:setMod(tpz.mod.ATT, 1500) -- Attack Stat (Compare to DEF)
+	mob:setMod(tpz.mod.MATT, 100) -- Magic Attack (Compare to MDEF)
+    -- mob:setMod(tpz.mod.ACC, 700) -- Accuracy (compare to EVA)
+	-- mob:setMod(tpz.mod.MACC, 500) -- Magic ACC (Compare to MEVA)
+	-- mob:setMod(tpz.mod.EVA, 600) -- Evasion (Compare to ACC)
+	-- mob:setMod(tpz.mod.DEF, 600) -- Defense (Compart to ATT)
+	mob:setMod(tpz.mod.MEVA, 500) -- Magic Evasion (Compare to MACC)
+	mob:setMod(tpz.mod.MDEF, 100) -- Magic Defense (Compare to MATT)
+	mob:setMod(tpz.mod.DMGMAGIC, 50) -- MDT
+	-- mob:setMod(tpz.mod.DOUBLE_ATTACK, 35) -- Double Attack in %
+	-- mob:setMod(tpz.mod.TRIPLE_ATTACK, 10) -- Triple Attack in %
 end
 
 
 function onMobFight(mob, target)
     -- 1st form
-    -- after change magic or physical immunity every 5min or 1k dmg
+    -- after change magic or physical immunity every 5min or 15k dmg
     -- 2nd form
     -- the Shadow Lord will do nothing but his Implosion attack. This attack hits everyone in the battlefield, but he only has 4000 HP
 
@@ -62,7 +63,7 @@ function onMobFight(mob, target)
                 mob:setLocalVar("changeTime", mob:getBattleTime())
                 mob:setLocalVar("changeHP", mob:getHP())
             -- subanimation 2 is physical mode, so check if he should change into magic mode
-            elseif (mob:AnimationSub() == 2 and (mob:getHP() <= changeHP - 1000 or
+            elseif (mob:AnimationSub() == 2 and (mob:getHP() <= changeHP - 15000 or
                     mob:getBattleTime() - changeTime > 300)) then
                 mob:AnimationSub(1)
                 mob:delStatusEffect(tpz.effect.PHYSICAL_SHIELD)
@@ -73,7 +74,7 @@ function onMobFight(mob, target)
                 mob:setLocalVar("changeTime", mob:getBattleTime())
                 mob:setLocalVar("changeHP", mob:getHP())
             -- subanimation 1 is magic mode, so check if he should change into physical mode
-            elseif (mob:AnimationSub() == 1 and (mob:getHP() <= changeHP - 1000 or
+            elseif (mob:AnimationSub() == 1 and (mob:getHP() <= changeHP - 15000 or
                     mob:getBattleTime() - changeTime > 300)) then
                 -- and use an ability before changing
                 mob:useMobAbility(673)

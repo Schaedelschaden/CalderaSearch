@@ -32,7 +32,7 @@ function onUseAbility(player, target, ability, action)
 	local bonus = 1.0
 	local lungeBonus = player:getMod(tpz.mod.LUNGE_BONUS) / 100
 	local multiplier = 2
-	local dmg = player:getSkillLevel(skillType) * (0.75 + lungeBonus) * multiplier
+	local dmg = (player:getSkillLevel(skillType) + player:getILvlSkill(tpz.slot.MAIN)) * (0.75 + lungeBonus) * multiplier
 	
 	for i,v in ipairs(RuneEnhancement) do
 		if (player:getOldestRune() == RuneEnhancement[i]) then

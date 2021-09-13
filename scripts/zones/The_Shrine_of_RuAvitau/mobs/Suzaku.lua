@@ -13,8 +13,8 @@ function onMobSpawn(mob)
 	mob:setMod(tpz.mod.DMGPHYS, -25)
 	mob:setMod(tpz.mod.DMGRANGE, -25)
 	mob:setMod(tpz.mod.DMGMAGIC, -30)
-	mob:addMod(tpz.mod.ACC, 500)
-	mob:addMod(tpz.mod.MACC, 500)
+--	mob:addMod(tpz.mod.ACC, 500)
+--	mob:addMod(tpz.mod.MACC, 500)
 	mob:addMod(tpz.mod.MATT, 150)
 end
 

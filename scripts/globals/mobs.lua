@@ -40,6 +40,16 @@ function onMobDeathEx(mob, player, isKiller, isWeaponSkillKill)
             player:addCharVar("testingTime_crea_count", 1)
         end
     end
+	
+	-- Universal Kill Counter
+	-- TODO: Remove kill counters from previously established NM's
+	-- local mobName = mob:getName()
+	-- local fixedMobName = string.gsub(mobName, "_", "")
+	-- local KillCounter = player:getCharVar("KillCounter_"..fixedMobName)
+	
+	-- KillCounter = KillCounter + 1
+	
+	-- player:setCharVar("KillCounter_"..fixedMobName, KillCounter)
 
     tpz.magian.checkMagianTrial(player, {['mob'] = mob})
 end
@@ -133,6 +143,10 @@ tpz.mob.additionalEffect =
     STUN       = 19,
     TERROR     = 20,
     TP_DRAIN   = 21,
+	HASTE      = 22,
+	BIND       = 23,
+	DOOM       = 24,
+	CHARM      = 25,
 }
 tpz.mob.ae = tpz.mob.additionalEffect
 
@@ -378,6 +392,58 @@ local additionalEffects =
         bonusAbilityParams = {bonusmab = 0, includemab = false},
         code = function(mob, target, power) local tp = math.min(power, target:getTP()) target:delTP(tp) mob:addTP(tp) end,
     },
+	[tpz.mob.ae.HASTE] =
+    {
+        chance = 25,
+        sub = tpz.subEffect.HASTE,
+        msg = tpz.msg.basic.NONE,
+        selfBuff = true,
+        eff = tpz.effect.HASTE,
+        power = 3000,
+        duration = 30,
+        minDuration = 30,
+        maxDuration = 30,
+    },
+	[tpz.mob.ae.BIND] =
+    {
+        chance = 25,
+        ele = tpz.magic.ele.DARK,
+        sub = tpz.subEffect.BIND,
+        msg = tpz.msg.basic.ADD_EFFECT_STATUS,
+        applyEffect = true,
+        eff = tpz.effect.BIND,
+        power = 1,
+        duration = 30,
+        minDuration = 1,
+        maxDuration = 30,
+    },
+	[tpz.mob.ae.DOOM] =
+    {
+        chance = 10,
+        ele = tpz.magic.ele.DARK,
+        sub = tpz.subEffect.DOOM,
+        msg = tpz.msg.basic.ADD_EFFECT_STATUS,
+        applyEffect = true,
+        eff = tpz.effect.DOOM,
+        power = 10,
+        duration = 30,
+        minDuration = 30,
+        maxDuration = 30,
+		tick = 3,
+    },
+	[tpz.mob.ae.CHARM] =
+    {
+        chance = 10,
+        ele = tpz.magic.ele.LIGHT,
+        sub = tpz.subEffect.CHARM,
+        msg = tpz.msg.basic.ADD_EFFECT_STATUS,
+        applyEffect = true,
+        eff = tpz.effect.CHARM_I,
+        power = 1,
+        duration = 60,
+        minDuration = 60,
+        maxDuration = 60,
+    },
 }
 
 --[[
@@ -420,7 +486,7 @@ tpz.mob.onAddEffect = function(mob, target, damage, effect, params)
                     local tick = ae.tick or 0
                     local duration = params.duration or ae.duration
 
-                    if dLevel < 0 and ae.eff ~= tpz.effect.TERROR then
+                    if dLevel < 0 and ae.eff ~= tpz.effect.TERROR and ae.eff ~= tpz.effect.STUN then
                         duration = duration - dLevel
                     end
 
@@ -433,7 +499,11 @@ tpz.mob.onAddEffect = function(mob, target, damage, effect, params)
                     duration = duration * resist
 
                     target:addStatusEffect(ae.eff, power, tick, duration)
-
+					
+					if (ae.eff == tpz.effect.CHARM_I) then
+						mob:charm(target)
+					end
+					
                     if params.code then
                         params.code(mob, target, power)
                     elseif ae.code then
@@ -442,7 +512,16 @@ tpz.mob.onAddEffect = function(mob, target, damage, effect, params)
 
                     return ae.sub, ae.msg, ae.eff
                 end
-
+			
+			elseif ae.selfBuff then
+				local power = params.power or ae.power or 0
+				local tick = ae.tick or 0
+				local duration = params.duration or ae.duration
+				
+				mob:addStatusEffect(ae.eff, power, tick, duration)
+				
+				return ae.sub, ae.msg, ae.eff
+				
             -- IMMEDIATE EFFECT
             else
                 local power = 0
@@ -470,11 +549,11 @@ tpz.mob.onAddEffect = function(mob, target, damage, effect, params)
 
                 local message = ae.msg
                 if power < 0 then
-                    if ae.negMsg then
-                        message = ae.negMsg
-                    else
+                    -- if ae.negMsg then
+                        -- message = ae.negMsg
+                    -- else
                         power = 0
-                    end
+                    -- end
                 end
 
                 if power ~= 0 then

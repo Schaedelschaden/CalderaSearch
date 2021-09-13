@@ -29,67 +29,70 @@ function onTrigger(player, npc)
 	
 	local stock =
     {
-		1695, 500,		-- Bunch of Habanero Peppers
-		4358, 16,		-- Slice of Hare Meat
-		1985, 1428,		-- Helmet Mole
-		1590, 542,		-- Sprig of Holy Basil
-		4370, 58,		-- Pot of Honey
-		631, 18,		-- Bag of Horo Flour
-		5564, 11640,	-- Chunk of Hydra Meat
-		2156, 8,		-- Clump of Imperial Tea Leaves
-		2237, 30,		-- Bag of Imperial Flour
-		2214, 30,		-- Bag of Imperial Rice
-		5453, 1168,		-- Istakoz
-		5571, 640,		-- Slice of Karakul Meat
-		612, 30,		-- Bunch of Kazham Peppers
-		4432, 30,		-- Kazham Pineapple
-		1982, 410,		-- King Locust
-		4386, 3060,		-- King Truffle
-		4273, 684,		-- Kitron
-		632, 60,		-- Kukuru Bean
-		4400, 542,		-- Slice of Land Crab Meat
-		4366, 12,		-- La Theine Cabbage
-		4362, 30,		-- Lizard Egg
-		5667, 612,		-- Slice of Lynx Meat
-		627, 20,		-- Pot of Maple Sugar
-		5747, 1708,		-- Jar of Marinara Sauce
-		4527, 262,		-- Jug of Mary's Milk
-		614, 40,		-- Bulb of Mhaura Garlic
-		629, 24,		-- Ear of Millioncorn
-		5195, 1078,		-- Sprig of Misareaux Parsley
-		4390, 12,		-- Mithran Tomato
+		1695, 750,		-- Bunch of Habanero Peppers
+		4358, 24,		-- Slice of Hare Meat
+		1985, 2142,		-- Helmet Mole
+		1590, 813,		-- Sprig of Holy Basil
+		4370, 90,		-- Pot of Honey
+		631, 27,		-- Bag of Horo Flour
+		5564, 18000,	-- Chunk of Hydra Meat
+		2156, 12,		-- Clump of Imperial Tea Leaves
+		2237, 45,		-- Bag of Imperial Flour
+		2214, 45,		-- Bag of Imperial Rice
+		5453, 600,		-- Istakoz
+		5571, 960,		-- Slice of Karakul Meat
+		612, 45,		-- Bunch of Kazham Peppers
+		4432, 45,		-- Kazham Pineapple
+		1982, 615,		-- King Locust
+		4386, 4500,		-- King Truffle
+		4273, 1050,		-- Kitron
+		632, 90,		-- Kukuru Bean
+		4400, 840,		-- Slice of Land Crab Meat
+		4366, 18,		-- La Theine Cabbage
+		4362, 45,		-- Lizard Egg
+		5667, 918,		-- Slice of Lynx Meat
+		627, 30,		-- Pot of Maple Sugar
+		5747, 2562,		-- Jar of Marinara Sauce
+		4527, 393,		-- Jug of Mary's Milk
+		614, 60,		-- Bulb of Mhaura Garlic
+		629, 36,		-- Ear of Millioncorn
+		5195, 159,		-- Sprig of Misareaux Parsley
+		6466, 840,		-- Bowl of Miso-based Ramen Soup
+		4390, 18,		-- Mithran Tomato
 		4567, 200,		-- Moon Carrot
-		1983, 614,		-- Mushroom Locust
-		5235, 1930,		-- Head of Napa
-		5650, 1560,		-- Pair of Nopales
-		630, 48,		-- Ogre Pumpkin
-		633, 6,			-- Flask of Olive Oil
-		5563, 570,		-- Chunk of Orobon Meat
-		4468, 40,		-- Bunch of Pamamas
-		5740, 290,		-- Cluster of Paprika
-		4274, 950,		-- Persikos
-		616, 40,		-- Piece of Pie Dough
-		2213, 6,		-- Handful of Pine Nuts
-		2561, 400,		-- Piece of Pizza Dough
-		5194, 464,		-- Bowl of Pomodoro Sauce
-		619, 22,		-- Popoto
-		4448, 604,		-- Puffball
-		5569, 468,		-- Puk Egg
-		5682, 3162,		-- Purple Polypore
-		4444, 10,		-- Rarab Tail
-		4449, 2500,		-- Reishi Mushroom
-		1652, 984,		-- Bottle of Rice Vinegar
-		5649, 94,		-- Handful of Roasted Almonds
-		4593, 196,		-- Block of Rock Cheese
-		936, 6,			-- Chunk of Rock Salt
-		4365, 60,		-- Rolanberry
-		4531, 48,		-- Rolanberry (864 C.E.)
-		4530, 48,		-- Rolanberry (874 C.E.)
-		4529, 48,		-- Rolanberry (881 C.E.)
-		5541, 286,		-- Bunch of Royal Grapes
-		2272, 154,		-- Bowl of Roast Coffee Beans
-		5755, 860,		-- Slab of Ruszor Meat
-		611, 2,			-- Bag of Rye Flour
+		1983, 921,		-- Mushroom Locust
+		5235, 2895,		-- Head of Napa
+		5650, 2340,		-- Pair of Nopales
+		630, 72,		-- Ogre Pumpkin
+		633, 9,			-- Flask of Olive Oil
+		5563, 840,		-- Chunk of Orobon Meat
+		4468, 60,		-- Bunch of Pamamas
+		5740, 435,		-- Cluster of Paprika
+		4274, 1425,		-- Persikos
+		616, 60,		-- Piece of Pie Dough
+		2213, 9,		-- Handful of Pine Nuts
+		2561, 600,		-- Piece of Pizza Dough
+		5194, 696,		-- Bowl of Pomodoro Sauce
+		619, 33,		-- Popoto
+		6393, 1260,		-- Cut of Porxie Pork
+		4448, 906,		-- Puffball
+		5569, 702,		-- Puk Egg
+		5682, 4743,		-- Purple Polypore
+		9196, 3000,		-- Container of Ramen Noodles
+		4444, 15,		-- Rarab Tail
+		4449, 3750,		-- Reishi Mushroom
+		1652, 525,		-- Bottle of Rice Vinegar
+		5649, 141,		-- Handful of Roasted Almonds
+		4593, 294,		-- Block of Rock Cheese
+		936, 12,		-- Chunk of Rock Salt
+		4365, 90,		-- Rolanberry
+		4531, 72,		-- Rolanberry (864 C.E.)
+		4530, 72,		-- Rolanberry (874 C.E.)
+		4529, 72,		-- Rolanberry (881 C.E.)
+		5541, 429,		-- Bunch of Royal Grapes
+		2272, 231,		-- Bowl of Roast Coffee Beans
+		5755, 1290,		-- Slab of Ruszor Meat
+		611, 3,			-- Bag of Rye Flour
 	}
 	
 	tpz.shop.general(player, stock)

@@ -34,7 +34,7 @@ function onSpellCast(caster, target, spell)
 		params.spellFamily = tpz.ecosystem.HUMANOID
 		params.attbonus = 50 -- +50% Attack
         params.numhits = 1
-        params.multiplier = 7.50 -- 1.00
+        params.multiplier = 9.50 -- 1.00
         params.tp150 = 8.50 -- 2.00
         params.tp300 = 10.00 -- 3.00
         params.azuretp = 15.00 -- 5.00

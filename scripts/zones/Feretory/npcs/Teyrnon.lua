@@ -17,6 +17,7 @@ function onTrade(player, npc, trade)
 	--	{"aug1", "aug1 value", "aug2", "aug2 value", "aug3", "aug3 value", "aug4", "aug4 value"}
 		{"514", "0", "33", "2", "42", "0", "39", "0"}, -- VIT +1, DEF +3, Enemy Crit Hit Rate -1%, Enmity +1
 		{"1", "6", "512", "0", "23", "2", "25", "2"}, -- HP +7, STR +1, ACC +3, ATK +3
+		{"1", "3", "512", "0", "27", "2", "29", "2"}, -- HP +4, STR +1, RACC +3, RATK +3
 		{"9", "6", "517", "0", "329", "0", "31", "2"}, -- MP +7, MND +1, Cure Potency +1%, EVA +3
 		{"9", "6", "516", "0", "133", "2", "31", "2"}, -- MP +7, INT +1, MAB +3, EVA +3
 		{"97", "2", "99", "2", "98", "2"}, -- Pet: ATK/RATK +3, Pet: DEF +3, Pet: EVA +3
@@ -64,17 +65,20 @@ function onTrade(player, npc, trade)
 	elseif (trade:hasItemQty(894, 12)) then -- 12x Beetle Jaw
 		augmentList = augments[2]
 --		player:addItem(894, 12) -- Returns 12x Beetle Jaw to make testing easier, remove later
-	elseif (trade:hasItemQty(918, 12)) then -- 12x Mistletoe
+	elseif (trade:hasItemQty(846, 12)) then -- 12x Insect Wing
 		augmentList = augments[3]
 --		player:addItem(918, 12) -- Returns 12x Mistletoe to make testing easier, remove later
-	elseif (trade:hasItemQty(2506, 12)) then -- 12x Ladybug Wing
+	elseif (trade:hasItemQty(918, 12)) then -- 12x Mistletoe
 		augmentList = augments[4]
+--		player:addItem(918, 12) -- Returns 12x Mistletoe to make testing easier, remove later
+	elseif (trade:hasItemQty(2506, 12)) then -- 12x Ladybug Wing
+		augmentList = augments[5]
 --		player:addItem(2506, 12) -- Returns 12x Ladybug Wing to make testing easier, remove later
 	elseif (trade:hasItemQty(924, 12)) then -- 12x Fiend Blood
-		augmentList = augments[5]
+		augmentList = augments[6]
 --		player:addItem(924, 12) -- Returns 12x Fiend Blood to make testing easier, remove later
-	elseif not (trade:hasItemQty(4400, 12) or trade:hasItemQty(894, 12) or trade:hasItemQty(918, 12) or trade:hasItemQty(2506, 12) or trade:hasItemQty(924, 12)) then
-		player:PrintToPlayer(string.format("Teyrnon : You must include 12x Land Crab Meat, 12x Beetle Jaws, 12x Mistletoe, 12x Ladybug Wings, or 12x Fiend Blood."),tpz.msg.channel.NS_SAY)
+	elseif not (trade:hasItemQty(4400, 12) or trade:hasItemQty(894, 12) or trade:hasItemQty(846, 12) or trade:hasItemQty(918, 12) or trade:hasItemQty(2506, 12) or trade:hasItemQty(924, 12)) then
+		player:PrintToPlayer(string.format("Teyrnon : You must include 12x Land Crab Meat, 12x Beetle Jaws, 12x Insect Wings, 12x Mistletoe, 12x Ladybug Wings, or 12x Fiend Blood."),tpz.msg.channel.NS_SAY)
         return
 	end
 	
@@ -96,6 +100,7 @@ function onTrigger(player,npc)
 	player:PrintToPlayer(string.format("Teyrnon : Select an augment set from the list below:"),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Teyrnon : 12x Land Crab Meat = VIT +1, DEF +3, Enemy Crit Hit Rate -1%%, Enmity +1"),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Teyrnon : 12x Beetle Jaws = HP +7, STR +1, ACC +3, ATK +3"),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Teyrnon : 12x Insect Wings = HP +4, STR +1, RACC +3, RATK +3"),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Teyrnon : 12x Mistletoe = MP +7, MND +1, Cure Potency +1%%, EVA +3"),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Teyrnon : 12x Ladybug Wings = MP +7, INT +1, MAB +3, EVA +3"),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Teyrnon : 12x Fiend Blood = Pet: ATK/RATK +3, Pet: DEF +3, Pet: EVA +3"),tpz.msg.channel.NS_SAY)

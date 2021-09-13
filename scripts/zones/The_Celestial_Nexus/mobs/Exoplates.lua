@@ -9,13 +9,19 @@ require("scripts/globals/magic")
 -----------------------------------
 
 function onMobInitialize(mob)
-    mob:addMod(tpz.mod.REGAIN, 50)
 end
 
 function onMobSpawn(mob)
     mob:AnimationSub(0)
     mob:SetAutoAttackEnabled(false)
     mob:setUnkillable(true)
+	mob:addMod(tpz.mod.ATT, 400)
+	mob:addMod(tpz.mod.ACC, 200)		
+	mob:addMod(tpz.mod.DEF, 300)
+	mob:addMod(tpz.mod.EVA, 200)
+	mob:addMod(tpz.mod.REGEN, 250)
+	mob:addMod(tpz.mod.REFRESH, 200)
+	mob:addMod(tpz.mod.REGAIN, 100)
 end
 
 function onMobFight(mob, target)

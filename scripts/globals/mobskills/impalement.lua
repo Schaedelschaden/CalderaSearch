@@ -1,7 +1,7 @@
 ---------------------------------------------
 --  Impalement
 --
---  Description: Deals damage to a single target reducing their HP to 5%. Resets enmity.
+--  Description: Impales a single target, leaving it near death. Additional effect: Slow + resets enmity.
 --  Type: Physical
 --  Utsusemi/Blink absorb: No
 --  Range: Single Target
@@ -13,19 +13,23 @@ require("scripts/globals/magic")
 
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
-    return 0
+	if (mob:isMobType(MOBTYPE_NOTORIOUS)) then
+		return 0
+	end
+	
+	return 1
 end
 
 function onMobWeaponSkill(target, mob, skill)
     MobStatusEffectMove(mob, target, tpz.effect.SLOW, 1250, 0, 120)
-
-    MobStatusEffectMove(mob, target, tpz.effect.SLOW, 128, 0, 120)
+	
     local currentHP = target:getHP()
     -- remove all by 5%
-    local stab = currentHP * .95
+    local stab = currentHP * 0.95
 
     local dmg = MobFinalAdjustments(stab, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING, MOBPARAM_IGNORE_SHADOWS)
 
     mob:resetEnmity(target)
+	
     return dmg
 end

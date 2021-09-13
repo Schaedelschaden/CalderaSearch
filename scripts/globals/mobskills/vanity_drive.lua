@@ -19,5 +19,15 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = math.random(1, 2)+math.random()
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
+	
+	-- Hadal Mirrors copy the monster skills the Hadal Satiator uses
+	if (mob:getID() == 16838657) then
+		for babyID = mob:getID() + 1, mob:getID() + mob:getLocalVar("maxBabies") do
+			local baby = GetMobByID(babyID)
+			
+			baby:useMobAbility(747)
+		end
+	end
+	
     return dmg
 end

@@ -20,7 +20,7 @@ function onPetAbility(target, automaton, skill, master, action)
     chance = chance + (automaton:getMainLvl() - target:getMainLvl()) * 5
 
     if math.random() * 100 < chance then
-        target:addStatusEffect(tpz.effect.STUN, 1, 0, 6)
+        target:addStatusEffect(tpz.effect.STUN, 1, 0, 4)
     end
 
     local slowPower = automaton:getMod(tpz.mod.AUTO_SHIELD_BASH_SLOW)

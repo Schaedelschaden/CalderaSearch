@@ -452,41 +452,40 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
     }
     else
     {
-		if (PEntity != nullptr)
+		auto check = [PEntity, &found](auto entity) { if (PEntity == entity) { found = true; return found; } return false; };
+
+		if (PEntity->objtype == TYPE_NPC)
 		{
-			auto check = [PEntity, &found](auto entity) { if (PEntity == entity) { found = true; return found; } return false; };
-
-			if (PEntity->objtype == TYPE_NPC)
-			{
-				PEntity->status = STATUS_DISAPPEAR;
-				PEntity->loc.zone->PushPacket(PEntity, CHAR_INRANGE, new CEntityUpdatePacket(PEntity, ENTITY_DESPAWN, UPDATE_ALL_MOB));
-				m_NpcList.erase(std::remove_if(m_NpcList.begin(), m_NpcList.end(), check), m_NpcList.end());
-			}
-			else if (PEntity->objtype == TYPE_MOB || PEntity->objtype == TYPE_PET)
-			{
-				// todo: probably need to check allegiance too cause besieged will prolly use > 0x700 too
-				// allies targid >= 0x700
-				if (PEntity->targid >= 0x700)
-				{
-					if (static_cast<CPetEntity*>(PEntity)->isAlive() && PEntity->PAI->IsSpawned())
-						static_cast<CPetEntity*>(PEntity)->Die();
-
-					if (m_AllyList.size() > 0)
-					{
-						m_AllyList.erase(std::remove_if(m_AllyList.begin(), m_AllyList.end(), check), m_AllyList.end());
-					}
-					PEntity->status = STATUS_DISAPPEAR;
-					return found;
-				}
-				else
-				{
-					auto check = [PEntity, &found](auto entity) { if (entity.PMob == PEntity) { found = true; return found; } return false; };
-					m_RequiredEnemyList.erase(std::remove_if(m_RequiredEnemyList.begin(), m_RequiredEnemyList.end(), check), m_RequiredEnemyList.end());
-					m_AdditionalEnemyList.erase(std::remove_if(m_AdditionalEnemyList.begin(), m_AdditionalEnemyList.end(), check), m_AdditionalEnemyList.end());
-				}
-			}
-			PEntity->loc.zone->PushPacket(PEntity, CHAR_INRANGE, new CEntityAnimationPacket(PEntity, CEntityAnimationPacket::Fade_Out));
+			PEntity->status = STATUS_DISAPPEAR;
+			PEntity->loc.zone->PushPacket(PEntity, CHAR_INRANGE, new CEntityUpdatePacket(PEntity, ENTITY_DESPAWN, UPDATE_ALL_MOB));
+			m_NpcList.erase(std::remove_if(m_NpcList.begin(), m_NpcList.end(), check), m_NpcList.end());
 		}
+		else if (PEntity->objtype == TYPE_MOB || PEntity->objtype == TYPE_PET)
+		{
+			// todo: probably need to check allegiance too cause besieged will prolly use > 0x700 too
+			// allies targid >= 0x700
+			if (PEntity->targid >= 0x700)
+			{
+				if (static_cast<CPetEntity*>(PEntity)->isAlive() && PEntity->PAI->IsSpawned())
+				{
+					static_cast<CPetEntity*>(PEntity)->Die();
+				}
+
+				if (m_AllyList.size() > 0 && m_AllyList.size() != 24576)
+				{
+					m_AllyList.erase(std::remove_if(m_AllyList.begin(), m_AllyList.end(), check), m_AllyList.end());
+				}
+				PEntity->status = STATUS_DISAPPEAR;
+				return found;
+			}
+			else
+			{
+				auto check = [PEntity, &found](auto entity) { if (entity.PMob == PEntity) { found = true; return found; } return false; };
+				m_RequiredEnemyList.erase(std::remove_if(m_RequiredEnemyList.begin(), m_RequiredEnemyList.end(), check), m_RequiredEnemyList.end());
+				m_AdditionalEnemyList.erase(std::remove_if(m_AdditionalEnemyList.begin(), m_AdditionalEnemyList.end(), check), m_AdditionalEnemyList.end());
+			}
+		}
+		PEntity->loc.zone->PushPacket(PEntity, CHAR_INRANGE, new CEntityAnimationPacket(PEntity, CEntityAnimationPacket::Fade_Out));
 	}
 
     // Remove enmity from valid battle entities

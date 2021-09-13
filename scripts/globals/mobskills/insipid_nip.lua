@@ -25,9 +25,9 @@ function onMobWeaponSkill(target, mob, skill)
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING, info.hitslanded)
 
-    if (MobPhysicalHit(skill, dmg, target, info.hitslanded)) then
-        target:dispelStatusEffect()
-    end
+    local effectType = math.random(136, 142)
+
+   MobDrainAttribute(mob, target, effectType, 25, 0, 120)
 
     return dmg
 end

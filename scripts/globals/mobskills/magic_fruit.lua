@@ -26,6 +26,10 @@ function onMobWeaponSkill(target, mob, skill)
     potency = potency - math.random(0, potency/4)
 
     skill:setMsg(tpz.msg.basic.SELF_HEAL)
+	
+	if (mob:getID() == 17318453) then
+		mob:eraseStatusEffect()
+	end
 
     return MobHealMove(mob, mob:getMaxHP() * potency / 100)
 end

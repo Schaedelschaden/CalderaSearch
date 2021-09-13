@@ -31,6 +31,8 @@ function onPetAbility(target, automaton, skill, master, action)
     }
 
     local damage = doAutoRangedWeaponskill(automaton, target, 0, params, 1000, true, skill, action)
+	target:updateEnmity(master)
+	target:updateClaim(master)
 
     return damage
 end

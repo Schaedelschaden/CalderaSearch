@@ -532,7 +532,8 @@ void CAttack::ProcessDamage()
             m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE) ||
             m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_DOUBT)))
     {
-        m_trickAttackDamage += m_attacker->DEX() * (2 + m_attacker->getMod(Mod::SNEAK_ATK_DEX) / 100);
+        m_trickAttackDamage += (int32)(m_attacker->DEX() * (1.5f + m_attacker->getMod(Mod::SNEAK_ATK_DEX) / 100));
+		PChar->SetLocalVar("SneakAttack_Active", 1);
     }
 
     // Trick attack.
@@ -540,7 +541,8 @@ void CAttack::ProcessDamage()
         m_isFirstSwing &&
         m_attackRound->GetTAEntity() != nullptr)
     {
-        m_trickAttackDamage += m_attacker->AGI() * (2 + m_attacker->getMod(Mod::TRICK_ATK_AGI) / 100);
+        m_trickAttackDamage += (int32)(m_attacker->AGI() * (1.5f + m_attacker->getMod(Mod::TRICK_ATK_AGI) / 100));
+		PChar->SetLocalVar("TrickAttack_Active", 1);
     }
 
     SLOTTYPE slot = (SLOTTYPE)GetWeaponSlot();
@@ -577,7 +579,13 @@ void CAttack::ProcessDamage()
 	// Caldera Dagger base damage adjustment
 	if (m_attacker->objtype == TYPE_PC && (mainWeapon != nullptr && mainWeapon->getSkillType() == SKILL_DAGGER || subWeapon != nullptr && subWeapon->getSkillType() == SKILL_DAGGER))
 	{
-		m_damage = (uint32)(m_damage * 1.60f);
+		m_damage = (uint32)(m_damage * 1.50f);
+	}
+	
+	// Caldera Katana base damage adjustment
+	if (m_attacker->objtype == TYPE_PC && (mainWeapon != nullptr && mainWeapon->getSkillType() == SKILL_KATANA || subWeapon != nullptr && subWeapon->getSkillType() == SKILL_KATANA))
+	{
+		m_damage = (uint32)(m_damage * 1.35f);
 	}
 
     // Soul eater.
@@ -643,10 +651,14 @@ void CAttack::ProcessDamage()
     m_damage = attackutils::CheckForDamageMultiplier((CCharEntity*)m_attacker, dynamic_cast<CItemWeapon*>(m_attacker->m_Weapons[slot]), m_damage, m_attackType, slot);
 
     // Get critical bonus mods.
-    if (m_isCritical)
+    if (m_isCritical && slot != SLOT_AMMO)
     {		
         m_damage += (int32)(m_damage * (m_attacker->getMod(Mod::CRIT_DMG_INCREASE) - m_victim->getMod(Mod::CRIT_DEF_BONUS)) / 100.0f);
     }
+	else if (m_isCritical && slot == SLOT_AMMO)
+	{
+		m_damage += (int32)(m_damage * ((m_attacker->getMod(Mod::CRIT_DMG_INCREASE) + m_attacker->getMod(Mod::RANGED_CRIT_DMG_INCREASE)) - m_victim->getMod(Mod::CRIT_DEF_BONUS)) / 100.0f);
+	}
 
     // Apply Sneak Attack Augment Mod
     if (m_attacker->getMod(Mod::AUGMENTS_SA) > 0 && m_trickAttackDamage > 0 && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK))

@@ -77,7 +77,7 @@ function onTrade(player,npc,trade)
     if (player:getQuestStatus(SANDORIA,tpz.quest.id.sandoria.FLYERS_FOR_REGINE) == QUEST_ACCEPTED) then
         if (trade:hasItemQty(532,1) and trade:getItemCount() == 1) then -- Trade Magicmart Flyer
             player:messageSpecial(ID.text.FLYER_REFUSED)
-            npc:pathStop()
+            -- npc:pathStop()
         end
     end
 
@@ -87,21 +87,21 @@ function onTrade(player,npc,trade)
             player:tradeComplete()
             player:addKeyItem(tpz.ki.SCOWLING_STONE)
             player:messageSpecial(ID.text.KEYITEM_OBTAINED,tpz.ki.SCOWLING_STONE)
-            npc:pathStop()
+            -- npc:pathStop()
         end
     end
 
-    npc:pathResume()
+    -- npc:pathResume()
 end
 
 function onTrigger(player,npc)
     player:startEvent(614)
---    npc:pathStop()
+    -- npc:pathStop()
 end
 
 function onEventUpdate(player,csid,option)
 end
 
 function onEventFinish(player,csid,option,npc)
---    npc:pathResume()
+    -- npc:pathResume()
 end

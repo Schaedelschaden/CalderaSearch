@@ -368,76 +368,76 @@ local loot =
             -- {itemid = 65535, droprate = 1000, amount = 1800000}, -- gil
         -- },
         {
-            {itemid = 3339, droprate = 1000}, -- Jug Of Honey Wine
+            {itemid = 3339, droprate = 1000},  -- Jug Of Honey Wine
         },
         {
-            {itemid = 21689, droprate = 180}, -- Montante +1
-            {itemid = 20528, droprate = 180}, -- Fists of Fury +1
-            {itemid = 20805, droprate = 180}, -- Perun +1
-            {itemid = 20614, droprate = 180}, -- Pukulatmuj +1
-            {itemid = 20981, droprate = 180}, -- Raicho +1
-            {itemid = 21163, droprate = 100}, -- Pouwhenua +1
+            {itemid = 21689, droprate = 180},  -- Montante +1
+            {itemid = 20528, droprate = 180},  -- Fists of Fury +1
+            {itemid = 20805, droprate = 180},  -- Perun +1
+            {itemid = 20614, droprate = 180},  -- Pukulatmuj +1
+            {itemid = 20981, droprate = 180},  -- Raicho +1
+            {itemid = 21163, droprate = 100},  -- Pouwhenua +1
         },
         {
-            {itemid = 20612, droprate = 180},   -- Sangarius +1
-            {itemid = 20988, droprate = 180}, -- Tancho +1
+            {itemid = 20612, droprate = 180},  -- Sangarius +1
+            {itemid = 20988, droprate = 180},  -- Tancho +1
             {itemid = 20680, droprate = 180},  -- Tanmogayi +1
-            {itemid = 20604, droprate = 180},   -- Ternion Dagger +1
+            {itemid = 20604, droprate = 180},  -- Ternion Dagger +1
             {itemid =  21691, droprate = 180}, -- Ushenzi +1
             {itemid =  21076, droprate = 100}, -- Septoptic +1
         },
         {
-            {itemid = 26942, droprate = 110}, -- Agony Jerkin +1
-            {itemid = 25681, droprate = 110}, -- Cohort Cloak +1
-            {itemid = 26871, droprate = 110}, -- Emet Harness +1
-            {itemid = 26873, droprate = 110}, -- Hime Domaru +1
-            {itemid = 26897, droprate = 110}, -- Lugra Cloak +1
-            {itemid = 25710, droprate = 110}, -- Obviation Cuirass +1
-            {itemid = 26869, droprate = 110}, -- Rosette Jaseran +1
-            {itemid = 26888, droprate = 110}, -- Shomonjijoe +1
-            {itemid = 25733, droprate = 120}, -- Tatenashi Haramaki +1
+            {itemid = 26942, droprate = 110},  -- Agony Jerkin +1
+            {itemid = 25681, droprate = 110},  -- Cohort Cloak +1
+            {itemid = 26871, droprate = 110},  -- Emet Harness +1
+            {itemid = 26873, droprate = 110},  -- Hime Domaru +1
+            {itemid = 26897, droprate = 110},  -- Lugra Cloak +1
+            {itemid = 25710, droprate = 110},  -- Obviation Cuirass +1
+            {itemid = 26869, droprate = 110},  -- Rosette Jaseran +1
+            {itemid = 26888, droprate = 110},  -- Shomonjijoe +1
+            {itemid = 25733, droprate = 120},  -- Tatenashi Haramaki +1
         },
         {
-            {itemid = 21417, droprate = 100}, -- Refined Grip +1
-            {itemid = 21419, droprate = 100}, -- Rigorous Grip +1
-            {itemid = 27639, droprate = 100}, -- Ajax +1
-            {itemid = 27637, droprate = 100}, -- Evalach +1
-            {itemid = 27641, droprate = 100}, -- Deliverance +1
-            {itemid = 26402, droprate = 100}, -- Forfend +1
-            {itemid = 22121, droprate = 100}, -- Imati +1
-            {itemid = 21484, droprate = 100}, -- Malison +1
-            {itemid = 21220, droprate = 100}, -- Paloma +1
-            {itemid = 22267, droprate = 100}, -- Antitail +1
+            {itemid = 21417, droprate = 100},  -- Refined Grip +1
+            {itemid = 21419, droprate = 100},  -- Rigorous Grip +1
+            {itemid = 27639, droprate = 100},  -- Ajax +1
+            {itemid = 27637, droprate = 100},  -- Evalach +1
+            {itemid = 27641, droprate = 100},  -- Deliverance +1
+            {itemid = 26402, droprate = 100},  -- Forfend +1
+            {itemid = 22121, droprate = 100},  -- Imati +1
+            {itemid = 21484, droprate = 100},  -- Malison +1
+            {itemid = 21220, droprate = 100},  -- Paloma +1
+            {itemid = 22267, droprate = 100},  -- Antitail +1
         },
         {
+			{itemid =    0, droprate = 250},   -- Nothing
             {itemid = 4069, droprate = 150},   -- Rem Chapt 6
             {itemid = 4070, droprate = 150},   -- Rem Chapt 7
             {itemid = 4071, droprate = 150},   -- Rem Chapt 8
             {itemid = 4072, droprate = 150},   -- Rem Chapt 9
             {itemid = 4073, droprate = 150},   -- Rem Chapt 10
-			{itemid =    0, droprate = 250},   -- Nothing
         },
         {
+			{itemid =    0, droprate = 250},   -- Nothing
             {itemid = 4069, droprate = 150},   -- Rem Chapt 6
             {itemid = 4070, droprate = 150},   -- Rem Chapt 7
             {itemid = 4071, droprate = 150},   -- Rem Chapt 8
             {itemid = 4072, droprate = 150},   -- Rem Chapt 9
             {itemid = 4073, droprate = 150},   -- Rem Chapt 10
-			{itemid =    0, droprate = 250},   -- Nothing
         },
         {
             {itemid = 8732, droprate = 1000},  -- Kupon I S-3
         },
         {
-            {itemid = 8747, droprate = 111},  -- Ra'Kaznar Ore
-			{itemid = 4077, droprate = 111},  -- Moonbow Steel
-			{itemid = 4079, droprate = 111},  -- Moonbow Leather
-			{itemid = 4080, droprate = 111},  -- Moonbow Urushi
-			{itemid = 4081, droprate = 111},  -- Moonbow Stone
-			{itemid = 4078, droprate = 111},  -- Moonbow CLoth
-			{itemid = 9251, droprate = 111},  -- Khoma Thread
-			{itemid = 9255, droprate = 111},  -- Cyan Coral
-			{itemid = 4082, droprate = 112},  -- Moonlight Coral
+            {itemid = 8747, droprate = 111},   -- Ra'Kaznar Ore
+			{itemid = 4077, droprate = 111},   -- Moonbow Steel
+			{itemid = 4079, droprate = 111},   -- Moonbow Leather
+			{itemid = 4080, droprate = 111},   -- Moonbow Urushi
+			{itemid = 4081, droprate = 111},   -- Moonbow Stone
+			{itemid = 4078, droprate = 111},   -- Moonbow CLoth
+			{itemid = 9251, droprate = 111},   -- Khoma Thread
+			{itemid = 9255, droprate = 111},   -- Cyan Coral
+			{itemid = 4082, droprate = 112},   -- Moonlight Coral
 			
         },
         {
@@ -480,26 +480,25 @@ local loot =
         },
         {
             {itemid =  3972, droprate =  1000}, -- Kupon I S-2
-
         },
         {
-            {itemid =  3972, droprate =  1000}, -- Kupon I S-2
-			
+			{itemid =  0,    droprate = 850},  -- Nothing
+            {itemid =  3972, droprate =  150}, -- Kupon I S-2
         },
         {
-            {itemid = 4069, droprate = 150},   -- Rem Chapt 6
-
+            {itemid = 4069, droprate = 1000},  -- Rem Chapt 6
         },
         {
+			{itemid =  0,   droprate = 850},   -- Nothing
             {itemid = 4069, droprate = 150},   -- Rem Chapt 6
         },
 		{
-            {itemid = 4080, droprate =  175}, -- Moonbow Urushi
-            {itemid = 4079, droprate =  165}, -- Moonbow Leather
-            {itemid = 4078, droprate =  165}, -- Moonbow Cloth
-            {itemid = 4077, droprate =  165}, -- Moonbow Steel
-            {itemid = 4081, droprate =  165}, -- Moonbow Stone
-			{itemid = 4082, droprate =  165}, -- Moonlight Coral
+            {itemid = 4080, droprate =  160}, -- Moonbow Urushi
+            {itemid = 4079, droprate =  80},  -- Moonbow Leather
+            {itemid = 4078, droprate =  120}, -- Moonbow Cloth
+            {itemid = 4077, droprate =  240}, -- Moonbow Steel
+            {itemid = 4081, droprate =  240}, -- Moonbow Stone
+			{itemid = 4082, droprate =  160}, -- Moonlight Coral
         },
     },
     -- BCNM Rapid Raptors
@@ -548,38 +547,40 @@ local loot =
             -- {itemid = 65535, droprate = 1000, amount = 500000}, -- gil
         -- },
 		{
-            {itemid =  0, droprate = 100}, -- Nothing
+            {itemid =  0,     droprate = 100}, -- Nothing
 			{itemid =  21285, droprate = 300}, -- Camaraderie Gun
 			{itemid =  21003, droprate = 300}, -- Camaraderie Katana
 			{itemid =  21050, droprate = 300}, -- Camaraderie Tachi
         },
         {
-            {itemid =  0, droprate = 100}, -- Nothing
+            {itemid =  0,     droprate = 100}, -- Nothing
 			{itemid =  28642, droprate = 300}, -- Contriver's Cape
 			{itemid =  28582, droprate = 300}, -- Locus Ring
 			{itemid =  21388, droprate = 300}, -- Dashavatara Sachet
         },
         {
-            {itemid =  0, droprate = 100}, -- Nothing
+            {itemid =  0,     droprate = 100}, -- Nothing
 			{itemid =  28199, droprate = 300}, -- Manibozho Brais
 			{itemid =  28200, droprate = 300}, -- Bokwus Slops
 			{itemid =  28198, droprate = 300}, -- Mikinaak Cuisses
         },
         {
-            {itemid =  4064, droprate = 1000}, -- Rems Chapt 1
+            {itemid =  4065, droprate = 1000}, -- Rems Chapt 2
         },
         {
-            {itemid =  4064, droprate = 1000}, -- Rems Chapt 1
+			{itemid = 0,     droprate = 850},  -- Nothing
+            {itemid =  4065, droprate = 150},  -- Rems Chapt 2
         },
         {
-            {itemid = 0, droprate =  900}, -- Nothing
-            {itemid = 1178, droprate =  100}, -- Lachesis Orb
+            {itemid = 0,    droprate =  900},  -- Nothing
+            {itemid = 1178, droprate =  100},  -- Lachesis Orb
         },
         {
-           {itemid = 8734, droprate = 334},   -- Kupon I S-1
+           {itemid = 8734, droprate = 1000},   -- Kupon I S-1
         },
         {
-           {itemid = 8734, droprate = 334},   -- Kupon I S-1
+			{itemid = 0,   droprate = 850},    -- Nothing
+           {itemid = 8734, droprate = 150},    -- Kupon I S-1
         },
     },
 }

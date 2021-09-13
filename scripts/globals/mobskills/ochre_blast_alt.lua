@@ -1,10 +1,10 @@
 ---------------------------------------------
 -- Ochre Blast Alt
 --
--- Description: Deals fire damage to a single target
+-- Description: Deals wind damage to a single target
 -- Type: Magical
 -- Utsusemi/Blink absorb: Wipes shadows
--- Notes: Used only by Tiamat, Smok and Ildebrann while flying in place of standard attacks
+-- Notes: Used only by Ouryu and Cuelebre while flying in place of standard attacks
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")

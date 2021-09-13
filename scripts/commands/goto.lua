@@ -5,7 +5,7 @@
 
 cmdprops =
 {
-    permission = 0,
+    permission = 1,
     parameters = "si"
 }
 
@@ -15,7 +15,7 @@ function error(player, msg)
 end
 
 function onTrigger(player, target, forceZone)
-	if (player:getGMLevel() > 0 or player:getMentor() > 0) then
+	if (player:getGMLevel() > 0) then -- or player:getMentor() > 0) then
 		-- validate target
 		if not target then
 			error(player, "You must enter a player name.")

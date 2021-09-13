@@ -28,10 +28,10 @@ end
 function onTrigger(player,npc)
     if (player:getCharVar("BathedInScent") == 1) then
         player:startEvent(163) -- scent from Blue Rafflesias
-        npc:pathStop()
+        -- npc:pathStop()
     else
         player:startEvent(190)
-        npc:pathStop()
+        -- npc:pathStop()
     end
 end
 
@@ -39,5 +39,5 @@ function onEventUpdate(player,csid,option)
 end
 
 function onEventFinish(player,csid,option,npc)
-    npc:pathResume()
+    -- npc:pathResume()
 end

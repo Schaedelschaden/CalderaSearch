@@ -23,10 +23,18 @@ function onMagicCastingCheck(caster,target,spell)
 end
 
 function onSpellCast(caster,target,spell)
+	-- local params = {}
+		-- params.diff = nil
+		-- params.attribute = tpz.mod.INT
+		-- params.skillType = tpz.skill.BLUE_MAGIC
+		-- params.bonus = 0
+		-- params.effect = tpz.effect.WEIGHT
+	-- local resist = applyResistanceEffect(caster, target, spell, params)
+	-- printf("subduction.lua onSpellCast RESIST: [%1.2f]", resist)
 	local params = {}
         params.damageType = tpz.damageType.WIND
 		params.spellFamily = tpz.ecosystem.ARCANA
-        params.multiplier = 6.00 -- 2.00
+        params.multiplier = 4.00 -- 2.00
         params.tMultiplier = 2.0 -- dINT/dMND/dCHR multiplier
         params.duppercap = 136
         params.str_wsc = 0.2 -- 0.1
@@ -39,7 +47,9 @@ function onSpellCast(caster,target,spell)
     damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 	
-	target:addStatusEffect(tpz.effect.WEIGHT, 76, 0, 60)
+	-- if (resist >= 0.10) then
+		-- target:addStatusEffect(tpz.effect.WEIGHT, 76, 0, 60)
+	-- end
 
     return damage
 end

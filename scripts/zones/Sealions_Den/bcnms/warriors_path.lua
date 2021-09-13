@@ -15,6 +15,7 @@ function onBattlefieldRegister(player, battlefield)
 end
 
 function onBattlefieldEnter(player, battlefield)
+    player:delKeyItem(tpz.ki.WARRIORS_PATH_PHANTOM_GEM)
 end
 
 function onBattlefieldLeave(player, battlefield, leavecode)
@@ -37,8 +38,8 @@ function onEventFinish(player, csid, option)
             player:addMission(COP, tpz.mission.id.cop.GARDEN_OF_ANTIQUITY)
             player:setCharVar("PromathiaStatus", 0)
         end
-        player:addExp(1000)
-        player:addTitle(tpz.title.THE_CHEBUKKIS_WORST_NIGHTMARE)
-        player:setPos(-25, -1, -620, 208, 33) -- Al'Taieu
+        -- player:addExp(1000)
+        player:addTitle(tpz.title.UNWAVERING_BLAZE)
+        -- player:setPos(-25, -1, -620, 208, 33) -- Al'Taieu
     end
 end

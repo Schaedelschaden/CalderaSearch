@@ -37,20 +37,20 @@ function onTrigger(player,npc)
 
     if (Vault == QUEST_AVAILABLE and player:getFameLevel(NORG) >= 3 and mLvl >= 5) then
         player:startEvent(36,tpz.ki.SEALED_IRON_BOX) -- Start quest
-        npc:pathStop()
+        -- npc:pathStop()
     elseif (Vault == QUEST_ACCEPTED) then
         if (IronBox == true) then
             player:startEvent(38) -- Finish quest
-            npc:pathStop()
+            -- npc:pathStop()
         else
             player:startEvent(37,tpz.ki.MAP_OF_THE_SEA_SERPENT_GROTTO) -- Reminder/Directions Dialogue
         end
     elseif (Vault == QUEST_COMPLETED) then
         player:startEvent(39) -- New Standard Dialogue for everyone who has completed the quest
-        npc:pathStop()
+        -- npc:pathStop()
     else
         player:startEvent(89) -- Standard Conversation
-        npc:pathStop()
+        -- npc:pathStop()
     end
 end
 
@@ -72,5 +72,5 @@ function onEventFinish(player,csid,option,npc)
         end
     end
 
-    npc:pathResume()
+    -- npc:pathResume()
 end

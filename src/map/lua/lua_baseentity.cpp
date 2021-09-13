@@ -2483,8 +2483,8 @@ inline int32 CLuaBaseEntity::sendGuild(lua_State* L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 4) || !lua_isnumber(L, 4));
 
     uint16 GuildID = (uint16)lua_tonumber(L, 1);
-    uint8  open = (uint8)lua_tonumber(L, 2);
-    uint8  close = (uint8)lua_tonumber(L, 3);
+    uint8  open = 0;//(uint8)lua_tonumber(L, 2);
+    uint8  close = 24;//(uint8)lua_tonumber(L, 3);
     uint8  holiday = (uint8)lua_tonumber(L, 4);
 
     TPZ_DEBUG_BREAK_IF(open > close);
@@ -5891,6 +5891,33 @@ inline int32 CLuaBaseEntity::getJobLevel(lua_State *L)
 
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
     lua_pushinteger(L, PChar->jobs.job[JobID]);
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: getItemLevel()
+*  Purpose : Returns the average item level of all gear the player is currently wearing
+*  Example : player:getItemLevel()
+*  Notes   : Calculates average item level using the battleutils function GetPlayerItemLevel
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getItemLevel(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+	TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+	
+	if (m_PBaseEntity->objtype == TYPE_MOB)
+    {
+		lua_pushinteger(L, 0);
+	}
+	
+	if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+		CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+		
+		lua_pushinteger(L, battleutils::GetPlayerItemLevel(PChar));
+	}
 
     return 1;
 }
@@ -12208,6 +12235,141 @@ inline int32 CLuaBaseEntity::getItemMod(lua_State* L)
 }
 
 /************************************************************************
+*  Function: getGearSlot(itemID)
+*  Purpose : Checks what slot the requested item equips to
+*  Example : player:getGearSlot(17299)
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getGearSlot(lua_State *L)
+{
+	TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+	
+	uint16 gearSlot = 0;
+	
+	const char* Query = "SELECT slot FROM item_equipment WHERE itemId = '%i';";
+    int32 ret = Sql_Query(SqlHandle, Query, lua_tointeger(L, 1));
+	
+	if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+	{
+        gearSlot = (uint16)Sql_GetIntData(SqlHandle, 0);
+		switch (gearSlot)
+		{
+			case 1:
+				gearSlot = 0; // tpz.slot.MAIN
+				break;
+			case 2:
+				gearSlot = 1; // tpz.slot.SUB
+				break;
+			case 3:
+				gearSlot = 0; // tpz.slot.MAIN or tpz.slot.SUB (Dual Wield)
+				break;
+			case 4:
+				gearSlot = 2; // tpz.slot.RANGED
+				break;
+			case 8:
+				gearSlot = 3; // tpz.slot.AMMO
+				break;
+			case 16:
+				gearSlot = 4; // tpz.slot.HEAD
+				break;
+			case 32:
+				gearSlot = 5; // tpz.slot.BODY
+				break;
+			case 64:
+				gearSlot = 6; // tpz.slot.HANDS
+				break;
+			case 128:
+				gearSlot = 7; // tpz.slot.LEGS
+				break;
+			case 256:
+				gearSlot = 8; // tpz.slot.FEET
+				break;
+			case 512:
+				gearSlot = 9; // tpz.slot.NECK
+				break;
+			case 1024:
+				gearSlot = 10; // tpz.slot.WAIST
+				break;
+			case 6144:
+				gearSlot = 11; // tpz.slot.EAR1 or tpz.slot.EAR2
+				break;
+			case 24576:
+				gearSlot = 13; // tpz.slot.RING1 or tpz.slot.RING2
+				break;
+			case 32768:
+				gearSlot = 15; // tpz.slot.BACK
+				break;
+			default:
+				break;
+		}
+		lua_pushinteger(L, gearSlot);
+	}
+	else
+	{
+		lua_pushinteger(L, 0);
+	}
+    return 1;
+}
+
+/************************************************************************
+*  Function: getGearName()
+*  Purpose : Returns the name of an item
+*  Example : player:getGearName(itemID)
+*  Notes   : 
+************************************************************************/
+inline int32 CLuaBaseEntity::getGearName(lua_State *L)
+{
+	TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+	
+	const char* Query = "SELECT name FROM item_equipment WHERE itemId = '%i';";
+    int32 ret = Sql_Query(SqlHandle, Query, lua_tointeger(L, 1));
+	
+	if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+	{
+		auto gearName = (const char*)Sql_GetData(SqlHandle, 0);
+//		auto gearName = std::string(lua_tostring(L, 1));
+		lua_pushstring(L, gearName);
+	}
+	else
+	{
+		lua_pushstring(L, "");
+	}
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: getGearILvl()
+*  Purpose : Returns the item level of an item
+*  Example : player:getGearILvl()
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getGearILvl(lua_State *L)
+{
+	TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+	
+//	uint16 itemID = lua_tointeger(L, 1);
+	uint8 itemLvl = 0;
+	
+	const char* Query = "SELECT ilevel FROM item_equipment WHERE itemId = '%i';";
+    int32 ret = Sql_Query(SqlHandle, Query, lua_tointeger(L, 1));
+	
+	if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+	{
+        itemLvl = (uint8)Sql_GetIntData(SqlHandle, 0);
+		lua_pushinteger(L, itemLvl);
+	}
+	else
+	{
+		lua_pushinteger(L, 0);
+	}
+
+    return 1;
+}
+
+/************************************************************************
 *  Function: addBardSong()
 *  Purpose : Adds a song effect to Player(s') Status Effect Container(s); returns true if sucess
 *  Example : target:addBardSong(caster,EFFECT_BALLAD,power,0,duration,caster:getID(), 0, 1)
@@ -12519,28 +12681,6 @@ inline int32 CLuaBaseEntity::getRATT(lua_State *L)
 }
 
 /************************************************************************
-*  Function: getItemLevel()
-*  Purpose : Returns the average item level of all gear the player is currently wearing
-*  Example : player:getItemLevel()
-*  Notes   : Calculates average item level using the battleutils function GetPlayerItemLevel
-************************************************************************/
-
-inline int32 CLuaBaseEntity::getItemLevel(lua_State *L)
-{
-    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-	TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
-	
-	if (m_PBaseEntity->objtype == TYPE_PC)
-    {
-		CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
-		
-		lua_pushinteger(L, battleutils::GetPlayerItemLevel(PChar));
-	}
-
-    return 1;
-}
-
-/************************************************************************
 *  Function: getILvlSkill()
 *  Purpose : Returns the weapon skill value of an equipped weapon
 *  Example : player:getILvlSkill()
@@ -12585,10 +12725,18 @@ inline int32 CLuaBaseEntity::getILvlMacc(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
 
-    if (auto weapon = dynamic_cast<CItemWeapon*>(((CBattleEntity*)m_PBaseEntity)->m_Weapons[SLOT_MAIN]))
-        lua_pushinteger(L, weapon->getILvlMacc());
-    else
-        lua_pushinteger(L, 0);
+	uint16 macc = 0;
+
+    if (auto weaponMain = dynamic_cast<CItemWeapon*>(((CBattleEntity*)m_PBaseEntity)->m_Weapons[SLOT_MAIN]))
+	{
+        macc += weaponMain->getILvlMacc();
+	}
+    if (auto weaponSub = dynamic_cast<CItemWeapon*>(((CBattleEntity*)m_PBaseEntity)->m_Weapons[SLOT_SUB]))
+	{
+        macc += weaponSub->getILvlMacc();
+	}
+	
+	lua_pushinteger(L, macc);
 
     return 1;
 }
@@ -12604,10 +12752,18 @@ inline int32 CLuaBaseEntity::getILvlParry(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
 
-    if (auto weapon = dynamic_cast<CItemWeapon*>(((CBattleEntity*)m_PBaseEntity)->m_Weapons[SLOT_MAIN]))
-        lua_pushinteger(L, weapon->getILvlParry());
-    else
-        lua_pushinteger(L, 0);
+	uint16 parry = 0;
+
+    if (auto weaponMain = dynamic_cast<CItemWeapon*>(((CBattleEntity*)m_PBaseEntity)->m_Weapons[SLOT_MAIN]))
+	{
+        parry += weaponMain->getILvlParry();
+	}
+    if (auto weaponSub = dynamic_cast<CItemWeapon*>(((CBattleEntity*)m_PBaseEntity)->m_Weapons[SLOT_SUB]))
+	{
+        parry += weaponSub->getILvlParry();
+	}
+	
+	lua_pushinteger(L, parry);
 
     return 1;
 }
@@ -15688,18 +15844,38 @@ inline int32 CLuaBaseEntity::itemStolen(lua_State *L)
 
 /************************************************************************
 *  Function: getTHlevel()
-*  Purpose : Return mob's current Treasure Hunter tier if alive, or its last if dead.
+*  Purpose : Return mob's current Treasure Hunter tier
 *  Example : local TH = target:getTHlevel()
 *  Notes   :
 ************************************************************************/
 
-inline int32 CLuaBaseEntity::getTHlevel(lua_State* L)
+inline int32 CLuaBaseEntity::getTHlevel(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
 
     CMobEntity* PMob = (CMobEntity*)m_PBaseEntity;
-    lua_pushinteger(L, PMob->isDead() ? PMob->m_THLvl : PMob->PEnmityContainer->GetHighestTH());
+	int16 TH = PMob->m_THLvl;
+	
+    lua_pushinteger(L, TH);
+    return 1;
+}
+
+/************************************************************************
+*  Function: setTHlevel()
+*  Purpose : Set the mob's current Treasure Hunter tier
+*  Example : target:setTHlevel(4)
+*  Notes   : Forces the mob's Treasure Hunter value to the integer provided
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setTHlevel(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+	TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    CMobEntity* PMob = (CMobEntity*)m_PBaseEntity;
+    PMob->m_THLvl = (uint16)lua_tointeger(L, 1);
     return 1;
 }
 
@@ -15855,6 +16031,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
 	
 	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getItemSkillType),
 	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getItemMod),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getGearSlot),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,createShop),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addShopItem),
@@ -16240,6 +16417,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getEVA),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRACC),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRATT),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getGearName),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getGearILvl),
 	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getItemLevel),
 	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getILvlSkill),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getILvlMacc),
@@ -16400,6 +16579,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getDespoilDebuff),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,itemStolen),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getTHlevel),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,setTHlevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPlayerRegionInZone),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateToEntireZone),
 

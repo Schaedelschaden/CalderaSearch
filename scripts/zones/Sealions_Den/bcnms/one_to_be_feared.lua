@@ -18,6 +18,7 @@ function onBattlefieldRegister(player, battlefield)
 end
 
 function onBattlefieldEnter(player, battlefield)
+    player:delKeyItem(tpz.ki.FEARED_ONE_PHANTOM_GEM)
 end
 
 function onBattlefieldLeave(player, battlefield, leavecode)
@@ -35,12 +36,14 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 32001 then
+		-- player:delKeyItem(tpz.ki.FEARED_ONE_PHANTOM_GEM)
+	
         if player:getCurrentMission(COP) == tpz.mission.id.cop.ONE_TO_BE_FEARED and player:getCharVar("PromathiaStatus") == 2 then
             player:completeMission(COP, tpz.mission.id.cop.ONE_TO_BE_FEARED)
             player:addMission(COP, tpz.mission.id.cop.CHAINS_AND_BONDS)
             player:setCharVar("PromathiaStatus", 0)
         end
-        player:addExp(1500)
-        player:setPos(438, 0, -18, 11, 24) -- Lufaise
+--        player:addExp(1500)
+--        player:setPos(438, 0, -18, 11, 24) -- Lufaise
     end
 end

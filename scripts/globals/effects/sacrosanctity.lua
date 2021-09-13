@@ -16,4 +16,5 @@ end
 
 function onEffectLose(target,effect)
 	target:delMod(tpz.mod.DMGMAGIC_II,75)
+	target:removeListener("SACROSANCTITY_TAKE_MAGIC")
 end

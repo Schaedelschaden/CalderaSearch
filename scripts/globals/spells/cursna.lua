@@ -4,6 +4,7 @@
 -----------------------------------------
 require("scripts/globals/status")
 require("scripts/globals/msg")
+require("scripts/globals/utils")
 -----------------------------------------
 
 function onMagicCastingCheck(caster,target,spell)
@@ -11,11 +12,14 @@ function onMagicCastingCheck(caster,target,spell)
 end
 
 function onSpellCast(caster,target,spell)
+	local healingSkill = caster:getSkillLevel(tpz.skill.HEALING_MAGIC)
     local curse = target:getStatusEffect(tpz.effect.CURSE_I)
     local curse2 = target:getStatusEffect(tpz.effect.CURSE_II)
     local bane = target:getStatusEffect(tpz.effect.BANE)
-    local bonus = caster:getMod(tpz.mod.ENHANCES_CURSNA) + target:getMod(tpz.mod.ENHANCES_CURSNA_RCVD)
-    local power = 25*((100+bonus)/100) -- This 25 is temp until the skill calculation is in.
+    local casterGear = caster:getMod(tpz.mod.ENHANCES_CURSNA)
+	local targetGear = target:getMod(tpz.mod.ENHANCES_CURSNA_RCVD)
+	local power = (utils.clamp(caster:getSkillLevel(tpz.skill.HEALING_MAGIC) / 12.5, 10, 40) * ((100 + casterGear) / 100)) * ((100 + targetGear) / 100)
+    -- local power = utils.clamp(player:getSkillLevel(tpz.skill.HEALING_MAGIC) / 19.2, 10, 26) * ((100 + bonus) / 100)
 	
 	local PoisonRES = target:getMod(tpz.mod.POISONRES)
 	local ParaRES = target:getMod(tpz.mod.PARALYZERES)

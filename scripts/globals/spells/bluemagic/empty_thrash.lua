@@ -31,7 +31,7 @@ function onSpellCast(caster,target,spell)
         params.damageType = tpz.damageType.SLASHING
 		params.spellFamily = tpz.ecosystem.EMPTY
         params.numhits = 1
-        params.multiplier = 2.0
+        params.multiplier = 5.0
         params.tp150 = 2.0
         params.tp300 = 2.0
         params.azuretp = 2.0

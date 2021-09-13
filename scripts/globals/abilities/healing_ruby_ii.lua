@@ -20,5 +20,11 @@ function onUseAbility(player, target, ability)
 	local bloodpact = 911 -- mob_skill_id from mob_skills.sql
 
 --	printf("Healing Ruby II PLAYER onUseAbility\n")
-	pet:useMobAbility(bloodpact)
+
+	-- Curse II prevents restoring HP
+	if not (target:hasStatusEffect(20)) then
+		pet:useMobAbility(bloodpact, target)
+	else
+		return tpz.msg.basic.UNABLE_TO_USE_JA, 0
+	end
 end

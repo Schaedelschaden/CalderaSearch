@@ -22,6 +22,8 @@ function onEffectGain(target, effect)
 	target:setMod(tpz.mod.ENSPELL, 8)
     target:setMod(tpz.mod.ENSPELL_DMG, potency)
 	target:addMod(tpz.mod.LIGHTRES, effect:getPower())
+	target:addMod(tpz.mod.CHARMRES, effect:getPower() / 2)
+	target:addMod(tpz.mod.LULLABYRES, effect:getPower() / 2)
 end
 
 function onEffectTick(target, effect)
@@ -43,14 +45,16 @@ function onEffectTick(target, effect)
 end
 
 function onEffectLose(target, effect)
-	local RuneCounter = target:countEffect(tpz.effect.LUX)
+	local RuneCounter = target:countEffect(tpz.effect.TENEBRAE)
 
 	if ((RuneCounter == 0) and (target:getMod(tpz.mod.ENSPELL) == 8)) then
 		target:setMod(tpz.mod.ENSPELL, 0)
 		target:setMod(tpz.mod.ENSPELL_DMG, 0)
-		target:setMod(tpz.mod.LIGHTRES, 0)
 	else
 		target:delMod(tpz.mod.ENSPELL_DMG, effect:getPower() * 1.25)
-		target:delMod(tpz.mod.LIGHTRES, effect:getPower())
 	end
+	
+	target:delMod(tpz.mod.LIGHTRES, effect:getPower())
+	target:delMod(tpz.mod.CHARMRES, effect:getPower() / 2)
+	target:delMod(tpz.mod.LULLABYRES, effect:getPower() / 2)
 end

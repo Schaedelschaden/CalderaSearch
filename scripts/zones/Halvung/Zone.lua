@@ -9,6 +9,9 @@ require("scripts/globals/helm")
 
 function onInitialize(zone)
     tpz.helm.initZone(zone, tpz.helm.type.MINING)
+	
+	-- Gurfurlur the Menacing's spawn ???
+	GetNPCByID(17031608):setPos(-59.9163, -23.8305, 0.7668, 0)
 end
 
 function onZoneIn(player, prevZone)

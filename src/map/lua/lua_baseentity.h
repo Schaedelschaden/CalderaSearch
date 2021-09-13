@@ -200,6 +200,9 @@ public:
 	
 	int32 getItemSkillType(lua_State* L);
 	int32 getItemMod(lua_State* L);          // Checks the provided item ID for the specified mod and returns its value if found
+	int32 getGearSlot(lua_State* L);         // Checks the provided item ID for the slot it equips to and returns a tpz.slot
+	int32 getGearName(lua_State *L);         // Get item name from database using item id
+	int32 getGearILvl(lua_State *L);         // Get item level from database using item id
 
     int32 createShop(lua_State*);            // Prepare the container for work of shop ??
     int32 addShopItem(lua_State*);           // Adds item to shop container (16 max)
@@ -287,6 +290,7 @@ public:
     int32 getMainLvl(lua_State*);           // Gets Entity Main Job Level
     int32 getSubLvl(lua_State*);            // Get Entity Sub Job Level
     int32 getJobLevel(lua_State*);          // Gets character job level for specified JOBTYPE
+	int32 getItemLevel(lua_State *L);       // Get char average Item Level
     int32 setLevel(lua_State*);             // sets the character's level
     int32 setsLevel(lua_State*);            // sets the character's level
     int32 levelCap(lua_State*);             // genkai
@@ -583,7 +587,6 @@ public:
     int32 getEVA(lua_State*);                   // Get total EVA
     int32 getRACC(lua_State*);                  // Get total r.acc
     int32 getRATT(lua_State*);                  // Get total r.attack
-	int32 getItemLevel(lua_State *L);           // Get char average Item Level
 	int32 getILvlSkill(lua_State *L);           // Get char ILvl Weapon skill of specified weapon slot
     int32 getILvlMacc(lua_State *L);            // Get char ILvl MACC skill of all items currently equipped
     int32 getILvlParry(lua_State*);             // Get char ILvl Parry skill of all items currently equipped
@@ -740,7 +743,8 @@ public:
     int32 getDespoilItem(lua_State*);       // gets ItemID of droplist despoil item from mob (steal item if no despoil item)
     int32 getDespoilDebuff(lua_State*);     // gets the status effect id to apply to the mob on successful despoil
     int32 itemStolen(lua_State*);           // sets mob's ItemStolen var = true
-    int32 getTHlevel(lua_State*);           // Returns the Monster's current Treasure Hunter Tier
+    int32 getTHlevel(lua_State *L);           // Returns the Monster's current Treasure Hunter Tier
+	int32 setTHlevel(lua_State *L);           // Sets the Monster's current Treasure Hunter Tier to the provided integer
 };
 
 #endif

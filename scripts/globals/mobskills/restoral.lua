@@ -17,7 +17,7 @@ function onMobWeaponSkill(target, mob, skill)
     which does not seem to fit with retail in game observations on the mobskill version..
     So math.random() for now!
     ]]
-    local heal = math.random(900, 1400)
+    local heal = math.random(4000, 5000)
     if mob:getPool() == 243 then
         heal = heal * 2.5
     end

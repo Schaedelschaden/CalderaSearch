@@ -3,7 +3,6 @@
 --  Mob: Gurfurlur the Menacing
 -- !pos -59.000 -23.000 3.000 62
 -----------------------------------
-mixins = {require("scripts/mixins/job_special")}
 local ID = require("scripts/zones/Halvung/IDs")
 require("scripts/globals/status")
 require("scripts/globals/titles")
@@ -16,13 +15,14 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.SLOWRES, 70)
 	mob:setMod(tpz.mod.ATT, 2000)
 	mob:setMod(tpz.mod.MATT, 200)
-    mob:setMod(tpz.mod.ACC, 1000)
-	mob:setMod(tpz.mod.MACC, 500)
-	mob:setMod(tpz.mod.DEF, 1300)
-	mob:setMod(tpz.mod.MDEF, 200)
-	mob:setMod(tpz.mod.EVA, 100)
-	mob:setMod(tpz.mod.MEVA, 50)
-	mob:setMod(tpz.mod.CRITHITRATE, 100)
+    mob:addMod(tpz.mod.ACC, 100)
+	-- mob:setMod(tpz.mod.MACC, 500)
+	-- mob:setMod(tpz.mod.DEF, 1300)
+	-- mob:setMod(tpz.mod.MDEF, 1000)
+	-- mob:setMod(tpz.mod.EVA, 850)
+	-- mob:setMod(tpz.mod.MEVA, 650)
+	mob:setMod(tpz.mod.CRITHITRATE, 25)
+	mob:setMod(tpz.mod.CRIT_DMG_INCREASE, -10)
 	mob:setMod(tpz.mod.COUNTER, 50)
 end
 
@@ -33,12 +33,14 @@ function onMobEngaged(mob, target)
 end
 
 function onMobFight(mob, target)
+	mob:setMod(tpz.mod.CRITHITRATE, 25)
+	mob:setMod(tpz.mod.CRIT_DMG_INCREASE, -10)
    	local isBusy = false
 	local has2Hrd = mob:getLocalVar("has2Hrd")
 	local act = mob:getCurrentAction()
 	
 	if act == tpz.act.MOBABILITY_START or act == tpz.act.MOBABILITY_USING or act == tpz.act.MOBABILITY_FINISH or act == tpz.act.MAGIC_START or act == tpz.act.MAGIC_CASTING or act == tpz.act.MAGIC_START then
-        isBusy = true -- Set to true if Seiryu is in any stage of using a mobskill or casting a spell
+        isBusy = true -- Set to true if mob is in any stage of using a mobskill or casting a spell
     end
    	if (mob:getHPP() <= 50 and isBusy == false and has2Hrd ~= 1) then
 		mob:useMobAbility(690) -- Hundred Fists

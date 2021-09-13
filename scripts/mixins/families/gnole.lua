@@ -17,6 +17,12 @@ g_mixins.families.gnole = function(mob)
     mob:addListener("COMBAT_TICK", "GNOLE_COMBAT", function(mob)
         attemptTransform(mob, 60)
     end)
+	
+	mob:addListener("COMBAT_TICK", "CALL_OF_THE_MOON", function(mob)
+        if (os.time() - mob:getLocalVar("CalloftheMoon") >= 30) then
+			mob:setMod(tpz.mod.HUMANOID_KILLER, 0)
+		end
+    end)
 end
 
 function attemptTransform(mob, timeThreshold)

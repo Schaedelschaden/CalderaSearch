@@ -32,10 +32,10 @@ function onSpellCast(caster, target, spell)
 		params.spellFamily = tpz.ecosystem.ARCANA
 		params.isACrit = false
         params.numhits = 5
-        params.multiplier = 1.00
-        params.tp150 = 1.5
-        params.tp300 = 2.0
-        params.azuretp = 2.5
+        params.multiplier = 8.50
+        params.tp150 = 3.5
+        params.tp300 = 4.0
+        params.azuretp = 5.5
         params.duppercap = 136
         params.str_wsc = 1.0 -- 0.5
         params.dex_wsc = 0.0

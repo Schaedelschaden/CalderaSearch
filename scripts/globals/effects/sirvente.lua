@@ -22,6 +22,8 @@ function onEffectGain(target, effect)
 		setBonus = 5
 	end
 	
+	target:addMod(tpz.mod.ENMITY_LOSS_REDUCTION, -effect:getPower())
+	
 	if (setBonus > 0) then
 		target:addMod(tpz.mod.CHR, setBonus)
 	end
@@ -33,6 +35,8 @@ function onEffectTick(target,effect)
 end
 
 function onEffectLose(target, effect)
+	target:delMod(tpz.mod.ENMITY_LOSS_REDUCTION, -effect:getPower())
+	
 	if (setBonus > 0) then
 		target:delMod(tpz.mod.CHR, setBonus)
 	end

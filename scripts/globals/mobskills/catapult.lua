@@ -24,6 +24,13 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 1.6
 
     local info = MobRangedMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
+	
+	local shadows = info.hitslands
+	
+	if (mob:getID() == 17318439) then
+		shadows = MOBPARAM_IGNORE_SHADOWS
+		target:dispelStatusEffect()
+	end
 
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.RANGED, tpz.damageType.PIERCING, info.hitslanded)
 

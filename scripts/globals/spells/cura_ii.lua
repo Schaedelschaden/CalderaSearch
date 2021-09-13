@@ -69,52 +69,54 @@ function onSpellCast(caster, target, spell)
         end
     end
 
-    if (USE_OLD_CURE_FORMULA == true) then
-        basecure = getBaseCureOld(power, divisor, constant)
-    else
-        basecure = getBaseCure(power, divisor, constant, basepower)
-    end
+	if isValidHealTarget(caster, target) then -- e.g. is a PC and not a monster (?)
+		if (USE_OLD_CURE_FORMULA == true) then
+			basecure = getBaseCureOld(power, divisor, constant)
+		else
+			basecure = getBaseCure(power, divisor, constant, basepower)
+		end
 
-    --Apply Afflatus Misery Bonus to Final Result
-    if (caster:hasStatusEffect(tpz.effect.AFFLATUS_MISERY)) then
-        if (caster:getID() == target:getID()) then -- Let's use a local var to hold the power of Misery so the boost is applied to all targets,
-            caster:setLocalVar("Misery_Power", caster:getMod(tpz.mod.AFFLATUS_MISERY))
-        end
-        local misery = caster:getLocalVar("Misery_Power")
+		--Apply Afflatus Misery Bonus to Final Result
+		if (caster:hasStatusEffect(tpz.effect.AFFLATUS_MISERY)) then
+			if (caster:getID() == target:getID()) then -- Let's use a local var to hold the power of Misery so the boost is applied to all targets,
+				caster:setLocalVar("Misery_Power", caster:getMod(tpz.mod.AFFLATUS_MISERY))
+			end
+			local misery = caster:getLocalVar("Misery_Power")
 
-        --THIS IS LARELY SEMI-EDUCATED GUESSWORK. THERE IS NOT A
-        --LOT OF CONCRETE INFO OUT THERE ON CURA THAT I COULD FIND
+			--THIS IS LARELY SEMI-EDUCATED GUESSWORK. THERE IS NOT A
+			--LOT OF CONCRETE INFO OUT THERE ON CURA THAT I COULD FIND
 
-        --Not very much documentation for Cura II known at all.
-        --As with Cura, the Afflatus Misery bonus can boost this spell up
-        --to roughly the level of a Curaga 3. For Cura I vs Curaga II,
-        --this is document at ~175HP, 15HP less than the cap of 190HP. So
-        --for Cura II, i'll go with 15 less than the cap of Curaga III (390): 375
-        --So with lack of available formula documentation, I'll go with that.
+			--Not very much documentation for Cura II known at all.
+			--As with Cura, the Afflatus Misery bonus can boost this spell up
+			--to roughly the level of a Curaga 3. For Cura I vs Curaga II,
+			--this is document at ~175HP, 15HP less than the cap of 190HP. So
+			--for Cura II, i'll go with 15 less than the cap of Curaga III (390): 375
+			--So with lack of available formula documentation, I'll go with that.
 
-        --printf("BEFORE AFFLATUS MISERY BONUS: %d", basecure)
+			--printf("BEFORE AFFLATUS MISERY BONUS: %d", basecure)
 
-        basecure = basecure + misery
+			basecure = basecure + misery
 
-        if (basecure > 375) then
-            basecure = 375
-        end
+			if (basecure > 375) then
+				basecure = 375
+			end
 
-        --printf("AFTER AFFLATUS MISERY BONUS: %d", basecure)
+			--printf("AFTER AFFLATUS MISERY BONUS: %d", basecure)
 
-        --Afflatus Misery Mod Gets Used Up
-        caster:setMod(tpz.mod.AFFLATUS_MISERY, 0)
-    end
+			--Afflatus Misery Mod Gets Used Up
+			caster:setMod(tpz.mod.AFFLATUS_MISERY, 0)
+		end
 
-    final = getCureFinal(caster, spell, basecure, minCure, false)
-    final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD)/100))
+		final = getCureFinal(caster, spell, basecure, minCure, false)
+		final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD)/100))
 
-    --Applying server mods....
-    final = final * CURE_POWER
+		--Applying server mods....
+		final = final * CURE_POWER
 
-    target:addHP(final)
+		target:addHP(final)
 
-    target:wakeUp()
+		target:wakeUp()
+	end
 
     --Enmity for Cura is fixed, so its CE/VE is set in the SQL and not calculated with updateEnmityFromCure
 

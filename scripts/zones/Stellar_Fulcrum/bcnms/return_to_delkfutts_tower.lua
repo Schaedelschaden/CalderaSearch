@@ -15,6 +15,7 @@ function onBattlefieldRegister(player, battlefield)
 end
 
 function onBattlefieldEnter(player, battlefield)
+	player:delKeyItem(tpz.ki.STELLAR_FULCRUM_PHANTOM_GEM)
 end
 
 function onBattlefieldLeave(player, battlefield, leavecode)
@@ -32,16 +33,23 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 32001 then
-		player:delKeyItem(tpz.ki.STELLAR_FULCRUM_PHANTOM_GEM)
+		-- player:delKeyItem(tpz.ki.STELLAR_FULCRUM_PHANTOM_GEM)
 	
         if player:getCurrentMission(ZILART) == tpz.mission.id.zilart.RETURN_TO_DELKFUTTS_TOWER then
             player:completeMission(ZILART, tpz.mission.id.zilart.RETURN_TO_DELKFUTTS_TOWER)
             player:addMission(ZILART, tpz.mission.id.zilart.ROMAEVE)
             player:setCharVar("ZilartStatus", 0)
         end
+		player:startEvent(7)
         -- Play last CS if not skipped.
         if option == 1 then
             player:startEvent(17)
         end
+		
+		local KillCounter = player:getCharVar("KillCounter_Kamlanaut")
+		
+		KillCounter = KillCounter + 1
+		
+		player:setCharVar("KillCounter_Kamlanaut", KillCounter)
     end
 end

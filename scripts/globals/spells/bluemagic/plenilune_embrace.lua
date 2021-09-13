@@ -81,9 +81,13 @@ function onSpellCast(caster,target,spell)
 	caster:addStatusEffect(tpz.effect.ATTACK_BOOST, attValue, 0, 90)
 	caster:addStatusEffect(tpz.effect.MAGIC_ATK_BOOST, mattValue, 0, 90)
 
-    target:addHP(final)
-    target:wakeUp()
-    caster:updateEnmityFromCure(target,final)
+	-- Curse II prevents restoring HP
+	if not (caster:hasStatusEffect(20)) then
+		target:addHP(final)
+		target:wakeUp()
+		caster:updateEnmityFromCure(target,final)
+	end
+	
     spell:setMsg(tpz.msg.basic.MAGIC_RECOVERS_HP)
 
     return final

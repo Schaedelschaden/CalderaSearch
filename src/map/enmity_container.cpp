@@ -189,7 +189,9 @@ void CEnmityContainer::UpdateEnmity(CBattleEntity* PEntity, int32 CE, int32 VE, 
         enmity_obj->second.active = true;
 
         if (CE + VE > 0 && PEntity->getMod(Mod::TREASURE_HUNTER) > enmity_obj->second.maxTH)
+		{
             enmity_obj->second.maxTH = PEntity->getMod(Mod::TREASURE_HUNTER);
+		}
     }
     else if (CE >= 0 && VE >= 0)
     {
@@ -473,6 +475,7 @@ void CEnmityContainer::DecayEnmity()
 {
 	CBattleEntity* PEntity = nullptr;
 	int16 playerLevel = 0;
+	int16 playerItemLevel = 0;
 	int16 decayVE = 1;
 	int16 decayCE = 1;
 	
@@ -482,9 +485,15 @@ void CEnmityContainer::DecayEnmity()
 		EnmityObject_t& PEnmityObject = it->second;
 		PEntity = PEnmityObject.PEnmityOwner;
 			
-		if (PEntity != nullptr)
+		if (PEntity != nullptr && PEnmityObject.CE > 1)
 		{
-			playerLevel = PEntity->GetMLevel();
+			if (PEntity->objtype == TYPE_PC)
+			{
+				CCharEntity* PChar = (CCharEntity*)PEntity;
+				playerItemLevel = (int16)(battleutils::GetPlayerItemLevel(PChar));
+			}
+			
+			playerLevel = PEntity->GetMLevel() + playerItemLevel;
 //			printf("enmity_container.cpp DecayEnmity PLAYER LEVEL: [%i]\n", playerLevel);
 
 			if (playerLevel <= 50)
@@ -516,13 +525,49 @@ void CEnmityContainer::DecayEnmity()
 				}
 //				printf("enmity_container.cpp DecayEnmity PLAYER LEVEL = 99\n");
 			}
+			else if (playerLevel >= 109)
+			{
+				decayVE = 300;
+				decayCE = 50;
+			
+				if (PEntity->GetMJob() == JOB_PLD || PEntity->GetMJob() == JOB_NIN || PEntity->GetMJob() == JOB_RUN)
+				{
+					decayVE = 150;
+					decayCE = 35;
+				}
+//				printf("enmity_container.cpp DecayEnmity PLAYER LEVEL = 109\n");
+			}
+			else if (playerLevel >= 115)
+			{
+				decayVE = 500;
+				decayCE = 75;
+			
+				if (PEntity->GetMJob() == JOB_PLD || PEntity->GetMJob() == JOB_NIN || PEntity->GetMJob() == JOB_RUN)
+				{
+					decayVE = 250;
+					decayCE = 45;
+				}
+//				printf("enmity_container.cpp DecayEnmity PLAYER LEVEL = 115\n");
+			}
 		
 			int32 ve_decay_amount = (int)(decayVE / server_tick_rate); //constexpr int decay_amount = (int)(60 / server_tick_rate); // server_tick_rate = 2.5s
 			int32 ce_decay_amount = (int)(decayCE / server_tick_rate); // constexpr int ce_decay_amount = (int)(60 / server_tick_rate);
 
-			PEnmityObject.VE -= PEnmityObject.VE > ve_decay_amount ? ve_decay_amount : PEnmityObject.VE;
-			PEnmityObject.CE -= PEnmityObject.CE > ce_decay_amount ? ce_decay_amount : PEnmityObject.CE;
-//        	ShowDebug("%d: active: %d CE: %d VE: %d\n", it->first, PEnmityObject.active, PEnmityObject.CE, PEnmityObject.VE);
+			if (PEnmityObject.CE - ce_decay_amount > 1)
+			{
+				PEnmityObject.VE -= PEnmityObject.VE > ve_decay_amount ? ve_decay_amount : PEnmityObject.VE;
+				PEnmityObject.CE -= PEnmityObject.CE > ce_decay_amount ? ce_decay_amount : PEnmityObject.CE;
+//	        	ShowDebug("%d: active: %d CE: %d VE: %d\n", it->first, PEnmityObject.active, PEnmityObject.CE, PEnmityObject.VE);
+			}
+			else
+			{
+				PEnmityObject.VE -= PEnmityObject.VE > ve_decay_amount ? ve_decay_amount : PEnmityObject.VE;
+				PEnmityObject.CE = 1;
+			}
+		}
+		else
+		{
+			PEnmityObject.CE = 1;
 		}
     }
 }
@@ -544,7 +589,9 @@ int16 CEnmityContainer::GetHighestTH() const
         PEntity = PEnmityObject.PEnmityOwner;
 
         if (PEntity != nullptr && !PEntity->isDead() && PEnmityObject.maxTH > THLvl)
+		{
             THLvl = PEnmityObject.maxTH;
+		}
     }
 
     return THLvl;

@@ -27,17 +27,32 @@ function onUseAbility(player,target,ability)
         burden = 20
     end
 
-    local overload = target:addBurden(tpz.magic.ele.LIGHT-1, burden)
+	local currentBurden = target:addBurden(tpz.magic.ele.LIGHT-1, burden)
+	local threshold = 30 + player:getMod(tpz.mod.OVERLOAD_THRESH)
+	local overloadChance = 5 + (currentBurden - threshold)
+	local roll = math.random(1, 100)
+	local overloaded = false
+	
+	if (overloadChance < 0) then
+		overloadChance = 0
+	end
+	
+	if (roll < overloadChance) then
+		overloaded = true
+	end
+--	printf("light_maneuver.lua onUseAbility CURRENT BURDEN: [%i] OVERLOAD CHANCE: [%i] ROLL: [%i]", currentBurden, overloadChance, roll)
 
-    if (overload ~= 0 and
+    if (overloaded == true and
         (player:getMod(tpz.mod.PREVENT_OVERLOAD) > 0 or player:getPet():getMod(tpz.mod.PREVENT_OVERLOAD) > 0) and
         player:delStatusEffectSilent(tpz.effect.WATER_MANEUVER)) then
-        overload = 0
+        overloaded = false
     end
 
-    if (overload ~= 0) then
+    if (overloaded == true) then
         target:removeAllManeuvers()
-        target:addStatusEffect(tpz.effect.OVERLOAD, 0, 0, overload)
+        target:addStatusEffect(tpz.effect.OVERLOAD, 0, 0, currentBurden - threshold)
+		
+		ability:setMsg(tpz.msg.basic.OVERLOAD_CHANCE_OVERLOADED)
     else
         local level
         if (target:getMainJob() == tpz.job.PUP) then
@@ -55,7 +70,8 @@ function onUseAbility(player,target,ability)
         local dur = player:getPet():getLocalVar("MANEUVER_DURATION")
         target:addStatusEffect(tpz.effect.LIGHT_MANEUVER, bonus, 0, utils.clamp(dur,60,300))
 
+		ability:setMsg(tpz.msg.basic.OVERLOAD_CHANCE)
     end
 
-    return tpz.effect.LIGHT_MANEUVER
+    return overloadChance
 end

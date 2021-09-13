@@ -13,7 +13,7 @@ require("scripts/globals/status")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    return 0
+	return 0
 end
 
 function onMobWeaponSkill(target, mob, skill)
@@ -22,6 +22,18 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.DARK, MOBPARAM_1_SHADOW)
 
     skill:setMsg(MobPhysicalDrainMove(mob, target, skill, MOBDRAIN_HP, dmg))
+
+	-- Clingy Clare can use Vampiric Lash three times in a row
+	if (mob:getID() == 16838946) then
+		local counter = 2 - mob:getLocalVar("ClingyClare_MultiLash")
+		
+		if (counter > 0 and counter <= 2) then
+			mob:useMobAbility(317)
+			mob:setLocalVar("ClingyClare_MultiLash", mob:getLocalVar("ClingyClare_MultiLash") + 1)
+		elseif (counter == 0) then
+			mob:setLocalVar("ClingyClare_MultiLash", 0)
+		end
+	end
 
     return dmg
 end

@@ -25,7 +25,7 @@ function onTrigger(player, npc)
         end
     elseif player:getCurrentMission(ROV) == tpz.mission.id.rov.A_LAND_AFTER_TIME then
         local rank6 = (player:getRank(player:getNation()) >= 6) and 1 or 0
-        player:startEvent(4, player:getZoneID(), 0, 0, 0, 0, 0, rank6)
+--        player:startEvent(4, player:getZoneID(), 0, 0, 0, 0, 0, rank6)
 
     -- CoP Missions
     elseif player:getCurrentMission(COP) == tpz.mission.id.cop.BELOW_THE_ARKS and player:getCharVar("PromathiaStatus") == 1 then

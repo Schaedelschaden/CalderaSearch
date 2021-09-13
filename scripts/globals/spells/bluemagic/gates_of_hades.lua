@@ -24,7 +24,7 @@ function onSpellCast(caster, target, spell)
 	local params = {}
         params.damageType = tpz.damageType.FIRE
 		params.spellFamily = tpz.ecosystem.BEAST
-        params.multiplier = 25.0 -- 4.0
+        params.multiplier = 30.0 -- 4.0
         params.tMultiplier = 1.0
         params.duppercap = 136
         params.str_wsc = 0.4 -- 0.2

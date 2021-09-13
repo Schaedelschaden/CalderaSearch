@@ -9,25 +9,23 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onMobSpawn(mob)
-	mob:addMod(tpz.mod.EVA, 270)
-
     -- adjust drops based on number of HQ Aern Organs traded to QM
     local qm = GetNPCByID(ID.npc.IXAERN_MNK_QM)
     local chance = qm:getLocalVar("[SEA]IxAern_DropRate")
-    if (math.random(0, 1) > 0) then
+    -- if (math.random(0, 1) > 0) then
         SetDropRate(2845, 1851, chance * 10) -- Deed Of Placidity
-        SetDropRate(2845, 1901, 0)
-    else
-        SetDropRate(2845, 1851, 0)
-        SetDropRate(2845, 1901, chance * 10) -- Vice of Antipathy
-    end
+        SetDropRate(2845, 1901, chance * 10)
+    -- else
+        -- SetDropRate(2845, 1851, 0)
+        -- SetDropRate(2845, 1901, chance * 10) -- Vice of Antipathy
+    -- end
     qm:setLocalVar("[SEA]IxAern_DropRate", 0)
 
     mob:AnimationSub(1) -- Reset the subanim - otherwise it will respawn with bracers on. Note that Aerns are never actually supposed to be in subanim 0.
 end
 
 function onMobFight(mob, target)
-	mob:setMod(tpz.mod.EVA, 750)
+	mob:setMod(tpz.mod.EVA, 650)
     -- The mob gains a huge boost when it 2hours to attack speed and attack.
     -- It forces the minions to 2hour as well. Wiki says 50% but all videos show 60%.
     if (mob:getLocalVar("BracerMode") == 0) then

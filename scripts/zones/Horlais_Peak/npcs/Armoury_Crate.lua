@@ -543,39 +543,36 @@ local loot =
             {itemid =  21690, droprate = 125}, -- Ushenzi
         },
         {
-            {itemid = 26942, droprate =  110}, -- Agony Jerkin
-            {itemid = 25680, droprate =  110}, -- Cohort Cloak
-            {itemid = 26870, droprate =  110}, -- Emet Harness
-            {itemid = 26872, droprate =  110}, -- Hime Domaru
-            {itemid = 26896, droprate =  110}, -- Lugra Cloak
-            {itemid = 25709, droprate =  110}, -- Obviation Cuirass
-            {itemid = 26868, droprate =  110}, -- Rosette Jaseran
-            {itemid = 26887, droprate =  110}, -- Shimonjijoe
-            {itemid = 27532, droprate =  120}, -- Tatenashi Haramaki
-
+            {itemid = 26942, droprate =  125}, -- Agony Jerkin
+            {itemid = 25680, droprate =  125}, -- Cohort Cloak
+            {itemid = 26870, droprate =  125}, -- Emet Harness
+            {itemid = 26872, droprate =  125}, -- Hime Domaru
+            {itemid = 26896, droprate =  125}, -- Lugra Cloak
+            {itemid = 25709, droprate =  125}, -- Obviation Cuirass
+            {itemid = 26868, droprate =  125}, -- Rosette Jaseran
+            {itemid = 25732, droprate =  125}, -- Tatenashi Haramaki
         },
         {
-            {itemid = 4073, droprate = 1000},   -- Rem Chapt 10
-
+            {itemid = 4073, droprate = 1000},  -- Rem Chapt 10
         },
         {
-            {itemid = 4073, droprate = 1000},   -- Rem Chapt 10
-
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 4073, droprate = 150},   -- Rem Chapt 10
         },
         {
-            {itemid = 3972, droprate = 1000},   -- Kupon I S-2
-
+            {itemid = 3972, droprate = 1000},  -- Kupon I S-2
         },
         {
-            {itemid = 3972, droprate = 1000},   -- Kupon I S-2
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 3972, droprate = 150},   -- Kupon I S-2
         },
 		{
-            {itemid = 4080, droprate =  175}, -- Moonbow Urushi
-            {itemid = 4079, droprate =  165}, -- Moonbow Leather
-            {itemid = 4078, droprate =  165}, -- Moonbow Cloth
-            {itemid = 4077, droprate =  165}, -- Moonbow Steel
-            {itemid = 4081, droprate =  165}, -- Moonbow Stone
-			{itemid = 4082, droprate =  165}, -- Moonlight Coral
+            {itemid = 4080, droprate =  160}, -- Moonbow Urushi
+            {itemid = 4079, droprate =  80},  -- Moonbow Leather
+            {itemid = 4078, droprate =  120}, -- Moonbow Cloth
+            {itemid = 4077, droprate =  240}, -- Moonbow Steel
+            {itemid = 4081, droprate =  240}, -- Moonbow Stone
+			{itemid = 4082, droprate =  160}, -- Moonlight Coral
         },
     },
 
@@ -613,38 +610,40 @@ local loot =
             -- {itemid = 65535, droprate = 1000, amount = 500000}, -- gil
         -- },
 		{
-            {itemid =  0, droprate = 100}, -- Nothing
+            {itemid =  0,     droprate = 100}, -- Nothing
 			{itemid =  20545, droprate = 300}, -- Camaraderie Knuckles
 			{itemid =  20823, droprate = 300}, -- Camaraderie Axe
 			{itemid =  20869, droprate = 300}, -- Camaraderie Reaver
         },
         {
-            {itemid =  0, droprate = 100}, -- Nothing
+            {itemid =  0,     droprate = 100}, -- Nothing
 			{itemid =  28534, droprate = 300}, -- Lifestorm Earring
 			{itemid =  28525, droprate = 300}, -- Psystorm Earring
 			{itemid =  28403, droprate = 300}, -- Inquisitor Bead Necklace
         },
         {
-            {itemid =  0, droprate = 100}, -- Nothing
+            {itemid =  0,     droprate = 100}, -- Nothing
 			{itemid =  27778, droprate = 300}, -- Bokwus Circlet
 			{itemid =  27776, droprate = 300}, -- Mikinaak Helm
 			{itemid =  27777, droprate = 300}, -- Manibozho Beret
         },
         {
-            {itemid = 0, droprate = 900}, -- Nothing
+            {itemid = 0,      droprate = 900}, -- Nothing
             {itemid = 1178, droprate = 100},   -- Lachesis Orb
         },
         {
-            {itemid = 8734, droprate = 1000},   -- Kupon I S-1
+            {itemid = 8734, droprate = 1000},  -- Kupon I S-1
         },
         {
-            {itemid = 8734, droprate = 1000},   -- Kupon I S-1
+			{itemid = 0,    droprate = 850},   -- Nothing
+            {itemid = 8734, droprate = 150},   -- Kupon I S-1
         },
         {
-            {itemid = 4067, droprate = 1000},    -- Rems Chapt 4
+            {itemid = 4067, droprate = 1000},  -- Rems Chapt 4
         },
-		        {
-            {itemid = 4067, droprate = 1000},    -- Rems Chapt 4
+		{
+			{itemid = 0,    droprate = 850},   -- Nothing
+            {itemid = 4067, droprate = 150},   -- Rems Chapt 4
         },
     },
     -- BCNM Today's Horoscope  -- Off

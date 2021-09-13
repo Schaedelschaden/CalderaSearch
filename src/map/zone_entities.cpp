@@ -910,13 +910,20 @@ void CZoneEntities::PushPacket(CBaseEntity* PEntity, GLOBAL_MESSAGE_TYPE message
                 TracyZoneCString("CHAR_INRANGE");
                 // todo: rewrite packet handlers and use enums instead of rawdog packet ids
                 // 30 yalms if action packet, 50 otherwise
-                const int checkDistanceSq = packet->id() == 0x0028 ? 900 : 2500;
+                int16 checkDistanceSq = packet->id() == 0x0028 ? 900 : 2500;
 
                 for (EntityList_t::const_iterator it = m_charList.begin(); it != m_charList.end(); ++it)
                 {
                     CCharEntity* PCurrentChar = (CCharEntity*)it->second;
                     if (PEntity != PCurrentChar)
                     {
+						// Force maximum range in battlefields
+						// Addresses AA TT going invisible when teleporting out of 30 yalm range
+						if (PEntity->PBattlefield)
+						{
+							checkDistanceSq = 2500;
+						}
+						
                         if (distanceSquared(PEntity->loc.p, PCurrentChar->loc.p) < checkDistanceSq &&
                             ((PEntity->objtype != TYPE_PC) || (((CCharEntity*)PEntity)->m_moghouseID == PCurrentChar->m_moghouseID)))
                         {

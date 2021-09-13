@@ -14,7 +14,7 @@ require("scripts/globals/status")
 function onMobSkillCheck(target, mob, skill)
     local mobhp = mob:getHPP()
 
-    if (mobhp >= 70 or mobhp < 40) then
+    if (mobhp >= 70 or mobhp <= 40) then
         return 0
     end
     return 1

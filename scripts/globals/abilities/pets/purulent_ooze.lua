@@ -14,7 +14,7 @@ require("scripts/globals/status")
 
 function onAbilityCheck(player, target, ability)
 	local pet = player:getPet()
-	pet:useMobAbility(2124)
+	pet:useMobAbility(2184)
     return 0
 end
 

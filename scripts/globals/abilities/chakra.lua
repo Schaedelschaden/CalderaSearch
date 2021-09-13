@@ -18,7 +18,12 @@ local ChakraStatusEffects =
 }
 
 function onAbilityCheck(player, target, ability)
-    return 0, 0
+	-- Curse II prevents restoring HP
+	if (player:hasStatusEffect(20)) then
+		return tpz.msg.basic.UNABLE_TO_USE_JA, 0
+	else
+		return 0, 0
+	end
 end
 
 function onUseAbility(player, target, ability)

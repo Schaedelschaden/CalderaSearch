@@ -21,10 +21,10 @@ function onManeuverGain(pet, maneuvers)
     elseif maneuvers == 3 then
         pet:addMod(tpz.mod.AUTO_PERFORMANCE_BOOST, 5)
     end
-    local master = pet:getMaster()
-    if master then
-        master:updateAttachments()
-    end
+    -- local master = pet:getMaster()
+    -- if master then
+        -- master:updateAttachments()
+    -- end
 end
 
 function onManeuverLose(pet, maneuvers)
@@ -35,8 +35,8 @@ function onManeuverLose(pet, maneuvers)
     elseif maneuvers == 3 then
         pet:delMod(tpz.mod.AUTO_PERFORMANCE_BOOST, 5)
     end
-    local master = pet:getMaster()
-    if master then
-        master:updateAttachments()
-    end
+    -- local master = pet:getMaster()
+    -- if master then
+        -- master:updateAttachments()
+    -- end
 end

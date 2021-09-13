@@ -7,10 +7,19 @@ require("scripts/globals/titles")
 require("scripts/globals/mobs")
 -----------------------------------
 
-function onMobInitialize(mob)
+function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.EXP_BONUS, -100)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:setMobMod(tpz.mobMod.GIL_MAX, -1)
+	mob:addMod(tpz.mod.ACC, 100)
+	mob:setMod(tpz.mod.MACC, 850)
+	mob:addMod(tpz.mod.EVA, 150)
+--	mob:addMod(tpz.mod.MEVA, 150)
+--	mob:addMod(tpz.mod.MDEF, 150)
+	mob:addMod(tpz.mod.STORETP, 50)
+	mob:setMod(tpz.mod.REGAIN, 100)
+	mob:setMod(tpz.mod.REGEN, 250)
+	mob:addMod(tpz.mod.DOUBLE_ATTACK, 30)
 end
 
 function onMobFight(mob, target)
@@ -22,7 +31,10 @@ function onMobFight(mob, target)
 end
 
 function onAdditionalEffect(mob, target, damage)
-    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.STUN)
+	local params = {}
+		params.duration = math.random(5,8)
+
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.STUN, params)
 end
 
 function onMobDeath(mob, player, isKiller)

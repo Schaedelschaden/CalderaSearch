@@ -21,7 +21,6 @@ function onMobSpawn(mob)
     mob:AnimationSub(1)
     mob:setModelId(1169)
 	
-	mob:addMod(tpz.mod.EVA, math.random(350, 475))
 	mob:addMod(tpz.mod.MDEF, math.random(45, 75))
 	mob:addMod(tpz.mod.REFRESH, 15)
 end

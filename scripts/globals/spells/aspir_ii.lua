@@ -46,14 +46,17 @@ function onSpellCast(caster,target,spell)
         return dmg
     end
 
-    if (target:getMP() > dmg) then
-        caster:addMP(dmg)
-        target:delMP(dmg)
-    else
-        dmg = target:getMP()
-        caster:addMP(dmg)
-        target:delMP(dmg)
-    end
+	-- Curse II prevents restoring MP
+	if not (caster:hasStatusEffect(20)) then
+		if (target:getMP() > dmg) then
+			caster:addMP(dmg)
+			target:delMP(dmg)
+		else
+			dmg = target:getMP()
+			caster:addMP(dmg)
+			target:delMP(dmg)
+		end
+	end
 	
 	if caster:hasStatusEffect(tpz.effect.NETHER_VOID) then
 		caster:delStatusEffect(tpz.effect.NETHER_VOID)

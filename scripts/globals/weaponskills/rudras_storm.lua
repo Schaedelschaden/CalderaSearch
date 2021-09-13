@@ -19,7 +19,7 @@ require("scripts/globals/weaponskills")
 function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftp100 = 3.25 params.ftp200 = 4.25 params.ftp300 = 5.25
+    params.ftp100 = 7.25 params.ftp200 = 8.25 params.ftp300 = 9.25
     params.str_wsc = 0.0 params.dex_wsc = 0.6 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
@@ -27,8 +27,12 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
 
     if USE_ADOULIN_WEAPON_SKILL_CHANGES then
-        params.ftp100 = 5 params.ftp200 = 10.19 params.ftp300 = 13
+        params.ftp100 = 9 params.ftp200 = 11 params.ftp300 = 13
         params.dex_wsc = 0.8
+		
+		if (player:getMainJob() == tpz.job.DNC) then
+			params.ftp100 = 14 params.ftp200 = 16 params.ftp300 = 18
+		end
     end
 
     -- Apply aftermath

@@ -14,7 +14,7 @@ require("scripts/globals/monstertpmoves")
 
 function onAbilityCheck(player, target, ability)
 	local pet = player:getPet()
-	pet:useMobAbility(2125)
+	pet:useMobAbility(2185)
     return 0
 end
 

@@ -51,33 +51,36 @@ function onUseAbility(player, target, ability)
     local mjob = player:getMainJob()
     local cure = 0
 
-    -- Perform mj check
-    if mjob == tpz.job.DNC then
-        cure = (vit + chr) * 0.75 + 270
-	else
-        cure = (vit + chr) * 0.175 + 270
-    end
+	-- Curse II prevents restoring HP
+	if not (target:hasStatusEffect(20)) then
+		-- Perform mj check
+		if mjob == tpz.job.DNC then
+			cure = (vit + chr) * 0.75 + 270
+		else
+			cure = (vit + chr) * 0.175 + 270
+		end
 
-    -- Apply waltz modifiers
-    cure = math.floor(cure * (1.0 + (player:getMod(tpz.mod.WALTZ_POTENTCY) / 100) + (target:getMod(tpz.mod.WALTZ_POTENCY_RCVD) / 100)))
-	
-	-- Apply Contradance
-	if (player:hasStatusEffect(tpz.effect.CONTRADANCE)) then
-		cure = cure * 2
-		player:delStatusEffectSilent(tpz.effect.CONTRADANCE)
+		-- Apply waltz modifiers
+		cure = math.floor(cure * (1.0 + (player:getMod(tpz.mod.WALTZ_POTENTCY) / 100) + (target:getMod(tpz.mod.WALTZ_POTENCY_RCVD) / 100)))
+		
+		-- Apply Contradance
+		if (player:hasStatusEffect(tpz.effect.CONTRADANCE)) then
+			cure = cure * 2
+			player:delStatusEffectSilent(tpz.effect.CONTRADANCE)
+		end
+
+		-- Apply server mod
+		cure = cure * CURE_POWER
+		
+		-- Cap the final amount to max HP
+		if ((target:getMaxHP() - target:getHP()) < cure) then
+			cure = (target:getMaxHP() - target:getHP())
+		end
+
+		target:restoreHP(cure)
+		target:wakeUp()
+		player:updateEnmityFromCure(target, cure)
 	end
-
-    -- Apply server mod
-    cure = cure * CURE_POWER
-	
-	-- Cap the final amount to max HP
-    if ((target:getMaxHP() - target:getHP()) < cure) then
-        cure = (target:getMaxHP() - target:getHP())
-    end
-
-    target:restoreHP(cure)
-    target:wakeUp()
-    player:updateEnmityFromCure(target, cure)
 
     return cure
 end

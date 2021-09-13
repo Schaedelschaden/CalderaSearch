@@ -12,12 +12,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local power = 175
-    local duration = 300
-
-    local typeEffect = tpz.effect.PROTECT
-
-    skill:setMsg(MobBuffMove(mob, typeEffect, power, 0, duration))
-
-    return typeEffect
+    mob:addStatusEffect(tpz.effect.SENTINEL, 90, 3, 30)
+	mob:addStatusEffect(tpz.effect.PALISADE, 1, 0, 60)
+	mob:addStatusEffect(tpz.effect.STONESKIN, 300, 0, 300)
 end

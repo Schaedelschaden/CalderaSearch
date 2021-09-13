@@ -18,7 +18,7 @@ function onUseAbility(player,target,ability)
 	
 	-- Recover 100% of current MP
 	player:addStatusEffect(tpz.effect.ASTRAL_CONDUIT,1,0,30)
-	player:setMP(maxMP)
+	player:addMP(maxMP)
 	
 	-- All Blood Pact recast times are reset
     player:resetRecast(tpz.recast.ABILITY, 173) -- Blood Pact: Rage

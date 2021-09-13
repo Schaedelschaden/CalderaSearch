@@ -3,14 +3,14 @@
 --   NM: Jailer of Prudence
 -- AnimationSubs: 0 - Normal, 3 - Mouth Open
 -----------------------------------
-local ID = require("scripts/zones/AlTaieu/IDs");
+local ID = require("scripts/zones/AlTaieu/IDs")
 mixins = {require("scripts/mixins/job_special")}
 require("scripts/globals/status");
 -----------------------------------
 
 function onMobInitialize(mob)
-    mob:setMobMod(tpz.mobMod.NO_DROPS, 1);
-end;
+    mob:setMobMod(tpz.mobMod.NO_DROPS, 1)
+end
 
 function onMobSpawn(mob)
     tpz.mix.jobSpecial.config(mob, {
@@ -31,17 +31,17 @@ function onMobSpawn(mob)
     mob:addStatusEffectEx(tpz.effect.FLEE,0,100,0,60);
     mob:setMod(tpz.mod.TRIPLE_ATTACK, 20);
     mob:setMod(tpz.mod.REGEN, 10);
-    mob:addMod(tpz.mod.BINDRES, 30);
-    mob:addMod(tpz.mod.SLOWRES, 10);
-    mob:addMod(tpz.mod.BLINDRES, 10);
-    mob:addMod(tpz.mod.SLEEPRES, 30);
-    mob:addMod(tpz.mod.PETRIFYRES, 10);
-    mob:addMod(tpz.mod.GRAVITYRES, 10);
-    mob:addMod(tpz.mod.LULLABYRES, 30);
-end;
+    mob:setMod(tpz.mod.BINDRES, 30);
+    mob:setMod(tpz.mod.SLOWRES, 10);
+    mob:setMod(tpz.mod.BLINDRES, 10);
+    mob:setMod(tpz.mod.SLEEPRES, 30);
+    mob:setMod(tpz.mod.PETRIFYRES, 10);
+    mob:setMod(tpz.mod.GRAVITYRES, 10);
+    mob:setMod(tpz.mod.LULLABYRES, 30);
+end
 
 function onMobDisEngage(mob, target)
-end;
+end
 
 --[[ onMobskill -- When this functionlity is added, this should work.
 function onUseAbility(mob,target,ability)
@@ -62,29 +62,32 @@ end
 --]]
 
 function onMobDeath(mob, player, isKiller)
+	local firstPrudence     = GetMobByID(ID.mob.JAILER_OF_PRUDENCE_1)
+    local secondPrudence    = GetMobByID(ID.mob.JAILER_OF_PRUDENCE_2)
+    if (mob:getID() == ID.mob.JAILER_OF_PRUDENCE_1) then
+        secondPrudence:setMobMod(tpz.mobMod.NO_DROPS, 0)
+        secondPrudence:AnimationSub(3); -- Mouth Open
+        secondPrudence:addMod(tpz.mod.ATTP, 100)
+        secondPrudence:delMod(tpz.mod.DEFP, -50)
+    else
+        firstPrudence:setMobMod(tpz.mobMod.NO_DROPS, 0)
+        firstPrudence:AnimationSub(3); -- Mouth Open
+        firstPrudence:addMod(tpz.mod.ATTP, 100)
+        firstPrudence:delMod(tpz.mod.DEFP, -50)
+    end
+
 	local KillCounter = player:getCharVar("KillCounter_JailOfPrud")
 	local playerName = player:getName()
 	local mobName = mob:getName()
 	local fixedMobName = string.gsub(mobName, "_", " ")
 	
-	KillCounter = KillCounter + 1
-	
-	player:setCharVar("KillCounter_JailOfPrud", KillCounter)
-	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
-end;
+	if (GetMobByID(ID.mob.JAILER_OF_PRUDENCE_1):isDead() and GetMobByID(ID.mob.JAILER_OF_PRUDENCE_2):isDead()) then
+		KillCounter = KillCounter + 1
+		
+		player:setCharVar("KillCounter_JailOfPrud", KillCounter)
+		player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+	end
+end
 
 function onMobDespawn(mob)
-    local firstPrudence     = GetMobByID(ID.mob.JAILER_OF_PRUDENCE_1);
-    local secondPrudence    = GetMobByID(ID.mob.JAILER_OF_PRUDENCE_2);
-    if (mob:getID() == ID.mob.JAILER_OF_PRUDENCE_1) then
-        secondPrudence:setMobMod(tpz.mobMod.NO_DROPS, 0);
-        secondPrudence:AnimationSub(3); -- Mouth Open
-        secondPrudence:addMod(tpz.mod.ATTP, 100);
-        secondPrudence:delMod(tpz.mod.DEFP, -50);
-    else
-        firstPrudence:setMobMod(tpz.mobMod.NO_DROPS, 0);
-        firstPrudence:AnimationSub(3); -- Mouth Open
-        firstPrudence:addMod(tpz.mod.ATTP, 100);
-        firstPrudence:delMod(tpz.mod.DEFP, -50);
-    end;
-end;
+end

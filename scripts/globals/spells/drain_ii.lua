@@ -53,12 +53,22 @@ function onSpellCast(caster,target,spell)
 	end
 
     local leftOver = (caster:getHP() + dmg) - caster:getMaxHP()
+	local hpBoost = (leftOver / caster:getMaxHP()) * 100
 
-    if (leftOver > 0) then
-        caster:addStatusEffect(tpz.effect.MAX_HP_BOOST, (leftOver/caster:getMaxHP())*100, 0, 60)
+    if (leftOver > 0 and not caster:hasStatusEffect(tpz.effect.WEAKNESS)) then
+--		printf("drain_ii.lua onSpellCast CURRENT HP: [%i]  MAX HP: [%i]  LEFT OVER: [%i]  RESTORE: [%i]", caster:getHP(), caster:getMaxHP(), leftOver, hpBoost)
+        caster:addStatusEffect(tpz.effect.MAX_HP_BOOST, hpBoost, 0, 180)
+	elseif (caster:hasStatusEffect(tpz.effect.WEAKNESS)) then
+		hpBoost = math.min(hpBoost, 10)
+--		printf("drain_ii.lua onSpellCast WEAKENED CURRENT HP: [%i]  MAX HP: [%i]  LEFT OVER: [%i]  RESTORE: [%i]", caster:getHP(), caster:getMaxHP(), leftOver, hpBoost)
+		caster:addStatusEffect(tpz.effect.MAX_HP_BOOST, hpBoost, 0, 180)
     end
 
-    caster:addHP(dmg)
+	-- Curse II prevents restoring HP
+	if not (caster:hasStatusEffect(20)) then
+		caster:addHP(dmg)
+	end
+	
     spell:setMsg(tpz.msg.basic.MAGIC_DRAIN_HP) --change msg to 'xxx hp drained from the yyyy.'
     return dmg
 end

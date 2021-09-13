@@ -9,6 +9,9 @@ require("scripts/globals/helm")
 
 function onInitialize(zone)
     tpz.helm.initZone(zone, tpz.helm.type.LOGGING)
+	
+	-- Gulool Ja Ja's spawn ???
+	GetNPCByID(16999018):setPos(-290.538, 17.777, -379.968, 0)
 end
 
 function onZoneIn(player, prevZone)

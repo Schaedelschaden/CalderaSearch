@@ -46,7 +46,7 @@ function onSpellCast(caster, target, spell)
         duration = duration * 2
     end
 
-    if not (target:addBardSong(caster, tpz.effect.CAROL, power, 0, duration, caster:getID(), tpz.magic.ele.DARK, 1)) then
+    if not (target:addBardSong(caster, tpz.effect.CAROL, power, 0, duration, caster:getID(), tpz.magic.ele.LIGHT, 1)) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     end
 

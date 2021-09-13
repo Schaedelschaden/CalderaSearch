@@ -30,8 +30,10 @@ function onMobWeaponSkill(target, mob, skill)
         -- else you die
         damage = currentHP
     end
+	
     local dmg = MobFinalAdjustments(damage, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING, MOBPARAM_IGNORE_SHADOWS)
 
-        mob:resetEnmity(target)
+    mob:resetEnmity(target)
+	
     return dmg
 end

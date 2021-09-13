@@ -19,9 +19,20 @@ function onMobSpawn(mob)
 
     mob:setLocalVar("[rage]timer", 1800) -- 30 minutes
 	
+	mob:addMod(tpz.mod.PARALYZERES, 50)
+    mob:addMod(tpz.mod.STUNRES, 40)
+    mob:addMod(tpz.mod.BINDRES, 50)
+    mob:addMod(tpz.mod.SLOWRES, 50)
+    mob:addMod(tpz.mod.SILENCERES, 80)
+    mob:addMod(tpz.mod.SLEEPRES, 100)
+    mob:addMod(tpz.mod.LULLABYRES, 100) 
+    mob:addMod(tpz.mod.PETRIFYRES, 80)
+    mob:addMod(tpz.mod.POISONRES, 30)
+	mob:addMod(tpz.mod.ATT, 700)
+	mob:addMod(tpz.mod.MATT, 300)
 	mob:addMod(tpz.mod.DEF, 600)
-	mob:addMod(tpz.mod.EVA, 400)
-	mob:addMod(tpz.mod.MACC, 800)
+	mob:addMod(tpz.mod.DOUBLE_ATTACK, 30)
+	mob:addMod(tpz.mod.REGEN, 60)	
 end
 
 function onMobDeath(mob, player, isKiller)

@@ -21,6 +21,7 @@ function onBattlefieldRegister(player, battlefield)
 end
 
 function onBattlefieldEnter(player, battlefield)
+	player:delKeyItem(tpz.keyItem.SHADOW_LORD_PHANTOM_GEM)
 end
 
 function onBattlefieldLeave(player, battlefield, leavecode)
@@ -49,4 +50,10 @@ function onEventFinish(player, csid, option)
         player:setCharVar("MissionStatus", 4)
         player:setPos(378, -12, -20, 125, 161)
     end
+	
+	local KillCounter = player:getCharVar("KillCounter_ShadowLord")
+		
+	KillCounter = KillCounter + 1
+	
+	player:setCharVar("KillCounter_ShadowLord", KillCounter)
 end

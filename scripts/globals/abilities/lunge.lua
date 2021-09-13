@@ -48,7 +48,7 @@ function onUseAbility(player, target, ability, action)
 --	printf("lunge.lua onUseAbility LUNGE RUNE COUNTER: [%i]", RuneCounter)
 	
 	local runeBonus = RuneCounter * 0.25
-	local dmg = player:getSkillLevel(skillType) * (0.50 + runeBonus + lungeBonus) * multiplier
+	local dmg = (player:getSkillLevel(skillType) + player:getILvlSkill(tpz.slot.MAIN)) * (0.50 + runeBonus + lungeBonus) * multiplier
 	
 	local params = {}
 		params.includemab = true

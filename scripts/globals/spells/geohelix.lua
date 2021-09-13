@@ -18,7 +18,7 @@ function onSpellCast(caster, target, spell)
 
     -- calculate raw damage
     local params = {}
-    params.dmg = 35
+    params.dmg = 200
     params.multiplier = 1
     params.skillType = tpz.skill.ELEMENTAL_MAGIC
     params.attribute = tpz.mod.INT

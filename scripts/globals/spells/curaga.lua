@@ -26,22 +26,26 @@ function onSpellCast(caster, target, spell)
         constant = 47.5
     end
 
-    local final = getCureFinal(caster, spell, getBaseCureOld(power, divisor, constant), minCure, false)
+	local final
 
-    final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD)/100))
+	if isValidHealTarget(caster, target) then -- e.g. is a PC and not a monster (?)
+		final = getCureFinal(caster, spell, getBaseCureOld(power, divisor, constant), minCure, false)
 
-    --Applying server mods....
-    final = final * CURE_POWER
+		final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD)/100))
 
-    local diff = (target:getMaxHP() - target:getHP())
-    if (final > diff) then
-        final = diff
-    end
-    target:addHP(final)
+		--Applying server mods....
+		final = final * CURE_POWER
 
-    target:wakeUp()
-    caster:updateEnmityFromCure(target, final)
+		local diff = (target:getMaxHP() - target:getHP())
+		if (final > diff) then
+			final = diff
+		end
+		target:addHP(final)
 
+		target:wakeUp()
+		caster:updateEnmityFromCure(target, final)
+	end
+	
     spell:setMsg(tpz.msg.basic.AOE_HP_RECOVERY)
 
     local mpBonusPercent = (final*caster:getMod(tpz.mod.CURE2MP_PERCENT))/100

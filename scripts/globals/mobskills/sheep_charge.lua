@@ -19,6 +19,14 @@ function onMobWeaponSkill(target, mob, skill)
     local accmod = 1
     local dmgmod = 2.2
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded)
+	local shadows = info.hitslanded
+	
+	-- Dozing Dorian's Sheep Charge ignores shadows
+	if (mob:getID() == 17318434) then
+		shadows = MOBPARAM_IGNORE_SHADOWS
+	end
+	
+    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, shadows)
+	
     return dmg
 end

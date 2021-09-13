@@ -18,7 +18,8 @@ function onAbilityCheck(player, target, ability)
 		player:hasStatusEffect(tpz.effect.SULPOR) or
 		player:hasStatusEffect(tpz.effect.UNDA) or
 		player:hasStatusEffect(tpz.effect.LUX) or
-		player:hasStatusEffect(tpz.effect.TENEBRAE)) then
+		player:hasStatusEffect(tpz.effect.TENEBRAE) or
+		not player:hasStatusEffect(20)) then -- Curse II prevents restoring HP
 		return 0,0
 	else
 		return tpz.msg.basic.UNABLE_TO_USE_JA

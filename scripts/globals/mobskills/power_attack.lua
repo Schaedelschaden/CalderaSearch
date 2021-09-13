@@ -14,6 +14,11 @@ function onMobSkillCheck(target, mob, skill)
     if (mob:getMainJob() ~= tpz.job.WAR) then
         return 0
     end
+	
+	if (mob:getHPP() <= 25 and (mob:getID() == 17957328 or mob:getID() == 17957329)) then
+		mob:useMobAbility(2823)
+	end
+	
     return 1
 end
 

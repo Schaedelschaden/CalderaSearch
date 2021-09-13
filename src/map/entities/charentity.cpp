@@ -1025,6 +1025,12 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                     }
                 }
             }
+			
+			if (damage > 0)
+			{
+				// Trigger Treasure Hunter from weaponskill
+				battleutils::ApplyTreasureHunter(this, PTarget, &actionTarget, false);
+			}
         }
         battleutils::ClaimMob(PBattleTarget, this);
     }
@@ -1119,7 +1125,10 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 			else
             {
 				// Blood Pact recasts can be reduced by a total of 40 seconds
-                action.recast -= std::min<int16>(getMod(Mod::BP_DELAY) + getMod(Mod::BP_DELAY_II) + getMod(Mod::AVATARS_FAVOR_BP_DELAY), 40);
+				int16 bpDelay = std::min<int16>(getMod(Mod::BP_DELAY), 15);
+				int16 bpDelayII = std::min<int16>(getMod(Mod::BP_DELAY_II), 15);
+				int16 favorDelay = std::min<int16>(getMod(Mod::AVATARS_FAVOR_BP_DELAY), 10);
+                action.recast -= std::min(bpDelay + bpDelayII + favorDelay, 40);
             }
         }
 
@@ -1251,6 +1260,12 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 
                 actionTarget.messageID = msg;
                 actionTarget.param = luautils::OnUseAbility(this, PTarget, PAbility, &action);
+				
+				if (PTarget->objtype == TYPE_MOB)
+				{
+					// Trigger Treasure Hunter from AoE ability
+					battleutils::ApplyTreasureHunter(this, PTarget, &actionTarget, false);
+				}
             }
         }
         else
@@ -1319,6 +1334,12 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             //}
 
             state.ApplyEnmity();
+			
+			if (PTarget->objtype == TYPE_MOB)
+			{
+				// Trigger Treasure Hunter from single target ability
+				battleutils::ApplyTreasureHunter(this, PTarget, &actionTarget, false);
+			}
         }
         PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
 
@@ -1384,8 +1405,13 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     uint8 realHits = 0;			// to store the real number of hit for tp multipler
     auto ammoConsumed = 0;
     bool hitOccured = false;	// track if player hit mob at all
+	bool isCritical = false;
     bool isSange = false;
     bool isBarrage = StatusEffectContainer->HasStatusEffect(EFFECT_BARRAGE, 0);
+	bool isFirstShot = false;
+	bool distanceSweetSpot = false;
+	float damagePenalty = 0.0f;
+	int16 rangedDelay = 0;
 
     // if barrage is detected, getBarrageShotCount also checks for ammo count
     if (!ammoThrowing && !rangedThrowing && isBarrage)
@@ -1428,7 +1454,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
             }
             else
             {
-                bool isCritical = tpzrand::GetRandomNumber(100) < battleutils::GetCritHitRate(this, PTarget, true);
+                isCritical = tpzrand::GetRandomNumber(100) < battleutils::GetCritHitRate(this, PTarget, true);
 				
                 float pdif = battleutils::GetRangedDamageRatio(this, PTarget, isCritical);
 
@@ -1442,6 +1468,11 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
                 hitOccured = true;
                 realHits++;
 
+				if (i == 1)
+				{
+					isFirstShot = true;
+				}
+
                 if (isSange)
                 {
                     // change message to sange
@@ -1451,21 +1482,113 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
                 damage = (int32)((this->GetRangedWeaponDmg() + battleutils::GetFSTR(this, PTarget, slot)) * pdif);
 				
 				// Ranged attack distance correction ideal distances
-				if (rangedDistance >= 3.5f && rangedThrowing == true)
+				// https://www.bg-wiki.com/ffxi/Distance_Correction
+				// https://ffxiclopedia.fandom.com/wiki/Distance
+				// TODO: Check for target model size and increase allowable distance
+				
+				// Throwing (Ranged or Ammo slot)
+				if (rangedThrowing == true || ammoThrowing == true)
 				{
-					damage = (int32)(damage * distanceCorrection);
+					if (rangedDistance >= 1.0f && rangedDistance <= 3.5f && rangedThrowing == true)
+					{
+						damage = (int32)(damage * distanceCorrection);
+						distanceSweetSpot = true;
+					}
+					else if (rangedDistance > 3.5f && rangedThrowing == true)
+					{
+						damagePenalty = (100.0f - rangedDistance) / 100.0f;
+						damage = (int32)(damage * damagePenalty);
+					}
 				}
-				else if (rangedDistance >= 3.5f && ammoThrowing == true)
+				
+				if (PItem != nullptr && PItem->getSkillType() == SKILL_MARKSMANSHIP)
 				{
-					damage = (int32)(damage * distanceCorrection);
+					rangedDelay = ((PItem->getDelay() * 60) / 1000);
+					
+					// Marksmanship (Crossbow)
+					if (rangedDelay <= 436)
+					{
+						if (rangedDistance >= 8.5f && rangedDistance <= 12.5f)
+						{
+							damage = (int32)(damage * distanceCorrection);
+							distanceSweetSpot = true;
+						}
+						else if (rangedDistance < 8.5f)
+						{
+							damagePenalty = (100.0f - (40.0f - std::clamp(rangedDistance * 5.0f, 6.5f, 35.0f))) / 100.0f;
+							damage = (int32)(damage * damagePenalty);
+						}
+						else if (rangedDistance >= 12.5f)
+						{
+							damagePenalty = (100.0f - std::clamp(rangedDistance * 0.7f, 5.0f, 14.0f)) / 100.0f;
+							damage = (int32)(damage * damagePenalty);
+						}
+					}
+					
+					//Marksmanship (Gun)
+					if (rangedDelay >= 466)
+					{
+						if (rangedDistance >= 5.5f && rangedDistance <= 7.5f)
+						{
+							damage = (int32)(damage * distanceCorrection);
+							distanceSweetSpot = true;
+						}
+						else if (rangedDistance < 5.5f)
+						{
+							damagePenalty = (100.0f - (30.0f - std::clamp(rangedDistance * 5.0f, 5.0f, 25.0f))) / 100.0f;
+							damage = (int32)(damage * damagePenalty);
+						}
+						else if (rangedDistance > 7.5f)
+						{
+							damagePenalty = (100.0f - std::clamp(rangedDistance * 5.6f, 5.0f, 15.0f)) / 100.0f;
+							damage = (int32)(damage * damagePenalty);
+						}
+					}
 				}
-				else if (rangedDistance >= 8.5f && PItem->getSkillType() == SKILL_MARKSMANSHIP)
+				
+				if (PItem != nullptr && PItem->getSkillType() == SKILL_ARCHERY)
 				{
-					damage = (int32)(damage * distanceCorrection);
-				}
-				else if (rangedDistance >= 10.5f && PItem->getSkillType() == SKILL_ARCHERY)
-				{
-					damage = (int32)(damage * distanceCorrection);
+					rangedDelay = ((PItem->getDelay() * 60) / 1000);
+					
+					// Archery (Shortbow)
+					if (rangedDelay <= 436)
+					{
+						if (rangedDistance >= 7.0f && rangedDistance <= 10.0f)
+						{
+							damage = (int32)(damage * distanceCorrection);
+							distanceSweetSpot = true;
+						}
+						else if (rangedDistance < 7.0f)
+						{
+							damagePenalty = (100.0f - (40.0f - std::clamp(rangedDistance * 5.0f, 5.5f, 35.0f))) / 100.0f;
+							damage = (int32)(damage * damagePenalty);
+						}
+						else if (rangedDistance > 10.0f)
+						{
+							damagePenalty = (100.0f - std::clamp(rangedDistance * 0.52f, 1.0f, 13.0f)) / 100.0f;
+							damage = (int32)(damage * damagePenalty);
+						}
+					}
+						
+					// Archery (Longbow)
+					if (rangedDelay >= 466)
+					{
+						if (rangedDistance >= 10.5f && rangedDistance <= 13.5f)
+						{
+							damage = (int32)(damage * distanceCorrection);
+							distanceSweetSpot = true;
+						}
+						else if (rangedDistance < 10.5f)
+						{
+							damagePenalty = (100.0f - (40.0f - std::clamp(rangedDistance * 5.0f, 5.5f, 35.0f))) / 100.0f;
+							damage = (int32)(damage * damagePenalty);
+						}
+						else if (rangedDistance > 13.5f)
+						{
+							damagePenalty = (100.0f - std::clamp(rangedDistance * 0.52f, 1.0f, 13.0f)) / 100.0f;
+							damage = (int32)(damage * damagePenalty);
+						}
+					}
 				}
 
                 if (slot == SLOT_RANGED)
@@ -1574,6 +1697,17 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
             actionTarget.reaction = REACTION_HIT;
             actionTarget.speceffect = SPECEFFECT_CRITICAL_HIT;
         }
+		
+		// 576 - Ranged attack strikes squarely
+		// 577 - Ranged attack strikes true, pummeling
+		if (distanceSweetSpot == true && isCritical == false)
+		{
+			actionTarget.messageID = 577;
+		}
+		else if (distanceSweetSpot == false && isCritical == false)
+		{
+			actionTarget.messageID = 576;
+		}
 
         actionTarget.param = battleutils::TakePhysicalDamage(this, PTarget, PHYSICAL_ATTACK_TYPE::RANGED, totalDamage, false, slot, realHits, nullptr, true, true);
 
@@ -1596,6 +1730,13 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         if ((PAmmo != nullptr && battleutils::GetScaledItemModifier(this, PAmmo, Mod::ADDITIONAL_EFFECT) > 0) ||
             (PItem != nullptr && battleutils::GetScaledItemModifier(this, PItem, Mod::ADDITIONAL_EFFECT) > 0)) {}
         luautils::OnAdditionalEffect(this, PTarget, (PAmmo != nullptr ? PAmmo : PItem), &actionTarget, totalDamage);
+		
+		// Treasure Hunter only applies on the first shot
+		if (isFirstShot == true && actionTarget.param > 0)
+		{
+			// Trigger Treasure Hunter from ranged attack
+			battleutils::ApplyTreasureHunter(this, PTarget, &actionTarget, true);
+		}
     }
     else if (shadowsTaken > 0)
     {

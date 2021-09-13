@@ -34,6 +34,7 @@ function onRegionEnter(player, region)
     switch (region:GetRegionID()): caseof
     {
         [1] = function (x)
+			-- printf("DANGRUF WADI zone.lua onRegionEnter REGION 1 TRIGGERED")
             player:startEvent(10)
             SendEntityVisualPacket(ID.npc.GEYSER_OFFSET, "kkj2")
         end,

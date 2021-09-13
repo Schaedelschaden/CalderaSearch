@@ -34,144 +34,98 @@ function onUseAbility(player, target, ability, action)
 
 	local StepACC = player:getMod(tpz.mod.STEP_ACCURACY)
     local hit = 2
-    local effect = 1
-	
-	if (player:hasStatusEffect(tpz.effect.PRESTO)) then
-		StepACC = StepACC + 50
-	end
+    local statusEffect
+	local duration
+	local tier = 1
+	local power
+	local finishingMoves = 2
 
     if math.random() <= player:getHitRate(target, 0, StepACC) then
         hit = 6
         local mjob = player:getMainJob()
-        local daze = 1
 
-        if (mjob == tpz.job.DNC) then
-            if (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_1)) then
-                local duration = target:getStatusEffect(tpz.effect.SLUGGISH_DAZE_1):getDuration()
-                target:delStatusEffectSilent(tpz.effect.SLUGGISH_DAZE_1)
-                if (player:hasStatusEffect(tpz.effect.PRESTO)) then
-                    target:addStatusEffect(tpz.effect.SLUGGISH_DAZE_3,1,0,duration+30)
-                    daze = 3
-                    effect = 3
-                else
-                    target:addStatusEffect(tpz.effect.SLUGGISH_DAZE_2,1,0,duration+30)
-                    daze = 2
-                    effect = 2
-                end
-
-            elseif (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_2)) then
-                local duration = target:getStatusEffect(tpz.effect.SLUGGISH_DAZE_2):getDuration()
-                target:delStatusEffectSilent(tpz.effect.SLUGGISH_DAZE_2)
-                if (player:hasStatusEffect(tpz.effect.PRESTO)) then
-                    target:addStatusEffect(tpz.effect.SLUGGISH_DAZE_4,1,0,duration+30)
-                    daze = 3
-                    effect = 4
-                else
-                    target:addStatusEffect(tpz.effect.SLUGGISH_DAZE_3,1,0,duration+30)
-                    daze = 2
-                    effect = 3
-                end
-
-            elseif (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_3)) then
-                local duration = target:getStatusEffect(tpz.effect.SLUGGISH_DAZE_3):getDuration()
-                target:delStatusEffectSilent(tpz.effect.SLUGGISH_DAZE_3)
-                if (player:hasStatusEffect(tpz.effect.PRESTO)) then
-                    target:addStatusEffect(tpz.effect.SLUGGISH_DAZE_5,1,0,duration+30)
-                    daze = 3
-                    effect = 5
-                else
-                    target:addStatusEffect(tpz.effect.SLUGGISH_DAZE_4,1,0,duration+30)
-                    daze = 2
-                    effect = 4
-                end
-
-            elseif (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_4)) then
-                local duration = target:getStatusEffect(tpz.effect.SLUGGISH_DAZE_4):getDuration()
-                target:delStatusEffectSilent(tpz.effect.SLUGGISH_DAZE_4)
-                if (player:hasStatusEffect(tpz.effect.PRESTO)) then
-                    daze = 3
-                else
-                    daze = 2
-                end
-                target:addStatusEffect(tpz.effect.SLUGGISH_DAZE_5,1,0,duration+30)
-                effect = 5
-
-            elseif (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_5)) then
-                local duration = target:getStatusEffect(tpz.effect.SLUGGISH_DAZE_5):getDuration()
-                target:delStatusEffectSilent(tpz.effect.SLUGGISH_DAZE_5)
-                target:addStatusEffect(tpz.effect.SLUGGISH_DAZE_5,1,0,duration+30)
-                daze = 1
-                effect = 5
-
-            else
-                if (player:hasStatusEffect(tpz.effect.PRESTO)) then
-                    target:addStatusEffect(tpz.effect.SLUGGISH_DAZE_2,1,0,60)
-                    daze = 3
-                    effect = 2
-                else
-                    target:addStatusEffect(tpz.effect.SLUGGISH_DAZE_1,1,0,60)
-                    daze = 2
-                    effect = 1
-                end
-            end
-        else
-            if (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_1)) then
-                local duration = target:getStatusEffect(tpz.effect.SLUGGISH_DAZE_1):getDuration()
-                target:delStatusEffectSilent(tpz.effect.SLUGGISH_DAZE_1)
-                target:addStatusEffect(tpz.effect.SLUGGISH_DAZE_2,1,0,duration+30)
-                effect = 2
-
-            elseif (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_2)) then
-                local duration = target:getStatusEffect(tpz.effect.SLUGGISH_DAZE_2):getDuration()
-                target:delStatusEffectSilent(tpz.effect.SLUGGISH_DAZE_2)
-                target:addStatusEffect(tpz.effect.SLUGGISH_DAZE_3,1,0,duration+30)
-                effect = 3
-
-            elseif (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_3)) then
-                local duration = target:getStatusEffect(tpz.effect.SLUGGISH_DAZE_3):getDuration()
-                target:delStatusEffectSilent(tpz.effect.SLUGGISH_DAZE_3)
-                target:addStatusEffect(tpz.effect.SLUGGISH_DAZE_4,1,0,duration+30)
-                effect = 4
-
-            elseif (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_4)) then
-                local duration = target:getStatusEffect(tpz.effect.SLUGGISH_DAZE_4):getDuration()
-                target:delStatusEffectSilent(tpz.effect.SLUGGISH_DAZE_4)
-                target:addStatusEffect(tpz.effect.SLUGGISH_DAZE_5,1,0,duration+30)
-                effect = 5
-
-            elseif (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_5)) then
-                local duration = target:getStatusEffect(tpz.effect.SLUGGISH_DAZE_5):getDuration()
-                target:delStatusEffectSilent(tpz.effect.SLUGGISH_DAZE_5)
-                target:addStatusEffect(tpz.effect.SLUGGISH_DAZE_5,1,0,duration+30)
-                effect = 5
-            else
-                target:addStatusEffect(tpz.effect.SLUGGISH_DAZE_1,1,0,60)
-                effect = 1
-            end
+        if (mjob == tpz.job.DNC) then -- DNC Main
+			if (player:hasStatusEffect(tpz.effect.PRESTO)) then
+				if (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_1)) then
+					statusEffect = target:getStatusEffect(tpz.effect.SLUGGISH_DAZE_1)
+					duration = statusEffect:getDuration() + 30
+					
+					if (statusEffect:getTier() < 10) then
+						tier = statusEffect:getTier() + 5
+						finishingMoves = 5
+					else
+						tier = 10
+						finishingMoves = 1
+					end
+					
+					target:delStatusEffectSilent(tpz.effect.SLUGGISH_DAZE_1)
+				else
+					tier = 5
+					duration = 60
+				end
+			else
+				if (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_1)) then
+					statusEffect = target:getStatusEffect(tpz.effect.SLUGGISH_DAZE_1)
+					tier = statusEffect:getTier() + 1
+					duration = statusEffect:getDuration() + 30
+					
+					target:delStatusEffectSilent(tpz.effect.SLUGGISH_DAZE_1)
+				else
+					duration = 60
+				end
+			end
+			
+			if (tier > 10) then
+				tier = 10
+			end
+        else -- DNC Sub
+			finishingMoves = 1
+		
+			if (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_1)) then
+				statusEffect = target:getStatusEffect(tpz.effect.SLUGGISH_DAZE_1)
+				tier = statusEffect:getTier() + 1
+				duration = statusEffect:getDuration() + 30
+				
+				target:delStatusEffectSilent(tpz.effect.SLUGGISH_DAZE_1)
+			else
+				duration = 60
+			end
+			
+			if (tier > 5) then
+				tier = 5
+			end
         end
-
-        if (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_1)) then
+		
+		power = tier * 1.5
+		
+		-- Effect, Power, Tick, Duration, SubID, SubPower, Tier
+		target:addStatusEffect(tpz.effect.SLUGGISH_DAZE_1, power, 0, duration, 0, 0, tier)
+		
+		if (player:hasStatusEffect(tpz.effect.PRESTO) and finishingMoves > 1 and not player:hasStatusEffect(tpz.effect.FINISHING_MOVE_5)) then
+			player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_1)
+			player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_2)
+			player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_3)
+			player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_4)
+			player:addStatusEffect(tpz.effect.FINISHING_MOVE_5, 1, 0, 7200)
+        elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_1)) then
             player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_1)
-            player:addStatusEffect(tpz.effect.FINISHING_MOVE_1+daze,1,0,7200)
-
+            player:addStatusEffect(tpz.effect.FINISHING_MOVE_1 + finishingMoves, 1, 0, 7200)
         elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_2)) then
             player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_2)
-            player:addStatusEffect(tpz.effect.FINISHING_MOVE_2+daze,1,0,7200)
-
+            player:addStatusEffect(tpz.effect.FINISHING_MOVE_2 + finishingMoves, 1, 0, 7200)
         elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_3)) then
             player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_3)
-            if (daze > 2) then
-                daze = 2
+            if (finishingMoves > 2) then
+                finishingMoves = 2
             end
-            player:addStatusEffect(tpz.effect.FINISHING_MOVE_3+daze,1,0,7200)
-
+            player:addStatusEffect(tpz.effect.FINISHING_MOVE_3 + finishingMoves, 1, 0, 7200)
         elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_4)) then
             player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_4)
-            player:addStatusEffect(tpz.effect.FINISHING_MOVE_5,1,0,7200)
+            player:addStatusEffect(tpz.effect.FINISHING_MOVE_5, 1, 0, 7200)
         elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_5)) then
-
+			
         else
-            player:addStatusEffect(tpz.effect.FINISHING_MOVE_1 - 1 + daze,1,0,7200)
+            player:addStatusEffect(tpz.effect.FINISHING_MOVE_1 - 1 + finishingMoves, 1, 0, 7200)
         end
 
     else
@@ -182,6 +136,6 @@ function onUseAbility(player, target, ability, action)
     action:speceffect(target:getID(), hit)
 	
 	player:delStatusEffect(tpz.effect.PRESTO)
-	
-    return effect
+    
+	return tier
 end

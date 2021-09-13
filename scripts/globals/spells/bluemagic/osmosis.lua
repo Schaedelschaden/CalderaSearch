@@ -60,7 +60,11 @@ function onSpellCast(caster, target, spell)
     end
 	
     dmg = BlueFinalAdjustments(caster, target, spell, dmg, params)
-    caster:addHP(dmg)
+	
+	-- Curse II prevents restoring HP
+	if not (caster:hasStatusEffect(20)) then
+		caster:addHP(dmg)
+	end
 	
 	local dispel = target:dispelStatusEffect()
 	caster:addStatusEffect(dispel, 1, 0, 60)

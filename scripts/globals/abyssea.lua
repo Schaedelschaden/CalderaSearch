@@ -70,7 +70,7 @@ local popEvents =
 {
     [tpz.zone.ABYSSEA_KONSCHTAT]        = {1010, 1020, 1021},
     [tpz.zone.ABYSSEA_TAHRONGI]         = {1010, 1020, 1021},
-    [tpz.zone.ABYSSEA_LA_THEINE]        = {1010, 1020, 1021},
+    [tpz.zone.ABYSSEA_LA_THEINE]        = {1010, 1020, 1016},
     [tpz.zone.ABYSSEA_ATTOHWA]          = {1010, 1022, 1023},
     [tpz.zone.ABYSSEA_MISAREAUX]        = {1010, 1022, 1021},
     [tpz.zone.ABYSSEA_VUNKERL]          = {1010, 1015, 1120},
@@ -302,25 +302,47 @@ tpz.abyssea.getNewBlueWeakness = function(mob)
     return blueWeakness[table][math.random(#blueWeakness[table])]
 end
 
+-- Drop KI on death
+tpz.abyssea.kiOnMobDeath = function(mob, player)
+	if (mob:checkDistance(player) <= 40) then
+		local zoneId = player:getZoneID()
+		local keyItem = zones[zoneId].mob.ON_DEATH_KI[mob:getID()].reward
+		
+		if not (player:hasKeyItem(keyItem)) then
+			player:messageSpecial(zones[zoneId].text.KEYITEM_OBTAINED, keyItem)
+			player:addKeyItem(keyItem)
+		end
+	end
+end
+
 -- trade to QM to pop mob
 tpz.abyssea.qmOnTrade = function(player, npc, trade)
     -- validate QM pop data
     local zoneId = player:getZoneID()
     local pop = zones[zoneId].npc.QM_POPS[npc:getID()] -- TODO: Once I (Wren) finish entity-QC on all Abyssea zones, I must adjust the format of QM_POPS table
+	
     if not pop then
         return false
     end
 
     -- validate trade-to-pop
     local reqTrade = pop[2]
-    if #reqTrade == 0 or trade:getItemCount() ~= #reqTrade then
+	
+	local count = 0
+	for i = 1, #reqTrade do
+		if (reqTrade[i] ~= 0) then
+			count = count + 1
+		end
+	end
+	
+    if count == 0 or trade:getItemCount() ~= count then
         return false
     end
 
     -- validate traded items
     for k, v in pairs(reqTrade) do
-        if not trade:hasItemQty(v, 1) then
-            return false
+        if (reqTrade[k] ~= 0 and not trade:hasItemQty(v, 1)) then
+			return false
         end
     end
 
@@ -337,6 +359,22 @@ tpz.abyssea.qmOnTrade = function(player, npc, trade)
     local dz = player:getZPos() + math.random(-1, 1)
     GetMobByID(nm):setSpawn(dx, dy, dz)
     SpawnMob(nm):updateClaim(player)
+	
+	-- Handle ??? disappearing on pop and reappearing after mob dies
+	local mob = GetMobByID(nm)
+	
+	npc:setStatus(tpz.status.DISAPPEAR)
+	mob:setLocalVar("qm", npc:getID())
+	mob:addListener("DESPAWN", "QM_"..nm, function(m)
+		m:removeListener("QM_"..nm)
+		
+		if mob:isAlive() then
+			return false
+		end
+
+		GetNPCByID(m:getLocalVar("qm")):updateNPCHideTime(30)
+	end)
+	
     return true
 end
 
@@ -345,6 +383,7 @@ tpz.abyssea.qmOnTrigger = function(player, npc)
     local zoneId = player:getZoneID()
     local events = popEvents[zoneId]
     local pop = zones[zoneId].npc.QM_POPS[npc:getID()] -- TODO: Once I (Wren) finish entity-QC on all Abyssea zones, I must adjust the format of QM_POPS table
+	
     if not pop then
         return false
     end
@@ -376,10 +415,10 @@ tpz.abyssea.qmOnTrigger = function(player, npc)
     -- validate kis
     local validKis = true
     for k, v in pairs(kis) do
-        if not player:hasKeyItem(v) then
-            validKis = false
-            break
-        end
+		if (kis[k] ~= 0 and not player:hasKeyItem(v)) then
+			validKis = false
+			break
+		end
     end
 
     -- infill kis
@@ -408,7 +447,10 @@ tpz.abyssea.qmOnEventFinish = function(player, csid, option)
     local zoneId = player:getZoneID()
     local events = popEvents[zoneId]
     local pop = zones[zoneId].npc.QM_POPS[player:getLocalVar("abysseaQM")] -- TODO: Once I (Wren) finish entity-QC on all Abyssea zones, I must adjust the format of QM_POPS table
-    player:setLocalVar("abysseaQM", 0)
+    local qm = GetNPCByID(player:getLocalVar("abysseaQM"))
+	
+	player:setLocalVar("abysseaQM", 0)
+	
     if not pop then
         return false
     end
@@ -429,6 +471,22 @@ tpz.abyssea.qmOnEventFinish = function(player, csid, option)
         local dz = player:getZPos() + math.random(-1, 1)
         GetMobByID(nm):setSpawn(dx, dy, dz)
         SpawnMob(nm):updateClaim(player)
+		
+		-- Handle ??? disappearing on pop and reappearing after mob dies
+		local mob = GetMobByID(nm)
+		
+		qm:setStatus(tpz.status.DISAPPEAR)
+		mob:setLocalVar("qm", qm:getID())
+		mob:addListener("DESPAWN", "QM_"..nm, function(m)
+			m:removeListener("QM_"..nm)
+			
+			if mob:isAlive() then
+				return false
+			end
+
+			GetNPCByID(m:getLocalVar("qm")):updateNPCHideTime(30)
+		end)
+		
         return true
     end
 end

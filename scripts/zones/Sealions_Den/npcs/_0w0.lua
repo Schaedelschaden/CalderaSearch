@@ -36,7 +36,7 @@ function onEventFinish(player, csid, option)
         return
     end
     if (csid == 12 and option == 1) then
-        toPalaceEntrance(player)
+        player:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.SEA, 0, 1)
     elseif (csid == 13) then
         player:setCharVar("PromathiaStatus", 0)
         player:completeMission(COP, tpz.mission.id.cop.SLANDEROUS_UTTERINGS)

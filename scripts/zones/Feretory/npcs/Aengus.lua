@@ -16,6 +16,7 @@ function onTrade(player,npc,trade)
 	{
 	--	{"aug1", "aug1 value", "aug2", "aug2 value", "aug3", "aug3 value", "aug4", "aug4 value"}
 		{"1", "4", "23", "1", "25", "1", "31", "1"}, -- HP +5, ACC +2, ATK +2, EVA +2
+		{"1", "2", "27", "1", "29", "1", "31", "1"}, -- HP +3, RACC +2, RATK +2, EVA +2
 		{"9", "4", "35", "1", "133", "0", "31", "1"}, -- MP +5, MACC +2, MAB +1, EVA +2
 		{"25","4","143","1"}, -- ATK +5, Double Attack +2%
 	}
@@ -59,14 +60,17 @@ function onTrade(player,npc,trade)
 	if (trade:hasItemQty(4358, 12)) then -- 12x Hare Meat
 		augmentList = augments[1]
 --		player:addItem(4358, 12) -- Returns 12x Hare Meat to make testing easier, remove later
-	elseif (trade:hasItemQty(936, 12)) then -- 12x Rock Salt
+	elseif (trade:hasItemQty(847, 12)) then -- 12x Bird Feathers
 		augmentList = augments[2]
+--		player:addItem(847, 12) -- Returns 12x Bird Feathers to make testing easier, remove later
+	elseif (trade:hasItemQty(936, 12)) then -- 12x Rock Salt
+		augmentList = augments[3]
 --		player:addItem(936, 12) -- Returns 12x Rock Salt to make testing easier, remove later
 	elseif (trade:hasItemQty(14986, 1)) then -- 1x Ochimusha Kote
-		augmentList = augments[3]
+		augmentList = augments[4]
 --		player:addItem(14986, 12) -- Returns Ochimusha Kote to make testing easier, remove later
-	elseif not (trade:hasItemQty(936, 12) or trade:hasItemQty(4358, 12) or trade:hasItemQty(14986, 1)) then
-		player:PrintToPlayer(string.format("Aengus : You must include 12x Hare Meat, 12x Rock Salt, or a pair of Ochimusha Kote."),tpz.msg.channel.NS_SAY)
+	elseif not (trade:hasItemQty(4358, 12) or trade:hasItemQty(847, 12) or trade:hasItemQty(936, 12) or trade:hasItemQty(14986, 1)) then
+		player:PrintToPlayer(string.format("Aengus : You must include 12x Hare Meat, 12x Bird Feathers, 12x Rock Salt, or a pair of Ochimusha Kote."),tpz.msg.channel.NS_SAY)
         return
 	end
 	
@@ -88,6 +92,7 @@ function onTrigger(player,npc)
 --	player:PrintToPlayer(string.format("Aengus : I handle the augment trades requiring a Bronze Rose."),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Aengus : Select an augment set from the list below:"),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Aengus : 12x Hare Meat = HP +5, ACC +2, ATK +2, EVA +2"),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Aengus : 12x Bird Feather = HP +3, RACC +2, RATK +2, EVA +2"),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Aengus : 12x Rock Salt = MP +5, MACC +2, MAB +1, EVA +2"),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Aengus : 1x Ochimusha Kote = ATK +5, Double Attack +2%%"),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Aengus : Trade 1 piece of level 1-30 gear, 1 Bronze Rose (furniture), and the item/stack from above."),tpz.msg.channel.NS_SAY)

@@ -13,13 +13,15 @@ cmdprops =
 function onTrigger(player)
 	local mainLvl = player:getMainLvl()
 	
-	if RegenCommand == true then
-		player:delStatusEffect(tpz.effect.SIGNET)
-		player:delStatusEffect(tpz.effect.REGEN)
-		player:delStatusEffect(tpz.effect.REFRESH)
-	end
+	local regenCommand = player:getCharVar("RegenCommand")
 	
-	if mainLvl <= 98 then
+	if (mainLvl <= 98) then
+		if regenCommand == 1 then
+			player:delStatusEffect(tpz.effect.SIGNET)
+			player:delStatusEffect(tpz.effect.REGEN)
+			player:delStatusEffect(tpz.effect.REFRESH)
+		end
+	
 		player:injectActionPacket(6,254)
 		player:addStatusEffect(tpz.effect.SIGNET, 1, 0, 28800) --Adds Signet, normal strength, 0 tick time, 28,800 seconds (8 hours)
 		player:addStatusEffect(tpz.effect.REGEN, 3, 0, 28800) -- Adds Regen, 3 per tick, 0 tick time, 28,800 seconds
@@ -31,6 +33,6 @@ function onTrigger(player)
 			pet:addStatusEffect(tpz.effect.REFRESH, 3, 0, 28800)
 		end
 		
-		RegenCommand = true
+		player:setCharVar("RegenCommand", 1)
 	end
 end

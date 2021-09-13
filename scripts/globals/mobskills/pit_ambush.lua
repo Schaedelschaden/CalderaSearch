@@ -14,10 +14,10 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:getPool() == 1318 and mob:getLocalVar("AMBUSH") == 1) then
-        return 1
-    else
+    if (mob:AnimationSub() == 0) then
         return 0
+    else
+        return 1
     end
 end
 
@@ -32,7 +32,7 @@ function onMobWeaponSkill(target, mob, skill)
     mob:hideName(false)
     mob:untargetable(false)
     mob:AnimationSub(1)
-    mob:setLocalVar("AMBUSH", 1) -- Used it for the last time!
+    -- mob:setLocalVar("AMBUSH", 1) -- Used it for the last time!
 
     return dmg
 end

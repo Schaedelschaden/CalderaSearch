@@ -24,6 +24,10 @@ g_mixins.families.aern = function(mob)
                 local dropid = mob:getDropID()
                 mob:setDropID(0)
                 local target = mob:getTarget()
+				if (target:isPet()) then
+					local master = target:getMaster()
+					target = master
+				end
                 if target then killer = target end
                 mob:timer(12000, function(mob)
                     mob:setHP(mob:getMaxHP())

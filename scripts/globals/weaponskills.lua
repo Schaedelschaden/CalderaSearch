@@ -188,6 +188,15 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
         attacker:delStatusEffectSilent(tpz.effect.STRIKING_FLOURISH)
         attacker:delStatusEffectSilent(tpz.effect.TERNARY_FLOURISH)
     end
+	
+	-- Consume Mana
+	if (attacker:hasStatusEffect(tpz.effect.CONSUME_MANA)) then
+		local currentMP = attacker:getMP()
+		local consumeMana = currentMP / 5
+		dmg = dmg + consumeMana
+		attacker:delStatusEffect(tpz.effect.CONSUME_MANA)
+		attacker:setMP(0)
+	end
     
     dmg = dmg * ftp
     
@@ -283,7 +292,6 @@ end
 -- Sets up the necessary calcParams for a melee WS before passing it to calculateRawWSDmg. When the raw
 -- damage is returned, handles reductions based on target resistances and passes off to takeWeaponskillDamage.
 function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, primaryMsg, taChar)
-
     -- Determine cratio and ccritratio
     local ignoredDef = 0
     if (wsParams.ignoresDef == not nil and wsParams.ignoresDef == true) then
@@ -382,6 +390,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     finaldmg = finaldmg * randomness
     
     calcParams.finalDmg = finaldmg
+	
     finaldmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end
@@ -723,6 +732,7 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
     if flourisheffect ~= nil and flourisheffect:getPower() > 1 then
         attacker:addMod(tpz.mod.ATTP, 25 + flourisheffect:getSubPower() / 2)
     end
+--	printf("weaponskills.lua cMeleeRTio ATTACKER: [%s]", attacker:getName())
     local atkmulti = fTP(tp, params.atk100, params.atk200, params.atk300)
     local cratio = (attacker:getStat(tpz.mod.ATT) * atkmulti) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
     cratio = utils.clamp(cratio, 0, 2.25)

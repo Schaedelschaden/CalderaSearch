@@ -3,7 +3,7 @@
 --  Family: Corse
 --  Description: Damages enemies in an area of effect. Additional effect: Stun
 --  Type: Physical
---  Utsusemi/Blink absorb: 1-3 shadows
+--  Utsusemi/Blink absorb: 2 shadows
 --  Range: Radial
 --  Notes: Only used by some notorious monsters like Xolotl.
 ---------------------------------------------
@@ -21,7 +21,7 @@ function onMobWeaponSkill(target, mob, skill)
     local accmod = 1
     local dmgmod = 3.2
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, MOBPARAM_3_SHADOW)
+    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, MOBPARAM_2_SHADOW)
 
     local typeEffect = tpz.effect.STUN
 

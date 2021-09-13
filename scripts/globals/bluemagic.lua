@@ -203,8 +203,6 @@ function BluePhysicalSpell(caster, target, spell, params)
             tp = 3000
         end
 
-        multiplier = BluefTP(tp, multiplier, params.tp150, params.tp300)
-		-- printf("bluemagic.lua BluePhysicalSpell CHAIN AFFINITY MULTIPLIER: [%i]", multiplier)
 		D = D + caster:getMod(tpz.mod.CHAIN_AFFINITY_EFFECT)
     end
 	
@@ -213,14 +211,26 @@ function BluePhysicalSpell(caster, target, spell, params)
 	-- the multipliers to fTP(multiplier, tp150, tp300)           --
 	----------------------------------------------------------------
 	if (caster:hasStatusEffect(tpz.effect.EFFLUX)) then
-		tp = tp + 1000 + caster:getMod(tpz.mod.ENH_EFFLUX)
+		if not (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY)) then
+			tp = tp + 1000 + caster:getMod(tpz.mod.ENH_EFFLUX)
+		else
+			tp = 1000 + caster:getMod(tpz.mod.ENH_EFFLUX)
+		end
 		
 		if (tp > 3000) then
             tp = 3000
         end
-		
+
 		D = D * 1.5
+		
+		caster:delStatusEffect(tpz.effect.EFFLUX)
 	end
+	
+	----------------------------------------------------------------
+	-- Calculates Blue Magic fTP                                  --
+	----------------------------------------------------------------
+	multiplier = BluefTP(tp, multiplier, params.tp150, params.tp300)
+--	printf("bluemagic.lua BluePhysicalSpell fTP MULTIPLIER: [%f]", multiplier)
 	
 	------------------------
 	-- Applies Azure Lore --
@@ -304,7 +314,7 @@ function BluePhysicalSpell(caster, target, spell, params)
     -----------------------------------------------
     local cratio = BluecRatio(casterATT / target:getStat(tpz.mod.DEF), caster:getMainLvl(), target:getMainLvl())
     local hitrate = BlueGetHitRate(caster, target, true)
-	-- printf("bluemagic.lua BluePhysicalSpell CORRECTED RATIO MIN: [%f]  MAX: [%f]  HIT RATE: [%f]", cratio[1], cratio[2], hitrate)
+--	printf("bluemagic.lua BluePhysicalSpell CORRECTED RATIO MIN: [%f]  MAX: [%f]  HIT RATE: [%f]", cratio[1], cratio[2], hitrate)
 	
 	------------------------------------------------------------------
 	-- Applies accuracy bonus from "Accuracy Varies with TP" Spells --
@@ -472,6 +482,12 @@ end
 -- Blue Magical type spells --
 ------------------------------
 function BlueMagicalSpell(caster, target, spell, params, statMod)
+	if (caster:hasStatusEffect(tpz.effect.BURST_AFFINITY) and caster:getLocalVar("BLUAoETrigger") == 0) then
+		caster:setLocalVar("BLUAoETargets", spell:getTotalTargets())
+		caster:setLocalVar("BLUAoETrigger", 1)
+--		printf("thermal_pulse.lua onMagicCastingCheck TARGETS: [%i]", spell:getTotalTargets())
+	end
+
     local D = caster:getMainLvl() + 2
 
     if (D > params.duppercap) then
@@ -566,7 +582,6 @@ function BlueMagicalSpell(caster, target, spell, params, statMod)
 		-- printf("bluemagic.lua BlueMagicalSpell AZURE LORE DAMAGE: [%i]", dmg)
 	end
 
-    caster:delStatusEffectSilent(tpz.effect.BURST_AFFINITY)
 	caster:delStatusEffectSilent(tpz.effect.CONVERGENCE)
 
     return dmg
@@ -645,6 +660,22 @@ function BlueFinalAdjustments(caster, target, spell, dmg, params)
         dmg = 0
     end
 
+	if (caster:isSpellAoE(spell:getID())) then
+        local total = spell:getTotalTargets()
+		
+		-- printf("bluemagic.lua BlueFinalAdjustments MULTI TARGET REDUCTION  TARGETS: [%i]  DAMAGE: [%i]", total, dmg)
+
+        if (total > 9) then
+            -- AoE spells on 10+ targets = 0.4
+            dmg = dmg * 0.4
+        elseif (total > 1) then
+            -- AoE spells on 2 to 9 targets = 0.9 - 0.05T where T = number of targets
+            dmg = dmg * (0.9 - 0.05 * total)
+        end
+
+		-- printf("bluemagic.lua BlueFinalAdjustments MULTI TARGET REDUCTION  DAMAGE: [%i]", dmg)
+	end
+
     dmg = dmg * BLUE_POWER
 
     dmg = dmg - target:getMod(tpz.mod.PHALANX)
@@ -654,6 +685,10 @@ function BlueFinalAdjustments(caster, target, spell, dmg, params)
 
     -- handling stoneskin
     dmg = utils.stoneskin(target, dmg)
+	
+	if (target:isPC()) then
+		dmg = math.random(100,900)
+	end
 
 	local attackType = params.attackType or tpz.attackType.PHYSICAL
     local damageType = params.damageType or tpz.damageType.NONE
@@ -662,6 +697,19 @@ function BlueFinalAdjustments(caster, target, spell, dmg, params)
     target:updateEnmityFromDamage(caster, dmg)
     target:handleAfflatusMiseryDamage(dmg)
     -- TP has already been dealt with.
+	
+	local AoETargets = caster:getLocalVar("BLUAoETargets")
+	
+	if (AoETargets <= 1 and caster:hasStatusEffect(tpz.effect.BURST_AFFINITY)) then
+		caster:delStatusEffectSilent(tpz.effect.BURST_AFFINITY)
+		caster:setLocalVar("BLUAoETargets", 0)
+		caster:setLocalVar("BLUAoETrigger", 0)
+	elseif (AoETargets > 1 and caster:hasStatusEffect(tpz.effect.BURST_AFFINITY)) then
+		AoETargets = AoETargets - 1
+		caster:setLocalVar("BLUAoETargets", AoETargets)
+--		printf("bluemagic.lua BlueFinalAdjustments AOE TARGETS: [%i]", AoETargets)		
+	end
+	
     return dmg
 end
 
@@ -775,13 +823,20 @@ end
 -- Determines whether a hit connects based off caster ACC and target EVA --
 ---------------------------------------------------------------------------
 function BlueGetHitRate(attacker, target, capHitRate)
-    local acc = attacker:getACC()
+    local acc = attacker:getACC() + attacker:getILvlSkill(tpz.slot.MAIN) + attacker:getILvlSkill(tpz.slot.SUB)
     local eva = target:getEVA()
+	local attackerLevel = attacker:getMainLvl()
+	
+	if (attacker:getObjType() == tpz.objType.PC) then
+		attackerLevel = attackerLevel + attacker:getItemLevel()
+	end
+	
+	local targetLevel = target:getMainLvl()
 
-    if (attacker:getMainLvl() > target:getMainLvl()) then -- ACC bonus
-        acc = acc + ((attacker:getMainLvl() - target:getMainLvl()) * 4)
-    elseif (attacker:getMainLvl() < target:getMainLvl()) then -- ACC penalty
-        acc = acc - ((target:getMainLvl() - attacker:getMainLvl()) * 4)
+    if (attackerLevel > targetLevel) then -- ACC bonus
+        acc = acc + ((attackerLevel - targetLevel) * 4)
+    elseif (attackerLevel < targetLevel) then -- ACC penalty
+        acc = acc - ((targetLevel - attackerLevel) * 4)
     end
 
     local hitdiff = 0
@@ -795,6 +850,9 @@ function BlueGetHitRate(attacker, target, capHitRate)
     hitrate = hitrate + hitdiff
     hitrate = hitrate / 100
 
+	-- if (attacker:getName() == "Khalum") then
+		-- printf("bluemagic.lia BlueGetHitRate CASTER LEVEL: [%i]  ACC: [%i]  TARGET LEVEL: [%i]  EVA: [%i]  Hit DIFF: [%i]  HIT RATE: [%1.2f]", attackerLevel, acc, targetLevel, eva, hitdiff, hitrate)
+	-- end
 
     -- Applying hitrate caps
     if (capHitRate) then -- This isn't capped for 'ACC varies with TP', as more penalties are due

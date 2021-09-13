@@ -33,7 +33,11 @@ function onSpellCast(caster,target,spell)
         caster:delStatusEffect(tpz.effect.DIFFUSION)
     end
 	
-	target:addStatusEffect(tpz.effect.PHALANX, 15, 0, duration)
+	if target:addStatusEffect(tpz.effect.PHALANX, 0, 0, duration, 0, 1, 0) then
+		spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)
+    else
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+    end
 
     return tpz.effect.PHALANX
 end

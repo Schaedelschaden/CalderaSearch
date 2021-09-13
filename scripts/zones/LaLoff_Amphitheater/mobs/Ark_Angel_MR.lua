@@ -43,14 +43,16 @@ function onMobEngaged(mob, target)
     mob:setMod(tpz.mod.POISONRES, 100) -- Resistance to Poison
 	mob:setMod(tpz.mod.ATT, 1800) -- Attack Stat (Compare to DEF)
 	mob:setMod(tpz.mod.MATT, 100) -- Magic Attack (Compare to MDEF)
-    mob:setMod(tpz.mod.ACC, 900) -- Accuracy (compare to EVA)
-	mob:setMod(tpz.mod.MACC, 700) -- Magic ACC (Compare to MEVA)
-	mob:setMod(tpz.mod.EVA, 900) -- Evasion (Compare to ACC)
-	mob:setMod(tpz.mod.DEF, 750) -- Defense (Compart to ATT)
-	mob:setMod(tpz.mod.MEVA, 200) -- Magic Evasion (Compare to MACC)
+    -- mob:setMod(tpz.mod.ACC, 900) -- Accuracy (compare to EVA)
+	-- mob:setMod(tpz.mod.MACC, 700) -- Magic ACC (Compare to MEVA)
+	-- mob:setMod(tpz.mod.EVA, 900) -- Evasion (Compare to ACC)
+	-- mob:setMod(tpz.mod.DEF, 750) -- Defense (Compart to ATT)
+	mob:setMod(tpz.mod.MEVA, 700)
 	mob:setMod(tpz.mod.MDEF, 300) -- Magic Defense (Compare to MATT)
 	mob:setMod(tpz.mod.DOUBLE_ATTACK, 50) -- Double Attack in %
 	mob:setMod(tpz.mod.ALL_KILLER_EFFECTS, 10) -- Killer Effects %
+	mob:setMod(tpz.mod.REGEN, 250)
+	mob:setMod(tpz.mod.REGAIN, 100)
 end
 
 function onMobFight(mob, target)

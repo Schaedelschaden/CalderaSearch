@@ -11,6 +11,12 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAbilityCheck(player, target, ability)
+	if player:hasStatusEffect(tpz.effect.UNLEASH) then
+        ability:setRecast(0)
+	elseif (player:getMod(tpz.mod.CALL_BEAST_RECAST) > 0) then
+		ability:setRecast(ability:getRecast() - player:getMod(tpz.mod.CALL_BEAST_RECAST))
+	end
+
     if player:getPet() ~= nil then
         return tpz.msg.basic.ALREADY_HAS_A_PET,0
     elseif not player:hasValidJugPetItem() then
@@ -25,8 +31,4 @@ end
 function onUseAbility(player, target, ability)
     tpz.pet.spawnPet(player, player:getWeaponSubSkillType(tpz.slot.AMMO))
     player:removeAmmo()
-	
-	if player:hasStatusEffect(tpz.effect.UNLEASH) then
-        ability:setRecast(utils.clamp(0, 0, 0))
-	end
 end

@@ -50,10 +50,10 @@ function onTrade(player,npc,trade)
         if progress == 1 or failed == 2 then
             if goodtrade then
                 player:startEvent(220)
-                npc:pathStop()
+                -- npc:pathStop()
             elseif badtrade then
                 player:startEvent(230)
-                npc:pathStop()
+                -- npc:pathStop()
             end
         end
     end
@@ -68,17 +68,17 @@ function onTrigger(player,npc)
     if (OpoOpoAndIStatus == QUEST_ACCEPTED) then
         if retry >= 1 then                          -- has failed on future npc so disregard previous successful trade
             player:startEvent(198)
-            npc:pathStop()
+            -- npc:pathStop()
         elseif (progress == 1 or failed == 2) then
                 player:startEvent(208)  -- asking for workbench
-                npc:pathStop()
+                -- npc:pathStop()
         elseif (progress >= 2 or failed >= 3) then
             player:startEvent(243) -- happy with workbench
-            npc:pathStop()
+            -- npc:pathStop()
         end
     else
         player:startEvent(198)
-        npc:pathStop()
+        -- npc:pathStop()
     end
 end
 
@@ -100,5 +100,5 @@ function onEventFinish(player,csid,option,npc)
         player:setCharVar("OPO_OPO_RETRY",2)
     end
 
-    npc:pathResume()
+    -- npc:pathResume()
 end

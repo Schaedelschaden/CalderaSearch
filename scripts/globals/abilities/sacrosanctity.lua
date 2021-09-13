@@ -14,4 +14,8 @@ end
 
 function onUseAbility(player, target, ability)
 	target:addStatusEffect(tpz.effect.SACROSANCTITY, 1, 0, 60)
+	
+	target:addListener("MAGIC_TAKE", "SACROSANCTITY_TAKE_MAGIC", function(target, caster, spell)
+        target:delStatusEffect(tpz.effect.SACROSANCTITY)
+    end)
 end

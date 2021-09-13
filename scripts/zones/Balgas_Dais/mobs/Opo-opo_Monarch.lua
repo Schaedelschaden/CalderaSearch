@@ -5,10 +5,13 @@
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
-function onMobSpawn (mob)
-	mob:addMod(tpz.mod.ACC, 800)
+function onMobSpawn(mob)
+	mob:addMod(tpz.mod.SLEEPRES, 100)
+	-- mob:addMod(tpz.mod.ACC, 800)
 	mob:addMod(tpz.mod.ATT, 700)
 	mob:addMod(tpz.mod.REGAIN, 100)
+	mob:addMod(tpz.mod.EVA, 175)
+	mob:addMod(tpz.mod.MEVA, 200)
 end
 
 function onMobFight (mob, target)

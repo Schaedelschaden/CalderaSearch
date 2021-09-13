@@ -22,6 +22,8 @@ function onEffectGain(target, effect)
 	target:setMod(tpz.mod.ENSPELL, 2)
     target:setMod(tpz.mod.ENSPELL_DMG, potency)
 	target:addMod(tpz.mod.WINDRES, effect:getPower())
+	target:addMod(tpz.mod.SILENCERES, effect:getPower() / 2)
+	target:addMod(tpz.mod.GRAVITYRES, effect:getPower() / 2)
 end
 
 function onEffectTick(target, effect)
@@ -48,9 +50,11 @@ function onEffectLose(target, effect)
 	if ((RuneCounter == 0) and (target:getMod(tpz.mod.ENSPELL) == 2)) then
 		target:setMod(tpz.mod.ENSPELL, 0)
 		target:setMod(tpz.mod.ENSPELL_DMG, 0)
-		target:setMod(tpz.mod.WINDRES, 0)
 	else
 		target:delMod(tpz.mod.ENSPELL_DMG, effect:getPower() * 1.25)
-		target:delMod(tpz.mod.WINDRES, effect:getPower())
 	end
+	
+	target:delMod(tpz.mod.WINDRES, effect:getPower())
+	target:delMod(tpz.mod.SILENCERES, effect:getPower() / 2)
+	target:delMod(tpz.mod.GRAVITYRES, effect:getPower() / 2)
 end

@@ -4,6 +4,7 @@
 -- Involved in Quest: Trial by Wind, Trial Size Trial by Wind
 -----------------------------------
 mixins = {require("scripts/mixins/job_special")}
+require("scripts/globals/status")
 -----------------------------------
 
 function onMobSpawn(mob)
@@ -13,18 +14,19 @@ function onMobSpawn(mob)
             {id = 875, hpp = 25}, -- uses Aerial Blast once while at 25% HPP.
         },
     })
-	mob:setMod(tpz.mod.SILENCERES, 1000)
-    mob:setMod(tpz.mod.STUNRES, 1000)
-    mob:setMod(tpz.mod.BINDRES, 1000)
-    mob:setMod(tpz.mod.SLOWRES, 1000)
+	mob:setMod(tpz.mod.PETRIFYRES, 100)
+	mob:setMod(tpz.mod.SILENCERES, 100)
+    mob:setMod(tpz.mod.STUNRES, 95)
+    mob:setMod(tpz.mod.BINDRES, 100)
+    mob:setMod(tpz.mod.SLOWRES, 100)
     mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 17)
 	mob:setMod(tpz.mod.ATT, 1000)
 	mob:setMod(tpz.mod.MATT, 200)
-    mob:setMod(tpz.mod.ACC, 500)
+    -- mob:setMod(tpz.mod.ACC, 500)
 	mob:setMod(tpz.mod.MACC, 500)
-    mob:setMod(tpz.mod.EVA, 1100)
+    mob:setMod(tpz.mod.EVA, 850)
 	mob:setMod(tpz.mod.DEF, 700)
-	mob:setMod(tpz.mod.MEVA, 200)
+	mob:setMod(tpz.mod.MEVA, 650)
 	mob:setMod(tpz.mod.MDEF, 100)
 	mob:setMod(tpz.mod.TRIPLE_ATTACK, 25)
 	mob:setMod(tpz.mod.PHYS_ABSORB, 5)
@@ -34,19 +36,19 @@ end
 
 function onMobFight(mob, target)
    	local isBusy = false
-	local has2Hrd = mob:getLocalVar("has2Hrd")
+	-- local has2Hrd = mob:getLocalVar("has2Hrd")
 	local act = mob:getCurrentAction()
 	
 	if act == tpz.act.MOBABILITY_START or act == tpz.act.MOBABILITY_USING or act == tpz.act.MOBABILITY_FINISH or act == tpz.act.MAGIC_START or act == tpz.act.MAGIC_CASTING or act == tpz.act.MAGIC_START then
         isBusy = true
     end
 	
-   	if (mob:getHPP() <= 50 and isBusy == false and has2Hrd ~= 1) then
-		mob:useMobAbility(693)
-		mob:setLocalVar("has2Hrd", 1)
-	end
+   	-- if (mob:getHPP() <= 50 and isBusy == false and has2Hrd ~= 1) then
+		-- mob:useMobAbility(693)
+		-- mob:setLocalVar("has2Hrd", 1)
+	-- end
 	
-	if (mob:getBattleTime() > 30 and mob:getBattleTime() % 15 == 0 and isBusy == false) then
+	if (mob:getBattleTime() > 30 and mob:getBattleTime() % 22 == 0 and isBusy == false and mob:getLocalVar("UseMobSkillClear") == 0) then
         local rnd = math.random()
 
 		if rnd < 0.2 then
@@ -56,6 +58,13 @@ function onMobFight(mob, target)
 		else
 			mob:useMobAbility(873)
 		end
+		
+		mob:setLocalVar("UseMobSkill", os.time())
+		mob:setLocalVar("UseMobSkillClear", 1)
+	end
+	
+	if (os.time() - mob:getLocalVar("UseMobSkill") >= 10) then
+		mob:setLocalVar("UseMobSkillClear", 0)
 	end
 	
 	if (mob:getHPP() <= 10) then

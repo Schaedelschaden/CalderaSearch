@@ -15,6 +15,8 @@ function onInstanceZoneIn(player, instance)
 
     local pos = player:getPos()
     if (pos.x == 0 and pos.y == 0 and pos.z == 0) then
+		-- 593.5 -0 -20 (Entry to hallway leading boss room?)
+		-- -442.593 -4 420.078 (Astral Candescence room)
         player:setPos(player:getInstance():getEntryPos())
     end
     if (player:getCurrentMission(TOAU) == tpz.mission.id.toau.PATH_OF_DARKNESS) then

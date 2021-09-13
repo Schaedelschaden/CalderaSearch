@@ -47,7 +47,7 @@ function onUseAbility(player, target, ability, action)
     end
 
     local base = weaponDamage + fstr
-    local cratio, ccritratio = cMeleeRatio(player, target, params, 0)
+    local cratio, ccritratio = cMeleeRatio(player, target, params, 0, player:getTP())
     local isSneakValid = player:hasStatusEffect(tpz.effect.SNEAK_ATTACK)
 	
     if (isSneakValid and not player:isBehind(target)) then

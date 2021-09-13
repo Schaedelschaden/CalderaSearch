@@ -348,6 +348,17 @@ void setFrame(CCharEntity* PChar, uint8 frame)
         for (int i = 0; i < 8; i++)
             PChar->PAutomaton->setElementMax(i, tempElementMax[i]);
     }
+	
+	// Remove all currently equipped attachments
+	for (uint8 i = 0; i < 12; i++)
+	{
+		if (PChar->PAutomaton->getAttachment(i) != 0)
+		{
+			CItemPuppet* PAttachment = (CItemPuppet*)itemutils::GetItemPointer(0x2100 + PChar->PAutomaton->getAttachment(i));
+
+			setAttachment(PChar, i, 0);
+		}
+	}
 }
 
 void setHead(CCharEntity* PChar, uint8 head)
@@ -405,6 +416,16 @@ void setHead(CCharEntity* PChar, uint8 head)
             PChar->PAutomaton->setElementMax(i, tempElementMax[i]);
     }
 
+	// Remove all currently equipped attachments
+	for (uint8 i = 0; i < 12; i++)
+	{
+		if (PChar->PAutomaton->getAttachment(i) != 0)
+		{
+			CItemPuppet* PAttachment = (CItemPuppet*)itemutils::GetItemPointer(0x2100 + PChar->PAutomaton->getAttachment(i));
+
+			setAttachment(PChar, i, 0);
+		}
+	}
 }
 
 uint16 getSkillCap(CCharEntity* PChar, SKILLTYPE skill, uint8 level)

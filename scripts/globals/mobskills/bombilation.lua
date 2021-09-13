@@ -1,7 +1,7 @@
 ---------------------------------------------
 -- Bombilation
 --
--- Description: Resets TP of all targets in an area of effect.
+-- Description: Reduces TP of targets in area of effect.
 -- Type: Enfeebling
 -- Ignores Shadows
 -- Range: Unknown radial
@@ -17,12 +17,14 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local reset = 0
+    local reduce = math.random(500, 1000)
+	
     if (target:getTP() == 0) then
         skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT) -- no effect
     else
-        target:setTP(reset)
+        target:setTP(reduce)
         skill:setMsg(tpz.msg.basic.TP_REDUCED)
     end
-    return reset
+	
+    return reduce
 end

@@ -15,6 +15,7 @@ function onBattlefieldRegister(player, battlefield)
 end
 
 function onBattlefieldEnter(player, battlefield)
+	player:delKeyItem(tpz.ki.SAVAGES_PHANTOM_GEM)
 end
 
 function onBattlefieldLeave(player, battlefield, leavecode)

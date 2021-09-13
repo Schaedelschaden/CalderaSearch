@@ -33,7 +33,7 @@ function onUseAbility(pet, target, skill, action)
 		pet:delStatusEffect(tpz.effect.MAGIC_ATK_BOOST)
 	end
 
-    local gear = master:getMod(tpz.mod.WYVERN_BREATH) -- Master gear that enhances breath
+    local gear = (master:getMod(tpz.mod.WYVERN_BREATH)/256) + (pet:getMod(tpz.mod.PET_BREATH) / 100) -- Gear that enhances breath
 
     local tp = math.floor(pet:getTP()/200)/1.165 -- HP only increases for every 20% TP
 	pet:setTP(0)
@@ -43,6 +43,13 @@ function onUseAbility(pet, target, skill, action)
 		base = target:getMaxHP() - target:getHP() --cap it
 	end
 	skill:setMsg(tpz.msg.basic.JA_RECOVERS_HP)
-	target:addHP(base)
+	
+   -- Curse II prevents restoring HP
+	if not (target:hasStatusEffect(20)) then
+		target:addHP(base)
+	else
+		base = 0
+	end
+	
 	return base
 end

@@ -18,9 +18,15 @@ function onMobWeaponSkill(target, mob, skill)
 
     local numhits = 1
     local accmod = 1
-    local dmgmod = 2.5
+    local dmgmod = 1.75
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 2, 3)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
+	local shadows = info.hitslanded
+	
+	if (mob:getID() == 17318445) then
+		shadows = MOBPARAM_IGNORE_SHADOWS
+	end
+	
+    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, shadows)
 
     MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.DEFENSE_DOWN, 30, 0, 120)
 

@@ -20,7 +20,7 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 2.4
 	
 	if (mob:getID() == 17391803) then
-		dmgmod = 4.8
+		dmgmod = 4
 	end
 	
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)

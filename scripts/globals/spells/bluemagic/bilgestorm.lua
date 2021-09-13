@@ -34,7 +34,7 @@ function onSpellCast(caster, target, spell)
 		params.damageType = tpz.damageType.IMPACT
 		params.spellFamily = tpz.ecosystem.DEMON
         params.numhits = 1
-        params.multiplier = 8.00 -- 5.00
+        params.multiplier = 50.00 -- 5.00
         params.tp150 = 8.00
         params.tp300 = 8.00
         params.azuretp = 10.00

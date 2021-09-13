@@ -43,7 +43,7 @@ local entryInfo =
         winKI = tpz.ki.HYDRA_CORPS_COMMAND_SCEPTER,
         enterPos = {161.838, -2.000, 161.673, 93, 185},
         reqs = function(player)
-            return player:hasKeyItem(tpz.ki.PRISMATIC_HOURGLASS)
+            return player:getCharVar("KillCounter_ShadowLord") > 0
         end,
     },
     [tpz.zone.BASTOK_MINES] =
@@ -57,7 +57,7 @@ local entryInfo =
         winKI = tpz.ki.HYDRA_CORPS_EYEGLASS,
         enterPos = {116.482, 0.994, -72.121, 128, 186},
         reqs = function(player)
-            return player:hasKeyItem(tpz.ki.PRISMATIC_HOURGLASS)
+            return player:getCharVar("KillCounter_ShadowLord") > 0
         end,
     },
     [tpz.zone.WINDURST_WALLS] =
@@ -71,7 +71,7 @@ local entryInfo =
         winKI = tpz.ki.HYDRA_CORPS_LANTERN,
         enterPos = {-221.988, 1.000, -120.184, 0, 187},
         reqs = function(player)
-            return player:hasKeyItem(tpz.ki.PRISMATIC_HOURGLASS)
+            return player:getCharVar("KillCounter_ShadowLord") > 0
         end,
     },
     [tpz.zone.RULUDE_GARDENS] =
@@ -85,7 +85,7 @@ local entryInfo =
         winKI = tpz.ki.HYDRA_CORPS_TACTICAL_MAP,
         enterPos = {48.930, 10.002, -71.032, 195, 188},
         reqs = function(player)
-            return player:hasKeyItem(tpz.ki.PRISMATIC_HOURGLASS)
+            return player:getCharVar("KillCounter_ShadowLord") > 0
         end,
     },
     [tpz.zone.BEAUCEDINE_GLACIER] =
@@ -467,15 +467,15 @@ dynamis.zoneOnZoneIn = function(player, prevZone)
             player:timer(5000, function(player) player:messageBasic(tpz.msg.basic.UNABLE_TO_ACCESS_SJ) end)
             player:addStatusEffect(tpz.effect.SJ_RESTRICTION, 0, 0, 0, 7200)
         end
-        player:addStatusEffectEx(tpz.effect.DYNAMIS, 0, 0, 3, 3600)
-        player:timer(5500, function(player) player:messageSpecial(ID.text.DYNAMIS_TIME_BEGIN, 60, tpz.ki.PRISMATIC_HOURGLASS) end)
+--        player:addStatusEffectEx(tpz.effect.DYNAMIS, 0, 0, 3, 3600)
+--        player:timer(5500, function(player) player:messageSpecial(ID.text.DYNAMIS_TIME_BEGIN, 60, tpz.ki.PRISMATIC_HOURGLASS) end)
         player:setCharVar("Dynamis_Entry", 0)
         player:setCharVar("Dynamis_subjob", 0)
     end
 
-    if not player:hasStatusEffect(tpz.effect.DYNAMIS) then
-        cs = 100 -- eject event (same event in all dynamis zones)
-    elseif player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
+--    if not player:hasStatusEffect(tpz.effect.DYNAMIS) then
+--        cs = 100 -- eject event (same event in all dynamis zones)
+    if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
         player:setPos(unpack(info.entryPos))
     end
 

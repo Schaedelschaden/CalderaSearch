@@ -23,6 +23,11 @@ function onMobWeaponSkill(target, mob, skill)
     MobStatusEffectMove(mob, target, typeEffect, power, 3, 60)
 
     local dmgmod = 1
+	
+	if (mob:getID() == 17318440) then
+		dmgmod = 2.5
+	end
+	
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*1.5, tpz.magic.ele.WATER, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.WATER, MOBPARAM_IGNORE_SHADOWS)
     

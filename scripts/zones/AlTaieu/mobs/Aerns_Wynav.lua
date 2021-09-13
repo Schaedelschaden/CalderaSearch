@@ -25,12 +25,13 @@ function onMobSpawn(mob)
 		wyvern:setMobLevel(115)
 		wyvern:addMod(tpz.mod.INT, 75)
 		wyvern:addMod(tpz.mod.ATT, 400)
-		wyvern:addMod(tpz.mod.MATT, math.random(100, 200))
+--		wyvern:addMod(tpz.mod.MATT, math.random(50, 100))
 		wyvern:addMod(tpz.mod.DEF, 250)
-		wyvern:addMod(tpz.mod.ACC, 250)
-		wyvern:addMod(tpz.mod.MACC, math.random(750, 900))
+--		wyvern:addMod(tpz.mod.ACC, 250)
+		wyvern:addMod(tpz.mod.MACC, 650)
 		wyvern:addMod(tpz.mod.EVA, 200)
-		wyvern:addMod(tpz.mod.MEVA, 150)
+--		wyvern:addMod(tpz.mod.MEVA, 150)
+		wyvern:setMod(tpz.mod.REFRESH, 30)
 		wyvern:setHP(99999)
 	end
 end
@@ -40,6 +41,7 @@ function onMobEngaged(mob, target)
 end
 
 function onMobFight(mob, target)
+	mob:setMod(tpz.mod.REFRESH, 30)
 	local day = VanadielDayOfTheWeek()
 	local mobID = mob:getID()
 	

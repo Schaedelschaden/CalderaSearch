@@ -704,6 +704,7 @@ enum EFFECT
 //	EFFECT_NONE                     = 638, // (None) DEBUG: Please report.
 //	EFFECT_NONE                     = 639, // (None) DEBUG: Please report.
 //	EFFECT_NONE                     = 640, // (None) DEBUG: Please report. - Crashed
+
 //	EFFECT_NONE                     = 763, // (None) Blank - Crashed
 //	EFFECT_NONE                     = 764, // (None) Blank
 //	EFFECT_NONE                     = 765, // (None) Blank - Crashed
@@ -754,6 +755,48 @@ enum EFFECT
     EFFECT_ELEMENTALRES_DOWN        = 802, // Elemental resistance down
     EFFECT_FULL_SPEED_AHEAD         = 803, // Used to track Full Speed Ahead quest minigame
     // EFFECT_PLACEHOLDER           = 804  // Description
+	
+//  ? = 771, // (Icon) Lasting Emanation
+//  ? = 772, // (Icon) Ecliptic Attrition
+//  ? = 773, // (Icon) Collimated Fervor
+//  ? = 774, // (Icon) Dematerialize
+//  ? = 775, // (Icon) Theurgic Focus
+//  ? = 776, // (Icon) (None) DEBUG: Please report.
+//  ? = 777, // (Icon) (None) DEBUG: Please report.
+//  ? = 778, // (Icon) Elemental Sforzo
+//  ? = 779, // (Icon) Ignis
+//  ? = 780, // (Icon) Gelus
+//  ? = 781, // (Icon) Flabra
+//  ? = 782, // (Icon) Tellus
+//  ? = 783, // (Icon) Sulpor
+//  ? = 784, // (Icon) Unda
+//  ? = 785, // (Icon) Lux
+//  ? = 786, // (Icon) Tenebrae
+//  ? = 787, // (Icon) Vallation
+//  ? = 788, // (Icon) Swordplay
+//  ? = 789, // (Icon) Pflug
+//  ? = 790, // (Icon) Embolden
+//  ? = 791, // (Icon) Valiance
+//  ? = 792, // (Icon) Gambit
+//  ? = 793, // (Icon) Liement
+//  ? = 794, // (Icon) One for All
+//  ? = 795, // (Icon) GEO Regen
+//  ? = 796, // (Icon) GEO Poison
+//  ? = 797, // (Icon) GEO Refresh
+//  ? = 798, // (Icon) GEO STR
+//  ? = 799, // (Icon) GEO DEX
+//  ? = 800, // (Icon) GEO VIT
+//  ? = 801, // (Icon) GEO AGI
+//  ? = 802, // (Icon) GEO INT
+//  ? = 803, // (Icon) GEO MND
+//  ? = 804, // 
+//  ? = 805, // 
+//  ? = 806, // 
+//  ? = 807, // 
+//  ? = 808, // 
+//  ? = 809, // 
+//  ? = 810, // 
+	
     // 804-1022
     // EFFECT_PLACEHOLDER           = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
 };

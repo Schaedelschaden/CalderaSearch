@@ -49,9 +49,13 @@ function onSpellCast(caster, target, spell)
         final = diff
     end
 
-    target:addHP(final)
-    target:wakeUp()
-    caster:updateEnmityFromCure(target,final)
+	-- Curse II prevents restoring HP
+	if not (caster:hasStatusEffect(20)) then
+		target:addHP(final)
+		target:wakeUp()
+		caster:updateEnmityFromCure(target,final)
+	end
+	
     spell:setMsg(tpz.msg.basic.MAGIC_RECOVERS_HP)
 
     return final

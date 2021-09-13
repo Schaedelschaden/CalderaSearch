@@ -22,24 +22,27 @@ function onPetAbility(target, pet, skill)
 	
     base = base * tp / 1000
 
-    if (target:getHP()+base > target:getMaxHP()) then
-        base = target:getMaxHP() - target:getHP() --cap it
-    end
-	
-    target:delStatusEffect(tpz.effect.BLINDNESS)
-    target:delStatusEffect(tpz.effect.POISON)
-    target:delStatusEffect(tpz.effect.PARALYSIS)
-    target:delStatusEffect(tpz.effect.DISEASE)
-    target:delStatusEffect(tpz.effect.PETRIFICATION)
-    target:delStatusEffect(tpz.effect.SILENCE)
-	target:wakeUp()
-	
-    if math.random() > 0.5 then
-        target:delStatusEffect(tpz.effect.SLOW)
-    end
-	
-    skill:setMsg(tpz.msg.basic.SELF_HEAL)
-    target:addHP(base)
+	-- Curse II prevents restoring HP
+	if not (target:hasStatusEffect(20)) then
+		if (target:getHP()+base > target:getMaxHP()) then
+			base = target:getMaxHP() - target:getHP() --cap it
+		end
+		
+		target:delStatusEffect(tpz.effect.BLINDNESS)
+		target:delStatusEffect(tpz.effect.POISON)
+		target:delStatusEffect(tpz.effect.PARALYSIS)
+		target:delStatusEffect(tpz.effect.DISEASE)
+		target:delStatusEffect(tpz.effect.PETRIFICATION)
+		target:delStatusEffect(tpz.effect.SILENCE)
+		target:wakeUp()
+		
+		if math.random() > 0.5 then
+			target:delStatusEffect(tpz.effect.SLOW)
+		end
+		
+		skill:setMsg(tpz.msg.basic.SELF_HEAL)
+		target:addHP(base)
+	end
 	
     return base
 end

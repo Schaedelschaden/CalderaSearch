@@ -39,9 +39,11 @@ function onUseAbility(player,target,ability)
 
     target:despawnPet()
     -- All Jump recast times are reset
-    target:resetRecast(tpz.recast.ABILITY,158) -- Jump
-    target:resetRecast(tpz.recast.ABILITY,159) -- High Jump
-    target:resetRecast(tpz.recast.ABILITY,160) -- Super Jump
+    target:resetRecast(158) -- Jump
+    target:resetRecast(159) -- High Jump
+    target:resetRecast(160) -- Super Jump
+	target:resetRecast(166) -- Spirit Jump
+    target:resetRecast(167) -- Soul Jump
 
     target:addStatusEffect(tpz.effect.SPIRIT_SURGE, mhp_boost, 0, duration, 0, strBoost)
 end

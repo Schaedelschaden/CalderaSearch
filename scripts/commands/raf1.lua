@@ -81,10 +81,10 @@ function onTrigger(player, target, aug0, aug0val, aug1, aug1val, aug2, aug2val, 
 			if (mainJob == 21 or mainJob == 22) then
 				startingID = 27684
 				itemId[1] = startingID + targ:getMainJob()
-				itemId[2] = itemId[1] + 140
-				itemId[3] = itemId[2] + 140
-				itemId[4] = itemId[3] + 140
-				itemId[5] = itemId[4] + 140
+				itemId[2] = itemId[1] + 144
+				itemId[3] = itemId[2] + 136
+				itemId[4] = itemId[3] + 147
+				itemId[5] = itemId[4] + 133
 			end
 		end
 		

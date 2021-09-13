@@ -26,7 +26,7 @@ function onMobSpawn(mob)
 	mob:setMod(tpz.mod.MATT, 700)
     mob:setMod(tpz.mod.ACC, 600)
 	mob:setMod(tpz.mod.MACC, 700)
-    mob:setMod(tpz.mod.EVA, 250)
+    mob:setMod(tpz.mod.EVA, 750)
 	mob:setMod(tpz.mod.DEF, 800)
 	mob:setMod(tpz.mod.MEVA, 300)
 	mob:setMod(tpz.mod.MDEF, 250)
@@ -71,13 +71,13 @@ function onMobEngaged(mob, target)
         avatar:updateEnmity(target)
     end
 	
-	for i = 1, 19 do
-		local link = GetMobByID(assistMobs[i])
+	-- for i = 1, 19 do
+		-- local link = GetMobByID(assistMobs[i])
 		
-		if (link:getCurrentAction() == tpz.act.ROAMING) then
-            link:updateEnmity(target)
-        end
-	end
+		-- if (link:getCurrentAction() == tpz.act.ROAMING) then
+            -- link:updateEnmity(target)
+        -- end
+	-- end
 end
 
 function onMobFight(mob, target)

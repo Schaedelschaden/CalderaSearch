@@ -14,7 +14,7 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:isInDynamis() and mob:isMobType(MOBTYPE_NOTORIOUS)) then
+    if (mob:isInDynamis() and mob:isMobType(MOBTYPE_NOTORIOUS) and not mob:getID() == 17535044) then
         return 0
     end
     return 1

@@ -5,12 +5,19 @@
 -----------------------------------------
 require("scripts/globals/magic")
 require("scripts/globals/status")
+require("scripts/globals/utils")
 require("scripts/globals/msg")
 -----------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
     spell:setFlag(tpz.magic.spellFlag.IGNORE_SHADOWS)
-    return 0
+	
+	-- Bloodeye Vileberry cannot cast Death while above 50% HP
+	if (caster:isMob() and caster:getHPP() >= 50 and caster:getID() == 16839068 or caster:getID() == 16839071 or caster:getID() == 16839074) then
+		return 1
+	else
+		return 0
+	end
 end
 
 function onSpellCast(caster, target, spell)
@@ -20,5 +27,6 @@ function onSpellCast(caster, target, spell)
     end
 
     target:setHP(0)
+	
     return 0
 end

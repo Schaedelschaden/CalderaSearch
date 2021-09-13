@@ -164,6 +164,8 @@ namespace attackutils
         switch (attackType)
         {
             case PHYSICAL_ATTACK_TYPE::RANGED:
+				occ_do_triple_dmg = PChar->getMod(Mod::REM_OCC_DO_TRIPLE_DMG_RANGED);
+                occ_do_double_dmg = PChar->getMod(Mod::REM_OCC_DO_DOUBLE_DMG_RANGED);
 				if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_DOUBLE_SHOT))
 				{
 					occ_do_double_dmg = PChar->getMod(Mod::DOUBLE_SHOT_RATE);
@@ -176,15 +178,15 @@ namespace attackutils
 				}
 				break;
             case PHYSICAL_ATTACK_TYPE::RAPID_SHOT:
-                occ_do_quad_dmg = PChar->getMod(Mod::REM_OCC_DO_QUAD_DMG_RANGED) / 10;
-				occ_do_triple_dmg = PChar->getMod(Mod::REM_OCC_DO_TRIPLE_DMG_RANGED) / 10;
-                occ_do_double_dmg = PChar->getMod(Mod::REM_OCC_DO_DOUBLE_DMG_RANGED) / 10;
+                occ_do_quad_dmg = PChar->getMod(Mod::REM_OCC_DO_QUAD_DMG_RANGED);
+				occ_do_triple_dmg = PChar->getMod(Mod::REM_OCC_DO_TRIPLE_DMG_RANGED);
+                occ_do_double_dmg = PChar->getMod(Mod::REM_OCC_DO_DOUBLE_DMG_RANGED);
                 break;
             case PHYSICAL_ATTACK_TYPE::NORMAL:
                 if (weaponSlot == SLOT_MAIN) // Only applies to mainhand
                 {
-                    occ_do_triple_dmg = PChar->getMod(Mod::REM_OCC_DO_TRIPLE_DMG) / 10;
-                    occ_do_double_dmg = PChar->getMod(Mod::REM_OCC_DO_DOUBLE_DMG) / 10;
+                    occ_do_triple_dmg = PChar->getMod(Mod::REM_OCC_DO_TRIPLE_DMG);
+                    occ_do_double_dmg = PChar->getMod(Mod::REM_OCC_DO_DOUBLE_DMG);
                 }
                 break;
             default:

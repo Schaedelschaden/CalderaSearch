@@ -17,9 +17,9 @@ function onTrigger(player, npc)
     if (player:hasKeyItem(2895) and npcUtil.popFromQM(player, npc, ID.mob.WEPWAWET, {claim = true, hide = 30})) then
 		GetMobByID(ID.mob.WEPWAWET):setPos(35, 0, 126, 0)
 		player:delKeyItem(2895)
-	elseif (player:hasKeyItem(2919) and npcUtil.popFromQM(player, npc, ID.mob.URMAHLULU, {claim = true, hide = 30})) then
-		GetMobByID(ID.mob.URMAHLULU):setPos(35, 0, 126, 0)
-		player:delKeyItem(2919)
+	-- elseif (player:hasKeyItem(2919) and npcUtil.popFromQM(player, npc, ID.mob.URMAHLULU, {claim = true, hide = 30})) then
+		-- GetMobByID(ID.mob.URMAHLULU):setPos(35, 0, 126, 0)
+		-- player:delKeyItem(2919)
 	else
 		player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
 	end

@@ -39,12 +39,16 @@ function onTrigger(player)
 	-- Abyssea
 	local kcRabbit = player:getCharVar("KillCounter_Rabbits")
 	local kcMarvin = player:getCharVar("KillCounter_MangyTailedMarvin")
+	-- Battlefields
+	local kcSL = player:getCharVar("KillCounter_ShadowLord")
+	local kcKammy = player:getCharVar("KillCounter_Kamlanaut")
+	
 	player:PrintToPlayer(string.format("SKY ------------------------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  Ullikummi: [%i]  Despot: [%i]  Olla: [%i]  Zipacna: [%i]  Mother Globe: [%i]  Steam Cleaner: [%i]  Faust: [%i]  Brigandish Blade: [%i]", kcUllikummi, kcDespot, kcOlla, kcZipacna, kcMotherGlobe, kcSteamCleaner, kcFaust, kcBrigBlade),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  Byakko: [%i]  Genbu: [%i]  Seiryu: [%i]  Suzaku: [%i]  Kirin: [%i]", kcByakko, kcGenbu, kcSeiryu, kcSuzaku, kcKirin),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("SEA ------------------------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  Ix'Aern (MNK): [%i]  Ix'Aern (DRK): [%i]  Ix'Aern (DRG): [%i]  Jailer of Temperance: [%i]  Jailer of Fortitude: [%i]  Jailer of Faith: [%i]", kcIxAernMNK, kcIxAernDRK, kcIxAernDRG, kcJailOfTemp, kcJailOfFort, kcJailOfFaith),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  Jailer of Hope: [%i]  Jailer of Justice: [%i]  Jailer of Prudence: [%i]  Jailer of Love: [%i]  Absolute Virtue: [%i]", kcJailOfHope, kcJailOfJust, kcJailOfPrud, kcJailOfLove, kcAbsoluteVirtue),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("ABYSSEA -------------------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  Rabbits: [%i]  Mangy-Tailed Marvin: [%i]", kcRabbit, kcMarvin),tpz.msg.channel.SYSTEM_3)
+	player:PrintToPlayer(string.format("BATTLEFIELDS ---------------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
+	player:PrintToPlayer(string.format("  Shadow Lord: [%i]  Kam'lanaut: [%i]", kcSL, kcKammy),tpz.msg.channel.SYSTEM_3)
 end

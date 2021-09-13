@@ -9,11 +9,25 @@ require("scripts/globals/utils")
 cmdprops =
 {
     permission = 2,
-    parameters = ""
+    parameters = "s"
 };
 
-function onTrigger(player)
-	local targ = player:getCursorTarget()
+function onTrigger(player, target)
+
+	local targ
+    if (target == nil) then
+        targ = player:getCursorTarget()
+        if (targ == nil or not targ:isPC()) then
+            error(player,"You must target a player.")
+            return
+        end
+    else
+        targ = GetPlayerByName(target)
+        if (targ == nil) then
+            error(player,"Invalid target.")
+            return
+        end
+    end
 
 	local jobMagic = {tpz.job.WHM, tpz.job.BLM, tpz.job.RDM, tpz.job.PLD, tpz.job.DRK, tpz.job.NIN, tpz.job.BLU, tpz.job.SCH, tpz.job.GEO}
 	local jobMagicSkill = {tpz.skill.DIVINE_MAGIC, tpz.skill.ELEMENTAL_MAGIC, tpz.skill.ENFEEBLING_MAGIC, tpz.skill.DIVINE_MAGIC, tpz.skill.ELEMENTAL_MAGIC, tpz.skill.NINJUTSU, tpz.skill.BLUE_MAGIC, tpz.skill.ELEMENTAL_MAGIC, tpz.skill.ELEMENTAL_MAGIC}

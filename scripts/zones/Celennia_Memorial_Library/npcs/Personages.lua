@@ -17,19 +17,19 @@ function onTrade(player, npc, trade)
 	local artifactArmor = {
 		[  1] = {trade = {af[1], af[2], af[3], af[4], af[5], {"gil", 250000}}, reward = {afHQ[1], afHQ[2], afHQ[3], afHQ[4], afHQ[5]}}, -- WAR
 		[  2] = {trade = {af[1] + 1, af[2] + 1, af[3] + 1, af[4] + 1, af[5] + 1, {"gil", 250000}}, reward = {afHQ[1] + 1, afHQ[2] + 1, afHQ[3] + 1, afHQ[4] + 1, afHQ[5] + 1}}, -- MNK
-		[  3] = {trade = {af[1] + 2, af[2] + 2, af[3] + 2, af[4] + 2, af[5] + 2, {"gil", 250000}}, reward = {afHQ[1] + 2, afHQ[2] + 2, afHQ[3] + 2, afHQ[4] + 2, afHQ[5] + 2}}, -- WHM
-		[  4] = {trade = {af[1] + 3, af[2] + 3, af[3] + 3, af[4] + 3, af[5] + 3, {"gil", 250000}}, reward = {afHQ[1] + 3, afHQ[2] + 3, afHQ[3] + 3, afHQ[4] + 3, afHQ[5] + 3}}, -- BLM
-		[  5] = {trade = {af[1] + 4, af[2] + 4, af[3] + 4, af[4] + 4, af[5] + 4, {"gil", 250000}}, reward = {afHQ[1] + 4, afHQ[2] + 4, afHQ[3] + 4, afHQ[4] + 4, afHQ[5] + 4}}, -- RDM
-		[  6] = {trade = {af[1] + 5, af[2] + 5, af[3] + 5, af[4] + 5, af[5] + 5, {"gil", 250000}}, reward = {afHQ[1] + 5, afHQ[2] + 5, afHQ[3] + 5, afHQ[4] + 5, afHQ[5] + 5}}, -- THF
-		[  7] = {trade = {af[1] + 6, af[2] + 6, af[3] + 6, af[4] + 6, af[5] + 6, {"gil", 250000}}, reward = {afHQ[1] + 6, afHQ[2] + 6, afHQ[3] + 6, afHQ[4] + 6, afHQ[5] + 6}}, -- PLD
-		[  8] = {trade = {af[1] + 7, af[2] + 7, af[3] + 7, af[4] + 7, af[5] + 7, {"gil", 250000}}, reward = {afHQ[1] + 7, afHQ[2] + 7, afHQ[3] + 7, afHQ[4] + 7, afHQ[5] + 7}}, -- DRK
-		[  6] = {trade = {af[1] + 8, af[2] + 8, af[3] + 8, af[4] + 8, af[5] + 8, {"gil", 250000}}, reward = {afHQ[1] + 8, afHQ[2] + 8, afHQ[3] + 8, afHQ[4] + 8, afHQ[5] + 8}}, -- BST
-		[ 10] = {trade = {af[1] + 9, af[2] + 9, af[3] + 9, af[4] + 9, af[5] + 9, {"gil", 250000}}, reward = {afHQ[1] + 9, afHQ[2] + 9, afHQ[3] + 9, afHQ[4] + 9, afHQ[5] + 9}}, -- BRD
-		[ 11] = {trade = {af[1] + 10, af[2] + 10, af[3] + 10, af[4] + 10, af[5] + 10, {"gil", 250000}}, reward = {afHQ[1] + 10, afHQ[2] + 10, afHQ[3] + 10, afHQ[4] + 10, afHQ[5] + 10}}, -- RNG
-		[ 12] = {trade = {af[1] + 11, af[2] + 11, af[3] + 11, af[4] + 11, af[5] + 11, {"gil", 250000}}, reward = {afHQ[1] + 11, afHQ[2] + 11, afHQ[3] + 11, afHQ[4] + 11, afHQ[5] + 11}}, -- SAM
-		[ 13] = {trade = {af[1] + 12, af[2] + 12, af[3] + 12, af[4] + 12, af[5] + 12, {"gil", 250000}}, reward = {afHQ[1] + 12, afHQ[2] + 12, afHQ[3] + 12, afHQ[4] + 12, afHQ[5] + 12}}, -- NIN
-		[ 14] = {trade = {af[1] + 13, af[2] + 13, af[3] + 13, af[4] + 13, af[5] + 13, {"gil", 250000}}, reward = {afHQ[1] + 13, afHQ[2] + 13, afHQ[3] + 13, afHQ[4] + 13, afHQ[5] + 13}}, -- DRG
-		[ 15] = {trade = {af[1] + 14, af[2] + 14, af[3] + 14, af[4] + 14, af[5] + 14, {"gil", 250000}}, reward = {afHQ[1] + 14, afHQ[2] + 14, afHQ[3] + 14, afHQ[4] + 14, afHQ[5] + 14}}, -- SMN
+		[  3] = {trade = {af[1] + 1344, af[2] + 2, af[3] + 2, af[4] + 2, af[5] + 2, {"gil", 250000}}, reward = {afHQ[1] + 2, afHQ[2] + 2, afHQ[3] + 2, afHQ[4] + 2, afHQ[5] + 2}}, -- WHM
+		[  4] = {trade = {af[1] + 1345, af[2] + 3, af[3] + 3, af[4] + 3, af[5] + 3, {"gil", 250000}}, reward = {afHQ[1] + 3, afHQ[2] + 3, afHQ[3] + 3, afHQ[4] + 3, afHQ[5] + 3}}, -- BLM
+		[  5] = {trade = {af[1] + 2, af[2] + 4, af[3] + 4, af[4] + 4, af[5] + 4, {"gil", 250000}}, reward = {afHQ[1] + 4, afHQ[2] + 4, afHQ[3] + 4, afHQ[4] + 4, afHQ[5] + 4}}, -- RDM
+		[  6] = {trade = {af[1] + 3, af[2] + 5, af[3] + 5, af[4] + 5, af[5] + 5, {"gil", 250000}}, reward = {afHQ[1] + 5, afHQ[2] + 5, afHQ[3] + 5, afHQ[4] + 5, afHQ[5] + 5}}, -- THF
+		[  7] = {trade = {af[1] + 4, af[2] + 6, af[3] + 6, af[4] + 6, af[5] + 6, {"gil", 250000}}, reward = {afHQ[1] + 6, afHQ[2] + 6, afHQ[3] + 6, afHQ[4] + 6, afHQ[5] + 6}}, -- PLD
+		[  8] = {trade = {af[1] + 5, af[2] + 7, af[3] + 7, af[4] + 7, af[5] + 7, {"gil", 250000}}, reward = {afHQ[1] + 7, afHQ[2] + 7, afHQ[3] + 7, afHQ[4] + 7, afHQ[5] + 7}}, -- DRK
+		[  9] = {trade = {af[1] + 6, af[2] + 8, af[3] + 8, af[4] + 8, af[5] + 8, {"gil", 250000}}, reward = {afHQ[1] + 8, afHQ[2] + 8, afHQ[3] + 8, afHQ[4] + 8, afHQ[5] + 8}}, -- BST
+		[ 10] = {trade = {af[1] + 1346, af[2] + 9, af[3] + 9, af[4] + 9, af[5] + 9, {"gil", 250000}}, reward = {afHQ[1] + 9, afHQ[2] + 9, afHQ[3] + 9, afHQ[4] + 9, afHQ[5] + 9}}, -- BRD
+		[ 11] = {trade = {af[1] + 7, af[2] + 10, af[3] + 10, af[4] + 10, af[5] + 10, {"gil", 250000}}, reward = {afHQ[1] + 10, afHQ[2] + 10, afHQ[3] + 10, afHQ[4] + 10, afHQ[5] + 10}}, -- RNG
+		[ 12] = {trade = {af[1] + 1357, af[2] + 1143, af[3] + 11, af[4] + 11, af[5] + 11, {"gil", 250000}}, reward = {afHQ[1] + 11, afHQ[2] + 11, afHQ[3] + 11, afHQ[4] + 11, afHQ[5] + 11}}, -- SAM
+		[ 13] = {trade = {af[1] + 1358, af[2] + 1144, af[3] + 12, af[4] + 12, af[5] + 12, {"gil", 250000}}, reward = {afHQ[1] + 12, afHQ[2] + 12, afHQ[3] + 12, afHQ[4] + 12, afHQ[5] + 12}}, -- NIN
+		[ 14] = {trade = {af[1] + 8, af[2] + 11, af[3] + 13, af[4] + 13, af[5] + 13, {"gil", 250000}}, reward = {afHQ[1] + 13, afHQ[2] + 13, afHQ[3] + 13, afHQ[4] + 13, afHQ[5] + 13}}, -- DRG
+		[ 15] = {trade = {af[1] + 9, af[2] + 12, af[3] + 14, af[4] + 14, af[5] + 14, {"gil", 250000}}, reward = {afHQ[1] + 14, afHQ[2] + 14, afHQ[3] + 14, afHQ[4] + 14, afHQ[5] + 14}}, -- SMN
 		[ 16] = {trade = {af[1] + 2754, af[2] + 1883, af[3] + 967, af[4] + 1511, af[5] + 1470, {"gil", 250000}}, reward = {afHQ[1] - 3761, afHQ[2] - 3182, afHQ[3] + 134, afHQ[4] + 784, afHQ[5] - 3971}}, -- BLU
 		[ 17] = {trade = {af[1] + 2755, af[2] + 1884, af[3] + 968, af[4] + 1512, af[5] + 1471, {"gil", 250000}}, reward = {afHQ[1] - 3758, afHQ[2] - 3179, afHQ[3] + 137, afHQ[4] + 787, afHQ[5] - 3968}}, -- COR
 		[ 18] = {trade = {af[1] + 2756, af[2] + 1885, af[3] + 969, af[4] + 1513, af[5] + 1472, {"gil", 250000}}, reward = {afHQ[1] - 3755, afHQ[2] - 3176, afHQ[3] + 140, afHQ[4] + 790, afHQ[5] - 3965}}, -- PUP
@@ -120,7 +120,7 @@ function onTrigger(player, npc)
 			player:addItem(14095, 1)
 			player:PrintToPlayer(string.format("Obtained the Gallant Armor Set!"),tpz.msg.channel.SYSTEM_3)
 		elseif (job == tpz.job.DRK and level > 51 and player:getFreeSlotsCount() >= 5) then
-			player:addItem(14516, 1)
+			player:addItem(12516, 1)
 			player:addItem(12645, 1)
 			player:addItem(13968, 1)
 			player:addItem(14221, 1)

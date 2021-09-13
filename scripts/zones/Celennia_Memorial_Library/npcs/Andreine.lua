@@ -75,11 +75,11 @@ function onTrigger(player,npc)
 					17227,	25000,		-- (Marksmanship) Heavy Crossbow +1
 					4224,	5000,		-- (Ammunition) Demon Arrow Quiver
 					4229,	5000,		-- (Ammunition) Darksteel Bolt Quiver
-					15225,	30000,		-- (Head) Fighter's Mask +1
-					14473,	30000,		-- (Body) Fighter's Lorica +1
-					14890,	30000,		-- (Hands) Fighter's Mufflers +1
-					15561,	30000,		-- (Legs) Fighter's Cuisses +1
-					15352,	30000,		-- (Feet) Fighter's Calligae +1
+					15225,	50000,		-- (Head) Fighter's Mask +1
+					14473,	50000,		-- (Body) Fighter's Lorica +1
+					14890,	50000,		-- (Hands) Fighter's Mufflers +1
+					15561,	50000,		-- (Legs) Fighter's Cuisses +1
+					15352,	50000,		-- (Feet) Fighter's Calligae +1
 					15523,	10000,		-- (Neck) Chivalrous Chain
 					15524,	10000,		-- (Neck) Fortified Chain
 					15521,	10000,		-- (Neck) Tempered Chain
@@ -88,7 +88,7 @@ function onTrigger(player,npc)
 					13403,	10000,		-- (Earring) Assault Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_WAR =
@@ -104,6 +104,9 @@ function onTrigger(player,npc)
 					11104,	50000,		-- (Hands) Ravager's Mufflers +2
 					11124,	50000,		-- (Legs) Ravager's Cuisses +2
 					11144,	50000,		-- (Feet) Ravager's Calligae +2
+					11591,  50000,		-- (Neck) Ravager's Gorget
+					11703,  50000,		-- (Earring) Ravager's Earring
+					19253,  50000,		-- (Ammunition) Ravager's Orb
 					10650,	50000,		-- (Head) Warrior's Mask +2
 					10670,	50000,		-- (Body) Warrior's Lorica +2
 					10690,	50000,		-- (Hands) Warrior's Mufflers +2
@@ -114,17 +117,20 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_WAR =
 				{
+					18916,  300000,		-- (Sword) Heimdall's Doom
 					20879,	100000,		-- (Great Axe) Nohkux Axe +1
 					20832,	65000,		-- (Axe) Aalak' Axe +1
 					19785,	100000,		-- (Archery) Lanner Bow +1
 					19266,	40000,		-- (Marksmanship) Darkwing +1
 					6137,	11500,		-- (Ammunition) Chapuli Arrow Quiver
 					6141,	11500,		-- (Ammunition) Oxidant Bolt Quiver
+					10442,  300000,		-- (Head) Laeradr Helm
+					10280,  300000,		-- (Body) Laeradr Breastplate
 					27743,	100000,		-- (Head) Temachtiani Headband
 					27884,	100000,		-- (Body) Temachtiani Shirt
 					28032,	100000,		-- (Hands) Temachtiani Gloves
@@ -135,12 +141,15 @@ function onTrigger(player,npc)
 					11104,	50000,		-- (Hands) Ravager's Mufflers +2
 					11124,	50000,		-- (Legs) Ravager's Cuisses +2
 					11144,	50000,		-- (Feet) Ravager's Calligae +2
+					11591,  50000,		-- (Neck) Ravager's Gorget
+					11703,  50000,		-- (Earring) Ravager's Earring
+					19253,  50000,		-- (Ammunition) Ravager's Orb
 					10650,	50000,		-- (Head) Warrior's Mask +2
 					10670,	50000,		-- (Body) Warrior's Lorica +2
 					10690,	50000,		-- (Hands) Warrior's Mufflers +2
 					10710,	50000,		-- (Legs) Warrior's Cuisses +2
 					10730,	50000,		-- (Feet) Warrior's Calligae +2
-					25417,	50000,		-- (Neck) Warrior's Bead Necklace
+					-- 25417,	50000,		-- (Neck) Warrior's Bead Necklace
 					10831,	50000,		-- (Waist) Paewr Belt
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
@@ -193,11 +202,11 @@ function onTrigger(player,npc)
 				{
 					18751,  25000,      -- (Hand-to-Hand) Black Adargas +1
 					17299,	50,			-- (Ammunition) Astragalos
-					15226,	30000,		-- (Head) Temple Crown +1
-					14474,	30000,		-- (Body) Temple Cyclas +1
-					14891,	30000,		-- (Hands) Temple Gloves +1
-					15562,	30000,		-- (Legs) Temple Hose +1
-					15353,	30000,		-- (Feet) Temple Gaiters +1
+					15226,	50000,		-- (Head) Temple Crown +1
+					14474,	50000,		-- (Body) Temple Cyclas +1
+					14891,	50000,		-- (Hands) Temple Gloves +1
+					15562,	50000,		-- (Legs) Temple Hose +1
+					15353,	50000,		-- (Feet) Temple Gaiters +1
 					15523,	10000,		-- (Neck) Chivalrous Chain
 					15524,	10000,		-- (Neck) Fortified Chain
 					15521,	10000,		-- (Neck) Tempered Chain
@@ -207,7 +216,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_MNK =
@@ -219,6 +228,9 @@ function onTrigger(player,npc)
 					11105,	50000,		-- (Hands) Tantra Gloves +2
 					11125,	50000,		-- (Legs) Tantra Hose +2
 					11145,	50000,		-- (Feet) Tantra Gaiters +2
+					11592,  50000,		-- (Neck) Tantra Necklace
+					11704,  50000,		-- (Earring) Tantra Earring
+					19254,  50000,		-- (Ammunition) Tantra Tathlum
 					10651,	50000,		-- (Head) Melee Crown +2
 					10671,	50000,		-- (Body) Melee Cyclas +2
 					10691,	50000,		-- (Hands) Melee Gloves +2
@@ -230,7 +242,7 @@ function onTrigger(player,npc)
 					13186,  75000,      -- (Waist) Black Belt
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_MNK =
@@ -247,12 +259,15 @@ function onTrigger(player,npc)
 					11105,	50000,		-- (Hands) Tantra Gloves +2
 					11125,	50000,		-- (Legs) Tantra Hose +2
 					11145,	50000,		-- (Feet) Tantra Gaiters +2
+					11592,  50000,		-- (Neck) Tantra Necklace
+					11704,  50000,		-- (Earring) Tantra Earring
+					19254,  50000,		-- (Ammunition) Tantra Tathlum
 					10651,	50000,		-- (Head) Melee Crown +2
 					10671,	50000,		-- (Body) Melee Cyclas +2
 					10691,	50000,		-- (Hands) Melee Gloves +2
 					10711,	50000,		-- (Legs) Melee Hose +2
 					10731,	50000,		-- (Feet) Melee Gaiters +2
-					25423,	50000,		-- (Neck) Monk's Nodowa
+					-- 25423,	50000,		-- (Neck) Monk's Nodowa
 					13186,  75000,      -- (Waist) Black Belt
 					10831,	50000,		-- (Waist) Paewr Belt
 					10992,	50000,		-- (Back) Vassal's Mantle
@@ -314,11 +329,11 @@ function onTrigger(player,npc)
 					17432,	25000,		-- (Club) Darksteel Maul +1
 					17520,	25000,		-- (Staff) Heavy Staff +1
 					17521,	25000,		-- (Staff) Mahogany Pole +1
-					15227,	30000,		-- (Head) Healer's Cap +1
-					14475,	30000,		-- (Body) Healer's Briault +1
-					14892,	30000,		-- (Hands) Healer's Mitts +1
-					15563,	30000,		-- (Legs) Healer's Pantaloons +1
-					15354,	30000,		-- (Feet) Healer's Duckbills +1
+					15227,	50000,		-- (Head) Healer's Cap +1
+					14475,	50000,		-- (Body) Healer's Briault +1
+					14892,	50000,		-- (Hands) Healer's Mitts +1
+					15563,	50000,		-- (Legs) Healer's Pantaloons +1
+					15354,	50000,		-- (Feet) Healer's Duckbills +1
 					15887,	10000,		-- (Neck) Resolute Belt
 					15885,	10000,		-- (Neck) Spectral Belt
 					15490,	10000,		-- (Back) Miraculous Cape
@@ -326,7 +341,7 @@ function onTrigger(player,npc)
 					15972,	10000,		-- (Earring) Insomnia Earring
 					15776,	10000,		-- (Ring) Ebullient Ring
 					15777,	10000,		-- (Ring) Hale Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_WHM =
@@ -339,6 +354,9 @@ function onTrigger(player,npc)
 					11106,	50000,		-- (Hands) Orison Mitts +2
 					11126,	50000,		-- (Legs) Orison Pantaloons +2
 					11146,	50000,		-- (Feet) Orison Duckbills +2
+					11615,  50000,		-- (Neck) Orison Locket
+					11705,  50000,		-- (Earring) Orison Earring
+					11554,  50000,		-- (Back) Orison Cape
 					10652,	50000,		-- (Head) Cleric's Cap +2
 					10672,	50000,		-- (Body) Cleric's Briault +2
 					10692,	50000,		-- (Hands) Cleric's Mitts +2
@@ -368,12 +386,15 @@ function onTrigger(player,npc)
 					11106,	50000,		-- (Hands) Orison Mitts +2
 					11126,	50000,		-- (Legs) Orison Pantaloons +2
 					11146,	50000,		-- (Feet) Orison Duckbills +2
+					11615,  50000,		-- (Neck) Orison Locket
+					11705,  50000,		-- (Earring) Orison Earring
+					11554,  50000,		-- (Back) Orison Cape
 					10652,	50000,		-- (Head) Cleric's Cap +2
 					10672,	50000,		-- (Body) Cleric's Briault +2
 					10692,	50000,		-- (Hands) Cleric's Mitts +2
 					10712,	50000,		-- (Legs) Cleric's Pantaloons +2
 					10732,	50000,		-- (Feet) Cleric's Duckbills +2
-					25429,	50000,		-- (Neck) Cleric's Torque
+					-- 25429,	50000,		-- (Neck) Cleric's Torque
 					28455,	50000,		-- (Waist) Ovate Rope
 					28596,	50000,		-- (Back) Oretania's Cape +1
 					-- 28474,	50000,		-- (Earring) Mendicant's Earring
@@ -430,11 +451,11 @@ function onTrigger(player,npc)
 					17435,	25000,		-- (Club) Darksteel Rod +1
 					17520,	25000,		-- (Staff) Heavy Staff +1
 					17521,	25000,		-- (Staff) Mahogany Pole +1
-					15228,	30000,		-- (Head) Wizard's Petasos +1
-					14476,	30000,		-- (Body) Wizard's Coat +1
-					14893,	30000,		-- (Hands) Wizard's Gloves +1
-					15564,	30000,		-- (Legs) Wizard's Tonban +1
-					15355,	30000,		-- (Feet) Wizard's Sabots +1
+					15228,	50000,		-- (Head) Wizard's Petasos +1
+					14476,	50000,		-- (Body) Wizard's Coat +1
+					14893,	50000,		-- (Hands) Wizard's Gloves +1
+					15564,	50000,		-- (Legs) Wizard's Tonban +1
+					15355,	50000,		-- (Feet) Wizard's Sabots +1
 					15887,	10000,		-- (Neck) Resolute Belt
 					15885,	10000,		-- (Neck) Spectral Belt
 					15490,	10000,		-- (Back) Miraculous Cape
@@ -442,7 +463,7 @@ function onTrigger(player,npc)
 					15972,	10000,		-- (Earring) Insomnia Earring
 					15776,	10000,		-- (Ring) Ebullient Ring
 					15777,	10000,		-- (Ring) Hale Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_BLM =
@@ -454,6 +475,9 @@ function onTrigger(player,npc)
 					11107,	50000,		-- (Hands) Goetia Gloves +2
 					11127,	50000,		-- (Legs) Goetia Chausses +2
 					11147,	50000,		-- (Feet) Goetia Sabots +2
+					11593,  50000,		-- (Neck) Goetia Chain
+					11706,  50000,		-- (Earring) Goetia Earring
+					16203,  50000,		-- (Back) Goetia Mantle
 					10653,	50000,		-- (Head) Sorcerer's Petasos +2
 					10673,	50000,		-- (Body) Sorcerer's Coat +2
 					10693,	50000,		-- (Hands) Sorcerer's Gloves +2
@@ -464,14 +488,14 @@ function onTrigger(player,npc)
 					11560,	30000,		-- (Back) Pedant Cape
 					11682,	30000,		-- (Earring) Snow Earring
 					13306,	30000,		-- (Ring) Omniscient Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_BLM =
 				{
 					21133,	100000,		-- (Club) Sasah Wand +1
 					21208,	100000,		-- (Staff) Lehbrailg
-					21362,	30000,		-- (Ammunition) Ombre Tathlum +1
+					-- 21362,	30000,		-- (Ammunition) Ombre Tathlum +1
 					27743,	100000,		-- (Head) Temachtiani Headband
 					27884,	100000,		-- (Body) Temachtiani Shirt
 					28032,	100000,		-- (Hands) Temachtiani Gloves
@@ -482,6 +506,9 @@ function onTrigger(player,npc)
 					11107,	50000,		-- (Hands) Goetia Gloves +2
 					11127,	50000,		-- (Legs) Goetia Chausses +2
 					11147,	50000,		-- (Feet) Goetia Sabots +2
+					-- 11593,  50000,		-- (Neck) Goetia Chain
+					11706,  50000,		-- (Earring) Goetia Earring
+					16203,  50000,		-- (Back) Goetia Mantle
 					10653,	50000,		-- (Head) Sorcerer's Petasos +2
 					10673,	50000,		-- (Body) Sorcerer's Coat +2
 					10693,	50000,		-- (Hands) Sorcerer's Gloves +2
@@ -543,11 +570,11 @@ function onTrigger(player,npc)
 					12353,  25000,      -- (Shield) Gilt Buckler
 					17427,	25000,		-- (Club) Ebony Wand +1
 					17520,	25000,		-- (Staff) Heavy Staff +1
-					15229,	30000,		-- (Head) Warlock's Chapeau +1
-					14477,	30000,		-- (Body) Warlock's Tabard +1
-					14894,	30000,		-- (Hands) Warlock's Gloves +1
-					15565,	30000,		-- (Legs) Warlock's Tights +1
-					15356,	30000,		-- (Feet) Warlock's Boots +1
+					15229,	50000,		-- (Head) Warlock's Chapeau +1
+					14477,	50000,		-- (Body) Warlock's Tabard +1
+					14894,	50000,		-- (Hands) Warlock's Gloves +1
+					15565,	50000,		-- (Legs) Warlock's Tights +1
+					15356,	50000,		-- (Feet) Warlock's Boots +1
 					15887,	10000,		-- (Neck) Resolute Belt
 					15885,	10000,		-- (Neck) Spectral Belt
 					15490,	10000,		-- (Back) Miraculous Cape
@@ -555,7 +582,7 @@ function onTrigger(player,npc)
 					15972,	10000,		-- (Earring) Insomnia Earring
 					15776,	10000,		-- (Ring) Ebullient Ring
 					15777,	10000,		-- (Ring) Hale Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_RDM =
@@ -568,6 +595,9 @@ function onTrigger(player,npc)
 					11108,	50000,		-- (Hands) Estoqueur's Gantherots +2
 					11128,	50000,		-- (Legs) Estoqueur's Fuseau +2
 					11148,	50000,		-- (Feet) Estoqueur's Houseaux +2
+					11594,  50000,		-- (Neck) Estoqueur's Collar
+					11707,  50000,		-- (Earring) Estoqueur's Earring
+					16204,  50000,		-- (Back) Estoqueur's Cape
 					10654,	50000,		-- (Head) Duelist's Chapeau +2
 					10674,	50000,		-- (Body) Duelist's Tabard +2
 					10694,	50000,		-- (Hands) Duelist's Gloves +2
@@ -582,7 +612,7 @@ function onTrigger(player,npc)
 					11682,	30000,		-- (Earring) Snow Earring
 					13308,	30000,		-- (Ring) Communion Ring
 					13306,	30000,		-- (Ring) Omniscient Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_RDM =
@@ -590,7 +620,7 @@ function onTrigger(player,npc)
 					20743,	100000,		-- (Sword) Bihkah Sword +1
 					28668,  100000,     -- (Shield) Matamata Shield +1
 					21207,	100000,		-- (Staff) Hemolele Staff +1
-					21362,	30000,		-- (Ammunition) Ombre Tathlum +1
+					-- 21362,	30000,		-- (Ammunition) Ombre Tathlum +1
 					27743,	100000,		-- (Head) Temachtiani Headband
 					27884,	100000,		-- (Body) Temachtiani Shirt
 					28032,	100000,		-- (Hands) Temachtiani Gloves
@@ -601,12 +631,15 @@ function onTrigger(player,npc)
 					11108,	50000,		-- (Hands) Estoqueur's Gantherots +2
 					11128,	50000,		-- (Legs) Estoqueur's Fuseau +2
 					11148,	50000,		-- (Feet) Estoqueur's Houseaux +2
+					11594,  50000,		-- (Neck) Estoqueur's Collar
+					11707,  50000,		-- (Earring) Estoqueur's Earring
+					16204,  50000,		-- (Back) Estoqueur's Cape
 					10654,	50000,		-- (Head) Duelist's Chapeau +2
 					10674,	50000,		-- (Body) Duelist's Tabard +2
 					10694,	50000,		-- (Hands) Duelist's Gloves +2
 					10714,	50000,		-- (Legs) Duelist's Tights +2
 					10734,	50000,		-- (Feet) Duelist's Boots +2
-					25441,	50000,		-- (Neck) Duelist's Torque
+					-- 25441,	50000,		-- (Neck) Duelist's Torque
 					10839,	50000,		-- (Waist) Othila Sash
 					28455,	50000,		-- (Waist) Ovate Rope
 					28596,	50000,		-- (Back) Oretania's Cape +1
@@ -669,11 +702,11 @@ function onTrigger(player,npc)
 					17603,  15000,      -- (Dagger) Cermet Kukri +1
 					19227,	25000,		-- (Marksmanship) Blunderbuss +1
 					5353,	5000,		-- (Ammunition) Iron Bullet Pouch
-					15230,	30000,		-- (Head) Rogue's Bonnet +1
-					14478,	30000,		-- (Body) Rogue's Vest +1
-					14895,	30000,		-- (Hands) Rogue's Armlets +1
-					15566,	30000,		-- (Legs) Rogue's Culottes +1
-					15357,	30000,		-- (Feet) Rogue's Poulaines +1
+					15230,	50000,		-- (Head) Rogue's Bonnet +1
+					14478,	50000,		-- (Body) Rogue's Vest +1
+					14895,	50000,		-- (Hands) Rogue's Armlets +1
+					15566,	50000,		-- (Legs) Rogue's Culottes +1
+					15357,	50000,		-- (Feet) Rogue's Poulaines +1
 					15523,	10000,		-- (Neck) Chivalrous Chain
 					15524,	10000,		-- (Neck) Fortified Chain
 					15521,	10000,		-- (Neck) Tempered Chain
@@ -682,7 +715,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_THF =
@@ -696,6 +729,9 @@ function onTrigger(player,npc)
 					11109,	50000,		-- (Hands) Raider's Armlets +2
 					11129,	50000,		-- (Legs) Raider's Culottes +2
 					11149,	50000,		-- (Feet) Raider's Poulaines +2 (TH)
+					19260,  50000,		-- (Throwing) Raider's Boomerang
+					11708,  50000,		-- (Earring) Raider's Earring
+					11736,  50000,		-- (Waist) Raider's Belt
 					10655,	50000,		-- (Head) Assassin's Bonnet +2
 					10675,	50000,		-- (Body) Assassin's Vest +2
 					10695,	50000,		-- (Hands) Assassin's Armlets +2 (TH)
@@ -708,7 +744,7 @@ function onTrigger(player,npc)
 					11679,	30000,		-- (Earring) Thunder Earring
 					14636,	30000,		-- (Ring) Breeze Ring
 					14638,	30000,		-- (Ring) Thunder Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_THF =
@@ -726,12 +762,15 @@ function onTrigger(player,npc)
 					11109,	50000,		-- (Hands) Raider's Armlets +2
 					11129,	50000,		-- (Legs) Raider's Culottes +2
 					11149,	50000,		-- (Feet) Raider's Poulaines +2 (TH)
+					19260,  50000,		-- (Throwing) Raider's Boomerang
+					11708,  50000,		-- (Earring) Raider's Earring
+					11736,  50000,		-- (Waist) Raider's Belt
 					10655,	50000,		-- (Head) Assassin's Bonnet +2
 					10675,	50000,		-- (Body) Assassin's Vest +2
 					10695,	50000,		-- (Hands) Assassin's Armlets +2 (TH)
 					10715,	50000,		-- (Legs) Assassin's Culottes +2
 					10735,	50000,		-- (Feet) Assassin's Poulaines +2
-					25447,	50000,		-- (Neck) Assassin's Gorget
+					-- 25447,	50000,		-- (Neck) Assassin's Gorget
 					10831,	50000,		-- (Waist) Paewr Belt
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
@@ -790,11 +829,11 @@ function onTrigger(player,npc)
 					12353,  25000,      -- (Shield) Gilt Buckler
 					17189,	25000,		-- (Archery) Rapid Bow +1
 					4224,	5000,		-- (Ammunition) Demon Arrow Quiver
-					15231,	30000,		-- (Head) Gallant Coronet +1
-					14479,	30000,		-- (Body) Gallant Surcoat +1
-					14896,	30000,		-- (Hands) Gallant Gauntlets +1
-					15567,	30000,		-- (Legs) Gallant Breeches +1
-					15358,	30000,		-- (Feet) Gallant Leggings +1
+					15231,	50000,		-- (Head) Gallant Coronet +1
+					14479,	50000,		-- (Body) Gallant Surcoat +1
+					14896,	50000,		-- (Hands) Gallant Gauntlets +1
+					15567,	50000,		-- (Legs) Gallant Breeches +1
+					15358,	50000,		-- (Feet) Gallant Leggings +1
 					15523,	10000,		-- (Neck) Chivalrous Chain
 					15524,	10000,		-- (Neck) Fortified Chain
 					15521,	10000,		-- (Neck) Tempered Chain
@@ -803,7 +842,7 @@ function onTrigger(player,npc)
 					14758,	10000,		-- (Earring) Knightly Earring
 					16009,	10000,		-- (Earring) Pennon Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_PLD =
@@ -817,6 +856,9 @@ function onTrigger(player,npc)
 					11110,	50000,		-- (Hands) Creed Gauntlets +2
 					11130,	50000,		-- (Legs) Creed Cuisses +2
 					11150,	50000,		-- (Feet) Creed Sabatons +2
+					11595,  50000,		-- (Neck) Creed Collar
+					11709,  50000,		-- (Earring) Creed Earring
+					11750,  50000,		-- (Waist) Creed Baudrier
 					10656,	50000,		-- (Head) Valor Coronet +2
 					10676,	50000,		-- (Body) Valor Surcoat +2
 					10696,	50000,		-- (Hands) Valor Gauntlets +2
@@ -827,7 +869,7 @@ function onTrigger(player,npc)
 					16216,	30000,		-- (Back) Cerberus Mantle +1
 					11680,	30000,		-- (Earring) Soil Earring
 					14634,	30000,		-- (Ring) Soil Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_PLD =
@@ -836,6 +878,8 @@ function onTrigger(player,npc)
 					28668,  100000,     -- (Shield) Matamata Shield +1
 					19785,	100000,		-- (Archery) Lanner Bow +1
 					6137,	11500,		-- (Ammunition) Chapuli Arrow Quiver
+					10442,  300000,		-- (Head) Laeradr Helm
+					10280,  300000,		-- (Body) Laeradr Breastplate
 					10435,	100000,		-- (Head) Dux Visor +1
 					10273,	100000,		-- (Body) Dux Scale Mail +1
 					10317,	100000,		-- (Hands) Dux Finger Gauntlets +1
@@ -846,12 +890,15 @@ function onTrigger(player,npc)
 					11110,	50000,		-- (Hands) Creed Gauntlets +2
 					11130,	50000,		-- (Legs) Creed Cuisses +2
 					11150,	50000,		-- (Feet) Creed Sabatons +2
+					11595,  50000,		-- (Neck) Creed Collar
+					11709,  50000,		-- (Earring) Creed Earring
+					11750,  50000,		-- (Waist) Creed Baudrier
 					10656,	50000,		-- (Head) Valor Coronet +2
 					10676,	50000,		-- (Body) Valor Surcoat +2
 					10696,	50000,		-- (Hands) Valor Gauntlets +2
 					10716,	50000,		-- (Legs) Valor Breeches +2
 					10736,	50000,		-- (Feet) Valor Leggings +2
-					25453,	50000,		-- (Neck) Knight's Bead Necklace
+					-- 25453,	50000,		-- (Neck) Knight's Bead Necklace
 					10819,	50000,		-- (Waist) Flume Belt
 					10996,	50000,		-- (Back) Testudo Mantle
 					11050,	50000,		-- (Earring) Puissant Pearl
@@ -912,11 +959,11 @@ function onTrigger(player,npc)
 					16616,	25000,		-- (Great Sword) Zweihander +1
 					17227,	25000,		-- (Marksmanship) Heavy Crossbow +1
 					4229,	5000,		-- (Ammunition) Darksteel Bolt Quiver
-					15232,	30000,		-- (Head) Chaos Burgeonet +1
-					14480,	30000,		-- (Body) Chaos Cuirass +1
-					14897,	30000,		-- (Hands) Chaos Gauntlets +1
-					15568,	30000,		-- (Legs) Chaos Flanchard +1
-					15359,	30000,		-- (Feet) Chaos Sollerets +1
+					15232,	50000,		-- (Head) Chaos Burgeonet +1
+					14480,	50000,		-- (Body) Chaos Cuirass +1
+					14897,	50000,		-- (Hands) Chaos Gauntlets +1
+					15568,	50000,		-- (Legs) Chaos Flanchard +1
+					15359,	50000,		-- (Feet) Chaos Sollerets +1
 					15523,	10000,		-- (Neck) Chivalrous Chain
 					15524,	10000,		-- (Neck) Fortified Chain
 					15521,	10000,		-- (Neck) Tempered Chain
@@ -925,7 +972,7 @@ function onTrigger(player,npc)
 					13403,	10000,		-- (Earring) Assault Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_DRK =
@@ -939,6 +986,9 @@ function onTrigger(player,npc)
 					11111,	50000,		-- (Hands) Bale Gauntlets +2
 					11131,	50000,		-- (Legs) Bale Flanchard +2
 					11151,	50000,		-- (Feet) Bale Sollerets +2
+					11616,  50000,		-- (Neck) Bale Choker
+					11710,  50000,		-- (Earring) Bale Earring
+					11737,  50000,		-- (Waist) Bale Belt
 					10657,	50000,		-- (Head) Abyss Burgeonet +2
 					10677,	50000,		-- (Body) Abyss Cuirass +2
 					10697,	50000,		-- (Hands) Abyss Gauntlets +2
@@ -949,15 +999,18 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_DRK =
 				{
+					18916,  300000,		-- (Sword) Heimdall's Doom
 					20923,	100000,		-- (Scythe) Aak'ab Scythe +1
 					20788,	100000,		-- (Great Sword) Hatzoaar Sword +1
 					19266,	40000,		-- (Marksmanship) Darkwing +1
 					6141,	11500,		-- (Ammunition) Oxidant Bolt Quiver
+					10442,  300000,		-- (Head) Laeradr Helm
+					10280,  300000,		-- (Body) Laeradr Breastplate
 					27743,	100000,		-- (Head) Temachtiani Headband
 					27884,	100000,		-- (Body) Temachtiani Shirt
 					28032,	100000,		-- (Hands) Temachtiani Gloves
@@ -968,12 +1021,15 @@ function onTrigger(player,npc)
 					11111,	50000,		-- (Hands) Bale Gauntlets +2
 					11131,	50000,		-- (Legs) Bale Flanchard +2
 					11151,	50000,		-- (Feet) Bale Sollerets +2
+					11616,  50000,		-- (Neck) Bale Choker
+					11710,  50000,		-- (Earring) Bale Earring
+					11737,  50000,		-- (Waist) Bale Belt
 					10657,	50000,		-- (Head) Abyss Burgeonet +2
 					10677,	50000,		-- (Body) Abyss Cuirass +2
 					10697,	50000,		-- (Hands) Abyss Gauntlets +2
 					10717,	50000,		-- (Legs) Abyss Flanchard +2
 					10737,	50000,		-- (Feet) Abyss Sollerets +2
-					25459,	50000,		-- (Neck) Abyssal Bead Necklace
+					-- 25459,	50000,		-- (Neck) Abyssal Bead Necklace
 					10831,	50000,		-- (Waist) Paewr Belt
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
@@ -1028,11 +1084,11 @@ function onTrigger(player,npc)
 					16682,	25000,		-- (Axe) Darksteel Pick +1
 					12353,  25000,      -- (Shield) Gilt Buckler
 					18962,  25000,      -- (Scythe) Rusty Zaghnal
-					15233,	30000,		-- (Head) Beast Helm +1
-					14481,	30000,		-- (Body) Beast Jackcoat +1
-					14898,	30000,		-- (Hands) Beast Gloves +1
-					15569,	30000,		-- (Legs) Beast Trousers +1
-					15360,	30000,		-- (Feet) Beast Gaiters +1
+					15233,	50000,		-- (Head) Beast Helm +1
+					14481,	50000,		-- (Body) Beast Jackcoat +1
+					14898,	50000,		-- (Hands) Beast Gloves +1
+					15569,	50000,		-- (Legs) Beast Trousers +1
+					15360,	50000,		-- (Feet) Beast Gaiters +1
 					15523,	10000,		-- (Neck) Chivalrous Chain
 					15524,	10000,		-- (Neck) Fortified Chain
 					15521,	10000,		-- (Neck) Tempered Chain
@@ -1041,7 +1097,7 @@ function onTrigger(player,npc)
 					13403,	10000,		-- (Earring) Assault Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_BST =
@@ -1054,6 +1110,9 @@ function onTrigger(player,npc)
 					11112,	50000,		-- (Hands) Ferine Manoplas +2
 					11132,	50000,		-- (Legs) Ferine Quijotes +2
 					11152,	50000,		-- (Feet) Ferine Ocreae +2
+					11617,  50000,		-- (Neck) Ferine Necklace
+					11711,  50000,		-- (Earring) Ferine Earring
+					11555,  50000,		-- (Back) Ferine Mantle
 					10658,	50000,		-- (Head) Monster Helm +2
 					10678,	50000,		-- (Body) Monster Jackcoat +2
 					10698,	50000,		-- (Hands) Monster Gloves +2
@@ -1064,7 +1123,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_BST =
@@ -1082,12 +1141,15 @@ function onTrigger(player,npc)
 					11112,	50000,		-- (Hands) Ferine Manoplas +2
 					11132,	50000,		-- (Legs) Ferine Quijotes +2
 					11152,	50000,		-- (Feet) Ferine Ocreae +2
+					11617,  50000,		-- (Neck) Ferine Necklace
+					11711,  50000,		-- (Earring) Ferine Earring
+					11555,  50000,		-- (Back) Ferine Mantle
 					10658,	50000,		-- (Head) Monster Helm +2
 					10678,	50000,		-- (Body) Monster Jackcoat +2
 					10698,	50000,		-- (Hands) Monster Gloves +2
 					10718,	50000,		-- (Legs) Monster Trousers +2
 					10738,	50000,		-- (Feet) Monster Gaiters +2
-					25465,	50000,		-- (Neck) Beastmaster Collar
+					-- 25465,	50000,		-- (Neck) Beastmaster Collar
 					10831,	50000,		-- (Waist) Paewr Belt
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
@@ -1145,11 +1207,11 @@ function onTrigger(player,npc)
 					16618,  25000,      -- (Sword) Mailbreaker +1
 					17832,	15000,		-- (Wind Instrument) Shofar +1
 					17833,	15000,		-- (String Instrument) Ebony Harp +1
-					15234,	30000,		-- (Head) Choral Roundlet +1
-					14482,	30000,		-- (Body) Choral Justaucorps +1
-					14899,	30000,		-- (Hands) Choral Cuffs +1
-					15570,	30000,		-- (Legs) Choral Cannions +1
-					15361,	30000,		-- (Feet) Choral Slippers +1
+					15234,	50000,		-- (Head) Choral Roundlet +1
+					14482,	50000,		-- (Body) Choral Justaucorps +1
+					14899,	50000,		-- (Hands) Choral Cuffs +1
+					15570,	50000,		-- (Legs) Choral Cannions +1
+					15361,	50000,		-- (Feet) Choral Slippers +1
 					15524,	10000,		-- (Neck) Fortified Chain
 					15525,	10000,		-- (Neck) Grandiose Chain
 					15521,	10000,		-- (Neck) Tempered Chain
@@ -1157,7 +1219,7 @@ function onTrigger(player,npc)
 					15490,	10000,		-- (Back) Miraculous Cape
 					16009,	10000,		-- (Earring) Pennon Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_BRD =
@@ -1168,6 +1230,9 @@ function onTrigger(player,npc)
 					11113,	50000,		-- (Hands) Aoidos' Manchettes +2
 					11133,	50000,		-- (Legs) Aoidos' Rhingrave +2
 					11153,	50000,		-- (Feet) Aoidos' Cothurnes +2
+					11618,  50000,		-- (Neck) Aoidos' Matinee
+					11712,  50000,		-- (Earring) Aoidos' Earring
+					11738,  50000,		-- (Waist) Aoidos' Belt
 					10659,	50000,		-- (Head) Bard's Roundlet +2
 					10679,	50000,		-- (Body) Bard's Justaucorps +2
 					10699,	50000,		-- (Hands) Bard's Cuffs +2
@@ -1178,7 +1243,7 @@ function onTrigger(player,npc)
 					11563,	30000,		-- (Back) Mesmeric Cape
 					11724,	30000,		-- (Earring) Reverie Earring +1
 					14643,	30000,		-- (Ring) Apollo's Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_BRD =
@@ -1194,12 +1259,15 @@ function onTrigger(player,npc)
 					11113,	50000,		-- (Hands) Aoidos' Manchettes +2
 					11133,	50000,		-- (Legs) Aoidos' Rhingrave +2
 					11153,	50000,		-- (Feet) Aoidos' Cothurnes +2
+					11618,  50000,		-- (Neck) Aoidos' Matinee
+					11712,  50000,		-- (Earring) Aoidos' Earring
+					11738,  50000,		-- (Waist) Aoidos' Belt
 					10659,	50000,		-- (Head) Bard's Roundlet +2
 					10679,	50000,		-- (Body) Bard's Justaucorps +2
 					10699,	50000,		-- (Hands) Bard's Cuffs +2
 					10719,	50000,		-- (Legs) Bard's Cannions +2
 					10739,	50000,		-- (Feet) Bard's Slippers +2
-					25471,	50000,		-- (Neck) Bard's Charm
+					-- 25471,	50000,		-- (Neck) Bard's Charm
 					10826,	50000,		-- (Waist) Witful Belt
 					11012,	50000,		-- (Back) Gwyddion's Cape
 					11036,	50000,		-- (Earring) Enchanter's Earring
@@ -1269,11 +1337,11 @@ function onTrigger(player,npc)
 					4224,	5000,		-- (Ammunition) Demon Arrow Quiver
 					4229,	5000,		-- (Ammunition) Darksteel Bolt Quiver
 					5353,	5000,		-- (Ammunition) Iron Bullet Pouch
-					15235,	30000,		-- (Head) Hunter's Beret +1
-					14483,	30000,		-- (Body) Hunter's Jerkin +1
-					14900,	30000,		-- (Hands) Hunter's Bracers +1
-					15571,	30000,		-- (Legs) Hunter's Braccae +1
-					15362,	30000,		-- (Feet) Hunter's Socks +1
+					15235,	50000,		-- (Head) Hunter's Beret +1
+					14483,	50000,		-- (Body) Hunter's Jerkin +1
+					14900,	50000,		-- (Hands) Hunter's Bracers +1
+					15571,	50000,		-- (Legs) Hunter's Braccae +1
+					15362,	50000,		-- (Feet) Hunter's Socks +1
 					15523,	10000,		-- (Neck) Chivalrous Chain
 					15524,	10000,		-- (Neck) Fortified Chain
 					15521,	10000,		-- (Neck) Tempered Chain
@@ -1282,7 +1350,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_RNG =
@@ -1299,6 +1367,9 @@ function onTrigger(player,npc)
 					11114,	50000,		-- (Hands) Sylvan Glovelettes +2
 					11134,	50000,		-- (Legs) Sylvan Bragues +2
 					11154,	50000,		-- (Feet) Sylvan Bottillons +2
+					11596,  50000,		-- (Neck) Sylvan Scarf
+					11713,  50000,		-- (Earring) Sylvan Earring
+					16205,  50000,		-- (Back) Sylvan Chlamys
 					10660,	50000,		-- (Head) Scout's Beret +2
 					10680,	50000,		-- (Body) Scout's Jerkin +2
 					10700,	50000,		-- (Hands) Scout's Bracers +2
@@ -1309,7 +1380,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11681,	30000,		-- (Earring) Breeze Earring
 					14636,	30000,		-- (Ring) Breeze Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_RNG =
@@ -1331,17 +1402,20 @@ function onTrigger(player,npc)
 					11114,	50000,		-- (Hands) Sylvan Glovelettes +2
 					11134,	50000,		-- (Legs) Sylvan Bragues +2
 					11154,	50000,		-- (Feet) Sylvan Bottillons +2
+					11596,  50000,		-- (Neck) Sylvan Scarf
+					11713,  50000,		-- (Earring) Sylvan Earring
+					16205,  50000,		-- (Back) Sylvan Chlamys
 					10660,	50000,		-- (Head) Scout's Beret +2
 					10680,	50000,		-- (Body) Scout's Jerkin +2
 					10700,	50000,		-- (Hands) Scout's Bracers +2
 					10720,	50000,		-- (Legs) Scout's Braccae +2
 					10740,	50000,		-- (Feet) Scout's Socks +2
-					25477,	50000,		-- (Neck) Scout's Gorget
+					-- 25477,	50000,		-- (Neck) Scout's Gorget
 					26337,	50000,		-- (Waist) Kwahu Kachina Belt
 					11006,	50000,		-- (Back) Thall Mantle
 					11046,	50000,		-- (Earring) Ouesk Pearl
 					28513,	50000,		-- (Earring) Phawaylla Earring
-					27572,	50000,		-- (Ring) Garuda Ring
+					11058,	50000,		-- (Ring) Hajduk Ring
 					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
@@ -1391,11 +1465,11 @@ function onTrigger(player,npc)
 					16990,  25000,      -- (Great Katana) Daihannya
 					17189,	25000,		-- (Archery) Rapid Bow +1
 					4224,	5000,		-- (Ammunition) Demon Arrow Quiver
-					15236,	30000,		-- (Head) Myochin Kabuto +1
-					14484,	30000,		-- (Body) Myochin Domaru +1
-					14901,	30000,		-- (Hands) Myochin Kote +1
-					15572,	30000,		-- (Legs) Myochin Haidate +1
-					15363,	30000,		-- (Feet) Myochin Sune-Ate +1
+					15236,	50000,		-- (Head) Myochin Kabuto +1
+					14484,	50000,		-- (Body) Myochin Domaru +1
+					14901,	50000,		-- (Hands) Myochin Kote +1
+					15572,	50000,		-- (Legs) Myochin Haidate +1
+					15363,	50000,		-- (Feet) Myochin Sune-Ate +1
 					15523,	10000,		-- (Neck) Chivalrous Chain
 					15524,	10000,		-- (Neck) Fortified Chain
 					15521,	10000,		-- (Neck) Tempered Chain
@@ -1404,7 +1478,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_SAM =
@@ -1417,6 +1491,9 @@ function onTrigger(player,npc)
 					11115,	50000,		-- (Hands) Unkai Kote +2
 					11135,	50000,		-- (Legs) Unkai Haidate +2
 					11155,	50000,		-- (Feet) Unkai Sune-Ate +2
+					11597,  50000,		-- (Neck) Unkai Nodowa
+					11714,  50000,		-- (Earring) Unkai Mimikazari
+					16206,  50000,		-- (Back) Unkai Sugemino
 					10661,	50000,		-- (Head) Saotome Kabuto +2
 					10681,	50000,		-- (Body) Saotome Domaru +2
 					10701,	50000,		-- (Hands) Saotome Kote +2
@@ -1427,7 +1504,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_SAM =
@@ -1445,12 +1522,15 @@ function onTrigger(player,npc)
 					11115,	50000,		-- (Hands) Unkai Kote +2
 					11135,	50000,		-- (Legs) Unkai Haidate +2
 					11155,	50000,		-- (Feet) Unkai Sune-Ate +2
+					11597,  50000,		-- (Neck) Unkai Nodowa
+					11714,  50000,		-- (Earring) Unkai Mimikazari
+					16206,  50000,		-- (Back) Unkai Sugemino
 					10661,	50000,		-- (Head) Saotome Kabuto +2
 					10681,	50000,		-- (Body) Saotome Domaru +2
 					10701,	50000,		-- (Hands) Saotome Kote +2
 					10721,	50000,		-- (Legs) Saotome Haidate +2
 					10741,	50000,		-- (Feet) Saotome Sune-Ate +2
-					25483,	50000,		-- (Neck) Samurai's Nodowa
+					-- 25483,	50000,		-- (Neck) Samurai's Nodowa
 					10831,	50000,		-- (Waist) Paewr Belt
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
@@ -1502,11 +1582,11 @@ function onTrigger(player,npc)
 				{
 					16923,  15000,      -- (Katana) Kabutowari +1
 					6302,	5000,		-- (Throwing) Fuma Shuriken Pouch
-					15237,	30000,		-- (Head) Ninja Hatsuburi +1
-					14485,	30000,		-- (Body) Ninja Chainmail +1
-					14902,	30000,		-- (Hands) Ninja Tekko +1
-					15573,	30000,		-- (Legs) Ninja Hakama +1
-					15364,	30000,		-- (Feet) Ninja Kyahan +1
+					15237,	50000,		-- (Head) Ninja Hatsuburi +1
+					14485,	50000,		-- (Body) Ninja Chainmail +1
+					14902,	50000,		-- (Hands) Ninja Tekko +1
+					15573,	50000,		-- (Legs) Ninja Hakama +1
+					15364,	50000,		-- (Feet) Ninja Kyahan +1
 					15523,	10000,		-- (Neck) Chivalrous Chain
 					15524,	10000,		-- (Neck) Fortified Chain
 					15521,	10000,		-- (Neck) Tempered Chain
@@ -1515,7 +1595,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_NIN =
@@ -1527,6 +1607,9 @@ function onTrigger(player,npc)
 					11116,	50000,		-- (Hands) Iga Tekko +2
 					11136,	50000,		-- (Legs) Iga Hakama +2
 					11156,	50000,		-- (Feet) Iga Kyahan +2
+					11598,  50000,		-- (Neck) Iga Erimaki
+					11715,  50000,		-- (Earring) Iga Mimikazari
+					16207,  50000,		-- (Back) Iga Dochugappa
 					10662,	50000,		-- (Head) Koga Hatsuburi +2
 					10682,	50000,		-- (Body) Koga Chainmail +2
 					10702,	50000,		-- (Hands) Koga Tekko +2
@@ -1537,7 +1620,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_NIN =
@@ -1554,15 +1637,19 @@ function onTrigger(player,npc)
 					11116,	50000,		-- (Hands) Iga Tekko +2
 					11136,	50000,		-- (Legs) Iga Hakama +2
 					11156,	50000,		-- (Feet) Iga Kyahan +2
+					11598,  50000,		-- (Neck) Iga Erimaki
+					11715,  50000,		-- (Earring) Iga Mimikazari
+					16207,  50000,		-- (Back) Iga Dochugappa
 					10662,	50000,		-- (Head) Koga Hatsuburi +2
 					10682,	50000,		-- (Body) Koga Chainmail +2
 					10702,	50000,		-- (Hands) Koga Tekko +2
 					10722,	50000,		-- (Legs) Koga Hakama +2
 					10742,	50000,		-- (Feet) Koga Kyahan +2
-					25489,	50000,		-- (Neck) Ninja Nodowa
+					-- 25489,	50000,		-- (Neck) Ninja Nodowa
 					10831,	50000,		-- (Waist) Paewr Belt
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
+					28492,  50000,      -- (Earring) Hibernation Earring
 					10797,	50000,		-- (Ring) Dagaz Ring
 					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
@@ -1608,11 +1695,11 @@ function onTrigger(player,npc)
 				{
 					18119,  25000,      -- (Polearm) Dark Mezraq +1
 					18259,	200,		-- (Ammunition) Angon
-					15238,	30000,		-- (Head) Drachen Armet +1
-					14486,	30000,		-- (Body) Drachen Mail +1
-					14903,	30000,		-- (Hands) Drachen Finger Gauntlets +1
-					15574,	30000,		-- (Legs) Drachen Brais +1
-					15365,	30000,		-- (Feet) Drachen Greaves +1
+					15238,	50000,		-- (Head) Drachen Armet +1
+					14486,	50000,		-- (Body) Drachen Mail +1
+					14903,	50000,		-- (Hands) Drachen Finger Gauntlets +1
+					15574,	50000,		-- (Legs) Drachen Brais +1
+					15365,	50000,		-- (Feet) Drachen Greaves +1
 					15523,	10000,		-- (Neck) Chivalrous Chain
 					15524,	10000,		-- (Neck) Fortified Chain
 					15521,	10000,		-- (Neck) Tempered Chain
@@ -1621,7 +1708,7 @@ function onTrigger(player,npc)
 					13403,	10000,		-- (Earring) Assault Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_DRG =
@@ -1633,6 +1720,9 @@ function onTrigger(player,npc)
 					11117,	50000,		-- (Hands) Lancer's Vambraces +2
 					11137,	50000,		-- (Legs) Lancer's Cuissots +2
 					11157,	50000,		-- (Feet) Lancer's Schynbalds +2
+					11599,  50000,		-- (Neck) Lancer's Torque
+					11716,  50000,		-- (Earring) Lancer's Earring
+					16208,  50000,		-- (Back) Lancer's Pelerine
 					10663,	50000,		-- (Head) Wyrm Armet +2
 					10683,	50000,		-- (Body) Wyrm Mail +2
 					10703,	50000,		-- (Hands) Wyrm Finger Gauntlets +2
@@ -1643,11 +1733,12 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_DRG =
 				{
+					19799,  300000,		-- (Polearm) Herja's Fork
 					20968,	100000,		-- (Polearm) Chanar Xyston +1
 					18259,	200,		-- (Ammunition) Angon
 					27743,	100000,		-- (Head) Temachtiani Headband
@@ -1660,12 +1751,15 @@ function onTrigger(player,npc)
 					11117,	50000,		-- (Hands) Lancer's Vambraces +2
 					11137,	50000,		-- (Legs) Lancer's Cuissots +2
 					11157,	50000,		-- (Feet) Lancer's Schynbalds +2
+					11599,  50000,		-- (Neck) Lancer's Torque
+					11716,  50000,		-- (Earring) Lancer's Earring
+					16208,  50000,		-- (Back) Lancer's Pelerine
 					10663,	50000,		-- (Head) Wyrm Armet +2
 					10683,	50000,		-- (Body) Wyrm Mail +2
 					10703,	50000,		-- (Hands) Wyrm Finger Gauntlets +2
 					10723,	50000,		-- (Legs) Wyrm Brais +2
 					10743,	50000,		-- (Feet) Wyrm Greaves +2
-					25495,	50000,		-- (Neck) Dragoon's Collar
+					-- 25495,	50000,		-- (Neck) Dragoon's Collar
 					10831,	50000,		-- (Waist) Paewr Belt
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
@@ -1716,11 +1810,11 @@ function onTrigger(player,npc)
 				{
 					17520,	25000,		-- (Staff) Heavy Staff +1
 					17521,	25000,		-- (Staff) Mahogany Pole +1
-					15239,	30000,		-- (Head) Evoker's Horn +1
-					14487,	30000,		-- (Body) Evoker's Doublet +1
-					14904,	30000,		-- (Hands) Evoker's Bracers +1
-					15575,	30000,		-- (Legs) Evoker's Spats +1
-					15366,	30000,		-- (Feet) Evoker's Pigaches +1
+					15239,	50000,		-- (Head) Evoker's Horn +1
+					14487,	50000,		-- (Body) Evoker's Doublet +1
+					14904,	50000,		-- (Hands) Evoker's Bracers +1
+					15575,	50000,		-- (Legs) Evoker's Spats +1
+					15366,	50000,		-- (Feet) Evoker's Pigaches +1
 					15887,	10000,		-- (Neck) Resolute Belt
 					15885,	10000,		-- (Neck) Spectral Belt
 					15490,	10000,		-- (Back) Miraculous Cape
@@ -1728,7 +1822,7 @@ function onTrigger(player,npc)
 					15972,	10000,		-- (Earring) Insomnia Earring
 					15776,	10000,		-- (Ring) Ebullient Ring
 					15777,	10000,		-- (Ring) Hale Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_SMN =
@@ -1740,6 +1834,9 @@ function onTrigger(player,npc)
 					11118,	50000,		-- (Hands) Caller's Bracers +2
 					11138,	50000,		-- (Legs) Caller's Spats +2
 					11158,	50000,		-- (Feet) Caller's Pigaches +2
+					11619,  50000,		-- (Neck) Caller's Pendant
+					11717,  50000,		-- (Earring) Caller's Earring
+					11739,  50000,		-- (Back) Caller's Sash
 					10664,	50000,		-- (Head) Summoner's Horn +2
 					10684,	50000,		-- (Body) Summoner's Doublet +2
 					10704,	50000,		-- (Hands) Summoner's Bracers +2
@@ -1751,7 +1848,7 @@ function onTrigger(player,npc)
 					11685,	30000,		-- (Earring) Darkness Earring
 					14644,	30000,		-- (Ring) Dark Ring
 					14625,  100000,		-- (Ring) Evoker's Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_SMN =
@@ -1768,12 +1865,15 @@ function onTrigger(player,npc)
 					11118,	50000,		-- (Hands) Caller's Bracers +2
 					11138,	50000,		-- (Legs) Caller's Spats +2
 					11158,	50000,		-- (Feet) Caller's Pigaches +2
+					11619,  50000,		-- (Neck) Caller's Pendant
+					11717,  50000,		-- (Earring) Caller's Earring
+					11739,  50000,		-- (Back) Caller's Sash
 					10664,	50000,		-- (Head) Summoner's Horn +2
 					10684,	50000,		-- (Body) Summoner's Doublet +2
 					10704,	50000,		-- (Hands) Summoner's Bracers +2
 					10724,	50000,		-- (Legs) Summoner's Spats +2
 					10744,	50000,		-- (Feet) Summoner's Pigaches +2
-					25501,	50000,		-- (Neck) Summoner's Collar
+					-- 25501,	50000,		-- (Neck) Summoner's Collar
 					28458,	50000,		-- (Waist) Jaq'ij Sash
 					27607,	50000,		-- (Back) Thaumaturge's Cape
 					11021,	30000,		-- (Earring) Darkness Pearl
@@ -1824,11 +1924,11 @@ function onTrigger(player,npc)
 			stock_BLU =
 				{
 					17639,  25000,      -- (Sword) Cutlass +1
-					11464,	30000,		-- (Head) Magus Keffiyeh +1
-					11291,	30000,		-- (Body) Magus Jubbah +1
-					15024,	30000,		-- (Hands) Magus Bazubands +1
-					16345,	30000,		-- (Legs) Magus Shalwar +1
-					11381,	30000,		-- (Feet) Magus Charuqs +1
+					11464,	50000,		-- (Head) Magus Keffiyeh +1
+					11291,	50000,		-- (Body) Magus Jubbah +1
+					15024,	50000,		-- (Hands) Magus Bazubands +1
+					16345,	50000,		-- (Legs) Magus Shalwar +1
+					11381,	50000,		-- (Feet) Magus Charuqs +1
 					15523,	10000,		-- (Neck) Chivalrous Chain
 					15524,	10000,		-- (Neck) Fortified Chain
 					15521,	10000,		-- (Neck) Tempered Chain
@@ -1838,7 +1938,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_BLU =
@@ -1849,6 +1949,9 @@ function onTrigger(player,npc)
 					11119,	50000,		-- (Hands) Mavi Bazubands +2
 					11139,	50000,		-- (Legs) Mavi Tayt +2
 					11159,	50000,		-- (Feet) Mavi Basmak +2
+					19255,  50000,		-- (Ammunition) Mavi Tathlum
+					11600,  50000,		-- (Neck) Mavi Scarf
+					11718,  50000,		-- (Earring) Mavi Earring
 					10665,	50000,		-- (Head) Mirage Keffiyeh +2
 					10685,	50000,		-- (Body) Mirage Jubbah +2
 					10705,	50000,		-- (Hands) Mirage Bazubands +2
@@ -1859,11 +1962,12 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_BLU =
 				{
+					18916,  300000,		-- (Sword) Heimdall's Doom
 					20743,	100000,		-- (Sword) Bihkah Sword +1
 					27743,	100000,		-- (Head) Temachtiani Headband
 					27884,	100000,		-- (Body) Temachtiani Shirt
@@ -1875,12 +1979,15 @@ function onTrigger(player,npc)
 					11119,	50000,		-- (Hands) Mavi Bazubands +2
 					11139,	50000,		-- (Legs) Mavi Tayt +2
 					11159,	50000,		-- (Feet) Mavi Basmak +2
+					19255,  50000,		-- (Ammunition) Mavi Tathlum
+					11600,  50000,		-- (Neck) Mavi Scarf
+					11718,  50000,		-- (Earring) Mavi Earring
 					10665,	50000,		-- (Head) Mirage Keffiyeh +2
 					10685,	50000,		-- (Body) Mirage Jubbah +2
 					10705,	50000,		-- (Hands) Mirage Bazubands +2
 					10725,	50000,		-- (Legs) Mirage Shalwar +2
 					10745,	50000,		-- (Feet) Mirage Charuqs +2
-					25507,	50000,		-- (Neck) Mirage Stole
+					-- 25507,	50000,		-- (Neck) Mirage Stole
 					10831,	50000,		-- (Waist) Paewr Belt
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
@@ -1934,11 +2041,11 @@ function onTrigger(player,npc)
 					17603,  15000,      -- (Dagger) Cermet Kukri +1
 					19227,	25000,		-- (Marksmanship) Blunderbuss +1
 					5353,	5000,		-- (Ammunition) Iron Bullet Pouch
-					11467,	30000,		-- (Head) Corsair's Tricorne +1
-					11294,	30000,		-- (Body) Corsair's Frac +1
-					15027,	30000,		-- (Hands) Corsair's Gants +1
-					16348,	30000,		-- (Legs) Corsair's Culottes +1
-					11384,	30000,		-- (Feet) Corsair's Bottes +1
+					11467,	50000,		-- (Head) Corsair's Tricorne +1
+					11294,	50000,		-- (Body) Corsair's Frac +1
+					15027,	50000,		-- (Hands) Corsair's Gants +1
+					16348,	50000,		-- (Legs) Corsair's Culottes +1
+					11384,	50000,		-- (Feet) Corsair's Bottes +1
 					15523,	10000,		-- (Neck) Chivalrous Chain
 					15524,	10000,		-- (Neck) Fortified Chain
 					15521,	10000,		-- (Neck) Tempered Chain
@@ -1947,7 +2054,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_COR =
@@ -1960,6 +2067,9 @@ function onTrigger(player,npc)
 					11120,	50000,		-- (Hands) Navarch's Gants +2
 					11140,	50000,		-- (Legs) Navarch's Culottes +2
 					11160,	50000,		-- (Feet) Navarch's Bottes +2
+					11601,  50000,		-- (Neck) Navarch's Choker
+					11719,  50000,		-- (Earring) Navarch's Earring
+					16209,  50000,		-- (Back) Navarch's Mantle
 					10666,	50000,		-- (Head) Commodore Tricorne +2
 					10686,	50000,		-- (Body) Commodore Frac +2
 					10706,	50000,		-- (Hands) Commodore Gants +2
@@ -1970,7 +2080,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11681,	30000,		-- (Earring) Breeze Earring
 					14636,	30000,		-- (Ring) Breeze Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_COR =
@@ -1988,12 +2098,15 @@ function onTrigger(player,npc)
 					11120,	50000,		-- (Hands) Navarch's Gants +2
 					11140,	50000,		-- (Legs) Navarch's Culottes +2
 					11160,	50000,		-- (Feet) Navarch's Bottes +2
+					11601,  50000,		-- (Neck) Navarch's Choker
+					11719,  50000,		-- (Earring) Navarch's Earring
+					16209,  50000,		-- (Back) Navarch's Mantle
 					10666,	50000,		-- (Head) Commodore Tricorne +2
 					10686,	50000,		-- (Body) Commodore Frac +2
 					10706,	50000,		-- (Hands) Commodore Gants +2
 					10726,	50000,		-- (Legs) Commodore Trews +2
 					10746,	50000,		-- (Feet) Commodore Bottes +2
-					25513,	50000,		-- (Neck) Commodore Charm
+					-- 25513,	50000,		-- (Neck) Commodore Charm
 					26337,	50000,		-- (Waist) Kwahu Kachina Belt
 					11006,	50000,		-- (Back) Thall Mantle
 					11046,	50000,		-- (Earring) Ouesk Pearl
@@ -2045,11 +2158,11 @@ function onTrigger(player,npc)
 				{
 					18751,  25000,      -- (Hand-to-Hand) Black Adargas +1
 					17857,	15000,		-- (Ranged) Animator +1
-					11470,	30000,		-- (Head) Puppetry Taj +1
-					11297,	30000,		-- (Body) Puppetry Tobe +1
-					15030,	30000,		-- (Hands) Puppetry Dastanas +1
-					16351,	30000,		-- (Legs) Puppetry Churidars +1
-					11387,	30000,		-- (Feet) Puppetry Babouches +1
+					11470,	50000,		-- (Head) Puppetry Taj +1
+					11297,	50000,		-- (Body) Puppetry Tobe +1
+					15030,	50000,		-- (Hands) Puppetry Dastanas +1
+					16351,	50000,		-- (Legs) Puppetry Churidars +1
+					11387,	50000,		-- (Feet) Puppetry Babouches +1
 					15523,	10000,		-- (Neck) Chivalrous Chain
 					15524,	10000,		-- (Neck) Fortified Chain
 					15521,	10000,		-- (Neck) Tempered Chain
@@ -2058,7 +2171,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_PUP =
@@ -2071,6 +2184,9 @@ function onTrigger(player,npc)
 					11121,	50000,		-- (Hands) Cirque Guanti +2
 					11141,	50000,		-- (Legs) Cirque Pantaloni +2
 					11161,	50000,		-- (Feet) Cirque Scarpe +2
+					11602,  50000,		-- (Neck) Cirque Necklace
+					11720,  50000,		-- (Earring) Cirque Earring
+					11751,  50000,		-- (Waist) Cirque Sash
 					10667,	50000,		-- (Head) Pantin Taj +2
 					10687,	50000,		-- (Body) Pantin Tobe +2
 					10707,	50000,		-- (Hands) Pantin Dastanas +2
@@ -2081,7 +2197,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_PUP =
@@ -2099,12 +2215,15 @@ function onTrigger(player,npc)
 					11121,	50000,		-- (Hands) Cirque Guanti +2
 					11141,	50000,		-- (Legs) Cirque Pantaloni +2
 					11161,	50000,		-- (Feet) Cirque Scarpe +2
+					11602,  50000,		-- (Neck) Cirque Necklace
+					11720,  50000,		-- (Earring) Cirque Earring
+					11751,  50000,		-- (Waist) Cirque Sash
 					10667,	50000,		-- (Head) Pantin Taj +2
 					10687,	50000,		-- (Body) Pantin Tobe +2
 					10707,	50000,		-- (Hands) Pantin Dastanas +2
 					10727,	50000,		-- (Legs) Pantin Churidars +2
 					10747,	50000,		-- (Feet) Pantin Babouches +2
-					25519,	50000,		-- (Neck) Puppetmaster's Collar
+					-- 25519,	50000,		-- (Neck) Puppetmaster's Collar
 					10831,	50000,		-- (Waist) Paewr Belt
 					10987,	50000,		-- (Back) Meanagh Cape
 					11057,	50000,		-- (Earring) Ghillie Earring +1
@@ -2153,16 +2272,16 @@ function onTrigger(player,npc)
 			stock_DNC =
 				{
 					17603,  15000,      -- (Dagger) Cermet Kukri +1
-					11476,	30000,		-- (Head) Dancer's Tiara +1 (Female)
-					11303,	30000,		-- (Body) Dancer's Casaque +1 (Female)
-					15036,	30000,		-- (Hands) Dancer's Bangles +1 (Female)
-					16358,	30000,		-- (Legs) Dancer's Tights +1 (Female)
-					11394,	30000,		-- (Feet) Dancer's Toe Shoes +1 (Female)
-					11475,	30000,		-- (Head) Dancer's Tiara +1 (Male)
-					11302,	30000,		-- (Body) Dancer's Casaque +1 (Male)
-					15035,	30000,		-- (Hands) Dancer's Bangles +1 (Male)
-					16357,	30000,		-- (Legs) Dancer's Tights +1 (Male)
-					11393,	30000,		-- (Feet) Dancer's Toe Shoes +1 (Male)
+					11476,	50000,		-- (Head) Dancer's Tiara +1 (Female)
+					11303,	50000,		-- (Body) Dancer's Casaque +1 (Female)
+					15036,	50000,		-- (Hands) Dancer's Bangles +1 (Female)
+					16358,	50000,		-- (Legs) Dancer's Tights +1 (Female)
+					11394,	50000,		-- (Feet) Dancer's Toe Shoes +1 (Female)
+					11475,	50000,		-- (Head) Dancer's Tiara +1 (Male)
+					11302,	50000,		-- (Body) Dancer's Casaque +1 (Male)
+					15035,	50000,		-- (Hands) Dancer's Bangles +1 (Male)
+					16357,	50000,		-- (Legs) Dancer's Tights +1 (Male)
+					11393,	50000,		-- (Feet) Dancer's Toe Shoes +1 (Male)
 					15523,	10000,		-- (Neck) Chivalrous Chain
 					15524,	10000,		-- (Neck) Fortified Chain
 					15521,	10000,		-- (Neck) Tempered Chain
@@ -2171,7 +2290,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_DNC =
@@ -2182,6 +2301,9 @@ function onTrigger(player,npc)
 					11122,	50000,		-- (Hands) Charis Bangles +2
 					11142,	50000,		-- (Legs) Charis Tights +2
 					11162,	50000,		-- (Feet) Charis Toe Shoes +2
+					19256,  50000,		-- (Ammunition) Charis Feather
+					11603,  50000,		-- (Neck) Charis Necklace
+					11721,  50000,		-- (Earring) Charis Earring
 					10668,	50000,		-- (Head) Etoile Tiara +2
 					10688,	50000,		-- (Body) Etoile Casaque +2
 					10708,	50000,		-- (Hands) Etoile Bangles +2
@@ -2192,7 +2314,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11679,	30000,		-- (Earring) Thunder Earring
 					14638,	30000,		-- (Ring) Thunder Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_DNC =
@@ -2208,12 +2330,15 @@ function onTrigger(player,npc)
 					11122,	50000,		-- (Hands) Charis Bangles +2
 					11142,	50000,		-- (Legs) Charis Tights +2
 					11162,	50000,		-- (Feet) Charis Toe Shoes +2
+					19256,  50000,		-- (Ammunition) Charis Feather
+					11603,  50000,		-- (Neck) Charis Necklace
+					11721,  50000,		-- (Earring) Charis Earring
 					10668,	50000,		-- (Head) Etoile Tiara +2
 					10688,	50000,		-- (Body) Etoile Casaque +2
 					10708,	50000,		-- (Hands) Etoile Bangles +2
 					10728,	50000,		-- (Legs) Etoile Tights +2
 					10748,	50000,		-- (Feet) Etoile Toe Shoes +2
-					25525,	50000,		-- (Neck) Etoile Gorget
+					-- 25525,	50000,		-- (Neck) Etoile Gorget
 					10831,	50000,		-- (Waist) Paewr Belt
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
@@ -2272,11 +2397,11 @@ function onTrigger(player,npc)
 					17435,	25000,		-- (Club) Darksteel Rod +1
 					17520,	25000,		-- (Staff) Heavy Staff +1
 					17521,	25000,		-- (Staff) Mahogany Pole +1
-					11477,	30000,		-- (Head) Scholar's Mortarboard +1
-					11304,	30000,		-- (Body) Scholar's Gown +1
-					15037,	30000,		-- (Hands) Scholar's Bracers +1
-					16359,	30000,		-- (Legs) Scholar's Pants +1
-					11395,	30000,		-- (Feet) Scholar's Loafers +1
+					11477,	50000,		-- (Head) Scholar's Mortarboard +1
+					11304,	50000,		-- (Body) Scholar's Gown +1
+					15037,	50000,		-- (Hands) Scholar's Bracers +1
+					16359,	50000,		-- (Legs) Scholar's Pants +1
+					11395,	50000,		-- (Feet) Scholar's Loafers +1
 					15887,	10000,		-- (Neck) Resolute Belt
 					15885,	10000,		-- (Neck) Spectral Belt
 					15490,	10000,		-- (Back) Miraculous Cape
@@ -2284,7 +2409,7 @@ function onTrigger(player,npc)
 					15972,	10000,		-- (Earring) Insomnia Earring
 					15776,	10000,		-- (Ring) Ebullient Ring
 					15777,	10000,		-- (Ring) Hale Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_SCH =
@@ -2296,6 +2421,9 @@ function onTrigger(player,npc)
 					11123,	50000,		-- (Hands) Savant's Bracers +2
 					11143,	50000,		-- (Legs) Savant's Pants +2
 					11163,	50000,		-- (Feet) Savant's Loafers +2
+					19247,  50000,		-- (Ammunition) Savant's Treatise
+					11620,  50000,		-- (Neck) Savant's Chain
+					11722,  50000,		-- (Earring) Savant's Earring
 					10669,	50000,		-- (Head) Argute Mortarboard +2
 					10689,	50000,		-- (Body) Argute Gown +2
 					10709,	50000,		-- (Hands) Argute Bracers +2
@@ -2311,14 +2439,14 @@ function onTrigger(player,npc)
 					11682,	30000,		-- (Earring) Snow Earring
 					13308,	30000,		-- (Ring) Communion Ring
 					13306,	30000,		-- (Ring) Omniscient Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_SCH =
 				{
 					21133,	100000,		-- (Club) Sasah Wand +1
 					21208,	100000,		-- (Staff) Lehbrailg
-					21362,	30000,		-- (Ammunition) Ombre Tathlum +1
+					-- 21362,	30000,		-- (Ammunition) Ombre Tathlum +1
 					27743,	100000,		-- (Head) Temachtiani Headband
 					27884,	100000,		-- (Body) Temachtiani Shirt
 					28032,	100000,		-- (Hands) Temachtiani Gloves
@@ -2329,20 +2457,23 @@ function onTrigger(player,npc)
 					11123,	50000,		-- (Hands) Savant's Bracers +2
 					11143,	50000,		-- (Legs) Savant's Pants +2
 					11163,	50000,		-- (Feet) Savant's Loafers +2
+					19247,  50000,		-- (Ammunition) Savant's Treatise
+					11620,  50000,		-- (Neck) Savant's Chain
+					11722,  50000,		-- (Earring) Savant's Earring
 					10669,	50000,		-- (Head) Argute Mortarboard +2
 					10689,	50000,		-- (Body) Argute Gown +2
 					10709,	50000,		-- (Hands) Argute Bracers +2
 					10729,	50000,		-- (Legs) Argute Pants +2
 					10749,	50000,		-- (Feet) Argute Loafers +2
-					25531,	50000,		-- (Neck) Argute Stole
+					-- 25531,	50000,		-- (Neck) Argute Stole
 					28455,	50000,		-- (Waist) Ovate Rope
 					10839,	50000,		-- (Waist) Othila Sash
 					28596,	50000,		-- (Back) Oretania's Cape +1
 					28601,	50000,		-- (Back) Seshaw Cape
 					11683,	30000,		-- (Earring) Aqua Earring
 					11682,	30000,		-- (Earring) Snow Earring
-					27566,	50000,		-- (Ring) Leviathan Ring
-					27574,	50000,		-- (Ring) Shiva Ring
+					13308,	30000,		-- (Ring) Communion Ring
+					13306,	30000,		-- (Ring) Omniscient Ring
 					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
@@ -2391,11 +2522,11 @@ function onTrigger(player,npc)
 				{
 					17427,	25000,		-- (Club) Ebony Wand +1
 					17435,	25000,		-- (Club) Darksteel Rod +1
-					12141,	30000,		-- (Head) Ebon Beret
-					12177,	30000,		-- (Body)  Ebon Frock
-					12213,	30000,		-- (Hands) Ebon Mitts
-					12249,	30000,		-- (Legs) Ebon Slops
-					12285,	30000,		-- (Feet) Ebon Clogs
+					12141,	50000,		-- (Head) Ebon Beret
+					12177,	50000,		-- (Body)  Ebon Frock
+					12213,	50000,		-- (Hands) Ebon Mitts
+					12249,	50000,		-- (Legs) Ebon Slops
+					12285,	50000,		-- (Feet) Ebon Clogs
 					15887,	10000,		-- (Neck) Resolute Belt
 					15885,	10000,		-- (Neck) Spectral Belt
 					15490,	10000,		-- (Back) Miraculous Cape
@@ -2403,7 +2534,7 @@ function onTrigger(player,npc)
 					15972,	10000,		-- (Earring) Insomnia Earring
 					15776,	10000,		-- (Ring) Ebullient Ring
 					15777,	10000,		-- (Ring) Hale Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_GEO =
@@ -2425,24 +2556,29 @@ function onTrigger(player,npc)
 					11560,	30000,		-- (Back) Pedant Cape
 					11682,	30000,		-- (Earring) Snow Earring
 					13306,	30000,		-- (Ring) Omniscient Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_GEO =
 				{
 					21133,	100000,		-- (Club) Sasah Wand +1
-					-- 21463,	1000,		-- (Handbell) Nepote Bell
-					21362,	30000,		-- (Ammunition) Ombre Tathlum +1
+					21461,	50000,		-- (Handbell) Filiae Bell
+					-- 21362,	30000,		-- (Ammunition) Ombre Tathlum +1
 					27743,	100000,		-- (Head) Temachtiani Headband
 					27884,	100000,		-- (Body) Temachtiani Shirt
 					28032,	100000,		-- (Hands) Temachtiani Gloves
 					28171,	100000,		-- (Legs) Temachtiani Pants
 					28309,	100000,		-- (Feet) Temachtiani Boots
-					25537,	50000,		-- (Neck) Bagua Charm
+					-- 25537,	50000,		-- (Neck) Bagua Charm
 					10839,	50000,		-- (Waist) Othila Sash
 					28601,	50000,		-- (Back) Seshaw Cape
 					11682,	30000,		-- (Earring) Snow Earring
 					27574,	50000,		-- (Ring) Shiva Ring
+					4044,   16667,		-- Atramenterrane (Reforged Artifact Material)
+					4043,   16667,		-- Lavarion (Reforged Artifact Material)
+					4042,   16667,		-- Acuex Ore (Reforged Artifact Material)
+					4030,   16667,		-- Sekishitsu (Reforged Artifact Material)
+					4045,   16667,		-- Cyclone Cotton (Reforged Artifact Material)
 					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
@@ -2488,11 +2624,11 @@ function onTrigger(player,npc)
 			stock_RUN =
 				{
 					16616,	25000,		-- (Great Sword) Zweihander +1
-					12120,	30000,		-- (Head) Ebon Mask
-					12156,	30000,		-- (Body) Ebon Harness
-					12192,	30000,		-- (Hands) Ebon Gloves
-					12228,	30000,		-- (Legs) Ebon Brais
-					12264,	30000,		-- (Feet) Ebon Boots
+					12120,	50000,		-- (Head) Ebon Mask
+					12156,	50000,		-- (Body) Ebon Harness
+					12192,	50000,		-- (Hands) Ebon Gloves
+					12228,	50000,		-- (Legs) Ebon Brais
+					12264,	50000,		-- (Feet) Ebon Boots
 					15523,	10000,		-- (Neck) Chivalrous Chain
 					15524,	10000,		-- (Neck) Fortified Chain
 					15521,	10000,		-- (Neck) Tempered Chain
@@ -2501,7 +2637,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_RUN =
@@ -2522,7 +2658,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					3645,	250000,		-- (Item) Leafbell (Used to trigger augment application trades)
+					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_RUN =
@@ -2534,11 +2670,16 @@ function onTrigger(player,npc)
 					10317,	100000,		-- (Hands) Dux Finger Gauntlets +1
 					10347,	100000,		-- (Legs) Dux Cuisses +1
 					10364,	100000,		-- (Feet) Dux Greaves +1
-					25543,	50000,		-- (Neck) Futhark Torque
+					-- 25543,	50000,		-- (Neck) Futhark Torque
 					10831,	50000,		-- (Waist) Paewr Belt
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
 					10797,	50000,		-- (Ring) Dagaz Ring
+					4046,   16667,		-- Corroded Ore (Reforged Artifact Material)
+					4025,   16667,		-- Snowsteel Sheet (Reforged Artifact Material)
+					4047,   16667,		-- Redoubtable Silk Thread (Reforged Artifact Material)
+					3923,   16667,		-- Rhodium Ingot (Reforged Artifact Material)
+					4029,   16667,		-- Runeweave (Reforged Artifact Material)
 					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end

@@ -747,7 +747,7 @@ namespace petutils
 			
 			PPet->setModifier(Mod::ATT, calcatt);
 			PPet->setModifier(Mod::ACC, calcacc);
-			PPet->setModifier(Mod::MACC, calcacc / 2);
+			PPet->setModifier(Mod::MACC, calcacc);
 			PPet->setModifier(Mod::DEF, calcdef);
 			PPet->setModifier(Mod::EVA, eva);
 			PPet->setModifier(Mod::MEVA, meva);
@@ -763,16 +763,16 @@ namespace petutils
 			meleeDMG = (uint16)(((PPet->GetSkill(SKILL_AUTOMATON_MELEE) / 9) * 1.50) + (mainLevelOver99 * 1.5));
 			meleeDamageType = DAMAGE_SLASHING;
 
-			calcatt = (uint16)(((4.413 * mainLevelUpTo75) + (5.92 * mainLevelOver76andUnder99) + (6.54 * mainLevelOver99)) * 1.1);
-			calcacc = (uint16)(((6.05 * mainLevelUpTo75) + (7.83 * mainLevelOver76andUnder99) + (8.62 * mainLevelOver99)) * 1.1);
-			calcdef = (uint16)(((4.653 * mainLevelUpTo75) + (5.792 * mainLevelOver76andUnder99) + (6.91 * mainLevelOver99)) * 1.6);
+			calcatt = (uint16)(((4.113 * mainLevelUpTo75) + (5.52 * mainLevelOver76andUnder99) + (6.54 * mainLevelOver99)) * 1.1);
+			calcacc = (uint16)(((4.35 * mainLevelUpTo75) + (5.83 * mainLevelOver76andUnder99) + (8.62 * mainLevelOver99)) * 1.1);
+			calcdef = (uint16)(((3.653 * mainLevelUpTo75) + (4.292 * mainLevelOver76andUnder99) + (6.91 * mainLevelOver99)) * 1.3);
 			eva = (int16)(((3.92 * mainLevelUpTo75) + (5.21 * mainLevelOver76andUnder99) + (4.57 * mainLevelOver99)) * 1.1);
-			meva = (int16)(4.5 * (mlvl < 122 ? mlvl - 1 : 122));
+			meva = (int16)(6.0 * (mlvl < 122 ? mlvl - 1 : 122));
 			mdef = (int16)(0.13f * (mlvl < 122 ? mlvl - 1 : 122));
 			
 			PPet->setModifier(Mod::ATT, calcatt);
 			PPet->setModifier(Mod::ACC, calcacc);
-			PPet->setModifier(Mod::MACC, calcacc / 2);
+			PPet->setModifier(Mod::MACC, 0);
 			PPet->setModifier(Mod::DEF, calcdef);
 			PPet->setModifier(Mod::EVA, eva);
 			PPet->setModifier(Mod::MEVA, meva);
@@ -800,7 +800,7 @@ namespace petutils
 			PPet->setModifier(Mod::RATT, calcratt);
 			PPet->setModifier(Mod::ACC, calcacc);
 			PPet->setModifier(Mod::RACC, calcracc);
-			PPet->setModifier(Mod::MACC, calcacc / 2);
+			PPet->setModifier(Mod::MACC, 0);
 			PPet->setModifier(Mod::DEF, calcdef);
 			PPet->setModifier(Mod::EVA, eva);
 			PPet->setModifier(Mod::MEVA, meva);
@@ -825,8 +825,8 @@ namespace petutils
 			PPet->health.maxmp = (int16)(PPet->health.maxmp * 1.2);
 			PPet->setModifier(Mod::ATT, calcatt);
 			PPet->setModifier(Mod::MATT, matt);
-			PPet->setModifier(Mod::ACC, calcacc);
-			PPet->setModifier(Mod::MACC, calcacc / 2);
+			PPet->setModifier(Mod::ACC, (int16)(calcacc * 0.9f));
+			PPet->setModifier(Mod::MACC, (int16)(calcacc * 1.1f));
 			PPet->setModifier(Mod::DEF, calcdef);
 			PPet->setModifier(Mod::EVA, eva);
 			PPet->setModifier(Mod::MEVA, meva);
@@ -1664,7 +1664,7 @@ namespace petutils
 			PPet->addModifier(Mod::HP, calchp);
 			PPet->setModifier(Mod::ATT, calcatt * 2);
 			PPet->setModifier(Mod::ACC, calcacc);
-			PPet->setModifier(Mod::MACC, calcacc / 2);
+			PPet->setModifier(Mod::MACC, (uint16)(calcacc * 0.85));
 			PPet->setModifier(Mod::DEF, calcdef);
 			
             // Cap the pet's magic skills so they play nice with spell scripts
@@ -1843,8 +1843,8 @@ namespace petutils
 		uint16 mainLevelOver76andUnder99 = std::clamp(mlvl - 75, 0, 24); 
 		uint16 mainLevelOver99 = std::clamp(weaponlevel - 99, 0, 23);
 		uint16 calcatt = (uint16)((4.413 * mainLevelUpTo75) + (6.81 * mainLevelOver76andUnder99) + (21.57 * mainLevelOver99));
-		uint16 calcacc = (uint16)((4.60 * mainLevelUpTo75) + (6.70 * mainLevelOver76andUnder99) + (19.85 * mainLevelOver99));
-		uint16 calcdef = (uint16)((4.653 * mainLevelUpTo75) + (5.792 * mainLevelOver76andUnder99) + (20.8 * mainLevelOver99));
+		uint16 calcacc = (uint16)((4.60 * mainLevelUpTo75) + (6.70 * mainLevelOver76andUnder99) + (16.85 * mainLevelOver99));
+		uint16 calcdef = (uint16)((4.653 * mainLevelUpTo75) + (5.792 * mainLevelOver76andUnder99) + (15.8 * mainLevelOver99));
 		
         //set the wyvern job based on master's SJ
         if (PMaster->GetSJob() != JOB_NON)
@@ -1858,6 +1858,7 @@ namespace petutils
 			((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(1 + floor(masterWeaponDmg * 0.35f)));
 			PPet->setModifier(Mod::ATT, calcatt);
 			PPet->setModifier(Mod::ACC, calcacc);
+			PPet->setModifier(Mod::MACC, calcacc);
 			PPet->setModifier(Mod::DEF, calcdef);
 			PPet->setModifier(Mod::DRAGON_KILLER, 10);
 		}
@@ -1869,6 +1870,7 @@ namespace petutils
 			((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(1 + floor(masterWeaponDmg * 0.35f)));		
 			PPet->setModifier(Mod::ATT, (calcatt));
 			PPet->setModifier(Mod::ACC, (calcacc));
+			PPet->setModifier(Mod::MACC, calcacc);
 			PPet->setModifier(Mod::DEF, (calcdef));
 			PPet->setModifier(Mod::DRAGON_KILLER, 15);
 		}

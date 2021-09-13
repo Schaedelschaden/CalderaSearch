@@ -4041,6 +4041,13 @@ void SmallPacket0x096(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 316));
         return;
     }
+	
+	if (PChar->m_moghouseID > 0)
+	{
+		// Prevent crafting in Mog Houses
+        PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 316));
+        return;
+	}
 
     if (PChar->m_LastSynthTime + 10s > server_clock::now())
     {

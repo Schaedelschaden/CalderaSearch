@@ -20,7 +20,7 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, MOBPARAM_3_SHADOW)
     local typeEffect = tpz.effect.WEIGHT
 
-    MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 50, 0, 300)
+    MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 50, 0, 120)
 
     return dmg
 end

@@ -35,27 +35,27 @@ function onUseAbility(player, target, ability)
 		if not (player:hasStatusEffect(tpz.effect.GRAND_PAS)) then
 			player:delStatusEffect(tpz.effect.FINISHING_MOVE_2)
 		end
-        target:addEnmity(player, 0, 500)
+        target:addEnmity(player, 0, 1500)
 		
     elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_3)) then
 		if not (player:hasStatusEffect(tpz.effect.GRAND_PAS)) then
 			player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_3)
 			player:addStatusEffect(tpz.effect.FINISHING_MOVE_1, 1, 0, 7200)
 		end
-        target:addEnmity(player, 0, 500)
+        target:addEnmity(player, 0, 1500)
 
     elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_4)) then
 		if not (player:hasStatusEffect(tpz.effect.GRAND_PAS)) then
 			player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_4)
 			player:addStatusEffect(tpz.effect.FINISHING_MOVE_2, 1, 0, 7200)
 		end
-        target:addEnmity(player, 0, 500)
+        target:addEnmity(player, 0, 1500)
 
     elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_5)) then
 		if not (player:hasStatusEffect(tpz.effect.GRAND_PAS)) then
 			player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_5)
 			player:addStatusEffect(tpz.effect.FINISHING_MOVE_3, 1, 0, 7200)
 		end
-        target:addEnmity(player, 0, 500)
+        target:addEnmity(player, 0, 1500)
     end
 end

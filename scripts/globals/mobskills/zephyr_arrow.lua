@@ -25,7 +25,13 @@ function onMobWeaponSkill(target, mob, skill)
 
     local numhits = 1
     local accmod = 4
-    local dmgmod = 5
+    local dmgmod = 3
+	
+	-- Baba Yaga uses this as a "regular" attack and deals less damage with it
+	if (mob:getID() == 17318441) then
+		dmgmod = 1.75
+	end
+	
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 2, 3)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.RANGED, tpz.damageType.PIERCING, MOBPARAM_IGNORE_SHADOWS)
     

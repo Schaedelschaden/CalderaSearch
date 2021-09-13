@@ -30,10 +30,10 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.BINDRES, 35)
     mob:setMod(tpz.mod.SLOWRES, 35)
 	mob:setMod(tpz.mod.ATT, 1200)
-	mob:setMod(tpz.mod.MATT, 700)
+	mob:setMod(tpz.mod.MATT, 600)
     mob:setMod(tpz.mod.ACC, 600)
 	mob:setMod(tpz.mod.MACC, 700)
-    mob:setMod(tpz.mod.EVA, 150)
+    mob:setMod(tpz.mod.EVA, 750)
 	mob:setMod(tpz.mod.DEF, 900)
 	mob:setMod(tpz.mod.MEVA, 200)
 	mob:setMod(tpz.mod.MDEF, 500)
@@ -48,13 +48,13 @@ end
 function onMobEngaged(mob, target)
     mob:showText(mob, ID.text.QUADAV_KING_ENGAGE)
 
-	for i = 1, 11 do
-		local link = GetMobByID(assistMobs[i])
+	-- for i = 1, 11 do
+		-- local link = GetMobByID(assistMobs[i])
 		
-		if (link:getCurrentAction() == tpz.act.ROAMING) then
-            link:updateEnmity(target)
-        end
-	end
+		-- if (link:getCurrentAction() == tpz.act.ROAMING) then
+            -- link:updateEnmity(target)
+        -- end
+	-- end
 end
 
 function onAdditionalEffect(mob, target, damage)
@@ -62,6 +62,7 @@ function onAdditionalEffect(mob, target, damage)
 end
 
 function onMobFight(mob, target)
+	mob:setMod(tpz.mod.MATT, 600)
 	-- for i = 1, 11 do
 		-- local link = GetMobByID(assistMobs[i])
 		

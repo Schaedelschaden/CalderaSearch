@@ -20,6 +20,20 @@ function onMobSpawn(mob)
     mob:addStatusEffectEx(tpz.effect.PHYSICAL_SHIELD, 0, 2, 0, 0)
     mob:addStatusEffectEx(tpz.effect.ARROW_SHIELD, 0, 1, 0, 0)
     mob:addStatusEffectEx(tpz.effect.MAGIC_SHIELD, 0, 2, 0, 0)
+	mob:addMod(tpz.mod.PARALYZERES, 30) -- Resistance to Silence
+    mob:addMod(tpz.mod.STUNRES, 75) -- Resistance to Stun
+    mob:addMod(tpz.mod.SILENCERES, 100) -- Resistance to Bind
+    mob:addMod(tpz.mod.SLEEPRES, 30) -- Resistance to Sleep
+    mob:addMod(tpz.mod.LULLABYRES, 30) -- Resistance to Lullaby
+    mob:addMod(tpz.mod.PETRIFYRES, 30) -- Resistance to Pertrify
+    mob:addMod(tpz.mod.POISONRES, 30) -- Resistance to Poison	
+	mob:addMod(tpz.mod.ATT, 400)
+	mob:setMod(tpz.mod.MATT, 350)	
+	mob:addMod(tpz.mod.DEF, 300)
+	mob:addMod(tpz.mod.EVA, 200)
+	mob:addMod(tpz.mod.REGEN, 250)
+	mob:addMod(tpz.mod.REFRESH, 200)
+	mob:addMod(tpz.mod.REGAIN, 100)
 end
 
 function onMobEngaged(mob, target)

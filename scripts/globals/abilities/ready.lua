@@ -10,8 +10,8 @@ require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------
 
--- function onAbilityCheck(player, target, ability)
-	-- printf("ready.lua onAbilityCheck")
+function onAbilityCheck(player, target, ability)
+	printf("ready.lua onAbilityCheck")
     -- if (player:getPet() == nil) then
         -- return tpz.msg.basic.REQUIRES_A_PET, 0
     -- else
@@ -25,7 +25,7 @@ require("scripts/globals/msg")
             -- return 0,0
         -- end
     -- end
--- end
+end
 
 -- function onUseAbility(player, target, ability)
 	-- printf("ready.lua onUseAbility")

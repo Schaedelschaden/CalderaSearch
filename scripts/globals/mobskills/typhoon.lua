@@ -19,19 +19,9 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local numhits = 4
     local accmod = 1.5
-    local dmgmod = 0.75
+    local dmgmod = 0.40
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded)
-    
-    -- if (mob:getName() == "Faust") then
-        -- if (mob:getLocalVar("Typhoon") < 2) then
-            -- mob:useMobAbility(539)
-            -- mob:setLocalVar("Typhoon", mob:getLocalVar("Typhoon") + 1)
-			-- printf("Faust.lua onMobWeaponSkill Typhoon Counter: [%i]\n", mob:getLocalVar("Typhoon"))
-        -- else
-            -- mob:setLocalVar("Typhoon", 0)
-        -- end
-    -- end
 
     return dmg
 end

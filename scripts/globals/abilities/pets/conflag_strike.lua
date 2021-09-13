@@ -15,6 +15,8 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+	local cap = math.random(1500, 2000) * (1 + (pet:getMod(tpz.mod.PET_BREATH) / 100))
+
 	local dmgmod = MobBreathMove(pet, target, 2.00, 3.25, tpz.magic.ele.FIRE, math.random(1500, 2000))
 	local dmg = MobFinalAdjustments(dmgmod,pet,skill,target,tpz.attackType.BREATH,tpz.damageType.FIRE,MOBPARAM_IGNORE_SHADOWS)
 	

@@ -274,68 +274,68 @@ function onEventFinish(player, csid, option)
 ----------------------------------------------------------------------------------------------------------------------------
 -------- Begin BCNM orb Handout --------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------
-    elseif (csid == 322) then
-        if (option == 1 and BeastmensSeal >= 20) then  -- Player asked for Cloudy orb
-            if (player:getFreeSlotsCount() >= 1 and player:hasItem(1551) == false) then
-                player:delSeals(20, 0)
-                player:addItem(1551)
-                player:messageSpecial(ID.text.ITEM_OBTAINED, 1551)
-                player:setCharVar("CloudyOrbIsCracked", 0)
-            elseif (player:hasItem(1551)) then
-                player:addItem(1551)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
-            else
-                player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1551)
-            end
-        elseif (option == 2 and BeastmensSeal >= 30) then   -- Player asked for Sky orb
-            if (player:getFreeSlotsCount() >= 1 and player:hasItem(1552) == false) then
-                player:delSeals(30, 0)
-                player:addItem(1552)
-                player:messageSpecial(ID.text.ITEM_OBTAINED, 1552)
-                player:setCharVar("SkyOrbIsCracked", 0)
-            elseif (player:hasItem(1552)) then
-                player:addItem(1552)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
-            else
-                player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1552)
-            end
-        elseif (option == 3 and BeastmensSeal >= 40) then   -- Player asked for Star orb
-            if (player:getFreeSlotsCount() >= 1 and player:hasItem(1131) == false) then
-                player:delSeals(40, 0)
-                player:addItem(1131)
-                player:messageSpecial(ID.text.ITEM_OBTAINED, 1131)
-                player:setCharVar("StarOrbIsCracked", 0)
-            elseif (player:hasItem(1131) == true) then
-                player:addItem(1131)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
-            else
-                player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1131)
-            end
-        elseif (option == 4 and BeastmensSeal >= 50) then   -- Player asked for Comet orb
-            if (player:getFreeSlotsCount() >= 1 and player:hasItem(1177) == false) then
-                player:delSeals(50, 0)
-                player:addItem(1177)
-                player:messageSpecial(ID.text.ITEM_OBTAINED, 1177)
-                player:setCharVar("CometOrbIsCracked", 0)
-            elseif (player:hasItem(1177)) then
-                player:addItem(1177)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
-            else
-                player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1177)
-            end
-        elseif (option == 5 and BeastmensSeal >= 60) then   -- Player asked for Moon orb
-            if (player:getFreeSlotsCount() >= 1 and player:hasItem(1130) == false) then
-                player:delSeals(60, 0)
-                player:addItem(1130)
-                player:messageSpecial(ID.text.ITEM_OBTAINED, 1130)
-                player:setCharVar("MoonOrbIsCracked", 0)
-            elseif (player:hasItem(1130)) then
-                player:addItem(1130)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
-            else
-                player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1130)
-            end
+    -- elseif (csid == 322) then
+        -- if (option == 1 and BeastmensSeal >= 20) then  -- Player asked for Cloudy orb
+            -- if (player:getFreeSlotsCount() >= 1 and player:hasItem(1551) == false) then
+                -- player:delSeals(20, 0)
+                -- player:addItem(1551)
+                -- player:messageSpecial(ID.text.ITEM_OBTAINED, 1551)
+                -- player:setCharVar("CloudyOrbIsCracked", 0)
+            -- elseif (player:hasItem(1551)) then
+                -- player:addItem(1551)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
+            -- else
+                -- player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1551)
+            -- end
+        -- elseif (option == 2 and BeastmensSeal >= 30) then   -- Player asked for Sky orb
+            -- if (player:getFreeSlotsCount() >= 1 and player:hasItem(1552) == false) then
+                -- player:delSeals(30, 0)
+                -- player:addItem(1552)
+                -- player:messageSpecial(ID.text.ITEM_OBTAINED, 1552)
+                -- player:setCharVar("SkyOrbIsCracked", 0)
+            -- elseif (player:hasItem(1552)) then
+                -- player:addItem(1552)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
+            -- else
+                -- player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1552)
+            -- end
+        -- elseif (option == 3 and BeastmensSeal >= 40) then   -- Player asked for Star orb
+            -- if (player:getFreeSlotsCount() >= 1 and player:hasItem(1131) == false) then
+                -- player:delSeals(40, 0)
+                -- player:addItem(1131)
+                -- player:messageSpecial(ID.text.ITEM_OBTAINED, 1131)
+                -- player:setCharVar("StarOrbIsCracked", 0)
+            -- elseif (player:hasItem(1131) == true) then
+                -- player:addItem(1131)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
+            -- else
+                -- player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1131)
+            -- end
+        -- elseif (option == 4 and BeastmensSeal >= 50) then   -- Player asked for Comet orb
+            -- if (player:getFreeSlotsCount() >= 1 and player:hasItem(1177) == false) then
+                -- player:delSeals(50, 0)
+                -- player:addItem(1177)
+                -- player:messageSpecial(ID.text.ITEM_OBTAINED, 1177)
+                -- player:setCharVar("CometOrbIsCracked", 0)
+            -- elseif (player:hasItem(1177)) then
+                -- player:addItem(1177)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
+            -- else
+                -- player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1177)
+            -- end
+        -- elseif (option == 5 and BeastmensSeal >= 60) then   -- Player asked for Moon orb
+            -- if (player:getFreeSlotsCount() >= 1 and player:hasItem(1130) == false) then
+                -- player:delSeals(60, 0)
+                -- player:addItem(1130)
+                -- player:messageSpecial(ID.text.ITEM_OBTAINED, 1130)
+                -- player:setCharVar("MoonOrbIsCracked", 0)
+            -- elseif (player:hasItem(1130)) then
+                -- player:addItem(1130)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
+            -- else
+                -- player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1130)
+            -- end
 ----------------------------------------------------------------------------------------------------------------------------
 -------- Begin KSNM orb Handout --------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------
-        elseif (option == 6 and KindredsSeal >= 30) then   -- Player asked for Clotho Orb
+        elseif (option == 6 and KindredsSeal >= 15) then   -- Player asked for Clotho Orb
             if (player:getFreeSlotsCount() >= 1 and player:hasItem(1175) == false) then
-                player:delSeals(30, 1)
+                player:delSeals(15, 1)
                 player:addItem(1175)
                 player:messageSpecial(ID.text.ITEM_OBTAINED, 1175)
                 player:setCharVar("ClothoOrbIsCracked", 0)
@@ -355,20 +355,20 @@ function onEventFinish(player, csid, option)
             else
                 player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1178)
             end
-            elseif (option == 8 and KindredsSeal >= 30) then  -- Player asked for Atropos Orb
-            if (player:getFreeSlotsCount() >= 1 and player:hasItem(1180) == false) then
-                player:delSeals(30, 1)
-                player:addItem(1180)
-                player:messageSpecial(ID.text.ITEM_OBTAINED, 1180)
-                player:setCharVar("AtroposOrbIsCracked", 0)
-            elseif (player:hasItem(1180)) then
-                player:addItem(1180)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
-            else
-                player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1180)
-            end
-        elseif (option == 9 and KindredsSeal >= 99) then   -- Player asked for Themis Orb
+            -- elseif (option == 8 and KindredsSeal >= 30) then  -- Player asked for Atropos Orb
+            -- if (player:getFreeSlotsCount() >= 1 and player:hasItem(1180) == false) then
+                -- player:delSeals(30, 1)
+                -- player:addItem(1180)
+                -- player:messageSpecial(ID.text.ITEM_OBTAINED, 1180)
+                -- player:setCharVar("AtroposOrbIsCracked", 0)
+            -- elseif (player:hasItem(1180)) then
+                -- player:addItem(1180)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
+            -- else
+                -- player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1180)
+            -- end
+        elseif (option == 9 and KindredsCrest >= 50) then   -- Player asked for Themis Orb
             if (player:getFreeSlotsCount() >= 1 and player:hasItem(1553) == false) then
-                player:delSeals(99, 1)
+                player:delSeals(50, 1)
                 player:addItem(1553)
                 player:messageSpecial(ID.text.ITEM_OBTAINED, 1553)
                 player:setCharVar("ThemisOrbIsCracked", 0)
@@ -380,79 +380,79 @@ function onEventFinish(player, csid, option)
 ----------------------------------------------------------------------------------------------------------------------------
 -------- Begin KCNM orb Handout --------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------
-        elseif (option == 10 and KindredsCrest >= 30) then   -- Player asked for Phobos Orb
-            if (player:getFreeSlotsCount() >= 1 and player:hasItem(3351) == false) then
-                player:delSeals(30, 2)
-                player:addItem(3351)
-                player:messageSpecial(ID.text.ITEM_OBTAINED, 3351)
-                player:setCharVar("PhobosOrbIsCracked", 0)
-            elseif (player:hasItem(3351)) then
-                player:addItem(3351)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
-            else
-                player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 3351)
-            end
-        elseif (option == 11 and KindredsCrest >= 50) then   -- Player asked for Deimos Orb
-            if (player:getFreeSlotsCount() >= 1 and player:hasItem(3352) == false) then
-                player:delSeals(50, 2)
-                player:addItem(3352)
-                player:messageSpecial(ID.text.ITEM_OBTAINED, 3352)
-                player:setCharVar("DeimosOrbIsCracked", 0)
-            elseif (player:hasItem(3352)) then
-                player:addItem(3352)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
-            else
-                player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 3352)
-            end
+        -- elseif (option == 10 and KindredsCrest >= 30) then   -- Player asked for Phobos Orb
+            -- if (player:getFreeSlotsCount() >= 1 and player:hasItem(3351) == false) then
+                -- player:delSeals(30, 2)
+                -- player:addItem(3351)
+                -- player:messageSpecial(ID.text.ITEM_OBTAINED, 3351)
+                -- player:setCharVar("PhobosOrbIsCracked", 0)
+            -- elseif (player:hasItem(3351)) then
+                -- player:addItem(3351)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
+            -- else
+                -- player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 3351)
+            -- end
+        -- elseif (option == 11 and KindredsCrest >= 50) then   -- Player asked for Deimos Orb
+            -- if (player:getFreeSlotsCount() >= 1 and player:hasItem(3352) == false) then
+                -- player:delSeals(50, 2)
+                -- player:addItem(3352)
+                -- player:messageSpecial(ID.text.ITEM_OBTAINED, 3352)
+                -- player:setCharVar("DeimosOrbIsCracked", 0)
+            -- elseif (player:hasItem(3352)) then
+                -- player:addItem(3352)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
+            -- else
+                -- player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 3352)
+            -- end
 ----------------------------------------------------------------------------------------------------------------------------
 -------- Begin HKCNM orb Handout -------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------
-        elseif (option == 12 and HighKindredsCrest >= 30) then   -- Player asked for Zelos Orb
-            if (player:getFreeSlotsCount() >= 1 and player:hasItem(3454) == false) then
-                player:delSeals(30, 3)
-                player:addItem(3454)
-                player:messageSpecial(ID.text.ITEM_OBTAINED, 3454)
-                player:setCharVar("ZelosOrbIsCracked", 0)
-            elseif (player:hasItem(3454)) then
-                player:addItem(3454)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
-            else
-                player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 3454)
-            end
-        elseif (option == 13 and HighKindredsCrest >= 50) then   -- Player asked for Bia Orb
-            if (player:getFreeSlotsCount() >= 1 and player:hasItem(3455) == false) then
-                player:delSeals(50, 3)
-                player:addItem(3455)
-                player:messageSpecial(ID.text.ITEM_OBTAINED, 3455)
-                player:setCharVar("BiaOrbIsCracked", 0)
-            elseif (player:hasItem(3455)) then
-                player:addItem(3455)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
-            else
-                player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 3455)
-            end
-----------------------------------------------------------------------------------------------------------------------------
--------- Begin SKCNM orb Handout -------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------
-        elseif (option == 14 and SacredKindredsCrest >= 10) then   -- Player asked for Microcosmic Orb
-            if (player:getFreeSlotsCount() >= 1 and player:hasItem(4062) == false) then
-                player:delSeals(10, 4)
-                player:addItem(4062)
-                player:messageSpecial(ID.text.ITEM_OBTAINED, 4062)
-                player:setCharVar("MicrocosmicOrbIsCracked", 0)
-            elseif (player:hasItem(4062)) then
-                player:addItem(4062)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
-            else
-                player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 4062)
-            end
-        elseif (option == 15 and SacredKindredsCrest >= 20) then   -- Player asked for Macrocosmic Orb
-            if (player:getFreeSlotsCount() >= 1 and player:hasItem(4063) == false) then
-                player:delSeals(20, 4)
-                player:addItem(4063)
-                player:messageSpecial(ID.text.ITEM_OBTAINED, 4063)
-                player:setCharVar("MacrocosmicOrbIsCracked", 0)
-            elseif (player:hasItem(4063)) then
-                player:addItem(4063)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
-            else
-                player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 4063)
-            end
-        end
+        -- elseif (option == 12 and HighKindredsCrest >= 30) then   -- Player asked for Zelos Orb
+            -- if (player:getFreeSlotsCount() >= 1 and player:hasItem(3454) == false) then
+                -- player:delSeals(30, 3)
+                -- player:addItem(3454)
+                -- player:messageSpecial(ID.text.ITEM_OBTAINED, 3454)
+                -- player:setCharVar("ZelosOrbIsCracked", 0)
+            -- elseif (player:hasItem(3454)) then
+                -- player:addItem(3454)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
+            -- else
+                -- player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 3454)
+            -- end
+        -- elseif (option == 13 and HighKindredsCrest >= 50) then   -- Player asked for Bia Orb
+            -- if (player:getFreeSlotsCount() >= 1 and player:hasItem(3455) == false) then
+                -- player:delSeals(50, 3)
+                -- player:addItem(3455)
+                -- player:messageSpecial(ID.text.ITEM_OBTAINED, 3455)
+                -- player:setCharVar("BiaOrbIsCracked", 0)
+            -- elseif (player:hasItem(3455)) then
+                -- player:addItem(3455)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
+            -- else
+                -- player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 3455)
+            -- end
+-- ----------------------------------------------------------------------------------------------------------------------------
+-- -------- Begin SKCNM orb Handout -------------------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------------------------------------------------
+        -- elseif (option == 14 and SacredKindredsCrest >= 10) then   -- Player asked for Microcosmic Orb
+            -- if (player:getFreeSlotsCount() >= 1 and player:hasItem(4062) == false) then
+                -- player:delSeals(10, 4)
+                -- player:addItem(4062)
+                -- player:messageSpecial(ID.text.ITEM_OBTAINED, 4062)
+                -- player:setCharVar("MicrocosmicOrbIsCracked", 0)
+            -- elseif (player:hasItem(4062)) then
+                -- player:addItem(4062)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
+            -- else
+                -- player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 4062)
+            -- end
+        -- elseif (option == 15 and SacredKindredsCrest >= 20) then   -- Player asked for Macrocosmic Orb
+            -- if (player:getFreeSlotsCount() >= 1 and player:hasItem(4063) == false) then
+                -- player:delSeals(20, 4)
+                -- player:addItem(4063)
+                -- player:messageSpecial(ID.text.ITEM_OBTAINED, 4063)
+                -- player:setCharVar("MacrocosmicOrbIsCracked", 0)
+            -- elseif (player:hasItem(4063)) then
+                -- player:addItem(4063)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
+            -- else
+                -- player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 4063)
+            -- end
+        -- end
 -- TODO : Find cutscene that tells you where you can bring it.
     elseif (csid == 317) then
         player:setCharVar("WildcatJeuno", utils.mask.setBit(player:getCharVar("WildcatJeuno"), 17, true))

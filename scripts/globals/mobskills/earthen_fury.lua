@@ -16,7 +16,7 @@ function onMobWeaponSkill(target, mob, skill)
 	
 	-- Adjust Trial By Earth Titan's Earthen Fury damage
 	if (mob:getID() == 17633281) then
-		dmgmod = 1.75
+		dmgmod = 1.25
 	end
 	
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg() * 9, tpz.magic.ele.EARTH, dmgmod, TP_NO_EFFECT, 1)

@@ -3416,10 +3416,6 @@ namespace charutils
         if (auto PMob = dynamic_cast<CMobEntity*>(PEntity))
         {
 			uint16 THLvl = PMob->m_THLvl;
-            if (PMob->StatusEffectContainer->HasStatusEffect(EFFECT_BOUNTY_SHOT))
-			{
-				THLvl = THLvl + PMob->StatusEffectContainer->GetStatusEffect(EFFECT_BOUNTY_SHOT)->GetPower();
-			}
 			
             //THLvl is the number of 'extra chances' at an item. If the item is obtained, then break out.
             tries = 0;
@@ -3447,22 +3443,11 @@ namespace charutils
     {
         uint8 pcinzone = 0;
         uint8 minlevel = 0, maxlevel = PChar->GetMLevel();
-		uint8 ilvl = PChar->m_Weapons[SLOT_MAIN]->getILvl();
-		uint8 rilvl = 0;
+		uint16 ilvl = battleutils::GetPlayerItemLevel(PChar);
 		
-		if (PChar->getEquip(SLOT_RANGED) && PChar->getEquip(SLOT_RANGED)->isType(ITEM_WEAPON))
+		if (ilvl > 0)
 		{
-			rilvl = PChar->m_Weapons[SLOT_RANGED]->getILvl();
-		}
-		
-		if (ilvl > maxlevel)
-		{
-			maxlevel = ilvl;
-		}
-		
-		if (rilvl > maxlevel && rilvl > ilvl)
-		{
-			maxlevel = rilvl;
+			maxlevel = maxlevel + ilvl;
 		}
 		
         REGIONTYPE region = PChar->loc.zone->GetRegionID();
@@ -3487,15 +3472,16 @@ namespace charutils
         }
 
         PChar->ForAlliance([&pcinzone, &PMob, &minlevel, &maxlevel](CBattleEntity* PMember) {
+			
             if (PMember->getZone() == PMob->getZone() && distance(PMember->loc.p, PMob->loc.p) < 100)
             {
                 if (PMember->PPet != nullptr && PMember->PPet->GetMLevel() > maxlevel && PMember->PPet->objtype != TYPE_PET)
                 {
                     maxlevel = PMember->PPet->GetMLevel();
                 }
-                if (PMember->GetMLevel() > maxlevel)
+                if (PMember->GetMLevel() + battleutils::GetPlayerItemLevel((CCharEntity*)PMember) > maxlevel)
                 {
-                    maxlevel = PMember->GetMLevel();
+                    maxlevel = PMember->GetMLevel() + battleutils::GetPlayerItemLevel((CCharEntity*)PMember);
                 }
                 else if (PMember->GetMLevel() < minlevel)
                 {
@@ -3519,22 +3505,11 @@ namespace charutils
 
             uint8 moblevel = PMob->GetMLevel();
             uint8 memberlevel = PMember->GetMLevel();
-			uint8 memberILvl = PMember->m_Weapons[SLOT_MAIN]->getILvl();
-			uint8 memberRILvl = 0;
+			uint16 memberILvl = battleutils::GetPlayerItemLevel(PMember);
 			
-			if (PMember->getEquip(SLOT_RANGED) && PMember->getEquip(SLOT_RANGED)->isType(ITEM_WEAPON))
+			if (memberILvl > 0)
 			{
-				memberRILvl = PMember->m_Weapons[SLOT_RANGED]->getILvl();
-			}
-			
-			if (memberILvl > memberlevel)
-			{
-				memberlevel = memberILvl;
-			}
-			
-			if (memberRILvl > memberlevel && memberRILvl > memberILvl)
-			{
-				memberlevel = memberRILvl;
+				memberlevel = memberlevel + memberILvl;
 			}
 
             EMobDifficulty mobCheck = CheckMob(maxlevel, moblevel);
@@ -3546,7 +3521,8 @@ namespace charutils
                 {
                     if (map_config.exp_party_gap_penalties == 1)
                     {
-                        if (maxlevel > 50 || maxlevel > (memberlevel + 7))
+                        // if (maxlevel > 50 || maxlevel > (memberlevel + 7))
+						if (maxlevel < (memberlevel + 12))
                         {
                             exp *= memberlevel / (float)maxlevel;
                         }

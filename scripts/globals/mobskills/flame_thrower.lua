@@ -17,9 +17,9 @@ function onMobSkillCheck(target, mob, skill)
     local mobhp = mob:getHPP()
     local phase = mob:getLocalVar("battlePhase")
 
-    if mob:getLocalVar("nuclearWaste") == 1 then
-        return 0
-    end
+    -- if mob:getLocalVar("nuclearWaste") == 0 then
+        -- return 0
+    -- end
 
     return 1
 end
@@ -28,13 +28,13 @@ function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.PLAGUE
     MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 5, 3, 30)
 
-    local dmgmod = 2
+    local dmgmod = 2.5
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*3, tpz.magic.ele.FIRE, dmgmod, TP_MAB_BONUS, 1)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.FIRE, MOBPARAM_IGNORE_SHADOWS)
 
-        if target:hasStatusEffect(tpz.effect.ELEMENTALRES_DOWN) then
+    if target:hasStatusEffect(tpz.effect.ELEMENTALRES_DOWN) then
         target:delStatusEffectSilent(tpz.effect.ELEMENTALRES_DOWN)
     end
-    mob:setLocalVar("nuclearWaste", 0)
+--    mob:setLocalVar("nuclearWaste", 0)
     return dmg
 end

@@ -11,7 +11,7 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local duration = 30
+    local duration = 60
     local pCHR = caster:getStat(tpz.mod.CHR)
     local mCHR = target:getStat(tpz.mod.CHR)
     local dCHR = pCHR - mCHR

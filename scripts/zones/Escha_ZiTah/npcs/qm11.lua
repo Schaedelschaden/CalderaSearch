@@ -17,9 +17,9 @@ function onTrigger(player, npc)
     if (player:hasKeyItem(2906) and npcUtil.popFromQM(player, npc, ID.mob.VYALA, {claim = true, hide = 30})) then
 		GetMobByID(ID.mob.VYALA):setPos(596.7, 0, -163.8, 0)
 		player:delKeyItem(2906)
-	elseif (player:hasKeyItem(2917) and npcUtil.popFromQM(player, npc, ID.mob.FLEETSTALKER, {claim = true, hide = 30})) then
-		GetMobByID(ID.mob.FLEETSTALKER):setPos(596.7, 0, -163.8, 0)
-		player:delKeyItem(2917)
+	-- elseif (player:hasKeyItem(2917) and npcUtil.popFromQM(player, npc, ID.mob.FLEETSTALKER, {claim = true, hide = 30})) then
+		-- GetMobByID(ID.mob.FLEETSTALKER):setPos(596.7, 0, -163.8, 0)
+		-- player:delKeyItem(2917)
 	else
 		player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
 	end

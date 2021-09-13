@@ -1152,7 +1152,7 @@ tpz.mod =
     CHARMRES                        = 252, -- Light based
     AMNESIARES                      = 253, -- Fire based
     LULLABYRES                      = 254, -- Light based
-    DEATHRES                        = 255, -- Light based
+    DEATHRES                        = 255, -- Dark based
     ALLSTATUSRES                    = 958, -- "Resistance to All Status Ailments"
     AFTERMATH                       = 256,
     PARALYZE                        = 257,
@@ -1627,6 +1627,22 @@ tpz.mod =
 	FRONTAL_DMG_REDUCTION           = 2000, -- Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the front
 	REAR_DMG_REDUCTION              = 2001, -- Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the rear
 	SIDE_DMG_REDUCTION              = 2002, -- Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the side
+	IMMUNITY_SLEEP                  = 2003, -- Tracks how much sleep resistance is accumulated from multiple castings of sleep on the target before Immunobreak triggers
+	IMMUNITY_POISON                 = 2004, -- Tracks how much poison resistance is accumulated from multiple castings of poison on the target before Immunobreak triggers
+	IMMUNITY_PARALYZE               = 2005, -- Tracks how much paralyze resistance is accumulated from multiple castings of paralyze on the target before Immunobreak triggers
+	IMMUNITY_BLIND                  = 2006, -- Tracks how much blind resistance is accumulated from multiple castings of blind on the target before Immunobreak triggers
+	IMMUNITY_SILENCE                = 2007, -- Tracks how much silence resistance is accumulated from multiple castings of silence on the target before Immunobreak triggers
+	IMMUNITY_VIRUS                  = 2008, -- Tracks how much virus resistance is accumulated from multiple castings of virus on the target before Immunobreak triggers
+	IMMUNITY_PETRIFY                = 2009, -- Tracks how much petrify resistance is accumulated from multiple castings of petrify on the target before Immunobreak triggers
+	IMMUNITY_BIND                   = 2010, -- Tracks how much bind resistance is accumulated from multiple castings of bind on the target before Immunobreak triggers
+	IMMUNITY_CURSE                  = 2011, -- Tracks how much curse resistance is accumulated from multiple castings of curse on the target before Immunobreak triggers
+	IMMUNITY_GRAVITY                = 2012, -- Tracks how much gravity resistance is accumulated from multiple castings of gravity on the target before Immunobreak triggers
+	IMMUNITY_SLOW                   = 2013, -- Tracks how much slow resistance is accumulated from multiple castings of slow on the target before Immunobreak triggers
+	IMMUNITY_STUN                   = 2014, -- Tracks how much stun resistance is accumulated from multiple castings of stun on the target before Immunobreak triggers
+	IMMUNITY_CHARM                  = 2015, -- Tracks how much charm resistance is accumulated from multiple castings of charm on the target before Immunobreak triggers
+	IMMUNITY_AMNESIA                = 2016, -- Tracks how much amnesia resistance is accumulated from multiple castings of amnesia on the target before Immunobreak triggers
+	IMMUNITY_LULLABY                = 2017, -- Tracks how much lullaby resistance is accumulated from multiple castings of lullaby on the target before Immunobreak triggers
+	IMMUNITY_DEATH                  = 2018, -- Tracks how much death resistance is accumulated from multiple castings of death on the target before Immunobreak triggers
 	
 	ENEMY_TP_ACCUM                  = 2800, -- Reduces enemy TP accumulation by % when player takes physical damage
 	WALTZ_POTENCY_RCVD              = 2801, -- Increases the potency of Waltz's received
@@ -1649,7 +1665,12 @@ tpz.mod =
 	ABSORB_EFFECT_DURATION          = 2818, -- Increases "Absorb" spell durations
 	ALL_JUMPS_DOUBLE_ATTACK         = 2819, -- Adds % chance to Double Attack to Jump, High Jump, Spirit Jump, and Soul Jump
 	LIFE_CYCLE_HP                   = 2820, -- Adds % to HP restored by Life Cycle
+	ENH_CARDINAL_CHANT              = 2821, -- Adds % bonus to Cardinal Chant effect
+	COVER_DT                        = 2822, -- Adds -% Damage Taken while using Cover (Mod value is %DT; -12 = -12% DT, 12 = +12% DT)
+	ENMITY_MITIGATES_DMG            = 2823, -- Adds -% Damage Taken based on current Enmity (CE + VE)
+	ENMITY_MITIGATES_DMG_DT         = 2824, -- Handles the amount of -% Damage Taken provided by ENMITY_MITIGATES_DMG
 	
+	SMN_SPELLINTERRUPT              = 2937, -- Summoning magic interruption rate down %
 	ELEMENTAL_MAGIC_RECAST          = 2938, -- Reduces the recast of elemental magic spells
 	AUGMENT_VIVACIOUS_PULSE         = 2939, -- Augments "Vivacious Pulse" (Grants Vivacious Pulse the ability to remove status ailments associated with a -na spell)
 	ENH_KLIMAFORM                   = 2940, -- Enhances "Klimaform" effect (Increases damage of spells under matching weather while Klimaform is active)
@@ -1719,8 +1740,8 @@ tpz.mod =
     POT_BANISH_UNDEAD               = 3004, -- Potency of "Banish" on Undead
     ELEM_DOT_EFFECT                 = 3005, -- Potency of Black Magic Elemental DOT
     GAIN_MAGIC_EFFECT               = 3006, -- Potency of White Magic Gain Spells
---	SNEAK_ATK_DMG                   = 3007, -- Increases Sneak Attack Damage
---	TRICK_ATK_DMG                   = 3008, -- Increases Trick Attack Damage
+	PET_BREATH                      = 3007, -- Increases effects of Pet Breath moves
+	CALL_BEAST_RECAST               = 3008, -- "Call Beast" Ability Delay
     SHIELD_BASH_DISPEL              = 3009, -- Shield Bash: Adds Dispel
 	DIVINE_ENMITY_BONUS             = 3010, -- Divine Magic Special Enmity Bonus
 	DARK_MAGIC_CAST                 = 3011, -- Dark Magic Casting Time -%
@@ -1780,6 +1801,7 @@ tpz.mod =
 	ENH_FULL_CIRCLE                 = 3065, -- Full Circle + Gear (Enhances the base MP return multiplier)
 	AUGMENT_CONCENTRIC_PULSE        = 3066, -- Augments "Concentric Pulse"
 	GEOMANCY_POTENCY                = 3067, -- +Geomancy potency from Eminent Bell/Dunna/etc
+	DEFENDER_BLOCK_CHANCE			= 3068, -- Defender: Chance of Successful Block
 	
 	SDT_FIRE                        = 3200, -- Fire Specific Damage Taken
     SDT_ICE                         = 3201, -- Ice Specific Damage Taken
@@ -1789,6 +1811,10 @@ tpz.mod =
     SDT_WATER                       = 3205, -- Water Specific Damage Taken
     SDT_LIGHT                       = 3206, -- Light Specific Damage Taken
     SDT_DARK                        = 3207, -- Dark Specific Damage Taken
+	SDT_PHYS						= 3208, -- Physical Specific Damage Taken
+	SDT_RANGED						= 3209, -- Ranged Specific Damage Taken
+	SDT_MAGIC						= 3210, -- Magic Specific Damage Taken
+	SDT_BREATH						= 3211, -- Breath Specific Damage Taken
 	
 	ENH_ERASE                       = 3208, -- Increases the number of effects removed by Erase (Cleric's Torque/+1/+2)
 	ENH_DISPEL                      = 3209, -- Increases the number of effects removed by Dispel (Duelist's Torque/+1/+2)
@@ -2334,7 +2360,7 @@ tpz.merit =
     ENLIGHTENMENT               = MCATEGORY_SCH_2 + 0x08,
     STORMSURGE                  = MCATEGORY_SCH_2 + 0x0A,
 
-        -- GEO 2
+    -- GEO 2
     MENDING_HALATION            = MCATEGORY_GEO_2 + 0x00,
     RADIAL_ARCANA               = MCATEGORY_GEO_2 + 0x02,
     CURATIVE_RECANTATION        = MCATEGORY_GEO_2 + 0x04,

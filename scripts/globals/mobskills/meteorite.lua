@@ -1,5 +1,5 @@
 ---------------------------------------------
---  meteorite
+--  Meteorite
 --
 --  Description: Carbuncle deals Light damage to an enemy.
 --

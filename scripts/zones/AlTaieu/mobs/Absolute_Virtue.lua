@@ -24,35 +24,28 @@ function onMobSpawn(mob)
 	
     -- setMod
 	mob:setMod(tpz.mod.LIGHTRES, 65)
-    mob:setMod(tpz.mod.SILENCERES, 85)
+    mob:setMod(tpz.mod.SILENCERES, 99)
 	mob:setMod(tpz.mod.SLEEPRES, 85)
-	mob:setMod(tpz.mod.PETRIFYRES, 85)
+	mob:setMod(tpz.mod.PETRIFYRES, 95)
 	mob:setMod(tpz.mod.BINDRES, 85)
-	mob:setMod(tpz.mod.CHARMRES, 85)
-	mob:setMod(tpz.mod.DEATHRES, 85)
+	mob:setMod(tpz.mod.CHARMRES, 100)
+	mob:setMod(tpz.mod.DEATHRES, 100)
 	mob:setMod(tpz.mod.PARALYZERES, 20)
-    mob:setMod(tpz.mod.STUNRES, 5000)
+    mob:setMod(tpz.mod.STUNRES, 100)
     mob:setMod(tpz.mod.BINDRES, 50)
     mob:setMod(tpz.mod.GRAVITYRES, 30)
 	mob:setMod(tpz.mod.MOVE, 50)
-    -- mob:setMod(tpz.mod.HPP, 500)
-	-- mob:setMod(tpz.mod.DMG, -95)
-	-- mob:setMod(tpz.mod.DMGPHYS, -95)
-	-- mob:setMod(tpz.mod.DMGRANGE, -95)
-	-- mob:setMod(tpz.mod.DMGMAGIC, -95)
-	mob:addMod(tpz.mod.ATT, 750)
-	mob:addMod(tpz.mod.ACC, 250)
+	mob:addMod(tpz.mod.ATT, 650)
+	mob:addMod(tpz.mod.ACC, 100)
 	mob:addMod(tpz.mod.MACC, 250)
 	-- mob:addMod(tpz.mod.EVA, 250)
 	-- mob:addMod(tpz.mod.MEVA, 250)
-	mob:addMod(tpz.mod.DEF, 500)
+	mob:addMod(tpz.mod.DEF, 300)
 	mob:addMod(tpz.mod.FASTCAST, 65)
 	-- mob:addMod(tpz.mod.MATT, 100)
 	mob:addMod(tpz.mod.REGEN, 380)
 	mob:addMod(tpz.mod.REFRESH, 25)
     mob:setLocalVar("numAdds", 1)
-	
-	-- mob:setHP(999999999)
 
     local JoL = GetMobByID(ID.mob.JAILER_OF_LOVE)
     -- Special check for regen modification by JoL pets killed
@@ -81,7 +74,7 @@ function onMobSpawn(mob)
 					
 					for v = 1, 13 do
 						if (abilityID == playerTwoHours[v] and player:hasRecast(tpz.recast.ABILITY, 0) and avUsedTwoHour == v and os.time() - avTwoHourTime <= 10) then
---							printf("absolute_virtue.lua 2hr Listener [%s] TRIGGERED 2HR: [%i]", player:getName(), playerTwoHours[v])
+							-- printf("absolute_virtue.lua 2hr Listener [%s] TRIGGERED 2HR: [%i]", player:getName(), playerTwoHours[v])
 							SetServerVariable(cantUse2Hr[v], 1)
 							
 							if (abilityID == 16 and mob:hasStatusEffect(tpz.effect.MIGHTY_STRIKES)) then
@@ -109,7 +102,7 @@ function onMobSpawn(mob)
 					end
 					
 					if (abilityID == 61 and player:hasRecast(tpz.recast.ABILITY, 163) and avUsedTwoHour == 14 and os.time() - avTwoHourTime <= 10) then
---						printf("absolute_virtue.lua 2hr Listener [%s] TRIGGERED 2HR: [%i]", player:getName(), abilityID)
+						-- printf("absolute_virtue.lua 2hr Listener [%s] TRIGGERED 2HR: [%i]", player:getName(), abilityID)
 						SetServerVariable(cantUse2Hr[12], 1)
 						SetServerVariable(cantUse2Hr[13], 1)
 						SetServerVariable(cantUse2Hr[14], 1)
@@ -127,6 +120,11 @@ function onMobSpawn(mob)
 end
 
 function onMobFight(mob, target)
+	if (mob:getLocalVar("AVMACCDrop") == 0) then
+		mob:delMod(tpz.mod.MACC, 400)
+		mob:setLocalVar("AVMACCDrop", 1)
+	end
+
 	local isBusy = false
 	local act = mob:getCurrentAction()
 	local numPets = mob:getLocalVar("numPets")
@@ -215,6 +213,7 @@ function onMobFight(mob, target)
 				end
 			elseif (pick2Hr >= 12 and pick2Hr <= 14 and numPets == 0) then -- Call Wyvern if pets aren't up
 				mob:useMobAbility(avTwoHours[14])
+				pick2Hr = 14
 			elseif ((pick2Hr >= 12 and pick2Hr <= 14) and numPets > 0) then -- Familiar & Astral Flow require a pet to be out. Use another pet 2hr if Call Wyvern doesn't need to be used
 				if (pick2Hr == 14 and numPets > 0 and GetServerVariable(cantUse2Hr[12]) == 0 and GetServerVariable(cantUse2Hr[13]) == 0) then
 					pick2Hr = math.random(12, 13)
@@ -256,11 +255,11 @@ function onMobFight(mob, target)
 		mob:addMod(tpz.mod.ATT, 250)
 		mob:addMod(tpz.mod.ACC, 250)
 		mob:addMod(tpz.mod.MACC, 250)
-		mob:addMod(tpz.mod.EVA, 250)
-		mob:addMod(tpz.mod.MEVA, 250)
+		mob:addMod(tpz.mod.EVA, 150)
+		mob:addMod(tpz.mod.MEVA, 150)
 		mob:addMod(tpz.mod.DEF, 250)
-		mob:addMod(tpz.mod.MATT, 150)
-		printf("Absolute_Virtue.lua onMobFight RAGE")
+		mob:addMod(tpz.mod.MATT, 75)
+--		printf("Absolute_Virtue.lua onMobFight RAGE")
 	end
 end
 

@@ -183,7 +183,7 @@ tpz.aftermath.effects =
     },
 
     -----------------------------------
-    -- Tier 1 Empyrean
+    -- Tier 1 Empyrean (Melee)
     -----------------------------------
     [44] =
     {
@@ -193,11 +193,31 @@ tpz.aftermath.effects =
     },
 
     -----------------------------------
-    -- Tier 2 Empyrean
+    -- Tier 2 Empyrean (Melee)
     -----------------------------------
     [45] =
     {
         mod = tpz.mod.REM_OCC_DO_TRIPLE_DMG,
+        power = { 30, 40, 50 },
+        duration = { 60, 120, 180 }
+    },
+	
+	-----------------------------------
+    -- Tier 1 Empyrean (Ranged)
+    -----------------------------------
+    [46] =
+    {
+        mod = tpz.mod.REM_OCC_DO_DOUBLE_DMG_RANGED,
+        power = { 30, 40, 50 },
+        duration = { 60, 120, 180 }
+    },
+	
+	-----------------------------------
+    -- Tier 2 Empyrean (Ranged)
+    -----------------------------------
+    [47] =
+    {
+        mod = tpz.mod.REM_OCC_DO_TRIPLE_DMG_RANGED,
         power = { 30, 40, 50 },
         duration = { 60, 120, 180 }
     }

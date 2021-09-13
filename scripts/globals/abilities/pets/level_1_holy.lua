@@ -18,7 +18,7 @@ function onPetAbility(target, pet, skill, player)
 	local fixedName = string.gsub(mobName, "_", " ")
 	local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
 
-	local damage = 700
+	local damage = 225
 	damage = damage + (dINT * 1.5)
 	damage = MobMagicalMove(pet,target,skill,damage,tpz.magic.ele.LIGHT,1,TP_NO_EFFECT,2)
 	damage = mobAddBonuses(pet, nil, target, damage.dmg, tpz.magic.ele.LIGHT)
@@ -27,7 +27,8 @@ function onPetAbility(target, pet, skill, player)
 	target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.LIGHT)
 	target:updateEnmityFromDamage(pet,damage)
 	
-	player:PrintToPlayer(string.format("The %s takes %i damage.", fixedName, damage),tpz.msg.channel.NS_SAY)
+	pet:PrintToArea(string.format("The %s take %i damage.", fixedName, damage),tpz.msg.channel.NS_SAY, tpz.msg.area.SAY)
+	-- player:PrintToPlayer(string.format("The %s takes %i damage.", fixedName, damage),tpz.msg.channel.NS_SAY)
 	skill:setMsg(tpz.msg.basic.HIT_DMG)
 
 	return damage

@@ -6,12 +6,15 @@
 require("scripts/globals/status")
 -----------------------------------
 
-function onMobSpawn (mob)
+function onMobSpawn(mob)
     mob:SetAutoAttackEnabled(false)
     mob:SetMobAbilityEnabled(false)
-	mob:addMod(tpz.mod.ACC, 800)
+	mob:addMod(tpz.mod.SLEEPRES, 100)
+	-- mob:addMod(tpz.mod.ACC, 800)
 	mob:addMod(tpz.mod.ATT, 700)
 	mob:addMod(tpz.mod.REGAIN, 100)
+	mob:addMod(tpz.mod.EVA, 125)
+	mob:addMod(tpz.mod.MEVA, 175)
 end
 
 function onMobFight (mob, target)

@@ -15,12 +15,11 @@ function onTrade(player,npc,trade)
 end;
 
 function onTrigger(player,npc)
-	local trigger = math.random(1)
-	
-	if (trigger == 1) then
-		player:PrintToPlayer(string.format("Reja Ygridhi : Get your Rise of the Zilart and Chains of Promathia accessories here!"),tpz.msg.channel.NS_SAY)
-    local stock =
+	player:PrintToPlayer(string.format("Reja Ygridhi : Get your Rise of the Zilart and Chains of Promathia accessories here!"),tpz.msg.channel.NS_SAY)
+    
+	local stock =
     {
+		15840, 75000,-- Kupofried's Ring
         14739, 50000,-- Suppanomimi
 		14740, 50000,-- Knight's Earring
 		14741, 50000,-- Abyssal Earring
@@ -33,12 +32,19 @@ function onTrigger(player,npc)
 		15963, 50000,-- Magnetic Earring
 		15964, 50000,-- Hollow Earring
 		15965, 50000,-- Ethereal Earring
-		15840, 75000,-- Kupofried's Ring
+		2127, 75000, -- metal_chip
+		14815, 75000, -- stealth_earring
+		15961, 75000, -- musical_earring
+		14812, 75000, -- loquacious_earring
+		14813, 75000, -- brutal_earring
+		15477, 75000, -- boxers_mantle
+		15488, 75000, -- gunners_mantle
+		15475, 150000, -- charger_mantle
+		15476, 150000, -- jaeger_mantle
+		15244, 150000, -- flawless_ribbon
     }
 
     tpz.shop.general(player, stock)
-
-	end
 end
 
 function onEventUpdate(player,csid,option)

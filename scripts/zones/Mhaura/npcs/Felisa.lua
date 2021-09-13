@@ -5,9 +5,14 @@
 -----------------------------------
 
 function onTrade(player, npc, trade)
+	if (trade:hasItemQty(65535, 200)) then
+		player:tradeComplete()
+		player:setPos(0, 0, 0, 0, 50)
+	end
 end
 
 function onTrigger(player, npc)
+	player:PrintToPlayer(string.format("If you would like to teleport to Aht Urhgan Whitegate please trade 200 gil to Felisa."))
 
     if (player:getZPos() > 38.5) then
         player:startEvent(221, player:getGil(), 100)

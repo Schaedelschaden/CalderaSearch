@@ -26,6 +26,6 @@ function onMobWeaponSkill(target, mob, skill)
     local typeEffectTwo = tpz.effect.SHOCK_SPIKES
 
     skill:setMsg(MobBuffMove(mob, typeEffectOne, 1, 0, 60))
-    MobBuffMove(mob, typeEffectTwo, 25, 0, 60)
+    MobBuffMove(mob, typeEffectTwo, 125, 0, 60)
     return typeEffectOne
 end

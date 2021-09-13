@@ -94,6 +94,6 @@ uint16 CItemShop::getSellPrice()
 	}
 	else
 	{
-		return getBasePrice() / 3;
+		return getBasePrice() / 15;
 	}
 }

@@ -22,7 +22,7 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player,target,ability)
-    player:addStatusEffect(tpz.effect.OVERDRIVE, 0, 0, 60)
+    player:addStatusEffect(tpz.effect.OVERDRIVE, 0, 0, 180)
 	
     return tpz.effect.OVERDRIVE
 end

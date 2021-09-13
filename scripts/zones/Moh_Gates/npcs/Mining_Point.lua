@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Moh Gates
---  NPC: Mining Point
+-- NPC: Mining Point
+-- ID's: 17879373, 17879374, 17879375, 17879376, 17879377, 17879378
 -----------------------------------
 local ID = require("scripts/zones/Moh_Gates/IDs")
 require("scripts/globals/helm")
@@ -11,16 +12,17 @@ require("scripts/globals/status")
 local drops =
 {
 	{3000, 928}, -- Bomb Ash
-	{3000, 768}, -- Flint Stone
+--	{3000, 768}, -- Flint Stone
 	{2000, 3918}, -- Midrium Ore
 	{1800, 1108}, -- Sulfur
-	{1700, 1155}, -- Iron Sand
 	{1500, 756}, -- Durium Ore
 	{1400, 643}, -- Iron Ore
 	{1250, 736}, -- Silver Ore
-	{1000, 4043}, -- Lavarion
+--	{1000, 4043}, -- Lavarion
 	{920, 3920}, -- Vanadium Ore
 	{875, 1703}, -- Kunwu Ore
+	{2000, 741}, -- Palladian Brass Ore
+	{1700, 734}, -- Thokcha Ore
 }
 
 local points =
@@ -33,7 +35,7 @@ local points =
 	{69.8838,  29.7920,  -374.9613}, -- Map 1 G-11
 	{168.3535,  30.9142,  -387.8913}, -- Map 1 H-11
 	{242.9664,  40.0965,  -189.6982}, -- Map 1 I-8
-	{-42.9705,  -9.6283,  131.1130}, -- Map 1 J-9
+--	{-42.9705,  -9.6283,  131.1130}, -- Map 1 J-9 -- Open space?
 	{312.6441,  28.9426,  -135.9306}, -- Map 1 J-8
 	{351.8693,  28.8050,  -51.3427}, -- Map 1 J-7
 	{376.8394,  30.7051,  -57.3132}, -- Map 1 J-7
@@ -43,7 +45,7 @@ local points =
 
 local function doMove(npc, x, y, z)
     return function(entity)
-		printf("Mining_Point.lua doMove X: [%f] Y: [%f] Z: [%f]", x, y, z)
+--		printf("Mining_Point.lua doMove X: [%f] Y: [%f] Z: [%f]", x, y, z)
         entity:setPos(x, y, z, 0)
     end
 end

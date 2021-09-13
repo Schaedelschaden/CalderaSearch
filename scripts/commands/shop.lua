@@ -21,15 +21,15 @@ function onTrigger(player,page)
             4153,   2500,        -- Antacid (food removal medication)
 			6212,   850,         -- Marinara Slice +1 (Low level melee food, 60 min duration)
             5744,   3500,        -- Marinara Pizza +1 (low level melee food, 240 min duration)
-			6465,   15000,       -- Behemoth Steak +1 (high level DD food, 240 min duration)
-			6070,   15000,       -- Oceanfin Soup (high level Ranged DD food, 240 min duration)
+--			6465,   15000,       -- Behemoth Steak +1 (high level DD food, 240 min duration)
+--			6070,   15000,       -- Oceanfin Soup (high level Ranged DD food, 240 min duration)
             5999,   3500,        -- Adoulinian Soup +1 (low level tank food, 240 min duration)
-			6461,   15000,       -- Miso Ramen +1 (high level tank food, 60 min duration)
+--			6461,   15000,       -- Miso Ramen +1 (high level tank food, 60 min duration)
 			6064,   2500,        -- Queen's Crown (high level MAB/MACC food, 180 min duration)
-            6225,   6500,        -- Cyclical Coalescence (high level MAB food, 30 min duration)
-            6568,   5000,        -- Crepe des Rois (high level MACC food, 60 min duration)
-			6261,   3500,        -- Akamochi +1 (low level pet ATK food, 60 min duration)
-			6263,   7500,        -- Kusamochi +1 (high level pet ATK food, 60 min duration)
+--          6225,   6500,        -- Cyclical Coalescence (high level MAB food, 30 min duration)
+--          6568,   5000,        -- Crepe des Rois (high level MACC food, 60 min duration)
+--			6261,   3500,        -- Akamochi +1 (low level pet ATK food, 60 min duration)
+--			6263,   7500,        -- Kusamochi +1 (high level pet ATK food, 60 min duration)
         };
         tpz.shop.general(player,stock_1);
 		
@@ -97,6 +97,10 @@ function onTrigger(player,page)
 			10807,   10000,        -- Mandraguard
 			10429,   10000,        -- Moogle Masque
 			10250,   10000,        -- Moogle Suit
+			26968,   10000,        -- Cossie Top +1
+			27294,   10000,        -- Cossie Bottom +1
+			26966,   10000,        -- Ta Moko +1
+			27292,   10000,        -- Swimming Togs +1
       };
       tpz.shop.general(player,stock_4);
 	  

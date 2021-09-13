@@ -65,7 +65,11 @@ function onSpellCast(caster, target, spell)
 	
 	dmg = dmg * ecoBoost
     dmg = BlueFinalAdjustments(caster, target, spell, dmg, params)
-    caster:addHP(dmg)
+	
+	-- Curse II prevents restoring HP
+	if not (caster:hasStatusEffect(20)) then
+		caster:addHP(dmg)
+	end
 
     return dmg
 end

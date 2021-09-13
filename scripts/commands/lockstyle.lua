@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------------------------------
--- func: !lockstyle <target> <number>
+-- func: !lockstyle <number> <target>
 -- desc: Visually changes the player's equipment.
 ---------------------------------------------------------------------------------------------------
 
@@ -12,6 +12,7 @@ cmdprops =
 function onTrigger(player, set, target)
 	if (set == nil) then
         player:PrintToPlayer("You must enter a number between 1 and 471.")
+		player:PrintToPlayer("!lockstyle <number> <target>")
         return
     end
 	
@@ -23,6 +24,7 @@ function onTrigger(player, set, target)
         targ = GetPlayerByName(target)
         if (targ == nil) then
             error(player, string.format("Player named '%s' not found!", target))
+			player:PrintToPlayer("!lockstyle <number> <target>")
             return
         end
     end

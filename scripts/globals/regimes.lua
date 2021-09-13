@@ -635,14 +635,14 @@ local regimeInfo = {
                 event = 29,
                 page =
                 {
-                    { 3, 3, 0, 0, 60, 64, 1440, 735},
-                    { 5, 1, 0, 0, 60, 66, 1480, 736},
-                    { 3, 3, 0, 0, 60, 66, 1380, 737},
-                    { 4, 2, 0, 0, 60, 67, 1550, 738},
-                    { 3, 3, 0, 0, 63, 69, 1410, 739},
-                    { 3, 3, 0, 0, 65, 69, 1540, 740},
-                    { 3, 3, 0, 0, 77, 80, 1660, 741},
-                    { 3, 3, 0, 0, 99, 103, 1900, 742},
+                    { 3, 3, 0, 0, 60, 64, 1940, 735},
+                    { 5, 1, 0, 0, 60, 66, 1980, 736},
+                    { 3, 3, 0, 0, 60, 66, 1880, 737},
+                    { 4, 2, 0, 0, 60, 67, 2050, 738},
+                    { 3, 3, 0, 0, 63, 69, 1910, 739},
+                    { 3, 3, 0, 0, 65, 69, 2040, 740},
+                    { 3, 3, 0, 0, 77, 80, 2160, 741},
+                    { 3, 3, 0, 0, 99, 103, 2400, 742},
                 },
             },
             [tpz.zone.SEA_SERPENT_GROTTO] =
@@ -1431,6 +1431,10 @@ tpz.regime.checkRegime = function(player, mob, regimeId, index, regimeType)
 
     -- award XP every page completion
     player:addExp(reward)
+
+	if (player:getMainLvl() > 50 and player:getFreeSlotsCount() >= 1) then
+		player:addItem(1127, 1)
+	end
 
     -- repeating regimes
     if player:getCharVar("[regime]repeat") == 1 then

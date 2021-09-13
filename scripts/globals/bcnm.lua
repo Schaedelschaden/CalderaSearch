@@ -112,8 +112,8 @@ local battlefields = {
 
     [tpz.zone.SEALIONS_DEN] =
     {
-        { 0,  992, 2987},   -- One to Be Feared (PM6-4)
-        { 1,  993, 2546},   -- The Warrior's Path (PM7-5)
+        { 0,  992, 0},   -- One to Be Feared (PM6-4)
+        { 1,  993, 0},   -- The Warrior's Path (PM7-5)
      -- { 2,    ?,    0},   -- *The Warrior's Path (HTMBF)
      -- { 3,    ?,    0},   -- *One to Be Feared (HTMBF)
     },
@@ -357,7 +357,7 @@ local battlefields = {
 
     [tpz.zone.THRONE_ROOM] =
     {
-        { 0,  160, 2468},   -- The Shadow Lord Battle (Mission 5-2)
+        { 0,  160,    0},   -- The Shadow Lord Battle (Mission 5-2)
         { 1,  161,    0},   -- Where Two Paths Converge (Basty 9-2)
      -- { 2,  162, 1130},   -- Kindred Spirits (BS60)
         { 3,  163, 2557},   -- Survival of the Wisest (SCH LB5)
@@ -387,7 +387,7 @@ local battlefields = {
     {
         { 0,  224,    0},   -- The Moonlit Path (Quest)
         { 1,  225,    0},   -- Moon Reading (Windy 9-2)
-     -- { 2,  226,    0},   -- Waking the Beast (Quest)
+		{ 2,  226,    0},   -- Waking the Beast (Quest)
      -- { 3,  227,    0},   -- Battaru Royale (ASA10)
      -- { 4,    ?,    0},   -- *The Moonlit Path (HTMBF)
      -- { 5,    ?,    0},   -- *Waking the Beast (HTMBF)
@@ -581,7 +581,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 103] = function() return ( mjob == tpz.job.SMN and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (SMN LB5)
         [ 116] = function() return ( player:hasKeyItem(tpz.ki.SOUL_GEM_CLASP)                                                                                               ) end, -- Quest: Beyond Infinity
         [ 128] = function() return ( roz == mi.zilart.THE_TEMPLE_OF_UGGALEPIH                                                                                               ) end, -- ZM4: The Temple of Uggalepih
-        [ 160] = function() return ( nat == mi.nation.SHADOW_LORD and natStat == 3                                                                                          ) end, -- Mission 5-2
+        [ 160] = function() return ( player:hasKeyItem(tpz.ki.SHADOW_LORD_PHANTOM_GEM)                                                                                      ) end, -- Mission 5-2
         [ 161] = function() return ( basty == mi.bastok.WHERE_TWO_PATHS_CONVERGE and natStat == 1                                                                           ) end, -- Basty 9-2: Where Two Paths Converge
         [ 163] = function() return ( mjob == tpz.job.SCH and mlvl >= 66                                                                                                     ) end, -- Quest: Survival of the Wisest (SCH LB5)
         [ 192] = function() return ( roz == mi.zilart.THROUGH_THE_QUICKSAND_CAVES                                                                                           ) end, -- ZM6: Through the Quicksand Caves
@@ -590,6 +590,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 196] = function() return ( mjob == tpz.job.DRG and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (DRG LB5)
         [ 224] = function() return ( player:hasKeyItem(tpz.ki.MOON_BAUBLE)                                                                                                  ) end, -- Quest: The Moonlit Path
         [ 225] = function() return ( windy == mi.windurst.MOON_READING and natStat == 2                                                                                     ) end, -- Windy 9-2: Moon Reading
+		[ 226] = function() return ( player:hasKeyItem(tpz.ki.WAKING_THE_BEAST_PHANTOM_GEM)                                                                                 ) end, -- Waking the Beast
         [ 256] = function() return ( player:hasKeyItem(tpz.ki.STELLAR_FULCRUM_PHANTOM_GEM)                                                                                  ) end, -- ZM8: Return to Delkfutt's Tower
         [ 288] = function() return ( npcid == getEntranceOffset(0) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_APATHY)                                                      ) end, -- ZM14: Ark Angels (Hume)
         [ 289] = function() return ( npcid == getEntranceOffset(1) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_COWARDICE)                                                   ) end, -- ZM14: Ark Angels (Tarutaru)
@@ -597,7 +598,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 291] = function() return ( npcid == getEntranceOffset(3) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_ARROGANCE)                                                   ) end, -- ZM14: Ark Angels (Elvaan)
         [ 292] = function() return ( npcid == getEntranceOffset(4) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_RAGE)                                                        ) end, -- ZM14: Ark Angels (Galka)
         [ 293] = function() return ( dm1 == QUEST_ACCEPTED or dm2 == QUEST_ACCEPTED                                                                                         ) end, -- ZM14 Divine Might
-        [ 320] = function() return ( roz == mi.zilart.THE_CELESTIAL_NEXUS                                                                                                   ) end, -- ZM16: The Celestial Nexus
+        [ 320] = function() return ( player:hasKeyItem(tpz.ki.CELESTIAL_NEXUS_PHANTOM_GEM)                                                                                  ) end, -- ZM16: The Celestial Nexus
         [ 416] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_WIND)                                                                                          ) end, -- Quest: Trial by Wind
         [ 417] = function() return ( player:getCharVar("CarbuncleDebacleProgress") == 6                                                                                     ) end, -- Quest: Carbuncle Debacle
         [ 418] = function() return ( mjob == tpz.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Wind
@@ -632,7 +633,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 642] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                                   ) end, -- ENM: When Hell Freezes Over
         [ 643] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                                   ) end, -- ENM: Brothers
         [ 644] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                                   ) end, -- ENM: Holy Cow
-        [ 672] = function() return ( cop == mi.cop.THREE_PATHS and player:getCharVar("COP_Ulmia_s_Path") == 5                                                               ) end, -- PM5-3 U2: Head Wind
+        [ 672] = function() return ( player:hasKeyItem(tpz.ki.HEAD_WIND_PHANTOM_GEM)                                                                                        ) end, -- PM5-3 U2: Head Wind
         [ 673] = function() return ( player:hasKeyItem(tpz.ki.MIASMA_FILTER)                                                                                                ) end, -- ENM: Like the Wind
         [ 674] = function() return ( player:hasKeyItem(tpz.ki.MIASMA_FILTER)                                                                                                ) end, -- ENM: Sheep in Antlion's Clothing
         [ 675] = function() return ( player:hasKeyItem(tpz.ki.MIASMA_FILTER)                                                                                                ) end, -- ENM: Shell We Dance?
@@ -656,24 +657,25 @@ function checkReqs(player, npc, bfid, registrant)
         [ 865] = function() return ( player:hasKeyItem(tpz.ki.CENSER_OF_ACRIMONY)                                                                                           ) end, -- ENM: Pulling the Plug
         [ 896] = function() return ( player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.STORMS_OF_FATE) == QUEST_ACCEPTED and player:getCharVar('StormsOfFate') == 2           ) end, -- Quest: Storms of Fate
         [ 960] = function() return ( cop == mi.cop.ANCIENT_VOWS and copStat == 2                                                                                            ) end, -- PM2-5: Ancient Vows
-        [ 961] = function() return ( cop == mi.cop.THE_SAVAGE and copStat == 1                                                                                              ) end, -- PM4-2: The Savage
+        [ 961] = function() return ( player:hasKeyItem(tpz.ki.SAVAGES_PHANTOM_GEM)                                                                                          ) end, -- PM4-2: The Savage
         [ 962] = function() return ( player:hasKeyItem(tpz.ki.MONARCH_BEARD)                                                                                                ) end, -- ENM: Fire in the Sky
         [ 963] = function() return ( player:hasKeyItem(tpz.ki.MONARCH_BEARD)                                                                                                ) end, -- ENM: Bad Seed
         [ 964] = function() return ( player:hasKeyItem(tpz.ki.MONARCH_BEARD)                                                                                                ) end, -- ENM: Bugard in the Clouds
         [ 965] = function() return ( player:hasKeyItem(tpz.ki.MONARCH_BEARD)                                                                                                ) end, -- ENM: Beloved of Atlantes
-        [ 992] = function() return ( cop == mi.cop.ONE_TO_BE_FEARED and copStat == 2                                                                                        ) end, -- PM6-4: One to be Feared
-        [ 993] = function() return ( cop == mi.cop.THE_WARRIOR_S_PATH                                                                                                       ) end, -- PM7-5: The Warrior's Path
+        [ 992] = function() return ( player:hasKeyItem(tpz.ki.FEARED_ONE_PHANTOM_GEM)                                                                                       ) end, -- PM6-4: One to be Feared
+        [ 993] = function() return ( player:hasKeyItem(tpz.ki.WARRIORS_PATH_PHANTOM_GEM)                                                                                    ) end, -- PM7-5: The Warrior's Path
         [1024] = function() return ( cop == mi.cop.WHEN_ANGELS_FALL and copStat == 4                                                                                        ) end, -- PM8-3: When Angels Fall
-        [1056] = function() return ( cop == mi.cop.DAWN and copStat == 2                                                                                                    ) end, -- PM8-4: Dawn
+        [1056] = function() return ( player:hasKeyItem(tpz.ki.DAWN_PHANTOM_GEM)                                                                                             ) end, -- PM8-4: Dawn
         [1057] = function() return ( player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_ACCEPTED and player:getCharVar('ApocalypseNigh') == 4        ) end, -- Apocalypse Nigh
         [1090] = function() return ( player:hasKeyItem(tpz.ki.TOGGLE_SWITCH)                                                                                                ) end, -- Quest: Puppetmaster Blues
         [1091] = function() return ( mjob == tpz.job.COR and mlvl >= 66                                                                                                     ) end, -- Quest: Breaking the Bonds of Fate (COR LB5)
-        [1092] = function() return ( toau == mi.toau.LEGACY_OF_THE_LOST                                                                                                     ) end, -- TOAU35: Legacy of the Lost
+        [1092] = function() return ( player:hasKeyItem(tpz.ki.LEGACY_PHANTOM_GEM)                                                                                           ) end, -- TOAU35: Legacy of the Lost
         [1122] = function() return ( player:getQuestStatus(AHT_URHGAN,tpz.quest.id.ahtUrhgan.OMENS) == QUEST_ACCEPTED and player:getCharVar('OmensProgress') == 1           ) end, -- Quest: Omens (BLU AF Quest 2)
         [1123] = function() return ( mjob == tpz.job.PUP and mlvl >= 66                                                                                                     ) end, -- Quest: Achieving True Power (PUP LB5)
         [1124] = function() return ( toau == mi.toau.SHIELD_OF_DIPLOMACY and toauStat == 2                                                                                  ) end, -- TOAU22: Shield of Diplomacy
         [1154] = function() return ( mjob == tpz.job.BLU and mlvl >= 66                                                                                                     ) end, -- Quest: The Beast Within (BLU LB5)
-        [1156] = function() return ( toau == mi.toau.PUPPET_IN_PERIL and toauStat == 1                                                                                      ) end, -- TOAU29: Puppet in Peril
+        [1154] = function() return ( mjob == tpz.job.BLU and mlvl >= 66                                                                                                     ) end, -- Quest: The Beast Within (BLU LB5)
+        [1156] = function() return ( player:hasKeyItem(tpz.ki.PUPPET_IN_PERIL_PHANTOM_GEM)                                                                                  ) end, -- TOAU29: Puppet in Peril
         [1290] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.RED_CARD) and npcid == getEntranceOffset(0)                        ) end, -- NW Apollyon
         [1291] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.RED_CARD) and npcid == getEntranceOffset(0)                        ) end, -- SW Apollyon
         [1292] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.BLACK_CARD) and npcid == getEntranceOffset(1)                      ) end, -- NE Apollyon
@@ -815,7 +817,7 @@ function checkSkip(player, bfid)
         [  67] = function() return ( player:hasCompletedMission(BASTOK, mi.bastok.ON_MY_WAY) or (basty == mi.bastok.ON_MY_WAY and natStat > 2)                                                       ) end, -- Basty 7-2: On My Way
         [  96] = function() return ( mission2_3c                                                                                                                                                     ) end, -- Mission 2-3
         [  99] = function() return ( player:hasCompletedMission(WINDURST, mi.windurst.SAINTLY_INVITATION) or (windy == mi.windurst.SAINTLY_INVITATION and natStat > 1)                               ) end, -- Windy 6-2: A Saintly Invitation
-        [ 160] = function() return ( player:hasCompletedMission(player:getNation(), mi.nation.SHADOW_LORD) or (nat == mi.nation.SHADOW_LORD and natStat > 3)                                         ) end, -- Mission 5-2
+        [ 160] = function() return ( player:hasKeyItem(tpz.ki.SHADOW_LORD_PHANTOM_GEM)                                                                                                               ) end, -- Mission 5-2
         [ 161] = function() return ( player:hasCompletedMission(BASTOK, mi.bastok.WHERE_TWO_PATHS_CONVERGE) or (basty == mi.bastok.WHERE_TWO_PATHS_CONVERGE and natStat > 4)                         ) end, -- Basty 9-2: Where Two Paths Converge
         [ 192] = function() return ( player:hasCompletedMission(ZILART, mi.zilart.THROUGH_THE_QUICKSAND_CAVES)                                                                                       ) end, -- ZM6: Through the Quicksand Caves
         [ 224] = function() return ( player:hasCompletedQuest(WINDURST, tpz.quest.id.windurst.THE_MOONLIT_PATH) or player:hasKeyItem(tpz.ki.WHISPER_OF_THE_MOON)                                     ) end, -- Quest: The Moonlit Path
@@ -847,7 +849,7 @@ function checkSkip(player, bfid)
         [ 896] = function() return ( sofStat == QUEST_COMPLETED or (sofStat == QUEST_ACCEPTED and player:getCharVar("StormsOfFate") > 2)                                                             ) end, -- Quest: Storms of Fate
         [ 960] = function() return ( player:hasCompletedMission(COP, mi.cop.ANCIENT_VOWS)                                                                                                            ) end, -- PM2-5: Ancient Vows
         [ 961] = function() return ( player:hasCompletedMission(COP, mi.cop.THE_SAVAGE) or (cop == mi.cop.THE_SAVAGE and copStat > 1)                                                                ) end, -- PM4-2: The Savage
-        [ 992] = function() return ( player:hasCompletedMission(COP, mi.cop.ONE_TO_BE_FEARED)                                                                                                        ) end, -- PM6-4: One to be Feared
+        [ 992] = function() return ( player:hasKeyItem(tpz.ki.FEARED_ONE_PHANTOM_GEM)                                                                                                                ) end, -- PM6-4: One to be Feared
         [ 993] = function() return ( player:hasCompletedMission(COP, mi.cop.THE_WARRIOR_S_PATH)                                                                                                      ) end, -- PM7-5: The Warrior's Path
         [1024] = function() return ( player:hasCompletedMission(COP, mi.cop.WHEN_ANGELS_FALL) or (cop == mi.cop.WHEN_ANGELS_FALL and copStat > 4)                                                    ) end, -- PM8-3: When Angels Fall
         [1056] = function() return ( player:hasCompletedMission(COP, mi.cop.DAWN) or (cop == mi.cop.DAWN and copStat > 2)                                                                            ) end, -- PM8-4: Dawn
@@ -979,7 +981,7 @@ end
 function EventTriggerBCNM(player, npc)
     -- player is in battlefield and clicks to leave
     if player:getBattlefield() then
-		printf("bcnm.lua EventTriggerBCNM START")
+--		printf("bcnm.lua EventTriggerBCNM START")
         player:startEvent(32003)
         return true
 
@@ -1017,7 +1019,7 @@ function EventUpdateBCNM(player, csid, option, extras)
 
     -- requesting a battlefield
     if csid == 32000 then
-		printf("bcnm.lua EventUpdateBCNM START")
+--		printf("bcnm.lua EventUpdateBCNM START")
         if option == 0 then
             -- todo: check if battlefields full, check party member requiremenst
             return 0
@@ -1093,7 +1095,7 @@ function EventUpdateBCNM(player, csid, option, extras)
 
                     -- set other traded item to worn
                     elseif player:hasItem(item) and player:getName() == initiatorName then
-						printf("bcnm.lua EventUpdateBCNM ITEM [%i] SET TO WORN", item)
+--						printf("bcnm.lua EventUpdateBCNM ITEM [%i] SET TO WORN", item)
                         player:createWornItem(item)
                     end
                 end
@@ -1113,11 +1115,11 @@ function EventUpdateBCNM(player, csid, option, extras)
     -- leaving a battlefield
     elseif csid == 32003 and option == 2 then
         player:updateEvent(3)
-		printf("bcnm.lua EventUpdateBCNM LEAVING BATTLEFIELD OPTION 2")
+--		printf("bcnm.lua EventUpdateBCNM LEAVING BATTLEFIELD OPTION 2")
         return true
     elseif csid == 32003 and option == 3 then
         player:updateEvent(0)
-		printf("bcnm.lua EventUpdateBCNM LEAVING BATTLEFIELD OPTION 3")
+--		printf("bcnm.lua EventUpdateBCNM LEAVING BATTLEFIELD OPTION 3")
         return true
     end
 
@@ -1129,8 +1131,8 @@ end
 -----------------------------------------------
 
 function EventFinishBCNM(player, csid, option)
-	printf("EventFinishBCNM CSID: [%i] OPTION: [%i]", csid, option)
-    player:PrintToPlayer(string.format("EventFinishBCNM csid=%i option=%i", csid, option))
+--	printf("EventFinishBCNM CSID: [%i] OPTION: [%i]", csid, option)
+--    player:PrintToPlayer(string.format("EventFinishBCNM csid=%i option=%i", csid, option))
     player:setLocalVar("[battlefield]area", 0)
     if player:hasStatusEffect(tpz.effect.BATTLEFIELD) then
         if csid == 32003 and option == 4 then

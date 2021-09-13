@@ -33,12 +33,12 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-
-    if (player:getCurrentMission(player:getNation()) == tpz.mission.id.nation.SHADOW_LORD and player:getCharVar("MissionStatus") == 2) then
-        player:startEvent(6)
-    elseif (EventTriggerBCNM(player, npc)) then
-        return 1
-    end
+	EventTriggerBCNM(player, npc)
+    -- if (player:getCurrentMission(player:getNation()) == tpz.mission.id.nation.SHADOW_LORD and player:getCharVar("MissionStatus") == 2) then
+        -- player:startEvent(6)
+    -- elseif (EventTriggerBCNM(player, npc)) then
+        -- return 1
+    -- end
 
 end
 

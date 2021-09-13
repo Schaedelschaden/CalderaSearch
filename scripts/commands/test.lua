@@ -3,19 +3,171 @@
 -- desc: Use this to test LUA functions
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/settings")
+require("scripts/globals/status")
+require("scripts/globals/ability")
+
 cmdprops =
 {
     permission = 1,
-    parameters = ""
+    parameters = "i"
 }
 
 function onTrigger(player)
-	local target = player:getCursorTarget()
-	local pet = player:getPet()
-	local petCE = target:getCE(pet)
-	local petVE = target:getVE(pet)
+
+---------------------------------------------------------------------------------------------------
+
+-- Test Random Number Generator
+	for i = 1, 60 do
+		printf("test.lua onTrigger RANDOM VALUE %i: [%i]", i, math.random(1, 999))
+	end
+
+---------------------------------------------------------------------------------------------------
+	-- local itemID = 27677
+	-- local test = "[Aug]SuibhnePathGenbu_"..itemID
+
+	-- if (player:getCharVar("[Aug]SuibhnePathGenbu_27677") > 0) then
+		-- printf("test.lua onTrigger [%s]", test)
+		-- augments = skyAugmentsCarryOver[1]
+		-- player:setCharVar("[Aug]SuibhnePathGenbu_"..augItem, 0)
+	-- end
 	
-	printf("test.lua onTrigger PET CE: [%i]  VE: [%i]", petCE, petVE)
+---------------------------------------------------------------------------------------------------
+
+-- Test tables
+	-- local test = {trade = {1663, 3}}
+	-- printf("test.lua onTrigger  TEST: [%i]", test.trade[2])
+
+---------------------------------------------------------------------------------------------------
+
+-- Test utils.clamp
+	-- printf("test.lua onTrigger CLAMP: [%i]", utils.clamp(player:getSkillLevel(tpz.skill.HEALING_MAGIC) / 12.5, 10, 40))
+
+---------------------------------------------------------------------------------------------------
+
+-- Force set movement speed
+	-- local target = player:getCursorTarget()
+	-- target:speed(80)
+
+---------------------------------------------------------------------------------------------------
+
+-- Force Treasure Hunter level
+	-- local target = player:getCursorTarget()
+	-- target:setTHlevel(9)
+
+---------------------------------------------------------------------------------------------------
+
+-- Test math.ceil
+	-- printf("test.lua onTrigger CEILING: [%f]", math.ceil(1.3))
+
+---------------------------------------------------------------------------------------------------
+
+-- Get NPC ID
+	-- local npc = player:getCursorTarget()
+	-- local pos = npc:getPos()
+	-- printf("test.lua onTrigger NPC ID: [%i]  POS X: [%f]  POS Y: [%f]  POS Z: [%f]", npc:getID(), pos.x, pos.y, pos.z)
+
+---------------------------------------------------------------------------------------------------
+
+	-- local target = player:getCursorTarget()
+	-- printf("test.lua onTrigger HP: [%i]", target:getHP())
+
+---------------------------------------------------------------------------------------------------
+
+-- Test mob enmity list
+	-- local target = player:getCursorTarget()
+	-- local mobTargets = target:getEnmityList()
+	-- local assistTargets = {}
+	
+	-- for i, v in pairs(mobTargets) do
+		-- printf("test.lua onTrigger TARGET NAME: [%s]", v.entity)
+		-- assistTargets[i] = GetPlayerByName(v.entity:getName())
+	-- end
+
+---------------------------------------------------------------------------------------------------
+
+	-- for i = 16, 17 do
+		-- printf("test.lua onTrigger  i: [%i]", i)
+	-- end
+
+---------------------------------------------------------------------------------------------------
+
+-- Test for player having a status effect (Extreme Purgation)
+	-- local statusEffect = player:getStatusEffect(42)
+	
+	-- printf("test.lua onTrigger EFFECT: [%s]  POWER: [%i]  TICK: [%i]  DURATION: [%i]", statusEffect, statusEffect:getPower(), statusEffect:getTickCount(), statusEffect:getDuration())
+
+---------------------------------------------------------------------------------------------------
+
+-- Get mob's TH value
+	-- local target = player:getCursorTarget()
+	-- printf("test.lua onTrigger CURRENT TH: [%i]", mob:getTHlevel())
+
+---------------------------------------------------------------------------------------------------
+
+-- Return increased value versus decreasing HPP
+	-- local hpp = player:getHPP()
+	-- printf("test.lua onTrigger VALUE: [%i]", 5 + ((100 - hpp) / 5))
+
+---------------------------------------------------------------------------------------------------
+
+-- Force an AnimationSub
+	-- local target = player:getCursorTarget()
+	-- target:AnimationSub(2)
+
+---------------------------------------------------------------------------------------------------
+
+-- Remove Charm
+	-- player:uncharm()
+	
+---------------------------------------------------------------------------------------------------
+
+-- Restore an NPC from tpz.status.DISAPPEAR
+	-- local qm = GetNPCByID(17318485)
+	-- qm:setStatus(tpz.status.NORMAL)
+
+---------------------------------------------------------------------------------------------------
+
+-- Code for testing arrays
+	-- local spells =
+	-- {
+		-- {options = {148, 177, 233}}, -- Fire V, Firaga IV, Bio IV
+		-- {options = {163, 192, 35}},  -- Stone V, Stonega IV, Slowga
+		-- {options = {173, 202, 227}}, -- Water V, Waterga IV, Poisonga III
+		-- {options = {158, 187, 359}}, -- Aero V, Aeroga IV, Silencega
+		-- {options = {153, 182, 356}}, -- Blizzard V, Blizzaga IV, Paralyga
+		-- {options = {168, 197, 252}}  -- Thunder V, Thundaga IV, Stun
+	-- }
+	-- for i = 1, #spells[int].options do
+		-- printf("test.lua OnTrigger ENTRY: [%i]  SPELL: [%s]", int, spells[int].options[i])
+	-- end
+
+---------------------------------------------------------------------------------------------------
+	-- local mobName = player:getCursorTarget():getName()
+	-- local fixedMobName = string.gsub(mobName, "_", "")
+	-- local test = "KillCounter_" ..fixedMobName
+	-- printf("test.lua onTrigger %s", test)
+---------------------------------------------------------------------------------------------------
+	-- local targ = player:getCursorTarget()
+	
+	-- targ:speed(40)
+---------------------------------------------------------------------------------------------------
+	-- local vines = 17879394
+	-- local wall = 17879397
+
+	-- GetNPCByID(vines):setAnimation(tpz.anim.CLOSE_DOOR)
+	-- GetNPCByID(wall):openDoor(120)
+--	GetNPCByID(npc):setStatus(tpz.status.NORMAL)
+--	GetNPCByID(npc):setPos(239.4632, 18.7437, -42.0869, 203, 269)
+
+---------------------------------------------------------------------------------------------------
+
+	-- local target = player:getCursorTarget()
+	-- local pet = player:getPet()
+	-- local petCE = target:getCE(pet)
+	-- local petVE = target:getVE(pet)
+	
+	-- printf("test.lua onTrigger PET CE: [%i]  VE: [%i]", petCE, petVE)
 
 ---------------------------------------------------------------------------------------------------
 -- local missionZM = {0, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 23, 24, 26, 27, 28, 30}

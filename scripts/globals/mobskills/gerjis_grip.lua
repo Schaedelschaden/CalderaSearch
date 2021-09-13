@@ -15,5 +15,6 @@ function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.STUN
     skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 1, 0, 10))
 	mob:resetEnmity(target)
+	
     return typeEffect
 end

@@ -312,6 +312,10 @@ bool CMobController::MobSkill(int wsList)
 //				printf("mob_controller.cpp MobSkill PASSING TARGID:[%i]  SKILLID: [%i]\n", PActionTarget->targid, PMobSkill->getID());
                 return MobSkill(PActionTarget->targid, PMobSkill->getID());
             }
+			else if (currentDistance > PMobSkill->getDistance())
+			{
+				PMob->health.tp = 0;
+			}
         }
     }
 
@@ -755,12 +759,16 @@ void CMobController::DoRoamTick(time_point tick)
                 // recover 10% health
                 if (PMob->Rest(0.1f))
                 {
+					// Reset Treasure Hunter level to 0
+					PMob->m_THLvl = 0;
                     // health updated
                     PMob->updatemask |= UPDATE_HP;
                 }
 
                 if (PMob->GetHPP() == 100)
                 {
+					// Reset Treasure Hunter level to 0
+					PMob->m_THLvl = 0;
                     // at max health undirty exp
                     PMob->m_HiPCLvl = 0;
                     PMob->m_HiPartySize = 0;

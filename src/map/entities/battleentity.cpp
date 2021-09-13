@@ -464,10 +464,14 @@ int16 CBattleEntity::addTP(int16 tp)
         }
         else if (objtype == TYPE_PET)
         {
-            if (static_cast<CPetEntity*>(this)->getPetType() != PETTYPE_AUTOMATON || !this->PMaster)
+            if (this->PMaster->objtype == TYPE_MOB)
+			{
                 TPMulti = map_config.mob_tp_multiplier * 3;
+			}
             else
+			{
                 TPMulti = map_config.player_tp_multiplier;
+			}
         }
 
         tp = (int16)(tp * TPMulti);
@@ -746,7 +750,8 @@ uint16 CBattleEntity::RACC(uint8 skill, uint16 bonusSkill)
 uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
 {
 	// Determines character, pet, and mod ACC stat
-    if (this->objtype & TYPE_PC) {
+    if (this->objtype & TYPE_PC)
+	{
         uint16 skill = 0;
         uint16 iLvlSkill = 0;
         if (attackNumber == 0)
@@ -1564,6 +1569,12 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         else
         {
             state.ApplyEnmity(PTarget, ce, ve);
+			
+			if (this->objtype == TYPE_PC && PTarget->objtype == TYPE_MOB && actionTarget.param > 0)
+			{
+				// Trigger Treasure Hunter from magic
+				battleutils::ApplyTreasureHunter(this, PTarget, &actionTarget, false);
+			}
         }
 
         if (PTarget->objtype == TYPE_MOB && msg != MSGBASIC_SHADOW_ABSORB) // If message isn't the shadow loss message, because I had to move this outside of the above check for it.
@@ -1931,6 +1942,12 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
         {
             battleutils::HandleEnspell(this, PTarget, &actionTarget, attack.IsFirstSwing(), (CItemWeapon*)this->m_Weapons[attack.GetWeaponSlot()], attack.GetDamage());
             battleutils::HandleSpikesDamage(this, PTarget, &actionTarget, attack.GetDamage());
+			
+			if (attack.IsFirstSwing() && actionTarget.param > 0)
+			{
+				// Trigger Treasure Hunter from melee
+				battleutils::ApplyTreasureHunter(this, PTarget, &actionTarget, true);
+			}
         }
 
         if (actionTarget.speceffect == SPECEFFECT_HIT && actionTarget.param > 0)

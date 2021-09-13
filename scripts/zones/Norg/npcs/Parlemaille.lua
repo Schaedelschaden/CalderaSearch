@@ -14,7 +14,7 @@ local path =
 
 function onSpawn(npc)
     npc:initNpcPathing()
-    onPath(npc)
+--    onPath(npc)
 end
 
 function onPath(npc)
@@ -26,12 +26,12 @@ end
 
 function onTrigger(player,npc)
     player:startEvent(88)
-    npc:pathStop()
+    -- npc:pathStop()
 end
 
 function onEventUpdate(player,csid,option)
 end
 
 function onEventFinish(player,csid,option,npc)
-    npc:pathResume()
+    -- npc:pathResume()
 end

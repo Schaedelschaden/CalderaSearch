@@ -18,6 +18,7 @@ function onSpellCast(caster, target, spell)
 
 	if (caster:hasStatusEffect(tpz.effect.EMBOLDEN)) then
 		hp = hp * 2
+		duration = duration / 2
 		caster:delStatusEffect(tpz.effect.EMBOLDEN)
 	end
 

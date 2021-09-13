@@ -7,9 +7,9 @@ require("scripts/globals/homepoint")
 -----------------------------------
 
 function onTrigger(player, npc)
-    if (player:hasKeyItem(2167) and player:hasKeyItem(2205)) then -- Watercraft, Watercrafting
-		player:setPos(-179.1296, -1.3351, -248.7754)
-	end
+    -- if (player:hasKeyItem(2167) and player:hasKeyItem(2205)) then -- Watercraft, Watercrafting
+		-- player:setPos(-179.1296, -1.3351, -248.7754)
+	-- end
 end
 
 function onEventUpdate(player, csid, option)

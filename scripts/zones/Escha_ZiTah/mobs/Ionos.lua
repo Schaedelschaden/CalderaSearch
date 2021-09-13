@@ -10,22 +10,22 @@ require("scripts/globals/status") -- required for LUA status adjustments
 function onMobSpawn(mob) -- When mob spawns (either forced or time)
 	mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 	mob:setMod(tpz.mod.PARALYZERES, 30) -- Resistance to Silence
-    mob:setMod(tpz.mod.STUNRES, 500) -- Resistance to Stun
+    mob:setMod(tpz.mod.STUNRES, 50) -- Resistance to Stun
     mob:setMod(tpz.mod.BINDRES, 30) -- Resistance to Bind
     mob:setMod(tpz.mod.SLOWRES, 30) -- Resistance to Slow
     mob:setMod(tpz.mod.SILENCERES, 30) -- Resistance to Silence
     mob:setMod(tpz.mod.SLEEPRES, 30) -- Resistance to Sleep
     mob:setMod(tpz.mod.LULLABYRES, 30) -- Resistance to Lullaby
     mob:setMod(tpz.mod.PETRIFYRES, 30) -- Resistance to Pertrify
-    mob:setMod(tpz.mod.POISONRES, 30) -- Resistance to Poison
-	mob:setMod(tpz.mod.ATT, 1250) -- Attack Stat (Compare to DEF)
-	mob:setMod(tpz.mod.MATT, 200) -- Magic Attack (Compare to MDEF)
-    mob:setMod(tpz.mod.ACC, 800) -- Accuracy (compare to EVA)
-	mob:setMod(tpz.mod.MACC, 700) -- Magic ACC (Compare to MEVA)
-	mob:setMod(tpz.mod.EVA, 800) -- Evasion (Compare to ACC)
-	mob:setMod(tpz.mod.DEF, 750) -- Defense (Compart to ATT)
-	mob:setMod(tpz.mod.MEVA, 100) -- Magic Evasion (Compare to MACC)
-	mob:setMod(tpz.mod.MDEF, 400) -- Magic Defense (Compare to MATT)
+    -- mob:setMod(tpz.mod.POISONRES, 30) -- Resistance to Poison
+	-- mob:setMod(tpz.mod.ATT, 1250) -- Attack Stat (Compare to DEF)
+	-- mob:setMod(tpz.mod.MATT, 200) -- Magic Attack (Compare to MDEF)
+    -- mob:setMod(tpz.mod.ACC, 800) -- Accuracy (compare to EVA)
+	-- mob:setMod(tpz.mod.MACC, 700) -- Magic ACC (Compare to MEVA)
+	-- mob:setMod(tpz.mod.EVA, 800) -- Evasion (Compare to ACC)
+	-- mob:setMod(tpz.mod.DEF, 750) -- Defense (Compart to ATT)
+	-- mob:setMod(tpz.mod.MEVA, 800) -- Magic Evasion (Compare to MACC)
+	-- mob:setMod(tpz.mod.MDEF, 400) -- Magic Defense (Compare to MATT)
 	mob:setMod(tpz.mod.DOUBLE_ATTACK, 15) -- Double Attack in %
 	mob:setMod(tpz.mod.DMG, -35)
 	mob:setMod(tpz.mod.MOBMOD_TP_USE_CHANCE, 1000)
@@ -33,21 +33,7 @@ function onMobSpawn(mob) -- When mob spawns (either forced or time)
 end
 
 function onMobFight(mob, target) -- When mob is engaged
-	-- mob:setMod(tpz.mod.MOBMOD_TP_USE_CHANCE, 1000)
-	-- mob:setMod(tpz.mod.REGAIN, 200)
-	
-	-- if (mob:getHPP() <= 75) then
-		-- mob:setMod(tpz.mod.REGEN, 250)
-	-- end
-	
-	-- if (mob:getHPP() <= 50) then
-		-- mob:setMod(tpz.mod.REGEN, 500)
-	-- end
-	
-	-- if (mob:getHPP() <= 25) then
-		-- mob:setMod(tpz.mod.REGEN, 1000)
-		-- mob:setMod(tpz.mod.DMG, -50)
-	-- end
+
 end
 
 function onAdditionalEffect(mob, target, damage)

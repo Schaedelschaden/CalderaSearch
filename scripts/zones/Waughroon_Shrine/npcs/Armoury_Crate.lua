@@ -435,34 +435,35 @@ local loot =
             {itemid =  20679, droprate = 125}, -- Tanmogayi
         },
         {
-            {itemid = 27409, droprate =  200}, -- Hippomenes Socks
-            {itemid = 27407, droprate =  200}, -- Hygieia Clogs
-            {itemid = 28275, droprate =  200}, -- Jute Boots
-            {itemid = 28273, droprate =  200}, -- Regal Pumps
-            {itemid = 25923, droprate =  200}, -- Tatenashi Sune-Ate
+			{itemid = 26401, droprate =  145}, -- Forfend
+            {itemid = 27409, droprate =  145}, -- Hippomenes Socks
+            {itemid = 27407, droprate =  145}, -- Hygieia Clogs
+            {itemid = 28275, droprate =  145}, -- Jute Boots
+            {itemid = 28273, droprate =  145}, -- Regal Pumps
+			{itemid = 26887, droprate =  130}, -- Shomonjijoe
+            {itemid = 25923, droprate =  145}, -- Tatenashi Sune-Ate
         },
         {
-            {itemid = 4073, droprate = 1000},   -- Rem Chapt 10
-
+            {itemid = 4072, droprate = 1000},  -- Rem Chapt 9
         },
         {
-            {itemid = 4073, droprate = 1000},   -- Rem Chapt 10
-
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 4072, droprate = 150},   -- Rem Chapt 9
         },
         {
-            {itemid = 3972, droprate = 1000},   -- Kupon I S-2
-
+            {itemid = 3972, droprate = 1000},  -- Kupon I S-2
         },
         {
-            {itemid = 3972, droprate = 1000},   -- Kupon I S-2
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 3972, droprate = 150},   -- Kupon I S-2
         },
 		{
-            {itemid = 4080, droprate =  175}, -- Moonbow Urushi
-            {itemid = 4079, droprate =  165}, -- Moonbow Leather
-            {itemid = 4078, droprate =  165}, -- Moonbow Cloth
-            {itemid = 4077, droprate =  165}, -- Moonbow Steel
-            {itemid = 4081, droprate =  165}, -- Moonbow Stone
-			{itemid = 4082, droprate =  165}, -- Moonlight Coral
+            {itemid = 4080, droprate =  160}, -- Moonbow Urushi
+            {itemid = 4079, droprate =  80},  -- Moonbow Leather
+            {itemid = 4078, droprate =  120}, -- Moonbow Cloth
+            {itemid = 4077, droprate =  240}, -- Moonbow Steel
+            {itemid = 4081, droprate =  240}, -- Moonbow Stone
+			{itemid = 4082, droprate =  160}, -- Moonlight Coral
         },
     },
 
@@ -473,38 +474,40 @@ local loot =
             -- {itemid = 65535, droprate = 1000, amount = 500000}, -- gil
         -- },
 		{
-            {itemid =  0, droprate = 100}, -- Nothing
-			{itemid =  20774, droprate = 300}, -- Voay Sworrd +1
-			{itemid =  20735, droprate = 300}, -- Camaraderie Blade
-			{itemid =  20633, droprate = 300}, -- Camaraderie Dagger
+            {itemid =  0,     droprate = 100},  -- Nothing
+			{itemid =  20774, droprate = 300},	-- Voay Sword +1
+			{itemid =  20735, droprate = 300},	-- Camaraderie Blade
+			{itemid =  20633, droprate = 300},	-- Camaraderie Dagger
         },
         {
-            {itemid =  0, droprate = 100}, -- Nothing
-			{itemid =  21455, droprate = 300}, -- Alternator
-			{itemid =  28643, droprate = 300}, -- Refraction Cape
-			{itemid =  28402, droprate = 300}, -- Asperity Necklace
+            {itemid =  0,     droprate = 100}, 	-- Nothing
+			{itemid =  21455, droprate = 300},	-- Alternator
+			{itemid =  28643, droprate = 300},	-- Refraction Cape
+			{itemid =  28402, droprate = 300},	-- Asperity Necklace
         },
         {
-            {itemid =  0, droprate = 100}, -- Nothing
-			{itemid =  28058, droprate = 300}, -- Manibozho Gloves
-			{itemid =  28059, droprate = 300}, -- Bokwus Gloves
-			{itemid =  28057, droprate = 300}, -- Mikinaak Gauntlets 
+            {itemid =  0,     droprate = 100},	-- Nothing
+			{itemid =  28058, droprate = 300}, 	-- Manibozho Gloves
+			{itemid =  28059, droprate = 300}, 	-- Bokwus Gloves
+			{itemid =  28057, droprate = 300}, 	-- Mikinaak Gauntlets
         },
         {
-            {itemid = 0, droprate = 900}, -- Nothing
-            {itemid = 1178, droprate = 100},   -- Lachesis Orb
-        },
-        {
-            {itemid = 8734, droprate = 1000},   -- Kupon I S-1
+            {itemid = 0,    droprate = 900},    -- Nothing
+            {itemid = 1178, droprate = 100},	-- Lachesis Orb
         },
         {
             {itemid = 8734, droprate = 1000},   -- Kupon I S-1
         },
         {
-            {itemid = 4067, droprate = 1000},    -- Rems Chapt 4
+			{itemid =  0,   droprate = 850},	-- Nothing
+            {itemid = 8734, droprate = 150},	-- Kupon I S-1
+        },
+        {
+            {itemid = 4066, droprate = 1000},	-- Rems Chapt 3
         },
 		{
-            {itemid = 4067, droprate = 1000},    -- Rems Chapt 4
+			{itemid =  0,   droprate = 850}, 	-- Nothing
+            {itemid = 4066, droprate = 150},    -- Rems Chapt 3
         },
     },
 }

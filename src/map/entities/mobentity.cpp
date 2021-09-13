@@ -41,6 +41,7 @@
 #include "../utils/itemutils.h"
 #include "../utils/mobutils.h"
 #include "../utils/petutils.h"
+#include "../utils/zoneutils.h"
 #include "../status_effect_container.h"
 #include "../enmity_container.h"
 #include "../mob_spell_container.h"
@@ -51,6 +52,7 @@
 #include "../roe.h"
 #include "../treasure_pool.h"
 #include "../conquest_system.h"
+#include "../vana_time.h"
 
 CMobEntity::CMobEntity()
 {
@@ -749,7 +751,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         if (target.speceffect & SPECEFFECT_HIT)
         {
             target.speceffect = SPECEFFECT_RECOIL;
-            target.knockback = PSkill->getKnockback() - PTarget->getMod(Mod::REDUCE_KNOCKBACK);
+            target.knockback = std::clamp(PSkill->getKnockback() - PTarget->getMod(Mod::REDUCE_KNOCKBACK), 0, 15);
             if (first && (PSkill->getPrimarySkillchain() != 0))
             {
                 if (PSkill->getPrimarySkillchain())
@@ -902,7 +904,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 
     uint16 Pzone = PChar->getZone();
 
-    bool validZone = ((Pzone > 0 && Pzone < 39) || (Pzone > 42 && Pzone < 134) || (Pzone > 135 && Pzone < 185) || (Pzone > 188 && Pzone < 255));
+    bool validZone = ((Pzone > 0 && Pzone < 39) || (Pzone > 42 && Pzone < 134) || (Pzone > 135 && Pzone < 185) || (Pzone > 188 && Pzone < 255) || (Pzone == 288));
 
 /* 	uint8 pCharLvl = PChar->GetMLevel();
 	uint8 mLvl = this->GetMLevel();
@@ -928,28 +930,29 @@ void CMobEntity::DropItems(CCharEntity* PChar)
         >= 75 = Kindred Crests ID=2955
         >= 90 = High Kindred Crests ID=2956
         */
-        if (tpzrand::GetRandomNumber(100) < 33 && PChar->PTreasurePool->CanAddSeal() && !getMobMod(MOBMOD_NO_DROPS))
+		int8 dropChance = tpzrand::GetRandomNumber(100);
+		
+        if (dropChance < 33 && PChar->PTreasurePool->CanAddSeal() && !getMobMod(MOBMOD_NO_DROPS))
         {
             //RULES: Only 1 kind may drop per mob
             if (GetMLevel() >= 75 && luautils::IsContentEnabled("ABYSSEA")) // all 4 types
             {
-                switch (tpzrand::GetRandomNumber(4))
+                switch (tpzrand::GetRandomNumber(3))
                 {
+/*                 case 0:
+                    if (AddItemToPool(1126, ++dropCount)) // Beastmen's Seal
+                        return;
+                    break; */
                 case 0:
-
-                    if (AddItemToPool(1126, ++dropCount))
+                    if (AddItemToPool(1127, ++dropCount)) // Kindred's Seal
                         return;
                     break;
                 case 1:
-                    if (AddItemToPool(1127, ++dropCount))
+                    if (AddItemToPool(2955, ++dropCount)) // Kindred's Crest
                         return;
                     break;
                 case 2:
-                    if (AddItemToPool(2955, ++dropCount))
-                        return;
-                    break;
-                case 3:
-                    if (AddItemToPool(2956, ++dropCount))
+                    if (AddItemToPool(2956, ++dropCount)) // High Kindred Crest
                         return;
                     break;
                 }
@@ -992,9 +995,177 @@ void CMobEntity::DropItems(CCharEntity* PChar)
                     return;
             }
         }
-        // Todo: Avatarite and Geode drops during day/weather. Much higher chance during weather than day.
+		
+        // Avatarite and Geode drops during day/weather. Much higher chance during weather than day.
         // Item element matches day/weather element, not mob crystal. Lv80+ xp mobs can drop Avatarite.
         // Wiki's have conflicting info on mob lv required for Geodes. One says 50 the other 75. I think 50 is correct.
+		dropChance = tpzrand::GetRandomNumber(100);
+		uint8 weekDay = (uint8)CVanaTime::getInstance()->getWeekday();
+		auto weatherElement = zoneutils::GetWeatherElement(battleutils::GetWeather((CBattleEntity*)PChar, false));
+		
+		if (dropChance < 33 && weatherElement > 0)
+        {
+			if (GetMLevel() >= 80 && luautils::IsContentEnabled("ABYSSEA")) // Avatarite
+            {
+				switch (weatherElement)
+				{
+					case 0:
+						break; // No element
+					case 1: // Hot Spell, Heat Wave
+						if (AddItemToPool(3520, ++dropCount)) // Ifritite
+							return;
+						break;
+					case 2: // Snow, Blizzards
+						if (AddItemToPool(3521, ++dropCount)) // Shivite
+							return;
+						break;
+					case 3: // Wind, Gales
+						if (AddItemToPool(3522, ++dropCount)) // Garudite
+							return;
+						break;
+					case 4: // Dust Storm, Sand Storm
+						if (AddItemToPool(3523, ++dropCount)) // Titanite
+							return;
+						break;
+					case 5: // Thunder, Thunderstorms
+						if (AddItemToPool(3524, ++dropCount)) // Ramuite
+							return;
+						break;
+					case 6: // Rain, Squall
+						if (AddItemToPool(3525, ++dropCount)) // Leviatite
+							return;
+						break;
+					case 7: // Auroras, Stellar Glare
+						if (AddItemToPool(3526, ++dropCount)) // Carbite
+							return;
+						break;
+					case 8: // Gloom, Darkness
+						if (AddItemToPool(3527, ++dropCount)) // Fenrite
+							return;
+						break;
+				}
+			}
+			if (GetMLevel() >= 50 && GetMLevel() <= 79 && luautils::IsContentEnabled("ABYSSEA")) // Geodes
+            {
+				switch (weatherElement)
+				{
+					case 0:
+						break; // No element
+					case 1: // Hot Spell, Heat Wave
+						if (AddItemToPool(3297, ++dropCount)) // Flame Geode
+							return;
+						break;
+					case 2: // Snow, Blizzards
+						if (AddItemToPool(3298, ++dropCount)) // Snow Geode
+							return;
+						break;
+					case 3: // Wind, Gales
+						if (AddItemToPool(3299, ++dropCount)) // Breeze Geode
+							return;
+						break;
+					case 4: // Dust Storm, Sand Storm
+						if (AddItemToPool(3300, ++dropCount)) // Soil Geode
+							return;
+						break;
+					case 5: // Thunder, Thunderstorms
+						if (AddItemToPool(3301, ++dropCount)) // Thunder Geode
+							return;
+						break;
+					case 6: // Rain, Squall
+						if (AddItemToPool(3302, ++dropCount)) // Aqua Geode
+							return;
+						break;
+					case 7: // Auroras, Stellar Glare
+						if (AddItemToPool(3303, ++dropCount)) // Light Geode
+							return;
+						break;
+					case 8: // Gloom, Darkness
+						if (AddItemToPool(3304, ++dropCount)) // Shadow Geode
+							return;
+						break;
+				}
+			}
+		}
+		else if (dropChance < 15 && weatherElement == 0)
+        {
+			if (GetMLevel() >= 80 && luautils::IsContentEnabled("ABYSSEA")) // Avatarite
+            {
+				switch (weekDay)
+				{
+					case 0: // Firesday
+						if (AddItemToPool(3520, ++dropCount)) // Ifritite
+							return;
+						break;
+					case 1: // Earthsday
+						if (AddItemToPool(3523, ++dropCount)) // Titanite
+							return;
+						break;
+					case 2: // Watersday
+						if (AddItemToPool(3525, ++dropCount)) // Leviatite
+							return;
+						break;
+					case 3: // Windsday
+						if (AddItemToPool(3522, ++dropCount)) // Garudite
+							return;
+						break;
+					case 4: // Iceday
+						if (AddItemToPool(3521, ++dropCount)) // Shivite
+							return;
+						break;
+					case 5: // Lightningday
+						if (AddItemToPool(3524, ++dropCount)) // Ramuite
+							return;
+						break;
+					case 6: // Lightsday
+						if (AddItemToPool(3526, ++dropCount)) // Carbite
+							return;
+						break;
+					case 7: // Darksday
+						if (AddItemToPool(3527, ++dropCount)) // Fenrite
+							return;
+						break;
+				}
+			}
+			if (GetMLevel() >= 50 && GetMLevel() <= 79 && luautils::IsContentEnabled("ABYSSEA")) // Geodes
+            {
+				switch (weekDay)
+				{
+					case 0: // Firesday
+						if (AddItemToPool(3297, ++dropCount)) // Flame Geode
+							return;
+						break;
+					case 1: // Earthsday
+						if (AddItemToPool(3300, ++dropCount)) // Soil Geode
+							return;
+						break;
+					case 2: // Watersday
+						if (AddItemToPool(3302, ++dropCount)) // Aqua Geode
+							return;
+						break;
+					case 3: // Windsday
+						if (AddItemToPool(3299, ++dropCount)) // Breeze Geode
+							return;
+						break;
+					case 4: // Iceday
+						if (AddItemToPool(3298, ++dropCount)) // Snow Geode
+							return;
+						break;
+					case 5: // Lightningday
+						if (AddItemToPool(3301, ++dropCount)) // Thunder Geode
+							return;
+						break;
+					case 6: // Lightsday
+						if (AddItemToPool(3303, ++dropCount)) // Light Geode
+							return;
+						break;
+					case 7: // Darksday
+						if (AddItemToPool(3304, ++dropCount)) // Shadow Geode
+							return;
+						break;
+				}
+			}
+		}
+		
 
         uint8 effect = 0; // Begin Adding Crystals
 
@@ -1145,7 +1316,8 @@ void CMobEntity::OnDespawn(CDespawnState&)
 
 void CMobEntity::Die()
 {
-    m_THLvl = PEnmityContainer->GetHighestTH();
+	// Deprecated GetHighestTH in favor of applying Treasure Hunter on ProcessDamage through attack.cpp
+    // m_THLvl = PEnmityContainer->GetHighestTH();
     PEnmityContainer->Clear();
     PAI->ClearStateStack();
     if (PPet != nullptr && PPet->isAlive() && GetMJob() == JOB_SMN)

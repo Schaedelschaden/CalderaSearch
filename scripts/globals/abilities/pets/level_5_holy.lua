@@ -19,7 +19,7 @@ function onPetAbility(target, pet, skill, player)
 	local moblevel = target:getMainLvl()
 	local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
 
-	local damage = 2000
+	local damage = 1500
 	
 	if (moblevel % 5 == 0) then -- Divides moblevel by 5 then checks if there is any remainder
 		damage = damage + (dINT * 1.5)
@@ -30,7 +30,8 @@ function onPetAbility(target, pet, skill, player)
 		target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.LIGHT)
 		target:updateEnmityFromDamage(pet,damage)
 	
-		player:PrintToPlayer(string.format("The %s takes %i damage.", fixedName, damage),tpz.msg.channel.NS_SAY)
+		pet:PrintToArea(string.format("The %s take %i damage.", fixedName, damage),tpz.msg.channel.NS_SAY, tpz.msg.area.SAY)
+		-- player:PrintToPlayer(string.format("The %s takes %i damage.", fixedName, damage),tpz.msg.channel.NS_SAY)
 		skill:setMsg(tpz.msg.basic.HIT_DMG)
 
 		return damage

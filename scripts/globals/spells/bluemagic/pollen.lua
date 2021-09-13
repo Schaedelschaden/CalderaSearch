@@ -48,7 +48,11 @@ function onSpellCast(caster, target, spell)
     if (final > diff) then
         final = diff
     end
-    target:addHP(final)
+	
+	-- Curse II prevents restoring HP
+	if not (caster:hasStatusEffect(20)) then
+		target:addHP(final)
+	end
 
     if (target:getAllegiance() == caster:getAllegiance() and (target:getObjType() == tpz.objType.PC or target:getObjType() == tpz.objType.MOB)) then
         caster:updateEnmityFromCure(target, final)

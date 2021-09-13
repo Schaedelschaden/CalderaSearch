@@ -1,107 +1,116 @@
--- -----------------------------------
--- -- Area: Feretory
--- --  NPC: Suibhne
--- -- !pos -353.9244 -3.2226 -469.9172 285
--- -----------------------------------
--- local ID = require("scripts/zones/Feretory/IDs")
--- require("scripts/globals/settings")
--- require("scripts/globals/keyitems")
--- require("scripts/globals/status")
--- -----------------------------------
+-----------------------------------
+-- Area: Feretory
+--  NPC: Suibhne
+-- !pos -353.9244 -3.2226 -469.9172 285
+-----------------------------------
+local ID = require("scripts/zones/Feretory/IDs")
+require("scripts/globals/npc_util")
+require("scripts/globals/settings")
+require("scripts/globals/keyitems")
+require("scripts/globals/status")
+-----------------------------------
 
 function onTrade(player, npc, trade)
-	-- local itemToAug = 0
-	-- local itemFound = false
-	-- local augments =
-	-- {
-	-- --	{"aug1", "aug1 value", "aug2", "aug2 value", "aug3", "aug3 value", "aug4", "aug4 value"}
-		-- {"514", "0", "33", "2", "42", "0", "39", "0"}, -- VIT +1, DEF +3, Enemy Crit Hit Rate -1%, Enmity +1
-		-- {"1", "6", "512", "0", "23", "2", "25", "2"}, -- HP +7, STR +1, ACC +3, ATK +3
-		-- {"9", "6", "517", "0", "329", "0", "31", "2"}, -- MP +7, MND +1, Cure Potency +1%, EVA +3
-		-- {"9", "6", "516", "0", "133", "2", "31", "2"}, -- MP +7, INT +1, MAB +3, EVA +3
-		-- {"97", "2", "99", "2", "98", "2"}, -- Pet: ATK/RATK +3, Pet: DEF +3, Pet: EVA +3
-	-- }
+	local itemToAug = 0
+	local itemFound = false
+	local augments =
+	{
+	--	{"aug1", "aug1 value", "aug2", "aug2 value", "aug3", "aug3 value", "aug4", "aug4 value"}
+		{"1", "14", "31", "9", "42", "1", "54", "1"}, 	-- HP +15, EVA +10, Enemy Crit Hit Rate -2%, PDT -2%
+		{"41", "1", "328", "1", "106", "9", "195", "2"}, -- Crit Hit Rate +2%, Crit Hit Damage +2%, ACC/RACC +10, Subtle Blow +3
+		{"9", "14", "133", "4", "362", "9", "35", "9"}, -- MP +15, MAB +5, Magic Damage +10, MACC +10
+		{"1806", "4", "102", "1", "115", "2"}, 			-- Pet: STR/DEX/VIT +5, Pet: Crit Hit Rate +2%, Pet: Store TP +3
+	}
 	
-	-- -- Checks all 8 slots of the trade window and restricts the augmentable item to ID's between 10249 and 28671 (Armor & Weapons)
-	-- for i = 0, 7, 1 do
-		-- local itemID = trade:getItemId(i)
--- --		printf("Suibhne Trade Item %i ID: [%i]", i, itemID)
-		-- if (itemID > 10249 and itemID < 28671 and itemFound == false) then
-			-- itemToAug = itemID
-			-- itemFound = true
--- --			printf("Suibhne Trade Item to Augment ID: [%i]\n", itemToAug)
-			-- if (trade:getItem(i):getReqLvl() < 31 or trade:getItem(i):getReqLvl() > 60) then
-				-- player:PrintToPlayer(string.format("Suibhne : The item to be augmented must be between levels 31 and 60."),tpz.msg.channel.NS_SAY)
-				-- return
-			-- end
-		-- end
-	-- end
+	-- Checks all 8 slots of the trade window and restricts the augmentable item to ID's between 10249 and 28671 (Armor & Weapons)
+	for i = 0, 7, 1 do
+		local itemID = trade:getItemId(i)
+		local ilvl = npc:getGearILvl(itemID)
+--		printf("Suibhne Trade Item %i ID: [%i]", i, itemID)
+		if (itemID > 10249 and itemID < 28671 and itemFound == false) then
+			itemToAug = itemID
+			itemFound = true
+--			printf("Suibhne Trade Item to Augment ID: [%i]\n", itemToAug)
+			if (trade:getItem(i):getReqLvl() < 90 or ilvl > 109) then
+				player:PrintToPlayer(string.format("Suibhne : The item to be augmented must be between level 90 and item level 109."),tpz.msg.channel.NS_SAY)
+				return
+			end
+			
+			local itemGearSlot = player:getGearSlot(itemID)
+			
+			-- Check if the traded gear is a Head, Body, Hand, Leg, or Feet piece
+			if (itemGearSlot ~= 4 and itemGearSlot ~= 5 and itemGearSlot ~= 6 and itemGearSlot ~= 7 and itemGearSlot ~= 8) then
+				player:PrintToPlayer(string.format("Suibhne : The item to be augmented must be a Head, Body, Hands, Leg, or Feet piece."),tpz.msg.channel.NS_SAY)
+				return
+			end
+		end
+	end
 	
--- --	printf("Suibhne Trade Item to Augment ID: [%i]\n", itemToAug)
+--	printf("Suibhne Trade Item to Augment ID: [%i]\n", itemToAug)
 	
-	-- -- Checks to see if an augmentable item was found
-	-- if (itemToAug < 10249) then
-		-- player:PrintToPlayer(string.format("Suibhne : You must include a piece of gear in your trade."),tpz.msg.channel.NS_SAY)
-		-- return
-	-- end
+	-- Checks to see if an augmentable item was found
+	if (itemToAug < 10249) then
+		player:PrintToPlayer(string.format("Suibhne : You must include a piece of gear in your trade."),tpz.msg.channel.NS_SAY)
+		return
+	end
 	
-	-- -- Check for required number of Mythril Bell
-    -- if (trade:getItemQty(318) ~= 1) then
-        -- player:PrintToPlayer(string.format("Suibhne : You must include a Crystal Rose in your trade."),tpz.msg.channel.NS_SAY)
-        -- return
-    -- end
+	-- Check for required number of Mythril Bell
+    if (trade:getItemQty(321) ~= 1) then
+        player:PrintToPlayer(string.format("Suibhne : You must include a Mythril Bell in your trade."),tpz.msg.channel.NS_SAY)
+        return
+    end
 	
-	-- -- Check for enough inventory space
-    -- if (player:getFreeSlotsCount() < 1) then
-        -- player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, giveToPlayer[1][1])
-        -- return
-    -- end
+	-- Check for enough inventory space
+    if (player:getFreeSlotsCount() < 1) then
+        player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, giveToPlayer[1][1])
+        return
+    end
 	
-	-- -- Determine augment set based on additional items in trade
-	-- if (trade:hasItemQty(4400, 12)) then -- 12x Land Crab Meat
-		-- augmentList = augments[1]
--- --		player:addItem(4400, 12) -- Returns 12x Land Crab Meat to make testing easier, remove later
-	-- elseif (trade:hasItemQty(894, 12)) then -- 12x Beetle Jaw
-		-- augmentList = augments[2]
--- --		player:addItem(894, 12) -- Returns 12x Beetle Jaw to make testing easier, remove later
-	-- elseif (trade:hasItemQty(918, 12)) then -- 12x Mistletoe
-		-- augmentList = augments[3]
--- --		player:addItem(918, 12) -- Returns 12x Mistletoe to make testing easier, remove later
-	-- elseif (trade:hasItemQty(2506, 12)) then -- 12x Ladybug Wing
-		-- augmentList = augments[4]
--- --		player:addItem(2506, 12) -- Returns 12x Ladybug Wing to make testing easier, remove later
-	-- elseif (trade:hasItemQty(924, 12)) then -- 12x Fiend Blood
-		-- augmentList = augments[5]
--- --		player:addItem(924, 12) -- Returns 12x Fiend Blood to make testing easier, remove later
-	-- elseif not (trade:hasItemQty(4400, 12) or trade:hasItemQty(894, 12) or trade:hasItemQty(918, 12) or trade:hasItemQty(2506, 12) or trade:hasItemQty(924, 12)) then
-		-- player:PrintToPlayer(string.format("Suibhne : You must include 12x Land Crab Meat, 12x Beetle Jaws, 12x Mistletoe, 12x Ladybug Wings, or 12x Fiend Blood."),tpz.msg.channel.NS_SAY)
-        -- return
-	-- end
+	-- Determine augment set based on additional items in trade
+	if (trade:hasItemQty(3275, 4)) then -- 4x Genbu Scrap
+		augmentList = augments[1]
+		player:setCharVar("[Aug]SuibhnePathGenbu_"..itemToAug, 1)
+		-- player:addItem(3275, 4) -- Returns 4x Genbu Scrap to make testing easier, remove later
+	elseif (trade:hasItemQty(3276, 4)) then -- 4x Suzaku Scrap
+		augmentList = augments[3]
+		player:setCharVar("[Aug]SuibhnePathSuzaku_"..itemToAug, 1)
+		-- player:addItem(3276, 4) -- Returns 4x Suzaku Scrap to make testing easier, remove later
+	elseif (trade:hasItemQty(3277, 4)) then -- 4x Seiryu Scrap
+		augmentList = augments[4]
+		player:setCharVar("[Aug]SuibhnePathSeiryu_"..itemToAug, 1)
+		-- player:addItem(3277, 4) -- Returns 4x Seiryu Scrap to make testing easier, remove later
+	elseif (trade:hasItemQty(3278, 4)) then -- 4x Byakko Scrap
+		augmentList = augments[2]
+		player:setCharVar("[Aug]SuibhnePathByakko_"..itemToAug, 1)
+		-- player:addItem(3278, 4) -- Returns 4x Byakko Scrap to make testing easier, remove later
+	elseif not (trade:hasItemQty(3275, 4) or trade:hasItemQty(3276, 4) or trade:hasItemQty(3277, 4) or trade:hasItemQty(3278, 4)) then
+		player:PrintToPlayer(string.format("Suibhne : You must include 4x Byakko Scraps, 4x Genbu Scraps, 4x Seiryu Scraps, or 4x Suzaku Scraps."),tpz.msg.channel.NS_SAY)
+        return
+	end
 	
--- --	player:PrintToPlayer(string.format("Suibhne : Applying augment %i %i %i %i %i %i %i %i!", augmentList[1], augmentList[2], augmentList[3], augmentList[4], augmentList[5], augmentList[6], augmentList[7], augmentList[8]),tpz.msg.channel.NS_SAY)
+--	player:PrintToPlayer(string.format("Suibhne : Applying augment %i %i %i %i %i %i %i %i!", augmentList[1], augmentList[2], augmentList[3], augmentList[4], augmentList[5], augmentList[6], augmentList[7], augmentList[8]),tpz.msg.channel.NS_SAY)
 	
-	-- -- Make the trade	
-    -- player:tradeComplete()
+	-- Make the trade	
+    player:tradeComplete()
 	
-	-- player:addItem(itemToAug, 1, augmentList[1], augmentList[2], augmentList[3], augmentList[4], augmentList[5], augmentList[6], augmentList[7], augmentList[8])
--- --	player:addItem(318, 1) -- Returns a Crystal Rose to make testing easier, remove later
+	player:addItem(itemToAug, 1, augmentList[1], augmentList[2], augmentList[3], augmentList[4], augmentList[5], augmentList[6], augmentList[7], augmentList[8])
+	-- player:addItem(321, 1) -- Returns a Mythril Bell to make testing easier, remove later
 	
-	-- if (itemToAug ~= 0) then
-		-- player:PrintToPlayer(string.format("Suibhne : Here you go! All augmented!"),tpz.msg.channel.NS_SAY)
-		-- player:messageSpecial(ID.text.ITEM_OBTAINED, itemToAug)
-	-- end
+	if (itemToAug ~= 0) then
+		player:PrintToPlayer(string.format("Suibhne : Here you go! All augmented!"),tpz.msg.channel.NS_SAY)
+		player:messageSpecial(ID.text.ITEM_OBTAINED, itemToAug)
+	end
 end
 
 function onTrigger(player,npc)
-	-- player:PrintToPlayer(string.format("Suibhne : Select an augment set from the list below:"),tpz.msg.channel.NS_SAY)
-	-- player:PrintToPlayer(string.format("Suibhne : 12x Land Crab Meat = VIT +1, DEF +3, Enemy Crit Hit Rate -1%%, Enmity +1"),tpz.msg.channel.NS_SAY)
-	-- player:PrintToPlayer(string.format("Suibhne : 12x Beetle Jaws = HP +7, STR +1, ACC +3, ATK +3"),tpz.msg.channel.NS_SAY)
-	-- player:PrintToPlayer(string.format("Suibhne : 12x Mistletoe = MP +7, MND +1, Cure Potency +1%%, EVA +3"),tpz.msg.channel.NS_SAY)
-	-- player:PrintToPlayer(string.format("Suibhne : 12x Ladybug Wings = MP +7, INT +1, MAB +3, EVA +3"),tpz.msg.channel.NS_SAY)
-	-- player:PrintToPlayer(string.format("Suibhne : 12x Fiend Blood = Pet: ATK/RATK +3, Pet: DEF +3, Pet: EVA +3"),tpz.msg.channel.NS_SAY)
-	-- player:PrintToPlayer(string.format("Suibhne : Trade 1 piece of level 91-109 gear, 1 Mythril Bell (furniture), and the item from above."),tpz.msg.channel.NS_SAY)
-	-- player:PrintToPlayer(string.format("Suibhne : Trade me EXACTLY the ingredients requested. Any additional items included will be lost in the trade."),tpz.msg.channel.NS_SAY)
-	player:PrintToPlayer(string.format("Suibhne : I handle the augments for gear between levels 91 and 109! Please bear with me while I am being built."),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Suibhne : Select an augment set from the list below:"),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Suibhne : 4x Genbu Scraps = HP +15, EVA +10, Enemy Crit Hit Rate -2%%, PDT -2%%"),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Suibhne : 4x Byakko Scraps = Crit Hit Rate +2%%, Crit Hit Damage +2%%, ACC +10, Subtle Blow +3"),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Suibhne : 4x Suzaku Scraps = MP +15, MAB +5, Magic Damage +10, MACC +10"),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Suibhne : 4x Seiryu Scraps = Pet: STR/DEX/VIT +5, Pet: Crit Hit Rate +2%%, Pet: Store TP +3"),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Suibhne : Trade 1 piece of level 90-109 Head/Body/Hands/Leg/Feet gear, 1 Mythril Bell (furniture), and the items from above."),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Suibhne : Trade me EXACTLY the ingredients requested. Any additional items included will be lost in the trade."),tpz.msg.channel.NS_SAY)
+--	player:PrintToPlayer(string.format("Suibhne : I handle the augments for gear between levels 91 and 109! Please bear with me while I am being built."),tpz.msg.channel.NS_SAY)
 end
 
 function onEventUpdate(player,csid,option)

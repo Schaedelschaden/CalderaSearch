@@ -67,7 +67,10 @@ function onSpellCast(caster, target, spell)
 	
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
-    caster:addHP(damage)
+	-- Curse II prevents restoring HP
+	if not (caster:hasStatusEffect(20)) then
+		caster:addHP(damage)
+	end
 
     return damage
 end

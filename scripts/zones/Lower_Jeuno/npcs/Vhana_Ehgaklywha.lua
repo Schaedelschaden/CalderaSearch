@@ -30,7 +30,7 @@ function onPath(npc)
         if VanadielHour() < 1 or VanadielHour() >= 5 or point == #LOWER_JEUNO.lampPath then
             npc:clearPath()
             npc:setStatus(tpz.status.DISAPPEAR)
-            npc:speed(0) -- npc:pathStop()
+            npc:speed(0) -- -- npc:pathStop()
         else
             -- if vasha is at one of the lamp points, turn on that lamp.
             -- she reaches the lamps in reverse order of their npcIds, hence (12 - i).

@@ -568,7 +568,8 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
 		PTrust->addModifier(Mod::EVA, (uint16)(mobutils::GetEvasion(PTrust)));
 		PTrust->addModifier(Mod::ATT, (uint16)(mobutils::GetBase(PTrust, PTrust->attRank)));
 		PTrust->addModifier(Mod::ACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank)));
-
+		PTrust->addModifier(Mod::MACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank)));
+		PTrust->addModifier(Mod::MATT, (uint16)(mobutils::GetBase(PTrust, PTrust->attRank / 3)));
 		PTrust->addModifier(Mod::RATT, (uint16)(mobutils::GetBase(PTrust, PTrust->attRank)));
 		PTrust->addModifier(Mod::RACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank)));
 
@@ -589,7 +590,8 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
 		PTrust->addModifier(Mod::EVA, (uint16)(mobutils::GetEvasion(PTrust) * map_config.alter_ego_stat_multiplier));
 		PTrust->addModifier(Mod::ATT, (uint16)(mobutils::GetBase(PTrust, PTrust->attRank) * map_config.alter_ego_stat_multiplier));
 		PTrust->addModifier(Mod::ACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank) * map_config.alter_ego_stat_multiplier));
-
+		PTrust->addModifier(Mod::MACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank)* map_config.alter_ego_stat_multiplier));
+		PTrust->addModifier(Mod::MATT, (uint16)(mobutils::GetBase(PTrust, PTrust->attRank / 3)* map_config.alter_ego_stat_multiplier));
 		PTrust->addModifier(Mod::RATT, (uint16)(mobutils::GetBase(PTrust, PTrust->attRank) * map_config.alter_ego_stat_multiplier));
 		PTrust->addModifier(Mod::RACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank) * map_config.alter_ego_stat_multiplier));
 
@@ -597,7 +599,16 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
 		PTrust->addModifier(Mod::MEVA, (uint16)(mobutils::GetMagicEvasion(PTrust) * map_config.alter_ego_stat_multiplier));
 	}
 	
-
+	// Job specific mods
+	if (mJob == JOB_BLM)
+	{
+		PTrust->addModifier(Mod::ENMITY, (uint16)(mLvl * -0.84));
+	}
+	else if (mJob == JOB_PLD)
+	{
+		PTrust->addModifier(Mod::ENMITY, (uint16)(mLvl * 0.84));
+	}
+	
     // Add traits for sub and main
     battleutils::AddTraits(PTrust, traits::GetTraits(mJob), mLvl);
     battleutils::AddTraits(PTrust, traits::GetTraits(sJob), sLvl);

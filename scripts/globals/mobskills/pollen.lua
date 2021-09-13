@@ -22,6 +22,11 @@ function onMobWeaponSkill(target, mob, skill)
     end
 
     potency = potency - math.random(0, potency/4)
+	
+	-- Chasmic Hornet's healing capability is scaled down
+	if (mob:getID() == 17318451) then
+		potency = (math.random(3, 6))
+	end
 
     skill:setMsg(tpz.msg.basic.SELF_HEAL)
 

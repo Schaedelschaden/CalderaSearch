@@ -31,8 +31,9 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
 
     if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
-        params.ftp100 = 1 params.ftp200 = 1 params.ftp300 = 1
-        params.dex_wsc = 0.7 + (player:getMerit(tpz.merit.BLADE_SHUN) / 100)
+        params.ftp100 = 11 params.ftp200 = 11 params.ftp300 = 11
+		params.dex_wsc = 0.85
+--        params.dex_wsc = 0.7 + (player:getMerit(tpz.merit.BLADE_SHUN) / 100)
     end
 
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)

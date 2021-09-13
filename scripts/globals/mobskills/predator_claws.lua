@@ -20,7 +20,7 @@ function onMobWeaponSkill(target, mob, skill)
 	
 				-- Adjust Trial Wind Garuda's damage
 	if (mob:getID() == 17600513) then
-		dmgmod = 3
+		dmgmod = 2.545
 	end
 	
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_ACC_VARIES, 1, 2, 3)

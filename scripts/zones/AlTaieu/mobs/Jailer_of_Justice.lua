@@ -8,10 +8,10 @@ require("scripts/globals/magic");
 
 function onMobSpawn(mob)
 	mob:setMobLevel(120)
-	mob:addMod(tpz.mod.ATT, math.random(125, 275))
-	mob:addMod(tpz.mod.DEF, math.random(475, 650))
+	mob:addMod(tpz.mod.ATT, math.random(25, 175))
+	mob:addMod(tpz.mod.DEF, math.random(275, 450))
 	mob:addMod(tpz.mod.MDEF, math.random(75, 125))
-	mob:addMod(tpz.mod.EVA, math.random(350, 475))
+	mob:addMod(tpz.mod.EVA, math.random(150, 275))
 end
 
 function onMobFight(mob, target)

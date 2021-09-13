@@ -31,7 +31,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.multiHitfTP = true
 
     if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
-        params.ftp100 = 0.71875 params.ftp200 = 1.5 params.ftp300 = 2.25
+        params.ftp100 = 1.50 params.ftp200 = 1.75 params.ftp300 = 2.00
         params.str_wsc = 0.7 + (player:getMerit(tpz.merit.RESOLUTION) / 100)
     end
 

@@ -19,6 +19,7 @@ function onBattlefieldRegister(player, battlefield)
 end
 
 function onBattlefieldEnter(player, battlefield)
+	player:delKeyItem(tpz.ki.CELESTIAL_NEXUS_PHANTOM_GEM)
 end
 
 function onBattlefieldLeave(player, battlefield, leavecode)
@@ -42,6 +43,6 @@ function onEventFinish(player, csid, option)
             player:addTitle(tpz.title.BURIER_OF_THE_ILLUSION)
             player:setCharVar("ZilartStatus", 0)
         end
-        player:setPos(0, -18, 137, 64, 251) -- Hall of the Gods
+        -- player:setPos(0, -18, 137, 64, 251) -- Hall of the Gods
     end
 end

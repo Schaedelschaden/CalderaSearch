@@ -22,7 +22,7 @@ function onBattlefieldLeave(player, battlefield, leavecode)
         local arg8 = (player:hasCompletedMission(TOAU, tpz.mission.id.toau.PUPPET_IN_PERIL)) and 1 or 0
         player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 1, battlefield:getLocalVar("[cs]bit"), arg8)
     elseif leavecode == tpz.battlefield.leaveCode.LOST then
-        player:startEvent(32002)
+        player:startEvent(32002) --So I think we need to force the mission value to 1 to skip CS. Trying to find a work around for the CS, but if you disable it.....maybe hard code a warp out
     end
 end
 

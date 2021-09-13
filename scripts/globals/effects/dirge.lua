@@ -26,6 +26,8 @@ function onEffectGain(target, effect)
 		target:addMod(tpz.mod.CHR, setBonus)
 	end
 	
+	target:addMod(tpz.mod.ENMITY, -effect:getPower())
+	
 	effect:setPower(power)
 end
 
@@ -34,6 +36,8 @@ end
 
 function onEffectLose(target, effect)
 	local power = effect:getPower()
+	
+	target:delMod(tpz.mod.ENMITY, -effect:getPower())
 	
 	if (setBonus > 0) then
 		target:delMod(tpz.mod.CHR, setBonus)

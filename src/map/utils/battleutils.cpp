@@ -62,6 +62,7 @@
 #include "../items.h"
 #include "../item_container.h"
 #include "../items/item_weapon.h"
+#include "../items/item_equipment.h"
 #include "../packets/pet_sync.h"
 #include "../packets/char_sync.h"
 #include "../packets/position.h"
@@ -419,6 +420,7 @@ namespace battleutils
 
     int32 CalculateEnspellDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 Tier, uint8 element) {
         int32 damage = 0;
+		int8 enmityDmgMitigation = 0;
 
         //Tier 1 enspells have their damaged pre-calculated AT CAST TIME and is stored in Mod::ENSPELL_DMG
         if (Tier == 1)
@@ -507,6 +509,24 @@ namespace battleutils
         else if (resvar <= half)
             resist = 0.5f;
 
+		// Add -% Damage Taken from the "Mitigates damage taken based on enmity" item stat
+		if (PDefender->objtype == TYPE_PC && PAttacker->objtype == TYPE_MOB && PDefender->getMod(Mod::ENMITY_MITIGATES_DMG) > 0)
+		{
+			int32 currentEnmity = ((CMobEntity*)PAttacker)->PEnmityContainer->GetCE(PDefender) + ((CMobEntity*)PAttacker)->PEnmityContainer->GetVE(PDefender);
+			enmityDmgMitigation = currentEnmity / 5000;
+			
+			if (enmityDmgMitigation < 2)
+			{
+				enmityDmgMitigation = 2;
+			}
+			else if (enmityDmgMitigation > 10)
+			{
+				enmityDmgMitigation = 10;
+			}
+			
+			PDefender->addModifier(Mod::ENMITY_MITIGATES_DMG_DT, -enmityDmgMitigation);
+		}
+
         if (PAttacker->objtype == TYPE_PC)
         {
             CItemEquipment* waist = ((CCharEntity*)PAttacker)->getEquip(SLOT_WAIST);
@@ -536,6 +556,12 @@ namespace battleutils
         damage = (int32)(damage * resist);
         damage = (int32)(damage * dBonus);
         damage = MagicDmgTaken(PDefender, damage, (ELEMENT)(element + 1));
+
+		// Reverse the -% Damage Taken from the "Mitigates damage taken based on enmity" item stat
+		if (enmityDmgMitigation > 0)
+		{
+			PDefender->delModifier(Mod::ENMITY_MITIGATES_DMG_DT, -enmityDmgMitigation);
+		}
 
         if (damage > 0)
         {
@@ -1664,7 +1690,7 @@ namespace battleutils
 		} */
 		
 		// Distance Correction/Penalty
-		if (PAttacker->objtype == TYPE_PC)
+/* 		if (PAttacker->objtype == TYPE_PC)
         {
 			float rangedDistance = distance(PAttacker->loc.p, PDefender->loc.p);
 			float distanceCorrection = 0;
@@ -1686,7 +1712,7 @@ namespace battleutils
 			}
 			
 //			printf("battleutils.cpp GetRangedDamageRatio 13 DISTANCE CORRECTION - RANGED DISTANCE: [%1.1f]  DISTANCE CORRECTION: [%1.2f] pDIF: [%1.4f]\n\n", rangedDistance, distanceCorrection, pdif);
-		}
+		} */
 
         return pdif;
     }
@@ -1744,6 +1770,7 @@ namespace battleutils
 
         float check = (float)(base + diff);
         uint8 meritReduction = 0;
+		uint8 summonSpellInterrupt = 0;
 
         if (PDefender->objtype == TYPE_PC) { //Check player's skill.
             //For mobs, we can assume their skill is capped at their level, so this term is 1 anyway.
@@ -1774,8 +1801,13 @@ namespace battleutils
             //apply any merit reduction
             meritReduction = ((CCharEntity*)PDefender)->PMeritPoints->GetMeritValue(MERIT_SPELL_INTERUPTION_RATE, (CCharEntity*)PDefender);
         }
+		
+		if ((SKILLTYPE)PSpell->getSkillType() == SKILL_SUMMONING_MAGIC)
+		{
+			summonSpellInterrupt = (uint8)PDefender->getMod(Mod::SMN_SPELLINTERRUPT);
+		}
 
-        float interruptRate = ((float)((100.0f - (meritReduction + (float)PDefender->getMod(Mod::SPELLINTERRUPT))) / 100.0f));
+        float interruptRate = ((float)((100.0f - (meritReduction + (float)PDefender->getMod(Mod::SPELLINTERRUPT) + (float)summonSpellInterrupt)) / 100.0f));
         check *= interruptRate;
         uint8 chance = tpzrand::GetRandomNumber(100);
 
@@ -2062,6 +2094,25 @@ namespace battleutils
         {
             damageType = (DAMAGETYPE)(weapon ? weapon->getDmgType() : 0);
 			int32 CounterDMG = 0;
+			int8 enmityDmgMitigation = 0;
+			
+			// Add -% Damage Taken from the "Mitigates damage taken based on enmity" item stat
+			if (PDefender->objtype == TYPE_PC && PAttacker->objtype == TYPE_MOB && PDefender->getMod(Mod::ENMITY_MITIGATES_DMG) > 0)
+			{
+				int32 currentEnmity = ((CMobEntity*)PAttacker)->PEnmityContainer->GetCE(PDefender) + ((CMobEntity*)PAttacker)->PEnmityContainer->GetVE(PDefender);
+				enmityDmgMitigation = currentEnmity / 5000;
+				
+				if (enmityDmgMitigation < 2)
+				{
+					enmityDmgMitigation = 2;
+				}
+				else if (enmityDmgMitigation > 10)
+				{
+					enmityDmgMitigation = 10;
+				}
+				
+				PDefender->addModifier(Mod::ENMITY_MITIGATES_DMG_DT, -enmityDmgMitigation);
+			}
 			
 			if (isCounter && PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_PERFECT_COUNTER))
 			{
@@ -2136,6 +2187,12 @@ namespace battleutils
 					damage = PhysicalDmgTaken(PDefender, damage, damageType, isCovered);
 				}
             }
+			
+			// Reverse the -% Damage Taken from the "Mitigates damage taken based on enmity" item stat
+			if (enmityDmgMitigation > 0)
+			{
+				PDefender->delModifier(Mod::ENMITY_MITIGATES_DMG_DT, -enmityDmgMitigation);
+			}
 
             //absorb mods are handled in the above functions, but they do not affect counters
             //this is a little hacky, but will work for now
@@ -2796,7 +2853,7 @@ namespace battleutils
 			
 			hitrate += static_cast<int32>(std::floor((attackerAcc - PDefender->EVA()) / 2));
 			
-/* 			if (PAttacker->objtype == TYPE_PC || PAttacker->objtype == TYPE_PET)
+/*  			if (PAttacker->objtype == TYPE_MOB)//(PAttacker->objtype == TYPE_PC || PAttacker->objtype == TYPE_PET)
 			{
 				printf("battleutils.cpp GetHitRateEx ATTACKER BASE ACC: [%i]  DEFENDER EVA: [%i]  BASE HIT RATE: [%i]\n", attackerAcc, PDefender->EVA(), hitrate);
 			} */
@@ -2809,6 +2866,8 @@ namespace battleutils
             // This includes Escha/Reisenjima and the new Dynamis zones
             // (Not a post Adoulin Zone) && (Not Legion_A)
 			bool shouldApplyLevelCorrection = (zoneId < 256) && (zoneId != 183);
+
+			int16 dLvl = 0;
 
             if (shouldApplyLevelCorrection)
 			{
@@ -2828,7 +2887,7 @@ namespace battleutils
 					}
 				}
 				
-                int16 dLvl = defenderMLvl - attackerMLvl;
+                dLvl = defenderMLvl - attackerMLvl;
                 // Skip penalties for avatars, this should likely be all pets and mobs but I have no proof
                 // of this for ACC, ATT level correction for Pets/Avatars is the same as mobs though.
                 bool isPet = PAttacker->objtype == TYPE_PET;
@@ -2879,10 +2938,17 @@ namespace battleutils
 
             hitrate = std::clamp(hitrate, 20, maxHitRate);
 			
-/* 			if (PAttacker->objtype == TYPE_PC || PAttacker->objtype == TYPE_PET)
+			if (PAttacker->objtype == TYPE_PC) // || PAttacker->objtype == TYPE_PET)
+/* 			if (PAttacker->objtype == TYPE_MOB) */
 			{
-				printf("battleutils.cpp GetHitRateEx MELEE FINAL HIT RATE: [%i]  ATTACKER NAME: [%s]\n\n", hitrate, PAttacker->GetName());
-			} */
+				CCharEntity* PChar = (CCharEntity*)PAttacker;
+				int8 auditHitRate = charutils::GetCharVar(PChar, "AuditHitRate");
+				
+				if (auditHitRate == 1)
+				{
+					printf("battleutils.cpp GetHitRateEx BASE ACC: [%i]  ENEMY EVA: [%i]  LVL DIFF: [%i]  MELEE FINAL HIT RATE: [%i]  ATTACKER NAME: [%s]\n", attackerAcc, PDefender->EVA(), dLvl, hitrate, PAttacker->GetName());
+				}
+			}
         }
         return static_cast<uint8>(hitrate);
     }
@@ -3026,7 +3092,7 @@ namespace battleutils
 				mainWeapon = (mainWeapon - 99) / 2;
 			}
 		}
-		if (PChar->getEquip(SLOT_SUB) && PChar->getEquip(SLOT_SUB)->isType(ITEM_WEAPON))
+		if (PChar->getEquip(SLOT_SUB) && (PChar->getEquip(SLOT_SUB)->isType(ITEM_WEAPON) || PChar->getEquip(SLOT_SUB)->isType(ITEM_EQUIPMENT)))
 		{
 			subWeapon = PChar->m_Weapons[SLOT_SUB]->getILvl();
 			if (subWeapon > 0)
@@ -3061,9 +3127,14 @@ namespace battleutils
 		if (PChar->getEquip(SLOT_BODY) && PChar->getEquip(SLOT_BODY)->isType(ITEM_EQUIPMENT))
 		{
 			equipBody = PChar->getEquip(SLOT_BODY)->getILvl();
+			CItemEquipment* armorBody = PChar->getEquip(SLOT_BODY);
 			if (equipBody > 0)
 			{
 				equipBody = (equipBody - 99) / 10;
+				if (armorBody->getRemoveSlotId() > 0)
+				{
+					equipBody = equipBody * 2;
+				}
 			}
 		}
 		if (PChar->getEquip(SLOT_HANDS) && PChar->getEquip(SLOT_HANDS)->isType(ITEM_EQUIPMENT))
@@ -3460,6 +3531,99 @@ namespace battleutils
         // Multiply the final result by x1.00 ~ x1.05 to randomize
         return pDIF * tpzrand::GetRandomNumber(1.0f, 1.05f);
     }
+
+    /************************************************************************
+    *   Check to apply Treasure Hunter based on player attacks or abilities *
+    ************************************************************************/
+	
+	void ApplyTreasureHunter(CBattleEntity* PAttacker, CBattleEntity* PDefender, actionTarget_t* Action, bool triggerEffect)
+	{
+		CMobEntity* PMob = (CMobEntity*)PDefender;
+		bool triggerProc = false;
+		int16 maxBase = 4;
+		int16 maxTH = 12;
+		int16 THLvl = 0;
+		int16 currentMobTH = PMob->m_THLvl;
+		int16 proc = tpzrand::GetRandomNumber(100);
+		
+		if (PAttacker->objtype == TYPE_PC)
+		{
+			CCharEntity* PChar = (CCharEntity*)PAttacker;
+			
+			uint8 mJob = PChar->GetMJob();
+			THLvl = PChar->getMod(Mod::TREASURE_HUNTER);
+			int16 meritFeint = PChar->PMeritPoints->GetMeritValue(MERIT_FEINT, PChar);
+			int16 procChance = std::clamp((THLvl + (THLvl - currentMobTH)) / 2, 1, 8);
+			
+			// https://www.bg-wiki.com/ffxi/Treasure_Hunter
+			// TH can go to a maximum level of 14 for THF, 12 for all other jobs
+			if (mJob == JOB_THF)
+			{
+				maxBase = 8;
+				maxTH = 14;
+			}
+			
+			// Sneak Attack and Trick Attack increase the chance of a proc
+			if (PChar->GetLocalVar("SneakAttack_Active") == 1 || PChar->GetLocalVar("TrickAttack_Active") == 1)
+			{
+				procChance *= 10;
+				PChar->SetLocalVar("SneakAttack_Active", 0);
+				PChar->SetLocalVar("TrickAttack_Active", 0);
+			}
+			
+			// Feint merits increase the chance of a proc on the player's next attack after activating Feint
+			if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_FEINT))
+			{
+				procChance = (int16)(procChance * (1 + (meritFeint / 100.0f)));
+			}
+			
+			// If the mob hasn't been tagged with TH or the mob has been tagged with TH less
+			// than the maxBase and someone has higher TH then apply the maxBase
+			if (THLvl > 0 && currentMobTH < maxBase && currentMobTH < THLvl)
+			{
+				PMob->m_THLvl = std::clamp<int16>(THLvl, 1, maxBase);
+				triggerProc = true;
+			}
+			// If the mob has been tagged with the maxBase but someone has higher TH check for proc
+			else if (THLvl > 0 && currentMobTH > 0 && currentMobTH < maxTH && currentMobTH < THLvl && proc <= procChance)
+			{
+				PMob->m_THLvl = currentMobTH + 1;
+				triggerProc = true;
+			}
+		}
+		else if (PAttacker->objtype == TYPE_PET)
+		{
+			CPetEntity* PPet = (CPetEntity*)PAttacker;
+			
+			THLvl = PPet->getMod(Mod::TREASURE_HUNTER);
+			
+			if (currentMobTH < THLvl)
+			{
+				PMob->m_THLvl = THLvl;
+				triggerProc = true;
+			}
+		}
+		else if (PAttacker->objtype == TYPE_TRUST)
+		{
+			CTrustEntity* PTrust = (CTrustEntity*)PAttacker;
+			
+			THLvl = PTrust->getMod(Mod::TREASURE_HUNTER);
+			
+			if (currentMobTH < THLvl)
+			{
+				PMob->m_THLvl = THLvl;
+				triggerProc = true;
+			}
+		}
+		
+		// Melee and ranged attacks trigger an additional effect animation and message
+		if (triggerEffect && triggerProc == true)
+		{
+			Action->additionalEffect = SUBEFFECT_LIGHT_DAMAGE;
+			Action->addEffectMessage = 603;
+			Action->addEffectParam = PMob->m_THLvl;
+		}
+	}
 
     /************************************************************************
     *   Formula for Strength                                                *
@@ -5334,14 +5498,37 @@ namespace battleutils
 
     int32 BreathDmgTaken(CBattleEntity* PDefender, int32 damage)
     {
+		int32 damageTaken = PDefender->getMod(Mod::DMG);
+		int32 enmityDmgMitigation = PDefender->getMod(Mod::ENMITY_MITIGATES_DMG_DT);
+		int32 breathSDT = PDefender->getMod(Mod::SDT_BREATH);
+		
+		if (PDefender->getMod(Mod::COVER_DT) > 0 && PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_COVER))
+		{
+			damageTaken += PDefender->getMod(Mod::COVER_DT);
+		}
+		
+		float barrierTuskReduction = 0;
         float resist = 1.0f + floor( 256.0f * ( PDefender->getMod(Mod::UDMGBREATH) / 100.0f )  ) / 256.0f;
         resist = std::max<float>(resist, 0);
         damage = (int32)(damage * resist);
 
         resist = 1.0f + ( floor( 256.0f * ( PDefender->getMod(Mod::DMGBREATH) / 100.0f ) ) / 256.0f )
-                      + ( floor( 256.0f * ( PDefender->getMod(Mod::DMG)       / 100.0f ) ) / 256.0f );
-        resist = std::clamp(resist, 0.5f, 1.5f); //assuming if its floored at .5f its capped at 1.5f but who's stacking +dmgtaken equip anyway???
+                      + ( floor( 256.0f * ( damageTaken                       / 100.0f ) ) / 256.0f )
+					  + ( floor( 256.0f * ( enmityDmgMitigation               / 100.0f ) ) / 256.0f );
+        resist = std::clamp(resist, 0.5f, 1.5f); //assuming if its floored at .5f its capped at 1.5f but who's stacking +dmgtaken equip anyway??? (DRK's XD)
+		
         damage = (int32)(damage * resist);
+		
+		// Barrier Tusk bypasses the -50% DT cap and provides -15% DT when under -50% DT or -7.5% DT at cap
+		auto PEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_PHALANX);
+		if (PEffect && PEffect->GetSubPower() == 1)
+		{
+			barrierTuskReduction = 0.15f * resist;
+			damage -= (int32)(damage * barrierTuskReduction);
+		}
+
+		// Handle Specific Damage Taken (SDT)
+		damage -= (int32)(damage * (floor(256.0f * (breathSDT / 100.0f)) / 256.0f));
 
         if (tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::ABSORB_DMG_CHANCE))
             damage = -damage;
@@ -5357,23 +5544,47 @@ namespace battleutils
     }
 
     int32 MagicDmgTaken(CBattleEntity* PDefender, int32 damage, ELEMENT element)
-    {		
+    {
         Mod absorb[8] = { Mod::FIRE_ABSORB, Mod::ICE_ABSORB, Mod::WIND_ABSORB, Mod::EARTH_ABSORB, Mod::LTNG_ABSORB, Mod::WATER_ABSORB, Mod::LIGHT_ABSORB, Mod::DARK_ABSORB };
         Mod nullarray[8] = { Mod::FIRE_NULL, Mod::ICE_NULL, Mod::WIND_NULL, Mod::EARTH_NULL, Mod::LTNG_NULL, Mod::WATER_NULL, Mod::LIGHT_NULL, Mod::DARK_NULL };
 		Mod sdt[8] = { Mod::SDT_FIRE, Mod::SDT_ICE, Mod::SDT_WIND, Mod::SDT_EARTH, Mod::SDT_LIGHTNING, Mod::SDT_WATER, Mod::SDT_LIGHT, Mod::SDT_DARK };
+		
+		int32 damageTaken = PDefender->getMod(Mod::DMG);
+		int32 enmityDmgMitigation = PDefender->getMod(Mod::ENMITY_MITIGATES_DMG_DT);
+		int32 magicSDT = PDefender->getMod(Mod::SDT_MAGIC);
+		
+		if (PDefender->getMod(Mod::COVER_DT) > 0 && PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_COVER))
+		{
+			damageTaken += PDefender->getMod(Mod::COVER_DT);
+		}
 
 //		printf("battleutils.cpp MagicDmgTaken ELEMENT: [%i]  ABSORB: [%i]\n", element, PDefender->getMod(absorb[element - 1]));
 //		printf("battleutils.cpp MagicDmgTaken ELEMENT: [%i]  SDT: [%i]  DAMAGE: [%i]\n", element, PDefender->getMod(sdt[element - 1]), damage);
 
+		float barrierTuskReduction = 0;
         float resist = 1.f + PDefender->getMod(Mod::UDMGMAGIC) / 100.f;
         resist = std::max(resist, 0.f);
         damage = (int32)(damage * resist);
 
-        resist = 1.f + PDefender->getMod(Mod::DMGMAGIC) / 100.f + PDefender->getMod(Mod::DMG) / 100.f;
+        resist = 1.f + PDefender->getMod(Mod::DMGMAGIC) / 100.f + damageTaken / 100.f + enmityDmgMitigation / 100.f;
         resist = std::max(resist, 0.5f);
+		
         resist += PDefender->getMod(Mod::DMGMAGIC_II) / 100.f;
         resist = std::max(resist, 0.125f); // Total cap with MDT-% II included is 87.5%
+		
         damage = (int32)(damage * resist);
+		
+		// Barrier Tusk bypasses the -50% DT cap and provides -15% DT when under -50% DT or -7.5% DT at cap
+		auto PEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_PHALANX);
+		if (PEffect && PEffect->GetSubPower() == 1)
+		{
+			barrierTuskReduction = 0.15f * resist;
+			damage -= (int32)(damage * barrierTuskReduction);
+		}
+		
+		// Handle Specific Damage Taken (SDT)
+		damage -= (int32)(damage * (magicSDT / 100.f));
+		
 		damage -= PDefender->getMod(Mod::ONE_FOR_ALL_EFFECT);
 
         if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_STEAM_JACKET) > 1)
@@ -5430,16 +5641,37 @@ namespace battleutils
 
     int32 PhysicalDmgTaken(CBattleEntity* PDefender, int32 damage, int16 damageType, bool IsCovered)
     {
+		int32 damageTaken = PDefender->getMod(Mod::DMG);
+		int32 enmityDmgMitigation = PDefender->getMod(Mod::ENMITY_MITIGATES_DMG_DT);
+		int32 physicalSDT = PDefender->getMod(Mod::SDT_PHYS);
 		
+		if (PDefender->getMod(Mod::COVER_DT) > 0 && PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_COVER))
+		{
+			damageTaken += PDefender->getMod(Mod::COVER_DT);
+		}
+		
+		float barrierTuskReduction = 0;
         float resist = 1.f + PDefender->getMod(Mod::UDMGPHYS) / 100.f;
         resist = std::max(resist, 0.f);
         damage = (int32)(damage * resist);
 
-        resist = 1.f + PDefender->getMod(Mod::DMGPHYS) / 100.f + PDefender->getMod(Mod::DMG) / 100.f;
+        resist = 1.f + PDefender->getMod(Mod::DMGPHYS) / 100.f + damageTaken / 100.f + enmityDmgMitigation / 100.f;
         resist = std::max(resist, 0.5f); // PDT caps at -50%
+		
         resist += PDefender->getMod(Mod::DMGPHYS_II) / 100.f; // Add Burtgang reduction after 50% cap. Extends cap to -68%
 		
         damage = (int32)(damage * resist);
+		
+		// Barrier Tusk bypasses the -50% DT cap and provides -15% DT when under -50% DT or -7.5% DT at cap
+		auto PEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_PHALANX);
+		if (PEffect && PEffect->GetSubPower() == 1)
+		{
+			barrierTuskReduction = 0.15f * resist;
+			damage -= (int32)(damage * barrierTuskReduction);
+		}
+		
+		// Handle Specific Damage Taken (SDT)
+		damage -= (int32)(damage * (physicalSDT / 100.f));
 
         if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_STEAM_JACKET) > 0)
             damage = HandleSteamJacket(PDefender, damage, damageType);
@@ -5462,7 +5694,7 @@ namespace battleutils
 			if (PDefender->getMod(Mod::CONVERT_DMG_TO_TP) > 0)
 			{
 				int16 absorbedTP = static_cast<int16>(damage * (float)(PDefender->getMod(Mod::CONVERT_DMG_TO_TP) / 100.0));
-				printf("battleutils.cpp PhysicalDmgTaken CONVERT DMG TO TP: [%i]\n", absorbedTP);
+//				printf("battleutils.cpp PhysicalDmgTaken CONVERT DMG TO TP: [%i]\n", absorbedTP);
 				PDefender->addTP(absorbedTP);
 			}
 
@@ -5474,13 +5706,35 @@ namespace battleutils
 
     int32 RangedDmgTaken(CBattleEntity* PDefender, int32 damage, int16 damageType, bool IsCovered)
     {
+		int32 damageTaken = PDefender->getMod(Mod::DMG);
+		int32 enmityDmgMitigation = PDefender->getMod(Mod::ENMITY_MITIGATES_DMG_DT);
+		int32 rangedSDT = PDefender->getMod(Mod::SDT_RANGED);
+		
+		if (PDefender->getMod(Mod::COVER_DT) > 0 && PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_COVER))
+		{
+			damageTaken += PDefender->getMod(Mod::COVER_DT);
+		}
+		
+		float barrierTuskReduction;
         float resist = 1.0f + PDefender->getMod(Mod::UDMGRANGE) / 100.f;
         resist = std::max(resist, 0.f);
         damage = (int32)(damage * resist);
 
-        resist = 1.0f + PDefender->getMod(Mod::DMGRANGE) / 100.f + PDefender->getMod(Mod::DMG) / 100.f;
+        resist = 1.0f + PDefender->getMod(Mod::DMGRANGE) / 100.f + damageTaken / 100.f + enmityDmgMitigation / 100.f;
         resist = std::max(resist, 0.5f);
+		
         damage = (int32)(damage * resist);
+		
+		// Barrier Tusk bypasses the -50% DT cap and provides -15% DT when under -50% DT or -7.5% DT at cap
+		auto PEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_PHALANX);
+		if (PEffect && PEffect->GetSubPower() == 1)
+		{
+			barrierTuskReduction = 0.15f * resist;
+			damage -= (int32)(damage * barrierTuskReduction);
+		}
+		
+		// Handle Specific Damage Taken (SDT)
+		damage -= (int32)(damage * (rangedSDT / 100.f));
 
         if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_STEAM_JACKET) > 0)
             damage = HandleSteamJacket(PDefender, damage, damageType);

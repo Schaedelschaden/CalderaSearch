@@ -22,5 +22,11 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 2.0
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, MOBPARAM_3_SHADOW)
+	
+	-- Keesha Poppo usually resets enmity
+	if (mob:getID() == 17318453 and math.random() <= 50) then
+		mob:resetEnmity(target)
+	end
+	
     return dmg
 end

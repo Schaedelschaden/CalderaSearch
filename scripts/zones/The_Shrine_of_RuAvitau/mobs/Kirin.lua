@@ -17,20 +17,22 @@ end
 function onMobSpawn(mob)
 	mob:setMod(tpz.mod.WINDRES, -64)
     mob:setMod(tpz.mod.SILENCERES, 35)
-    mob:setMod(tpz.mod.STUNRES, 35)
+	mob:setMod(tpz.mod.PETRIFYRES, 85)
+    mob:setMod(tpz.mod.STUNRES, 85)
     mob:setMod(tpz.mod.BINDRES, 35)
     mob:setMod(tpz.mod.GRAVITYRES, 35)
     -- mob:setMod(tpz.mod.HPP, 300)
 	mob:setMod(tpz.mod.DMGPHYS, -25)
 	mob:setMod(tpz.mod.DMGRANGE, -25)
 	mob:setMod(tpz.mod.DMGMAGIC, -30)
-	mob:addMod(tpz.mod.ACC, 500)
+--	mob:addMod(tpz.mod.ACC, 500)
+--	mob:addMod(tpz.mod.EVA, 100)
 	mob:addMod(tpz.mod.MACC, 500)
-	mob:addMod(tpz.mod.MEVA, 500)
-	mob:addMod(tpz.mod.MDEF, 15)
+--	mob:addMod(tpz.mod.MEVA, 300)
+--	mob:addMod(tpz.mod.MDEF, 15)
 	-- mob:addMod(tpz.mod.EARTHATT, 500)
 	-- mob:addMod(tpz.mod.EARTHACC, 1000)
-	mob:addMod(tpz.mod.MATT, 200)
+	mob:addMod(tpz.mod.MATT, 100)
 	-- mob:addStatusEffect(tpz.effect.REGEN, 500, 3, 0)
 	mob:addMod(tpz.mod.REFRESH, 25)
 	mob:setLocalVar("numAdds", 90) -- Based off Kirin's HPP now. Spawns first "pet" at 90% HP
@@ -80,6 +82,10 @@ function onMobFight( mob, target )
 end
 
 function onAdditionalEffect(mob, target, damage)
+	params = {}
+	params.power = 300
+	params.chance = 100
+
     return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENSTONE)
 end
 

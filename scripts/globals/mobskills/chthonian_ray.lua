@@ -16,7 +16,9 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.DOOM
 
-    skill:setMsg(MobStatusEffectMove(mob, target, 0.2, 0.75, typeEffect, 10, 3, 30))
+	if (target:isFacing(mob)) then
+		skill:setMsg(MobStatusEffectMove(mob, target, 0.2, 0.75, typeEffect, 10, 3, 30))
+	end
 
     return typeEffect
 end

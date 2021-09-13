@@ -205,12 +205,14 @@ end
 
 function onPlayerLevelUp(player)
 --	player:PrintToPlayer("Congratulations!");
-	mainLvl = player:getMainLvl();
+	mainLvl = player:getMainLvl()
 	
 	if mainLvL == 98 then
-		player:PrintToPlayer("Removing !regen buffs.");
-		player:delStatusEffect(tpz.effect.REGEN);
-		player:delStatusEffect(tpz.effect.REFRESH);
+		player:PrintToPlayer("Removing !regen buffs.")
+		player:delStatusEffect(tpz.effect.REGEN)
+		player:delStatusEffect(tpz.effect.REFRESH)
+		
+		player:setCharVar("RegenCommand", 0)
 	end
 end
 

@@ -42,6 +42,13 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 32001 then
+		local KCAA = {"KillCounter_AAHM", "KillCounter_AATT", "KillCounter_AAMT", "KillCounter_AAEV", "KillCounter_AAGK"}
+		
+		for i = 1, #KCAA do
+			local killCounter = player:getCharVar(KCAA[i])
+			player:setCharVar(KCAA[i], killCounter + 1)
+		end
+		
         if player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.DIVINE_MIGHT) == QUEST_ACCEPTED then
             player:setCharVar("DivineMight", 2) -- Used to use 2 to track completion, so that's preserved to maintain compatibility
             for i = tpz.ki.SHARD_OF_APATHY, tpz.ki.SHARD_OF_RAGE do

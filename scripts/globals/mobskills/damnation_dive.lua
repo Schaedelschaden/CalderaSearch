@@ -32,8 +32,14 @@ function onMobWeaponSkill(target, mob, skill)
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
     local typeEffect = tpz.effect.STUN
+	local duration = 4
 
-    MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 1, 0, 4)
+	if (mob:isNM()) then
+		duration = 8
+		mob:resetEnmity(target)
+	end
+
+    MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 1, 0, duration)
 
     return dmg
 end

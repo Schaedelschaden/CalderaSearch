@@ -20,17 +20,17 @@ function onMobSkillCheck(target, mob, skill)
     local mobhp = mob:getHPP()
     local phase = mob:getLocalVar("battlePhase")
 
-    if ((skillList == 729 and phase < 4) or (skillList == 728 and mobhp < 20)) then
-        if mob:getLocalVar("nuclearWaste") == 0 then
+    if ((skillList == 729 and phase < 4) or (skillList == 728 and mobhp <= 20)) then
+--        if mob:getLocalVar("nuclearWaste") == 0 then
             return 0
-        end
+--        end
     end
 
     return 1
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local dmgmod = 2.5
+    local dmgmod = 3.0
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*3, tpz.magic.ele.LIGHT, dmgmod, TP_MAB_BONUS, 1)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.LIGHT, MOBPARAM_IGNORE_SHADOWS)
 

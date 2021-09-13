@@ -70,6 +70,9 @@ function onTrigger(player, npc)
             player:startEvent(256)
         end
     end
+	
+	player:PrintToPlayer(string.format("Ranpi-Monpi : I'll provide Advanced Cooking Support to you at any time!"),tpz.msg.channel.NS_SAY)
+	player:addStatusEffect(tpz.effect.COOKING_IMAGERY, 3, 0, 480)
 end
 
 function onEventUpdate(player, csid, option)

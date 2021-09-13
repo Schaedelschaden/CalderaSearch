@@ -14,4 +14,6 @@ end
 function onEffectLose(target,effect)
     target:levelRestriction(0)
     target:disableLevelSync()
+	target:delStatusEffect(tpz.effect.REGEN)
+	target:delStatusEffect(tpz.effect.REFRESH)
 end

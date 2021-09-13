@@ -1,24 +1,39 @@
 -----------------------------------
 -- Area: Balga's Dais
---  Mob: Wyrm
+-- Mob: Wyrm
 -- KSNM: Early Bird Catches the Wyrm
 -- For future reference: Trusts are not allowed in this fight 
 -----------------------------------
-require("scripts/globals/status")
+require("scripts/globals/mobs")
+-----------------------------------
 
 function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
+	mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1) -- has a bug during flight, like Tiamat
     mob:setTP(3000) -- opens fight with a skill
-	mob:setMod(tpz.mod.DMGMAGIC, -50)
-	mob:setMod(tpz.mod.STUNRES, 1000)
-	mob:addMod(tpz.mod.MACC, 800)
+	mob:setMod(tpz.mod.STUNRES, 100)
+	mob:setMod(tpz.mod.SILENCERES, 100)
+--	mob:addMod(tpz.mod.ADDITIONAL_EFFECT, 1)
+--  mob:setMod(tpz.mod.DMGMAGIC, -0)
+	mob:setMod(tpz.mod.STUNRES, 100)
+--	mob:addMod(tpz.mod.EVA, 100)
+	mob:addMod(tpz.mod.MEVA, 100)
+	-- mob:addMod(tpz.mod.MACC, 900)
 	mob:addMod(tpz.mod.MATT, 350)
-	mob:addMod(tpz.mod.MEVA, 250)
-	mob:addMod(tpz.mod.MDEF, 250)
+	mob:addMod(tpz.mod.MDEF, 75)
+	mob:addMod(tpz.mod.REGEN, 100)
 	mob:addMod(tpz.mod.REFRESH, 100)
+end
+
+function onAdditionalEffect(mob, target, damage)
+	params = {}
+	params.power = 200
+	params.chance = 100
+	
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENFIRE, params)
 end
 
 function onMobEngaged(mob, target)
@@ -92,8 +107,6 @@ end
 		mob:delMod(tpz.mod.DMGMAGIC, -50)
     end
 end
-
-
 
 function onMobDeath(mob, player, isKiller)
 end

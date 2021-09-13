@@ -253,7 +253,7 @@ local function setCasketData(player, x, y, z, r, npc, partyID, mobLvl)
             npc:setLocalVar("[caskets]HINTS_TABLE", 1234567)
         else
             npc:setLocalVar("[caskets]LOCKED", 0)
-            npc:setLocalVar("[caskets]LOOT_TYPE", 1)
+            npc:setLocalVar("[caskets]LOOT_TYPE", math.random(3))
         end
 
         npc:setLocalVar("[caskets]SPAWNSTATUS", casketInfo.spawnStatus.SPAWNED_CLOSED)
@@ -323,11 +323,18 @@ local function messageChest(player, messageString, param1, param2, param3, param
         msg = ID.text.PLAYER_OBTAINS_TEMP_ITEM
     end
 
-    for _, member in pairs(player:getAlliance()) do
-        if member:getZoneID() == player:getZoneID() then
-            member:messageName(msg, player, param1, param2, param3, param4, nil)
-        end
-    end
+--	if (player:getParty() ~= nil) then
+--		printf("caskets.lua messageChest ALLIANCE MESSAGE")
+		for _, member in pairs(player:getAlliance()) do
+			if member:getZoneID() == player:getZoneID() then
+				member:messageName(msg, player, param1, param2, param3, param4, nil)
+			end
+		end
+--	else
+--		printf("caskets.lua messageChest SOLO MESSAGE")
+--		player:messageSpecial(msg, param1)
+--		player:messageName(msg, player, param1, param2, param3, param4, nil)
+--	end
 end
 
 ----------------------------------------------------------------------------------
@@ -620,7 +627,7 @@ local function giveItem(player, npc, itemNum)
                     if player:addItem(itemID) then
                         messageChest(player, "PLAYER_OBTAINS_ITEM", itemID, 0, 0, 0)
                         npc:setLocalVar(itemQuery, 0)
-                         checkItemChestIsEmpty(npc)
+                        checkItemChestIsEmpty(npc)
                     end
                 end
             end
@@ -653,7 +660,7 @@ tpz.caskets.onTrigger = function(player, npc)
     -- Basic chest var's
     ------------------------------------------------------------------
     local chestId           = npc:getID()                             -- ID of the chest
-    local itemType          = npc:getLocalVar("[caskets]LOOT_TYPE")   -- Type: 1 Temps, 2 Items.
+    local itemType          = npc:getLocalVar("[caskets]LOOT_TYPE")   -- Type: 1 Temps, 2 Items, 3 Experience Points.
     local locked            = npc:getLocalVar("[caskets]LOCKED")      -- enter two-digit combination (10~99).
     local chestOwner        = npc:getLocalVar("[caskets]PARTYID")     -- the id of the party that has rights to the chest.
     local leaderId          = player:getLeaderID()
@@ -702,6 +709,23 @@ tpz.caskets.onTrigger = function(player, npc)
                 getChestItem(npc, 3),
                 getChestItem(npc, 4),
                 0, 0, 0, 0)
+		elseif itemType == 3 then            -- experience
+			local mobLvl = npc:getLocalVar("[caskets]MOBLVL")
+			local bonusExp = (mobLvl * 12.5) / EXP_RATE
+			local playerZone = player:getZoneID()
+			local party = player:getParty()
+			
+			if (party ~= nil) then
+				for i, member in ipairs(party) do
+					if (member:getZoneID() == playerZone) then
+						member:addExp(bonusExp)
+					end
+				end
+			end
+			
+			removeChest(npc)
+		
+--          player:startEvent(unlockedEvent)
         end
     end
 end
@@ -983,6 +1007,8 @@ tpz.caskets.onEventFinish = function(player, csid, option, npc)
             elseif option == 65540 then
                 giveItem(player, npc, 4)
             end
+		elseif lootType == 3 then
+            removeChest(npc)
         end
     end
 end

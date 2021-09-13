@@ -48,9 +48,9 @@ function onEffectLose(target, effect)
 	if ((RuneCounter == 0) and (target:getMod(tpz.mod.ENSPELL) == 6)) then
 		target:setMod(tpz.mod.ENSPELL, 0)
 		target:setMod(tpz.mod.ENSPELL_DMG, 0)
-		target:setMod(tpz.mod.FIRERES, 0)
 	else
 		target:delMod(tpz.mod.ENSPELL_DMG, effect:getPower() * 1.25)
-		target:delMod(tpz.mod.FIRERES, effect:getPower())
 	end
+	
+	target:delMod(tpz.mod.FIRERES, effect:getPower())
 end

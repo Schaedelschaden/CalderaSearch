@@ -31,6 +31,11 @@ function onSpellCast(caster, target, spell)
     else
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
+	
+	-- Irrlicht resets hate of affected targets
+	if (caster:getID() == 17318454) then
+		caster:resetEnmity(target)
+	end
 
     return params.effect
 end

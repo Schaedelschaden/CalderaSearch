@@ -29,51 +29,52 @@ function onTrigger(player, npc)
 	
 	local stock =
     {
-		638, 82,		-- Sprig of Sage
-		5299, 74,		-- Dish of Salsa
-		4389, 16,		-- San d'Orian Carrot
-		610, 30,		-- Bag of San d'Orian Flour
-		4431, 38,		-- Bunch of San d'Orian Grapes
-		4392, 16,		-- Saruta Orange
-		4447, 406,		-- Scream Fungus
-		615, 44,		-- Stick of Selbina Butter
-		4378, 30,		-- Jug of Selbina Milk
-		1840, 900,		-- Bag of Semolina
-		5237, 176,		-- Bundle of Shirataki
-		5236, 766,		-- Clump of Shungiku
-		2236, 154,		-- Bag of Simsim
-		1981, 194,		-- Skull Locust
-		4374, 50,		-- Sleepshroom
-		5668, 640,		-- Smilodon Liver
-		1984, 804,		-- Snapping Mole
-		2710, 388,		-- Bundle of Soba Noodles
-		4565, 30,		-- Sobbing Fungus
-		5232, 60,		-- Jug of Soy Milk
-		2111, 80,		-- Saucer of Soy Stock
-		1776, 400,		-- Serving of Spaghetti
-		1471, 380,		-- Box of Sticky Rice
-		4460, 138,		-- Block of Stone Cheese
-		4505, 48,		-- Handful of Sunflower Seeds
-		620, 30,		-- Box of Tarutaru Rice
-		4412, 184,		-- Thundermelon
-		1554, 280,		-- Onz of Turmeric
-		5703, 166,		-- Jug of Uleguerand Milk
-		2112, 142,		-- Stick of Vanilla
-		5661, 624,		-- Walnut
-		4602, 1020,		-- Warm Egg
-		4491, 100,		-- Watermelon
-		5562, 60,		-- Pot of White Honey
-		4597, 40,		-- Wild Melon
-		4387, 144,		-- Wild Onion
-		4596, 30,		-- Bunch of Wild Pamamas
-		4598, 22,		-- Wild Pineapple
-		635, 8,			-- Clump of Windurstian Tea Leaves
+		638, 111,		-- Sprig of Sage
+		5299, 111,		-- Dish of Salsa
+		4389, 24,		-- San d'Orian Carrot
+		610, 45,		-- Bag of San d'Orian Flour
+		4431, 57,		-- Bunch of San d'Orian Grapes
+		4392, 24,		-- Saruta Orange
+		4447, 609,		-- Scream Fungus
+		615, 45,		-- Stick of Selbina Butter
+		4378, 45,		-- Jug of Selbina Milk
+		1840, 1200,		-- Bag of Semolina
+		5237, 264,		-- Bundle of Shirataki
+		5236, 1149,		-- Clump of Shungiku
+		2236, 231,		-- Bag of Simsim
+		1981, 291,		-- Skull Locust
+		4374, 75,		-- Sleepshroom
+		5668, 960,		-- Smilodon Liver
+		1984, 123,		-- Snapping Mole
+		2710, 582,		-- Bundle of Soba Noodles
+		4565, 45,		-- Sobbing Fungus
+		5232, 90,		-- Jug of Soy Milk
+		9197, 840,		-- Bowl of Soy-based Ramen Soup
+		2111, 120,		-- Saucer of Soy Stock
+		1776, 900,		-- Serving of Spaghetti
+		1471, 570,		-- Box of Sticky Rice
+		4460, 207,		-- Block of Stone Cheese
+		4505, 72,		-- Handful of Sunflower Seeds
+		620, 45,		-- Box of Tarutaru Rice
+		4412, 276,		-- Thundermelon
+		1554, 420,		-- Onz of Turmeric
+		5703, 246,		-- Jug of Uleguerand Milk
+		2112, 213,		-- Stick of Vanilla
+		5661, 936,		-- Walnut
+		4602, 1500,		-- Warm Egg
+		4491, 150,		-- Watermelon
+		5562, 90,		-- Pot of White Honey
+		4597, 60,		-- Wild Melon
+		4387, 234,		-- Wild Onion
+		4596, 45,		-- Bunch of Wild Pamamas
+		4598, 33,		-- Wild Pineapple
+		635, 12,			-- Clump of Windurstian Tea Leaves
 		5907, 200,		-- Winterflower
-		4373, 430,		-- Woozyshroom
-		4445, 22,		-- Yagudo Cherry
-		5575, 408,		-- Bowl of Yogurt
-		5581, 400,		-- Slice of Ziz Meat
-		5726, 252,		-- Zucchini
+		4373, 645,		-- Woozyshroom
+		4445, 33,		-- Yagudo Cherry
+		5575, 612,		-- Bowl of Yogurt
+		5581, 600,		-- Slice of Ziz Meat
+		5726, 378,		-- Zucchini
 	}
 	
 	tpz.shop.general(player, stock)

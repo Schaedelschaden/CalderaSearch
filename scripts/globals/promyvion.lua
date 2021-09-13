@@ -109,9 +109,24 @@ tpz.promyvion.receptacleOnDeath = function(mob, isKiller)
         if stream:getLocalVar("[promy]floorExit") == 1 then
             randomizeFloorExit(ID, floor)
             local events = ID.npc.MEMORY_STREAMS[streamId][7]
-            local event = events[math.random(#events)]
+			local pickEvent = 1
+			
+			-- Force Floor 2 Memory Receptacles to alternate between which side the warp deposits players on
+			if (#events > 1) then
+				local zoneID = mob:getZoneID()
+				local lastEventPicked = GetServerVariable("[promy]LastEventPicked"..zoneID)
+--				printf("promyvion.lua receptacleOnDeath LAST EVENT PICKED: [%i]", lastEventPicked)
+				if (lastEventPicked == 1) then
+					pickEvent = 2
+				else
+					pickEvent = 1
+				end
+				SetServerVariable("[promy]LastEventPicked"..zoneID, pickEvent)
+			end
+			
+            local event = events[pickEvent]
             stream:setLocalVar("[promy]destination", event)
-            stream:openDoor(180)
+            stream:openDoor(90)
         end
     end
 end

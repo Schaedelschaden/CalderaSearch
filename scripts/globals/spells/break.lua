@@ -8,7 +8,12 @@ require("scripts/globals/status")
 -----------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
-    return 0
+    -- Bloodeye Vileberry cannot cast Break while above 50% HP
+	if (caster:isMob() and caster:getHPP() >= 50 and caster:getID() == 16839068 or caster:getID() == 16839071 or caster:getID() == 16839074) then
+		return 1
+	else
+		return 0
+	end
 end
 
 function onSpellCast(caster, target, spell)

@@ -29,7 +29,7 @@ function onMobWeaponSkill(target, mob, skill)
         return typeEffect
     end
 
-    local msg = MobStatusEffectMove(mob, target, typeEffect, 0, 3, 150)
+    local msg = MobStatusEffectMove(mob, target, typeEffect, 1, 3, 90)
     if (msg == tpz.msg.basic.SKILL_ENFEEB_IS) then
         mob:charm(target)
     end

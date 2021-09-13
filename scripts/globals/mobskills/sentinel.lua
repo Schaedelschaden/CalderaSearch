@@ -11,5 +11,6 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     target:addEnmity(mob, 1, 1800)
-    skill:setMsg(tpz.msg.basic.NONE)
+	mob:addStatusEffect(tpz.effect.SENTINEL, 90, 3, 30)
+--    skill:setMsg(tpz.msg.basic.NONE)
 end

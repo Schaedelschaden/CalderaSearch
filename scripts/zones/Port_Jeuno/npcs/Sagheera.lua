@@ -244,7 +244,12 @@ local highTierKIs = {
 	[4] = {trade = {956}, reward = 2474}, -- Lilac -> Phantom Gem of Cowardice
 	[5] = {trade = {957}, reward = 2475}, -- Amaryllis -> Phantom Gem of Rage
 	[6] = {trade = {948}, reward = 2472}, -- Carnation -> Phantom Gem of Arrogance
-	[7] = {trade = {957}, reward = 2468}, -- Amaryllis -> Shadow Lord Phantom Gem
+	[7] = {trade = {1524}, reward = 2468}, -- Pinch of Fresh Mugwort -> Shadow Lord Phantom Gem
+	[8] = {trade = {2960}, reward = 2987}, -- Water Lily -> Feared One Phantom Gem
+	[9] = {trade = {959}, reward = 2546}, -- Dahlia -> Warriors Path Phantom Gem
+	[10] = {trade = {1120}, reward = 2545}, -- Casablanca -> Savages Phantom Gem
+	[11] = {trade = {1413}, reward = 2924}, -- Cattleya -> Waking the Beast Phantom Gem
+	[12] = {trade = {2713}, reward = 2469}, -- Dyer's Woad -> Celestial Nexus Phantom Gem
 }
 
 -----------------------------------
@@ -290,18 +295,24 @@ function onTrade(player, npc, trade)
     local afUpgrade = player:getCharVar("AFupgrade")
 	
 	local lastHighTierKITrade = {
-		"Stellar_Fulcrum_TIME",
+		"Gem_StellarFulcrum_TIME",
 		"Gem_Envy_TIME",
 		"Gem_Apathy_TIME",
 		"Gem_Cowardice_TIME",
 		"Gem_Rage_TIME",
-		"Gem_Arrogance_TIME"
+		"Gem_Arrogance_TIME",
+		"Gem_ShadowLord_TIME",
+		"Gem_FearedOne_TIME",
+		"Gem_WarriorsPath_TIME",
+		"Gem_Savages_TIME",
+		"Gem_WakingTheBeast_TIME",
+		"Gem_CelestialNexus_TIME",
 	}
 	
 	local tradedCombo = 0
 	
 	-- Check for High Tier KI Trades
-	if tradedCombo == 0 then
+	if tradedCombo == 0 and player:getCharVar("KillCounter_Kirin") >= 1 and player:getCharVar("KillCounter_JailofLove") >= 1 then
 		for k, v in pairs(highTierKIs) do
 			if npcUtil.tradeHasExactly(trade, v.trade) then
 				tradedCombo = k
@@ -319,7 +330,7 @@ function onTrade(player, npc, trade)
 		player:addKeyItem(reward)
 		player:messageSpecial(ID.text.KEYITEM_OBTAINED, reward)
 		player:setCharVar(lastHighTierKITrade[tradedCombo], os.time() + 86400)
-	elseif (player:hasKeyItem(highTierKIs[tradedCombo].reward)) then
+	elseif (player:hasKeyItem(reward)) then
 		player:messageSpecial(ID.text.CANNOT_OBTAIN_MORE)
 	else
 		local timeRemaining = ((player:getCharVar(lastHighTierKITrade[tradedCombo]) - os.time()) / 60)

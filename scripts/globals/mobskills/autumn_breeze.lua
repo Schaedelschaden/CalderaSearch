@@ -25,6 +25,10 @@ function onMobWeaponSkill(target, mob, skill)
     carabosse : 100-250 ish (lowest lv mob of the 3)
     ]]
     local heal = math.random(100, 400)
+	
+	if (mob:isNM()) then
+		heal = mob:getMaxHP() * 0.01
+	end
 
     skill:setMsg(tpz.msg.basic.SELF_HEAL)
 

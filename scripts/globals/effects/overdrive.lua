@@ -4,6 +4,7 @@
 --
 -----------------------------------
 require("scripts/globals/status")
+require("scripts/globals/utils")
 
 function onEffectGain(target, effect)
     target:addMod(tpz.mod.OVERLOAD_THRESH, 5000)
@@ -31,7 +32,9 @@ function onEffectLose(target, effect)
     target:delMod(tpz.mod.OVERLOAD_THRESH, 5000)
     local pet = target:getPet()
     if pet and pet:getLocalVar("overdrive") ~= 0 then
+--		target:removeAllManeuvers()
         pet:setLocalVar("overdrive", 0)
+--		target:removeAllManeuvers()
         pet:delMod(tpz.mod.HASTE_MAGIC, 2500)
         pet:delMod(tpz.mod.MAIN_DMG_RATING, 30)
         pet:delMod(tpz.mod.RANGED_DMG_RATING, 30)

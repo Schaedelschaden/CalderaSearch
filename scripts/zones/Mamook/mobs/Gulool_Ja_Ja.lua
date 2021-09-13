@@ -5,7 +5,6 @@
 require("scripts/globals/titles")
 require("scripts/globals/status")
 local ID = require("scripts/zones/Mamook/IDs")
-mixins = {require("scripts/mixins/job_special")}
 
 -----------------------------------
 
@@ -16,14 +15,14 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.SLOWRES, 35)
     mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 17)
 	mob:setMod(tpz.mod.ATT, 1200)
-	mob:setMod(tpz.mod.MATT, 600)
-    mob:setMod(tpz.mod.ACC, 500)
+	mob:setMod(tpz.mod.MATT, 170)
+    -- mob:setMod(tpz.mod.ACC, 500)
 	mob:setMod(tpz.mod.MACC, 500)
-    mob:setMod(tpz.mod.EVA, 450)
-	mob:setMod(tpz.mod.DEF, 800)
-	mob:setMod(tpz.mod.MEVA, 200)
-	mob:setMod(tpz.mod.MDEF, 100)
-	mob:setMod(tpz.mod.DOUBLE_ATTACK, 100)
+    -- mob:setMod(tpz.mod.EVA, 1000)
+	-- mob:setMod(tpz.mod.DEF, 800)
+	-- mob:setMod(tpz.mod.MEVA, 200)
+	-- mob:setMod(tpz.mod.MDEF, 100)
+	mob:setMod(tpz.mod.DOUBLE_ATTACK, 40)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 2)
 end
 

@@ -15,12 +15,12 @@ local path =
 }
 
 function onSpawn(npc)
-    npc:initNpcPathing(path[1][1], path[1][2], path[1][3])
-    onPath(npc)
+--    npc:initNpcPathing(path[1][1], path[1][2], path[1][3])
+--    onPath(npc)
 end
 
 function onPath(npc)
-    tpz.path.general(npc, path, tpz.path.flag.WALLHACK, false)
+--    tpz.path.general(npc, path, tpz.path.flag.WALLHACK, false)
 end
 
 function onTrade(player,npc,trade)
@@ -28,12 +28,12 @@ end
 
 function onTrigger(player,npc)
     player:startEvent(706)
-    npc:pathStop()
+--    npc:pathStop()
 end
 
 function onEventUpdate(player,csid,option)
 end
 
 function onEventFinish(player,csid,option,npc)
-    npc:pathResume()
+    -- npc:pathResume()
 end

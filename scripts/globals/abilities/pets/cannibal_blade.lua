@@ -15,8 +15,8 @@ end
 function onPetAbility(target, automaton, skill, master, action)
     local params = {
         numHits = 1,
-        atkmulti = 20.0,
-        accBonus = 1000,
+        atkmulti = 1.0,
+        accBonus = 10,
         weaponDamage = automaton:getSkillLevel(tpz.skill.AUTOMATON_MELEE),
         weaponType = tpz.skill.SWORD,
         ftp100 = 0.25,
@@ -41,9 +41,9 @@ function onPetAbility(target, automaton, skill, master, action)
     if USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.weaponDamage = nil
         params.mnd_wsc = 1.0
-        params.ftp100 = 16.0
-        params.ftp200 = 23.5
-        params.ftp300 = 31.5
+        params.ftp100 = 2.0
+        params.ftp200 = 4.0
+        params.ftp300 = 6.0
     end
 
     if automaton:checkDistance(target) > 7 then

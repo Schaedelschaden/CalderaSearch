@@ -53,5 +53,18 @@ function onUseAbility(player, target, ability)
 --	player:removeAllRunes()
     target:addStatusEffect(tpz.effect.LIEMENT, 1, 0, duration)
 	
+	local party = player:getParty()
+	local mob = player:getTarget()
+	
+	for i, v in ipairs(party) do
+		if (v:hasStatusEffect(tpz.effect.LIEMENT) and mob ~= nil) then
+			local currentCE = mob:getCE(player)
+			local currentVE = mob:getVE(player)
+			printf("liement.lua OnUseAbility  CE: [%i]  VE: [%i]", currentCE, currentVE)
+			mob:setCE(player, currentCE + 450)
+			mob:setVE(player, currentVE + 900)
+		end
+	end
+	
 	return tpz.effect.LIEMENT
 end

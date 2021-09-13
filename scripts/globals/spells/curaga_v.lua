@@ -22,22 +22,26 @@ function onSpellCast(caster, target, spell)
         divisor = 2.667
         constant = 814--this is too powerful and needs to be fixed when the rest of the curaga 5 numbers are determined
     end
+	
+	local final
 
-    local final = getCureFinal(caster, spell, getBaseCureOld(power, divisor, constant), minCure, false)
+	if isValidHealTarget(caster, target) then -- e.g. is a PC and not a monster (?)
+		final = getCureFinal(caster, spell, getBaseCureOld(power, divisor, constant), minCure, false)
 
-    final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD)/100))
+		final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD)/100))
 
-    --Applying server mods....
-    final = final * CURE_POWER
+		--Applying server mods....
+		final = final * CURE_POWER
 
-    local diff = (target:getMaxHP() - target:getHP())
-    if (final > diff) then
-        final = diff
-    end
-    target:restoreHP(final)
-    target:wakeUp()
+		local diff = (target:getMaxHP() - target:getHP())
+		if (final > diff) then
+			final = diff
+		end
+		target:restoreHP(final)
+		target:wakeUp()
 
-    caster:updateEnmityFromCure(target, final)
+		caster:updateEnmityFromCure(target, final)
+	end
 
     spell:setMsg(tpz.msg.basic.AOE_HP_RECOVERY)
 

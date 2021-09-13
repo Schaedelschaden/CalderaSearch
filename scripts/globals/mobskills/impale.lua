@@ -23,6 +23,15 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 3.5
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local shadows = info.hitslanded
+	
+	-- if (mob:getID() == 17957301 or mob:getID() == 17957302) then
+		-- local typeEffect = tpz.effect.PARALYSIS
+		-- local numhits = 1
+		-- local accmod = 2
+		-- local dmgmod = 5
+		-- local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
+		-- local shadows = info.hitslanded
+	-- end
 
     if mob:isMobType(MOBTYPE_NOTORIOUS) then
         shadows = MOBPARAM_IGNORE_SHADOWS

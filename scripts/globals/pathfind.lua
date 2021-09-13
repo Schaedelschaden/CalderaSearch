@@ -115,8 +115,8 @@ tpz.path =
             local length = tpz.path.length(points)
             local currentLength = 0
             local i = 51
-
-            while(i <= length) do
+			
+            while (i <= length) do
                 if npc:atPoint(tpz.path.get(points, i)) then
                     npc:pathThrough(tpz.path.fromStart(points, i), flags)
                     break

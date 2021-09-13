@@ -27,6 +27,11 @@ function AvatarPhysicalMove(avatar, target, skill, numberofhits, accmod, dmgmod,
     local hitdiff = 0
     local hitrate = 75
     local firsthit = 0
+	
+	-- apply TP ACC bonus
+    if tpeffect == TP_ACC_BONUS then
+        finaldmg = acc * avatarFTP(skill:getTP(), mtp100, mtp200, mtp300)
+    end
 
     hitdiff = hitrate + math.floor(acc - eva)
     firsthit = hitrate + math.floor(firstacc - eva)
@@ -268,7 +273,7 @@ function AvatarFinalAdjustments(dmg, mob, skill, target, skilltype, skillparam, 
 		local multBloodBoon = master:getMod(tpz.mod.AUGMENT_BLOOD_BOON) / 5
 		local dmgBoost = 1 + ((multBloodBoon * 25) / 100)
 		
-		dmg = finaldmg * dmgBoost
+		dmg = dmg * dmgBoost
 		master:setLocalVar("BloodBoonActivated", 0)
 	end
 	

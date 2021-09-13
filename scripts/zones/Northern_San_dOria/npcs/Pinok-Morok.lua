@@ -18,55 +18,55 @@ end
 function onTrigger(player,npc)
     local stock =
     {
-        1229, 600,   -- Adaman Nugget
-        646, 1300,   -- Adaman Ore
-        675, 1400,   -- Adaman Scales
-        4058, 1800,  -- Bismuth Ore
-		1232, 260,   -- Bronze Nugget
-        672, 60,     -- Bronze Scales
-        1230, 35,    -- Copper Nugget
-        640, 2,      -- Copper Ore
-        645, 1500,   -- Darksteel Ore
-		2000, 2000,  -- Dark Adaman
-        1989, 748,   -- Dark Bronze
-        1773, 1400,  -- Dark Scales
-        1228, 400,   -- Dst. Nugget
-        756, 2900,   -- Durium Ore
-		2764, 354,   -- Dweomer Steel
-        1287,4290,   -- Frigid Core
-        1654, 300,   -- Igneous Rock
-        1284, 3000,  -- Inferno Core
-        2823, 2010,  -- Iridium
-		1234, 100,   -- Iron Nugget
-        643, 200,    -- Iron Ore
-        1155, 250,   -- Iron Sand
-        674, 1500,   -- Iron Scales 
-        2006, 340,   -- Iyo Scale
-		685, 1400,   -- Khroma Ore
-        2711, 300,   -- Khroma Nugget
-        1703, 400,   -- Kunwu Ore
-        1681, 380,   -- Light Steel
-        2135, 650,   -- Lucent Steel
-		2134, 600,   -- Lucent Iron
-        1285, 3280,  -- Luminous Core
-        2886, 430,   -- Mildewy Ingot
-        647, 1000,   -- Molybdenum Ore
-        2531, 300,   -- Obsidian
-		2860, 500,   -- Plumbago
-        1466, 1000,  -- Relic Iron
-        1467, 7000,  -- Relic Steel
-        4023, 540,   -- Snowsteel Ore
-        1286, 1810,  -- Spirit Core
-		1235, 150,   -- Steel Nugget
-        676, 2000,   -- Steel Scales
-        2763, 900,   -- Swamp Ore
-        657, 1030,   -- Tama-Hagane
-        641, 40,     -- Tin Ore
-		4020, 100,   -- Titanium Ore
-        2303, 2300,  -- Tr. Brz. Sheet
-        3447, 2500,  -- Voidwrought Plate
-        1469, 300,   -- Wootz Ore
-        2144, 30,    -- Workshop Anvil
+		1229, 3334,		-- Adaman Nugget
+		646, 10000,		-- Adaman Ore
+		675, 4536,		-- Adaman Scales
+		4058, 2826,		-- Bismuth Ore
+		1232, 36,		-- Bronze Nugget
+		672, 78,		-- Bronze Scales
+		1230, 33,		-- Copper Nugget
+		640, 9,			-- Copper Ore
+		645, 1425,		-- Darksteel Ore
+		2000, 4242,		-- Dark Adaman
+		1989, 1170,		-- Dark Bronze
+		1773, 2910,		-- Dark Scales
+		1228, 639,		-- Dst. Nugget
+		756, 3675,		-- Durium Ore
+		2764, 3120,		-- Dweomer Steel
+		1287, 6240,		-- Frigid Core
+		1654, 540,		-- Igneous Rock
+		1284, 6054,		-- Inferno Core
+		2823, 4194,		-- Iridium
+		1234, 225,		-- Iron Nugget
+		643, 450,		-- Iron Ore
+		1155, 237,		-- Iron Sand
+		674, 3213,		-- Iron Scales
+		2006, 2958,		-- Iyo Scale
+		685, 2175,		-- Khroma Ore
+		2711, 705,		-- Khroma Nugget
+		1703, 1050,		-- Kunwu Ore
+		1681, 2298,		-- Light Steel
+		2135, 984,		-- Lucent Steel
+		2134, 984,		-- Lucent Iron
+		1285, 6240,		-- Luminous Core
+		2886, 612,		-- Mildewy Ingot
+		647, 15000,		-- Molybdenum Ore
+		2531, 561,		-- Obsidian
+		2860, 1320,		-- Plumbago
+--		1466, 795,		-- Relic Iron
+		1467, 15900,	-- Relic Steel
+		4023, 237,		-- Snowsteel Ore
+		1286, 6240,		-- Spirit Core
+		1235, 270,		-- Steel Nugget
+		676, 4200,		-- Steel Scales
+		2763, 1440,		-- Swamp Ore
+		657, 2712,		-- Tama-Hagane
+		641, 30,		-- Tin Ore
+		4020, 237,		-- Titanium Ore
+		2303, 4044,		-- Tr. Brz. Sheet
+--		3447, 15699,	-- Voidwrought Plate
+--		1469, 795,		-- Wootz Ore
+		2144, 57,		-- Workshop Anvil
     }
 
     tpz.shop.general(player, stock)

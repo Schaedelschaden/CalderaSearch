@@ -39,7 +39,7 @@ function onMobWeaponSkill(target, mob, skill)
 
     dmg = dmg * 2.5
 	
-	local targetMaxHP = target:getMaxHP() - 1
+	local targetMaxHP = target:getMaxHP() * 0.5
 	
 	if (dmg > targetMaxHP) then
 		dmg = targetMaxHP

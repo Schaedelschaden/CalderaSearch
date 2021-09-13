@@ -36,13 +36,13 @@ function onTrigger(player,npc)
 
     if (DampScroll == QUEST_AVAILABLE and player:getFameLevel(NORG) >= 3 and mLvl >= 10 and player:hasItem(1210) == true) then
         player:startEvent(31,1210) -- Start the quest
-        npc:pathStop()
+        -- npc:pathStop()
     elseif (DampScroll == QUEST_ACCEPTED) then
         player:startEvent(32) -- Reminder Dialogue
-        npc:pathStop()
+        -- npc:pathStop()
     else
         player:startEvent(85)
-        npc:pathStop()
+        -- npc:pathStop()
     end
 end
 
@@ -54,5 +54,5 @@ function onEventFinish(player,csid,option,npc)
         player:addQuest(OUTLANDS,tpz.quest.id.outlands.SECRET_OF_THE_DAMP_SCROLL)
     end
 
-    npc:pathResume()
+    -- npc:pathResume()
 end

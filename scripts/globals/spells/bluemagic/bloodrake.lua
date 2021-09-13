@@ -32,7 +32,7 @@ function onSpellCast(caster, target, spell)
 		params.spellFamily = tpz.ecosystem.DEMON
 		params.attbonus = 75 -- 75% Attack boost
         params.numhits = 3
-        params.multiplier = 5.00 -- 1.00
+        params.multiplier = 50.00 -- 1.00
         params.tp150 = 6.50 -- 1.1375
         params.tp300 = 8.00 -- ???
         params.azuretp = 10.00 -- ???
@@ -51,7 +51,10 @@ function onSpellCast(caster, target, spell)
 	if (target:isUndead()) then
 		return damage
 	else
-		caster:addHP(damage)
+		-- Curse II prevents restoring HP
+		if not (caster:hasStatusEffect(20)) then
+			caster:addHP(damage)
+		end
 	end
 	
     return damage

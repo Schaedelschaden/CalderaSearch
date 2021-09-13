@@ -1897,7 +1897,10 @@ void CStatusEffectContainer::TickRegen(time_point tick)
         int16 poison = m_POwner->getMod(Mod::REGEN_DOWN);
         int16 refresh = m_POwner->getMod(Mod::REFRESH) - m_POwner->getMod(Mod::REFRESH_DOWN);
         int16 regain = m_POwner->getMod(Mod::REGAIN) - m_POwner->getMod(Mod::REGAIN_DOWN);
-        m_POwner->addHP(regen);
+		if (!m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_CURSE_II))
+		{
+			m_POwner->addHP(regen);
+		}
 
         if (poison)
         {
@@ -1960,7 +1963,10 @@ void CStatusEffectContainer::TickRegen(time_point tick)
         }
         else
         {
-            m_POwner->addMP(refresh);
+			if (!m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_CURSE_II))
+			{
+				m_POwner->addMP(refresh);
+			}
         }
 
         m_POwner->addTP(regain);

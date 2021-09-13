@@ -6,7 +6,7 @@
 mixins = {require("scripts/mixins/job_special")}
 -----------------------------------
 function onMobInitialize(mob)
-	mob:setMod(tpz.mod.ACC, 400)
+	-- mob:setMod(tpz.mod.ACC, 400)
 	mob:setMod(tpz.mod.Double_ATTACK, 15)
 	end
 

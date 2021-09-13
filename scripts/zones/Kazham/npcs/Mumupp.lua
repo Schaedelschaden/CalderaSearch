@@ -60,10 +60,10 @@ function onTrade(player,npc,trade)
         if progress == 2 or failed == 3 then
             if goodtrade then
                 player:startEvent(221)
-                npc:pathStop()
+                -- npc:pathStop()
             elseif badtrade then
                 player:startEvent(231)
-                npc:pathStop()
+                -- npc:pathStop()
             end
         end
     end
@@ -78,17 +78,17 @@ function onTrigger(player,npc)
     if (OpoOpoAndIStatus == QUEST_ACCEPTED) then
         if retry >= 1 then -- has failed on future npc so disregard previous successful trade
             player:startEvent(199)
-            npc:pathStop()
+            -- npc:pathStop()
         elseif (progress == 2 or failed == 3) then
                 player:startEvent(209)  -- asking for ten of coins
-                npc:pathStop()
+                -- npc:pathStop()
         elseif (progress >= 3 or failed >= 4) then
             player:startEvent(244) -- happy with ten of coins
-            npc:pathStop()
+            -- npc:pathStop()
         end
     else
         player:startEvent(199)
-        npc:pathStop()
+        -- npc:pathStop()
     end
 end
 
@@ -110,5 +110,5 @@ function onEventFinish(player,csid,option,npc)
         player:setCharVar("OPO_OPO_RETRY",3)
     end
 
-    npc:pathResume()
+    -- npc:pathResume()
 end

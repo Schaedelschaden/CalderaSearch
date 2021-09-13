@@ -44,7 +44,7 @@ function onUseAbility(player,target,ability,action)
     local stolen = 0
 
     if (player:getMainJob() == tpz.job.THF) then
-        thfLevel = player:getMainLvl()
+        thfLevel = player:getMainLvl() + player:getItemLevel()
     else
         thfLevel = player:getSubLvl()
     end

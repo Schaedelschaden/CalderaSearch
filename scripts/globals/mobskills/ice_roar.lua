@@ -12,7 +12,7 @@ require("scripts/globals/monstertpmoves")
 
 function onMobSkillCheck(target, mob, skill)
 
-    if (mob:getZoneID() == 135 or mob:getZoneID() == 111) then
+    if (mob:getZoneID() == 135 or mob:getZoneID() == 111 or mob:getZoneID() == 132) then
         return 0
     end
 
@@ -24,6 +24,5 @@ function onMobWeaponSkill(target, mob, skill)
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg() * 4, tpz.magic.ele.ICE, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.ICE, MOBPARAM_IGNORE_SHADOWS)
 
-    
     return dmg
 end

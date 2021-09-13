@@ -25,10 +25,10 @@ function onUseAbility(pet, target, skill, action)
         pet:delStatusEffect(tpz.effect.MAGIC_ATK_BOOST)
     end
 
-    local gear = master:getMod(tpz.mod.WYVERN_BREATH)/256 -- Master gear that enhances breath
+    local gear = 1 + (master:getMod(tpz.mod.WYVERN_BREATH)/256) + (pet:getMod(tpz.mod.PET_BREATH) / 100) -- Gear that enhances breath
 
     local dmgmod = MobBreathMove(pet, target, 0.185, pet:getMainLvl() * 15, tpz.magic.ele.WATER) -- Works out to (hp/6) + 15, as desired
-    dmgmod = (dmgmod * (1 + gear)) * deep
+    dmgmod = (dmgmod * gear) * deep
     pet:setTP(0)
 
     local dmg = AbilityFinalAdjustments(dmgmod,pet,skill,target,tpz.attackType.BREATH,tpz.damageType.WATER,MOBPARAM_IGNORE_SHADOWS)

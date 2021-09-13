@@ -56,7 +56,11 @@ function onSpellCast(caster,target,spell)
 		caster:delStatusEffect(tpz.effect.NETHER_VOID)
 	end
 
-    caster:addHP(dmg)
+	-- Curse II prevents restoring HP
+	if not (caster:hasStatusEffect(20)) then
+		caster:addHP(dmg)
+	end
+	
     return dmg
 
 end

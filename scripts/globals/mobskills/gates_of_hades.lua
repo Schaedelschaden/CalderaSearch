@@ -15,32 +15,20 @@ require("scripts/globals/monstertpmoves")
 
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
-  if(mob:getFamily() == 316) then
-    local mobSkin = mob:getModelId()
-
-    if (mobSkin == 1793) then
+    if (mob:getHPP() < 25) then 
         return 0
-    else
-        return 1
+	else
+		return 1
     end
-  end
-    local result = 1
-    local mobhp = mob:getHPP()
-
-    if (mobhp <= 25) then
-        result = 0
-    end
-
-    return result
 end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.BURN
-    local power = 21
+    local power = 15
 
     MobStatusEffectMove(mob, target, typeEffect, power, 3, 60)
 
-    local dmgmod = 1.7
+    local dmgmod = 2.5
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*6, tpz.magic.ele.FIRE, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.FIRE, MOBPARAM_WIPE_SHADOWS)
     return dmg

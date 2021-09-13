@@ -17,7 +17,7 @@ function onPetAbility(target, pet, skill)
 
 	local damage = 975
 	damage = damage + (dINT * 1.5)
-	damage = MobMagicalMove(pet,target,skill,damage,tpz.magic.ele.LIGHT,1,TP_DMG_BONUS,1)
+	damage = MobMagicalMove(pet,target,skill,damage,tpz.magic.ele.LIGHT,1,TP_DMG_BONUS, 1, 2, 3)
 	damage = mobAddBonuses(pet, nil, target, damage.dmg, tpz.magic.ele.LIGHT)
 	damage = AvatarFinalAdjustments(damage,pet,skill,target,tpz.attackType.MAGICAL,tpz.damageType.LIGHT,1)
 

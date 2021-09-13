@@ -25,17 +25,20 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.LULLABYRES, 30) -- Resistance to Lullaby
     mob:setMod(tpz.mod.PETRIFYRES, 30) -- Resistance to Pertrify
     mob:setMod(tpz.mod.POISONRES, 30) -- Resistance to Poison
-	mob:setMod(tpz.mod.ATT, 1000) -- Attack Stat (Compare to DEF)
+	-- mob:setMod(tpz.mod.ATT, 1000) -- Attack Stat (Compare to DEF)
 	mob:setMod(tpz.mod.MATT, 100) -- Magic Attack (Compare to MDEF)
-    mob:setMod(tpz.mod.ACC, 1100) -- Accuracy (compare to EVA)
-	mob:setMod(tpz.mod.MACC, 400) -- Magic ACC (Compare to MEVA)
-	mob:setMod(tpz.mod.EVA, 1000) -- Evasion (Compare to ACC)
-	mob:setMod(tpz.mod.DEF, 1000) -- Defense (Compart to ATT)
-	mob:setMod(tpz.mod.MEVA, 200) -- Magic Evasion (Compare to MACC)
+    -- mob:setMod(tpz.mod.ACC, 1100) -- Accuracy (compare to EVA)
+	-- mob:setMod(tpz.mod.MACC, 400) -- Magic ACC (Compare to MEVA)
+	-- mob:setMod(tpz.mod.EVA, 1000) -- Evasion (Compare to ACC)
+	-- mob:setMod(tpz.mod.DEF, 1000) -- Defense (Compart to ATT)
+	mob:setMod(tpz.mod.MEVA, 650)-- Magic Evasion (Compare to MACC)
 	mob:setMod(tpz.mod.MDEF, 400) -- Magic Defense (Compare to MATT)
 	mob:setMod(tpz.mod.DOUBLE_ATTACK, 50) -- Double Attack in %
 	mob:setMod(tpz.mod.COUNTER, 50) -- Counter Attack
 	mob:setMod(tpz.mod.COUNTER_DMG, 50) -- Counter Damage
+	mob:setMod(tpz.mod.REGEN, 250)
+	mob:setMod(tpz.mod.REGAIN, 100)
+	mob:setMod(tpz.mod.DMG, -20)
 end
 
 function onMobEngaged(mob, target)

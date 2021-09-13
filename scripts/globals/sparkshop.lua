@@ -12,18 +12,18 @@ local optionToItem = {
     [1] = { -- Items page
         [ 0] = { cost =    10, id =  4181 }, -- Scroll of Instant Warp
         [ 1] = { cost =    10, id =  4182 }, -- Scroll of Instant Reraise
-        [ 2] = { cost =  7500, id =  4064 }, -- Copy of Rem's Tale, chapter 1
-        [ 3] = { cost =  7500, id =  4065 }, -- Copy of Rem's Tale, chapter 2
-        [ 4] = { cost =  7500, id =  4066 }, -- Copy of Rem's Tale, chapter 3
-        [ 5] = { cost =  7500, id =  4067 }, -- Copy of Rem's Tale, chapter 4
-        [ 6] = { cost =  7500, id =  4068 }, -- Copy of Rem's Tale, chapter 5
-        [ 7] = { cost = 15000, id =  4069 }, -- Copy of Rem's Tale, chapter 6
-        [ 8] = { cost = 15000, id =  4070 }, -- Copy of Rem's Tale, chapter 7
-        [ 9] = { cost = 15000, id =  4071 }, -- Copy of Rem's Tale, chapter 8
-        [10] = { cost = 15000, id =  4072 }, -- Copy of Rem's Tale, chapter 9
-        [11] = { cost = 15000, id =  4073 }, -- Copy of Rem's Tale, chapter 10
-        [12] = { cost =  5000, id = 28546 }, -- Capacity Ring
-        [13] = { cost = 10000, id =  9009 }, -- Etched Memory
+        [ 2] = { cost = 15000, id =  4064 }, -- Copy of Rem's Tale, chapter 1
+        [ 3] = { cost = 15000, id =  4065 }, -- Copy of Rem's Tale, chapter 2
+        [ 4] = { cost = 15000, id =  4066 }, -- Copy of Rem's Tale, chapter 3
+        [ 5] = { cost = 15000, id =  4067 }, -- Copy of Rem's Tale, chapter 4
+        [ 6] = { cost = 15000, id =  4068 }, -- Copy of Rem's Tale, chapter 5
+        [ 7] = { cost = 30000, id =  4069 }, -- Copy of Rem's Tale, chapter 6
+        [ 8] = { cost = 30000, id =  4070 }, -- Copy of Rem's Tale, chapter 7
+        [ 9] = { cost = 30000, id =  4071 }, -- Copy of Rem's Tale, chapter 8
+        [10] = { cost = 30000, id =  4072 }, -- Copy of Rem's Tale, chapter 9
+        [11] = { cost = 30000, id =  4073 }, -- Copy of Rem's Tale, chapter 10
+       -- [12] = { cost =  5000, id = 28546 }, -- Capacity Ring
+       -- [13] = { cost = 10000, id =  9009 }, -- Etched Memory
     },
     [2] = { -- Skill-increasing tomes
         [ 0] = { cost = 200, id = 6147 }, -- Mikehe's memo
@@ -485,21 +485,21 @@ local optionToItem = {
         [42] = { cost =  300,  id = 16189 }, -- Gleaming shield
     },
     [10] = { -- Equipment (Lv.99)
-        [ 0] = { cost =  3000, id = 27740 }, -- Outrider mask
+        [ 0] = { cost =  5000, id = 27740 }, -- Outrider mask
         [ 1] = { cost =  5000, id = 27881 }, -- Outrider mail
-        [ 2] = { cost =  3000, id = 28029 }, -- Outrider mittens
-        [ 3] = { cost =  3000, id = 28168 }, -- Outrider hose
-        [ 4] = { cost =  3000, id = 28306 }, -- Outrider greaves
-        [ 5] = { cost =  3000, id = 27741 }, -- Espial cap
+        [ 2] = { cost =  5000, id = 28029 }, -- Outrider mittens
+        [ 3] = { cost =  5000, id = 28168 }, -- Outrider hose
+        [ 4] = { cost =  5000, id = 28306 }, -- Outrider greaves
+        [ 5] = { cost =  5000, id = 27741 }, -- Espial cap
         [ 6] = { cost =  5000, id = 27882 }, -- Espial Gambison
-        [ 7] = { cost =  3000, id = 28030 }, -- Espial bracers
-        [ 8] = { cost =  3000, id = 28169 }, -- Espial hose
-        [ 9] = { cost =  3000, id = 28307 }, -- Espial socks
-        [10] = { cost =  3000, id = 27742 }, -- Wayfarer circlet
+        [ 7] = { cost =  5000, id = 28030 }, -- Espial bracers
+        [ 8] = { cost =  5000, id = 28169 }, -- Espial hose
+        [ 9] = { cost =  5000, id = 28307 }, -- Espial socks
+        [10] = { cost =  5000, id = 27742 }, -- Wayfarer circlet
         [11] = { cost =  5000, id = 27883 }, -- Wayfarer robe
-        [12] = { cost =  3000, id = 28031 }, -- Wayfarer cuffs
-        [13] = { cost =  3000, id = 28170 }, -- Wayfarer slops
-        [14] = { cost =  3000, id = 28308 }, -- Wayfarer clogs
+        [12] = { cost =  5000, id = 28031 }, -- Wayfarer cuffs
+        [13] = { cost =  5000, id = 28170 }, -- Wayfarer slops
+        [14] = { cost =  5000, id = 28308 }, -- Wayfarer clogs
         [15] = { cost =  2000, id = 27743 }, -- Temachtiani headband
         [16] = { cost =  3000, id = 27884 }, -- Temachtiani shirt
         [17] = { cost =  2000, id = 28032 }, -- Temachtiani gloves
@@ -522,28 +522,28 @@ local optionToItem = {
         [34] = { cost =  7000, id = 21251 }, -- Eminent crossbow
         [35] = { cost =  7000, id = 21281 }, -- Eminent gun
         [36] = { cost =  7000, id = 28656 }, -- Eminent shield
-        [37] = { cost =  7000, id = 21453 }, -- Eminent animator
-        [38] = { cost =  7000, id = 21383 }, -- Eminent sachet
-        [39] = { cost = 10000, id = 28549 }, -- Enlivened ring
-        [40] = { cost = 10000, id = 28550 }, -- Vehemence ring
-        [41] = { cost = 10000, id = 28551 }, -- Longshot ring
-        [42] = { cost = 10000, id = 28552 }, -- Fistmele ring
-        [43] = { cost = 10000, id = 28553 }, -- Perception ring
-        [44] = { cost = 10000, id = 28554 }, -- Acumen ring
-        [45] = { cost = 10000, id = 28499 }, -- Influx earring
-        [46] = { cost = 10000, id = 28500 }, -- Upsurge earring
-        [47] = { cost = 10000, id = 28501 }, -- Allegro earring
-        [48] = { cost = 10000, id = 28502 }, -- Impregnable earring
-        [49] = { cost = 10000, id = 28503 }, -- Flashward earring
-        [50] = { cost = 10000, id = 28504 }, -- Spellbreaker earring
-        [51] = { cost = 10000, id = 28547 }, -- Merirosvo ring
-        [52] = { cost = 10000, id = 21462 }, -- Eminent bell
-        [53] = { cost = 10000, id = 21405 }, -- Eminent flute
-        [54] = { cost =  5000, id = 21302 }, -- Eminent arrow
-        [55] = { cost =  5000, id = 21316 }, -- Eminent bolt
-        [56] = { cost =  5000, id = 21331 }, -- Eminent bullet
-        [57] = { cost =  7000, id = 21355 }, -- Hachiya shuriken
-        [58] = { cost =  7000, id = 22260 }, -- Eminent animator II
+        -- [37] = { cost =  7000, id = 21453 }, -- Eminent animator
+        -- [38] = { cost =  7000, id = 21383 }, -- Eminent sachet
+        [39] = { cost = 5000, id = 28549 }, -- Enlivened ring
+        [40] = { cost = 5000, id = 28550 }, -- Vehemence ring
+        [41] = { cost = 5000, id = 28551 }, -- Longshot ring
+        [42] = { cost = 5000, id = 28552 }, -- Fistmele ring
+        [43] = { cost = 5000, id = 28553 }, -- Perception ring
+        [44] = { cost = 5000, id = 28554 }, -- Acumen ring
+        [45] = { cost = 5000, id = 28499 }, -- Influx earring
+        [46] = { cost = 5000, id = 28500 }, -- Upsurge earring
+        [47] = { cost = 5000, id = 28501 }, -- Allegro earring
+        [48] = { cost = 5000, id = 28502 }, -- Impregnable earring
+        [49] = { cost = 5000, id = 28503 }, -- Flashward earring
+        [50] = { cost = 5000, id = 28504 }, -- Spellbreaker earring
+        [51] = { cost = 5000, id = 28547 }, -- Merirosvo ring
+        -- [52] = { cost = 10000, id = 21462 }, -- Eminent bell
+        -- [53] = { cost = 10000, id = 21405 }, -- Eminent flute
+        [54] = { cost =  2000, id = 21302 }, -- Eminent arrow
+        [55] = { cost =  2000, id = 21316 }, -- Eminent bolt
+        [56] = { cost =  2000, id = 21331 }, -- Eminent bullet
+        [57] = { cost =  2000, id = 21355 }, -- Hachiya shuriken
+        -- [58] = { cost =  7000, id = 22260 }, -- Eminent animator II
     }
 }
 
@@ -584,11 +584,18 @@ function tpz.sparkshop.onEventUpdate(player,csid,option)
         cost = 7000
     end
 	
-	-- TODO: Unlock access to these purchases again once players have progressed through a certain level of content.
-	-- Players must progress through at least Sea (ilvl 115 weapons) and probably through ToAU to unlock these.
+	-- Restrict access to the sparks shops until players have been present for a Kirin and Jailer of Love kill
 	if (item.cost > 2000) then
-		player:PrintToPlayer(string.format("We're sorry, that option is currently unavailable for purchase. Please check back after progressing through some content!"),tpz.msg.channel.SYSTEM_3)
-		return
+		if (player:getCharVar("KillCounter_Kirin") == 0 and player:getCharVar("KillCounter_JailOfLove") == 0) then
+			player:PrintToPlayer(string.format("We're sorry, that option is currently unavailable for purchase. Please return after defeating Kirin and the Jailer of Love!"),tpz.msg.channel.SYSTEM_3)
+			return
+		elseif (player:getCharVar("KillCounter_Kirin") > 0 and player:getCharVar("KillCounter_JailOfLove") == 0) then
+			player:PrintToPlayer(string.format("We're sorry, that option is currently unavailable for purchase. Please return after defeating the Jailer of Love!"),tpz.msg.channel.SYSTEM_3)
+			return
+		elseif (player:getCharVar("KillCounter_Kirin") == 0 and player:getCharVar("KillCounter_JailOfLove") > 0) then
+			player:PrintToPlayer(string.format("We're sorry, that option is currently unavailable for purchase. Please return after defeating Kirin!"),tpz.msg.channel.SYSTEM_3)
+			return
+		end
 	end
 
     -- verifies and finishes transaction

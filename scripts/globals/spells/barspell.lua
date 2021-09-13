@@ -47,6 +47,7 @@ function applyBarspell(effectType, caster, target, spell)
 	
 	if (caster:hasStatusEffect(tpz.effect.EMBOLDEN)) then
 		power = power * 2
+		duration = duration / 2
 		caster:delStatusEffect(tpz.effect.EMBOLDEN)
 	end
 

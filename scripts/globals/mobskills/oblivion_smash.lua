@@ -24,8 +24,8 @@ function onMobWeaponSkill(target, mob, skill)
 
     MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.BLINDNESS, 20, 0, 120)
     MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.SILENCE, 0, 0, 120)
-    MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.BIND, 0, 0, 120)
-    MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.WEIGHT, 50, 0, 120)
+	MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.WEIGHT, 50, 0, 120)
+    MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.BIND, 1, 0, 120)
 
     return dmg
 end

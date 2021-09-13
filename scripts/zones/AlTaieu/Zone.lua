@@ -31,7 +31,7 @@ function onZoneIn(player,prevZone)
 end
 
 function afterZoneIn(player)
-	player:PrintToPlayer(string.format("You can feel your communication with Trusts fade away."), tpz.msg.channel.NS_LINKSHELL3)
+	-- player:PrintToPlayer(string.format("You can feel your communication with Trusts fade away."), tpz.msg.channel.NS_LINKSHELL3)
 end
 
 function onRegionEnter(player,region)

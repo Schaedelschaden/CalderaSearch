@@ -39,7 +39,7 @@ end
 function onTrigger(player, npc)
     if (player:getCurrentMission(SANDORIA) == tpz.mission.id.sandoria.INFILTRATE_DAVOI and player:getCharVar("MissionStatus") == 3) then
         player:startEvent(117)
-        npc:pathStop()
+        -- npc:pathStop()
     else
         player:showText(npc, ID.text.QUEMARICOND_DIALOG)
         npc:clearTargID()
@@ -56,5 +56,5 @@ function onEventFinish(player, csid, option, npc)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED,tpz.ki.ROYAL_KNIGHTS_DAVOI_REPORT)
     end
 
-    npc:pathResume()
+    -- npc:pathResume()
 end

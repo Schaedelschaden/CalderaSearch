@@ -14,6 +14,8 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     mob:useMobAbility(mob:getMobMod(tpz.mobMod.TELEPORT_END))
+	
     skill:setMsg(tpz.msg.basic.NONE)
+	
     return 0
 end

@@ -972,7 +972,6 @@ tpz.casket_loot.casketItems =
             {1350,   702}, -- Ebony Log
             {1290,   737}, -- Gold Ore
             { 525,   823}, -- Gold Thread
-            { 190,   844}, -- Phoenix Feather
             { 780,  1443}, -- Dried Mugwort
             {5000,  4116}, -- Hi-Potion
             {4500,  4117}, -- Hi-Potion +1
@@ -1089,7 +1088,6 @@ tpz.casket_loot.casketItems =
             {1350,   702}, -- Ebony Log
             {1290,   737}, -- Gold Ore
             { 525,   823}, -- Gold Thread
-            { 190,   844}, -- Phoenix Feather
             { 780,  1443}, -- Dried Mugwort
             { 240,  3309}, -- Barrage Turbine
             {1500,  3450}, -- Voiddust
@@ -1647,7 +1645,6 @@ tpz.casket_loot.casketItems =
             {1350,   702}, -- Ebony Log
             {1290,   737}, -- Gold Ore
             { 525,   823}, -- Gold Thread
-            { 190,   844}, -- Phoenix Feather
             { 780,  1443}, -- Dried Mugwort
             {5000,  4116}, -- Hi-Potion
             {4500,  4117}, -- Hi-Potion +1
@@ -2018,7 +2015,6 @@ tpz.casket_loot.casketItems =
             {1350,   702}, -- Ebony Log
             {1290,   737}, -- Gold Ore
             { 525,   823}, -- Gold Thread
-            { 190,   844}, -- Phoenix Feather
             { 780,  1443}, -- Dried Mugwort
             {5000,  4116}, -- Hi-Potion
             {4500,  4117}, -- Hi-Potion +1
@@ -2257,7 +2253,6 @@ tpz.casket_loot.casketItems =
         --| Weight | Item ID |   Name  |--
         ----------------------------------
             { 700,   702}, -- Ebony Log
-            { 100,   844}, -- Phoenix Feather
             { 320,  3308}, -- Power Cooler
             {1650,  3434}, -- Cobalt Cell
             {1600,  3436}, -- Xanthous Cell
@@ -2304,7 +2299,6 @@ tpz.casket_loot.casketItems =
             {2580,   702}, -- Ebony Log
             { 700,   737}, -- Gold Ore
             { 690,   823}, -- Gold Thread
-            { 450,   844}, -- Phoenix Feather
             {3500,  1122}, -- Wyvern Skin
             {2700,  1213}, -- Dst. Bolt Heads x33
             { 740,  3308}, -- Power Cooler
@@ -2477,7 +2471,6 @@ tpz.casket_loot.casketItems =
             { 745,   748}, -- Gold Beastcoin
             { 625,   769}, -- Red Rock
             { 325,   821}, -- Rainbow Thread
-            { 425,   844}, -- Phoenix Feather
             { 720,  1213}, -- Dst. Bolt Heads
             { 830,  2459}, -- Minium
             { 240,  3309}, -- Barrage Turbine
@@ -2546,7 +2539,6 @@ tpz.casket_loot.casketItems =
             { 745,   748}, -- Gold Beastcoin
             { 625,   769}, -- Red Rock
             { 325,   821}, -- Rainbow Thread
-            { 425,   844}, -- Phoenix Feather
             { 720,  1213}, -- Dst. Bolt Heads
             { 830,  2459}, -- Minium
             { 240,  3309}, -- Barrage Turbine
@@ -2923,7 +2915,6 @@ tpz.casket_loot.casketItems =
             { 560,   737}, -- Gold Ore
             { 520,   823}, -- Gold Thread
             { 840,   843}, -- G. Bird Plume
-            {1250,   844}, -- Phoenix Feather
             {2500,  1155}, -- Iron Sand
             {1900,  1213}, -- Dst. Bolt Heads
             {2100,  1443}, -- Dried Mugwort

@@ -479,6 +479,7 @@ end
 function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, shadowbehav)
 	local element = {tpz.magic.ele.FIRE, tpz.magic.ele.ICE, tpz.magic.ele.WIND, tpz.magic.ele.EARTH, tpz.magic.ele.THUNDER, tpz.magic.ele.WATER, tpz.magic.ele.LIGHT, tpz.magic.ele.DARK}
 	local damageElement = 0
+	local enmityDmgMitigation = 0
 	
 	if (damageType ~= nil and damageType >= 5) then
 		for i = 1, 8 do
@@ -550,6 +551,20 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
         target:setLocalVar("analyzer_hits", analyzerHits)
     end
 
+	-- Handles -% Damage Taken from the "Mitigates damage taken based on enmity" item stat
+	if (mob:getObjType() == tpz.objType.MOB and target:getObjType() == tpz.objType.PC and target:getMod(tpz.mod.ENMITY_MITIGATES_DMG) > 0) then
+		local currentEnmity = mob:getCE(target) + mob:getVE(target)
+		enmityDmgMitigation = currentEnmity / 5000
+		
+		if (enmityDmgMitigation < 2) then
+			enmityDmgMitigation = 2
+		elseif (enmityDmgMitigation > 10) then
+			enmityDmgMitigation = 10
+		end
+		
+		target:addMod(tpz.mod.ENMITY_MITIGATES_DMG_DT, -enmityDmgMitigation)
+	end
+
     if (attackType == tpz.attackType.PHYSICAL) then
 
         dmg = target:physicalDmgTaken(dmg, damageType)
@@ -567,6 +582,11 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
         dmg = target:rangedDmgTaken(dmg)
 
     end
+	
+	-- Reverse the -% Damage Taken from the "Mitigates damage taken based on enmity" item stat
+	if (enmityDmgMitigation > 0) then
+		target:delMod(tpz.mod.ENMITY_MITIGATES_DMG_DT, -enmityDmgMitigation)
+	end
 
 	-- Caldera custom damage modification for Jug Pets
 	if (mob:isPet() and mob:getMaster():isPC()) then

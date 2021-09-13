@@ -56,7 +56,7 @@ INITIAL_LEVEL_CAP = 99 -- The initial level cap for new players.  There seems to
 MAX_LEVEL = 99 -- Level max of the server, lowers the attainable cap by disabling Limit Break quests.
 NORMAL_MOB_MAX_LEVEL_RANGE_MIN = 0 -- Lower Bound of Max Level Range for Normal Mobs (0 = Uncapped)
 NORMAL_MOB_MAX_LEVEL_RANGE_MAX = 0 -- Upper Bound of Max Level Range for Normal Mobs (0 = Uncapped)
-START_GIL = 50000 -- Amount of gil given to newly created characters.
+START_GIL = 1000 -- Amount of gil given to newly created characters.
 START_INVENTORY = 80 -- Starting inventory and satchel size.  Ignores values < 30.  Do not set above 80!
 NEW_CHARACTER_CUTSCENE = 0 -- Set to 1 to enable opening cutscenes, 0 to disable.
 SUBJOB_QUEST_LEVEL = 0 -- Minimum level to accept either subjob quest.  Set to 0 to start the game with subjobs unlocked.
@@ -72,10 +72,10 @@ TABS_RATE       = 1.000 -- Multiplies tabs earned from fov.
 ROE_EXP_RATE    = 1.000 -- Multiplies exp earned from records of eminence.
 SPARKS_RATE     = 1.000 -- Multiplies sparks earned from records of eminence.
 CURE_POWER      = 1.000 -- Multiplies amount healed from Healing Magic, including the relevant Blue Magic.
-ELEMENTAL_POWER = 1.250 -- Multiplies damage dealt by Elemental and non-drain Dark Magic.
+ELEMENTAL_POWER = 1.600 -- Multiplies damage dealt by Elemental and non-drain Dark Magic.
 DIVINE_POWER    = 1.000 -- Multiplies damage dealt by Divine Magic.
 NINJUTSU_POWER  = 1.750 -- Multiplies damage dealt by Ninjutsu Magic.
-BLUE_POWER      = 0.900 -- Multiplies damage dealt by Blue Magic.
+BLUE_POWER      = 1.100 -- Multiplies damage dealt by Blue Magic.
 DARK_POWER      = 1.000 -- Multiplies amount drained by Dark Magic.
 ITEM_POWER      = 1.000 -- Multiplies the effect of items such as Potions and Ethers.
 WEAPON_SKILL_POWER  = 1.000 -- Multiplies damage dealt by Weapon Skills.
@@ -115,7 +115,7 @@ NM_LOTTERY_CHANCE = 1.0
 NM_LOTTERY_COOLDOWN = 1.0
 
 -- DYNAMIS SETTINGS
-BETWEEN_2DYNA_WAIT_TIME = 1         -- Hours before player can re-enter Dynamis. Default is 1 Earthday (24 hours).
+BETWEEN_2DYNA_WAIT_TIME = 0         -- Hours before player can re-enter Dynamis. Default is 1 Earthday (24 hours).
 DYNA_MIDNIGHT_RESET = false         -- if true, makes the wait time count by number of server midnights instead of full 24 hour intervals
 DYNA_LEVEL_MIN = 90                 -- level min for entering in Dynamis
 TIMELESS_HOURGLASS_COST = 1000      -- refund for the timeless hourglass for Dynamis.

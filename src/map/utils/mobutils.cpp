@@ -83,7 +83,77 @@ uint16 GetWeaponDamage(CMobEntity* PMob)
 
 uint16 GetMagicEvasion(CMobEntity* PMob)
 {
-    uint8 mEvaRank = 3;
+    uint8 mEvaRank = 0;
+	
+	switch (PMob->GetMJob())
+    {
+		case JOB_WAR:
+            mEvaRank = 3;
+        break;
+		case JOB_MNK:
+            mEvaRank = 6;
+        break;
+		case JOB_WHM:
+            mEvaRank = 1;
+        break;
+		case JOB_BLM:
+            mEvaRank = 1;
+        break;
+		case JOB_RDM:
+            mEvaRank = 1;
+        break;
+		case JOB_THF:
+            mEvaRank = 4;
+        break;
+		case JOB_PLD:
+            mEvaRank = 7;
+        break;
+		case JOB_DRK:
+            mEvaRank = 7;
+        break;
+		case JOB_BST:
+            mEvaRank = 4;
+        break;
+		case JOB_BRD:
+            mEvaRank = 1;
+        break;
+		case JOB_RNG:
+            mEvaRank = 4;
+        break;
+		case JOB_SAM:
+            mEvaRank = 5;
+        break;
+		case JOB_NIN:
+            mEvaRank = 6;
+        break;
+		case JOB_DRG:
+            mEvaRank = 5;
+        break;
+		case JOB_SMN:
+            mEvaRank = 1;
+        break;
+		case JOB_BLU:
+            mEvaRank = 4;
+        break;
+		case JOB_COR:
+            mEvaRank = 4;
+        break;
+		case JOB_PUP:
+            mEvaRank = 6;
+        break;
+		case JOB_DNC:
+            mEvaRank = 4;
+        break;
+		case JOB_SCH:
+            mEvaRank = 1;
+        break;
+		case JOB_GEO:
+            mEvaRank = 1;
+        break;
+		case JOB_RUN:
+            mEvaRank = 4;
+        break;
+	}
 
     return GetBase(PMob, mEvaRank);
 }
@@ -160,8 +230,30 @@ uint16 GetBaseToRank(uint8 rank, uint16 lvl)
 uint16 GetBase(CMobEntity * PMob, uint8 rank)
  {
     uint8 lvl = PMob->GetMLevel();
-    if(lvl > 50){
-        switch(rank){
+    if (lvl > 99)
+	{
+        switch(rank)
+		{
+            case 1: // A
+                return (uint16)(398 + (lvl - 99) * 12.0f);
+            case 2: // B
+                return (uint16)(387 + (lvl - 99) * 11.9f);
+            case 3: // C
+                return (uint16)(371 + (lvl - 99) * 11.8f);
+            case 4: // D
+                return (uint16)(356 + (lvl - 99) * 11.7f);
+            case 5: // E
+                return (uint16)(337 + (lvl - 99) * 11.5f);
+            case 6: // F
+                return (uint16)(322 + (lvl - 99) * 11.4f);
+            case 7: // G
+                return (uint16)(307 + (lvl - 99) * 11.3f);
+        }
+    }
+	else if (lvl > 50)
+	{
+        switch(rank)
+		{
             case 1: // A
                 return (uint16)(153 + (lvl - 50) * 5.0f);
             case 2: // B
@@ -177,8 +269,11 @@ uint16 GetBase(CMobEntity * PMob, uint8 rank)
             case 7: // G
                 return (uint16)(96 + (lvl - 50) * 4.3f);
         }
-    } else {
-        switch(rank){
+    }
+	else
+	{
+        switch(rank)
+		{
             case 1:
                 return (uint16)(6 + (lvl - 1) * 3.0f);
             case 2:
@@ -498,14 +593,57 @@ void CalculateStats(CMobEntity * PMob)
             PMob->WorkingSkills.skill[i] = maxSkill;
         }
     }
+	
+	switch(mJob)
+	{
+		case JOB_WHM:
+			PMob->addModifier(Mod::MACC, GetBase(PMob, 2));
+			break;
+		case JOB_BLM:
+			PMob->addModifier(Mod::MACC, GetBase(PMob, 1));
+			break;
+		case JOB_RDM:
+			PMob->addModifier(Mod::MACC, GetBase(PMob, 1));
+			break;
+		case JOB_DRK:
+			PMob->addModifier(Mod::MACC, GetBase(PMob, 3));
+			break;
+		case JOB_BRD:
+			PMob->addModifier(Mod::MACC, GetBase(PMob, 3));
+			break;
+		case JOB_BLU:
+			PMob->addModifier(Mod::MACC, GetBase(PMob, 2));
+			break;
+		case JOB_SCH:
+			PMob->addModifier(Mod::MACC, GetBase(PMob, 1));
+			break;
+		case JOB_GEO:
+			PMob->addModifier(Mod::MACC, GetBase(PMob, 2));
+			break;
+		default:
+			PMob->addModifier(Mod::MACC, GetBase(PMob, 4));
+			break;
+	}
 
-    PMob->addModifier(Mod::DEF, GetBase(PMob,PMob->defRank));
-    PMob->addModifier(Mod::EVA, GetEvasion(PMob));
-    PMob->addModifier(Mod::ATT, GetBase(PMob,PMob->attRank));
-    PMob->addModifier(Mod::ACC, GetBase(PMob,PMob->accRank));
-
-    //natural magic evasion
-    PMob->addModifier(Mod::MEVA, GetMagicEvasion(PMob));
+	if (isNM)
+	{
+		PMob->addModifier(Mod::ATT, GetBase(PMob,PMob->attRank));
+		PMob->addModifier(Mod::ACC, (uint16)(GetBase(PMob,PMob->accRank)));// * 0.50f));
+		PMob->setModifier(Mod::MACC, GetBase(PMob, 1));
+		PMob->addModifier(Mod::DEF, GetBase(PMob,PMob->defRank));
+		PMob->addModifier(Mod::EVA, GetEvasion(PMob));
+		PMob->addModifier(Mod::MEVA, GetMagicEvasion(PMob));
+		PMob->addModifier(Mod::MDEF, mLvl);
+	}
+	else
+	{
+		PMob->addModifier(Mod::ATT, (uint16)(GetBase(PMob,PMob->attRank) * 0.80f));
+		PMob->addModifier(Mod::ACC, (uint16)(GetBase(PMob,PMob->accRank)));// * 0.75f));
+		PMob->addModifier(Mod::DEF, (uint16)(GetBase(PMob,PMob->defRank) * 0.80f));
+		PMob->addModifier(Mod::EVA, (uint16)(GetEvasion(PMob) * 0.80f));
+		PMob->addModifier(Mod::MEVA, (uint16)(GetMagicEvasion(PMob) * 0.80f));
+		PMob->addModifier(Mod::MDEF, (uint8)(mLvl * 0.80f));
+	}	
 
     // add traits for sub and main
     battleutils::AddTraits(PMob, traits::GetTraits(mJob), mLvl);
@@ -591,7 +729,7 @@ void SetupJob(CMobEntity* PMob)
     switch(job)
     {
         case JOB_BLM:
-            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 35);
+            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 25);
             PMob->defaultMobMod(MOBMOD_GA_CHANCE, 40);
             PMob->defaultMobMod(MOBMOD_BUFF_CHANCE, 15);
             PMob->defaultMobMod(MOBMOD_SEVERE_SPELL_CHANCE, 20);
@@ -615,10 +753,10 @@ void SetupJob(CMobEntity* PMob)
             PMob->defaultMobMod(MOBMOD_MAGIC_DELAY, 10);
             break;
         case JOB_BLU:
-            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 35);
+            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 25);
             break;
         case JOB_RDM:
-            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 35);
+            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 30);
             PMob->defaultMobMod(MOBMOD_GA_CHANCE, 15);
             PMob->defaultMobMod(MOBMOD_BUFF_CHANCE, 40);
             PMob->defaultMobMod(MOBMOD_MAGIC_DELAY, 10);

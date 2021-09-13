@@ -47,10 +47,10 @@ function onTrade(player,npc,trade)
         if progress == 0 or failed == 1 then
             if goodtrade then                   -- first or second time trading correctly
                 player:startEvent(219)
-                npc:pathStop()
+                -- npc:pathStop()
             elseif badtrade then
                 player:startEvent(229)
-                npc:pathStop()
+                -- npc:pathStop()
             end
         end
     end
@@ -62,52 +62,52 @@ function onTrigger(player,npc)
     local failed = player:getCharVar("OPO_OPO_FAILED")
     local retry = player:getCharVar("OPO_OPO_RETRY")
 
-    npc:pathStop()
+    -- npc:pathStop()
 
     if (player:getCharVar("BathedInScent") == 1 and OpoOpoAndIStatus == QUEST_AVAILABLE) then
         player:startEvent(217, 0, 483)  -- 483 broken mithran fishing rod
-        npc:pathStop()
+        -- npc:pathStop()
     elseif (OpoOpoAndIStatus == QUEST_ACCEPTED) then
         if retry == 1 then
             player:startEvent(239) -- gave 1st NPC wrong item instead of "Broken Mithran Fishing Rod"
-            npc:pathStop()
+            -- npc:pathStop()
         elseif retry == 2 then
             player:startEvent(239, 0, 0, 1) -- gave 2nd NPC wrong item instead of "Workbench"
-            npc:pathStop()
+            -- npc:pathStop()
         elseif retry == 3 then
             player:startEvent(239, 0, 0, 2) -- gave 3rd NPC wrong item instead of "Ten of Coins"
-            npc:pathStop()
+            -- npc:pathStop()
         elseif retry == 4 then
             player:startEvent(239, 0, 0, 3) -- gave 4th NPC wrong item instead of "Sands of silence"
-            npc:pathStop()
+            -- npc:pathStop()
         elseif retry == 5 then
             player:startEvent(239, 0, 0, 4) -- gave 5th NPC wrong item instead of "Wandering Bulb"
-            npc:pathStop()
+            -- npc:pathStop()
         elseif retry == 6 then
             player:startEvent(239, 0, 0, 5) -- gave 6th NPC wrong item instead of "Giant Fish Bones"
-            npc:pathStop()
+            -- npc:pathStop()
         elseif retry == 7 then
             player:startEvent(239, 0, 0, 6) -- gave 7th NPC wrong item instead of "Blackened Toad"
-            npc:pathStop()
+            -- npc:pathStop()
         elseif retry == 8 then
             player:startEvent(239, 0, 0, 7) -- gave 8th NPC wrong item instead of "Wyvern Skull"
-            npc:pathStop()
+            -- npc:pathStop()
         elseif retry == 9 then
             player:startEvent(239, 0, 0, 8) -- gave 9th NPC wrong item instead of "Ancient Salt"
-            npc:pathStop()
+            -- npc:pathStop()
         elseif retry == 10 then
             player:startEvent(239, 0, 0, 9) -- gave 10th NPC wrong item instead of "Lucky Egg" ... uwot
-            npc:pathStop()
+            -- npc:pathStop()
         elseif (progress == 0 or failed == 1) then
             player:startEvent(207)  -- asking for rod with Opoppo
-            npc:pathStop()
+            -- npc:pathStop()
         elseif (progress >= 1 or failed >= 2) then
             player:startEvent(242) -- happy with rod
-            npc:pathStop()
+            -- npc:pathStop()
         end
     else
         player:startEvent(197)  -- not sure why but this cs has no text
-        npc:pathStop()
+        -- npc:pathStop()
     end
 end
 
@@ -131,5 +131,5 @@ function onEventFinish(player,csid,option,npc)
         player:setCharVar("OPO_OPO_FAILED",1)
     end
 
-    npc:pathResume()
+    -- npc:pathResume()
 end

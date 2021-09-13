@@ -82,6 +82,11 @@ CCharStatsPacket::CCharStatsPacket(CCharEntity * PChar)
 	{
 		ref<uint8>(0x52) = PChar->GetMLevel() == 99 ? 1: 0;
 	}
+	// Unlocks Superior Level 1 after beating Divine Might once
+	if (charutils::GetCharVar(PChar, "KillCounter_DivineMight") >= 1)
+	{
+		ref<uint8>(0x52) = PChar->GetMLevel() == 99 ? 2: 0;
+	}
 	if (PChar->m_GMlevel > 0)
 	{
 		ref<uint8>(0x52) = PChar->GetMLevel() == 99 ? 5: 0;

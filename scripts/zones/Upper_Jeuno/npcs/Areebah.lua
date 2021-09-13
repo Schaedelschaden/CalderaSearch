@@ -16,10 +16,16 @@ function onTrigger(player, npc)
         951,  110,    -- Wijnruit
         948,   60,    -- Carnation
         941,   80,    -- Red Rose
+		959,   90,    -- Dahlia
         949,   96,    -- Rain Lily
         956,  120,    -- Lilac
         957,  120,    -- Amaryllis
         958,  120,    -- Marguerite
+		2960, 630,    -- Water Lily
+		1524, 300,    -- Pinch of Fresh Mugwort
+		1120, 900,    -- Casablanca
+		1413, 900,    -- Cattleya
+		2713, 546,    -- Dyer's Woad
         2370, 520,    -- Flower Seeds
     }
 

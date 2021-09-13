@@ -28,7 +28,7 @@ function onSpellCast(caster, target, spell)
         params.damageType = tpz.damageType.IMPACT
 		params.spellFamily = tpz.ecosystem.ARCANA
         params.numhits = 1
-        params.multiplier = 12.00 -- 0~1499 TP, D Value Multiplier -- 4.00
+        params.multiplier = 50.00 -- 0~1499 TP, D Value Multiplier -- 4.00
         params.tp150 = 12.00 -- 1500~2999 TP
         params.tp300 = 12.00 -- 3000 TP
         params.azuretp = 14.00 -- 3500 TP/Azure Lore TP modifier -- 4.50

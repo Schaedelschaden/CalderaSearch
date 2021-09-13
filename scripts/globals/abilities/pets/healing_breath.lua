@@ -23,21 +23,28 @@ function onUseAbility(pet, target, skill, action)
    -- TODO: 5 per merit for augmented AF2 (10663 *w/ augment*)
     local master = pet:getMaster()
     local deep = 0
-   if (pet:hasStatusEffect(tpz.effect.MAGIC_ATK_BOOST) == true) then
-      deep = 50 + (master:getMerit(tpz.merit.DEEP_BREATHING)-1)*5
-      pet:delStatusEffect(tpz.effect.MAGIC_ATK_BOOST)
-   end
+    if (pet:hasStatusEffect(tpz.effect.MAGIC_ATK_BOOST) == true) then
+		deep = 50 + (master:getMerit(tpz.merit.DEEP_BREATHING)-1)*5
+		pet:delStatusEffect(tpz.effect.MAGIC_ATK_BOOST)
+    end
 
-    local gear = master:getMod(tpz.mod.WYVERN_BREATH) -- Master gear that enhances breath
+    local gear = (master:getMod(tpz.mod.WYVERN_BREATH)/256) + (pet:getMod(tpz.mod.PET_BREATH) / 100) -- Gear that enhances breath
 
     local tp = math.floor(pet:getTP()/200)/1.165 -- HP only increases for every 20% TP
-   pet:setTP(0)
+    pet:setTP(0)
 
     local base = math.floor(((45+tp+gear+deep)/256)*(pet:getMaxHP())+42)
-   if (target:getHP()+base > target:getMaxHP()) then
-      base = target:getMaxHP() - target:getHP() --cap it
-   end
-   skill:setMsg(tpz.msg.basic.JA_RECOVERS_HP)
-   target:addHP(base)
-   return base
+	if (target:getHP()+base > target:getMaxHP()) then
+		base = target:getMaxHP() - target:getHP() --cap it
+	end
+	skill:setMsg(tpz.msg.basic.JA_RECOVERS_HP)
+
+   -- Curse II prevents restoring HP
+	if not (target:hasStatusEffect(20)) then
+		target:addHP(base)
+	else
+		base = 0
+	end
+	
+	return base
 end

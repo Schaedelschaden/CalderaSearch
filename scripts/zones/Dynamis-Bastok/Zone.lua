@@ -9,7 +9,7 @@ require("scripts/globals/dynamis")
 -----------------------------------
 
 function onInitialize(zone)
-    dynamis.zoneOnInitialize(zone)
+    -- dynamis.zoneOnInitialize(zone)
 end
 
 function onConquestUpdate(zone, updatetype)

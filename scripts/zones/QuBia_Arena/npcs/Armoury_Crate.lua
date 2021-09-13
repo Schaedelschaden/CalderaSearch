@@ -135,7 +135,7 @@ local loot =
             -- {itemid = 65535, droprate = 1000, amount = 500000}, -- gil
         -- },
 		{
-            {itemid =  0, droprate = 100}, -- Nothing
+            {itemid =  0,     droprate = 100}, -- Nothing
 			{itemid =  20914, droprate = 300}, -- Camaraderie Scythe
 			{itemid =  20960, droprate = 300}, -- Camaraderie Lance
 			{itemid =  21235, droprate = 300}, -- Camaraderie Bow
@@ -160,13 +160,15 @@ local loot =
             {itemid = 8734,  droprate = 1000}, -- Kupon I S-1
         },
         {
-            {itemid = 8734,  droprate = 1000}, -- Kupon I S-1
+			{itemid = 0,     droprate = 900}, -- Nothing
+            {itemid = 8734,  droprate = 150}, -- Kupon I S-1
         },
         {
-            {itemid = 4067,  droprate = 1000}, -- Rems Chapt 4
+            {itemid = 4068,  droprate = 1000}, -- Rems Chapt 5
         },
 		{
-            {itemid = 4067,  droprate = 1000}, -- Rems Chapt 4
+			{itemid = 0,     droprate = 900}, -- Nothing
+            {itemid = 4068,  droprate = 150}, -- Rems Chapt 5
         },
     },
 
@@ -187,35 +189,35 @@ local loot =
             {itemid =  20987, droprate = 125}, -- Tancho
         },
         {
-            {itemid = 28134, droprate =  150}, -- Assiduity Pants
-            {itemid = 28136, droprate =  150}, -- Augury Cuisses
-            {itemid = 25855, droprate =  150}, -- Tatenashi Haidate
-            {itemid = 27230, droprate =  150}, -- Zoar Subligar
-            {itemid = 27638, droprate =  100}, -- Ajax
-            {itemid = 27636, droprate =  100}, -- Evalach
-            {itemid = 27640, droprate =  100}, -- Deliverance
-            {itemid = 26401, droprate =  100}, -- Forfend
+            {itemid = 28134, droprate =  145}, -- Assiduity Pants
+            {itemid = 28136, droprate =  145}, -- Augury Cuisses
+            {itemid = 25855, droprate =  145}, -- Tatenashi Haidate
+            {itemid = 27230, droprate =  145}, -- Zoar Subligar
+            {itemid = 27638, droprate =  130}, -- Ajax
+            {itemid = 27636, droprate =  145}, -- Evalach
+            {itemid = 27640, droprate =  145}, -- Deliverance
         },
         {
-            {itemid = 4073,  droprate = 1000}, -- Rem Chapt 10
+            {itemid = 4071,  droprate = 1000}, -- Rem Chapt 8
         },
         {
-            {itemid = 4073,  droprate = 1000}, -- Rem Chapt 10
-        },
-        {
-            {itemid = 3972,  droprate = 1000}, -- Kupon I S-2
-
+			{itemid =  0,    droprate = 850}, -- Nothing
+            {itemid = 4071,  droprate = 150}, -- Rem Chapt 8
         },
         {
             {itemid = 3972,  droprate = 1000}, -- Kupon I S-2
+        },
+        {
+			{itemid =  0,    droprate = 850}, -- Nothing
+            {itemid = 3972,  droprate = 150}, -- Kupon I S-2
         },
 		{
-            {itemid = 4080,  droprate =  175}, -- Moonbow Urushi
-            {itemid = 4079,  droprate =  165}, -- Moonbow Leather
-            {itemid = 4078,  droprate =  165}, -- Moonbow Cloth
-            {itemid = 4077,  droprate =  165}, -- Moonbow Steel
-            {itemid = 4081,  droprate =  165}, -- Moonbow Stone
-			{itemid = 4082,  droprate =  165}, -- Moonlight Coral
+            {itemid = 4080, droprate =  160}, -- Moonbow Urushi
+            {itemid = 4079, droprate =  80},  -- Moonbow Leather
+            {itemid = 4078, droprate =  120}, -- Moonbow Cloth
+            {itemid = 4077, droprate =  240}, -- Moonbow Steel
+            {itemid = 4081, droprate =  240}, -- Moonbow Stone
+			{itemid = 4082, droprate =  160}, -- Moonlight Coral
         },
     },
 

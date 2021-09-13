@@ -37,7 +37,7 @@ function onMobSpawn(mob)
 	mob:setMod(tpz.mod.MATT, 750)
     mob:setMod(tpz.mod.ACC, 1000)
 	mob:setMod(tpz.mod.MACC, 700)
-    mob:setMod(tpz.mod.EVA, 150)
+    mob:setMod(tpz.mod.EVA, 850)
 	mob:setMod(tpz.mod.DEF, 1200)
 	mob:setMod(tpz.mod.MEVA, 200)
 	mob:setMod(tpz.mod.MDEF, 250)
@@ -59,13 +59,13 @@ end
 function onMobEngaged(mob, target)
     mob:showText(mob, ID.text.ORC_KING_ENGAGE)
 	
-	for i = 1, 19 do
-		local link = GetMobByID(assistMobs[i])
+	-- for i = 1, 19 do
+		-- local link = GetMobByID(assistMobs[i])
 		
-		if (link:getCurrentAction() == tpz.act.ROAMING) then
-            link:updateEnmity(target)
-        end
-	end
+		-- if (link:getCurrentAction() == tpz.act.ROAMING) then
+            -- link:updateEnmity(target)
+        -- end
+	-- end
 end
 
 function onMobFight(mob, target)
