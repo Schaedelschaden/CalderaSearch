@@ -24,13 +24,12 @@ function onUseAbility(player, target, ability, action)
 	local atkmulti = (player:getMod(tpz.mod.SPIRIT_JUMP_ATT_BONUS) + 100) / 100
 	local tpbonus = player:getMod(tpz.mod.SPIRIT_JUMP_TP_BONUS)
 	local alljumpsbonus = player:getMod(tpz.mod.ALL_JUMPS_WYVERN_HP)
-	local alljumpsdmg = 0
 	
 	local params = {}
 	
 	if ((player:hasPet() == true) and (player:getPetID() == tpz.pet.id.WYVERN)) then
 		local pet = player:getPet()
-		alljumpsdmg = pet:getHP() * (alljumpsbonus / 100)
+		params.alljumpsdmg = pet:getHP() * (alljumpsbonus / 100)
 		atkmulti = atkmulti + (25 / 100)
 		params.crit100 = 1.0 params.crit200 = 1.0 params.crit300 = 1.0
 		tpbonus = tpbonus + 135
@@ -50,6 +49,9 @@ function onUseAbility(player, target, ability, action)
     params.atk100 = atkmulti params.atk200 = atkmulti params.atk300 = atkmulti
     params.bonusTP = tpbonus
     params.hitsHigh = false
+	if (player:getMod(tpz.mod.FORCE_JUMP_CRIT) > 0) then
+		params.crit100 = 1.0 params.crit200 = 1.0 params.crit300 = 1.0
+	end
 
     local taChar = player:getTrickAttackChar(target)
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, 0, params, 0, action, true, taChar)
@@ -64,16 +66,8 @@ function onUseAbility(player, target, ability, action)
         action:messageID(target:getID(), tpz.msg.basic.JA_MISS_2)
         action:speceffect(target:getID(), 0)
     end
-		
+	
 	target:lowerEnmity(player, 30)
 	
-	if (player:hasPet() == true) then
-		if (alljumpsbonus > 0) then
---			printf("Damage 1: [%i] All Jumps DMG: [%i]\n", damage, alljumpsdmg)
-			damage = damage + alljumpsdmg
---			printf("Damage 2: [%i]\n", damage)
-			player:delMod(tpz.mod.FORCE_JUMP_CRIT, 1)
-		end
-	end
 	return damage
 end

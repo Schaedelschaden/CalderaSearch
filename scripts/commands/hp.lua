@@ -31,22 +31,45 @@ function onTrigger(player, hp, target)
         targ = player
     end
 
-    -- validate amount
-    if hp == nil or tonumber(hp) == nil then
-        error(player, "You must provide an amount.")
-        return
-    elseif hp < 0 then
-        error(player, "Invalid amount.")
-        return
-    end
+	if (targ:isPC() and hp > 0) then
+		-- validate amount
+		if hp == nil or tonumber(hp) == nil then
+			error(player, "You must provide an amount.")
+			return
+		elseif hp < 0 then
+			error(player, "Invalid amount.")
+			return
+		end
 
-    -- set hp
-    if targ:isAlive() then
-        targ:setHP(hp)
-        if targ:getID() ~= player:getID() then
-            player:PrintToPlayer(string.format("Set %s's HP to %i.", targ:getName(), targ:getHP()))
-        end
-    else
-        player:PrintToPlayer(string.format("%s is currently dead.", targ:getName()))
-    end
+		-- set hp
+		if targ:isAlive() then
+			targ:setHP(hp)
+			if targ:getID() ~= player:getID() then
+				player:PrintToPlayer(string.format("Set %s's HP to %i.", targ:getName(), targ:getHP()))
+			end
+		else
+			player:PrintToPlayer(string.format("%s is currently dead.", targ:getName()))
+		end
+	elseif (targ:isPC() and hp == 0) then
+		player:PrintToPlayer(string.format("Do they really need to die?"))
+	else
+		-- validate amount
+		if hp == nil or tonumber(hp) == nil then
+			error(player, "You must provide an amount.")
+			return
+		elseif hp < 0 then
+			error(player, "Invalid amount.")
+			return
+		end
+
+		-- set hp
+		if targ:isAlive() then
+			targ:setHP(hp)
+			if targ:getID() ~= player:getID() then
+				player:PrintToPlayer(string.format("Set %s's HP to %i.", targ:getName(), targ:getHP()))
+			end
+		else
+			player:PrintToPlayer(string.format("%s is currently dead.", targ:getName()))
+		end
+	end
 end

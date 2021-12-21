@@ -9,29 +9,85 @@ require("scripts/globals/npc_util")
 require("scripts/globals/status")
 -----------------------------------
 
+local acceptedSeals = {
+					   -- Beastmen's Seal, Kindred's Crest, High Kindred Crest, Sacred Kindred Crest
+					   1126, 2955, 2956, 2957
+					   }
+
 function onTrade(player,npc,trade)
-	local SealQty = trade:getItemQty(1126)
-	local divided = SealQty / 3
+	local sealID
+	local sealQty
+	local foundType
+	local resultingKSeals
 	
-	local trades =
-	{
-		{{1126, SealQty}}
-	}
+	for i = 1, #acceptedSeals do
+		sealQty = trade:getItemQty(acceptedSeals[i])
+		
+		if (sealQty > 0) then
+			sealID = acceptedSeals[i]
+			foundType = i
+			break
+		end
+	end
+	
+	if (sealQty == 0 or sealQty == nil) then
+		player:PrintToPlayer(string.format("Jedelaih : What're ya tryin' to pull! I didn't ask for that!"),tpz.msg.channel.NS_SAY)
+	elseif (foundType == 1 and sealQty % 3 == 0) then
+		resultingKSeals = sealQty / 3
+		
+		if (resultingKSeals > 1) then
+			player:PrintToPlayer(string.format("Jedelaih : I'll take these %i Beastmen's Seals and give you %i Kindred's Seals.", sealQty, resultingKSeals),tpz.msg.channel.NS_SAY)
+		else
+			player:PrintToPlayer(string.format("Jedelaih : I'll take these %i Beastmen's Seals and give you %i Kindred's Seal.", sealQty, resultingKSeals),tpz.msg.channel.NS_SAY)
+		end
+	elseif (foundType == 2 and sealQty % 2 == 0) then
+		resultingKSeals = sealQty / 2
+		
+		if (resultingKSeals > 1) then
+			player:PrintToPlayer(string.format("Jedelaih : I'll take these %i Kindred's Crests and give you %i Kindred's Seals.", sealQty, resultingKSeals),tpz.msg.channel.NS_SAY)
+		else
+			player:PrintToPlayer(string.format("Jedelaih : I'll take these %i Kindred's Crests and give you %i Kindred's Seal.", sealQty, resultingKSeals),tpz.msg.channel.NS_SAY)
+		end
+	elseif (foundType == 3) then
+		resultingKSeals = sealQty
+		
+		if (sealQty > 1) then
+			player:PrintToPlayer(string.format("Jedelaih : I'll take these %i High Kindred's Crests and give you %i Kindred's Seals.", sealQty, resultingKSeals),tpz.msg.channel.NS_SAY)
+		else
+			player:PrintToPlayer(string.format("Jedelaih : I'll take this %i High Kindred's Crest and give you %i Kindred's Seal.", sealQty, resultingKSeals),tpz.msg.channel.NS_SAY)
+		end
+	elseif (foundType == 4) then
+		resultingKSeals = sealQty * 2
+		
+		if (sealQty > 1) then
+			player:PrintToPlayer(string.format("Jedelaih : I'll take these %i Sacred Kindred's Crests and give you %i Kindred's Seals.", sealQty, resultingKSeals),tpz.msg.channel.NS_SAY)
+		else
+			player:PrintToPlayer(string.format("Jedelaih : I'll take this %i Sacred Kindred's Crest and give you %i Kindred's Seals.", sealQty, resultingKSeals),tpz.msg.channel.NS_SAY)
+		end
+	else
+		player:PrintToPlayer(string.format("Jedelaih : I'm gonna need more of those before I can convert them for you."),tpz.msg.channel.NS_SAY)
+		return
+	end
+	
+	local trades = {{{sealID, sealQty}}}
 	
 	if npcUtil.tradeHasExactly(trade, trades[1]) then
---		printf("Jedelaih.lua onTrade PROPER NUMBER OF SEALS")
-		player:addItem(1127, divided)
+		player:addItem(1127, resultingKSeals)
 		player:messageSpecial(ID.text.ITEM_OBTAINED, 1127)
 		player:tradeComplete(trade)
+		player:PrintToPlayer(string.format("Jedelaih : Gahahaha! Much obliged! *madly strums away*."),tpz.msg.channel.NS_SAY)
 	else
 		player:PrintToPlayer(string.format("Jedelaih : What're ya tryin' to pull! I didn't ask for that!"),tpz.msg.channel.NS_SAY)
+		return
 	end
 end
 
 function onTrigger(player,npc)
-	player:PrintToPlayer(string.format("Jedelaih : Trade me 3x Beastmen Seals and I'll give you a Kindred Seal in return!"),tpz.msg.channel.NS_SAY)
-	player:PrintToPlayer(string.format("Jedelaih : I'll happily take as many seals as you can give me, just make sure they're in multiples of 3!"),tpz.msg.channel.NS_SAY)
-	player:PrintToPlayer(string.format("Jedelaih : Gahahaha! *madly strums away*"),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Jedelaih : I'll convert Beastmen Seals, Kindred's Crests, High Kindred Crests, and Sacred Kindred Crests into Kindred's Seals!"),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Jedelaih : My exchange rates are:"),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Jedelaih : 3 Beastmen Seals -> 1 Kindred's Seal          2 Kindred's Crests -> 1 Kindred's Seal"),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Jedelaih : 1 High Kindred's Crest -> 1 Kindred's Seal     1 Sacred Kindred's Crest -> 2 Kindred's Seals"),tpz.msg.channel.NS_SAY)
+	-- player:PrintToPlayer(string.format("Jedelaih : Gahahaha! *madly strums away*"),tpz.msg.channel.NS_SAY)
 end
 
 function onEventUpdate(player,csid,option)

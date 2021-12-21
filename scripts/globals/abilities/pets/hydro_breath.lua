@@ -32,7 +32,23 @@ function onUseAbility(pet, target, skill, action)
     pet:setTP(0)
 
     local dmg = AbilityFinalAdjustments(dmgmod,pet,skill,target,tpz.attackType.BREATH,tpz.damageType.WATER,MOBPARAM_IGNORE_SHADOWS)
-	dmg = dmg * 2 -- Retail breath damage calc is underwhelming, juice it up!
+	
+	local petLvl = pet:getMainLvl()
+	
+	-- Retail breath damage calc is underwhelming, juice it up!
+	if (petLvl <= 75) then
+		dmg = dmg * 2
+	elseif (petLvl > 75 and petLvl <= 90) then
+		dmg = dmg * 2.5
+	elseif (petLvl > 90 and petLvl <= 100) then
+		dmg = dmg * 3
+	elseif (petLvl > 100 and petLvl <= 110) then
+		dmg = dmg * 3.5
+	elseif (petLvl > 110 and petLvl <= 119) then
+		dmg = dmg * 4
+	end
+	
     target:takeDamage(dmg, pet, tpz.attackType.BREATH, tpz.damageType.WATER)
+	
     return dmg
 end

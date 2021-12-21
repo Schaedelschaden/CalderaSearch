@@ -20,5 +20,10 @@ function onTrigger(player)
 		return
 	end
 	
+	if (player:hasStatusEffect(tpz.effect.BUST)) then
+		player:PrintToPlayer(string.format("You must wait for certain status effects to wear off before using that command.", player))
+		return
+	end
+	
     player:setPos(player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID())
 end

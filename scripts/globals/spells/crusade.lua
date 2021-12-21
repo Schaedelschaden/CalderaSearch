@@ -12,7 +12,14 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    if target:addStatusEffect(tpz.effect.ENMITY_BOOST, 30, 0, 300) then
+	local power = 30
+	
+	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		power = power * 1.5
+		target:delStatusEffect(tpz.effect.EMBOLDEN)
+	end
+
+    if target:addStatusEffect(tpz.effect.ENMITY_BOOST, power, 0, 300) then
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)
     else
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)

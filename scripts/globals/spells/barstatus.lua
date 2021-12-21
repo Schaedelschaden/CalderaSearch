@@ -24,6 +24,10 @@ function applyBarstatus(effectType, caster, target, spell)
     local enhanceSkill = caster:getSkillLevel(tpz.skill.ENHANCING_MAGIC)
     local mdefBonus = caster:getMerit(tpz.merit.BAR_SPELL_EFFECT) + caster:getMod(tpz.mod.BARSPELL_MDEF_BONUS)
 
+	if (caster:hasStatusEffect(tpz.effect.AFFLATUS_SOLACE)) then
+		mdefBonus = mdefBonus + caster:getMod(tpz.mod.ENH_AFFLATUS_SOLACE)
+	end
+
     local power = calculateBarstatusPower(caster, enhanceSkill)
     local duration = calculateBarstatusDuration(caster, enhanceSkill)
 	
@@ -33,12 +37,12 @@ function applyBarstatus(effectType, caster, target, spell)
 		duration = duration * 3
 	end
 	
-	if (caster:hasStatusEffect(tpz.effect.EMBOLDEN)) then
-		power = power * 2
-		duration = duration / 2
-		caster:delStatusEffect(tpz.effect.EMBOLDEN)
+	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		power = power * 1.5
+		target:delStatusEffect(tpz.effect.EMBOLDEN)
 	end
 
-    target:addStatusEffect(effectType, power, 0, duration)
+    target:addStatusEffect(effectType, power, 0, duration, 0, mdefBonus, 0)
+	
     return effectType
 end

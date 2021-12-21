@@ -527,13 +527,36 @@ void CalculateStats(CMobEntity * PMob)
 
     if(isNM)
     {
-        PMob->stats.STR = (uint16)(PMob->stats.STR * map_config.nm_stat_multiplier);
-        PMob->stats.DEX = (uint16)(PMob->stats.DEX * map_config.nm_stat_multiplier);
-        PMob->stats.VIT = (uint16)(PMob->stats.VIT * map_config.nm_stat_multiplier);
-        PMob->stats.AGI = (uint16)(PMob->stats.AGI * map_config.nm_stat_multiplier);
-        PMob->stats.INT = (uint16)(PMob->stats.INT * map_config.nm_stat_multiplier);
-        PMob->stats.MND = (uint16)(PMob->stats.MND * map_config.nm_stat_multiplier);
-        PMob->stats.CHR = (uint16)(PMob->stats.CHR * map_config.nm_stat_multiplier);
+		if (mLvl <= 130)
+		{
+			PMob->stats.STR = (uint16)(PMob->stats.STR * map_config.nm_stat_multiplier);
+			PMob->stats.DEX = (uint16)(PMob->stats.DEX * map_config.nm_stat_multiplier);
+			PMob->stats.VIT = (uint16)(PMob->stats.VIT * map_config.nm_stat_multiplier);
+			PMob->stats.AGI = (uint16)(PMob->stats.AGI * map_config.nm_stat_multiplier);
+			PMob->stats.INT = (uint16)(PMob->stats.INT * map_config.nm_stat_multiplier);
+			PMob->stats.MND = (uint16)(PMob->stats.MND * map_config.nm_stat_multiplier);
+			PMob->stats.CHR = (uint16)(PMob->stats.CHR * map_config.nm_stat_multiplier);
+		}
+		else if (mLvl > 130 && mLvl <= 140)
+		{
+			PMob->stats.STR = (uint16)(PMob->stats.STR * (map_config.nm_stat_multiplier + 0.2f));
+			PMob->stats.DEX = (uint16)(PMob->stats.DEX * (map_config.nm_stat_multiplier + 0.2f));
+			PMob->stats.VIT = (uint16)(PMob->stats.VIT * (map_config.nm_stat_multiplier + 0.2f));
+			PMob->stats.AGI = (uint16)(PMob->stats.AGI * (map_config.nm_stat_multiplier + 0.2f));
+			PMob->stats.INT = (uint16)(PMob->stats.INT * (map_config.nm_stat_multiplier + 0.2f));
+			PMob->stats.MND = (uint16)(PMob->stats.MND * (map_config.nm_stat_multiplier + 0.2f));
+			PMob->stats.CHR = (uint16)(PMob->stats.CHR * (map_config.nm_stat_multiplier + 0.2f));
+		}
+		else if (mLvl > 140)
+		{
+			PMob->stats.STR = (uint16)(PMob->stats.STR * (map_config.nm_stat_multiplier + 0.7f));
+			PMob->stats.DEX = (uint16)(PMob->stats.DEX * (map_config.nm_stat_multiplier + 0.7f));
+			PMob->stats.VIT = (uint16)(PMob->stats.VIT * (map_config.nm_stat_multiplier + 0.7f));
+			PMob->stats.AGI = (uint16)(PMob->stats.AGI * (map_config.nm_stat_multiplier + 0.7f));
+			PMob->stats.INT = (uint16)(PMob->stats.INT * (map_config.nm_stat_multiplier + 0.7f));
+			PMob->stats.MND = (uint16)(PMob->stats.MND * (map_config.nm_stat_multiplier + 0.7f));
+			PMob->stats.CHR = (uint16)(PMob->stats.CHR * (map_config.nm_stat_multiplier + 0.7f));
+		}
     }
     else
     {
@@ -771,6 +794,8 @@ void SetupJob(CMobEntity* PMob)
             PMob->defaultMobMod(MOBMOD_BUFF_CHANCE, 20);
             PMob->defaultMobMod(MOBMOD_MAGIC_DELAY, 7);
             break;
+		case JOB_RUN:
+			PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 35);
         default:
             break;
     }

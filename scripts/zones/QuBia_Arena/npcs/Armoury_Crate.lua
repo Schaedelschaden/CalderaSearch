@@ -170,6 +170,10 @@ local loot =
 			{itemid = 0,     droprate = 900}, -- Nothing
             {itemid = 4068,  droprate = 150}, -- Rems Chapt 5
         },
+		{
+			{itemid = 0,    droprate = 800},   -- Nothing
+            {itemid = 1311, droprate = 200},   -- Oxblood
+        },
     },
 
     -- BCNM Brothers D'Aurphe
@@ -212,13 +216,24 @@ local loot =
             {itemid = 3972,  droprate = 150}, -- Kupon I S-2
         },
 		{
-            {itemid = 4080, droprate =  160}, -- Moonbow Urushi
-            {itemid = 4079, droprate =  80},  -- Moonbow Leather
-            {itemid = 4078, droprate =  120}, -- Moonbow Cloth
-            {itemid = 4077, droprate =  240}, -- Moonbow Steel
-            {itemid = 4081, droprate =  240}, -- Moonbow Stone
-			{itemid = 4082, droprate =  160}, -- Moonlight Coral
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 3923, droprate = 150},   -- Rhodium Ingot
         },
+		{
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 729, droprate = 150},   -- Bloodwood Log
+        },
+		{
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 767, droprate = 150},   -- Carnelian
+        },
+		{
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 8724, droprate = 150},   -- Beryllium Ingot
+        },		
+		{
+            {itemid = 8724, droprate = 1000},   -- Beryllium Ingot
+        },	
     },
 
     -- BCNM Undying Promise

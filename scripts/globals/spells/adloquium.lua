@@ -15,9 +15,15 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+	local power = 1
 	local duration = calculateDuration(180, spell:getSkillType(), spell:getSpellGroup(), caster, target)
 	
-	if target:addStatusEffect(tpz.effect.REGAIN, 1, 0, duration, 0, 0, 0) then
+	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		power = power * 1.5
+		target:delStatusEffect(tpz.effect.EMBOLDEN)
+	end
+	
+	if target:addStatusEffect(tpz.effect.REGAIN, power, 0, duration, 0, 0, 0) then
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)
     else
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)

@@ -424,32 +424,32 @@ dynamis.zoneOnInitialize = function(zone)
     local RF = ID.mob.REFILL_STATUE
 
     -- spawn one of each grouped TEs
-    if TE then
-        for _, v in pairs(TE) do
-            local group = {}
-            if type(v.mob) == "number" then
-                group = {v.mob}
-            elseif type(v.mob) == "table" then
-                group = {unpack(v.mob)}
-            end
-            local teId = group[math.random(#group)]
-            DisallowRespawn(teId, false)
-            SpawnMob(teId)
-        end
-    end
+    -- if TE then
+        -- for _, v in pairs(TE) do
+            -- local group = {}
+            -- if type(v.mob) == "number" then
+                -- group = {v.mob}
+            -- elseif type(v.mob) == "table" then
+                -- group = {unpack(v.mob)}
+            -- end
+            -- local teId = group[math.random(#group)]
+            -- DisallowRespawn(teId, false)
+            -- SpawnMob(teId)
+        -- end
+    -- end
 
-    -- spawn one of each grouped refill statue
-    if RF then
-        for _, g in pairs(RF) do
-            local group = {}
-            for _, m in pairs(g) do
-                table.insert(group, m.mob)
-            end
-            local spawnId = group[math.random(#group)]
-            DisallowRespawn(spawnId, false)
-            SpawnMob(spawnId)
-        end
-    end
+    -- -- spawn one of each grouped refill statue
+    -- if RF then
+        -- for _, g in pairs(RF) do
+            -- local group = {}
+            -- for _, m in pairs(g) do
+                -- table.insert(group, m.mob)
+            -- end
+            -- local spawnId = group[math.random(#group)]
+            -- DisallowRespawn(spawnId, false)
+            -- SpawnMob(spawnId)
+        -- end
+    -- end
 end
 
 dynamis.zoneOnZoneIn = function(player, prevZone)
@@ -574,7 +574,7 @@ dynamis.timeExtensionOnDeath = function(mob, player, isKiller)
                     DisallowRespawn(mobId, true)
                     DisallowRespawn(teId, false)
                 end
-                GetMobByID(teId):setRespawnTime(85)
+                GetMobByID(teId):setRespawnTime(600)
             end
         else
             printf("[dynamis.timeExtensionOnDeath] called in zone %i on mob %s that does not appear in a time extension group.", zoneId, mob:getName())
@@ -670,7 +670,7 @@ dynamis.refillStatueOnDeath = function(mob, player, isKiller)
                     DisallowRespawn(mobId, true)
                     DisallowRespawn(nextId, false)
                 end
-                GetMobByID(nextId):setRespawnTime(300) -- 5 minutes
+                GetMobByID(nextId):setRespawnTime(600) -- 10 minutes
             end
         else
             printf("[dynamis.refillStatueOnDeath] called in zone %i on mob %i that does not appear in a refill statue group.", zoneId, mobId)

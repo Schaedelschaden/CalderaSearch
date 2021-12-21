@@ -139,12 +139,12 @@ void CTrustController::DoCombatTick(time_point tick)
             }
             case MID_RANGE:
             {
-                PathOutToDistance(PTarget, 6.0f);
+                PathOutToDistance(PTarget, 10.0f);
                 break;
             }
             case LONG_RANGE:
             {
-                PathOutToDistance(PTarget, 12.0f);
+                PathOutToDistance(PTarget, 16.0f);
                 break;
             }
             case MELEE_RANGE:
@@ -405,6 +405,18 @@ bool CTrustController::Cast(uint16 targid, SpellID spellid)
     }
 
     auto PSpell = spell::GetSpell(spellid);
+	auto element = PSpell->getElement();
+	
+	/* if (POwner->PMaster->GetBattleTarget()->objtype == TYPE_MOB)
+	{
+		auto PMob = dynamic_cast<CMobEntity*>(POwner->PMaster->GetBattleTarget());
+		
+		if (PMob->m_nukeWallTimer[element - 1] >= server_clock::now())
+		{
+			
+		}
+	} */
+	
     if (PSpell->getValidTarget() == TARGET_SELF)
     {
         targid = POwner->targid;

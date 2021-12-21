@@ -17,8 +17,8 @@ function onTrade(player, npc, trade)
 	{
 	--	{"aug1", "aug1 value", "aug2", "aug2 value", "aug3", "aug3 value", "aug4", "aug4 value"}
 		{"1", "14", "31", "9", "42", "1", "54", "1"}, 	-- HP +15, EVA +10, Enemy Crit Hit Rate -2%, PDT -2%
-		{"41", "1", "328", "1", "106", "9", "195", "2"}, -- Crit Hit Rate +2%, Crit Hit Damage +2%, ACC/RACC +10, Subtle Blow +3
-		{"9", "14", "133", "4", "362", "9", "35", "9"}, -- MP +15, MAB +5, Magic Damage +10, MACC +10
+		{"41", "1", "328", "1", "129", "9", "195", "2"}, -- Crit Hit Rate +2%, Crit Hit Damage +2%, ACC/RACC +10, Subtle Blow +3
+		{"9", "14", "516", "2", "362", "9", "35", "9"}, -- MP +15, INT +3, Magic Damage +10, MACC +10
 		{"1806", "4", "102", "1", "115", "2"}, 			-- Pet: STR/DEX/VIT +5, Pet: Crit Hit Rate +2%, Pet: Store TP +3
 	}
 	
@@ -105,8 +105,8 @@ end
 function onTrigger(player,npc)
 	player:PrintToPlayer(string.format("Suibhne : Select an augment set from the list below:"),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Suibhne : 4x Genbu Scraps = HP +15, EVA +10, Enemy Crit Hit Rate -2%%, PDT -2%%"),tpz.msg.channel.NS_SAY)
-	player:PrintToPlayer(string.format("Suibhne : 4x Byakko Scraps = Crit Hit Rate +2%%, Crit Hit Damage +2%%, ACC +10, Subtle Blow +3"),tpz.msg.channel.NS_SAY)
-	player:PrintToPlayer(string.format("Suibhne : 4x Suzaku Scraps = MP +15, MAB +5, Magic Damage +10, MACC +10"),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Suibhne : 4x Byakko Scraps = Crit Hit Rate +2%%, Crit Hit Damage +2%%, ACC/RACC +10, Subtle Blow +3"),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Suibhne : 4x Suzaku Scraps = MP +15, INT +3, Magic Damage +10, MACC +10"),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Suibhne : 4x Seiryu Scraps = Pet: STR/DEX/VIT +5, Pet: Crit Hit Rate +2%%, Pet: Store TP +3"),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Suibhne : Trade 1 piece of level 90-109 Head/Body/Hands/Leg/Feet gear, 1 Mythril Bell (furniture), and the items from above."),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Suibhne : Trade me EXACTLY the ingredients requested. Any additional items included will be lost in the trade."),tpz.msg.channel.NS_SAY)

@@ -8,6 +8,7 @@
 -- applications of accuracy mods ('Accuracy varies with TP.')
 -- applications of damage mods ('Damage varies with TP.')
 -- performance of the actual WS (rand numbers, etc)
+require("scripts/globals/settings")
 require("scripts/globals/magicburst")
 require("scripts/globals/ability")
 require("scripts/globals/status")
@@ -206,8 +207,13 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
 
     -- Have to calculate added bonus for SA/TA here since it is done outside of the fTP multiplier
     if attacker:getMainJob() == tpz.job.THF then
+		if (calcParams.pdif == 0 or calcParams.pdif == nil) then
+			calcParams.pdif = 1
+		end
+	
         -- Add DEX/AGI bonus to first hit if THF main and valid Sneak/Trick Attack
         if calcParams.sneakApplicable then
+			-- printf("weaponskills.lua calculateRawWSDmg PLAYER NAME: [%s]  WS ID: [%i]", attacker:getName(), wsID)
             finaldmg = finaldmg +
                         (attacker:getStat(tpz.mod.DEX) * (1 + attacker:getMod(tpz.mod.SNEAK_ATK_DEX)/100) * calcParams.pdif) *
                         ((100+(attacker:getMod(tpz.mod.AUGMENTS_SA)))/100)
@@ -292,6 +298,7 @@ end
 -- Sets up the necessary calcParams for a melee WS before passing it to calculateRawWSDmg. When the raw
 -- damage is returned, handles reductions based on target resistances and passes off to takeWeaponskillDamage.
 function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, primaryMsg, taChar)
+	local alljumpsdmg = wsParams.alljumpsdmg or 0
     -- Determine cratio and ccritratio
     local ignoredDef = 0
     if (wsParams.ignoresDef == not nil and wsParams.ignoresDef == true) then
@@ -388,6 +395,11 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     end
     
     finaldmg = finaldmg * randomness
+	
+	-- Handle DRG All Jumps: Adds % of wyvern's max HP as additional damage
+	if (alljumpsdmg > 0 and alljumpsdmg ~= nil) then
+		finaldmg = finaldmg + alljumpsdmg
+	end
     
     calcParams.finalDmg = finaldmg
 	
@@ -485,11 +497,45 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
         ['extraHitsLanded'] = 0,
         ['bonusTP'] = wsParams.bonusTP or 0
     }
-
-    local bonusfTP, bonusacc = handleWSGorgetBelt(attacker)
-    bonusacc = bonusacc + attacker:getMod(tpz.mod.WSACC)
-
-    local fint = utils.clamp(8 + (attacker:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)), -32, 32)
+	
+	local weaponLevel = 0
+	local baseDMG = 0
+	
+	if (attacker:isPC()) then
+		if (wsParams.skill == tpz.skill.MARKSMANSHIP or wsParams.skill == tpz.skill.ARCHERY) then
+			local rangedWeaponID = attacker:getEquipID(tpz.slot.RANGED)
+			local rangedItem = GetItem(rangedWeaponID)
+			
+			baseDMG = attacker:getRangedDmg()
+			weaponLevel = rangedItem:getReqLvl()
+			
+			-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
+				-- printf("weaponskills.lua doMagicWeaponskill RANGED DMG: [%i]  AMMO DMG: [%i]", attacker:getRangedDmg(), attacker:getAmmoDmg())
+			-- end
+			
+			if (attacker:getGearILvl(rangedWeaponID) > weaponLevel) then
+				weaponLevel = attacker:getGearILvl(rangedWeaponID)
+			end
+		else
+			local WeaponID = attacker:getEquipID(tpz.slot.MAIN)
+			local meleeItem = GetItem(WeaponID)
+			
+			baseDMG = attacker:getWeaponDmg() + attacker:getOffhandDmg()
+			weaponLevel = meleeItem:getReqLvl()
+			
+			if (attacker:getGearILvl(WeaponID) > weaponLevel) then
+				weaponLevel = attacker:getGearILvl(WeaponID)
+			end
+		end
+	end
+	
+	-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
+		-- printf("weaponskills.lua doMagicWeaponskill BASE DMG: [%i]", baseDMG)
+	-- end
+	
+	local bonusfTP, bonusacc = handleWSGorgetBelt(attacker)
+	bonusacc = bonusacc + attacker:getMod(tpz.mod.WSACC)
+	
     local dmg = 0
 
     -- Magic-based WSes never miss, so we don't need to worry about calculating a miss, only if a shadow absorbed it.
@@ -526,16 +572,14 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
         if attacker:getMod(tpz.mod.WS_CHR_BONUS) > 0 then
             wsParams.chr_wsc = wsParams.chr_wsc + (attacker:getMod(tpz.mod.WS_CHR_BONUS) / 100)
         end
-
-        dmg = attacker:getMainLvl() + 2 + (attacker:getStat(tpz.mod.STR) * wsParams.str_wsc + attacker:getStat(tpz.mod.DEX) * wsParams.dex_wsc +
-             attacker:getStat(tpz.mod.VIT) * wsParams.vit_wsc + attacker:getStat(tpz.mod.AGI) * wsParams.agi_wsc +
-             attacker:getStat(tpz.mod.INT) * wsParams.int_wsc + attacker:getStat(tpz.mod.MND) * wsParams.mnd_wsc +
-             attacker:getStat(tpz.mod.CHR) * wsParams.chr_wsc) + fint
+			 
+		local WSC = (attacker:getStat(tpz.mod.STR) * wsParams.str_wsc + attacker:getStat(tpz.mod.DEX) * wsParams.dex_wsc +
+					 attacker:getStat(tpz.mod.VIT) * wsParams.vit_wsc + attacker:getStat(tpz.mod.AGI) * wsParams.agi_wsc +
+					 attacker:getStat(tpz.mod.INT) * wsParams.int_wsc + attacker:getStat(tpz.mod.MND) * wsParams.mnd_wsc +
+					 attacker:getStat(tpz.mod.CHR) * wsParams.chr_wsc)
 
         -- Applying fTP multiplier
         local ftp = fTP(tp, wsParams.ftp100, wsParams.ftp200, wsParams.ftp300) + bonusfTP
-
-        dmg = dmg * ftp
 
 		wsParams.specialWSDMG = wsParams.specialWSDMG or 0
 
@@ -549,15 +593,52 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
         local YaegasumiBonus = attacker:getMod(tpz.mod.YAEGASUMI_WS_BONUS)
         bonusdmg = bonusdmg + YaegasumiBonus
 
-        -- Add in bonusdmg
+		local dSTAT = wsParams.dSTAT or 1
+		local magicDamage = attacker:getMod(tpz.mod.MAGIC_DAMAGE)
+		local levelMod = math.floor((weaponLevel - 99) * 2.45)
+		
+		if (levelMod < 0) then
+			levelMod = 0
+		end
+
+		-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
+			-- printf("weaponskills.lua doMagicWeaponskill BASE DMG: [%i]  LEVEL MOD: [%i]  WSC: [%f]  FTP: [%f]  DSTAT: [%i]  MAGIC DAMAGE: [%i]", baseDMG, levelMod, WSC, ftp, dSTAT, magicDamage)
+		-- end
+
+		dmg = (baseDMG + levelMod + WSC) * ftp + dSTAT + magicDamage
+		
+		-- Add in bonusdmg
         dmg = dmg * ((100 + bonusdmg) / 100) -- Apply our "all hits" WS dmg bonuses
         dmg = dmg + ((dmg * attacker:getMod(tpz.mod.ALL_WSDMG_FIRST_HIT) + wsParams.specialWSDMG) / 100) -- Add in our "first hit" WS dmg bonus
 
+		-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
+			-- printf("weaponskills.lua doMagicWeaponskill MAGIC WS DMG 1: [%i]", dmg)
+		-- end
+
         -- Calculate magical bonuses and reductions
         dmg = addBonusesAbility(attacker, wsParams.ele, target, dmg, wsParams)
+		
+		-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
+			-- printf("weaponskills.lua doMagicWeaponskill MAGIC WS DMG 2: [%i]", dmg)
+		-- end
+		
         dmg = dmg * applyResistanceAbility(attacker, target, wsParams.ele, wsParams.skill, bonusacc)
+		
+		-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
+			-- printf("weaponskills.lua doMagicWeaponskill MAGIC WS DMG 3: [%i]", dmg)
+		-- end
+		
         dmg = target:magicDmgTaken(dmg)
+		
+		-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
+			-- printf("weaponskills.lua doMagicWeaponskill MAGIC WS DMG 4: [%i]", dmg)
+		-- end
+		
         dmg = adjustForTarget(target, dmg, wsParams.ele)
+		
+		-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
+			-- printf("weaponskills.lua doMagicWeaponskill MAGIC WS DMG 5: [%i]", dmg)
+		-- end
 
         dmg = dmg * WEAPON_SKILL_POWER -- Add server bonus
     else
@@ -565,7 +646,7 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
     end
     
     local posorneg = math.random(0, 1) -- Sets the swing positive or negative
-    local randomness = math.random(1,25) -- 25% swing range
+    local randomness = math.random(1, 10) -- 10% swing range
     
     if (posorneg == 0) then
         randomness = ((100 + randomness) / 100)
@@ -574,6 +655,10 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
     end
     
     dmg = dmg * randomness
+	
+	-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
+		-- printf("weaponskills.lua doMagicWeaponskill MAGIC WS DMG 6: [%i]", dmg)
+	-- end
 
     calcParams.finalDmg = dmg
     dmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
@@ -1156,44 +1241,55 @@ end
 function handleWSGorgetBelt(attacker)
     local ftpBonus = 0
     local accBonus = 0
+	local dayElement = VanadielDayOfTheWeek() + 1 -- Increase value by 1 to align with elemental table (normally a range of 0-7)
+	
     if (attacker:getObjType() == tpz.objType.PC) then
-        -- TODO: Get these out of itemid checks when possible.
-        local elementalGorget = { 15495, 15498, 15500, 15497, 15496, 15499, 15501, 15502 }
-        local elementalBelt =   { 11755, 11758, 11760, 11757, 11756, 11759, 11761, 11762 }
-        local neck = attacker:getEquipID(tpz.slot.NECK)
-        local belt = attacker:getEquipID(tpz.slot.WAIST)
-        local SCProp1, SCProp2, SCProp3 = attacker:getWSSkillchainProp()
-
-        for i, v in ipairs(elementalGorget) do
-            if (neck == v) then
-                if (doesElementMatchWeaponskill(i, SCProp1) or doesElementMatchWeaponskill(i, SCProp2) or doesElementMatchWeaponskill(i, SCProp3)) then
-                    accBonus = accBonus + 10
-                    ftpBonus = ftpBonus + 0.1
-                end
-                break
-            end
-        end
-
-        if (neck == 27510) then -- Fotia Gorget
-            accBonus = accBonus + 10
-            ftpBonus = ftpBonus + 0.1
-        end
-
-        for i, v in ipairs(elementalBelt) do
-            if (belt == v) then
-                if (doesElementMatchWeaponskill(i, SCProp1) or doesElementMatchWeaponskill(i, SCProp2) or doesElementMatchWeaponskill(i, SCProp3)) then
-                    accBonus = accBonus + 10
-                    ftpBonus = ftpBonus + 0.1
-                end
-                break
-            end
-        end
-
-        if (belt == 28420) then -- Fotia Belt
-            accBonus = accBonus + 10
-            ftpBonus = ftpBonus + 0.1
-        end
+		local wsElement = 0
+		local elementalFTPEquip = {tpz.mod.SC_FTP_LIQUEFACTION, tpz.mod.SC_FTP_INDURATION, tpz.mod.SC_FTP_DETONATION, tpz.mod.SC_FTP_SCISSION,
+								   tpz.mod.SC_FTP_IMPACTION, tpz.mod.SC_FTP_REVERBERATION, tpz.mod.SC_FTP_TRANSFIXION, tpz.mod.SC_FTP_COMPRESSION}
+		local SCProp1, SCProp2, SCProp3 = attacker:getWSSkillchainProp()
+		
+		if (SCProp1 == nil) then
+			SCProp1 = 0
+		end
+		
+		if (SCProp2 == nil) then
+			SCProp2 = 0
+		end
+		
+		if (SCProp3 == nil) then
+			SCProp3 = 0
+		end
+		
+		for i = 1, 8 do
+			if (attacker:getMod(elementalFTPEquip[i]) > 0) then
+				wsElement = i
+				break
+			end
+		end
+		
+		-- Elemental Gorgets & Belts
+		if (doesElementMatchWeaponskill(wsElement, SCProp1) or doesElementMatchWeaponskill(wsElement, SCProp2) or doesElementMatchWeaponskill(wsElement, SCProp3)) then
+			accBonus = accBonus + attacker:getMod(elementalFTPEquip[wsElement])
+			ftpBonus = ftpBonus + (attacker:getMod(elementalFTPEquip[wsElement]) / 100)
+		end
+		
+		-- Fotia Gorget & Belt
+		if (attacker:getMod(tpz.mod.SC_FTP_ALL) > 0) then
+			accBonus = accBonus + attacker:getMod(tpz.mod.SC_FTP_ALL)
+			ftpBonus = ftpBonus + (attacker:getMod(tpz.mod.SC_FTP_ALL) / 100)
+		end
+		
+		-- Athos's Gloves, Mekira-oto, Mekira-oto +1, Gavialis Helm
+		if (attacker:getMod(tpz.mod.WS_DAY_FTP_ALL) > 0 and
+		    doesElementMatchWeaponskill(dayElement, SCProp1) or doesElementMatchWeaponskill(dayElement, SCProp2) or doesElementMatchWeaponskill(dayElement, SCProp3)) then
+			accBonus = accBonus + attacker:getMod(tpz.mod.WS_DAY_FTP_ALL)
+			ftpBonus = ftpBonus + (attacker:getMod(tpz.mod.WS_DAY_FTP_ALL) / 100)
+		end
     end
+	
+	-- printf("weaponskills.lua handleWSGorgetBelt ACC BONUS: [%i]  FTP BONUS: [%1.2f]  DAY ELEMENT: [%s]", accBonus, ftpBonus, dayElement)
+	
     return ftpBonus, accBonus
 end
 

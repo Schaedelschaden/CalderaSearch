@@ -17,24 +17,24 @@ function onPetAbility(target, pet, skill, player)
     local duration = 180 + bonusTime
 	local petlvl = pet:getMainLvl()
 	local buffvalue = 0
-	local contrabuff = 50 -- Retail value 25
+	local contrabuff = 25 -- Retail value 25
 	local buffmultiplier = 1
     local moon = VanadielMoonPhase()
 
     if moon > 90 then
-        buffvalue = 50 -- Retail value 25
+        buffvalue = 25 -- Retail value 25
     elseif moon > 75 then
-        buffvalue = 42 -- Retail value 21
+        buffvalue = 21 -- Retail value 21
     elseif moon > 60 then
-        buffvalue = 34 -- Retail value 17
+        buffvalue = 17 -- Retail value 17
     elseif moon > 40 then
-        buffvalue = 26 -- Retail value 13
+        buffvalue = 13 -- Retail value 13
     elseif moon > 25 then
-        buffvalue = 18 -- Retail value 9
+        buffvalue = 9 -- Retail value 9
     elseif moon > 10 then
-        buffvalue = 10 -- Retail value 5
+        buffvalue = 5 -- Retail value 5
     else
-        buffvalue = 2 -- Retail value 1
+        buffvalue = 1 -- Retail value 1
     end
 	
 	if (petlvl > 99) then

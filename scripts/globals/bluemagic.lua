@@ -676,7 +676,15 @@ function BlueFinalAdjustments(caster, target, spell, dmg, params)
 		-- printf("bluemagic.lua BlueFinalAdjustments MULTI TARGET REDUCTION  DAMAGE: [%i]", dmg)
 	end
 
-    dmg = dmg * BLUE_POWER
+	-- if (caster:getObjType() == tpz.objType.PC) then
+		-- local casterLvl = caster:getMainLvl() + caster:getItemLevel()
+		
+		-- if (casterLvl < 99) then
+			-- dmg = dmg * (BLUE_POWER + 0.75)
+		-- end
+	-- else
+		dmg = dmg * BLUE_POWER
+	-- end
 
     dmg = dmg - target:getMod(tpz.mod.PHALANX)
     if (dmg < 0) then
@@ -823,7 +831,7 @@ end
 -- Determines whether a hit connects based off caster ACC and target EVA --
 ---------------------------------------------------------------------------
 function BlueGetHitRate(attacker, target, capHitRate)
-    local acc = attacker:getACC() + attacker:getILvlSkill(tpz.slot.MAIN) + attacker:getILvlSkill(tpz.slot.SUB)
+    local acc = attacker:getACC() + attacker:getILvlSkill(tpz.slot.MAIN) + (attacker:getILvlSkill(tpz.slot.SUB) / 2)
     local eva = target:getEVA()
 	local attackerLevel = attacker:getMainLvl()
 	

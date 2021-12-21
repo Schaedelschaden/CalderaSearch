@@ -23,9 +23,8 @@ function onMobRoam(mob)
     end
 end
 
-function onMobSpawn(mob)
-    mob:setMod(tpz.mod.SLASHRES, 0)
-    mob:setMod(tpz.mod.PIERCERES, 1500)
+function onMobInitialize( mob )
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end
 
 function onMobSpawn(mob)
@@ -35,6 +34,27 @@ function onMobSpawn(mob)
             {id = tpz.jsa.HUNDRED_FISTS, hpp = 50},
         },
     })
+	mob:setMod(tpz.mod.SLASHRES, 0)
+    mob:setMod(tpz.mod.PIERCERES, 1500)
+    mob:addMod(tpz.mod.BINDRES, 100) -- Resistance to Bind
+	mob:addMod(tpz.mod.ATT, 100) -- Attack Stat (Compare to DEF)
+	mob:addMod(tpz.mod.MATT, 100) -- Magic Attack (Compare to MDEF)
+    mob:addMod(tpz.mod.ACC, 160) -- Accuracy (compare to EVA)
+	mob:addMod(tpz.mod.MACC, 100) -- Magic ACC (Compare to MEVA)
+	mob:addMod(tpz.mod.EVA, 300) -- Evasion (Compare to ACC)
+	mob:addMod(tpz.mod.DEF, 300) -- Defense (Compart to ATT)
+	mob:addMod(tpz.mod.MEVA, 100) -- Magic Evasion (Compare to MACC)
+	mob:addMod(tpz.mod.MDEF, 150) -- Magic Defense (Compare to MATT)
+	mob:addMod(tpz.mod.STR, 150)
+	mob:addMod(tpz.mod.REGAIN, 200)
+end
+
+function onAdditionalEffect(mob, target, damage)
+	params = {}
+	params.power = 100
+	params.chance = 100
+
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENWATER)
 end
 
 function onMobDeath(mob, player, isKiller, noKiller)

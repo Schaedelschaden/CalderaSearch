@@ -14,7 +14,7 @@ end
 
 function onPetAbility(target, pet, skill)
 	target:delStatusEffect(tpz.effect.EARTHEN_ARMOR)
-	target:addStatusEffect(tpz.effect.EARTHEN_ARMOR, 75, 0, 60)
+	target:addStatusEffect(tpz.effect.EARTHEN_ARMOR, 75, 0, 60, 0, 45)
 
 	skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
 	return tpz.effect.EARTHEN_ARMOR

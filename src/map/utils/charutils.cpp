@@ -2583,15 +2583,31 @@ namespace charutils
         {
             CAbility* PAbility = AbilitiesList.at(i);
 
+			if (charutils::GetCharVar(PChar, "AuditAbilities") == 1)
+			{
+				printf("charutils.cpp BuildingCharAbilityTable CHAR NAME: [%s]  JOB: [%i]  ABILITY ID: [%i]\n", PChar->GetName(), PChar->GetMJob(), PAbility->getID());
+			}
+
             if (PAbility == nullptr) {
                 continue;
             }
 
             if (PChar->GetMLevel() >= PAbility->getLevel())
             {
+				if (charutils::GetCharVar(PChar, "AuditAbilities") == 1)
+				{
+					printf("charutils.cpp BuildingCharAbilityTable CHAR NAME: [%s]  MAIN LVL: [%i]  ABILITY LVL: [%i]\n", PChar->GetName(), PChar->GetMLevel(), PAbility->getLevel());
+				}
+				
                 if (PAbility->getID() < ABILITY_HEALING_RUBY && PAbility->getID() != ABILITY_PET_COMMANDS && CheckAbilityAddtype(PChar, PAbility))
                 {
                     addAbility(PChar, PAbility->getID());
+					
+					if (charutils::GetCharVar(PChar, "AuditAbilities") == 1)
+					{
+						printf("charutils.cpp BuildingCharAbilityTable CHAR NAME: [%s]  ADDING ABILITY ID: [%i]\n", PChar->GetName(), PAbility->getID());
+					}
+					
                     Charge_t* charge = ability::GetCharge(PChar, PAbility->getRecastId());
                     auto chargeTime = 0;
                     auto maxCharges = 0;
@@ -3113,6 +3129,11 @@ namespace charutils
 
     int32 addAbility(CCharEntity* PChar, uint16 AbilityID)
     {
+		if (charutils::GetCharVar(PChar, "AuditAbilities") == 1)
+		{
+			printf("charutils.cpp addAbility CHAR NAME: [%s]  ABILITY ID: [%i]\n", PChar->GetName(), AbilityID);
+		}
+		
         return addBit(AbilityID, PChar->m_Abilities, sizeof(PChar->m_Abilities));
     }
 
@@ -3522,9 +3543,9 @@ namespace charutils
                     if (map_config.exp_party_gap_penalties == 1)
                     {
                         // if (maxlevel > 50 || maxlevel > (memberlevel + 7))
-						if (maxlevel < (memberlevel + 12))
+						if (maxlevel > (memberlevel + 9))
                         {
-                            exp *= memberlevel / (float)maxlevel;
+                            exp *= 0.03f; // memberlevel / (float)maxlevel;
                         }
                         else
                         {
@@ -4881,18 +4902,18 @@ namespace charutils
 
         TPZ_DEBUG_BREAK_IF(element > 8);
 
-        reduction = reduction + PChar->getMod(strong[element]);
+        reduction = reduction + PChar->getMod(strong[element - 1]);
 
         if (battleutils::GetDayElement() == element)
         {
 			if (PChar->getMod(Mod::DAY_REDUCTION) >= 50)
 			{
-				reduction = (uint16)((float)PChar->getMod(Mod::AVATAR_PERPETUATION) / 2.0f) + (PChar->getMod(Mod::DAY_REDUCTION) - 50);
+				reduction += (uint16)((float)PChar->getMod(Mod::AVATAR_PERPETUATION) / 2.0f) + (PChar->getMod(Mod::DAY_REDUCTION) - 50);
 				dayBonusApplied = true;
 			}
 			else
 			{
-				reduction = reduction + PChar->getMod(Mod::DAY_REDUCTION);
+				reduction += reduction + PChar->getMod(Mod::DAY_REDUCTION);
 			}
         }
 
@@ -4902,11 +4923,11 @@ namespace charutils
         {
 			if (PChar->getMod(Mod::WEATHER_REDUCTION) >= 50 && dayBonusApplied == false)
 			{
-				reduction = (uint16)((float)PChar->getMod(Mod::AVATAR_PERPETUATION) / 2.0f) + (PChar->getMod(Mod::WEATHER_REDUCTION) - 50);
+				reduction += (uint16)((float)PChar->getMod(Mod::AVATAR_PERPETUATION) / 2.0f) + (PChar->getMod(Mod::WEATHER_REDUCTION) - 50);
 			}
 			else
 			{
-				reduction = reduction + PChar->getMod(Mod::WEATHER_REDUCTION);
+				reduction += reduction + PChar->getMod(Mod::WEATHER_REDUCTION);
 			}
         }
 
@@ -4981,8 +5002,12 @@ namespace charutils
 
     bool CheckAbilityAddtype(CCharEntity* PChar, CAbility* PAbility)
     {
+		int16 addType = 0;
+		
         if (PAbility->getAddType() & ADDTYPE_MERIT)
         {
+			addType = 1;
+			
 			// GEO has no merit mods so skip this
 			if (PChar->GetMJob() != JOBTYPE::JOB_GEO)
 			{
@@ -4994,6 +5019,8 @@ namespace charutils
         }
         if (PAbility->getAddType() & ADDTYPE_ASTRAL_FLOW)
         {
+			addType = 2;
+			
             if (!PChar->StatusEffectContainer->HasStatusEffect(EFFECT_ASTRAL_FLOW))
             {
                 return false;
@@ -5001,6 +5028,8 @@ namespace charutils
         }
         if (PAbility->getAddType() & ADDTYPE_LEARNED)
         {
+			addType = 3;
+			
             if (!hasLearnedAbility(PChar, PAbility->getID()))
             {
                 return false;
@@ -5008,6 +5037,8 @@ namespace charutils
         }
         if (PAbility->getAddType() & ADDTYPE_LIGHT_ARTS)
         {
+			addType = 4;
+			
             if (!PChar->StatusEffectContainer->HasStatusEffect({EFFECT_LIGHT_ARTS, EFFECT_ADDENDUM_WHITE}))
             {
                 return false;
@@ -5015,6 +5046,8 @@ namespace charutils
         }
         if (PAbility->getAddType() & ADDTYPE_DARK_ARTS)
         {
+			addType = 5;
+			
             if (!PChar->StatusEffectContainer->HasStatusEffect({EFFECT_DARK_ARTS, EFFECT_ADDENDUM_BLACK}))
             {
                 return false;
@@ -5022,6 +5055,8 @@ namespace charutils
         }
         if ((PAbility->getAddType() & (ADDTYPE_JUGPET | ADDTYPE_CHARMPET)) == (ADDTYPE_JUGPET | ADDTYPE_CHARMPET))
         {
+			addType = 6;
+			
             if (!PChar->PPet || !(PChar->PPet->objtype == TYPE_MOB || (PChar->PPet->objtype == TYPE_PET && static_cast<CPetEntity*>(PChar->PPet)->getPetType() == PETTYPE_JUG_PET)))
             {
                 return false;
@@ -5029,6 +5064,8 @@ namespace charutils
         }
         if ((PAbility->getAddType() & (ADDTYPE_JUGPET | ADDTYPE_CHARMPET)) == ADDTYPE_JUGPET)
         {
+			addType = 7;
+			
             if (!PChar->PPet || PChar->PPet->objtype != TYPE_PET || static_cast<CPetEntity*>(PChar->PPet)->getPetType() != PETTYPE_JUG_PET)
             {
                 return false;
@@ -5036,6 +5073,8 @@ namespace charutils
         }
         if ((PAbility->getAddType() & (ADDTYPE_JUGPET | ADDTYPE_CHARMPET)) == ADDTYPE_CHARMPET)
         {
+			addType = 8;
+			
             if (!PChar->PPet || PChar->PPet->objtype != TYPE_MOB)
             {
                 return false;
@@ -5043,6 +5082,8 @@ namespace charutils
         }
         if (PAbility->getAddType() & ADDTYPE_AVATAR)
         {
+			addType = 9;
+			
             if (!PChar->PPet || PChar->PPet->objtype != TYPE_PET || static_cast<CPetEntity*>(PChar->PPet)->getPetType() != PETTYPE_AVATAR)
             {
                 return false;
@@ -5050,11 +5091,19 @@ namespace charutils
         }
         if (PAbility->getAddType() & ADDTYPE_AUTOMATON)
         {
+			addType = 10;
+			
             if (!PChar->PPet || PChar->PPet->objtype != TYPE_PET || static_cast<CPetEntity*>(PChar->PPet)->getPetType() != PETTYPE_AUTOMATON)
             {
                 return false;
             }
         }
+		
+		if (charutils::GetCharVar(PChar, "AuditAbilities") == 1)
+		{
+			printf("charutils.cpp CheckAbilityAddtype CHAR NAME: [%s]  ABILITY TYPE: [%i]\n", PChar->GetName(), addType);
+		}
+		
         return true;
     }
 

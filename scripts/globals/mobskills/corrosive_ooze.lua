@@ -19,10 +19,19 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local typeEffectOne = tpz.effect.ATTACK_DOWN
     local typeEffectTwo = tpz.effect.DEFENSE_DOWN
+	local power = 15
     local duration = 120
+	
+	if (mob:getObjType() == tpz.objType.PET) then
+		local master = mob:getMaster()
+		
+		if (master:getObjType() == tpz.objType.PC) then
+			power = 33
+		end
+	end
 
-    MobStatusEffectMove(mob, target, typeEffectOne, 15, 0, duration)
-    MobStatusEffectMove(mob, target, typeEffectTwo, 15, 0, duration)
+    MobStatusEffectMove(mob, target, typeEffectOne, power, 0, duration)
+    MobStatusEffectMove(mob, target, typeEffectTwo, power, 0, duration)
 
     local dmgmod = 1
     local baseDamage = mob:getWeaponDmg()*4.2

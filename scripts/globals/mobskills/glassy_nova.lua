@@ -1,10 +1,10 @@
 ---------------------------------------------
---  Freeze Rush
+--  Glassy Nova
 --
---  Description: Makes an icy charge at a single target.
+--  Description: 
 --  Type: Magical
---  Utsusemi/Blink absorb: 1 shadow
---  Range: Melee
+--  Utsusemi/Blink absorb: Ignores shadows
+--  Range: 
 --  Notes:
 ---------------------------------------------
 require("scripts/globals/settings")

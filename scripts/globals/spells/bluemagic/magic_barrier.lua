@@ -22,7 +22,7 @@ end
 
 function onSpellCast(caster,target,spell)
     local typeEffect = tpz.effect.MAGIC_SHIELD
-    local power = 1
+    local power = caster:getSkillLevel(tpz.skill.BLUE_MAGIC) * 2
     local duration = 300
 
     if (caster:hasStatusEffect(tpz.effect.DIFFUSION)) then
@@ -35,7 +35,7 @@ function onSpellCast(caster,target,spell)
         caster:delStatusEffect(tpz.effect.DIFFUSION)
     end
 
-    if (target:addStatusEffect(typeEffect, power, 0, duration) == false) then
+    if (target:addStatusEffect(typeEffect, power, 0, duration, 0, 1, 0) == false) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     end
 

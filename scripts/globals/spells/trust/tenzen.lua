@@ -30,9 +30,17 @@ function onMobSpawn(mob)
     tpz.trust.teamworkMessage(mob, message_page_offset, {
         [tpz.magic.spell.IROHA] = tpz.trust.message_offset.TEAMWORK_1,
     })
+	
+	mob:addMod(tpz.mod.CONSERVE_TP, 400)
+
+	mob:addSimpleGambit(ai.t.SELF, ai.c.TP_LT, 2000,
+        ai.r.JA, ai.s.SPECIFIC, tpz.ja.MEDITATE)
 
     mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.HASSO,
         ai.r.JA, ai.s.SPECIFIC, tpz.ja.HASSO)
+		
+	 -- mob:addSimpleGambit(ai.t.SELF, ai.c.TP_GTE, 2000,
+        -- ai.r.JA, ai.s.SPECIFIC, tpz.ja.HAGAKURE)
 
     mob:addSimpleGambit(ai.t.SELF, ai.c.HAS_TOP_ENMITY, 0,
         ai.r.JA, ai.s.SPECIFIC, tpz.ja.THIRD_EYE)

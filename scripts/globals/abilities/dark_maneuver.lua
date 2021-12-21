@@ -29,7 +29,8 @@ function onUseAbility(player,target,ability)
 
     local currentBurden = target:addBurden(tpz.magic.ele.DARK-1, burden)
 	local threshold = 30 + player:getMod(tpz.mod.OVERLOAD_THRESH)
-	local overloadChance = 5 + (currentBurden - threshold)
+	local overloadDegree = currentBurden - threshold
+	local overloadChance = 5 + overloadDegree
 	local roll = math.random(1, 100)
 	local overloaded = false
 	
@@ -40,7 +41,7 @@ function onUseAbility(player,target,ability)
 	if (roll < overloadChance) then
 		overloaded = true
 	end
---	printf("dark_maneuver.lua onUseAbility CURRENT BURDEN: [%i] OVERLOAD CHANCE: [%i] ROLL: [%i]", currentBurden, overloadChance, roll)
+	-- printf("dark_maneuver.lua onUseAbility PLAYER: [%s]  CURRENT BURDEN: [%i] THRESHOLD: [%i]  OVERLOAD CHANCE: [%i] ROLL: [%i]", player:getName(), currentBurden, threshold, overloadChance, roll)
 
     if (overloaded == true and
         (player:getMod(tpz.mod.PREVENT_OVERLOAD) > 0 or player:getPet():getMod(tpz.mod.PREVENT_OVERLOAD) > 0) and
@@ -49,8 +50,14 @@ function onUseAbility(player,target,ability)
     end
 
     if (overloaded == true) then
+		if (overloadDegree < 1) then
+			overloadDegree = 1
+		elseif (overloadDegree > 120) then
+			overloadDegree = 120
+		end
+	
         target:removeAllManeuvers()
-        target:addStatusEffect(tpz.effect.OVERLOAD, 0, 0, currentBurden - threshold)
+        target:addStatusEffect(tpz.effect.OVERLOAD, 0, 0, overloadDegree)
 		
 		ability:setMsg(tpz.msg.basic.OVERLOAD_CHANCE_OVERLOADED)
     else

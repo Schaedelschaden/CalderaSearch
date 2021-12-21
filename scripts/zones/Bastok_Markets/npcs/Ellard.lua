@@ -32,7 +32,7 @@ local keyitems = {
     [4] = {
         id = tpz.ki.CLOCKMAKING,
         rank = 3,
-        cost = 100000 -- Adjusted from 10k to make automaton attachments more expensive
+        cost = 50000 -- Adjusted from 10k to make automaton attachments more expensive
     },
     [5] = {
         id = tpz.ki.WAY_OF_THE_GOLDSMITH,

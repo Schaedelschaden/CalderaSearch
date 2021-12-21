@@ -14,10 +14,12 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local typeEffect = tpz.effect.PARALYZE
+    local typeEffect = tpz.effect.PARALYSIS
 
 	if (target:isFacing(mob)) then
-		skill:setMsg(MobGazeMove(mob, target, typeEffect, 25, 0, 0))
+		skill:setMsg(MobGazeMove(mob, target, typeEffect, 50, 0, 90))
+	else
+		skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
 	end
 
     return typeEffect

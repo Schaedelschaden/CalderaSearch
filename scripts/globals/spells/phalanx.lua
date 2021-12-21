@@ -25,10 +25,9 @@ function onSpellCast(caster, target, spell)
     -- Cap at 35
     final = math.min(final, 35)
 	
-	if (caster:hasStatusEffect(tpz.effect.EMBOLDEN)) then
-		final = final * 2
-		duration = duration / 2
-		caster:delStatusEffect(tpz.effect.EMBOLDEN)
+	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		final = final * 1.5
+		target:delStatusEffect(tpz.effect.EMBOLDEN)
 	end
 	
 	final = final + target:getMod(tpz.mod.PHALANX_RCVD)

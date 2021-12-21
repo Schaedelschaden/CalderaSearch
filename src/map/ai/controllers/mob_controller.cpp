@@ -31,6 +31,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../../enmity_container.h"
 #include "../../mob_modifier.h"
 #include "../../mob_spell_container.h"
+#include "../../entities/baseentity.h"
 #include "../../entities/mobentity.h"
 #include "../../utils/battleutils.h"
 #include "../../../common/utils.h"
@@ -53,6 +54,27 @@ void CMobController::Tick(time_point tick)
         if (PMob->PAI->IsEngaged())
         {
             DoCombatTick(tick);
+			
+			// Decay enfeebling immunity mods
+			if (m_Tick >= m_DebuffResistDecay)
+			{
+				CBattleEntity* PBattleEntity = (CBattleEntity*)PMob;
+				
+				Mod immunityMods[15] = {Mod::IMMUNITY_GRAVITY, Mod::IMMUNITY_SLEEP,   Mod::IMMUNITY_LULLABY, Mod::IMMUNITY_POISON,  Mod::IMMUNITY_PARALYZE,
+										Mod::IMMUNITY_BLIND,   Mod::IMMUNITY_SILENCE, Mod::IMMUNITY_VIRUS,   Mod::IMMUNITY_PETRIFY, Mod::IMMUNITY_BIND,
+										Mod::IMMUNITY_CURSE,   Mod::IMMUNITY_SLOW,    Mod::IMMUNITY_STUN,    Mod::IMMUNITY_CHARM,   Mod::IMMUNITY_AMNESIA};
+				
+				for (int i = 0; i < 15; i++)
+				{
+					if (PBattleEntity->getMod(immunityMods[i]) > 0)
+					{
+						PBattleEntity->delModifier(immunityMods[i], 1);
+						/* printf("mob_controller.cpp Tick  IMMUNITY %i EXPIRING\n", i); */
+					}
+				}
+
+				m_DebuffResistDecay = m_Tick + 3s;
+			}
         }
         else if (!PMob->isDead())
         {

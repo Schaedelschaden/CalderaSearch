@@ -1643,6 +1643,7 @@ tpz.mod =
 	IMMUNITY_AMNESIA                = 2016, -- Tracks how much amnesia resistance is accumulated from multiple castings of amnesia on the target before Immunobreak triggers
 	IMMUNITY_LULLABY                = 2017, -- Tracks how much lullaby resistance is accumulated from multiple castings of lullaby on the target before Immunobreak triggers
 	IMMUNITY_DEATH                  = 2018, -- Tracks how much death resistance is accumulated from multiple castings of death on the target before Immunobreak triggers
+	MAGIC_SHIELD                    = 2019, -- Tracks remaining magical damage before wearing off
 	
 	ENEMY_TP_ACCUM                  = 2800, -- Reduces enemy TP accumulation by % when player takes physical damage
 	WALTZ_POTENCY_RCVD              = 2801, -- Increases the potency of Waltz's received
@@ -1669,7 +1670,10 @@ tpz.mod =
 	COVER_DT                        = 2822, -- Adds -% Damage Taken while using Cover (Mod value is %DT; -12 = -12% DT, 12 = +12% DT)
 	ENMITY_MITIGATES_DMG            = 2823, -- Adds -% Damage Taken based on current Enmity (CE + VE)
 	ENMITY_MITIGATES_DMG_DT         = 2824, -- Handles the amount of -% Damage Taken provided by ENMITY_MITIGATES_DMG
+	CONVERT_ELEM_DMG_MP             = 2825, -- Converts % of elemental magic damage dealt to MP
 	
+	PHANTOM_ROLL_RECAST             = 2935, -- Reduces the recast time of Phantom Roll
+	REVERSE_FLOURISH_BONUS          = 2936, -- Adds to the base TP returned by Reverse Flourish
 	SMN_SPELLINTERRUPT              = 2937, -- Summoning magic interruption rate down %
 	ELEMENTAL_MAGIC_RECAST          = 2938, -- Reduces the recast of elemental magic spells
 	AUGMENT_VIVACIOUS_PULSE         = 2939, -- Augments "Vivacious Pulse" (Grants Vivacious Pulse the ability to remove status ailments associated with a -na spell)
@@ -1802,6 +1806,44 @@ tpz.mod =
 	AUGMENT_CONCENTRIC_PULSE        = 3066, -- Augments "Concentric Pulse"
 	GEOMANCY_POTENCY                = 3067, -- +Geomancy potency from Eminent Bell/Dunna/etc
 	DEFENDER_BLOCK_CHANCE			= 3068, -- Defender: Chance of Successful Block
+	
+	-- Add +fTP to weaponskills based on Skillchain property (Elemental Gorgets, Elemental Obis, Fotia Neck/Waist)
+	SC_FTP_TRANSFIXION              = 3100, -- Lv1 Light
+    SC_FTP_COMPRESSION              = 3101, -- Lv1 Dark
+    SC_FTP_LIQUEFACTION             = 3102, -- Lv1 Fire
+    SC_FTP_SCISSION                 = 3103, -- Lv1 Earth
+    SC_FTP_REVERBERATION            = 3104, -- Lv1 Water
+    SC_FTP_DETONATION               = 3105, -- Lv1 Wind
+    SC_FTP_INDURATION               = 3106, -- Lv1 Ice
+    SC_FTP_IMPACTION                = 3107, -- Lv1 Thunder
+    SC_FTP_GRAVITATION              = 3108, -- Lv2 Dark & Earth
+    SC_FTP_DISTORTION               = 3109, -- Lv2 Water & Ice
+    SC_FTP_FUSION                   = 3110, -- Lv2 Fire & Light
+    SC_FTP_FRAGMENTATION            = 3111, -- Lv2 Wind & Thunder
+    SC_FTP_LIGHT                    = 3112, -- Lv3 Fire, Light, Wind, Thunder
+    SC_FTP_DARKNESS                 = 3113, -- Lv3 Dark, Earth, Water, Ice
+    SC_FTP_LIGHT_II                 = 3114, -- Lv4 Light
+    SC_FTP_DARKNESS_II              = 3115, -- Lv4 Darkness
+	SC_FTP_ALL                      = 3116, -- All skillchains
+	
+	-- Add +fTP to weaponskills based on Day element (Athos's Gloves, Mekira-oto, Gavialis Helm)
+	WS_DAY_FTP_TRANSFIXION          = 3117, -- Lv1 Light
+    WS_DAY_FTP_COMPRESSION          = 3118, -- Lv1 Dark
+    WS_DAY_FTP_LIQUEFACTION         = 3119, -- Lv1 Fire
+    WS_DAY_FTP_SCISSION             = 3120, -- Lv1 Earth
+    WS_DAY_FTP_REVERBERATION        = 3121, -- Lv1 Water
+    WS_DAY_FTP_DETONATION           = 3122, -- Lv1 Wind
+    WS_DAY_FTP_INDURATION           = 3123, -- Lv1 Ice
+    WS_DAY_FTP_IMPACTION            = 3124, -- Lv1 Thunder
+    WS_DAY_FTP_GRAVITATION          = 3125, -- Lv2 Dark & Earth
+    WS_DAY_FTP_DISTORTION           = 3126, -- Lv2 Water & Ice
+    WS_DAY_FTP_FUSION               = 3127, -- Lv2 Fire & Light
+    WS_DAY_FTP_FRAGMENTATION        = 3128, -- Lv2 Wind & Thunder
+    WS_DAY_FTP_LIGHT                = 3129, -- Lv3 Fire, Light, Wind, Thunder
+    WS_DAY_FTP_DARKNESS             = 3130, -- Lv3 Dark, Earth, Water, Ice
+    WS_DAY_FTP_LIGHT_II             = 3131, -- Lv4 Light
+    WS_DAY_FTP_DARKNESS_II          = 3132, -- Lv4 Darkness
+	WS_DAY_FTP_ALL                  = 3133, -- All skillchains
 	
 	SDT_FIRE                        = 3200, -- Fire Specific Damage Taken
     SDT_ICE                         = 3201, -- Ice Specific Damage Taken

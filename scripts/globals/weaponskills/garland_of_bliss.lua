@@ -1,6 +1,7 @@
 -----------------------------------
 -- Garland Of Bliss
 -- Staff weapon skill
+-- Weaponskill Category: Magical
 -- Skill level: N/A
 -- Lowers target's defense. Duration of effect varies with TP. Nirvana: Aftermath effect varies with TP.
 -- Reduces enemy's defense by 12.5%.
@@ -25,6 +26,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.ftp100 = 2 params.ftp200 = 2 params.ftp300 = 2
     params.str_wsc = 0.0 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0
     params.mnd_wsc = 0.4 params.chr_wsc = 0.0
+	params.dSTAT = (player:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)) * 2
     params.ele = tpz.magic.ele.LIGHT
     params.skill = tpz.skill.STAFF
     params.includemab = true

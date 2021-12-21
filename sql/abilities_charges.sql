@@ -31,7 +31,7 @@ INSERT INTO `abilities_charges` (`recastId`, `job`, `level`, `maxCharges`, `char
 	(231, 20, 70, 4, 60, 0),
 	(231, 20, 90, 5, 48, 0),
 	(195, 17, 40, 2, 60, 1410),
-	(102, 9, 25, 3, 30, 0);
+	(102, 9, 25, 3, 30, 902);
 /*!40000 ALTER TABLE `abilities_charges` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

@@ -168,7 +168,7 @@ bool CheckFisherLuck(CCharEntity* PChar)
 
 	int32 FishingChance = tpzrand::GetRandomNumber(100);
 
-	if (FishingChance <= 20)
+	if (FishingChance <= 80)
 	{
 		const char* Query =
             "SELECT "

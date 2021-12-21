@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `mob_spawn_mods` (
   PRIMARY KEY (`mobid`,`modid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=13 PACK_KEYS=1;
 
--- Dumping data for table tpzdb.mob_spawn_mods: 531 rows
+-- Dumping data for table tpzdb.mob_spawn_mods: 530 rows
 /*!40000 ALTER TABLE `mob_spawn_mods` DISABLE KEYS */;
 INSERT INTO `mob_spawn_mods` (`mobid`, `modid`, `value`, `is_mob_mod`) VALUES
 	(16806117, 288, 40, 0),
@@ -155,7 +155,6 @@ INSERT INTO `mob_spawn_mods` (`mobid`, `modid`, `value`, `is_mob_mod`) VALUES
 	(16814432, 168, 2, 0),
 	(16814432, 29, 33, 0),
 	(16921015, 387, -95, 0),
-	(16921015, 390, -95, 0),
 	(16921016, 60, 100, 0),
 	(16921016, 61, -100, 0),
 	(16921017, 60, -100, 0),

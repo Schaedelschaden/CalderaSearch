@@ -41,7 +41,7 @@ function onMobFight(mob, target)
 	local act = mob:getCurrentAction()
 	
 	if act == tpz.act.MOBABILITY_START or act == tpz.act.MOBABILITY_USING or act == tpz.act.MOBABILITY_FINISH or act == tpz.act.MAGIC_START or act == tpz.act.MAGIC_CASTING or act == tpz.act.MAGIC_START then
-        isBusy = true -- Set to true if Seiryu is in any stage of using a mobskill or casting a spell
+        isBusy = true -- Set to true if Ramuh is in any stage of using a mobskill or casting a spell
     end
 	
    	-- if (mob:getHPP() <= 50 and isBusy == false and has2Hrd ~= 1) then

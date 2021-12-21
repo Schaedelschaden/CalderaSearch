@@ -1,6 +1,7 @@
 -----------------------------------
 -- Sanguine Blade
 -- Sword weapon skill
+-- Weaponskill Category: Magical
 -- Skill Level: 300
 -- Drains a percentage of damage dealt to HP varies with TP.
 -- Will not stack with Sneak Attack.
@@ -34,6 +35,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.ftp100 = 10.75 params.ftp200 = 10.75 params.ftp300 = 10.75
     params.str_wsc = 0.3 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.5 params.chr_wsc = 0.0
+	params.dSTAT = (player:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)) * 2
     params.ele = tpz.magic.ele.DARK
     params.skill = tpz.skill.SWORD
     params.includemab = true

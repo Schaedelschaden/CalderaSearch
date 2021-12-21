@@ -493,13 +493,24 @@ local loot =
             {itemid = 4069, droprate = 150},   -- Rem Chapt 6
         },
 		{
-            {itemid = 4080, droprate =  160}, -- Moonbow Urushi
-            {itemid = 4079, droprate =  80},  -- Moonbow Leather
-            {itemid = 4078, droprate =  120}, -- Moonbow Cloth
-            {itemid = 4077, droprate =  240}, -- Moonbow Steel
-            {itemid = 4081, droprate =  240}, -- Moonbow Stone
-			{itemid = 4082, droprate =  160}, -- Moonlight Coral
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 4028, droprate = 150},   -- Akaso Cloth
         },
+		{
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 8751, droprate = 150},   -- Ancestral Cloth
+        },
+		{
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 812, droprate = 150},   -- Deathstone
+        },
+		{
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 8728, droprate = 150},   -- Sif's Macrame
+        },		
+		{
+            {itemid = 8728, droprate = 1000},   -- Sif's Macrame
+        },	
     },
     -- BCNM Rapid Raptors
     [109] =
@@ -581,6 +592,10 @@ local loot =
         {
 			{itemid = 0,   droprate = 850},    -- Nothing
            {itemid = 8734, droprate = 150},    -- Kupon I S-1
+        },
+		{
+			{itemid = 0,    droprate = 800},   -- Nothing
+            {itemid = 837,  droprate = 200},   -- Malboro Fiber
         },
     },
 }

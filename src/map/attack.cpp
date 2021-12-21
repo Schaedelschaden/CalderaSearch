@@ -576,16 +576,22 @@ void CAttack::ProcessDamage()
         m_damage = (uint32)((m_attacker->GetRangedWeaponDmg() + battleutils::GetFSTR(m_attacker, m_victim, slot)) * m_damageRatio);
     }
 	
+	// Caldera H2H base damage adjustment
+	if (m_attacker->objtype == TYPE_PC && (mainWeapon != nullptr && mainWeapon->getSkillType() == SKILL_HAND_TO_HAND))
+	{
+		m_damage = (uint32)(m_damage * 1.50f);
+	}
+	
 	// Caldera Dagger base damage adjustment
 	if (m_attacker->objtype == TYPE_PC && (mainWeapon != nullptr && mainWeapon->getSkillType() == SKILL_DAGGER || subWeapon != nullptr && subWeapon->getSkillType() == SKILL_DAGGER))
 	{
-		m_damage = (uint32)(m_damage * 1.50f);
+		m_damage = (uint32)(m_damage * 1.35f);
 	}
 	
 	// Caldera Katana base damage adjustment
 	if (m_attacker->objtype == TYPE_PC && (mainWeapon != nullptr && mainWeapon->getSkillType() == SKILL_KATANA || subWeapon != nullptr && subWeapon->getSkillType() == SKILL_KATANA))
 	{
-		m_damage = (uint32)(m_damage * 1.35f);
+		m_damage = (uint32)(m_damage * 1.50f);
 	}
 
     // Soul eater.
@@ -740,7 +746,8 @@ void CAttack::ProcessDamage()
 	// Apply Restraint Weaponskill Damage Modifier
 	// Effect power tracks the bonus per hit to be added to the modifiers
 	// Sub Effect power tracks the total bonus
-	if (m_isFirstSwing && m_attacker->objtype == TYPE_PC && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_RESTRAINT))
+	/* && m_attacker->objtype == TYPE_PC  */
+	if (m_isFirstSwing && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_RESTRAINT))
 	{
 		CStatusEffect* effect = m_attacker->StatusEffectContainer->GetStatusEffect(EFFECT_RESTRAINT, 0);
 		if (effect->GetSubPower() > 0 && effect->GetSubPower() < 30)

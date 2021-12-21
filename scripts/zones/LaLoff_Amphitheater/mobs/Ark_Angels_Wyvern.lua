@@ -5,6 +5,14 @@
 require("scripts/globals/status")
 -----------------------------------
 
+function onMobSpawn(mob)
+    mob:setMod(tpz.mod.SLEEPRES, 100) -- Resistance to Sleep
+    mob:setMod(tpz.mod.LULLABYRES, 100) -- Resistance to Lullaby
+	mob:setMod(tpz.mod.MATT, 100)
+	mob:setMod(tpz.mod.REGAIN, 100)
+	mob:setMod(tpz.mod.DMG, -30)
+end
+
 function onMobEngaged(mob, target)
     local mobid = mob:getID()
 

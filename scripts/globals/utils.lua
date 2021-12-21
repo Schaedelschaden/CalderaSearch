@@ -69,6 +69,26 @@ function utils.stoneskin(target, dmg)
     return dmg
 end
 
+-- returns unabsorbed magic damage
+function utils.magicshield(target, dmg)
+    --handling Magic Barrier/Shield
+    if (dmg > 0) then
+        skin = target:getMod(tpz.mod.MAGIC_SHIELD)
+        if (skin > 0) then
+            if (skin > dmg) then --absorb all damage
+                target:delMod(tpz.mod.MAGIC_SHIELD, dmg)
+                return 0
+            else --absorbs some damage then wear
+                target:delStatusEffect(tpz.effect.MAGIC_SHIELD)
+                target:setMod(tpz.mod.MAGIC_SHIELD, 0)
+                return dmg - skin
+            end
+        end
+    end
+
+    return dmg
+end
+
 function utils.takeShadows(target, dmg, shadowbehav)
     if (shadowbehav == nil) then
         shadowbehav = 1

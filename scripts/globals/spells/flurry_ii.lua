@@ -11,10 +11,16 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+	local power = 30
     local duration = calculateDuration(150, spell:getSkillType(), spell:getSpellGroup(), caster, target)
     duration = calculateDurationForLvl(duration, 96, target:getMainLvl())
 
-    if target:addStatusEffect(tpz.effect.FLURRY_II, 30, 0, duration) then
+	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		power = power * 1.5
+		target:delStatusEffect(tpz.effect.EMBOLDEN)
+	end
+
+    if target:addStatusEffect(tpz.effect.FLURRY_II, power, 0, duration) then
         spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
     else
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)

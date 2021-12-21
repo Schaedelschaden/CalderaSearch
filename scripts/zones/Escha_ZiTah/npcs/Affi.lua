@@ -80,7 +80,7 @@ function onTrigger(player, npc)
 end
 
 function onEventUpdate(player, csid, option)
-	printf("Affi.lua onEventUpdate CSID: [%i]  Option: [%i]", csid, option)
+	-- printf("Affi.lua onEventUpdate CSID: [%i]  Option: [%i]", csid, option)
 	local silt = player:getCurrency("escha_silt")
 	local param3 = 0x070001C4
 	

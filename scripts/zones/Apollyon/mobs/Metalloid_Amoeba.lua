@@ -8,6 +8,8 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.SLASHRES, 1500)
     mob:setMod(tpz.mod.HTHRES, 0)
     mob:setMod(tpz.mod.IMPACTRES, 0)
+	mob:setMod(tpz.mod.ATT, 1057)
+	mob:addMod(tpz.mod.ACC, 150)
 end
 
 function onMobDeath(mob, player, isKiller, noKiller)

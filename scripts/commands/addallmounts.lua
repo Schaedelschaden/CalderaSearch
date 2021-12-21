@@ -8,7 +8,7 @@ require("scripts/globals/keyitems")
 
 cmdprops =
 {
-    permission = 1,
+    permission = 0,
     parameters = "s"
 }
 

@@ -33,8 +33,6 @@ function onMobEngaged(mob, target)
 end
 
 function onMobFight(mob, target)
-	mob:setMod(tpz.mod.CRITHITRATE, 25)
-	mob:setMod(tpz.mod.CRIT_DMG_INCREASE, -10)
    	local isBusy = false
 	local has2Hrd = mob:getLocalVar("has2Hrd")
 	local act = mob:getCurrentAction()
@@ -72,14 +70,23 @@ function onMobFight(mob, target)
 end
 
 function onMobDisengage(mob)
-    for i = 1, 4 do DespawnMob(ID.mob.GURFURLUR_THE_MENACING + i) end
+	mob:setLocalVar("has2Hrd", 0)
+	
+    for i = 1, 4 do
+		DespawnMob(ID.mob.GURFURLUR_THE_MENACING + i)
+	end
 end
 
 function onMobDeath(mob, player, isKiller)
     player:addTitle(tpz.title.TROLL_SUBJUGATOR)
-    for i = 1, 4 do DespawnMob(ID.mob.GURFURLUR_THE_MENACING + i) end
+	
+    for i = 1, 4 do
+		DespawnMob(ID.mob.GURFURLUR_THE_MENACING + i)
+	end
 end
 
 function onMobDespawn(mob)
-    for i = 1, 4 do DespawnMob(ID.mob.GURFURLUR_THE_MENACING + i) end
+    for i = 1, 4 do
+		DespawnMob(ID.mob.GURFURLUR_THE_MENACING + i)
+	end
 end

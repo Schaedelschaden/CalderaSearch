@@ -26,7 +26,8 @@ function onPetAbility(target, pet, skill, player)
     target:takeDamage(totaldamage, pet, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
     target:updateEnmityFromDamage(pet, totaldamage)
 	
-	player:PrintToPlayer(string.format("The %s takes %i points of damage.", fixedMobName, totaldamage),tpz.msg.channel.NS_SAY)
+	pet:PrintToArea(string.format("The %s takes %i points of damage.", fixedName, totaldamage),tpz.msg.channel.NS_SAY, tpz.msg.area.SAY)
+	-- player:PrintToPlayer(string.format("The %s takes %i points of damage.", fixedMobName, totaldamage),tpz.msg.channel.NS_SAY)
 	
 	PlayPetAnimation(pet, target, 13, animationID)
 

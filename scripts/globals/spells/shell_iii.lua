@@ -25,10 +25,9 @@ function onSpellCast(caster, target, spell)
     end
     local power = utils.roundup((power + (buff * tier)) / 2.56) -- takes the result and converts it back to a usable DMGMAGIC value
 	
-	if (caster:hasStatusEffect(tpz.effect.EMBOLDEN)) then
-		power = power * 2
-		duration = duration / 2
-		caster:delStatusEffect(tpz.effect.EMBOLDEN)
+	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		power = power * 1.5
+		target:delStatusEffect(tpz.effect.EMBOLDEN)
 	end
 
     local typeEffect = tpz.effect.SHELL

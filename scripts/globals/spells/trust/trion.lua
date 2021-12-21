@@ -28,6 +28,12 @@ function onMobSpawn(mob)
 
     mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_HAS_TOP_ENMITY, 0,
                         ai.r.JA, ai.s.SPECIFIC, tpz.ja.PROVOKE)
+						
+	mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.SENTINEL,
+                        ai.r.JA, ai.s.SPECIFIC, tpz.ja.SENTINEL)
+						
+	mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_HAS_TOP_ENMITY, 0,
+                        ai.r.JA, ai.s.SPECIFIC, tpz.ja.SHIELD_BASH)
 
     mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.FLASH,
                         ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.FLASH)

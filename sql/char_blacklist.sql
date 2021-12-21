@@ -18,8 +18,13 @@ CREATE TABLE IF NOT EXISTS `char_blacklist` (
   PRIMARY KEY (`charid_target`,`charid_owner`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.char_blacklist: 0 rows
+-- Dumping data for table tpzdb.char_blacklist: 4 rows
 /*!40000 ALTER TABLE `char_blacklist` DISABLE KEYS */;
+INSERT INTO `char_blacklist` (`charid_owner`, `charid_target`) VALUES
+	(95, 152),
+	(106, 192),
+	(107, 192),
+	(108, 192);
 /*!40000 ALTER TABLE `char_blacklist` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

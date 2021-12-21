@@ -1,7 +1,7 @@
 ---------------------------------------------
 --  Lethal Triclip
 --
---  Description: Deals damage in a threefold attack. Additional effect: DEX Down
+--  Description: Deals damage in a threefold attack. Additional effect: Max HP Down
 --  Type: Physical
 --  Utsusemi/Blink absorb: 3 shadows
 --  Range: Melee
@@ -26,9 +26,9 @@ function onMobWeaponSkill(target, mob, skill)
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
 
-    local typeEffect = tpz.effect.DEX_DOWN
+    local typeEffect = tpz.effect.MAX_HP_DOWN
 
-    MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 10, 3, 120)
+    MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 25, 0, 120)
 
     return dmg
 end

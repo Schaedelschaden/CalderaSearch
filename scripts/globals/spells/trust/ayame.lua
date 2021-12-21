@@ -25,6 +25,9 @@ function onMobSpawn(mob)
         [tpz.magic.spell.GILGAMESH] = tpz.trust.message_offset.TEAMWORK_2,
     })
 
+	mob:addSimpleGambit(ai.t.SELF, ai.c.TP_LT, 1000,
+        ai.r.JA, ai.s.SPECIFIC, tpz.ja.MEDITATE)
+
     mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.HASSO,
         ai.r.JA, ai.s.SPECIFIC, tpz.ja.HASSO)
 

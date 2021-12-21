@@ -29,7 +29,7 @@ function onTrigger(player,npc)
 		1677, 4389,		-- Aqueous Orichalcum Ingot
 		1834, 4010,		-- Ardent Jadeite
 		2305, 105,		-- Handful of Auric Sand
-		779, 3584,		-- Aventurine
+		779, 27000,		-- Aventurine
 		2877, 4935,		-- Ingot of Befouled Silver
 		1679, 6408,		-- Bewitched Gold Ingot
 		793, 3600,		-- Black Pearl
@@ -42,9 +42,9 @@ function onTrigger(player,npc)
 		3318, 135,		-- Breeze Gem
 		3299, 600,		-- Breeze Geode
 		--3526, 900,		-- Carbite
-		767, 4000,		-- Carnelian
+		767, 27000,		-- Carnelian
 		801, 7380,		-- Chrysoberyl
-		--780, 4075,		-- Clarite
+		780, 27000,		-- Clarite
 		809, 600,		-- Clear Topaz
 		2859, 3180,		-- Chunk of Cobalt Ore
 		1306, 11961,	-- Dark Bead
@@ -67,7 +67,7 @@ function onTrigger(player,npc)
 		810, 6984,		-- Fluorite
 		2765, 2100,		-- Chunk of Fool's Gold Ore
 		1676, 4440,		-- Frigid Orichalcum Ingot
-		--777, 3952,		-- Fulmenite
+		777, 27000,		-- Fulmenite
 		790, 3600,		-- Garnet
 		--3522, 900,		-- Garudite
 		2360, 2664,		-- Golden Gear
@@ -77,7 +77,7 @@ function onTrigger(player,npc)
 		--808, 3600,		-- Goshenite
 		1465, 7950,		-- Slab of Granite
 		772, 615,		-- Green Rock
-		778, 9000,		-- Heliodor
+		778, 27000,		-- Heliodor
 		1300, 11961,	-- Ice Bead
 		1256, 11118,	-- Chunk of Ice Ore
 		--3520, 900,		-- Ifritite
@@ -87,7 +87,7 @@ function onTrigger(player,npc)
 		2880, 2829,		-- Kidney Stone
 		1460, 29811,	-- Koh-I-Noor
 		795, 636,		-- Lapis Lazuli
-		781, 3401,		-- Larimar
+		781, 27000,		-- Larimar
 		3525, 900,		-- Leviatite
 		1303, 11961,	-- Lightning Bead
 		1259, 10875,	-- Chunk of Lightning Ore

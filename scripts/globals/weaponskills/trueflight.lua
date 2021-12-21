@@ -1,5 +1,7 @@
 -----------------------------------
 -- Trueflight
+-- Marksmanship weapon skill
+-- Weaponskill Category: Magical
 -- Skill Level: N/A
 -- Description: Deals light elemental damage. Damage varies with TP. Gastraphetes: Aftermath effect varies with TP.
 -- Available only after completing the Unlocking a Myth (Ranger) quest.
@@ -28,12 +30,14 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.str_wsc = 0.0 params.dex_wsc = 0.0 params.vit_wsc = 0.0
     params.agi_wsc = 0.3 params.int_wsc = 0.0 params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
+	params.dSTAT = (player:getStat(tpz.mod.AGI) - target:getStat(tpz.mod.INT)) * 2
     params.ele = tpz.magic.ele.LIGHT
     params.skill = tpz.skill.MARKSMANSHIP
     params.includemab = true
+	params.adjustMDEFCalc = 0.07
 
     if USE_ADOULIN_WEAPON_SKILL_CHANGES then
-        params.ftp100 = 3.8906 params.ftp200 = 6.3906 params.ftp300 = 9.3906
+        params.ftp100 = 3.8906 params.ftp200 = 6.3906 params.ftp300 = 9.3906 -- 3.8906 / 6.3906 / 9.3906
         params.agi_wsc = 1.0
     end
 

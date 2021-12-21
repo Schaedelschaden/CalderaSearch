@@ -29,11 +29,11 @@ end
 
 function onMobFight(mob, target)
 
-    local bf = mob:getBattlefield()
-    if bf:getID() == 961 and mob:getHPP() < 30 then
-        bf:win()
-        return
-    end
+    -- local bf = mob:getBattlefield()
+    -- if bf:getID() == 961 and mob:getHPP() < 30 then
+        -- bf:win()
+        -- return
+    -- end
 
     if (mob:hasStatusEffect(tpz.effect.INVINCIBLE) == false and mob:actionQueueEmpty() == true) then
         local changeTime = mob:getLocalVar("changeTime")

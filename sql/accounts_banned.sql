@@ -20,8 +20,11 @@ CREATE TABLE IF NOT EXISTS `accounts_banned` (
   PRIMARY KEY (`accid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.accounts_banned: 0 rows
+-- Dumping data for table tpzdb.accounts_banned: 2 rows
 /*!40000 ALTER TABLE `accounts_banned` DISABLE KEYS */;
+INSERT INTO `accounts_banned` (`accid`, `timebann`, `timeunbann`, `banncomment`) VALUES
+	(1040, '2021-06-22 11:59:00', '2100-01-01 00:00:00', 'Zillion - Banned for using 3rd Party Tools which include Truesight and/or Radar Hack'),
+	(1076, '2021-06-22 11:59:00', '2100-01-01 00:00:00', 'Zillion Alt - Banned for using 3rd Party Tools which include Truesight and/or Radar Hack');
 /*!40000 ALTER TABLE `accounts_banned` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

@@ -21,6 +21,10 @@ function onSpellCast(caster, target, spell)
 
     potency = calculatePotency(potency, spell:getSkillType(), caster, target)
 
+	if (potency > 44) then
+		potency = 44
+	end
+
     local duration = calculateDuration(120, spell:getSkillType(), spell:getSpellGroup(), caster, target)
     local params = {}
     params.diff = dMND

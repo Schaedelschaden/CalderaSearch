@@ -18,7 +18,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
 
     local params = {}
     params.numHits = 4
-    params.ftp100 = 5.25 params.ftp200 = 6.50 params.ftp300 = 7.75
+    params.ftp100 = 4.25 params.ftp200 = 5.50 params.ftp300 = 6.75
     params.str_wsc = 0.85 + (player:getMerit(tpz.merit.STARDIVER) / 100) params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false

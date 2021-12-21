@@ -29,7 +29,8 @@ function onPetAbility(target, pet, skill, player)
     target:updateEnmityFromDamage(pet, damage)
 	target:dispelStatusEffect()
 	
-	player:PrintToPlayer(string.format("The %s takes %i points of damage.", fixedMobName, damage),tpz.msg.channel.NS_SAY)
+	pet:PrintToArea(string.format("The %s takes %i points of damage.", fixedName, damage),tpz.msg.channel.NS_SAY, tpz.msg.area.SAY)
+	-- player:PrintToPlayer(string.format("The %s takes %i points of damage.", fixedMobName, damage),tpz.msg.channel.NS_SAY)
 	
 	PlayPetAnimation(pet, target, 13, animationID)
 

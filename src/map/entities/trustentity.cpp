@@ -160,47 +160,43 @@ void CTrustEntity::OnRangedAttack(CRangeState& state, action_t& action)
     actionTarget.speceffect = SPECEFFECT_HIT;		//0x60 (SPECEFFECT_HIT + SPECEFFECT_RECOIL)
     actionTarget.messageID = 352;
 
-    /*
-    CItemWeapon* PItem = (CItemWeapon*)this->getEquip(SLOT_RANGED);
-    CItemWeapon* PAmmo = (CItemWeapon*)this->getEquip(SLOT_AMMO);
-
-    bool ammoThrowing = PAmmo ? PAmmo->isThrowing() : false;
-    bool rangedThrowing = PItem ? PItem->isThrowing() : false;
-
-    uint8 slot = SLOT_RANGED;
-
-    if (ammoThrowing)
-    {
-        slot = SLOT_AMMO;
-        PItem = nullptr;
-    }
-    if (rangedThrowing)
-    {
-        PAmmo = nullptr;
-    }
-    */
-
+	uint8 mLvl = this->GetMLevel();
     uint8 slot = SLOT_RANGED;
     uint8 shadowsTaken = 0;
     uint8 hitCount = 1;			// 1 hit by default
     uint8 realHits = 0;			// to store the real number of hit for tp multipler
     auto ammoConsumed = 0;
     bool hitOccured = false;	// track if player hit mob at all
-    bool isSange = false;
     bool isBarrage = StatusEffectContainer->HasStatusEffect(EFFECT_BARRAGE, 0);
 
-    /*
-    // if barrage is detected, getBarrageShotCount also checks for ammo count
-    if (!ammoThrowing && !rangedThrowing && isBarrage)
+    // If barrage is detected add shots based on level
+    if (isBarrage)
     {
-        hitCount += battleutils::getBarrageShotCount(this);
+        if (mLvl < 30)
+		{
+			hitCount = 3;
+		}
+		else if (mLvl < 50)
+		{
+			hitCount = 4;
+		}
+		else if (mLvl < 75)
+		{
+			hitCount = 5;
+		}
+		else if (mLvl < 90)
+		{
+			hitCount = 6;
+		}
+		else if (mLvl < 99)
+		{
+			hitCount = 7;
+		}
+		else if (mLvl >= 99)
+		{
+			hitCount = 8;
+		}
     }
-    else if (ammoThrowing && this->StatusEffectContainer->HasStatusEffect(EFFECT_SANGE))
-    {
-        isSange = true;
-        hitCount += getMod(Mod::UTSUSEMI);
-    }
-    */
 
     // loop for barrage hits, if a miss occurs, the loop will end
     for (uint8 i = 1; i <= hitCount; ++i)
@@ -234,35 +230,7 @@ void CTrustEntity::OnRangedAttack(CRangeState& state, action_t& action)
                 hitOccured = true;
                 realHits++;
 
-                if (isSange)
-                {
-                    // change message to sange
-                    actionTarget.messageID = 77;
-                }
-
                 damage = (int32)((this->GetRangedWeaponDmg() + battleutils::GetFSTR(this, PTarget, slot)) * pdif);
-                /*
-                if (slot == SLOT_RANGED)
-                {
-                    if (state.IsRapidShot())
-                    {
-                        damage = attackutils::CheckForDamageMultiplier(this, PItem, damage, PHYSICAL_ATTACK_TYPE::RAPID_SHOT, SLOT_RANGED);
-                    }
-                    else
-                    {
-                        damage = attackutils::CheckForDamageMultiplier(this, PItem, damage, PHYSICAL_ATTACK_TYPE::RANGED, SLOT_RANGED);
-                    }
-
-                    if (PItem != nullptr)
-                    {
-                        charutils::TrySkillUP(this, (SKILLTYPE)PItem->getSkillType(), PTarget->GetMLevel());
-                    }
-                }
-                else if (slot == SLOT_AMMO && PAmmo != nullptr)
-                {
-                    charutils::TrySkillUP(this, (SKILLTYPE)PAmmo->getSkillType(), PTarget->GetMLevel());
-                }
-                */
             }
         }
         else //miss
@@ -272,44 +240,31 @@ void CTrustEntity::OnRangedAttack(CRangeState& state, action_t& action)
             actionTarget.messageID = 354;
             hitCount = i; // end barrage, shot missed
         }
-        /*
-        // check for recycle chance
-        uint16 recycleChance = getMod(Mod::RECYCLE);
-        if (charutils::hasTrait(this, TRAIT_RECYCLE))
-        {
-            recycleChance += PMeritPoints->GetMeritValue(MERIT_RECYCLE, this);
-        }
 
-        // Only remove unlimited shot on hit
-        if (hitOccured && this->StatusEffectContainer->HasStatusEffect(EFFECT_UNLIMITED_SHOT))
-        {
-            StatusEffectContainer->DelStatusEffect(EFFECT_UNLIMITED_SHOT);
-            recycleChance = 100;
-        }
-
-        if (PAmmo != nullptr && tpzrand::GetRandomNumber(100) > recycleChance)
-        {
-            ++ammoConsumed;
-            TrackArrowUsageForScavenge(PAmmo);
-            if (PAmmo->getQuantity() == i)
-            {
-                hitCount = i;
-            }
-        }
-        */
         totalDamage += damage;
     }
 
     // if a hit did occur (even without barrage)
     if (hitOccured == true)
     {
-        // any misses with barrage cause remaing shots to miss, meaning we must check Action.reaction
-        if (actionTarget.reaction == REACTION_EVADE && (this->StatusEffectContainer->HasStatusEffect(EFFECT_BARRAGE) || isSange))
+        // any misses with barrage cause remaining shots to miss, meaning we must check Action.reaction
+        if (actionTarget.reaction == REACTION_EVADE && (this->StatusEffectContainer->HasStatusEffect(EFFECT_BARRAGE)))
         {
             actionTarget.messageID = 352;
             actionTarget.reaction = REACTION_HIT;
             actionTarget.speceffect = SPECEFFECT_CRITICAL_HIT;
         }
+		
+		if (this->StatusEffectContainer->HasStatusEffect(EFFECT_DOUBLE_SHOT) && tpzrand::GetRandomNumber(100) < this->getMod(Mod::DOUBLE_SHOT_RATE) && realHits == 1)
+		{
+			totalDamage = totalDamage * 2;
+			realHits = 2;
+		}
+		else if (this->StatusEffectContainer->HasStatusEffect(EFFECT_TRIPLE_SHOT) && tpzrand::GetRandomNumber(100) < this->getMod(Mod::TRIPLE_SHOT_RATE) && realHits == 1)
+		{
+			totalDamage = totalDamage * 3;
+			realHits = 3;
+		}
 
         actionTarget.param = battleutils::TakePhysicalDamage(this, PTarget, PHYSICAL_ATTACK_TYPE::RANGED, totalDamage, false, slot, realHits, nullptr, true, true);
 
@@ -325,17 +280,6 @@ void CTrustEntity::OnRangedAttack(CRangeState& state, action_t& action)
             actionTarget.param = -(actionTarget.param);
             actionTarget.messageID = 382;
         }
-
-        /*
-        //add additional effects
-        //this should go AFTER damage taken
-        //or else sleep effect won't work
-        //battleutils::HandleRangedAdditionalEffect(this,PTarget,&Action);
-        //TODO: move all hard coded additional effect ammo to scripts
-        if ((PAmmo != nullptr && battleutils::GetScaledItemModifier(this, PAmmo, Mod::ADDITIONAL_EFFECT) > 0) ||
-            (PItem != nullptr && battleutils::GetScaledItemModifier(this, PItem, Mod::ADDITIONAL_EFFECT) > 0)) {}
-        luautils::OnAdditionalEffect(this, PTarget, (PAmmo != nullptr ? PAmmo : PItem), &actionTarget, totalDamage);
-         */
     }
     else if (shadowsTaken > 0)
     {
@@ -352,17 +296,9 @@ void CTrustEntity::OnRangedAttack(CRangeState& state, action_t& action)
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_BARRAGE, 0)) {
         StatusEffectContainer->DelStatusEffect(EFFECT_BARRAGE, 0);
     }
-    else if (isSange)
-    {
-        uint16 power = StatusEffectContainer->GetStatusEffect(EFFECT_SANGE)->GetPower();
-
-        // remove shadows
-        while (realHits-- && tpzrand::GetRandomNumber(100) <= power && battleutils::IsAbsorbByShadow(this));
-
-        StatusEffectContainer->DelStatusEffect(EFFECT_SANGE);
-    }
+	
     battleutils::ClaimMob(PTarget, this);
-    //battleutils::RemoveAmmo(this, ammoConsumed);
+	
     // only remove detectables
     StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
 }

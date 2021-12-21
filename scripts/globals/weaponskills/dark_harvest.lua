@@ -1,6 +1,7 @@
 -----------------------------------
 -- Dark Harvest
 -- Scythe weapon skill
+-- Weaponskill Category: Magical
 -- Skill Level: 30
 -- Delivers a dark elemental attack. Damage varies with TP.
 -- Aligned with the Aqua Gorget.
@@ -20,6 +21,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.ftp100 = 1 params.ftp200 = 2 params.ftp300 = 2.5
     params.str_wsc = 0.2 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.2 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
+	params.dSTAT = ((player:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)) / 2) + 8
     params.ele = tpz.magic.ele.DARK
     params.skill = tpz.skill.SCYTHE
     params.includemab = true

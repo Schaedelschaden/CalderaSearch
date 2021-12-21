@@ -41,7 +41,7 @@ function onTrigger(player,npc)
 					13599,	2000,		-- (Back) Rabbit Mantle +1
 					14695,	2000,		-- (Earring) Hope Earring +1
 					13492,	2000,		-- (Ring) Copper Ring +1
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_WAR =
@@ -63,7 +63,7 @@ function onTrigger(player,npc)
 					13609,	5000,		-- (Back) Wolf Mantle +1
 					14703,	5000,		-- (Earring) Loyalty Earring +1
 					13519,	5000,		-- (Ring) Mythril Ring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_WAR =
@@ -88,7 +88,7 @@ function onTrigger(player,npc)
 					13403,	10000,		-- (Earring) Assault Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_WAR =
@@ -117,7 +117,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_WAR =
@@ -154,7 +154,7 @@ function onTrigger(player,npc)
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
 					10797,	50000,		-- (Ring) Dagaz Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -178,7 +178,7 @@ function onTrigger(player,npc)
 					13599,	2000,		-- (Back) Rabbit Mantle +1
 					14695,	2000,		-- (Earring) Hope Earring +1
 					13492,	2000,		-- (Ring) Copper Ring +1
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_MNK =
@@ -195,7 +195,7 @@ function onTrigger(player,npc)
 					13575,	5000,		-- (Back) Ram Mantle +1
 					14703,	5000,		-- (Earring) Loyalty Earring +1
 					13519,	5000,		-- (Ring) Mythril Ring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_MNK =
@@ -216,7 +216,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_MNK =
@@ -242,7 +242,7 @@ function onTrigger(player,npc)
 					13186,  75000,      -- (Waist) Black Belt
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_MNK =
@@ -273,7 +273,7 @@ function onTrigger(player,npc)
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
 					10797,	50000,		-- (Ring) Dagaz Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -299,7 +299,7 @@ function onTrigger(player,npc)
 					14694,	2000,		-- (Earring) Energy Earring +1
 					13440,	2000,		-- (Ring) Ascetic's Ring
 					13548,	50000,		-- (Ring) Astral Ring
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_WHM =
@@ -319,7 +319,7 @@ function onTrigger(player,npc)
 					13233,	5000,		-- (Waist) Gold Obi +1
 					13618,	5000,		-- (Back) White Cape +1
 					14702,	5000,		-- (Earring) Aura Earring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_WHM =
@@ -341,7 +341,7 @@ function onTrigger(player,npc)
 					15972,	10000,		-- (Earring) Insomnia Earring
 					15776,	10000,		-- (Ring) Ebullient Ring
 					15777,	10000,		-- (Ring) Hale Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_WHM =
@@ -367,7 +367,7 @@ function onTrigger(player,npc)
 					27598,	30000,		-- (Back) Dew Silk Cape +1
 					11683,	30000,		-- (Earring) Aqua Earring
 					13308,	30000,		-- (Ring) Communion Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_WHM =
@@ -400,8 +400,8 @@ function onTrigger(player,npc)
 					-- 28474,	50000,		-- (Earring) Mendicant's Earring
 					-- 11054,	50000,		-- (Earring) Pensee Earring
 					11683,	30000,		-- (Earring) Aqua Earring
-					27566,	50000,		-- (Ring) Leviathan Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 27566,	50000,		-- (Ring) Leviathan Ring
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -424,7 +424,7 @@ function onTrigger(player,npc)
 					14694,	2000,		-- (Earring) Energy Earring +1
 					13475,	2000,		-- (Ring) Hermit's Ring
 					13548,	50000,		-- (Ring) Astral Ring
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_BLM =
@@ -442,7 +442,7 @@ function onTrigger(player,npc)
 					13233,	5000,		-- (Waist) Gold Obi +1
 					13610,	5000,		-- (Back) Black Cape +1
 					14702,	5000,		-- (Earring) Aura Earring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_BLM =
@@ -463,7 +463,7 @@ function onTrigger(player,npc)
 					15972,	10000,		-- (Earring) Insomnia Earring
 					15776,	10000,		-- (Ring) Ebullient Ring
 					15777,	10000,		-- (Ring) Hale Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_BLM =
@@ -488,7 +488,7 @@ function onTrigger(player,npc)
 					11560,	30000,		-- (Back) Pedant Cape
 					11682,	30000,		-- (Earring) Snow Earring
 					13306,	30000,		-- (Ring) Omniscient Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_BLM =
@@ -506,7 +506,7 @@ function onTrigger(player,npc)
 					11107,	50000,		-- (Hands) Goetia Gloves +2
 					11127,	50000,		-- (Legs) Goetia Chausses +2
 					11147,	50000,		-- (Feet) Goetia Sabots +2
-					-- 11593,  50000,		-- (Neck) Goetia Chain
+					11593,  50000,		-- (Neck) Goetia Chain
 					11706,  50000,		-- (Earring) Goetia Earring
 					16203,  50000,		-- (Back) Goetia Mantle
 					10653,	50000,		-- (Head) Sorcerer's Petasos +2
@@ -514,12 +514,12 @@ function onTrigger(player,npc)
 					10693,	50000,		-- (Hands) Sorcerer's Gloves +2
 					10713,	50000,		-- (Legs) Sorcerer's Tonban +2
 					10733,	50000,		-- (Feet) Sorcerer's Sabots +2
-					25435,	50000,		-- (Neck) Sorcerer's Stole
+					-- 25435,	50000,		-- (Neck) Sorcerer's Stole
 					10839,	50000,		-- (Waist) Othila Sash
 					28601,	50000,		-- (Back) Seshaw Cape
 					11682,	30000,		-- (Earring) Snow Earring
-					27574,	50000,		-- (Ring) Shiva Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 27574,	50000,		-- (Ring) Shiva Ring
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -543,7 +543,7 @@ function onTrigger(player,npc)
 					13440,	2000,		-- (Ring) Ascetic's Ring
 					13475,	2000,		-- (Ring) Hermit's Ring
 					13548,	50000,		-- (Ring) Astral Ring
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_RDM =
@@ -561,7 +561,7 @@ function onTrigger(player,npc)
 					13233,	5000,		-- (Waist) Gold Obi +1
 					13611,	7500,		-- (Back) Red Cape +1
 					14702,	5000,		-- (Earring) Aura Earring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_RDM =
@@ -582,7 +582,7 @@ function onTrigger(player,npc)
 					15972,	10000,		-- (Earring) Insomnia Earring
 					15776,	10000,		-- (Ring) Ebullient Ring
 					15777,	10000,		-- (Ring) Hale Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_RDM =
@@ -612,7 +612,7 @@ function onTrigger(player,npc)
 					11682,	30000,		-- (Earring) Snow Earring
 					13308,	30000,		-- (Ring) Communion Ring
 					13306,	30000,		-- (Ring) Omniscient Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_RDM =
@@ -646,9 +646,9 @@ function onTrigger(player,npc)
 					28601,	50000,		-- (Back) Seshaw Cape
 					11683,	30000,		-- (Earring) Aqua Earring
 					11682,	30000,		-- (Earring) Snow Earring
-					27566,	50000,		-- (Ring) Leviathan Ring
-					27574,	50000,		-- (Ring) Shiva Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 27566,	50000,		-- (Ring) Leviathan Ring
+					-- 27574,	50000,		-- (Ring) Shiva Ring
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -677,7 +677,7 @@ function onTrigger(player,npc)
 					13599,	2000,		-- (Back) Rabbit Mantle +1
 					14695,	2000,		-- (Earring) Hope Earring +1
 					13492,	2000,		-- (Ring) Copper Ring +1
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_THF =
@@ -694,7 +694,7 @@ function onTrigger(player,npc)
 					13223,	5000,		-- (Waist) Silver Belt +1
 					13609,	5000,		-- (Back) Wolf Mantle +1
 					14703,	5000,		-- (Earring) Loyalty Earring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_THF =
@@ -715,7 +715,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_THF =
@@ -744,7 +744,7 @@ function onTrigger(player,npc)
 					11679,	30000,		-- (Earring) Thunder Earring
 					14636,	30000,		-- (Ring) Breeze Ring
 					14638,	30000,		-- (Ring) Thunder Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_THF =
@@ -775,7 +775,7 @@ function onTrigger(player,npc)
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
 					10797,	50000,		-- (Ring) Dagaz Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -801,7 +801,7 @@ function onTrigger(player,npc)
 					13492,	2000,		-- (Ring) Copper Ring +1
 					14670,	2000,		-- (Ring) Safeguard Ring
 					13548,	50000,		-- (Ring) Astral Ring
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_PLD =
@@ -820,7 +820,7 @@ function onTrigger(player,npc)
 					13609,	5000,		-- (Back) Wolf Mantle +1
 					14703,	5000,		-- (Earring) Loyalty Earring +1
 					13506,	5000,		-- (Ring) Bomb Ring
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_PLD =
@@ -842,7 +842,7 @@ function onTrigger(player,npc)
 					14758,	10000,		-- (Earring) Knightly Earring
 					16009,	10000,		-- (Earring) Pennon Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_PLD =
@@ -869,7 +869,7 @@ function onTrigger(player,npc)
 					16216,	30000,		-- (Back) Cerberus Mantle +1
 					11680,	30000,		-- (Earring) Soil Earring
 					14634,	30000,		-- (Ring) Soil Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_PLD =
@@ -905,7 +905,7 @@ function onTrigger(player,npc)
 					11039,	50000,		-- (Earring) Brachyura Earring
 					10798,	50000,		-- (Ring) Eihwaz Ring
 					28577,	50000,		-- (Ring) Kunaji Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -931,7 +931,7 @@ function onTrigger(player,npc)
 					13599,	2000,		-- (Back) Rabbit Mantle +1
 					14695,	2000,		-- (Earring) Hope Earring +1
 					13492,	2000,		-- (Ring) Copper Ring +1
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_DRK =
@@ -950,7 +950,7 @@ function onTrigger(player,npc)
 					13609,	5000,		-- (Back) Wolf Mantle +1
 					14703,	5000,		-- (Earring) Loyalty Earring +1
 					13519,	5000,		-- (Ring) Mythril Ring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_DRK =
@@ -972,7 +972,7 @@ function onTrigger(player,npc)
 					13403,	10000,		-- (Earring) Assault Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_DRK =
@@ -999,7 +999,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_DRK =
@@ -1034,7 +1034,7 @@ function onTrigger(player,npc)
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
 					10797,	50000,		-- (Ring) Dagaz Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -1058,7 +1058,7 @@ function onTrigger(player,npc)
 					13599,	2000,		-- (Back) Rabbit Mantle +1
 					14695,	2000,		-- (Earring) Hope Earring +1
 					13492,	2000,		-- (Ring) Copper Ring +1
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_BST =
@@ -1076,7 +1076,7 @@ function onTrigger(player,npc)
 					13609,	5000,		-- (Back) Wolf Mantle +1
 					14703,	5000,		-- (Earring) Loyalty Earring +1
 					13519,	5000,		-- (Ring) Mythril Ring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_BST =
@@ -1097,7 +1097,7 @@ function onTrigger(player,npc)
 					13403,	10000,		-- (Earring) Assault Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_BST =
@@ -1123,7 +1123,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_BST =
@@ -1154,7 +1154,7 @@ function onTrigger(player,npc)
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
 					10797,	50000,		-- (Ring) Dagaz Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -1182,7 +1182,7 @@ function onTrigger(player,npc)
 					14695,	2000,		-- (Earring) Hope Earring +1
 					13492,	2000,		-- (Ring) Copper Ring +1
 					13548,	50000,		-- (Ring) Astral Ring
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_BRD =
@@ -1199,7 +1199,7 @@ function onTrigger(player,npc)
 					13223,	5000,		-- (Waist) Silver Belt +1
 					13609,	5000,		-- (Back) Wolf Mantle +1
 					14703,	5000,		-- (Earring) Loyalty Earring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_BRD =
@@ -1219,7 +1219,7 @@ function onTrigger(player,npc)
 					15490,	10000,		-- (Back) Miraculous Cape
 					16009,	10000,		-- (Earring) Pennon Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_BRD =
@@ -1243,7 +1243,7 @@ function onTrigger(player,npc)
 					11563,	30000,		-- (Back) Mesmeric Cape
 					11724,	30000,		-- (Earring) Reverie Earring +1
 					14643,	30000,		-- (Ring) Apollo's Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_BRD =
@@ -1272,8 +1272,8 @@ function onTrigger(player,npc)
 					11012,	50000,		-- (Back) Gwyddion's Cape
 					11036,	50000,		-- (Earring) Enchanter's Earring
 					11701,	50000,		-- (Earring) Skald Breloque
-					27576,	50000,		-- (Ring) Carbuncle Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 27576,	50000,		-- (Ring) Carbuncle Ring
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -1304,7 +1304,7 @@ function onTrigger(player,npc)
 					13599,	2000,		-- (Back) Rabbit Mantle +1
 					14695,	2000,		-- (Earring) Hope Earring +1
 					13492,	2000,		-- (Ring) Copper Ring +1
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_RNG =
@@ -1325,7 +1325,7 @@ function onTrigger(player,npc)
 					13223,	5000,		-- (Waist) Silver Belt +1
 					13609,	5000,		-- (Back) Wolf Mantle +1
 					14703,	5000,		-- (Earring) Loyalty Earring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_RNG =
@@ -1350,7 +1350,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_RNG =
@@ -1380,7 +1380,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11681,	30000,		-- (Earring) Breeze Earring
 					14636,	30000,		-- (Ring) Breeze Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_RNG =
@@ -1416,7 +1416,7 @@ function onTrigger(player,npc)
 					11046,	50000,		-- (Earring) Ouesk Pearl
 					28513,	50000,		-- (Earring) Phawaylla Earring
 					11058,	50000,		-- (Ring) Hajduk Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -1439,7 +1439,7 @@ function onTrigger(player,npc)
 					13599,	2000,		-- (Back) Rabbit Mantle +1
 					14695,	2000,		-- (Earring) Hope Earring +1
 					13492,	2000,		-- (Ring) Copper Ring +1
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_SAM =
@@ -1457,7 +1457,7 @@ function onTrigger(player,npc)
 					13609,	5000,		-- (Back) Wolf Mantle +1
 					14703,	5000,		-- (Earring) Loyalty Earring +1
 					13519,	5000,		-- (Ring) Mythril Ring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_SAM =
@@ -1478,7 +1478,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_SAM =
@@ -1504,7 +1504,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_SAM =
@@ -1535,7 +1535,7 @@ function onTrigger(player,npc)
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
 					10797,	50000,		-- (Ring) Dagaz Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -1558,7 +1558,7 @@ function onTrigger(player,npc)
 					13599,	2000,		-- (Back) Rabbit Mantle +1
 					14695,	2000,		-- (Earring) Hope Earring +1
 					13492,	2000,		-- (Ring) Copper Ring +1
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_NIN =
@@ -1575,7 +1575,7 @@ function onTrigger(player,npc)
 					13609,	5000,		-- (Back) Wolf Mantle +1
 					14703,	5000,		-- (Earring) Loyalty Earring +1
 					13519,	5000,		-- (Ring) Mythril Ring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_NIN =
@@ -1595,7 +1595,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_NIN =
@@ -1620,7 +1620,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_NIN =
@@ -1651,7 +1651,7 @@ function onTrigger(player,npc)
 					11057,	50000,		-- (Earring) Ghillie Earring +1
 					28492,  50000,      -- (Earring) Hibernation Earring
 					10797,	50000,		-- (Ring) Dagaz Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -1672,7 +1672,7 @@ function onTrigger(player,npc)
 					13599,	2000,		-- (Back) Rabbit Mantle +1
 					14695,	2000,		-- (Earring) Hope Earring +1
 					13492,	2000,		-- (Ring) Copper Ring +1
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_DRG =
@@ -1688,7 +1688,7 @@ function onTrigger(player,npc)
 					13609,	5000,		-- (Back) Wolf Mantle +1
 					14703,	5000,		-- (Earring) Loyalty Earring +1
 					13519,	5000,		-- (Ring) Mythril Ring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_DRG =
@@ -1708,7 +1708,7 @@ function onTrigger(player,npc)
 					13403,	10000,		-- (Earring) Assault Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_DRG =
@@ -1733,7 +1733,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_DRG =
@@ -1764,7 +1764,7 @@ function onTrigger(player,npc)
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
 					10797,	50000,		-- (Ring) Dagaz Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -1787,7 +1787,7 @@ function onTrigger(player,npc)
 					14694,	2000,		-- (Earring) Energy Earring +1
 					13440,	2000,		-- (Ring) Ascetic's Ring
 					13548,	50000,		-- (Ring) Astral Ring
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_SMN =
@@ -1803,7 +1803,7 @@ function onTrigger(player,npc)
 					13233,	5000,		-- (Waist) Gold Obi +1
 					13618,	5000,		-- (Back) White Cape +1
 					14702,	5000,		-- (Earring) Aura Earring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_SMN =
@@ -1822,7 +1822,7 @@ function onTrigger(player,npc)
 					15972,	10000,		-- (Earring) Insomnia Earring
 					15776,	10000,		-- (Ring) Ebullient Ring
 					15777,	10000,		-- (Ring) Hale Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_SMN =
@@ -1848,7 +1848,7 @@ function onTrigger(player,npc)
 					11685,	30000,		-- (Earring) Darkness Earring
 					14644,	30000,		-- (Ring) Dark Ring
 					14625,  100000,		-- (Ring) Evoker's Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_SMN =
@@ -1874,12 +1874,12 @@ function onTrigger(player,npc)
 					10724,	50000,		-- (Legs) Summoner's Spats +2
 					10744,	50000,		-- (Feet) Summoner's Pigaches +2
 					-- 25501,	50000,		-- (Neck) Summoner's Collar
-					28458,	50000,		-- (Waist) Jaq'ij Sash
+					10842,	50000,		-- (Waist) Bougonia Rope
 					27607,	50000,		-- (Back) Thaumaturge's Cape
 					11021,	30000,		-- (Earring) Darkness Pearl
-					27578,	30000,		-- (Ring) Fenrir Ring
+					-- 27578,	30000,		-- (Ring) Fenrir Ring
 					14625,  100000,		-- (Ring) Evoker's Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -1902,7 +1902,7 @@ function onTrigger(player,npc)
 					14695,	2000,		-- (Earring) Hope Earring +1
 					14694,	2000,		-- (Earring) Energy Earring +1
 					13492,	2000,		-- (Ring) Copper Ring +1
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_BLU =
@@ -1918,7 +1918,7 @@ function onTrigger(player,npc)
 					13609,	5000,		-- (Back) Wolf Mantle +1
 					14703,	5000,		-- (Earring) Loyalty Earring +1
 					13506,	5000,		-- (Ring) Bomb Ring
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_BLU =
@@ -1938,7 +1938,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_BLU =
@@ -1962,7 +1962,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_BLU =
@@ -1992,7 +1992,7 @@ function onTrigger(player,npc)
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
 					10797,	50000,		-- (Ring) Dagaz Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -2016,7 +2016,7 @@ function onTrigger(player,npc)
 					13599,	2000,		-- (Back) Rabbit Mantle +1
 					14695,	2000,		-- (Earring) Hope Earring +1
 					13492,	2000,		-- (Ring) Copper Ring +1
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_COR =
@@ -2033,7 +2033,7 @@ function onTrigger(player,npc)
 					13223,	5000,		-- (Waist) Silver Belt +1
 					13609,	5000,		-- (Back) Wolf Mantle +1
 					14703,	5000,		-- (Earring) Loyalty Earring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_COR =
@@ -2054,7 +2054,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_COR =
@@ -2080,7 +2080,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11681,	30000,		-- (Earring) Breeze Earring
 					14636,	30000,		-- (Ring) Breeze Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_COR =
@@ -2111,8 +2111,8 @@ function onTrigger(player,npc)
 					11006,	50000,		-- (Back) Thall Mantle
 					11046,	50000,		-- (Earring) Ouesk Pearl
 					28513,	50000,		-- (Earring) Phawaylla Earring
-					27572,	50000,		-- (Ring) Garuda Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 27572,	50000,		-- (Ring) Garuda Ring
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -2134,7 +2134,7 @@ function onTrigger(player,npc)
 					13605,	2000,		-- (Back) Cape +1
 					14695,	2000,		-- (Earring) Hope Earring +1
 					13492,	2000,		-- (Ring) Copper Ring +1
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_PUP =
@@ -2151,7 +2151,7 @@ function onTrigger(player,npc)
 					13643,	5000,		-- (Back) Sarcenet Cape +1
 					14703,	5000,		-- (Earring) Loyalty Earring +1
 					13519,	5000,		-- (Ring) Mythril Ring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_PUP =
@@ -2171,7 +2171,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_PUP =
@@ -2197,7 +2197,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_PUP =
@@ -2228,7 +2228,7 @@ function onTrigger(player,npc)
 					10987,	50000,		-- (Back) Meanagh Cape
 					11057,	50000,		-- (Earring) Ghillie Earring +1
 					10797,	50000,		-- (Ring) Dagaz Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -2250,7 +2250,7 @@ function onTrigger(player,npc)
 					13599,	2000,		-- (Back) Rabbit Mantle +1
 					14695,	2000,		-- (Earring) Hope Earring +1
 					13492,	2000,		-- (Ring) Copper Ring +1
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 			tpz.shop.general(player, stock_DNC)
 		elseif (level <= 60) then
@@ -2266,7 +2266,7 @@ function onTrigger(player,npc)
 					13223,	5000,		-- (Waist) Silver Belt +1
 					13609,	5000,		-- (Back) Wolf Mantle +1
 					14703,	5000,		-- (Earring) Loyalty Earring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_DNC =
@@ -2290,7 +2290,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_DNC =
@@ -2314,7 +2314,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11679,	30000,		-- (Earring) Thunder Earring
 					14638,	30000,		-- (Ring) Thunder Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_DNC =
@@ -2343,7 +2343,7 @@ function onTrigger(player,npc)
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
 					10797,	50000,		-- (Ring) Dagaz Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -2369,7 +2369,7 @@ function onTrigger(player,npc)
 					13440,	2000,		-- (Ring) Ascetic's Ring
 					13475,	2000,		-- (Ring) Hermit's Ring
 					13548,	50000,		-- (Ring) Astral Ring
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 			tpz.shop.general(player, stock_SCH)
 		elseif (level <= 60) then
@@ -2388,7 +2388,7 @@ function onTrigger(player,npc)
 					13233,	5000,		-- (Waist) Gold Obi +1
 					13610,	5000,		-- (Back) Black Cape +1
 					14702,	5000,		-- (Earring) Aura Earring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_SCH =
@@ -2409,7 +2409,7 @@ function onTrigger(player,npc)
 					15972,	10000,		-- (Earring) Insomnia Earring
 					15776,	10000,		-- (Ring) Ebullient Ring
 					15777,	10000,		-- (Ring) Hale Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_SCH =
@@ -2439,7 +2439,7 @@ function onTrigger(player,npc)
 					11682,	30000,		-- (Earring) Snow Earring
 					13308,	30000,		-- (Ring) Communion Ring
 					13306,	30000,		-- (Ring) Omniscient Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_SCH =
@@ -2474,7 +2474,7 @@ function onTrigger(player,npc)
 					11682,	30000,		-- (Earring) Snow Earring
 					13308,	30000,		-- (Ring) Communion Ring
 					13306,	30000,		-- (Ring) Omniscient Ring
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -2499,7 +2499,7 @@ function onTrigger(player,npc)
 					14694,	2000,		-- (Earring) Energy Earring +1
 					13492,	2000,		-- (Ring) Copper Ring +1
 					13548,	50000,		-- (Ring) Astral Ring
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_GEO =
@@ -2515,7 +2515,7 @@ function onTrigger(player,npc)
 					13233,	5000,		-- (Waist) Gold Obi +1
 					13610,	5000,		-- (Back) Black Cape +1
 					14702,	5000,		-- (Earring) Aura Earring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_GEO =
@@ -2534,7 +2534,7 @@ function onTrigger(player,npc)
 					15972,	10000,		-- (Earring) Insomnia Earring
 					15776,	10000,		-- (Ring) Ebullient Ring
 					15777,	10000,		-- (Ring) Hale Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_GEO =
@@ -2556,7 +2556,7 @@ function onTrigger(player,npc)
 					11560,	30000,		-- (Back) Pedant Cape
 					11682,	30000,		-- (Earring) Snow Earring
 					13306,	30000,		-- (Ring) Omniscient Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_GEO =
@@ -2573,13 +2573,13 @@ function onTrigger(player,npc)
 					10839,	50000,		-- (Waist) Othila Sash
 					28601,	50000,		-- (Back) Seshaw Cape
 					11682,	30000,		-- (Earring) Snow Earring
-					27574,	50000,		-- (Ring) Shiva Ring
+					-- 27574,	50000,		-- (Ring) Shiva Ring
 					4044,   16667,		-- Atramenterrane (Reforged Artifact Material)
 					4043,   16667,		-- Lavarion (Reforged Artifact Material)
 					4042,   16667,		-- Acuex Ore (Reforged Artifact Material)
 					4030,   16667,		-- Sekishitsu (Reforged Artifact Material)
 					4045,   16667,		-- Cyclone Cotton (Reforged Artifact Material)
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		
@@ -2602,7 +2602,7 @@ function onTrigger(player,npc)
 					14695,	2000,		-- (Earring) Hope Earring +1
 					14694,	2000,		-- (Earring) Energy Earring +1
 					13492,	2000,		-- (Ring) Copper Ring +1
-					317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
+					-- 317,	100000,		-- (Item) Bronze Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 60) then
 			stock_RUN =
@@ -2618,7 +2618,7 @@ function onTrigger(player,npc)
 					13609,	5000,		-- (Back) Wolf Mantle +1
 					14703,	5000,		-- (Earring) Loyalty Earring +1
 					13519,	5000,		-- (Ring) Mythril Ring +1
-					318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
+					-- 318,	150000,		-- (Item) Crystal Rose (Used to trigger augment application trades)
 				}
 		elseif (level <= 75) then
 			stock_RUN =
@@ -2637,7 +2637,7 @@ function onTrigger(player,npc)
 					13369,	10000,		-- (Earring) Spike Earring
 					14764,	10000,		-- (Earring) Minuet Earring
 					13545,	10000,		-- (Ring) Demon's Ring +1
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level < 99) then
 			stock_RUN =
@@ -2658,7 +2658,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11678,	30000,		-- (Earring) Flame Earring
 					14630,	30000,		-- (Ring) Flame Ring
-					139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
 				}
 		elseif (level == 99) then
 			stock_RUN =
@@ -2675,12 +2675,13 @@ function onTrigger(player,npc)
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
 					10797,	50000,		-- (Ring) Dagaz Ring
+					10798,	50000,		-- (Ring) Eihwaz Ring
 					4046,   16667,		-- Corroded Ore (Reforged Artifact Material)
 					4025,   16667,		-- Snowsteel Sheet (Reforged Artifact Material)
 					4047,   16667,		-- Redoubtable Silk Thread (Reforged Artifact Material)
 					3923,   16667,		-- Rhodium Ingot (Reforged Artifact Material)
 					4029,   16667,		-- Runeweave (Reforged Artifact Material)
-					321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
+					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end
 		

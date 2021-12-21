@@ -20,7 +20,9 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player,target,ability,action)
-    local alljumpsdmg = 0
+	local pet = player:getPet()
+	local alljumpsbonus = player:getMod(tpz.mod.ALL_JUMPS_WYVERN_HP)
+	
 	local ftp = 1 + (player:getStat(tpz.mod.VIT) / 256)
 	local atkmulti = (player:getMod(tpz.mod.JUMP_ATT_BONUS) + 100) / 100
 	local params = {}
@@ -39,16 +41,15 @@ function onUseAbility(player,target,ability,action)
 		params.bonusTP = player:getMod(tpz.mod.JUMP_TP_BONUS)
 		params.hitsHigh = true
 	if (player:getMod(tpz.mod.FORCE_JUMP_CRIT) > 0) then
-			params.crit100 = 1.0 params.crit200 = 1.0 params.crit300 = 1.0
+		params.crit100 = 1.0 params.crit200 = 1.0 params.crit300 = 1.0
+	end
+	
+	if ((pet ~= nil) and (player:getPetID() == tpz.pet.id.WYVERN)) then
+		params.alljumpsdmg = pet:getHP() * (alljumpsbonus / 100)
 	end
 
 	local taChar = player:getTrickAttackChar(target)
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, 0, params, 0, action, true, taChar)
-	local alljumpsbonus = player:getMod(tpz.mod.ALL_JUMPS_WYVERN_HP)
-	local pet = player:getPet()
-	if ((pet ~= nil) and (player:getPetID() == tpz.pet.id.WYVERN)) then
-		alljumpsdmg = pet:getHP() * (alljumpsbonus / 100)
-	end
 
     if (tpHits + extraHits > 0) then
         -- Under Spirit Surge, Jump also decreases target defense by 20% for 60 seconds
@@ -66,12 +67,6 @@ function onUseAbility(player,target,ability,action)
         action:messageID(target:getID(), tpz.msg.basic.JA_MISS_2)
         action:speceffect(target:getID(), 0)
     end
-
-	if (alljumpsbonus > 0) then
---		printf("Damage 1: [%i] All Jumps DMG: [%i]\n", damage, alljumpsdmg)
-		damage = damage + alljumpsdmg
---		printf("Damage 2: [%i]\n", damage)
-	end
 	
 	return damage
 end

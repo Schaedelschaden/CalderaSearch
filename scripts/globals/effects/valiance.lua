@@ -16,6 +16,10 @@ function onEffectGain(target, effect)
 			target:addMod(sdtMod[i], -power)
 		end
 	end
+	
+	if (target:getMainJob() == tpz.job.RUN and target:getMerit(tpz.merit.INSPIRATION) > 1) then
+		target:addMod(tpz.mod.UFASTCAST, target:getMerit(tpz.merit.INSPIRATION))
+	end
 end
 
 function onEffectTick(target, effect)
@@ -30,5 +34,9 @@ function onEffectLose(target, effect)
 			target:delMod(sdtMod[i], -power)
 			target:setCharVar(sdtPower[i], 0)
 		end
+	end
+	
+	if (target:getMainJob() == tpz.job.RUN and target:getMerit(tpz.merit.INSPIRATION) > 1) then
+		target:delMod(tpz.mod.UFASTCAST, target:getMerit(tpz.merit.INSPIRATION))
 	end
 end

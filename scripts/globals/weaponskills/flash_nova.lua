@@ -1,6 +1,7 @@
 -----------------------------------
 -- Flash Nova
 -- Skill level: 290
+-- Weaponskill Category: Magical
 -- Delivers light elemental damage. Additional effect: Flash. Chance of effect varies with TP.
 -- Generates a significant amount of Enmity.
 -- Does not stack with Sneak Attack
@@ -25,6 +26,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.ftp100 = 3 params.ftp200 = 3 params.ftp300 = 3
     params.str_wsc = 0.3 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.3 params.chr_wsc = 0.0
+	params.dSTAT = ((player:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)) / 2) + 8
     params.ele = tpz.magic.ele.LIGHT
     params.skill = tpz.skill.CLUB
     params.includemab = true

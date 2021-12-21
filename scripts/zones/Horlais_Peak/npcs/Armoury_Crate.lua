@@ -567,13 +567,24 @@ local loot =
             {itemid = 3972, droprate = 150},   -- Kupon I S-2
         },
 		{
-            {itemid = 4080, droprate =  160}, -- Moonbow Urushi
-            {itemid = 4079, droprate =  80},  -- Moonbow Leather
-            {itemid = 4078, droprate =  120}, -- Moonbow Cloth
-            {itemid = 4077, droprate =  240}, -- Moonbow Steel
-            {itemid = 4081, droprate =  240}, -- Moonbow Stone
-			{itemid = 4082, droprate =  160}, -- Moonlight Coral
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 2275, droprate = 150},   -- Scintillant Ingot
         },
+		{
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 8751, droprate = 150},   -- Square of Ancestral Cloth
+        },
+		{
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 782, droprate = 150},   -- Selenite
+        },
+		{
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 8722, droprate = 150},   -- Hepatizon Ingot
+        },		
+		{
+            {itemid = 8722, droprate = 1000},   -- Hepatizon Ingot
+        },	
     },
 
     -- BCNM Shots in the Dark -- Off
@@ -644,6 +655,10 @@ local loot =
 		{
 			{itemid = 0,    droprate = 850},   -- Nothing
             {itemid = 4067, droprate = 150},   -- Rems Chapt 4
+        },
+		{
+			{itemid = 0,    droprate = 800},   -- Nothing
+            {itemid = 836,  droprate = 200},   -- Damascene Cloth
         },
     },
     -- BCNM Today's Horoscope  -- Off

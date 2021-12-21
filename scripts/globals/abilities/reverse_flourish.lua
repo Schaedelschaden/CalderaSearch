@@ -26,24 +26,25 @@ end
 function onUseAbility(player, target, ability)
 
     local TPGain = 0
+	local bonus = player:getMod(tpz.mod.REVERSE_FLOURISH_BONUS)
     local STM = 5 + player:getMod(tpz.mod.REVERSE_FLOURISH_EFFECT)
 
     local Merits = player:getMerit(tpz.merit.REVERSE_FLOURISH_EFFECT)
 
     if (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_1)) then
-        TPGain = 95 * 1 + STM * 1 ^ 2 + Merits
+        TPGain = (95 + bonus) * 1 + STM * 1 ^ 2 + Merits
 
     elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_2)) then
-        TPGain = 95 * 2 + STM * 2 ^ 2 + Merits
+        TPGain = (95 + bonus) * 2 + STM * 2 ^ 2 + Merits
 
     elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_3)) then
-        TPGain = 95 * 3 + STM * 3 ^ 2 + Merits
+        TPGain = (95 + bonus) * 3 + STM * 3 ^ 2 + Merits
 
     elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_4)) then
-        TPGain = 95 * 4 + STM * 4 ^ 2 + Merits
+        TPGain = (95 + bonus) * 4 + STM * 4 ^ 2 + Merits
 
     elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_5)) then
-        TPGain = 95 * 5 + STM * 5 ^ 2 + Merits
+        TPGain = (95 + bonus) * 5 + STM * 5 ^ 2 + Merits
     end
 
     player:addTP(TPGain)

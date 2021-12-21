@@ -1,6 +1,7 @@
 -----------------------------------
 -- Herculean Slash
 -- Great Sword weapon skill
+-- Weaponskill Category: Magical
 -- Skill Level: 290
 -- Paralyzes target. Duration of effect varies with TP.
 -- Aligned with the Snow Gorget, Thunder Gorget & Breeze Gorget.
@@ -22,6 +23,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.ftp100 = 3.5 params.ftp200 = 3.5 params.ftp300 = 3.5
     params.str_wsc = 0.0 params.dex_wsc = 0.0 params.vit_wsc = 0.6 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
+	params.dSTAT = 0
     params.ele = tpz.magic.ele.ICE
     params.skill = tpz.skill.GREAT_SWORD
     params.includemab = true

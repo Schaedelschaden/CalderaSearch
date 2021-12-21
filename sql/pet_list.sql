@@ -131,7 +131,7 @@ INSERT INTO `pet_list` (`petid`, `name`, `poolid`, `minLevel`, `maxLevel`, `time
 	(102, 'AttentiveIbuki', 6260, 99, 109, 7200, 0),
 	(103, 'SwoopingZhivago', 6261, 99, 119, 7200, 0),
 	(104, 'SunburstMalfik', 6262, 99, 104, 7200, 0),
-	(105, 'AgedAngus', 6263, 99, 105, 7200, 0),
+	(105, 'AgedAngus', 6263, 99, 119, 7200, 0),
 	(106, 'ScissorlegXerin', 6264, 99, 105, 7200, 0),
 	(107, 'BouncingBertha', 6265, 99, 105, 7200, 0),
 	(108, 'SpiderFamiliar', 6266, 99, 118, 7200, 0),

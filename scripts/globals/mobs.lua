@@ -43,13 +43,17 @@ function onMobDeathEx(mob, player, isKiller, isWeaponSkillKill)
 	
 	-- Universal Kill Counter
 	-- TODO: Remove kill counters from previously established NM's
-	-- local mobName = mob:getName()
-	-- local fixedMobName = string.gsub(mobName, "_", "")
-	-- local KillCounter = player:getCharVar("KillCounter_"..fixedMobName)
+	-- if (mob:isNM()) then
+		-- local mobName = mob:getName()
+		-- local fixedMobName = string.gsub(mobName, "_", "")
+		-- local KillCounter = player:getCharVar("KillCounter_"..fixedMobName)
 	
-	-- KillCounter = KillCounter + 1
-	
-	-- player:setCharVar("KillCounter_"..fixedMobName, KillCounter)
+		-- KillCounter = KillCounter + 1
+		
+		-- player:setCharVar("KillCounter_"..fixedMobName, KillCounter)
+	-- else
+		
+	-- end
 
     tpz.magian.checkMagianTrial(player, {['mob'] = mob})
 end

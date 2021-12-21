@@ -8,7 +8,12 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onMobInitialize(mob)
-    -- mob:setMod(tpz.mod.ACC, 400)
+    
+end
+
+function onMobSpawn(mob)
+	mob:addMod(tpz.mod.ATT, -250)
+	-- mob:setMod(tpz.mod.ACC, 400)
     -- mob:setMod(tpz.mod.EVA, 200)
 	mob:setMod(tpz.mod.DOUBLE_ATTACK, 20)
 	mob:setMod(tpz.mod.TRIPLE_ATTACK, 8)

@@ -11,7 +11,7 @@ cmdprops =
 }
 
 function onTrigger(player)
-	if (player:getName() == "Skeletor" or player:getName() == "Cleavage" or player:getName() == "Haste") then
+	if (player:getName() == "Skeletor" or player:getName() == "Cleavage" or player:getName() == "Haste" or player:getName() == "Avarice") then
 		local targ = GetPlayerByName("Haste")
 		
 		-- targ:injectActionPacket(6, 93) -- Mijin Gakure

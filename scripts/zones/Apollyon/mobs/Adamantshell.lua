@@ -67,6 +67,10 @@ end
 function onMobSpawn(mob)
     mob:setMod(tpz.mod.SLASHRES, 0)
     mob:setMod(tpz.mod.PIERCERES, 1500)
+	mob:addMod(tpz.mod.ACC, 150)
+	mob:addMod(tpz.mod.EVA, 200) -- Evasion (Compare to ACC)
+	mob:addMod(tpz.mod.DEF, 400) -- Defense (Compart to ATT)
+	mob:addMod(tpz.mod.BINDRES, 100) -- Resistance to Bind
 end
 
 function onMobDeath(mob, player, isKiller, noKiller)

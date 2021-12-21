@@ -69,7 +69,7 @@ function onTrade(player, npc, trade)
 			player:addItem(augGear, 1, 45, 4, 512, 11, 25, 14) -- +5 DMG, +12 STR, +15 ATK
 		-- Club
 		elseif (dynaGearCounter == 11) then
-			player:addItem(augGear, 1, 9, 29, 133, 9, 516, 9) -- +30 MP, +10 MATT, +10 INT
+			player:addItem(augGear, 1, 9, 29, 133, 9, 516, 6) -- +30 MP, +10 MATT, +7 INT
 		-- Mage Staff
 		elseif (dynaGearCounter == 12) then
 			player:addItem(augGear, 1, 9, 28, 9, 30, 133, 14, 516, 11) -- +60 MP, +15 MATT, +12 INT
@@ -117,7 +117,7 @@ function onTrade(player, npc, trade)
 			player:addItem(augGear, 1, 23, 14, 54, 2, 512, 6) -- +15 ACC, -3 PDT, +7 STR
 		-- Xaddi Set
 		elseif (dynaGearCounter >= 26 and dynaGearCounter <= 30) then
-			player:addItem(augGear, 1, 23, 14, 54, 2, 512, 6) -- +15 ACC, -3 PDT, +7 STR
+			player:addItem(augGear, 1, 23, 14, 54, 2, 2, 12) -- +15 ACC, -3 PDT, +45 HP
 		end
 	-- Path C (1 Byne Bill)
 	elseif (augCurrency == 1455) then
@@ -126,11 +126,11 @@ function onTrade(player, npc, trade)
 		elseif (dynaGearCounter == 2) then -- Sabebus
 			player:addItem(augGear, 1, 25, 9, 31, 9, 143, 2) -- +10 ATT, +10 EVA, +3 DOUBLE ATTACK
 		elseif (dynaGearCounter == 3) then -- Usonmunku
-			player:addItem(augGear, 1, 1, 29, 1, 15, 23, 9, 55, 2) -- +45 HP, +10 ACC, -3 MDT
+			player:addItem(augGear, 1, 1, 28, 1, 15, 23, 9, 54, 4) -- +45 HP, +10 ACC, -5 PDT
 		elseif (dynaGearCounter == 4) then -- Emxgha
 			player:addItem(augGear, 1, 25, 9, 23, 9, 97, 14) -- +10 ATT, +10 ACC, +15 Pet ATT
 		elseif (dynaGearCounter == 5) then -- Kbiroj
-			player:addItem(augGear, 1, 1, 29, 1, 15, 23, 9, 54, 4) -- +45 HP, +10 ACC, -5 PDT
+			player:addItem(augGear, 1, 1, 28, 1, 15, 23, 9, 54, 4) -- +45 HP, +10 ACC, -5 PDT
 		elseif (dynaGearCounter == 6) then -- Lekboza
 			player:addItem(augGear, 1, 25, 14, 23, 14, 143, 2) -- +15 ATT, +15 ACC, +3 DOUBLE ATTACK
 		elseif (dynaGearCounter == 7) then -- Vunetshelo
@@ -144,7 +144,7 @@ function onTrade(player, npc, trade)
 		elseif (dynaGearCounter == 11) then -- Gabaxorea
 			player:addItem(augGear, 1, 513, 6, 23, 9, 54, 2) -- +7 DEX, +10 ACC, -3 PDT
 		elseif (dynaGearCounter == 12) then -- Twebuliij
-			player:addItem(augGear, 1, 1, 29, 1, 15, 23, 9, 54, 4) -- +45 HP, +10 ACC, -5 PDT
+			player:addItem(augGear, 1, 1, 28, 1, 15, 23, 9, 54, 4) -- +45 HP, +10 ACC, -5 PDT
 		elseif (dynaGearCounter == 13) then -- Tumafyrig
 			player:addItem(augGear, 1, 54, 4, 108, 14) -- -5 PDT, +15 Pet MATT, +15 Pet MACC
 		elseif (dynaGearCounter == 14) then -- Cibitshavore
@@ -168,7 +168,7 @@ function onTrade(player, npc, trade)
 		elseif (dynaGearCounter == 23) then -- Qaaxo Mitaines
 			player:addItem(augGear, 1, 211, 2, 27, 14, 142, 2) -- +12 STR, +15 RACC, +3 STP
 		elseif (dynaGearCounter == 24) then -- Qaaxo Tights
-			player:addItem(augGear, 1, 3, 1, 1, 9, 37, 9, 54, 4) -- +75 HP, +10 ACC, -5 PDT
+			player:addItem(augGear, 1, 3, 0, 1, 9, 37, 9, 54, 4) -- +75 HP, +10 ACC, -5 PDT
 		elseif (dynaGearCounter == 25) then -- Qaaxo Leggings
 			player:addItem(augGear, 1, 25, 14, 512, 11, 133, 14) -- +15 ATT, +12 STR, +15 MATT
 		elseif (dynaGearCounter == 26) then -- Xaddi Headgear
@@ -178,7 +178,7 @@ function onTrade(player, npc, trade)
 		elseif (dynaGearCounter == 28) then -- Xaddi Gauntlets
 			player:addItem(augGear, 1, 23, 14, 143, 1, 142, 2) -- +15 ACC, +2 Double Attack, +3 STP
 		elseif (dynaGearCounter == 29) then -- Xaddi Cuisses
-			player:addItem(augGear, 1, 3, 1, 1, 9, 37, 14, 31, 14) -- +75 HP, +15 EVA, +15 MEVA
+			player:addItem(augGear, 1, 3, 0, 1, 9, 37, 14, 31, 14) -- +75 HP, +15 EVA, +15 MEVA
 		elseif (dynaGearCounter == 30) then -- Xaddi Boots
 			player:addItem(augGear, 1, 25, 14, 143, 1, 512, 6) -- +15 ATT, +2 Double Attack, +7 STR
 		end

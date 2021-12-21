@@ -30,7 +30,7 @@ function onTrigger(player, npc)
     {
 		4504, 6, 		-- Acorn
 		5680, 3711, 	-- Agaricus Mushroom
-		5649, 141, 		-- Handful of Roasted Almonds
+		2503, 105, 		-- Handful of Almonds
 		5568, 762,		-- Apkallu Egg
 		1523, 237,		-- Sprig of Apple Mint
 		625, 66,		-- Bottle of Apple Vinegar

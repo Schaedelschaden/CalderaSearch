@@ -21,5 +21,5 @@ end
 function onUseAbility(player, target, ability)
 	local merits = player:getMerit(tpz.merit.TOMAHAWK) + 15
 	
-	target:addStatusEffect(tpz.effect.AVOIDANCE_DOWN,1,0,merits)
+	target:addStatusEffect(tpz.effect.AVOIDANCE_DOWN, 1, 0, merits)
 end

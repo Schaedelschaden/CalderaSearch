@@ -66,6 +66,8 @@ function onMobFight(mob)
 			local currentTP = mob:getTP()
 			mob:useMobAbility(season[pickSeason])
 			mob:setTP(currentTP)
+		elseif (mob:getLocalVar("SeasonChangeHPP") <= 10) then
+			
 		end
 		
 		-- Use mob skills

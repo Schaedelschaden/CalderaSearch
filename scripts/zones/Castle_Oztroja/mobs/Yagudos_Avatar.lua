@@ -11,7 +11,7 @@ end
 function onMobSpawn(mob)
 	mob:setMod(tpz.mod.SLEEPRES, 100)
 	mob:setMod(tpz.mod.ATT, 800)
-	mob:setMod(tpz.mod.MATT, 200)
+	mob:setMod(tpz.mod.MATT, 100)
     mob:setMod(tpz.mod.ACC, 800)
 	mob:setMod(tpz.mod.MACC, 400)
     mob:setMod(tpz.mod.EVA, 500)

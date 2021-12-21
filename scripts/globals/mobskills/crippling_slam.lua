@@ -25,6 +25,10 @@ function onMobWeaponSkill(target, mob, skill)
     local accmod = 1
     local dmgmod = 4
 	
+	if (mob:getID() == 17207725 or mob:getID() == 17207724 or mob:getID() == 17207723) then
+		dmgmod = 7
+	end
+	
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded)
 	

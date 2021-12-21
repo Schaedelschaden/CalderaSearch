@@ -8,7 +8,7 @@ function onMobSpawn(mob)
 	mob:setMod(tpz.mod.BINDRES, 80)
 	mob:setMod(tpz.mod.GRAVITYRES, 80)
 	mob:setMod(tpz.mod.REGEN, 100)
-	mob:setMod(tpz.mod.TRIPLE_ATTACK, 50)
+	mob:setMod(tpz.mod.TRIPLE_ATTACK, 25)
 	mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 	
 end
@@ -58,12 +58,12 @@ end
 function onAdditionalEffect(mob, target, damage)
 	local params = {}
 		params.chance = 100
-		params.power = 50
+		params.power = 100
 		
 	if (mob:AnimationSub() == 2 and os.time() - mob:getLocalVar("Kukulkan_BlueEyes") < 60) then
-		params.power = 100
+		params.power = 200
 	end
-		
+	
     return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.POISON)
 end
 

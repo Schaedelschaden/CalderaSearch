@@ -18,7 +18,7 @@ function onPetAbility(target, pet, skill, player)
 	local fixedMobName = string.gsub(mobName, "_", " ")
 	local strength = 10 + math.floor((player:getSkillLevel(tpz.skill.SUMMONING_MAGIC) - 300) / 2.5)
 	local bonusTime = utils.clamp(player:getSkillLevel(tpz.skill.SUMMONING_MAGIC) - 300, 0, 180)
-	local duration = 60 + bonusTime
+	local duration = 120 + bonusTime
 	
 	pet:addStatusEffect(tpz.effect.ENAERO, strength, 0, duration)
 	target:addStatusEffect(tpz.effect.ENAERO, strength, 0, duration)

@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `bcnm_battlefield` (
   `conditions` tinyint(2) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=56;
 
--- Dumping data for table tpzdb.bcnm_battlefield: 1,707 rows
+-- Dumping data for table tpzdb.bcnm_battlefield: 1,710 rows
 /*!40000 ALTER TABLE `bcnm_battlefield` DISABLE KEYS */;
 INSERT INTO `bcnm_battlefield` (`bcnmId`, `battlefieldNumber`, `monsterId`, `conditions`) VALUES
 	(0, 1, 17346561, 3),
@@ -1234,17 +1234,17 @@ INSERT INTO `bcnm_battlefield` (`bcnmId`, `battlefieldNumber`, `monsterId`, `con
 	(992, 3, 16908308, 2),
 	(992, 3, 16908309, 2),
 	(993, 1, 16908310, 3),
-	(993, 1, 16908311, 0),
-	(993, 1, 16908312, 0),
-	(993, 1, 16908313, 0),
+	(993, 1, 16908311, 1),
+	(993, 1, 16908312, 1),
+	(993, 1, 16908313, 1),
 	(993, 2, 16908314, 3),
-	(993, 2, 16908315, 0),
-	(993, 2, 16908316, 0),
-	(993, 2, 16908317, 0),
+	(993, 2, 16908315, 1),
+	(993, 2, 16908316, 1),
+	(993, 2, 16908317, 1),
 	(993, 3, 16908318, 3),
-	(993, 3, 16908319, 0),
-	(993, 3, 16908320, 0),
-	(993, 3, 16908321, 0),
+	(993, 3, 16908319, 1),
+	(993, 3, 16908320, 1),
+	(993, 3, 16908321, 1),
 	(1024, 1, 16921011, 3),
 	(1024, 1, 16921012, 3),
 	(1024, 1, 16921013, 3),
@@ -1728,7 +1728,10 @@ INSERT INTO `bcnm_battlefield` (`bcnmId`, `battlefieldNumber`, `monsterId`, `con
 	(1301, 8, 16929085, 3),
 	(1301, 8, 16929086, 3),
 	(1301, 8, 16929087, 3),
-	(1301, 8, 16929088, 2);
+	(1301, 8, 16929088, 2),
+	(226, 1, 17473558, 3),
+	(226, 2, 17473569, 3),
+	(226, 3, 17473580, 3);
 /*!40000 ALTER TABLE `bcnm_battlefield` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

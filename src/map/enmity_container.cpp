@@ -390,6 +390,10 @@ void CEnmityContainer::UpdateEnmityFromDamage(CBattleEntity* PEntity, int32 Dama
 	{
 		lvlScalingFactor = 0.3;
 	}
+	else if (level > 120)
+	{
+		lvlScalingFactor = 0.1;
+	}
 
     int32 CE = (int32)(((80.f / damageMod) * Damage) * lvlScalingFactor);
     int32 VE = (int32)(((240.f / damageMod) * Damage) * lvlScalingFactor);

@@ -13,11 +13,11 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:AnimationSub() ~=1) then
-        return 1
-    else
-        return 0
-    end
+    if (mob:AnimationSub() == 1) then -- In air
+		return 0
+	elseif (mob:AnimationSub() == 0) then -- On ground
+		return 1
+	end
 end
 
 function onMobWeaponSkill(target, mob, skill)

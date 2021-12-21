@@ -18,9 +18,9 @@ function onMobWeaponSkill(target, mob, skill)
     local info = MobMagicalMove(mob, target, skill, baseDmg, tpz.magic.ele.NONE, dmgmod, TP_MAB_BONUS, 1)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.ELEMENTAL, MOBPARAM_IGNORE_SHADOWS)
 
-    if mob:isInDynamis() and not mob:isNM() then -- dynamis mobs will kill themselves, other mobs might not
-        mob:setHP(0)
-    end
+    -- if mob:isInDynamis() and not mob:isNM() then -- dynamis mobs will kill themselves, other mobs might not
+        -- mob:setHP(0)
+    -- end
 
     return dmg
 end

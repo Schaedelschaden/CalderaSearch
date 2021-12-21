@@ -21,6 +21,11 @@ function onSpellCast(caster, target, spell)
     else
         final = math.floor((enhskill - 300.5) / 28.5) + 28
     end
+	
+	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		final = final * 1.5
+		target:delStatusEffect(tpz.effect.EMBOLDEN)
+	end
 
 	final = final + target:getMod(tpz.mod.PHALANX_RCVD)
 

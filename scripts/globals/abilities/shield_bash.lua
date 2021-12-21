@@ -19,10 +19,9 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player, target, ability)
-
     local shieldSize = player:getShieldSize()
     local damage = 0
-    local chance = math.random(50, 90)
+    local chance = math.random(80, 95)
 	local stun = math.random(1, 100)
     damage = player:getMod(tpz.mod.SHIELD_BASH)
 
@@ -34,23 +33,25 @@ function onUseAbility(player, target, ability)
         damage = 260 + damage
     elseif shieldSize == 4 then
         damage = 360 + damage
-	 elseif shieldSize == 5 then
+	elseif shieldSize == 5 then
         damage = 100 + damage
-	 elseif shieldSize == 6 then
+	elseif shieldSize == 6 then
         damage = 100 + damage
+	elseif (player:getObjType() == tpz.objType.TRUST) then
+		damage = 152
     end
 
     -- Main job factors
     if player:getMainJob() ~= tpz.job.PLD then
         damage = math.floor(damage / 2.5) * 3
-        chance = 60
+        chance = math.random(50, 90)
     else
         damage = math.floor(damage * 3)
     end
 	
     -- Stun proc
     if stun < chance then
-        target:addStatusEffect(tpz.effect.STUN, 1, 0, 6)
+        target:addStatusEffect(tpz.effect.STUN, 1, 0, 4)
     end
 
     -- Randomize damage
@@ -81,6 +82,35 @@ function onUseAbility(player, target, ability)
     target:takeDamage(damage, player, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
     target:updateEnmityFromDamage(player,damage)
     ability:setMsg(tpz.msg.basic.JA_DAMAGE)
+	
+	if (player:getObjType() == tpz.objType.PC or player:getObjType() == tpz.objType.TRUST) then
+		local enmityList = target:getEnmityList()
+		local targName = {}
+		local targ
+		local currentCE
+
+		for i, v in ipairs(enmityList) do
+			local reduceCE = 100
+			targName[i] = v.entity:getName()
+			
+			if (v.entity:isPC()) then
+				targ = GetPlayerByName(targName[i])
+			else
+				targ = v.entity
+			end
+			
+			currentCE = target:getCE(targ)
+			
+			if (currentCE < 101) then
+				reduceCE = currentCE - 1
+			end
+
+			if (targ:getName() ~= player:getName()) then
+				-- printf("shield_bash.lua onUseAbility [%s] REDUCING [%s's] ENMITY BY [%i] FROM [%i] TO [%i]", player:getName(), targ:getName(), reduceCE, target:getCE(targ), target:getCE(targ) - reduceCE)
+				target:setCE(targ, target:getCE(targ) - reduceCE)
+			end
+		end
+	end
 
     return damage
 end

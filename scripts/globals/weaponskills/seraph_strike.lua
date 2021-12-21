@@ -1,6 +1,7 @@
 -----------------------------------
 -- Seraph Strike
 -- Club weapon skill
+-- Weaponskill Category: Magical
 -- Skill level: 40
 -- Deals light elemental damage to enemy. Damage varies with TP.
 -- Aligned with the Thunder Gorget.
@@ -21,6 +22,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.ftp100 = 2 params.ftp200 = 3 params.ftp300 = 4
     params.str_wsc = 0.3 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.3 params.chr_wsc = 0.0
+	params.dSTAT = 0
     params.ele = tpz.magic.ele.LIGHT
     params.skill = tpz.skill.CLUB
     params.includemab = true

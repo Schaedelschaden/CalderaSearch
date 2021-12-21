@@ -16,6 +16,15 @@ end
 function onTrigger(player,npc)
 	local stock_under_99 = 
 	{
+		5402, 7500,			-- (Ammunition) Fire Card Case
+		5403, 7500,			-- (Ammunition) Ice Card Case
+		5404, 7500,			-- (Ammunition) Wind Card Case
+		5405, 7500,			-- (Ammunition) Earth Card Case
+		5406, 7500,			-- (Ammunition) Thunder Card Case
+		5407, 7500,			-- (Ammunition) Water Card Case
+		5408, 7500,			-- (Ammunition) Light Card Case
+		5409, 7500,			-- (Ammunition) Dark Card Case
+		5870, 12500,		-- (Ammunition) Trump Card Case
 		17296,	1,			-- (Throwing) Pebble
 		17298,	20,			-- (Ammunition) Tathlum
 		17299,	50,			-- (Ammunition) Astragalos
@@ -46,6 +55,15 @@ function onTrigger(player,npc)
 	
 	local stock_over_99_basic = 
 	{
+		5402, 7500,			-- (Ammunition) Fire Card Case
+		5403, 7500,			-- (Ammunition) Ice Card Case
+		5404, 7500,			-- (Ammunition) Wind Card Case
+		5405, 7500,			-- (Ammunition) Earth Card Case
+		5406, 7500,			-- (Ammunition) Thunder Card Case
+		5407, 7500,			-- (Ammunition) Water Card Case
+		5408, 7500,			-- (Ammunition) Light Card Case
+		5409, 7500,			-- (Ammunition) Dark Card Case
+		5870, 12500,		-- (Ammunition) Trump Card Case
 		6304,	12000,		-- (Throwing) Roppo Shuriken Pouch
 		5819,	7500,		-- (Ammunition) Antlion Arrow Quiver
 		6137,	11500,		-- (Ammunition) Chapuli Arrow Quiver
@@ -60,6 +78,15 @@ function onTrigger(player,npc)
 	
 	local stock_t1_locked = 
 	{
+		5402, 7500,			-- (Ammunition) Fire Card Case
+		5403, 7500,			-- (Ammunition) Ice Card Case
+		5404, 7500,			-- (Ammunition) Wind Card Case
+		5405, 7500,			-- (Ammunition) Earth Card Case
+		5406, 7500,			-- (Ammunition) Thunder Card Case
+		5407, 7500,			-- (Ammunition) Water Card Case
+		5408, 7500,			-- (Ammunition) Light Card Case
+		5409, 7500,			-- (Ammunition) Dark Card Case
+		5870, 12500,		-- (Ammunition) Trump Card Case
 		6304,	12000,		-- (Throwing) Roppo Shuriken Pouch
 		6137,	11500,		-- (Ammunition) Chapuli Arrow Quiver
 		6138,	35000,		-- (Ammunition) Mantid Arrow Quiver
@@ -76,6 +103,15 @@ function onTrigger(player,npc)
 	
 	local stock_t2_locked = 
 	{
+		5402, 7500,			-- (Ammunition) Fire Card Case
+		5403, 7500,			-- (Ammunition) Ice Card Case
+		5404, 7500,			-- (Ammunition) Wind Card Case
+		5405, 7500,			-- (Ammunition) Earth Card Case
+		5406, 7500,			-- (Ammunition) Thunder Card Case
+		5407, 7500,			-- (Ammunition) Water Card Case
+		5408, 7500,			-- (Ammunition) Light Card Case
+		5409, 7500,			-- (Ammunition) Dark Card Case
+		5870, 12500,		-- (Ammunition) Trump Card Case
 		6304,	12000,		-- (Throwing) Roppo Shuriken Pouch
 		6137,	11500,		-- (Ammunition) Chapuli Arrow Quiver
 		6138,	35000,		-- (Ammunition) Mantid Arrow Quiver
@@ -95,6 +131,15 @@ function onTrigger(player,npc)
 	
 	local stock_t3_locked = 
 	{
+		5402, 7500,			-- (Ammunition) Fire Card Case
+		5403, 7500,			-- (Ammunition) Ice Card Case
+		5404, 7500,			-- (Ammunition) Wind Card Case
+		5405, 7500,			-- (Ammunition) Earth Card Case
+		5406, 7500,			-- (Ammunition) Thunder Card Case
+		5407, 7500,			-- (Ammunition) Water Card Case
+		5408, 7500,			-- (Ammunition) Light Card Case
+		5409, 7500,			-- (Ammunition) Dark Card Case
+		5870, 12500,		-- (Ammunition) Trump Card Case
 		6304,	12000,		-- (Throwing) Roppo Shuriken Pouch
 		6308,	30000,		-- (Throwing) Hachiya Shuriken Pouch
 		6137,	11500,		-- (Ammunition) Chapuli Arrow Quiver
@@ -115,6 +160,15 @@ function onTrigger(player,npc)
 	
 	local stock_t4_locked = 
 	{
+		5402, 7500,			-- (Ammunition) Fire Card Case
+		5403, 7500,			-- (Ammunition) Ice Card Case
+		5404, 7500,			-- (Ammunition) Wind Card Case
+		5405, 7500,			-- (Ammunition) Earth Card Case
+		5406, 7500,			-- (Ammunition) Thunder Card Case
+		5407, 7500,			-- (Ammunition) Water Card Case
+		5408, 7500,			-- (Ammunition) Light Card Case
+		5409, 7500,			-- (Ammunition) Dark Card Case
+		5870, 12500,		-- (Ammunition) Trump Card Case
 		6304,	12000,		-- (Throwing) Roppo Shuriken Pouch
 		6308,	30000,		-- (Throwing) Hachiya Shuriken Pouch
 		6137,	11500,		-- (Ammunition) Chapuli Arrow Quiver
@@ -161,15 +215,15 @@ function onTrigger(player,npc)
 		t4Unlock = 1
 	end
 	
-	if (playerLvl > 99 and t1Unlock == 1 and t2Unlock == 1 and t3Unlock == 1 and t4Unlock == 1) then
+	if (playerLvl >= 99 and t1Unlock == 1 and t2Unlock == 1 and t3Unlock == 1 and t4Unlock == 1) then
 		tpz.shop.general(player, stock_t4_locked)
-	elseif (playerLvl > 99 and t1Unlock == 1 and t2Unlock == 1 and t3Unlock == 1 and t4Unlock == 0) then
+	elseif (playerLvl >= 99 and t1Unlock == 1 and t2Unlock == 1 and t3Unlock == 1 and t4Unlock == 0) then
 		tpz.shop.general(player, stock_t3_locked)
-	elseif (playerLvl > 99 and t1Unlock == 1 and t2Unlock == 1 and t3Unlock == 0 and t4Unlock == 0) then
+	elseif (playerLvl >= 99 and t1Unlock == 1 and t2Unlock == 1 and t3Unlock == 0 and t4Unlock == 0) then
 		tpz.shop.general(player, stock_t2_locked)
-	elseif (playerLvl > 99 and t1Unlock == 1 and t2Unlock == 0 and t3Unlock == 0 and t4Unlock == 0) then
+	elseif (playerLvl >= 99 and t1Unlock == 1 and t2Unlock == 0 and t3Unlock == 0 and t4Unlock == 0) then
 		tpz.shop.general(player, stock_t1_locked)	
-	elseif (playerLvl > 99) then
+	elseif (playerLvl >= 99) then
 		tpz.shop.general(player, stock_over_99_basic)
 	else
 		tpz.shop.general(player, stock_under_99)

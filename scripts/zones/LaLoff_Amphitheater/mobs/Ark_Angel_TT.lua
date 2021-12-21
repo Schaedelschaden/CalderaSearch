@@ -31,14 +31,14 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.LULLABYRES, 100) -- Resistance to Lullaby
     mob:setMod(tpz.mod.PETRIFYRES, 100) -- Resistance to Pertrify
     mob:setMod(tpz.mod.POISONRES, 30) -- Resistance to Poison
-	mob:setMod(tpz.mod.ATT, 1500) -- Attack Stat (Compare to DEF)
+	-- mob:setMod(tpz.mod.ATT, 1500) -- Attack Stat (Compare to DEF)
 	mob:setMod(tpz.mod.MATT, 200) -- Magic Attack (Compare to MDEF)
     -- mob:setMod(tpz.mod.ACC, 800) -- Accuracy (compare to EVA)
 	mob:setMod(tpz.mod.MACC, 650) -- Magic ACC (Compare to MEVA)
 	-- mob:setMod(tpz.mod.EVA, 800) -- Evasion (Compare to ACC)
 	-- mob:setMod(tpz.mod.DEF, 500) -- Defense (Compart to ATT)
 	-- mob:setMod(tpz.mod.MEVA, 100) -- Magic Evasion (Compare to MACC)
-	mob:setMod(tpz.mod.MDEF, 400) -- Magic Defense (Compare to MATT)
+	mob:setMod(tpz.mod.MDEF, 150) -- Magic Defense (Compare to MATT)
 	mob:setMod(tpz.mod.QUICK_MAGIC, 35) -- Instant Cast in %
 	mob:setMod(tpz.mod.FASTCAST, 65) -- Speeds spellcasting
 	mob:addMod(tpz.mod.REFRESH, 100)

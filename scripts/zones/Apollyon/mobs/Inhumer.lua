@@ -65,6 +65,10 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.HTHRES, 1500)
     mob:setMod(tpz.mod.IMPACTRES, 1500)
     mob:setMod(tpz.mod.PIERCERES, 0)
+	mob:addMod(tpz.mod.BINDRES, 100) -- Resistance to Bind
+	mob:addMod(tpz.mod.EVA, 200) -- Evasion (Compare to ACC)
+	mob:addMod(tpz.mod.DEF, 400) -- Defense (Compart to ATT)
+	mob:addMod(tpz.mod.MATT, 20)
 end
 
 function onMobEngaged(mob, target)

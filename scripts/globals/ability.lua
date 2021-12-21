@@ -706,6 +706,11 @@ function corsairSetup(caster, ability, action, effect, job)
 	local merits = caster:getMerit(tpz.merit.PHANTOM_ROLL_RECAST)
 	local recast = ability:getRecast()
 	
+	if (caster:hasStatusEffect(tpz.effect.SNAKE_EYE)) then
+		roll = 1
+		caster:delStatusEffect(tpz.effect.SNAKE_EYE)
+	end
+	
     caster:delStatusEffectSilent(tpz.effect.DOUBLE_UP_CHANCE)
     caster:addStatusEffectEx(tpz.effect.DOUBLE_UP_CHANCE, tpz.effect.DOUBLE_UP_CHANCE, roll, 0, 45, ability:getID(), effect, job, true)
     caster:setLocalVar("corsairRollTotal", roll)

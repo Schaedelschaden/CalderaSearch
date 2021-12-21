@@ -27,15 +27,15 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200= 0.0 params.acc300= 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1;
+    params.atk100 = 4; params.atk200 = 4; params.atk300 = 4;
     params.ignoresDef = true
     params.ignored100 = 0.15
     params.ignored200 = 0.35
     params.ignored300 = 0.5
 
     if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
-        params.ftp100 = 4 params.ftp200 = 4.50 params.ftp300 = 5.00
-		params.agi_wsc = 0.7 + (player:getMerit(tpz.merit.APEX_ARROW) / 100)
+        params.ftp100 = 3.2 params.ftp200 = 3.2 params.ftp300 = 3.2
+		params.agi_wsc = 0.85 -- 0.7 + (player:getMerit(tpz.merit.APEX_ARROW) / 100)
     end
 
     local damage, criticalHit, tpHits, extraHits = doRangedWeaponskill(player, target, wsID, params, tp, action, primary)

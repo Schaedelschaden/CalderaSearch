@@ -20,6 +20,7 @@ function onMobSpawn(mob)
 	mob:addMod(tpz.mod.PARALYZERES, 30) -- Resistance to Silence
     mob:addMod(tpz.mod.STUNRES, 100) -- Resistance to Stun
     mob:addMod(tpz.mod.BINDRES, 30) -- Resistance to Bind
+	mob:addMod(tpz.mod.GRAVITYRES, 100) -- Resistance to Gravity
     mob:addMod(tpz.mod.SLOWRES, 30) -- Resistance to Slow
     mob:addMod(tpz.mod.SILENCERES, 30) -- Resistance to Silence
     mob:addMod(tpz.mod.SLEEPRES, 30) -- Resistance to Sleep
@@ -33,7 +34,7 @@ function onMobSpawn(mob)
 	mob:addMod(tpz.mod.MATT, 100)
 	mob:addMod(tpz.mod.REGEN, 1000)
 	mob:addMod(tpz.mod.REFRESH, 200)
-	mob:addMod(tpz.mod.REGAIN, 100)
+	-- mob:addMod(tpz.mod.REGAIN, 100)
 	mob:addMod(tpz.mod.LTNG_ABSORB, 100)
 	mob:addMod(tpz.mod.DOUBLE_ATTACK, 30)	
 	

@@ -13,7 +13,8 @@ function onEffectGain(target, effect)
 	
 	local DEF = target:getMod(tpz.mod.DEF)
 	local power = (effect:getPower() / 100)
-	conversion = DEF * power
+	local conversion = DEF * power
+	effect:setSubPower(conversion)
 	
     target:addMod(tpz.mod.DEF, -conversion)
 end
@@ -23,5 +24,7 @@ function onEffectTick(target, effect)
 end
 
 function onEffectLose(target, effect)
+	local conversion = effect:getSubPower()
+
     target:delMod(tpz.mod.DEF, -conversion)
 end

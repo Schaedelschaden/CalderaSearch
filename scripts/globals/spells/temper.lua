@@ -25,6 +25,11 @@ function onSpellCast(caster, target, spell)
         print("Warning: Unknown enhancing magic skill for Temper.")
     end
 
+	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		power = power * 1.5
+		target:delStatusEffect(tpz.effect.EMBOLDEN)
+	end
+
     -- TODO: Investigate rumor that Temper is no longer hard capped at 500 skill
 --    power = math.min(power, 20)
 

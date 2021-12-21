@@ -428,7 +428,7 @@ INSERT INTO `traits` (`traitid`, `name`, `job`, `level`, `rank`, `modifier`, `va
 	(70, 'zanshin', 12, 50, 3, 306, 35, 'COP', 0),
 	(70, 'zanshin', 12, 75, 4, 306, 45, 'COP', 0),
 	(70, 'zanshin', 12, 95, 5, 306, 50, 'ABYSSEA', 0),
-	(71, 'savagery', 1, 75, 1, 0, 0, 'TOAU', 0),
+	(71, 'savagery', 1, 75, 1, 0, 0, 'TOAU', 2052),
 	(72, 'aggressive aim', 1, 75, 1, 0, 0, 'TOAU', 0),
 	(73, 'invigorate', 2, 75, 1, 0, 24, 'TOAU', 0),
 	(74, 'penance', 2, 75, 1, 0, 0, 'TOAU', 0),

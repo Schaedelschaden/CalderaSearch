@@ -1,5 +1,6 @@
 -- Aeolian Edge
 -- Dagger weapon skill
+-- Weaponskill Category: Magical
 -- Delivers an area attack that deals wind elemental damage. Damage varies with TP.
 -- Skill Level: 290
 -- Aligned with the Breeze Gorget, Soil Gorget & Thunder Gorget.
@@ -21,6 +22,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.ftp100 = 2.75 params.ftp200 = 3.50 params.ftp300 = 4
     params.str_wsc = 0.0 params.dex_wsc = 0.28 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.28 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
+	params.dSTAT = ((player:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)) / 2) + 8
     params.ele = tpz.magic.ele.WIND
     params.skill = tpz.skill.DAGGER
     params.includemab = true

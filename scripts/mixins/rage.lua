@@ -27,12 +27,36 @@ g_mixins.rage = function(mob)
         if mob:getLocalVar("[rage]started") == 0 and os.time() > mob:getLocalVar("[rage]at") then
             mob:setLocalVar("[rage]started", 1)
 
+			local rageStats = {tpz.mod.STR, tpz.mod.DEX, tpz.mod.VIT, tpz.mod.AGI, tpz.mod.INT, tpz.mod.MND, tpz.mod.CHR,
+							   tpz.mod.DEF, tpz.mod.ATT, tpz.mod.ACC, tpz.mod.MATT, tpz.mod.MACC, tpz.mod.EVA, tpz.mod.MEVA,
+							   tpz.mod.REGEN, tpz.mod.REGAIN, tpz.mod.HASTE_MAGIC, tpz.mod.HASTE_ABILITY}
+
+			-- Boost all combat stats
+			for i = 1, #rageStats do
+				local amt
+			
+				if (i >= 1 and i <= 7) then
+					amt = math.ceil(mob:getStat(i) * 9)
+				elseif (i >= 8 and i <= 14) then
+					
+				elseif (i == 15) then
+					
+				elseif (i == 16) then
+					
+				elseif (i >= 17 and i <= 18) then
+					
+				end
+				
+				mob:setLocalVar("[rage]mod_" .. i, amt)
+				mob:addMod(i, amt)
+			end
+
             -- boost stats
-            for i = tpz.mod.STR, tpz.mod.CHR do
-                local amt = math.ceil(mob:getStat(i) * 9)
-                mob:setLocalVar("[rage]mod_" .. i, amt)
-                mob:addMod(i, amt)
-            end
+            -- for i = tpz.mod.STR, tpz.mod.CHR do
+                -- local amt = math.ceil(mob:getStat(i) * 9)
+                -- mob:setLocalVar("[rage]mod_" .. i, amt)
+                -- mob:addMod(i, amt)
+            -- end
 
             -- TODO: ATT, DEF, MACC, MATT, EVA, attack speed all increase
         end

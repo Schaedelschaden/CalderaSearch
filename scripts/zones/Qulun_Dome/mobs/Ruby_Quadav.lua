@@ -5,16 +5,17 @@
 mixins = {require("scripts/mixins/job_special")}
 -----------------------------------
 
-local AdamantkingLink = {17383441}
+local AdamantkingRoom = {17383441}
 
 function onMobInitialize(mob)
     
 end
 
 function onMobSpawn(mob)
-	if (mob:getID() == AdamantkingLink[i]) then
-		mob:setMobLevel(115)
-		mob:setRespawnTime(420)
+
+	if (mob:getID() == AdamantkingRoom[1]) then
+		mob:setMobLevel(110)
+		mob:setRespawnTime(900)
 		mob:addMod(tpz.mod.ATT, 150)
 		mob:addMod(tpz.mod.MATT, 300)
 		mob:addMod(tpz.mod.ACC, 250)

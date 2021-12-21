@@ -20,7 +20,9 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player,target,ability,action)
-    local alljumpsdmg = 0
+	local pet = player:getPet()
+	local alljumpsbonus = player:getMod(tpz.mod.ALL_JUMPS_WYVERN_HP)
+	
 	local ftp = 1
 	local params = {}
 		params.numHits = 1
@@ -42,6 +44,10 @@ function onUseAbility(player,target,ability,action)
 		params.crit100 = 1.0 params.crit200 = 1.0 params.crit300 = 1.0
 	end
 
+	if ((pet ~= nil) and (player:getPetID() == tpz.pet.id.WYVERN)) then
+		params.alljumpsdmg = pet:getHP() * (alljumpsbonus / 100)
+	end
+
     if (target:isMob()) then
         local enmityShed = 50
         if player:getMainJob() ~= tpz.job.DRG then
@@ -52,11 +58,6 @@ function onUseAbility(player,target,ability,action)
 
     local taChar = player:getTrickAttackChar(target)
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, 0, params, 0, action, true, taChar)
-	local alljumpsbonus = player:getMod(tpz.mod.ALL_JUMPS_WYVERN_HP)
-	local pet = player:getPet()
-	if ((pet ~= nil) and (player:getPetID() == tpz.pet.id.WYVERN)) then
-		alljumpsdmg = pet:getHP() * (alljumpsbonus / 100)
-	end
 
     if (tpHits + extraHits > 0) then
         -- Under Spirit Surge, High Jump reduces TP of target
@@ -73,12 +74,5 @@ function onUseAbility(player,target,ability,action)
         action:speceffect(target:getID(), 0)
     end
 
-	if (alljumpsbonus > 0) then
---		printf("Damage 1: [%i] All Jumps DMG: [%i]\n", damage, alljumpsdmg)
-		damage = damage + alljumpsdmg
---		printf("Damage 2: [%i]\n", damage)
-		return damage	
-	else
-		return damage
-	end
+	return damage
 end

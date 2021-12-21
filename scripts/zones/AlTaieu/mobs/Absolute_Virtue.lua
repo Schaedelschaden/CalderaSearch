@@ -73,9 +73,10 @@ function onMobSpawn(mob)
 					local avTwoHourTime = GetServerVariable("AV_2HR_USED_TIME")
 					
 					for v = 1, 13 do
-						if (abilityID == playerTwoHours[v] and player:hasRecast(tpz.recast.ABILITY, 0) and avUsedTwoHour == v and os.time() - avTwoHourTime <= 10) then
+						if (abilityID == playerTwoHours[v] and player:hasRecast(tpz.recast.ABILITY, 0) and avUsedTwoHour == v and os.time() - avTwoHourTime <= 15) then
 							-- printf("absolute_virtue.lua 2hr Listener [%s] TRIGGERED 2HR: [%i]", player:getName(), playerTwoHours[v])
 							SetServerVariable(cantUse2Hr[v], 1)
+							-- mob:PrintToArea(string.format("The %s take %i damage.", fixedMobName, totaldamage),tpz.msg.channel.NS_SAY, tpz.msg.area.SHOUT)
 							
 							if (abilityID == 16 and mob:hasStatusEffect(tpz.effect.MIGHTY_STRIKES)) then
 								mob:delStatusEffect(tpz.effect.MIGHTY_STRIKES)
@@ -101,7 +102,7 @@ function onMobSpawn(mob)
 						end
 					end
 					
-					if (abilityID == 61 and player:hasRecast(tpz.recast.ABILITY, 163) and avUsedTwoHour == 14 and os.time() - avTwoHourTime <= 10) then
+					if (abilityID == 61 and player:hasRecast(tpz.recast.ABILITY, 163) and avUsedTwoHour == 14 and os.time() - avTwoHourTime <= 15) then
 						-- printf("absolute_virtue.lua 2hr Listener [%s] TRIGGERED 2HR: [%i]", player:getName(), abilityID)
 						SetServerVariable(cantUse2Hr[12], 1)
 						SetServerVariable(cantUse2Hr[13], 1)
@@ -267,7 +268,7 @@ function onSpellPrecast(mob, spell)
     if (spell:getID() == 218) then -- Meteor
         spell:setAoE(tpz.magic.aoe.RADIAL)
         spell:setFlag(tpz.magic.spellFlag.HIT_ALL)
-        spell:setRadius(30)
+        spell:setRadius(20)
         spell:setAnimation(280) -- AoE Meteor Animation
         spell:setMPCost(1)
     end

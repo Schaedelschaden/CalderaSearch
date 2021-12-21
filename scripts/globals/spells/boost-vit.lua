@@ -13,6 +13,8 @@ end
 
 function onSpellCast(caster, target, spell)
     local effect = tpz.effect.VIT_BOOST
+	
     doBoostGain(caster, target, spell, effect)
+	
     return effect
 end

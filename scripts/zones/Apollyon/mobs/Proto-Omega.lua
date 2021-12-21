@@ -9,7 +9,7 @@ local ID = require("scripts/zones/Apollyon/IDs")
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:setMod(tpz.mod.COUNTER, 10) -- "Possesses a Counter trait"
-    mob:setMod(tpz.mod.REGEN, 25) -- "Posseses an Auto-Regen (low to moderate)"
+    mob:setMod(tpz.mod.REGEN, 250) -- "Posseses an Auto-Regen (low to moderate)"
 end
 
 function onMobSpawn(mob)
@@ -79,4 +79,3 @@ function onMobDeath(mob, player, isKiller, noKiller)
         GetNPCByID(ID.npc.APOLLYON_CENTRAL_CRATE):setStatus(tpz.status.NORMAL)
     end
 end
-

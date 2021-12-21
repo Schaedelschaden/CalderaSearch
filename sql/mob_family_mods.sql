@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `mob_family_mods` (
   PRIMARY KEY (`familyid`,`modid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=13 PACK_KEYS=1;
 
--- Dumping data for table tpzdb.mob_family_mods: 524 rows
+-- Dumping data for table tpzdb.mob_family_mods: 521 rows
 /*!40000 ALTER TABLE `mob_family_mods` DISABLE KEYS */;
 INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES
 	(175, 29, 50, 0),
@@ -208,7 +208,6 @@ INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUE
 	(188, 51, 3, 1),
 	(188, 52, 20, 1),
 	(139, 36, 55, 1),
-	(139, 52, 30, 1),
 	(258, 36, 90, 1),
 	(258, 52, 30, 1),
 	(227, 36, 65, 1),
@@ -334,8 +333,6 @@ INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUE
 	(125, 52, 30, 1),
 	(125, 51, 2, 1),
 	(125, 36, 40, 1),
-	(74, 52, 30, 1),
-	(74, 51, 2, 1),
 	(74, 36, 50, 1),
 	(86, 52, 30, 1),
 	(86, 36, 55, 1),

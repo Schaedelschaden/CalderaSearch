@@ -29,17 +29,17 @@ function onMobWeaponSkill(target, mob, skill)
     local hp = mob:getHP()
     local dmg = 0
 
-    -- Should produce 1000 - 3750 @ full HP using the player formula, assuming 8k HP for AA EV.
-    -- dmg * 2.5, as wiki claims ~2500 at 100% HP, until a better formula comes along.
-    if (tp <= 2000) then -- 1000 - 2000
-        dmg = math.floor(hp * (math.floor(0.016 * tp) + 16) / 256)
-    else -- 2001 - 3000
-        dmg = math.floor(hp * (math.floor(0.072 * tp) - 96) / 256)
-    end
+    -- -- Should produce 1000 - 3750 @ full HP using the player formula, assuming 8k HP for AA EV.
+    -- -- dmg * 2.5, as wiki claims ~2500 at 100% HP, until a better formula comes along.
+    -- if (tp <= 2000) then -- 1000 - 2000
+        -- dmg = math.floor(hp * (math.floor(0.016 * tp) + 16) / 256)
+    -- else -- 2001 - 3000
+        -- dmg = math.floor(hp * (math.floor(0.072 * tp) - 96) / 256)
+    -- end
 
-    dmg = dmg * 2.5
+    -- dmg = dmg * 2.5
 	
-	local targetMaxHP = target:getMaxHP() * 0.5
+	local targetMaxHP = target:getMaxHP() * 0.95
 	
 	if (dmg > targetMaxHP) then
 		dmg = targetMaxHP
@@ -62,11 +62,7 @@ function onMobWeaponSkill(target, mob, skill)
         target:updateEnmityFromDamage(mob, dmg)
     end
 	
-	-- if (target:isPC()) then
-		target:setHP(1)
-	-- else
-		-- target:setHP(-dmg)
-	-- end
+	target:addHP(-dmg)
 
     return dmg
 end

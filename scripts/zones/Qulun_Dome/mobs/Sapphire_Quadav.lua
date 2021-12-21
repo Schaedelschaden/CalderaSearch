@@ -3,7 +3,7 @@
 --   NM: Sapphire Quadav (BLM)
 -----------------------------------
 
-local AdamantkingLink = {17383435, 17383437}
+local AdamantkingRoom = {17383435, 17383437}
 
 function onMobInitialize(mob)
     
@@ -11,17 +11,9 @@ end
 
 function onMobSpawn(mob)
 	for i = 1, 2 do
-		if (mob:getID() == AdamantkingLink[i]) then
-			mob:setMobLevel(110)
-			mob:setRespawnTime(420)
-			mob:addMod(tpz.mod.ATT, 150)
-			mob:addMod(tpz.mod.MATT, 400)
-			mob:addMod(tpz.mod.ACC, 250)
-			mob:addMod(tpz.mod.MACC, 500)
-			mob:addMod(tpz.mod.DEF, 100)
-			mob:addMod(tpz.mod.MDEF, 20)
-			mob:addMod(tpz.mod.EVA, 150)
-			mob:addMod(tpz.mod.MEVA, 200)
+		if (mob:getID() == AdamantkingRoom[i]) then
+			mob:setMobLevel(105)
+			mob:setRespawnTime(900)
 		end
 	end
 end

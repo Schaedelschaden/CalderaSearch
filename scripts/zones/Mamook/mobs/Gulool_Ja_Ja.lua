@@ -41,7 +41,7 @@ function onMobFight(mob, target)
         isBusy = true -- Set to true if Seiryu is in any stage of using a mobskill or casting a spell
     end
 	
-   	if (mob:getHPP() <= 50 and isBusy == false and has2Hrd ~= 1) then
+   	if (mob:getHPP() <= 35 and isBusy == false and has2Hrd ~= 1) then
 		mob:useMobAbility(731) -- Mijin Gakure
  		mob:setLocalVar("has2Hrd", 1)
 	end

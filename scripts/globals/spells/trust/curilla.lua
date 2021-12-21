@@ -26,6 +26,9 @@ function onMobSpawn(mob)
         [tpz.magic.spell.RAHAL] = tpz.trust.message_offset.TEAMWORK_3,
         [tpz.magic.spell.HALVER] = tpz.trust.message_offset.TEAMWORK_4,
     })
+	
+	mob:addMod(tpz.mod.CURE_POTENCY, 35)
+	mob:addMod(tpz.mod.WHITE_MAGIC_CAST, -20)
 
     mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.SENTINEL,
                         ai.r.JA, ai.s.SPECIFIC, tpz.ja.SENTINEL)

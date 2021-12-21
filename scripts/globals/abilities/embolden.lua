@@ -14,5 +14,6 @@ end
 
 function onUseAbility(player,target,ability)
     player:addStatusEffect(tpz.effect.EMBOLDEN, 1, 0, 60)
+	
     return tpz.effect.EMBOLDEN
 end

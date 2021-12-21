@@ -62,17 +62,20 @@ function onTrigger(player, mobId)
 	local ATTP = targ:getMod(tpz.mod.ATTP)
 	
 	local weaponATT = 0
+	local strATT = 0
 	for i = 1, 12 do
 		if (weaponType == mainHandWeapons[i]) then
 			weaponATT = targ:getSkillLevel(mainHandWeapons[i])
 			
-			if (weaponATT > 200) then
-				weaponATT = ((weaponATT - 200) * 0.9) + 200
+			if (weaponType == mainHandWeapons[1]) then
+				strATT = (targ:getStat(tpz.mod.STR) * 5) / 8
+			else
+				strATT = (targ:getStat(tpz.mod.STR) * 3) / 4
 			end
 		end
 	end
 	
-	local ATT = 8 + targ:getMod(tpz.mod.ATT) + ((targ:getStat(tpz.mod.STR) * 3) / 4) + weaponATT
+	local ATT = 8 + targ:getMod(tpz.mod.ATT) + strATT + weaponATT
 	local DEF = 8 + targ:getMod(tpz.mod.DEF) + (targ:getStat(tpz.mod.VIT) / 2)
 	local DEFP = targ:getMod(tpz.mod.DEFP)
 	local MDEF = targ:getMod(tpz.mod.MDEF)
@@ -144,21 +147,21 @@ function onTrigger(player, mobId)
 	local AquanKiller = targ:getMod(tpz.mod.AQUAN_KILLER)
 	local AmorphKiller = targ:getMod(tpz.mod.AMORPH_KILLER)
 	local BirdKiller = targ:getMod(tpz.mod.BIRD_KILLER)
-	local SleepRES = targ:getMod(tpz.mod.SLEEPRES)
-    local PoisonRES = targ:getMod(tpz.mod.POISONRES)
-    local ParalyzeRES = targ:getMod(tpz.mod.PARALYZERES)
-    local BlindRES = targ:getMod(tpz.mod.BLINDRES)
-    local SilenceRES = targ:getMod(tpz.mod.SILENCERES)
-    local VirusRES = targ:getMod(tpz.mod.VIRUSRES)
-    local PetrifyRES = targ:getMod(tpz.mod.PETRIFYRES)
-    local BindRES = targ:getMod(tpz.mod.BINDRES)
-    local CurseRES = targ:getMod(tpz.mod.CURSERES)
-    local GravityRES = targ:getMod(tpz.mod.GRAVITYRES)
-    local SlowRES = targ:getMod(tpz.mod.SLOWRES)
-    local StunRES = targ:getMod(tpz.mod.STUNRES)
+	local SleepRES = targ:getMod(tpz.mod.SLEEPRES) + targ:getMod(tpz.mod.IMMUNITY_SLEEP)
+    local PoisonRES = targ:getMod(tpz.mod.POISONRES) + targ:getMod(tpz.mod.IMMUNITY_POISON)
+    local ParalyzeRES = targ:getMod(tpz.mod.PARALYZERES) + targ:getMod(tpz.mod.IMMUNITY_PARALYZE)
+    local BlindRES = targ:getMod(tpz.mod.BLINDRES) + targ:getMod(tpz.mod.IMMUNITY_BLIND)
+    local SilenceRES = targ:getMod(tpz.mod.SILENCERES) + targ:getMod(tpz.mod.IMMUNITY_SILENCE)
+    local VirusRES = targ:getMod(tpz.mod.VIRUSRES) + targ:getMod(tpz.mod.IMMUNITY_VIRUS)
+    local PetrifyRES = targ:getMod(tpz.mod.PETRIFYRES) + targ:getMod(tpz.mod.IMMUNITY_PETRIFY)
+    local BindRES = targ:getMod(tpz.mod.BINDRES) + targ:getMod(tpz.mod.IMMUNITY_BIND)
+    local CurseRES = targ:getMod(tpz.mod.CURSERES) + targ:getMod(tpz.mod.IMMUNITY_CURSE)
+    local GravityRES = targ:getMod(tpz.mod.GRAVITYRES) + targ:getMod(tpz.mod.IMMUNITY_GRAVITY)
+    local SlowRES = targ:getMod(tpz.mod.SLOWRES) + targ:getMod(tpz.mod.IMMUNITY_SLOW)
+    local StunRES = targ:getMod(tpz.mod.STUNRES) + targ:getMod(tpz.mod.IMMUNITY_STUN)
     local CharmRES = targ:getMod(tpz.mod.CHARMRES)
     local AmnesiaRES = targ:getMod(tpz.mod.AMNESIARES)
-    local LullabyRES = targ:getMod(tpz.mod.LULLABYRES)
+    local LullabyRES = targ:getMod(tpz.mod.LULLABYRES) + targ:getMod(tpz.mod.IMMUNITY_LULLABY)
     local DeathRES = targ:getMod(tpz.mod.DEATHRES)
 	
 	-- local strBonus = (STR / 1.78) -- STR bonus for one-handed weapon ATT

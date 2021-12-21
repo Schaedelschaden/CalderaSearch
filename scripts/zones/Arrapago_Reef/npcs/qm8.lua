@@ -15,5 +15,6 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.NOTHING_HAPPENS)
+    -- player:messageSpecial(ID.text.NOTHING_HAPPENS)
+	player:PrintToPlayer(string.format("You have the feeling that you need a Ranger's Testimony and a Lamian Bone Key..."),tpz.msg.channel.NS_SAY)
 end

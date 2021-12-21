@@ -106,9 +106,9 @@ function AvatarPhysicalMove(avatar, target, skill, numberofhits, accmod, dmgmod,
 	-- Apply Augments "Blood Boon" effect
 	-- 5% chance to activate per set piece, 25% damage boost per set piece
 	local master = avatar:getMaster()
-	if (master:getLocalVar("BloodBoonActivated") == 1 and math.random(1,100) < master:getMod(tpz.mod.AUGMENT_BLOOD_BOON)) then
-		local multBloodBoon = master:getMod(tpz.mod.AUGMENT_BLOOD_BOON) / 5
-		local dmgBoost = 1 + ((multBloodBoon * 25) / 100)
+	if (master:getLocalVar("BloodBoonActivated") > 0 and math.random(1,100) < master:getMod(tpz.mod.AUGMENT_BLOOD_BOON)) then
+		local multBloodBoon = master:getLocalVar("BloodBoonActivated") / 100
+		local dmgBoost = 1 + (1 - multBloodBoon)
 		
 		finaldmg = finaldmg * dmgBoost
 		master:setLocalVar("BloodBoonActivated", 0)
@@ -269,11 +269,11 @@ function AvatarFinalAdjustments(dmg, mob, skill, target, skilltype, skillparam, 
 	-- Apply Augments "Blood Boon" effect
 	-- 5% chance to activate per set piece, 25% damage boost per set piece
 	local master = mob:getMaster()
-	if (master:getLocalVar("BloodBoonActivated") == 1 and math.random(1,100) < master:getMod(tpz.mod.AUGMENT_BLOOD_BOON)) then
-		local multBloodBoon = master:getMod(tpz.mod.AUGMENT_BLOOD_BOON) / 5
-		local dmgBoost = 1 + ((multBloodBoon * 25) / 100)
+	if (master:getLocalVar("BloodBoonActivated") > 0 and math.random(1,100) < master:getMod(tpz.mod.AUGMENT_BLOOD_BOON)) then
+		local multBloodBoon = master:getLocalVar("BloodBoonActivated") / 100
+		local dmgBoost = 1 + (1 - multBloodBoon)
 		
-		dmg = dmg * dmgBoost
+		finaldmg = finaldmg * dmgBoost
 		master:setLocalVar("BloodBoonActivated", 0)
 	end
 	

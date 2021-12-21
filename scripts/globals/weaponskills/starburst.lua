@@ -1,6 +1,7 @@
 -----------------------------------
 -- Starburst
 -- Staff weapon skill
+-- Weaponskill Category: Magical
 -- Skill Level: 100
 -- Deals light or darkness elemental damage. Damage varies with TP.
 -- Aligned with the Shadow Gorget & Aqua Gorget.
@@ -23,6 +24,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.vit_wsc = 0.0 params.agi_wsc = 0.0
     params.int_wsc = 0.0 params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
+	params.dSTAT = ((player:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)) / 2) + 8
     params.skill = tpz.skill.STAFF
     params.includemab = true
     -- 50/50 shot of being light or dark

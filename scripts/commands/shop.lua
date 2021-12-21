@@ -13,9 +13,9 @@ cmdprops =
 function onTrigger(player,page)
     if (page == 0 or page == nil) then
 		player:PrintToPlayer(string.format("Please make a choice using one of the following options:"),tpz.msg.channel.SYSTEM_3)
-		player:PrintToPlayer(string.format("!shop 1: Food   !shop 2: Crystals   !shop 3: Crafting Gear   !shop 4: Vanity Gear   !shop 5: Charged Ammo"),tpz.msg.channel.SYSTEM_3)
+		player:PrintToPlayer(string.format("!shop 1: Food   !shop 2: Crystals   !shop 3: Crafting Gear   !shop 4: Charged Ammo   !shop 5: Vanity Gear   !shop 6: Seasonal Gear"),tpz.msg.channel.SYSTEM_3)
 		
-	elseif ( page == 1) then -- Creates Food shop.
+	elseif (page == 1) then -- Creates Food shop.
     local stock_1 =
         {
             4153,   2500,        -- Antacid (food removal medication)
@@ -30,8 +30,8 @@ function onTrigger(player,page)
 --          6568,   5000,        -- Crepe des Rois (high level MACC food, 60 min duration)
 --			6261,   3500,        -- Akamochi +1 (low level pet ATK food, 60 min duration)
 --			6263,   7500,        -- Kusamochi +1 (high level pet ATK food, 60 min duration)
-        };
-        tpz.shop.general(player,stock_1);
+        }
+        tpz.shop.general(player, stock_1)
 		
     elseif (page == 2) then -- Creates Crystals shop.
         local stock_2 =
@@ -52,10 +52,10 @@ function onTrigger(player,page)
             4243,   10000,       -- HQ Water Crystal
             4244,   10000,       -- HQ Light Crystal
             4245,   10000,       -- HQ Dark Crystal
-        };
-        tpz.shop.general(player,stock_2);
+        }
+        tpz.shop.general(player, stock_2)
 
-    elseif ( page == 3) then -- Creates Crafting Gear Shop.
+    elseif (page == 3) then -- Creates Crafting Gear Shop.
         local stock_3 =
         {
             17058,   250000,        -- Caduceus
@@ -74,11 +74,26 @@ function onTrigger(player,page)
 			14831,   250000,        -- Smithy's Mitts
 			14392,   250000,        -- Carpenter's Apron
 			14830,   250000,        -- Carpenter's Gloves
-      };
-      tpz.shop.general(player,stock_3);
+      }
+      tpz.shop.general(player, stock_3)
 	  
-    elseif ( page == 4) then -- Creates Vanity Gear Shop.
+	elseif (page == 4) then -- Creates Charged Ammunition Shop.
         local stock_4 =
+        {
+			18228,   30,           -- Battery
+			18229,   60,           -- Kilo Battery
+			18230,   90,           -- Mega Battery
+            18232,   30,           -- Hydro Pump
+			18233,   60,           -- Kilo Pump
+			18234,   90,           -- Mega Pump
+			18236,   30,           -- Wind Fan
+			18237,   60,           -- Kilo Fan
+			18238,   90,           -- Mega Fan
+      }
+      tpz.shop.general(player, stock_4)
+	  
+    elseif (page == 5) then -- Creates Vanity Gear Shop.
+        local stock_5 =
         {
             10384,   10000,        -- Cumulus Masque
 			11482,   10000,        -- Eyepatch
@@ -90,8 +105,6 @@ function onTrigger(player,page)
 			10594,   10000,        -- Decennial Hose
 			11861,   10000,        -- Hikogami Yukata
 			11862,   10000,        -- Himegami Yukata
-			11965,   10000,        -- Dream Trousers
-			11967,   10000,        -- Dream Pants
 			10811,   10000,        -- Chocobo Shield
 			10810,   10000,        -- Moogle Guard +1
 			10807,   10000,        -- Mandraguard
@@ -101,23 +114,20 @@ function onTrigger(player,page)
 			27294,   10000,        -- Cossie Bottom +1
 			26966,   10000,        -- Ta Moko +1
 			27292,   10000,        -- Swimming Togs +1
-      };
-      tpz.shop.general(player,stock_4);
+      }
+      tpz.shop.general(player, stock_5)
 	  
-	elseif ( page == 5) then -- Creates Charged Ammunition Shop.
-        local stock_5 =
+	elseif (page == 6) then -- Creates Charged Ammunition Shop.
+        local stock_6 =
         {
-			18228,   30,           -- Battery
-			18229,   60,           -- Kilo Battery
-			18230,   90,           -- Mega Battery
-            18232,   30,           -- Hydro Pump
-			18233,   60,           -- Kilo Pump
-			18234,   90,           -- Mega Pump
-			18236,   30,           -- Wind Fan
-			18237,   60,           -- Kilo Fan
-			18238,   90,           -- Mega Fan
-      };
-      tpz.shop.general(player,stock_5);
+			18863,   10000,        -- Dream Bell
+			15178,   10000,        -- Dream Hat
+			14519,   10000,        -- Dream Robe
+			11965,   10000,        -- Dream Trousers
+			11967,   10000,        -- Dream Pants
+			15752,   10000,        -- Dream Boots
+      }
+      tpz.shop.general(player, stock_6)
 
     else
         player:PrintToPlayer( string.format( "Page %i not found.", page ) );

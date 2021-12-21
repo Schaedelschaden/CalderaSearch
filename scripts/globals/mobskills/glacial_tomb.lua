@@ -3,8 +3,8 @@
 --
 --  Description: Deals ice damage to enemies within range. 
 --  Type: Magical
---  Utsusemi/Blink absorb: 1 shadow
---  Range: Melee
+--  Utsusemi/Blink absorb: Ignores shadows
+--  Range: 
 --  Notes:
 ---------------------------------------------
 require("scripts/globals/settings")

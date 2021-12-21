@@ -39,6 +39,7 @@ function onTrigger(player, npc)
 		2825, 3984,			-- Square of Cambric
 		1712, 1620,			-- Clump of Cashmere Wool
 		3449, 17220,		-- Celaeno's Cloth
+		3941, 258,			-- Chapuli Wing
 		1281, 8700,			-- Square of Cheviot Cloth
 		2537, 3306,			-- Square of Cilice
 		839, 93,			-- Piece of Crawler Cocoon
@@ -74,6 +75,7 @@ function onTrigger(player, npc)
 		833, 50,			-- Clump of Moko Grass
 		2704, 5078,			-- Square of Oil-Soaked Cloth
 --		2476, 250000,		-- Spool of Platinum Silk Thread
+		9147, 360,			-- Porxie Wing
 		821, 7280,			-- Spool of Rainbow Thread
 --		1132, 250000,		-- Square of Raxa
 		1828, 186,			-- Spool of Red Grass Thread

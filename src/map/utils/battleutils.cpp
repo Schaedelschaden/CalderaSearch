@@ -1465,6 +1465,18 @@ namespace battleutils
 
         uint8 finalhitrate = std::clamp(hitrate, 20, 95);
 //		printf("battleutils.cpp GetRangedHitRate RANGED FINAL HIT RATE: [%i]\n", finalhitrate);
+
+		if (PAttacker->objtype == TYPE_PC)
+		{
+			CCharEntity* PChar = (CCharEntity*)PAttacker;
+			int8 auditRangedHitRate = charutils::GetCharVar(PChar, "AuditRangedHitRate");
+			
+			if (auditRangedHitRate == 1)
+			{
+				printf("battleutils.cpp GetRangedHitRate BASE RACC: [%i]  ENEMY EVA: [%i]  LVL DIFF: [%i]  RANGED FINAL HIT RATE: [%i]  ATTACKER NAME: [%s]\n", acc, eva, defenderMLvl - attackerMLvl, hitrate, PAttacker->GetName());
+			}
+		}
+
         return finalhitrate;
     }
 
@@ -1916,8 +1928,19 @@ namespace battleutils
 
         float skillmodifier = (blockskill - attackskill) * 0.2325f;
 		int8 blockRate = (int8)(base + (int32)skillmodifier + blockRateMod);
-//		printf("battleutils.cpp GetBlockRate ATTACKER SKILL: [%i]  DEFENDER SHIELD SKILL: [%i]  SKILL MODIFIER: [%f]  BLOCK RATE: [%i]\n", attackskill, blockskill, skillmodifier, (int8)std::clamp((int32)blockRate, 5, (shieldSize == 6 ? 100 : std::max<int32>((int32)(65 + blockRateMod), 100))));
-        return (int8)std::clamp((int32)blockRate, 5, (shieldSize == 6 ? 100 : std::max<int32>((int32)(65 + blockRateMod), 100)));
+		
+		if (PDefender->objtype == TYPE_PC)
+		{
+			CCharEntity* PChar = (CCharEntity*)PDefender;
+			int8 auditBlockRate = charutils::GetCharVar(PChar, "AuditBlockRate");
+			
+			if (auditBlockRate == 1)
+			{
+				printf("battleutils.cpp GetBlockRate ATTACKER SKILL: [%i]  DEFENDER SHIELD SKILL: [%i]  SKILL MODIFIER: [%3.2f]  BLOCK RATE: [%i]\n", attackskill, blockskill, skillmodifier, (int8)std::clamp((int32)blockRate, 5, (shieldSize == 6 ? 100 : std::max<int32>((int32)(65 + blockRateMod), 100))));
+			}
+		}
+		
+		return (int8)std::clamp((int32)blockRate, 5, (shieldSize == 6 ? 100 : std::max<int32>((int32)(65 + blockRateMod), 100)));
     }
 
     uint8 GetParryRate(CBattleEntity* PAttacker, CBattleEntity* PDefender)
@@ -2658,8 +2681,10 @@ namespace battleutils
         if (!isRanged)
             PAttacker->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK);
 
+		int16 saveTP = (int16)std::clamp((float)PAttacker->getMod(Mod::SAVETP), 0.0f, 500.0f);
+
         // Apply TP
-        PAttacker->addTP(std::max((PAttacker->getMod(Mod::SAVETP)), standbyTp));
+        PAttacker->addTP(std::max(saveTP, standbyTp));
 
         // Remove Hagakure Effect if present
         if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HAGAKURE))
@@ -4358,14 +4383,17 @@ namespace battleutils
         {
             damage = (int32)(damage * (1.f + PChar->PMeritPoints->GetMeritValue(MERIT_INNIN_EFFECT, PChar)/100.f));    
         }
+		
         damage = damage * (1000 - resistance) / 1000;
         damage = MagicDmgTaken(PDefender, damage, appliedEle);
+		
         if (damage > 0)
         {
             damage = std::max(damage - PDefender->getMod(Mod::PHALANX), 0);
             damage = HandleStoneskin(PDefender, damage);
             HandleAfflatusMiseryDamage(PDefender, damage);
         }
+		
         damage = std::clamp(damage, -99999, 99999);
 
         PDefender->takeDamage(damage, PAttacker, ATTACK_SPECIAL, appliedEle == ELEMENT_NONE ? DAMAGE_NONE : (DAMAGETYPE)(DAMAGE_ELEMENTAL + appliedEle));
@@ -5160,59 +5188,65 @@ namespace battleutils
 
     void applyCharm(CBattleEntity* PCharmer, CBattleEntity* PVictim, duration charmTime)
     {
-        PVictim->isCharmed = true;
+		uint16 charmImmune = PVictim->getMod(Mod::IMMUNITY_CHARM);
+		uint16 charmRES = PVictim->getMod(Mod::CHARMRES);
+		
+		if (charmImmune < 1 && charmRES < tpzrand::GetRandomNumber(100.f))
+		{
+			PVictim->isCharmed = true;
 
-        if (PVictim->objtype == TYPE_MOB)
-        {
-            PVictim->PMaster = PCharmer;
-            PCharmer->PPet = PVictim;
+			if (PVictim->objtype == TYPE_MOB)
+			{
+				PVictim->PMaster = PCharmer;
+				PCharmer->PPet = PVictim;
 
-            //make the mob disengage
-            if (PCharmer->PPet->PAI->IsEngaged())
-            {
-                PCharmer->PPet->PAI->Disengage();
-            }
+				//make the mob disengage
+				if (PCharmer->PPet->PAI->IsEngaged())
+				{
+					PCharmer->PPet->PAI->Disengage();
+				}
 
-            //clear the victims emnity list
-            ((CMobEntity*)PVictim)->PEnmityContainer->Clear();
+				//clear the victims enmity list
+				((CMobEntity*)PVictim)->PEnmityContainer->Clear();
 
-            //set the mobs ai to petAi
-            PCharmer->PPet->PAI->SetController(std::make_unique<CPetController>(static_cast<CPetEntity*>(PCharmer->PPet)));
-            PCharmer->PPet->charmTime = server_clock::now() + charmTime;
+				//set the mobs ai to petAi
+				PCharmer->PPet->PAI->SetController(std::make_unique<CPetController>(static_cast<CPetEntity*>(PCharmer->PPet)));
+				PCharmer->PPet->charmTime = server_clock::now() + charmTime;
 
-            // this will make him transition back to roaming if sleeping
-            PCharmer->PPet->animation = ANIMATION_NONE;
-            PCharmer->updatemask |= UPDATE_HP;
+				// this will make him transition back to roaming if sleeping
+				PCharmer->PPet->animation = ANIMATION_NONE;
+				PCharmer->updatemask |= UPDATE_HP;
 
-            charutils::BuildingCharAbilityTable((CCharEntity*)PCharmer);
-            charutils::BuildingCharPetAbilityTable((CCharEntity*)PCharmer, (CPetEntity*)PVictim, PVictim->id);
-            ((CCharEntity*)PCharmer)->pushPacket(new CCharUpdatePacket((CCharEntity*)PCharmer));
-            ((CCharEntity*)PCharmer)->pushPacket(new CPetSyncPacket((CCharEntity*)PCharmer));
-            PCharmer->ForAlliance([&PVictim](CBattleEntity* PMember){
-                if (static_cast<CCharEntity*>(PMember)->PClaimedMob == PVictim)
-                    static_cast<CCharEntity*>(PMember)->PClaimedMob = nullptr;
-            });
-            ((CMobEntity*)PVictim)->m_OwnerID.clean();
-            PVictim->updatemask |= UPDATE_STATUS;
-        }
+				charutils::BuildingCharAbilityTable((CCharEntity*)PCharmer);
+				charutils::BuildingCharPetAbilityTable((CCharEntity*)PCharmer, (CPetEntity*)PVictim, PVictim->id);
+				((CCharEntity*)PCharmer)->pushPacket(new CCharUpdatePacket((CCharEntity*)PCharmer));
+				((CCharEntity*)PCharmer)->pushPacket(new CPetSyncPacket((CCharEntity*)PCharmer));
+				PCharmer->ForAlliance([&PVictim](CBattleEntity* PMember){
+					if (static_cast<CCharEntity*>(PMember)->PClaimedMob == PVictim)
+						static_cast<CCharEntity*>(PMember)->PClaimedMob = nullptr;
+				});
+				((CMobEntity*)PVictim)->m_OwnerID.clean();
+				PVictim->updatemask |= UPDATE_STATUS;
+			}
 
-        else if (PVictim->objtype == TYPE_PC)
-        {
-            if (PVictim->PPet)
-            {
-                petutils::DespawnPet(PVictim);
-            }
+			else if (PVictim->objtype == TYPE_PC)
+			{
+				if (PVictim->PPet)
+				{
+					petutils::DespawnPet(PVictim);
+				}
 
-            static_cast<CCharEntity*>(PVictim)->ClearTrusts();
+				static_cast<CCharEntity*>(PVictim)->ClearTrusts();
 
-            PVictim->PAI->SetController(std::make_unique<CPlayerCharmController>(static_cast<CCharEntity*>(PVictim)));
+				PVictim->PAI->SetController(std::make_unique<CPlayerCharmController>(static_cast<CCharEntity*>(PVictim)));
 
-            battleutils::RelinquishClaim(static_cast<CCharEntity*>(PVictim));
-            PVictim->PMaster = PCharmer;
-            PVictim->updatemask |= UPDATE_ALL_CHAR;
-        }
-        PVictim->allegiance = PCharmer->allegiance;
-        PVictim->updatemask |= UPDATE_HP;
+				battleutils::RelinquishClaim(static_cast<CCharEntity*>(PVictim));
+				PVictim->PMaster = PCharmer;
+				PVictim->updatemask |= UPDATE_ALL_CHAR;
+			}
+			PVictim->allegiance = PCharmer->allegiance;
+			PVictim->updatemask |= UPDATE_HP;
+		}
     }
 
     void unCharm(CBattleEntity* PEntity)
@@ -5528,7 +5562,7 @@ namespace battleutils
 		}
 
 		// Handle Specific Damage Taken (SDT)
-		damage -= (int32)(damage * (floor(256.0f * (breathSDT / 100.0f)) / 256.0f));
+		damage += (int32)(damage * (floor(256.0f * (breathSDT / 100.0f)) / 256.0f));
 
         if (tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::ABSORB_DMG_CHANCE))
             damage = -damage;
@@ -5557,6 +5591,19 @@ namespace battleutils
 		{
 			damageTaken += PDefender->getMod(Mod::COVER_DT);
 		}
+		
+		// Apply the "Nuke Wall"
+		if (PDefender->objtype == TYPE_MOB && damage > 0)
+		{
+			CMobEntity* PMob = (CMobEntity*)PDefender;
+			
+			if (PMob->m_nukeWallTimer[element - 1] >= server_clock::now())
+			{
+				damage = (int32)(damage * 0.4f); // 60% reduction
+			}
+			
+			PMob->m_nukeWallTimer[element - 1] = server_clock::now() + 5s;
+		}
 
 //		printf("battleutils.cpp MagicDmgTaken ELEMENT: [%i]  ABSORB: [%i]\n", element, PDefender->getMod(absorb[element - 1]));
 //		printf("battleutils.cpp MagicDmgTaken ELEMENT: [%i]  SDT: [%i]  DAMAGE: [%i]\n", element, PDefender->getMod(sdt[element - 1]), damage);
@@ -5583,7 +5630,7 @@ namespace battleutils
 		}
 		
 		// Handle Specific Damage Taken (SDT)
-		damage -= (int32)(damage * (magicSDT / 100.f));
+		damage += (int32)(damage * (magicSDT / 100.f));
 		
 		damage -= PDefender->getMod(Mod::ONE_FOR_ALL_EFFECT);
 
@@ -5671,7 +5718,7 @@ namespace battleutils
 		}
 		
 		// Handle Specific Damage Taken (SDT)
-		damage -= (int32)(damage * (physicalSDT / 100.f));
+		damage += (int32)(damage * (physicalSDT / 100.f));
 
         if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_STEAM_JACKET) > 0)
             damage = HandleSteamJacket(PDefender, damage, damageType);
@@ -5734,7 +5781,7 @@ namespace battleutils
 		}
 		
 		// Handle Specific Damage Taken (SDT)
-		damage -= (int32)(damage * (rangedSDT / 100.f));
+		damage += (int32)(damage * (rangedSDT / 100.f));
 
         if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_STEAM_JACKET) > 0)
             damage = HandleSteamJacket(PDefender, damage, damageType);
@@ -5949,6 +5996,9 @@ namespace battleutils
 		// Handles SMN Titan Blood Pact Earthen Armor
 		damage = HandleSevereDamageEffect(PDefender, EFFECT_EARTHEN_ARMOR, damage, false);
 		
+		// Handles BRD Song Sentinel's Scherzo
+		damage = HandleSevereDamageEffect(PDefender, EFFECT_SCHERZO, damage, false);
+		
 		// Handles SAM Job Ability Yaegasumi
 		damage = HandleSevereDamageEffect(PDefender, EFFECT_YAEGASUMI, damage, false);
 		
@@ -6036,9 +6086,9 @@ namespace battleutils
             if (damage > damageThreshold)
 			{
 //				printf("battleutils.cpp HandleSevereDamageEffect NORMAL THRESHOLD TRIGGERED\n");
-                uint16 severeReduction = PDefender->StatusEffectContainer->GetStatusEffect(effect)->GetSubPower();
-                severeReduction = std::clamp((100 - severeReduction), 0, 100) / 100;
-				damage = damage * severeReduction;
+                float severeReduction = (float)(PDefender->StatusEffectContainer->GetStatusEffect(effect)->GetSubPower());
+                severeReduction = std::clamp((100.0f - severeReduction), 0.0f, 100.0f) / 100.0f;
+				damage = (int32)(damage * severeReduction);
 				
 				if (removeEffect)
 				{

@@ -17,7 +17,7 @@ function onMobWeaponSkill(target, mob, skill)
 	
 	-- Adjust Trial By Earth Titan's Earthen Ward damage
 	if (mob:getID() == 17633281) then
-		base = 3000
+		base = 1500
 	end
 
     skill:setMsg(MobBuffMove(mob, typeEffect, base, 0, 180))

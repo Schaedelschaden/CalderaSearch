@@ -55,14 +55,14 @@ end
 
 function applyRoll(caster, target, ability, action, total)
     local duration = 300 + caster:getMerit(tpz.merit.WINNING_STREAK) + caster:getMod(tpz.mod.PHANTOM_DURATION)
-    local effectpowers = {10, 13, 15, 40, 18, 20, 25, 5, 27, 30, 50, 5}
+    local effectpowers = {20, 26, 30, 80, 36, 40, 50, 10, 54, 60, 100, 10}
     local effectpower = effectpowers[total]
 	local rollPlus = 5 -- Roll +1 Line from BGWiki
 	local effectMod = phantombuffMultiple(caster)
 	local CrookedCardsMod = 1 + (caster:getMod(tpz.mod.PHANTOM_ROLL_EFFECT) / 100)
 	
     if (caster:getLocalVar("corsairRollBonus") == 1 and total < 12) then
-        effectpower = effectpower + 15
+        effectpower = effectpower + 30
     end
 	
 --	printf("hunters_roll.lua applyRoll EFFECT POWER: [%i]  EFFECT MOD: [%i]\n", effectpower, effectMod)

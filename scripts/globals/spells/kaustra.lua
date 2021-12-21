@@ -38,7 +38,7 @@ function onSpellCast(caster, target, spell)
     dmg = adjustForTarget(target, dmg, spell:getElement())
     dmg = finalMagicAdjustments(caster, target, spell, dmg)
 
-    target:addStatusEffect(tpz.effect.KAUSTRA, math.floor(dmg/3), 3, duration)
+    target:addStatusEffect(tpz.effect.KAUSTRA, math.floor(dmg/4), 3, duration)
 
     return dmg
 end

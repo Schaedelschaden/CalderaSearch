@@ -16,16 +16,16 @@ function onMobFight(mob, target)
 	
 	if (hpp <= 80 and benediction == 0) then
 		mob:useMobAbility(689)
-		mob:getLocalVar("BENEDICTION", 1)
+		mob:setLocalVar("BENEDICTION", 1)
 	elseif (hpp <= 60 and benediction == 1) then
 		mob:useMobAbility(689)
-		mob:getLocalVar("BENEDICTION", 2)
+		mob:setLocalVar("BENEDICTION", 2)
 	elseif (hpp <= 40 and benediction == 2) then
 		mob:useMobAbility(689)
-		mob:getLocalVar("BENEDICTION", 3)
+		mob:setLocalVar("BENEDICTION", 3)
 	elseif (hpp <= 20 and benediction == 3) then
 		mob:useMobAbility(689)
-		mob:getLocalVar("BENEDICTION", 4)
+		mob:setLocalVar("BENEDICTION", 4)
 	end
 end
 

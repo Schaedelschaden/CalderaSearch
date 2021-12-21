@@ -13,14 +13,26 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill, player)
-	local bonusTime = utils.clamp(player:getSkillLevel(tpz.skill.SUMMONING_MAGIC) - 300, 0, 200)
-    local duration = 90 + bonusTime
+	local resm = applyPlayerResistance(pet, -1, target, pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT), tpz.skill.ELEMENTAL_MAGIC, 5)
+    local duration = 90
 	
-	target:addStatusEffect(tpz.effect.NIGHTMARE, 1, 0, duration)
-	target:addStatusEffect(tpz.effect.SLEEP_I, 1, 0, duration)
-	target:addStatusEffect(tpz.effect.BIO, 2, 3, duration)
+	if (resm < 0.5) then
+        skill:setMsg(tpz.msg.basic.JA_MISS_2) -- resist message
+        return tpz.effect.SLEEP_I
+    end
 	
-	skill:setMsg(tpz.msg.basic.SKILL_ENFEEB)
+    duration = duration * resm
+	
+    if (target:hasImmunity(1) or hasSleepEffects(target)) then
+        --No effect
+        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
+    else
+        skill:setMsg(tpz.msg.basic.SKILL_ENFEEB)
+
+        target:addStatusEffect(tpz.effect.NIGHTMARE, 1, 0, duration)
+		target:addStatusEffect(tpz.effect.SLEEP_I, 1, 0, duration)
+		target:addStatusEffect(tpz.effect.BIO, 2, 3, duration)
+    end
 	
 	return tpz.effect.SLEEP_I
 end

@@ -19,9 +19,9 @@ function onMobWeaponSkill(target, mob, skill)
     local accmod = 2
     local dmgmod = 3
 
-    if mob:isMobType(MOBTYPE_NOTORIOUS) then
-        dmgmod = 8.5
-    end
+    -- if mob:isMobType(MOBTYPE_NOTORIOUS) then
+        -- dmgmod = 4.0
+    -- end
 
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local shadows_removed = math.random(2)

@@ -25,6 +25,8 @@ function onMobWeaponSkill(target, mob, skill)
 	
 	if (mob:getID() == 16961932) then
 		baseDmg = mob:getWeaponDmg() * 3
+	elseif (mob:getID() == 16904202 or mob:getID() == 16904203 or mob:getID() == 16904204) then
+		baseDmg = mob:getWeaponDmg() * 5
 	end
 	
     local info = MobMagicalMove(mob, target, skill, baseDmg, tpz.magic.ele.EARTH, dmgmod, TP_NO_EFFECT)

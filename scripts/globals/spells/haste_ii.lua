@@ -17,6 +17,11 @@ function onSpellCast(caster, target, spell)
 
     local power = 2998 -- 307/1024 ~29.98%
 
+	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		power = power * 1.5
+		target:delStatusEffect(tpz.effect.EMBOLDEN)
+	end
+
     if not target:addStatusEffect(tpz.effect.HASTE, power, 0, duration) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     end

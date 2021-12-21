@@ -4,6 +4,7 @@
 -- !pos -3 0.1 -9 246
 -----------------------------------
 local ID = require("scripts/zones/Port_Jeuno/IDs")
+require("scripts/globals/common")
 require("scripts/globals/keyitems")
 require("scripts/globals/npc_util")
 require("scripts/globals/settings")
@@ -250,6 +251,8 @@ local highTierKIs = {
 	[10] = {trade = {1120}, reward = 2545}, -- Casablanca -> Savages Phantom Gem
 	[11] = {trade = {1413}, reward = 2924}, -- Cattleya -> Waking the Beast Phantom Gem
 	[12] = {trade = {2713}, reward = 2469}, -- Dyer's Woad -> Celestial Nexus Phantom Gem
+	[13] = {trade = {918}, reward = 2595}, -- Mistletoe -> Headwind Phantom Gem
+	[14] = {trade = {958}, reward = 2556}, -- Marguerite -> Puppet in Peril Phantom Gem
 }
 
 -----------------------------------
@@ -322,24 +325,27 @@ function onTrade(player, npc, trade)
 	end
 	
 	-- Found a match
-	if tradedCombo > 0 and player:getCharVar(lastHighTierKITrade[tradedCombo]) <= os.time() and not player:hasKeyItem(highTierKIs[tradedCombo].reward) then
+	-- if tradedCombo > 0 and player:getCharVar(lastHighTierKITrade[tradedCombo]) <= os.time() and
+	if tradedCombo > 0 and player:getCharVar(lastHighTierKITrade[tradedCombo]) < getMidnight()
+	and not player:hasKeyItem(highTierKIs[tradedCombo].reward) then
 		local ID = zones[player:getZoneID()]
 		local reward = highTierKIs[tradedCombo].reward
 	
 		player:confirmTrade()
 		player:addKeyItem(reward)
 		player:messageSpecial(ID.text.KEYITEM_OBTAINED, reward)
-		player:setCharVar(lastHighTierKITrade[tradedCombo], os.time() + 86400)
-	elseif (player:hasKeyItem(reward)) then
+		player:setCharVar(lastHighTierKITrade[tradedCombo], getMidnight())-- os.time() + 86400)
+	elseif (player:hasKeyItem(highTierKIs[tradedCombo].reward)) then
 		player:messageSpecial(ID.text.CANNOT_OBTAIN_MORE)
 	else
-		local timeRemaining = ((player:getCharVar(lastHighTierKITrade[tradedCombo]) - os.time()) / 60)
+		local timeRemainingHours = math.floor(((player:getCharVar(lastHighTierKITrade[tradedCombo]) - os.time()) / 60) / 60) -- ((player:getCharVar(lastHighTierKITrade[tradedCombo]) - os.time()) / 60)
+		local timeRemainingMinutes = (((player:getCharVar(lastHighTierKITrade[tradedCombo]) - os.time()) / 60) / 60)%1 * 60 -- ((player:getCharVar(lastHighTierKITrade[tradedCombo]) - os.time()) / 60)
 		
-		if (timeRemaining <= 60) then
-			player:PrintToPlayer(string.format("Sagheera : You must wait %i minutes until you can receive that key item.", timeRemaining),tpz.msg.channel.NS_SAY)
+		if (timeRemainingHours <= 1) then
+			player:PrintToPlayer(string.format("Sagheera : You must wait %i minutes until you can receive that key item.", timeRemainingMinutes),tpz.msg.channel.NS_SAY)
 		else
-			timeRemaining = timeRemaining / 60
-			player:PrintToPlayer(string.format("Sagheera : You must wait %i hours until you can receive that key item.", timeRemaining),tpz.msg.channel.NS_SAY)
+			-- timeRemaining = timeRemaining / 60
+			player:PrintToPlayer(string.format("Sagheera : You must wait %i hours %i minutes until you can receive that key item.", timeRemainingHours, timeRemainingMinutes),tpz.msg.channel.NS_SAY)
 		end
 		
 		return
@@ -457,10 +463,11 @@ function onEventFinish(player, csid, option)
 
     -- purchase cosmocleanse
     elseif csid == 310 and option == 3 then
-        local cosmoTime = getCosmoCleanseTime(player)
-        if cosmoTime == COSMO_READY and player:delGil(15000) then
-            npcUtil.giveKeyItem(player, tpz.ki.COSMOCLEANSE)
-        end
+        -- local cosmoTime = getCosmoCleanseTime(player)
+        -- if cosmoTime == COSMO_READY and player:delGil(15000) then
+            -- npcUtil.giveKeyItem(player, tpz.ki.COSMOCLEANSE)
+        -- end
+		player:PrintToPlayer(string.format("Sagheera : Unfortunately, I haven't gotten any shipments of Cosmocleanse yet."),tpz.msg.channel.NS_SAY)
 
     -- purchase item using ancient beastcoins
     elseif csid == 310 and abcShop[option] then

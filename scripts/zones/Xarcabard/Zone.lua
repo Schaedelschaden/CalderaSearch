@@ -13,6 +13,10 @@ require("scripts/globals/zone")
 
 function onInitialize(zone)
     tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
+	
+	local telepoint = GetNPCByID(17236304)
+	telepoint:setStatus(tpz.status.NORMAL)
+	-- telepoint:setPos(150.258, -21.047, -37.256)
 end
 
 function onZoneIn(player, prevZone)

@@ -18,9 +18,9 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.POISON
 
-    MobStatusEffectMove(mob, target, typeEffect, 20, 0, 60)
+    MobStatusEffectMove(mob, target, typeEffect, 150, 0, 30)
 
-    local dmgmod = 2
+    local dmgmod = 2.5
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*2.5, tpz.magic.ele.WATER, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.WATER, MOBPARAM_IGNORE_SHADOWS)
     return dmg

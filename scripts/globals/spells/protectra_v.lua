@@ -21,6 +21,11 @@ function onSpellCast(caster, target, spell)
         buff = 2 -- 2x Tier from MOD
     end
 
+	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		power = power * 1.5
+		target:delStatusEffect(tpz.effect.EMBOLDEN)
+	end
+
     local power = power + (buff * tier)
 
     local typeEffect = tpz.effect.PROTECT

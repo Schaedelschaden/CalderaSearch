@@ -17,6 +17,8 @@ function onMobWeaponSkill(target, mob, skill)
 	if (mob:getID() == 16838872 or mob:getID() == 16839070 or mob:getID() == 16839073) then
 		mob:setLocalVar("Kukulkan_YellowEyes", os.time())
 	end
+	
+	skill:setMsg(tpz.msg.basic.NONE)
 
     return
 end

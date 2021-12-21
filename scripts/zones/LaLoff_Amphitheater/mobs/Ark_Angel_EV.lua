@@ -34,7 +34,7 @@ function onMobSpawn(mob)
 	-- mob:setMod(tpz.mod.EVA, 775) -- Evasion (Compare to ACC)
 	mob:setMod(tpz.mod.DEF, 1500) -- Defense (Compart to ATT)
 	mob:setMod(tpz.mod.MEVA, 700) -- Magic Evasion (Compare to MACC)
-	mob:setMod(tpz.mod.MDEF, 400) -- Magic Defense (Compare to MATT)
+	mob:setMod(tpz.mod.MDEF, 300) -- Magic Defense (Compare to MATT)
 	mob:setMod(tpz.mod.DOUBLE_ATTACK, 35) -- Double Attack in %
 	mob:setMod(tpz.mod.SHIELDBLOCKRATE, 100) -- Block?
 	mob:setMod(tpz.mod.REGEN, 250)

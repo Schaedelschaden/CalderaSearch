@@ -762,12 +762,19 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
                 SUBEFFECT effect = battleutils::GetSkillChainEffect(PTarget, PBlueSpell->getPrimarySkillchain(), PBlueSpell->getSecondarySkillchain(), 0 );
                 if (effect != SUBEFFECT_NONE)
                 {
-                    uint16 skillChainDamage = battleutils::TakeSkillchainDamage(static_cast<CBattleEntity*>(this), PTarget, actionTarget.param, nullptr);
+                    int32 skillChainDamage = battleutils::TakeSkillchainDamage(static_cast<CBattleEntity*>(this), PTarget, actionTarget.param, nullptr);
 
-                    actionTarget.addEffectParam = skillChainDamage;
-                    actionTarget.addEffectMessage = 287 + effect;
-                    actionTarget.additionalEffect = effect;
-
+					if (skillChainDamage < 0)
+					{
+						actionTarget.addEffectParam = -skillChainDamage;
+                        actionTarget.addEffectMessage = 384 + effect;
+					}
+					else
+					{
+						actionTarget.addEffectParam = skillChainDamage;
+						actionTarget.addEffectMessage = 287 + effect;
+					}
+					actionTarget.additionalEffect = effect;
                 }
                 if (StatusEffectContainer->HasStatusEffect(EFFECT_AZURE_LORE))
 				{
@@ -824,10 +831,18 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
 				
 				if (effect != SUBEFFECT_NONE)
 				{
-					uint16 skillChainDamage = battleutils::TakeSkillchainDamage(static_cast<CBattleEntity*>(this), PTarget, actionTarget.param, nullptr);
+					int32 skillChainDamage = battleutils::TakeSkillchainDamage(static_cast<CBattleEntity*>(this), PTarget, actionTarget.param, nullptr);
 
-					actionTarget.addEffectParam = skillChainDamage;
-					actionTarget.addEffectMessage = 287 + effect;
+					if (skillChainDamage < 0)
+					{
+						actionTarget.addEffectParam = -skillChainDamage;
+                        actionTarget.addEffectMessage = 384 + effect;
+					}
+					else
+					{
+						actionTarget.addEffectParam = skillChainDamage;
+						actionTarget.addEffectMessage = 287 + effect;
+					}
 					actionTarget.additionalEffect = effect;
 				}
 				
@@ -1092,6 +1107,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             meritRecastReduction = PMeritPoints->GetMeritValue((MERIT_TYPE)PAbility->getMeritModID(), this);
         }
 
+		// Handle charged abilities like Sic/Ready, Stratagems
         auto charge = ability::GetCharge(this, PAbility->getRecastId());
         if (charge && PAbility->getID() != ABILITY_SIC)
         {
@@ -1131,6 +1147,12 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 action.recast -= std::min(bpDelay + bpDelayII + favorDelay, 40);
             }
         }
+		// Phantom Roll Ability Delay -#
+		else if (PAbility->getID() == ABILITY_PHANTOM_ROLL)
+		{
+			int16 rollRecast = getMod(Mod::PHANTOM_ROLL_RECAST);
+			action.recast += rollRecast;
+		}
 
         // remove invisible if aggressive
         if (PAbility->getID() != ABILITY_TAME && PAbility->getID() != ABILITY_FIGHT)
@@ -1194,8 +1216,9 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                         int16 bloodBoonRate = getMod(Mod::BLOOD_BOON);
                         if (tpzrand::GetRandomNumber(100) < bloodBoonRate)
                         {
-                            mpCost *= tpzrand::GetRandomNumber(8.f, 16.f) / 16.f;
-							this->SetLocalVar("BloodBoonActivated", 1);
+							float costReduction = tpzrand::GetRandomNumber(8.f, 16.f) / 16.f;
+                            mpCost *= costReduction;
+							this->SetLocalVar("BloodBoonActivated", (uint32)(costReduction * 100));
 //							printf("charentity.cpp onAbility BLOOD BOON MP COST: [%i]\n", (int16)mpCost);
                         }
                     }

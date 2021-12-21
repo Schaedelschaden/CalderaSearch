@@ -14,10 +14,19 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player,target,ability)
-    local merits = player:getMerit(tpz.merit.CHIVALRY)
+    local merits = player:getMerit(tpz.merit.CHIVALRY) - 5
     local tp = target:getTP()
+	
+	if (merits < 0) then
+		merits = 0
+	end
+	
+	if (target:getObjType() == tpz.objType.TRUST and tp < 1000) then
+		tp = 1000
+	end
+	
     -- (TP * .5) + (0.015 * TP * MND) = MP gained
-    local amount = (tp * 0.05 + 0.0015 * tp * target:getStat(tpz.mod.MND)) * ((100 + merits - 5) / 100)
+    local amount = ((tp * 0.05) + (0.0015 * tp) * target:getStat(tpz.mod.MND)) * ((100 + merits) / 100)
     target:setTP(0)
     return target:addMP(amount)
 end

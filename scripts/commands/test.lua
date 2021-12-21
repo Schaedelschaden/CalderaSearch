@@ -4,8 +4,12 @@
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/settings")
+require("scripts/globals/utils")
 require("scripts/globals/status")
 require("scripts/globals/ability")
+require("scripts/globals/magicburst")
+require("scripts/globals/magic")
+require("scripts/globals/msg")
 
 cmdprops =
 {
@@ -14,13 +18,211 @@ cmdprops =
 }
 
 function onTrigger(player)
+---------------------------------------------------------------------------------------------------
+
+-- Test Adoulin obstruction open/close
+	-- 17863388 - Morimar Basalt Fields Boulders at E-10
+
+	-- GetNPCByID(17863387):setAnimation(tpz.anim.OPEN_DOOR)
+	-- GetNPCByID(17863372):setAnimation(tpz.anim.OPEN_DOOR)
+	-- GetNPCByID(17863387):openDoor(120)
+	-- GetNPCByID(17863372):openDoor(120)
+	
+	-- GetNPCByID(17863387):setAnimation(tpz.anim.CLOSE_DOOR)
+	-- GetNPCByID(17863388):setAnimation(tpz.anim.CLOSE_DOOR)
+
+---------------------------------------------------------------------------------------------------
+
+-- Check if item has augment
+	
+
+---------------------------------------------------------------------------------------------------
+
+-- Check the size of a party without trusts, a party with trusts, and an alliance
+	-- local partySize = player:getPartySize()
+	-- local partySizeTrust = player:getPartyWithTrusts()
+	-- local allianceSize = player:getAlliance()
+	-- printf("test.lua onTrigger PARTY SIZE: [%i]  PARTY SIZE TRUST: [%i]  ALLIANCE SIZE: [%i]", partySize, #partySizeTrust, #allianceSize)
+
+---------------------------------------------------------------------------------------------------
+
+-- Spawn all statues and NM's in Dynamis Jeuno
+	-- local pop = {17547295, 17547296, 17547297, 17547391, 17547392, 17547393, 17547421, 17547422, 17547423, 17547456, 17547457, 17547458, 17547301, 17547302, 17547303,
+				 -- 17547389, 17547390, 17547420, 17547467, 17547493, 17547494, 17547496, 17547498}
+	
+	-- for i = 1, #pop do
+		-- SpawnMob(pop[i])
+	-- end
+
+---------------------------------------------------------------------------------------------------
+
+-- Despawn all mobs in Dynamis Jeuno
+	-- for i = 17547266, 17547498 do
+		-- -- GetMobByID(i):setRespawnTime(3600)
+		-- DespawnMob(i)
+		-- -- SpawnMob(i)
+	-- end
+
+---------------------------------------------------------------------------------------------------
+
+-- Spawn all statues and NM's in Dynamis San d'Oria
+	-- local pop = {17535003, 17535004, 17535005, 17535113, 17535114, 17535115, 17535154, 17535155, 17535166, 17535167, 17535193, 17535194, 17535205, 17535206, 17535026,
+				 -- 17535057, 17535128, 17535131, 17535139, 17535006, 17535044, 17535032}
+	
+	-- for i = 1, #pop do
+		-- SpawnMob(pop[i])
+	-- end
+
+---------------------------------------------------------------------------------------------------
+
+-- Despawn all mobs in Dynamis San d'Oria
+	-- for i = 17534978, 17535206 do
+		-- -- GetMobByID(i):setRespawnTime(3600)
+		-- DespawnMob(i)
+		-- -- SpawnMob(i)
+	-- end
+
+---------------------------------------------------------------------------------------------------
+
+-- Spawn all statues and NM's in Dynamis Windurst
+	-- local pop = {17543268, 17543269, 17543305, 17543306, 17543353, 17543354, 17543362, 17543363, 17543392, 17543393, 17543409, 17543410, 17543419, 17543420, 17543421,
+				 -- 17543461, 17543462, 17543463, 17543258, 17543259, 17543342, 17543372, 17543446, 17543294, 17543345, 17543357, 17543375}
+	
+	-- for i = 1, #pop do
+		-- SpawnMob(pop[i])
+	-- end
+
+---------------------------------------------------------------------------------------------------
+
+-- Despawn all mobs in Dynamis Windurst
+	-- for i = 17543169, 17543469 do
+		-- DespawnMob(i)
+		-- -- SpawnMob(i)
+	-- end
+
+---------------------------------------------------------------------------------------------------
+
+-- Despawn all mobs in Dynamis Bastok
+	-- for i = 17539074, 17539306 do
+		-- DespawnMob(i)
+		-- -- SpawnMob(i)
+	-- end
+
+---------------------------------------------------------------------------------------------------
+
+-- Pull required level from items under level 99 and pull item level from required level 99+ items
+	-- local rangedWeaponID = player:getEquipID(tpz.slot.RANGED)
+	-- printf("test.lua onTrigger RANGED ITEM ID: [%i]", rangedWeaponID)
+	-- local item = GetItem(rangedWeaponID)
+	-- printf("test.lua onTrigger RANGED LVL REQ: [%i]  RANGED ITEM LVL: [%i]", item:getReqLvl(), player:getGearILvl(rangedWeaponID))
+
+---------------------------------------------------------------------------------------------------
+
+-- Test new mod based system for elemental gorgets and belts
+	-- Flame, Soil, Aqua, Breeze, Snow, Thunder, Light, Shadow
+	-- local wsElement = 0
+	-- local accBonus = 0
+	-- local ftpBonus = 0
+	-- local SCProp1 = 6
+	-- local SCProp2 = 0
+	-- local SCProp3 = 0
+	-- local elementalFTPEquip = {tpz.mod.SC_FTP_LIQUEFACTION, tpz.mod.SC_FTP_INDURATION, tpz.mod.SC_FTP_DETONATION, tpz.mod.SC_FTP_SCISSION,
+							   -- tpz.mod.SC_FTP_IMPACTION, tpz.mod.SC_FTP_REVERBERATION, tpz.mod.SC_FTP_TRANSFIXION, tpz.mod.SC_FTP_COMPRESSION}
+	
+	-- for i = 1, 8 do
+		-- if (player:getMod(elementalFTPEquip[i]) > 0) then
+			-- wsElement = i
+			-- break
+		-- end
+	-- end
+	
+	-- if (doesElementMatchWeaponskill(wsElement, SCProp1) or doesElementMatchWeaponskill(wsElement, SCProp2) or doesElementMatchWeaponskill(wsElement, SCProp3)) then
+		-- accBonus = accBonus + player:getMod(elementalFTPEquip[wsElement])
+		-- ftpBonus = ftpBonus + (player:getMod(elementalFTPEquip[wsElement]) / 100)
+	-- end
+	
+	-- printf("test.lua onTrigger WS ELEMENT: [%i]  ACC BONUS: [%i]  FTP BONUS: [%1.2f]", wsElement, accBonus, ftpBonus)
+	
+---------------------------------------------------------------------------------------------------
+
+-- Test methods to obtain mob base stats
+	-- local target = player:getCursorTarget()
+
+	-- printf("test.lua onTrigger MOB: [%s]  STAT ATT: [%i]  MOD ATT: [%i]", target:getName(), target:getStat(tpz.mod.ATT), target:getMod(tpz.mod.ATT))
+
+---------------------------------------------------------------------------------------------------
+
+-- Spawn all Dynamis - Bastok statues
+	-- SpawnMob(17539118)
+	-- SpawnMob(17539119)
+	-- SpawnMob(17539120)
+	-- SpawnMob(17539161)
+	-- SpawnMob(17539162)
+	-- SpawnMob(17539163)
+	-- SpawnMob(17539171)
+	-- SpawnMob(17539172)
+	-- SpawnMob(17539173)
+	-- SpawnMob(17539227)
+	-- SpawnMob(17539228)
+	-- SpawnMob(17539229)
+	-- SpawnMob(17539234)
+	-- SpawnMob(17539235)
+	-- SpawnMob(17539236)
+	-- SpawnMob(17539266)
+	-- SpawnMob(17539267)
+	-- SpawnMob(17539274)
+	-- SpawnMob(17539275)
+	-- SpawnMob(17539286)
+	-- SpawnMob(17539287)
+	-- SpawnMob(17539293)
+	-- SpawnMob(17539294)
+	-- SpawnMob(17539142)
+	-- SpawnMob(17539148)
+	-- SpawnMob(17539149)
+	-- SpawnMob(17539253)
+	-- SpawnMob(17539306)
+
+---------------------------------------------------------------------------------------------------
+
+	-- printf("test.lua onTrigger CLAMP: [%1.2f]", utils.clamp(1 + (30 / 99), 1.25, 1.85))
+
+---------------------------------------------------------------------------------------------------
+
+	-- local merit = player:getMerit(tpz.merit.VALLATION_EFFECT)
+	-- printf("test.lua onTrigger MERIT: [%i]", merit)
+
+---------------------------------------------------------------------------------------------------
+
+-- Test breaking JP midnight timers down into hours and minutes (Sagheera)
+	-- printf("test.lua onTrigger HOURS: [%i]  MINUTES: [%i]", math.floor(((getMidnight() - os.time()) / 60) / 60), (((getMidnight() - os.time()) / 60) / 60)%1 * 60)
+	
+---------------------------------------------------------------------------------------------------
+
+-- local realday = tonumber(os.date("%d")) -- %M for next minute, %j for next day
+-- printf("test.lua onTrigger REAL DAY: [%i]", realday)
+
+---------------------------------------------------------------------------------------------------
+
+-- local telepoint = GetNPCByID(17236304)
+-- telepoint:setStatus(tpz.status.NORMAL)
+-- local pos = telepoint:getPos()
+-- printf("test.lua onTrigger TELEPOINT LOC X: [%3.3f]  LOC Y: [%3.3f]  LOC Z: [%3.3f]", pos.x, pos.y, pos.z)
+
+---------------------------------------------------------------------------------------------------
+
+-- Mass add items to inventory to look for augments
+	-- local augNumber = 1975
+
+	-- for i = 0, 79 do
+		-- player:addItem(12448, 1, augNumber + i, 0)
+	-- end
 
 ---------------------------------------------------------------------------------------------------
 
 -- Test Random Number Generator
-	for i = 1, 60 do
-		printf("test.lua onTrigger RANDOM VALUE %i: [%i]", i, math.random(1, 999))
-	end
+	-- for i = 1, 60 do
+		-- printf("test.lua onTrigger RANDOM VALUE %i: [%i]", i, math.random(1, 999))
+	-- end
 
 ---------------------------------------------------------------------------------------------------
 	-- local itemID = 27677
@@ -65,7 +267,8 @@ function onTrigger(player)
 -- Get NPC ID
 	-- local npc = player:getCursorTarget()
 	-- local pos = npc:getPos()
-	-- printf("test.lua onTrigger NPC ID: [%i]  POS X: [%f]  POS Y: [%f]  POS Z: [%f]", npc:getID(), pos.x, pos.y, pos.z)
+	-- -- printf("test.lua onTrigger NPC ID: [%i]  POS X: [%f]  POS Y: [%f]  POS Z: [%f]", npc:getID(), pos.x, pos.y, pos.z)
+	-- player:PrintToPlayer(string.format("NPC ID: [%i]  POS X: [%.3f]  POS Y: [%.3f]  POS Z: [%.3f]", npc:getID(), pos.x, pos.y, pos.z),tpz.msg.channel.SYSTEM_3)
 
 ---------------------------------------------------------------------------------------------------
 
@@ -184,7 +387,7 @@ function onTrigger(player)
 ---------------------------------------------------------------------------------------------------
 
 -- Outputs the current os.time
---	printf("Time: [%i]", os.time())
+	-- printf("Time: [%i]", os.time())
 
 ---------------------------------------------------------------------------------------------------
 -- Checks the targets Physical Damage Type Resistances
@@ -198,7 +401,7 @@ function onTrigger(player)
             -- return
         -- end
     -- else
-        -- targ = GetMobByID(mobId)
+        -- targ = SpawnMob(mobId)
         -- if (targ == nil) then
             -- error(player,"Invalid mobID.")
             -- return

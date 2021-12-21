@@ -18,7 +18,7 @@ function onMobSpawn(mob)
 --	mob:addMod(tpz.mod.MDEF, 150)
 	mob:addMod(tpz.mod.STORETP, 50)
 	mob:setMod(tpz.mod.REGAIN, 100)
-	mob:setMod(tpz.mod.REGEN, 1500)
+	mob:setMod(tpz.mod.REGEN, 750)
 	mob:addMod(tpz.mod.DOUBLE_ATTACK, 30)
 end
 

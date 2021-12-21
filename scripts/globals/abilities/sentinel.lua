@@ -8,18 +8,24 @@
 require("scripts/globals/status")
 -----------------------------------
 
-function onAbilityCheck(player,target,ability)
+function onAbilityCheck(player, target, ability)
+	if (player:getObjType() == tpz.objType.TRUST and player:getName() == "curilla") then
+		ability:setRecast(250)
+	end
     return 0,0
 end
 
-function onUseAbility(player,target,ability)
+function onUseAbility(player, target, ability)
    -- Whether feet have to be equipped before using ability, or if they can be swapped in
    -- is disputed.  Source used: http://wiki.bluegartr.com/bg/Sentinel
     local power = 90 + player:getMod(tpz.mod.SENTINEL_EFFECT)
 
     local guardian = player:getMerit(tpz.merit.GUARDIAN)
+	
+	if (player:getObjType() == tpz.objType.TRUST and player:getName() == "curilla") then
+		guardian = 95
+	end
 
    -- Sent as positive power because UINTs, man.
    player:addStatusEffect(tpz.effect.SENTINEL,power,3,30,0,guardian)
-
 end

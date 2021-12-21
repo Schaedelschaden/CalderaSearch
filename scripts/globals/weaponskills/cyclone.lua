@@ -1,6 +1,7 @@
 -----------------------------------
 -- Cyclone
 -- Dagger weapon skill
+-- Weaponskill Category: Magical
 -- Skill level: 125
 -- Delivers an area attack that deals wind elemental damage. Damage varies with TP.
 -- This weapon skill is ranged and can be used from a distance (Up to 15').
@@ -23,6 +24,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.ftp100 = 1 params.ftp200 = 2.375 params.ftp300 = 2.875
     params.str_wsc = 0.0 params.dex_wsc = 0.3 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.25 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
+	params.dSTAT = ((player:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)) / 2) + 8
     params.ele = tpz.magic.ele.WIND
     params.skill = tpz.skill.DAGGER
     params.includemab = true

@@ -22,6 +22,12 @@ function onMobRoam(mob)
     end
 end
 
+function onMobSpawn(mob)
+    mob:setMod(tpz.mod.COUNTER, 35)
+    mob:setMod(tpz.mod.SLASHRES, 500)
+	mob:addMod(tpz.mod.BINDRES, 100) -- Resistance to Bind
+end
+
 function onMobDeath(mob, player, isKiller, noKiller)
     if isKiller or noKiller then
         local battlefield = mob:getBattlefield()

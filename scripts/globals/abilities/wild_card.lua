@@ -24,6 +24,12 @@ function onUseAbility(caster, target, ability, action)
 	
 	if (targetName == casterName) then
         roll = math.random(1,6)
+		
+		if (caster:hasStatusEffect(tpz.effect.SNAKE_EYE)) then
+			roll = 1
+			caster:delStatusEffect(tpz.effect.SNAKE_EYE)
+		end
+		
 		caster:setLocalVar("corsairRollTotal", roll)
 --		printf("wild_card.lua onUseAbility WILD CARD ROLL: [%i]\n", roll)
         action:speceffect(caster:getID(), roll)

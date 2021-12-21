@@ -17,9 +17,12 @@ require("scripts/globals/status")
 
 function onEffectGain(target, effect)
     local power = effect:getPower()
-    if power == 8 then
+	
+	if (power > 8) then
+		target:setMod(tpz.mod.MAGIC_SHIELD, power)
+    elseif (power == 8) then
         target:addMod(tpz.mod.MAGIC_ABSORB, 100)
-    elseif power == 6 then
+    elseif (power == 6) then
         target:addMod(tpz.mod.FIRE_ABSORB, 100)
         target:addMod(tpz.mod.EARTH_ABSORB, 100)
         target:addMod(tpz.mod.WATER_ABSORB, 100)
@@ -28,7 +31,7 @@ function onEffectGain(target, effect)
         target:addMod(tpz.mod.LTNG_ABSORB, 100)
         target:addMod(tpz.mod.LIGHT_ABSORB, 100)
         target:addMod(tpz.mod.DARK_ABSORB, 100)
-    elseif power == 2 or power == 3 then
+    elseif (power == 2 or power == 3) then
         target:addMod(tpz.mod.UDMGMAGIC, -100)
     else
         target:addMod(tpz.mod.DMGMAGIC, -50)
@@ -37,9 +40,12 @@ end
 
 function onEffectLose(target, effect)
     local power = effect:getPower()
-    if power == 8 then
+	
+	if (power > 8) then
+		target:setMod(tpz.mod.MAGIC_SHIELD, 0)
+    elseif (power == 8) then
         target:delMod(tpz.mod.MAGIC_ABSORB, 100)
-    elseif power == 6 then
+    elseif (power == 6) then
         target:delMod(tpz.mod.FIRE_ABSORB, 100)
         target:delMod(tpz.mod.EARTH_ABSORB, 100)
         target:delMod(tpz.mod.WATER_ABSORB, 100)
@@ -48,7 +54,7 @@ function onEffectLose(target, effect)
         target:delMod(tpz.mod.LTNG_ABSORB, 100)
         target:delMod(tpz.mod.LIGHT_ABSORB, 100)
         target:delMod(tpz.mod.DARK_ABSORB, 100)
-    elseif power == 2 or power == 3 then
+    elseif (power == 2 or power == 3) then
         target:delMod(tpz.mod.UDMGMAGIC, -100)
     else
         target:delMod(tpz.mod.DMGMAGIC, -50)

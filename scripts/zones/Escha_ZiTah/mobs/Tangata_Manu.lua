@@ -8,7 +8,9 @@ require("scripts/globals/status") -- required for LUA status adjustments
 -----------------------------------
 
 function onMobSpawn(mob) -- When mob spawns (either forced or time)
+	mob:setMobMod(MOBMOD_MAGIC_COOL, 25)
 
+	mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 360)
     mob:setMod(tpz.mod.STUNRES, 35) -- Resistance to Stun
     mob:setMod(tpz.mod.BLINDRES, 100) -- Resistance to Blind
     mob:setMod(tpz.mod.SLOWRES, 100) -- Resistance to Slow
@@ -19,11 +21,11 @@ function onMobSpawn(mob) -- When mob spawns (either forced or time)
 	-- mob:setMod(tpz.mod.MACC, 400) -- Magic ACC (Compare to MEVA)
 	-- mob:setMod(tpz.mod.EVA, 750) -- Evasion (Compare to ACC)
 	-- mob:setMod(tpz.mod.DEF, 600) -- Defense (Compart to ATT)
-	-- mob:setMod(tpz.mod.MEVA, 700) -- Magic Evasion (Compare to MACC)
-	-- mob:setMod(tpz.mod.MDEF, 250) -- Magic Defense (Compare to MATT)
+	mob:addMod(tpz.mod.MEVA, math.random(150, 200)) -- Magic Evasion (Compare to MACC)
+	mob:addMod(tpz.mod.MDEF, math.random(20, 40)) -- Magic Defense (Compare to MATT)
 	mob:setMod(tpz.mod.DOUBLE_ATTACK, 30) -- Double Attack in %
 	mob:setMod(tpz.mod.FASTCAST, 50) -- Fast Cast in %
-	mob:setMod(tpz.mod.DMG, -35)
+	mob:setMod(tpz.mod.DMG, -15)
 	mob:setMod(tpz.mod.MOBMOD_TP_USE_CHANCE, 1000)
 --	mob:setMod(tpz.mod.REGAIN, 200)
 end

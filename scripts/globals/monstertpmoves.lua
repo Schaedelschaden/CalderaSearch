@@ -333,6 +333,9 @@ function applyPlayerResistance(mob, effect, target, diff, bonus, element)
 
     if (effect ~= nil) then
         percentBonus = percentBonus - getEffectResistance(target, effect)
+		-- if (target:getName() == "Khalum") then
+			-- printf("monstertpmoves.lua applyPlayerResistance EFFECT: [%i]  RESISTANCE: [%i]", effect, getEffectResistance(target, effect))
+		-- end
     end
 
     local p = getMagicHitRate(mob, target, 0, element, percentBonus, magicaccbonus)
@@ -600,6 +603,11 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 
 	-- Handle Stoneskin
     dmg = utils.stoneskin(target, dmg)
+	
+	-- Handle Magic Barrier
+	if (attackType == tpz.attackType.MAGICAL) then
+		dmg = utils.magicshield(target, dmg)
+	end
 
 	if (dmg < 0) then
 		-- Turn damage positive for correct health restoral and message display

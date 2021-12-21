@@ -1,6 +1,7 @@
 -----------------------------------
 -- Leaden Salute
 -- Sword weapon skill
+-- Weaponskill Category: Magical
 -- Skill Level: N/A
 -- Delivers a Twofold attack. Damage varies with TP. Death Penalty: Aftermath effect varies with TP.
 -- Available only after completing the Unlocking a Myth (Corsair) quest.
@@ -23,6 +24,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.ftp100 = 4 params.ftp200 = 4.25 params.ftp300 = 4.75
     params.str_wsc = 0.0 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.3 params.int_wsc = 0.0
     params.mnd_wsc = 0.0 params.chr_wsc = 0.0
+	params.dSTAT = (player:getStat(tpz.mod.AGI) - target:getStat(tpz.mod.INT)) * 2
     params.ele = tpz.magic.ele.DARK
     params.skill = tpz.skill.MARKSMANSHIP
     params.includemab = true

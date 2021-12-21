@@ -14,9 +14,10 @@ function onMobSpawn(mob)
             {id = 839, hpp = 25}, -- uses howling moon at 25%
         },
     })
+	mob:setMobMod(tpz.mobMod.TP_USE_CHANCE, 92)
 	mob:setMod(tpz.mod.SILENCERES, 35)
     mob:setMod(tpz.mod.STUNRES, 100)
-    mob:setMod(tpz.mod.BINDRES, 35)
+    mob:setMod(tpz.mod.BINDRES, 60)
     mob:setMod(tpz.mod.SLOWRES, 100)
 	mob:setMod(tpz.mod.STORETP, 50)
 	mob:setMod(tpz.mod.DOUBLE_ATTACK, 50)

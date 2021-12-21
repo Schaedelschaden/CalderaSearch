@@ -602,11 +602,15 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
 	// Job specific mods
 	if (mJob == JOB_BLM)
 	{
-		PTrust->addModifier(Mod::ENMITY, (uint16)(mLvl * -0.84));
+		PTrust->addModifier(Mod::ENMITY, (uint16)(mLvl * -0.84f));
 	}
 	else if (mJob == JOB_PLD)
 	{
-		PTrust->addModifier(Mod::ENMITY, (uint16)(mLvl * 0.84));
+		PTrust->addModifier(Mod::ENMITY, (uint16)(mLvl * 0.84f));
+	}
+	else if (mJob == JOB_RNG)
+	{
+		PTrust->addModifier(Mod::RACC, (uint16)(mLvl * 1.5f));
 	}
 	
     // Add traits for sub and main

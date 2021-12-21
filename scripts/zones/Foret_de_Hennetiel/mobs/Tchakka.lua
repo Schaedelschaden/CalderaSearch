@@ -26,6 +26,7 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.LULLABYRES, 30) -- Resistance to Lullaby
     mob:addMod(tpz.mod.PETRIFYRES, 30) -- Resistance to Pertrify
     mob:addMod(tpz.mod.POISONRES, 30) -- Resistance to Poison	
+	mob:addMod(tpz.mod.GRAVITYRES, 100) -- Resistance to Gravity
 	mob:addMod(tpz.mod.ATT, 400)	
 	mob:addMod(tpz.mod.DEF, 700)
 	mob:addMod(tpz.mod.EVA, 80)
@@ -33,7 +34,7 @@ function onMobSpawn(mob)
 	mob:addMod(tpz.mod.MATT, 100)
 	mob:addMod(tpz.mod.REGEN, 500)
 	mob:addMod(tpz.mod.REFRESH, 200)
-	mob:addMod(tpz.mod.REGAIN, 100)
+	-- mob:addMod(tpz.mod.REGAIN, 100)
 	mob:addMod(tpz.mod.WATER_ABSORB, 100)
 	mob:addMod(tpz.mod.DOUBLE_ATTACK, 30)	
 	

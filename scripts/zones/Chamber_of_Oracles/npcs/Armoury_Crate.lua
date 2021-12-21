@@ -50,6 +50,10 @@ local loot =
 			{itemid = 0,    droprate = 850},   -- Nothing
             {itemid = 4064, droprate = 150},   -- Rems Chapt 1
         },
+		{
+			{itemid = 0,    droprate = 800},   -- Nothing
+            {itemid = 844,  droprate = 200},   -- Phoenix Feather
+        },
     },
     -- KSNM Eye of the Storm
     [198] =
@@ -91,13 +95,24 @@ local loot =
             {itemid = 3972, droprate = 150},   -- Kupon I S-2
         },
 		{
-            {itemid = 4080, droprate =  160}, -- Moonbow Urushi
-            {itemid = 4079, droprate =  80},  -- Moonbow Leather
-            {itemid = 4078, droprate =  120}, -- Moonbow Cloth
-            {itemid = 4077, droprate =  240}, -- Moonbow Steel
-            {itemid = 4081, droprate =  240}, -- Moonbow Stone
-			{itemid = 4082, droprate =  160}, -- Moonlight Coral
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 655, droprate = 150},   -- Adaman Ingot
         },
+		{
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 4018, droprate = 150},   -- Guatambu Log
+        },
+		{
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 783, droprate = 150},   -- Tenebrite
+        },
+		{
+			{itemid =  0,   droprate = 850},   -- Nothing
+            {itemid = 8720, droprate = 150},   -- Maliyakaleya Orb
+        },		
+		{
+            {itemid = 8720, droprate = 1000},   -- Maliyakaleya Orb
+        },	
     },
 	}
 

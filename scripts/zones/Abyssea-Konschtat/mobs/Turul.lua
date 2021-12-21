@@ -14,7 +14,8 @@ function onMobSpawn(mob)
 	mob:setMod(tpz.mod.SILENCERES, 100)
 	mob:setMod(tpz.mod.SLOWRES, 100)
 	mob:setMod(tpz.mod.REFRESH, 20)
-	mob:setMod(tpz.mod.FASTCAST, 65)
+	mob:setMod(tpz.mod.FASTCAST, 55)
+	-- mob:delMod(tpz.mod.MATT, 40)
 end
 
 function onMobEngaged(mob)

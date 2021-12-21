@@ -680,7 +680,7 @@ function onTrade(player, npc, trade)
 	local augItem = 0
 	local skyAugmentsCarryOver = {
 		{"1", "14", "31", "9", "42", "1", "54", "1"}, 	-- HP +15, EVA +10, Enemy Crit Hit Rate -2%, PDT -2%
-		{"41", "1", "328", "1", "106", "9", "195", "2"}, -- Crit Hit Rate +2%, Crit Hit Damage +2%, ACC/RACC +10, Subtle Blow +3
+		{"41", "1", "328", "1", "129", "9", "195", "2"}, -- Crit Hit Rate +2%, Crit Hit Damage +2%, ACC/RACC +10, Subtle Blow +3
 		{"9", "14", "133", "4", "362", "9", "35", "9"}, -- MP +15, MAB +5, Magic Damage +10, MACC +10
 		{"1806", "4", "102", "1", "115", "2"}, 			-- Pet: STR/DEX/VIT +5, Pet: Crit Hit Rate +2%, Pet: Store TP +3
 		-- {"1", "29", "31", "19", "42", "3", "54", "3"}, 	-- HP +30, EVA +20, Enemy Crit Hit Rate -4%, PDT -4%

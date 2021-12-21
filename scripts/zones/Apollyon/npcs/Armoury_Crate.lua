@@ -385,8 +385,8 @@ local loot =
                 {itemid = 1910, droprate = 1000}, -- Smoky Chip
             },
             {
-                {itemid =    0, droprate = 100}, -- Nothing
-                {itemid = 2127, droprate =  59}, -- Metal Chip
+                {itemid =    0, droprate = 900}, -- Nothing
+                {itemid = 2127, droprate = 100}, -- Metal Chip
             },
         },
     },
@@ -513,7 +513,7 @@ local loot =
                 {itemid =  821, droprate =  63}, -- Rainbow Thread
             },
         },
-        -- SW_Apollyon floor 4
+        -- SW_Apollyon floor 4 (Elementals)
         [4] =
         {
             {
@@ -529,34 +529,44 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid =    0, droprate = 1000}, -- Nothing
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
-            {
-                {itemid = 1941, droprate = 468}, -- THF
-                {itemid = 1947, droprate = 340}, -- BST
-                {itemid = 1933, droprate = 255}, -- MNK
-                {itemid = 1939, droprate = 191}, -- RDM
-                {itemid = 1943, droprate = 170}, -- PLD
-                {itemid = 2661, droprate = 340}, -- PUP
-                {itemid = 2715, droprate = 170}, -- DNC
+			{
+                {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
+            },
+            -- {
+                -- {itemid = 1941, droprate = 468}, -- THF
+                -- {itemid = 1947, droprate = 340}, -- BST
+                -- {itemid = 1933, droprate = 255}, -- MNK
+                -- {itemid = 1939, droprate = 191}, -- RDM
+                -- {itemid = 1943, droprate = 170}, -- PLD
+                -- {itemid = 2661, droprate = 340}, -- PUP
+                -- {itemid = 2715, droprate = 170}, -- DNC
+            -- },
+            -- {
+                -- {itemid =    0, droprate = 400}, -- Nothing
+                -- {itemid = 1941, droprate = 468}, -- THF
+                -- {itemid = 1947, droprate = 340}, -- BST
+                -- {itemid = 1933, droprate = 255}, -- MNK
+                -- {itemid = 1939, droprate = 191}, -- RDM
+                -- {itemid = 1943, droprate = 170}, -- PLD
+                -- {itemid = 2661, droprate = 340}, -- PUP
+                -- {itemid = 2715, droprate = 170}, -- DNC
+            -- },
+			{
+				{itemid =     0, droprate =  600}, -- Nothing
+                {itemid = 25818, droprate =   80}, -- Flamma Manopolas
+				{itemid = 25812, droprate =   80}, -- Tali'ah Gages
+				{itemid = 25820, droprate =   80}, -- Mummu Wrists
+				{itemid = 25810, droprate =   80}, -- Ayanmo Manopolas
+				{itemid = 25822, droprate =   80}, -- Mallquis Cuffs
             },
             {
-                {itemid =    0, droprate = 400}, -- Nothing
-                {itemid = 1941, droprate = 468}, -- THF
-                {itemid = 1947, droprate = 340}, -- BST
-                {itemid = 1933, droprate = 255}, -- MNK
-                {itemid = 1939, droprate = 191}, -- RDM
-                {itemid = 1943, droprate = 170}, -- PLD
-                {itemid = 2661, droprate = 340}, -- PUP
-                {itemid = 2715, droprate = 170}, -- DNC
+                {itemid =  1987, droprate = 1000}, -- Charcoal Chip
             },
             {
-                {itemid = 1987, droprate = 1000}, -- Charcoal Chip
-            },
-            {
-                {itemid = 2127, droprate =  59}, -- Metal Chip
-                {itemid =    0, droprate = 100}, -- Nothing
+				{itemid =     0, droprate =  900}, -- Nothing
+                {itemid =  2127, droprate =  100}, -- Metal Chip
             },
         },
     },
@@ -839,7 +849,7 @@ local loot =
     },
     [1296] =
     {
-        -- omega
+        -- Proto-Omega
         [1] =
         {
             {
@@ -858,25 +868,32 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid =    0, droprate = 1000}, -- Nothing
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid = 1925, droprate = 659}, -- Omega's Eye
-                {itemid = 1927, droprate = 394}, -- Omega's Foreleg
-                {itemid = 1928, droprate = 388}, -- Omega's Hinf Leg
-                {itemid = 1929, droprate = 404}, -- Omega's Tail
+                {itemid =  1925, droprate = 357}, -- Omega's Eye
+                {itemid =  1927, droprate = 214}, -- Omega's Foreleg
+                {itemid =  1928, droprate = 210}, -- Omega's Hind Leg
+                {itemid =  1929, droprate = 219}, -- Omega's Tail
             },
             {
-                {itemid = 1928, droprate = 394}, -- Omega's Hind Leg
-                {itemid = 1929, droprate = 402}, -- Omega's Tail
-                {itemid = 1925, droprate = 659}, -- Omega's Eye
-                {itemid = 1927, droprate = 383}, -- Omega's Foreleg
+                {itemid =  1928, droprate = 214}, -- Omega's Hind Leg
+                {itemid =  1929, droprate = 219}, -- Omega's Tail
+                {itemid =  1925, droprate = 359}, -- Omega's Eye
+                {itemid =  1927, droprate = 208}, -- Omega's Foreleg
             },
             {
-                {itemid =    0, droprate = 735}, -- Nothing
-                {itemid = 1926, droprate = 265}, -- Omega's Heart
+                {itemid =     0, droprate = 735}, -- Nothing
+                {itemid =  1926, droprate = 265}, -- Omega's Heart
             },
+			{
+				{itemid =     0, droprate = 400}, -- Nothing
+				{itemid = 25779, droprate = 120}, -- Flamma Korazin
+				{itemid = 25764, droprate = 120}, -- Tali'ah Manteel
+				{itemid = 25781, droprate = 120}, -- Mummu Jacket
+				{itemid = 25762, droprate = 120}, -- Ayanmo Corazza
+				{itemid = 25783, droprate = 120}, -- Mallquis Saio
+			},
         },
     },
 }

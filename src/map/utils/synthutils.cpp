@@ -353,7 +353,6 @@ uint8 calcSynthResult(CCharEntity* PChar)
                 result = SYNTHESIS_HQ2;
             else
                 result = SYNTHESIS_HQ;
-
         }
         else
             result = SYNTHESIS_SUCCESS;

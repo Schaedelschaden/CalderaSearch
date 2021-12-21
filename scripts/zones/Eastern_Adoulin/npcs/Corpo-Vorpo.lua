@@ -13,15 +13,15 @@ function onTrade(player, npc, trade)
 						-- 1 Shield, 2-6 Gende, 7-11 Cizen, 12-16 Otro, 17-21 Iuitl, 21-26 Hagon
 	-- Beatific Shield, Gend Caubeen +1, Gend Bliaut +1, Gende Gages +1, Gende Spats +1, Gende Galoshes, Cizin Helm +1, Cizin Mail +1, Cizin Mufflers +1, Cizin Breeches +1,  
 	local acceptedItem = {28654, 27731, 27877, 28021, 28163, 28300, 27728, 27874, 28018, 28160,
-	-- Cizin Greavs +1, Otro Mask +1, Otro Harness +1, Otro Gloves +1, Otro Brais +1, Otro Boots +1, Hagon Hat +1, Hagon Coat +1, Hagon Cuffs +1, Hagon Pants +1,
+	-- Cizin Greavs +1, Otro Mask +1, Otro Harness +1, Otro Gloves +1, Otro Brais +1, Otro Boots +1, Hagondes Hat +1, Hagondes Coat +1, Hagondes Cuffs +1, Hagondes Pants +1,
 						  28297, 27729, 27875, 28019, 28161, 28298, 27732, 27878, 28022, 28164, 
-	-- Hagon Sabots +1, Iuitl Headgear +1, Iuitl Vest +1, Iuitl Wristbands +1, Iuitl Tights +1, Iuitl Gaiters +1
+	-- Hagondes Sabots +1, Iuitl Headgear +1, Iuitl Vest +1, Iuitl Wristbands +1, Iuitl Tights +1, Iuitl Gaiters +1
 						  28301, 27730, 27876, 28020, 28162, 28299}
 	-- PDT, HP/MP, Spell Int Rate, Shield Mastery, PDT, MDT
 	local augmentsBeatific = {54, {17, 29}, {53, 9}, {153, 2}, {54, 3}, {55, 3}}
 	-- PDT, ATK, ACC, Double Attack, Crit Rate, MDEF, MDT
 	--               Cizin AND Otronif
-	local augmentsMelee = {54, {25, 9}, {23, 9}, {143, 1}, {41, 1}, {134, 2}, {55, 3}}
+	local augmentsMelee = {54, {25, 9}, {23, 9}, {143, 1}, {41, 1}, {134, 2}, {39, 9}, {55, 3}}
 	-- PDT, Cure Cast, Cure Pot, Song Cast, Song Recast, MDT
 	local augmentsGende = {54, {323, 4}, {329, 7}, {322, 4}, {337, 2}, {55, 3}}
 	-- PDT, MAB, MACC, Pet: MAB, Pet: MACC, Pet: ATK/RATK, Pet: Acc/RAcc, Avatar Perp, ENM-, Fast Cast, Magic Burst Damage, MDT
@@ -29,7 +29,7 @@ function onTrade(player, npc, trade)
 	-- PDT, ATK, ACC, RATK, RACC, Snapshot, Recycle, Double Attack, Crit Hit Rate. ENM-, MDEF, MDT
 	local augmentsIuitl = {54, {25, 9}, {23, 9}, {29, 9}, {27, 9}, {211, 2}, {1388, 1}, {143, 1}, {41, 1}, {40, 6}, {134, 1}, {55, 3}}
 	--local tradeItem = -- thing	
-	local kupon = 3972 --testing purposes, possibly the thing
+	local kupon = {{3951, 25}} -- 25 wailing stones
 	local augItem = 0
 	local randomValues = true
 	local aug1 = 1 -- Good, same for all trades
@@ -37,7 +37,7 @@ function onTrade(player, npc, trade)
 	local aug3 = 0
 	
 	if not (npcUtil.tradeHas(trade, kupon)) then
-		player:PrintToPlayer(string.format("Corpo-Vorpo : I need the Moogle magic from a Kupon before I can augment anything!"),tpz.msg.channel.NS_SAY)
+		player:PrintToPlayer(string.format("Corpo-Vorpo : I need the agony of 25 wailing stones before I can augment anything!"),tpz.msg.channel.NS_SAY)
 		return
 	end
 	
@@ -49,7 +49,7 @@ function onTrade(player, npc, trade)
 	end
 	
 	if (augItem == 0) then
-		player:PrintToPlayer(string.format("Corpo-Vorpo : I can't enchant something if you don't give it to me!"),tpz.msg.channel.NS_SAY)
+		player:PrintToPlayer(string.format("Corpo-Vorpo : I can't augment something if you don't give it to me!"),tpz.msg.channel.NS_SAY)
 		return
 	end
 	
@@ -82,11 +82,11 @@ function onTrade(player, npc, trade)
 			aug2Value = math.random(1, augmentsGende[aug2][2])
 			aug3Value = math.random(1, augmentsGende[aug3][2])
 		elseif (i >= 7 and i <= 16 and augItem == acceptedItem[i]) then -- Cizin/Otro
-			aug2 = math.random(2, 7)
-			aug3 = math.random(2, 7)
+			aug2 = math.random(2, 8)
+			aug3 = math.random(2, 8)
 			
 			while (aug2 == aug3) do
-				aug3 = math.random(2, 6)
+				aug3 = math.random(2, 7)
 			end
 			
 			aug2Value = math.random(1, augmentsMelee[aug2][2])

@@ -70,7 +70,7 @@ function onTrigger(player, npc)
 		794, 11400,		-- Sapphire
 		807, 636,		-- Sardonyx
 		1649, 615,		-- Scarlet Stone
-		782, 10400,		-- Selenite
+		782, 27000,		-- Selenite
 		3323, 135,		-- Shadow Gem
 		3304, 600,		-- Shadow Geode
 		3521, 900,		-- Shivite
@@ -87,7 +87,7 @@ function onTrigger(player, npc)
 		1670, 4440,		-- Spirit Orichalcum Ingot
 		2359, 1740,		-- Star Sapphire
 		803, 7362,		-- Sunstone
-		783, 8000,		-- Tenebrite
+		783, 27000,		-- Tenebrite
 		3320, 135,		-- Thunder Gem
 		3301, 600,		-- Thunder Geode
 		1766, 1557,		-- Tiger Eye

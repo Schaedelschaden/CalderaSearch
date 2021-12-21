@@ -64,7 +64,7 @@ function onTrigger(player, npc)
         player:startEvent(876)
 
     -- Waking Dreams --
-    elseif (player:hasKeyItem(tpz.ki.VIAL_OF_DREAM_INCENSE)==false and ((player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED) and  waking_dreams == QUEST_AVAILABLE ) or(waking_dreams  == QUEST_COMPLETED and realday ~= player:getCharVar("Darkness_Named_date")))) then
+    elseif (player:hasKeyItem(tpz.ki.VIAL_OF_DREAM_INCENSE) == false and ((player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED) and waking_dreams == QUEST_AVAILABLE ) or (waking_dreams == QUEST_COMPLETED and realday > player:getCharVar("Darkness_Named_date")))) then
         player:addQuest(WINDURST, tpz.quest.id.windurst.WAKING_DREAMS)
         player:startEvent(918)--918
 
@@ -77,7 +77,8 @@ function onTrigger(player, npc)
         if (player:hasSpell(304)) then availRewards = availRewards + 32 -- Pact
         else availRewards = availRewards + 16 -- Gil
         end
-        player:startEvent(920, 17599, 14814, 15557, 15516, 0, 0, 0, availRewards)
+        --player:startEvent(920, 17599, 14814, 15557, 15516, 0, 0, 0, availRewards)
+		player:startEvent(920, 622475179, 0, 1757, 0, 65863679, 0, 1, availRewards)
 
     -- Blue Ribbon Blues --
     elseif (BlueRibbonBlues == QUEST_COMPLETED and needZone) then
@@ -129,6 +130,20 @@ function onTrigger(player, npc)
 end
 
 function onEventUpdate(player, csid, option)
+	local availRewards = 0
+	if (player:hasItem(17599)) then availRewards = availRewards + 1; end -- Diabolos's Pole
+	if (player:hasItem(14814)) then availRewards = availRewards + 2; end -- Diabolos's Earring
+	if (player:hasItem(15557)) then availRewards = availRewards + 4; end -- Diabolos's Ring
+	if (player:hasItem(15516)) then availRewards = availRewards + 8; end -- Diabolos's Torque
+	if (player:hasSpell(304)) then availRewards = availRewards + 32 -- Pact
+	else availRewards = availRewards + 16 -- Gil
+	end
+
+	if (csid == 312) then
+		player:updateEvent(0, 0, 0, 0, 0, 0, 0, 0)
+	elseif (csid == 920) then
+		player:updateEvent(17599, 14814, 15557, 15516, 0, 0, 1, availRewards)
+	end
 end
 
 function onEventFinish(player, csid, option)
@@ -179,46 +194,45 @@ function onEventFinish(player, csid, option)
     elseif (csid == 918) then    --diablos start
         player:addKeyItem(tpz.ki.VIAL_OF_DREAM_INCENSE)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.VIAL_OF_DREAM_INCENSE)
+		player:setCharVar("Darkness_Named_date", os.date("%j"))
     elseif (csid == 920) then    --diablos reward
         local item = 0
         local addspell = 0
-        if (option == 1 and player:hasItem(17599)==false) then item = 17599--diaboloss-pole
-
-        elseif (option == 2 and player:hasItem(14814)==false) then item = 14814--diaboloss-earring
-
-        elseif (option == 3 and player:hasItem(15557)==false) then item = 15557--diaboloss-ring
-
-        elseif (option == 4 and player:hasItem(15516)==false) then item = 15516--diaboloss-torque
-
-
+        if (option == 1 and player:hasItem(17599) == false) then
+			item = 17599--diaboloss-pole
+        elseif (option == 2 and player:hasItem(14814) == false) then
+			item = 14814--diaboloss-earring
+        elseif (option == 3 and player:hasItem(15557) == false) then
+			item = 15557--diaboloss-ring
+        elseif (option == 4 and player:hasItem(15516) == false) then
+			item = 15516--diaboloss-torque
         elseif (option == 5) then
             player:addGil(GIL_RATE*15000)
             player:messageSpecial(ID.text.GIL_OBTAINED, GIL_RATE*15000) -- Gil
             player:delKeyItem(tpz.ki.WHISPER_OF_DREAMS)
-            player:setCharVar("Darkness_Named_date", os.date("%j")) -- %M for next minute, %j for next day
+            -- player:setCharVar("Darkness_Named_date", os.date("%j")) -- %M for next minute, %j for next day
             player:completeQuest(WINDURST, tpz.quest.id.windurst.WAKING_DREAMS)
-
-        elseif (option == 6 and player:hasSpell(304)==false) then
+        elseif (option == 6 and player:hasSpell(304) == false) then
             player:addSpell(304) -- diabolos Spell
             player:messageSpecial(ID.text.DIABOLOS_UNLOCKED, 0, 0, 0)
-            addspell=1
+            addspell = 1
         end
-        if (addspell==1) then
+		
+        if (addspell == 1) then
             player:delKeyItem(tpz.ki.WHISPER_OF_DREAMS)
-            player:setCharVar("Darkness_Named_date", os.date("%j")) -- %M for next minute, %j for next day
+            -- player:setCharVar("Darkness_Named_date", os.date("%j")) -- %M for next minute, %j for next day
             player:completeQuest(WINDURST, tpz.quest.id.windurst.WAKING_DREAMS)
         elseif (item > 0 and player:getFreeSlotsCount()~=0) then
             player:delKeyItem(tpz.ki.WHISPER_OF_DREAMS)
-            player:setCharVar("Darkness_Named_date", os.date("%j")) -- %M for next minute, %j for next day
+            -- player:setCharVar("Darkness_Named_date", os.date("%j")) -- %M for next minute, %j for next day
             player:completeQuest(WINDURST, tpz.quest.id.windurst.WAKING_DREAMS)
             player:addItem(item)
             player:messageSpecial(ID.text.ITEM_OBTAINED, item) -- Item
-        elseif ( option ~= 5 and  (( item == 0 and  addspell==0 ) or (item > 0 and player:getFreeSlotsCount() == 0) ) ) then
+        elseif (option ~= 5 and  (( item == 0 and  addspell==0 ) or (item > 0 and player:getFreeSlotsCount() == 0) ) ) then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, item)
         end
     elseif (csid == 736) then
         player:setCharVar("MissionStatus", 2)
 
     end
-
 end

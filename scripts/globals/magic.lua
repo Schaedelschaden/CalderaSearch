@@ -114,6 +114,11 @@ function doBoostGain(caster, target, spell, effect)
         potency = 5
     end
     
+	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		potency = potency * 1.5
+		target:delStatusEffect(tpz.effect.EMBOLDEN)
+	end
+	
     potency = potency + gearbonus
 
     --printf("BOOST-GAIN: POTENCY = %d", potency)
@@ -372,24 +377,63 @@ function applyResistanceEffect(caster, target, spell, params)
         percentBonus = percentBonus - effectResistance
     end
 
-	-- if (effectResistance < 100) then
-		-- if (effect == tpz.effect.WEIGHT or tpz.effect.GEO_WEIGHT) then
-			-- local immunityGravity = target:getMod(tpz.mod.IMMUNITY_GRAVITY)
-			-- target:addMod(tpz.mod.IMMUNITY_GRAVITY, 10)
-		-- end
-		-- if (effect == tpz.effect.STUN) then
-			-- local IMMUNITY_STUN = target:getLocalVar("IMMUNITY_STUN")
-			-- target:addMod(tpz.mod.IMMUNITY_STUN)
-		-- end
-	-- end
-
     local p = getMagicHitRate(caster, target, skill, element, percentBonus, magicaccbonus)
 	
-	-- if (caster:getName() == "Khalum") then
-		-- printf("magic.lua applyResistanceEffect EFFECT: [%s]  RESISTANCE: [%i]  MAGIC HIT RATE: [%i]  PERCENT BONUS: [%i]", effect, effectResistance, p, percentBonus)
+	-- if (caster:getName() == "Khalum" or caster:getName() == "TestMage") then
+		-- printf("magic.lua applyResistanceEffect EFFECT: [%s]  EFFECT RES: [%i]  MAGIC HIT RATE: [%i]  PERCENT BONUS: [%i]  MAGIC RES: [%i]", effect, effectResistance, p, percentBonus, getMagicResist(p))
 	-- end
 
-    return getMagicResist(p)
+    local magicResist = getMagicResist(p)
+	
+	local enfeeblingEffects = {tpz.effect.WEIGHT,        tpz.effect.POISON, tpz.effect.PARALYSIS, tpz.effect.BLINDNESS, tpz.effect.SILENCE,
+							   tpz.effect.PETRIFICATION, tpz.effect.BIND,   tpz.effect.SLOW,      tpz.effect.STUN,      tpz.effect.SLEEP_I, tpz.effect.SLEEP_II}
+	local immunities = 		  {tpz.mod.IMMUNITY_GRAVITY, tpz.mod.IMMUNITY_POISON, tpz.mod.IMMUNITY_PARALYZE, tpz.mod.IMMUNITY_BLIND, tpz.mod.IMMUNITY_SILENCE,
+							   tpz.mod.IMMUNITY_PETRIFY, tpz.mod.IMMUNITY_BIND,   tpz.mod.IMMUNITY_SLOW,     tpz.mod.IMMUNITY_STUN,  tpz.mod.IMMUNITY_SLEEP}
+	local addImmunity
+	
+	if (target:isMob() and target:isNM()) then
+		addImmunity = 30
+	elseif (target:isMob() and not target:isNM()) then
+		addImmunity = 10
+	elseif (caster:isPC() and caster:hasStatusEffect(tpz.effect.CHAINSPELL)) then
+		addImmunity = 3
+	end
+	
+	if (target:isMob() and skill == tpz.skill.ENFEEBLING_MAGIC and magicResist >= 0.5) then
+		for i = 1, #enfeeblingEffects do
+			if (i >= 1 and i <= 9 and effect == enfeeblingEffects[i]) then
+				if (target:getMod(immunities[i]) > 100 - addImmunity) then
+					addImmunity = 100 - target:getMod(immunities[i])
+				end
+				
+				target:addMod(immunities[i], addImmunity)
+				-- printf("magic.lua applyResistanceEffect SPELL LANDED, INCREASING IMMUNITY  CURRENT: [%i]", target:getMod(immunities[i]))
+			elseif (i >= 10 and i <= 11 and effect == enfeeblingEffects[i]) then
+				if (target:getMod(immunities[10]) > 100 - addImmunity) then
+					addImmunity = 100 - target:getMod(immunities[10])
+				end
+			
+				target:addMod(immunities[10], addImmunity)
+				-- printf("magic.lua applyResistanceEffect SPELL LANDED, INCREASING IMMUNITY  CURRENT: [%i]", target:getMod(immunities[10]))
+			end
+		end
+	elseif (target:isMob() and skill == tpz.skill.SKILL_SINGING or skill == tpz.skill.SKILL_STRING_INSTRUMENT or skill == tpz.skill.SKILL_WIND_INSTRUMENT and magicResist >= 0.5) then
+		if (effect == tpz.effect.LULLABY) then
+			if (target:getMod(tpz.mod.IMMUNITY_LULLABY) > 70) then
+				addImmunity = 100 - target:getMod(tpz.mod.IMMUNITY_LULLABY)
+			end
+		
+			target:addMod(tpz.mod.IMMUNITY_LULLABY, addImmunity)
+		elseif (effect == tpz.effect.ELEGY) then
+			if (target:getMod(tpz.mod.IMMUNITY_SLOW) > 70) then
+				addImmunity = 100 - target:getMod(tpz.mod.IMMUNITY_SLOW)
+			end
+		
+			target:addMod(tpz.mod.IMMUNITY_SLOW, addImmunity)
+		end
+	end
+
+    return magicResist
 end
 
 -- Applies resistance for things that may not be spells - ie. Quick Draw
@@ -408,6 +452,8 @@ function applyResistanceAddEffect(player, target, element, bonus)
 end
 
 function getMagicHitRate(caster, target, skillType, element, percentBonus, bonusAcc)
+	local mainJob = caster:getMainJob()
+
     -- resist everything if magic shield is active
     if (target:hasStatusEffect(tpz.effect.MAGIC_SHIELD)) then
         local magicshieldsub = target:getStatusEffect(tpz.effect.MAGIC_SHIELD)
@@ -423,11 +469,11 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
         bonusAcc = 0
     end
 
-    local magicacc = caster:getMod(tpz.mod.MACC) + caster:getILvlMacc(tpz.slot.MAIN) + caster:getILvlMacc(tpz.slot.SUB)
+    local magicacc = caster:getMod(tpz.mod.MACC) + caster:getILvlMacc(tpz.slot.MAIN) + (caster:getILvlMacc(tpz.slot.SUB) / 2)
 	
 	local geoMACC = 0.0
 	
-	if caster:getMainJob() == tpz.job.GEO and spellGroup == tpz.magic.spellGroup.BLACK then
+	if mainJob == tpz.job.GEO and spellGroup == tpz.magic.spellGroup.BLACK then
         if caster:isSpellAoE(spellId) then
             geoBonus = getCardinalStats(caster, target, 1, spell)
         else
@@ -439,7 +485,7 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
 
     -- Get the base acc (just skill + skill mod (79 + skillID = ModID) + magic acc mod)
     if (skillType ~= 0) then
-		local mainJob = caster:getMainJob()
+		-- Reduce MACC for jobs without Enfeebling Magic Skill
 		if ((mainJob ~= tpz.job.BLM and mainJob ~= tpz.job.DRK and mainJob ~= tpz.job.GEO and
 			 mainJob ~= tpz.job.RDM and mainJob ~= tpz.job.SCH and mainJob ~= tpz.job.WHM) and
 			 skillType == tpz.skill.ENFEEBLING_MAGIC and not caster:isPet()) then
@@ -488,7 +534,14 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
     local maccFood = magicacc * (caster:getMod(tpz.mod.FOOD_MACCP)/100)
     magicacc = magicacc + utils.clamp(maccFood, 0, caster:getMod(tpz.mod.FOOD_MACC_CAP))
 
-	-- if (caster:getName() == "Khalum") then
+	-- Reduce MACC for Elemental Magic cast by jobs without Elemental Magic skill
+	if ((mainJob ~= tpz.job.BLM and mainJob ~= tpz.job.DRK and mainJob ~= tpz.job.GEO and
+		 mainJob ~= tpz.job.RDM and mainJob ~= tpz.job.SCH) and
+		 skillType == tpz.skill.ELEMENTAL_MAGIC and not caster:isPet()) then
+			magicacc = magicacc * 0.75
+	end
+
+	-- if (caster:getName() == "Preciosa") then
 		-- printf("magic.lua getMagicHitRate CASTER:[%s]  MAGICACC: [%i]  TARGET: [%s]", caster:getName(), magicacc, target:getName())
 	-- end
 	
@@ -507,7 +560,7 @@ function calculateMagicHitRate(magicacc, magiceva, percentBonus, casterLvl, targ
 
     p = (70 - 0.5 * (magiceva - magicacc) + levelDiff * 3) * adjustedPercent
 	
---	printf("magic.lua calculateMagicHitRate CASTER MACC: [%i]  TARGET MEVA: [%i]  PERCENTBONUS: [%1.2f]  p: [%i]  CAPPED p: [%i]", magicacc, magiceva, adjustedPercent, p, utils.clamp(p, 5, 95))
+	-- printf("magic.lua calculateMagicHitRate CASTER MACC: [%i]  TARGET MEVA: [%i]  PERCENTBONUS: [%1.2f]  p: [%i]  CAPPED p: [%i]", magicacc, magiceva, adjustedPercent, p, utils.clamp(p, 5, 95))
 
     return utils.clamp(p, 0, 100)
 end
@@ -554,85 +607,93 @@ end
 -- Returns the amount of resistance the
 -- target has to the given effect (stun, sleep, etc..)
 function getEffectResistance(target, effect)
---	printf("magic.lua getEffectResistance EFFECT: [%s]", effect)
+	-- if (target:getName() == "Khalum") then
+		-- printf("magic.lua getEffectResistance EFFECT: [%s]", effect)
+	-- end
+	
     local effectres = 0
     local statusres = target:getMod(tpz.mod.ALLSTATUSRES)
 	local immunity = 0
 	
 	if (effect == tpz.effect.KO) then
-        effectres = tpz.mod.DEATHRES
---		immunity = tpz.mod.IMMUNITY_DEATH
+        effectres = target:getMod(tpz.mod.DEATHRES)
+		immunity = tpz.mod.IMMUNITY_DEATH
     end
 	if (effect == tpz.effect.WEIGHT or tpz.effect.GEO_WEIGHT) then
-        effectres = tpz.mod.GRAVITYRES
---		immunity = tpz.mod.IMMUNITY_GRAVITY
+        effectres = target:getMod(tpz.mod.GRAVITYRES)
+		immunity = tpz.mod.IMMUNITY_GRAVITY
     end
     if (effect == tpz.effect.SLEEP_I or effect == tpz.effect.SLEEP_II) then
-        effectres = tpz.mod.SLEEPRES
---		immunity = tpz.mod.IMMUNITY_SLEEP
+        effectres = target:getMod(tpz.mod.SLEEPRES)
+		immunity = tpz.mod.IMMUNITY_SLEEP
 	end
     if (effect == tpz.effect.LULLABY) then
-        effectres = tpz.mod.LULLABYRES
---		immunity = tpz.mod.IMMUNITY_LULLABY
+        effectres = target:getMod(tpz.mod.LULLABYRES)
+		immunity = tpz.mod.IMMUNITY_LULLABY
 	end
     if (effect == tpz.effect.POISON) then
-        effectres = tpz.mod.POISONRES
---		immunity = tpz.mod.IMMUNITY_POISON
+        effectres = target:getMod(tpz.mod.POISONRES)
+		immunity = tpz.mod.IMMUNITY_POISON
 	end
     if (effect == tpz.effect.PARALYSIS) then
 --		printf("magic.lua getEffectResistance PARALYSIS TRIGGERED")
-        effectres = tpz.mod.PARALYZERES
---		immunity = tpz.mod.IMMUNITY_PARALYZE
+        effectres = target:getMod(tpz.mod.PARALYZERES)
+		immunity = tpz.mod.IMMUNITY_PARALYZE
     end
     if (effect == tpz.effect.BLINDNESS) then
-        effectres = tpz.mod.BLINDRES
+        effectres = target:getMod(tpz.mod.BLINDRES)
 --		printf("magic.lua getEffectResistance BLINDNESS TRIGGERED  BLINDRES: [%i]", target:getMod(effectres))
---		immunity = tpz.mod.IMMUNITY_BLIND
+		immunity = tpz.mod.IMMUNITY_BLIND
     end
     if (effect == tpz.effect.SILENCE) then
-        effectres = tpz.mod.SILENCERES
---		immunity = tpz.mod.IMMUNITY_SILENCE
+        effectres = target:getMod(tpz.mod.SILENCERES)
+		immunity = tpz.mod.IMMUNITY_SILENCE
     end
     if (effect == tpz.effect.PLAGUE or effect == tpz.effect.DISEASE) then
-        effectres = tpz.mod.VIRUSRES
---		immunity = tpz.mod.IMMUNITY_VIRUS
+        effectres = target:getMod(tpz.mod.VIRUSRES)
+		immunity = tpz.mod.IMMUNITY_VIRUS
     end
     if (effect == tpz.effect.PETRIFICATION) then
-        effectres = tpz.mod.PETRIFYRES
---		immunity = tpz.mod.IMMUNITY_PETRIFY
+        effectres = target:getMod(tpz.mod.PETRIFYRES)
+		immunity = tpz.mod.IMMUNITY_PETRIFY
     end
     if (effect == tpz.effect.BIND) then
-        effectres = tpz.mod.BINDRES
---		immunity = tpz.mod.IMMUNITY_BIND
+        effectres = target:getMod(tpz.mod.BINDRES)
+		immunity = tpz.mod.IMMUNITY_BIND
     end
     if (effect == tpz.effect.CURSE_I or effect == tpz.effect.CURSE_II or effect == tpz.effect.BANE) then
-        effectres = tpz.mod.CURSERES
---		immunity = tpz.mod.IMMUNITY_CURSE
+        effectres = target:getMod(tpz.mod.CURSERES)
+		immunity = tpz.mod.IMMUNITY_CURSE
     end
     if (effect == tpz.effect.SLOW or effect == tpz.effect.ELEGY) then
-        effectres = tpz.mod.SLOWRES
---		immunity = tpz.mod.IMMUNITY_SLOW
+        effectres = target:getMod(tpz.mod.SLOWRES)
+		immunity = tpz.mod.IMMUNITY_SLOW
     end
     if (effect == tpz.effect.STUN) then
-        effectres = tpz.mod.STUNRES
---		immunity = tpz.mod.IMMUNITY_STUN
+        effectres = target:getMod(tpz.mod.STUNRES)
+		immunity = tpz.mod.IMMUNITY_STUN
     end
-    if (effect == tpz.effect.CHARM) then
-        effectres = tpz.mod.CHARMRES
---		immunity = tpz.mod.IMMUNITY_CHARM
+    if (effect == tpz.effect.CHARM_I or effect == tpz.effect.CHARM) then
+		if (target:getName() == "Khalum") then
+			-- printf("magic.lua getEffectResistance CHARM RES TRIGGERED  CHARMRES MOD: [%i]  CHARMRES POWER: [%i]", tpz.mod.CHARMRES, target:getMod(tpz.mod.CHARMRES))
+		end
+        effectres = target:getMod(tpz.mod.CHARMRES)
+		immunity = tpz.mod.IMMUNITY_CHARM
     end
     if (effect == tpz.effect.AMNESIA) then
-        effectres = tpz.mod.AMNESIARES
---		immunity = tpz.mod.IMMUNITY_AMNESIA
+        effectres = target:getMod(tpz.mod.AMNESIARES)
+		immunity = tpz.mod.IMMUNITY_AMNESIA
     end
 	if (effect == tpz.effect.EVASION_DOWN or effect == tpz.effect.MAGIC_EVASION_DOWN or effect == nil) then
 		effectres = 0
 	end
 	
---	printf("magic.lua getEffectResistance EFFECT RESISTANCE: [%i]  POWER: [%i]", effectres, target:getMod(effectres))
+	-- if (target:getName() == "Khalum") then
+		-- printf("magic.lua getEffectResistance EFFECT RESISTANCE: [%i]", effectres)
+	-- end
 
     if (effectres ~= 0) then
-        return target:getMod(effectres) + statusres-- + target:getMod(immunity)
+        return effectres + statusres + target:getMod(immunity)
     end
 
     return statusres
@@ -787,11 +848,108 @@ end
         -- end
     end
 
+	-- Tier 1 (1-13) - Fire, Blizzard, Aero, Stone, Thunder, Water, Firaga, Blizzaga, Aeroga, Stonega, Thundaga, Waterga
+	local spellTier = {144, 149, 154, 159, 164, 169, 174, 179, 184, 189, 189, 194, 199,
+	-- Tier 2 (14-32) - Fire II, Blizzard II, Aero II, Stone II, Thunder II, Water II, Firaga II, Blizzaga II, Aeroga II, Stonega II, Thundaga II, Waterga II
+	--			        Fira, Blizzara, Aera, Stonera, Thundara, Watera
+					   145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 190, 195, 200, 828, 830, 832, 834, 836, 838,
+	-- Tier 3 (33-45) - Fire III, Blizzard III, Aero III, Stone III, Thunder III, Water III, Firaga III, Blizzaga III, Aeroga III, Stonega III, Thundaga III, Waterga III
+					   146, 151, 156, 161, 166, 171, 176, 181, 186, 191, 191, 196, 201,
+	-- Tier 4 (46-63) - Fire IV, Blizzard IV, Aero IV, Stone IV, Thunder IV, Water IV, Firaja, Blizzaja, Aeroja, Stoneja, Thundaja, Waterja
+	--			        Fira II, Blizzara II, Aera II, Stonera II, Thundara II, Watera II
+					   147, 152, 157, 162, 167, 172, 496, 497, 498, 499, 500, 501, 829, 831, 833, 835, 837, 839,
+	-- Tier 5 (64-69) - Fire V, Blizzard V, Aero V, Stone V, Thunder V, Water V
+					   148, 153, 158, 163, 168, 173,
+	-- Tier 6 () -     Fire VI, Blizzard VI, Aero VI, Stone VI, Thunder VI, Water VI
+					   
+	-- Ancient Magic (70-81) - Flare, Freeze, Tornado, Quake, Burst, Flood, Flare II, Freeze II, Tornado II, Quake II, Burst II, Flood II
+					   204, 206, 208, 210, 212, 214, 205, 207, 209, 211, 213, 215,
+	-- Non-elemental (82-84) - Meteor, Comet, Impact
+					   218, 219, 503,
+					   
+	-- Helix (85-92) - Geohelix, Hydrohelix, Anemohelix, Pyrohelix, Cryohelix, Ionohelix, Noctohelix, Luminohelix
+					   278, 279, 280, 281, 282, 283, 284, 285,
+	}
+
+	local multiplier = 1
     local skill = spell:getSkillType()
+	
     if (skill == tpz.skill.ELEMENTAL_MAGIC) then
-        dmg = dmg * ELEMENTAL_POWER
+		-- dmg = dmg * ELEMENTAL_POWER
+		if (caster:getObjType() == tpz.objType.PC and (caster:getMainJob() == tpz.job.BLM or caster:getMainJob() == tpz.job.DRK or
+			caster:getMainJob() == tpz.job.GEO or caster:getMainJob() == tpz.job.RDM or caster:getMainJob() == tpz.job.SCH)) then
+			local casterLvl = caster:getMainLvl() + caster:getItemLevel()
+		
+			if (casterLvl < 100) then
+				multiplier = utils.clamp(1 + (casterLvl / 99), 1.25, 1.85)
+			elseif (casterLvl >= 100) then
+				for i = 1, #spellTier do
+					-- Tier 1
+					if (i > 0 and i <= 13 and spell:getID() == spellTier[i]) then
+						-- printf("magic.lua finalMagicAdjustments TIER 1 ELEMENTAL MAGIC")
+						multiplier = 1.45
+					-- Tier 2
+					elseif (i > 13 and i <= 32 and spell:getID() == spellTier[i]) then
+						-- printf("magic.lua finalMagicAdjustments TIER 2 ELEMENTAL MAGIC")
+						multiplier = 1.40
+					-- Tier 3
+					elseif (i > 32 and i <= 45 and spell:getID() == spellTier[i]) then
+						-- printf("magic.lua finalMagicAdjustments TIER 3 ELEMENTAL MAGIC")
+						multiplier = 2.00-- 2.75
+					-- Tier 4
+					elseif (i > 45 and i <= 63 and spell:getID() == spellTier[i]) then
+						-- printf("magic.lua finalMagicAdjustments TIER 4 ELEMENTAL MAGIC")
+						multiplier = 3.95
+					-- Tier 5
+					elseif (i > 63 and i <= 69 and spell:getID() == spellTier[i]) then
+						-- printf("magic.lua finalMagicAdjustments TIER 5 ELEMENTAL MAGIC")
+						multiplier = 4.95
+					-- Ancient Magic
+					elseif (i > 69 and i <= 81 and spell:getID() == spellTier[i]) then
+						-- printf("magic.lua finalMagicAdjustments ANCIENT ELEMENTAL MAGIC")
+						multiplier = 5.10
+					-- Non-elemental
+					elseif (i > 81 and i <= 84 and spell:getID() == spellTier[i]) then
+						-- printf("magic.lua finalMagicAdjustments NON-ELEMENTAL MAGIC")
+						multiplier = 6.50
+					-- Helixes
+					elseif (i > 84 and i <= 92 and spell:getID() == spellTier[i]) then
+						-- printf("magic.lua finalMagicAdjustments HELIX MAGIC")
+						multiplier = 4.85
+					end
+				end
+				
+				if (spell:getElement() == tpz.magic.element.EARTH) then
+					multiplier = multiplier - 0.75
+				elseif (spell:getElement() == tpz.magic.element.WATER) then
+					multiplier = multiplier - 0.60
+				elseif (spell:getElement() == tpz.magic.element.WIND) then
+					multiplier = multiplier - 0.45
+				elseif (spell:getElement() == tpz.magic.element.FIRE) then
+					multiplier = multiplier - 0.30
+				elseif (spell:getElement() == tpz.magic.element.ICE) then
+					multiplier = multiplier - 0.15
+				end
+			end
+		else
+			multiplier = 1.25
+		end
+		
+		dmg = dmg * multiplier
     elseif (skill == tpz.skill.DARK_MAGIC) then
-        dmg = dmg * DARK_POWER
+		if (caster:getObjType() == tpz.objType.PC and (caster:getMainJob() == tpz.job.SCH)) then
+			local casterLvl = caster:getMainLvl() + caster:getItemLevel()
+			
+			if (spell:getID() == 502) then
+				if (casterLvl < 100) then
+					dmg = dmg * 2
+				elseif (casterLvl > 100) then
+					dmg = dmg * 8
+				end
+			end
+		else
+			dmg = dmg * DARK_POWER
+		end
     elseif (skill == tpz.skill.NINJUTSU) then
         dmg = dmg * NINJUTSU_POWER
     elseif (skill == tpz.skill.DIVINE_MAGIC) then
@@ -813,6 +971,7 @@ end
 
     -- Handle Stoneskin
     dmg = utils.stoneskin(target, dmg)
+	dmg = utils.magicshield(target, dmg)
     dmg = utils.clamp(dmg, -99999, 99999)
 
     if (dmg < 0) then
@@ -865,7 +1024,7 @@ function finalMagicNonSpellAdjustments(caster, target, ele, dmg)
 
     --handling stoneskin
     dmg = utils.stoneskin(target, dmg)
-
+	dmg = utils.magicshield(target, dmg)
     dmg = utils.clamp(dmg, -99999, 99999)
 
     if (dmg < 0) then
@@ -1297,17 +1456,36 @@ function addBonusesAbility(caster, ele, target, dmg, params)
         mdefBarBonus = target:getStatusEffect(tpz.magic.barSpell[ele]):getSubPower()
     end
 
+	local adjustMDEF = 1
+
+	if (params.adjustMDEFCalc ~= adjustMDEF) then
+		adjustMDEF = params.adjustMDEFCalc
+	end
+	
+	if (adjustMDEF == nil or adjustMDEF == 0) then
+		adjustMDEF = 1
+		-- printf("magic.lua addBonusesAbility USER NAME: [%s]", caster:getName())
+	end
+
     if (params ~= nil and params.bonusmab ~= nil and params.includemab == true) then
-        mab = (100 + caster:getMod(tpz.mod.MATT) + params.bonusmab) / (100 + target:getMod(tpz.mod.MDEF) + mdefBarBonus)
+        mab = (100 + caster:getMod(tpz.mod.MATT) + params.bonusmab) / ((100 + target:getMod(tpz.mod.MDEF) + mdefBarBonus))
     elseif (params == nil or (params ~= nil and params.includemab == true)) then
-        mab = (100 + caster:getMod(tpz.mod.MATT)) / (100 + target:getMod(tpz.mod.MDEF) + mdefBarBonus)
+        mab = (100 + caster:getMod(tpz.mod.MATT)) / ((100 + target:getMod(tpz.mod.MDEF) + mdefBarBonus))
     end
 
     if (mab < 0) then
         mab = 0
     end
 
+	-- if (caster:getName() == "Las") then
+		-- printf("magic.lua addBonusesAbility MAGIC WS DMG BEFORE MDEF: [%i]  MAB: [%f]", dmg, mab)
+	-- end
+
     dmg = math.floor(dmg * mab)
+	
+	-- if (caster:getName() == "Las") then
+		-- printf("magic.lua addBonusesAbility MAGIC WS DMG AFTER MDEF: [%i]", dmg)
+	-- end
 
     -- print(affinityBonus)
     -- print(speciesReduction)
@@ -1508,20 +1686,34 @@ function doElementalNuke(caster, spell, target, spellParams)
                 return 0
             end
 
+			-- if (caster:getName() == "Testmage" or caster:getName() == "Khalum") then
+				-- printf("magic.lua doElementalNuke  CASTER: [%s]  dINT <= 49  CASTER: [%s]  BASE DMG: [%i]  MAGIC DMG: [%i]  V: [%i]  dINT: [%i]  M: [%2.2f]", caster:getName(), DMG, mDMG, V, dINT, M)
+			-- end
+
         elseif (dINT >= 50 and dINT <= 99) then
             V = spellParams.V50
             M = spellParams.M50
             DMG = math.floor(DMG + mDMG + V + ((dINT - 50) * M))
-
+			
+			-- if (caster:getName() == "Testmage" or caster:getName() == "Khalum") then
+				-- printf("magic.lua doElementalNuke  dINT >= 50 & dINT <= 99  CASTER: [%s]  BASE DMG: [%i]  MAGIC DMG: [%i]  V: [%i]  dINT: [%i]  M: [%2.2f]", caster:getName(), DMG, mDMG, V, dINT, M)
+			-- end
         elseif (dINT >= 100 and dINT <= 199) then
             V = spellParams.V100
             M = spellParams.M100
             DMG = math.floor(DMG + mDMG + V + ((dINT - 100) * M))
 
+			-- if (caster:getName() == "Testmage" or caster:getName() == "Khalum") then
+				-- printf("magic.lua doElementalNuke  dINT >= 100 & dINT <= 199  CASTER: [%s]  BASE DMG: [%i]  MAGIC DMG: [%i]  V: [%i]  dINT: [%i]  M: [%2.2f]", caster:getName(), DMG, mDMG, V, dINT, M)
+			-- end
         elseif (dINT > 199) then
             V = spellParams.V200
             M = spellParams.M200
             DMG = math.floor(DMG + mDMG + V + ((dINT - 200) * M))
+
+			-- if (caster:getName() == "Testmage" or caster:getName() == "Khalum") then
+				-- printf("magic.lua doElementalNuke  dINT > 199  CASTER: [%s]  BASE DMG: [%i]  MAGIC DMG: [%i]  V: [%i]  dINT: [%i]  M: [%2.2f]", caster:getName(), DMG, mDMG, V, dINT, M)
+			-- end
         end
     end
 
@@ -1539,6 +1731,9 @@ function doElementalNuke(caster, spell, target, spellParams)
 
     --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
     DMG = addBonuses(caster, spell, target, DMG, spellParams)
+	-- if (caster:getName() == "Testmage" or caster:getName() == "Khalum") then
+		-- printf("magic.lua doElementalNuke > addBonuses  CASTER: [%s]  DMG: [%i]", caster:getName(), DMG)
+	-- end
 
     --add in target adjustment
     local ele = spell:getElement()
@@ -1548,16 +1743,42 @@ function doElementalNuke(caster, spell, target, spellParams)
 
     --add in final adjustments
     DMG = finalMagicAdjustments(caster, target, spell, DMG)
+	-- if (caster:getName() == "Testmage" or caster:getName() == "Khalum") then
+		-- printf("magic.lua doElementalNuke > finalMagicAdjustments  CASTER: [%s]  DMG: [%i]", caster:getName(), DMG)
+	-- end
 	
 	if (DMG < 0) then
 		spell:setMsg(tpz.msg.basic.MAGIC_RECOVERS_HP)
 	end
 	
 	-- Checks for and applies Augments "Conserve MP" set bonus
-	local conMPReduction = spell:getMPCost()
+	local conMPReduction = spell:getMPCost() -- caster:getCharVar("AugConserveMP")
 	if (conMPReduction > 0 and math.random(1, 100) < caster:getMod(tpz.mod.AUGMENT_CONSERVE_MP)) then
 --		printf("magic.lua doElementalNuke CONSERVE MP ADJUSTMENT: [%f]\n", 1 + ((conMPReduction * 2) / 100))
 		DMG = DMG * (1 + ((conMPReduction * 2) / 100))
+	end
+	
+	local canRestoreMP = false
+	
+	if (caster:isPC()) then
+		local bodyEquip = caster:getEquipID(tpz.slot.BODY)
+		
+		if (bodyEquip == 27810 or bodyEquip == 27831 or bodyEquip == 23110 or bodyEquip == 23445) then
+			canRestoreMP = true
+		end
+	end
+	
+	if (caster:getMod(tpz.mod.CONVERT_ELEM_DMG_MP) > 0 or canRestoreMP == true) then
+		local restoreMP = DMG * 0.02 -- (caster:getMod(tpz.mod.CONVERT_ELEM_DMG_MP) / 100)
+		local restoreCap = spell:getMPCost() / 4
+		
+		if (restoreMP > restoreCap) then
+			restoreMP = restoreCap
+		end
+		
+		caster:addMP(restoreMP)
+		
+		-- printf("magic.lua doElementalNuke CASTER: [%s]  SPELL COST: [%i]  RESTORE CAP: [%i]  RESTORE MP: [%i]", caster:getName(), spell:getMPCost(), restoreCap, restoreMP)
 	end
 	
 	if caster:hasStatusEffect(tpz.effect.THEURGIC_FOCUS) then

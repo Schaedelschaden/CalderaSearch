@@ -893,7 +893,7 @@ namespace petutils
             (grade::GetHPScale(grade, scaleOver60Column) * mainLevelOver60To75) +
             (grade::GetHPScale(grade, scaleOver75Column) * mainLevelOver75) +
 			(grade::GetHPScale(grade, scaleTo60Column) * mainLevelOver76andUnder99) +
-			(grade::GetHPScale(grade, scaleTo60Column) * mainLevelOver99); 
+			(grade::GetHPScale(grade, scaleTo60Column) * mainLevelOver99);
 
         // raceStat = (int32)(statScale[grade][baseValueColumn] + statScale[grade][scaleTo60Column] * (mlvl - 1));
 
@@ -1195,6 +1195,8 @@ namespace petutils
             PMob->PMaster = nullptr;
 
             PMob->PAI->SetController(std::make_unique<CMobController>(PMob));
+			
+			PMob->StatusEffectContainer->DelStatusEffectSilent(EFFECT_FAMILIAR);
         }
         else if (PPet->objtype == TYPE_PET)
         {
@@ -1576,19 +1578,19 @@ namespace petutils
 			uint16 mainLevelUpTo75 = (mlvl < 75 ? mlvl - 1 : 75);
 			uint16 mainLevelOver76andUnder99 = std::clamp(mlvl - 75, 0, 24); 
 			uint16 mainLevelOver99 = std::clamp(ilvl - 99, 0, 23);
-			uint16 calchp = 0;
+//			uint16 calchp = 0;
 			
 			if (PMaster->GetMJob() == JOB_SMN)
             {
 				if (ilvl < mlvl)
 				{
 					PPet->SetMLevel(mlvl);
-					calchp = (uint16)(3.09 * mlvl);
+//					calchp = (uint16)(3.09 * mlvl);
 				}
 				else
 				{
 					PPet->SetMLevel(ilvl);
-					calchp = (uint16)(20.16 * ilvl);
+//					calchp = (uint16)(20.16 * ilvl);
 				}
             }
             else if (PMaster->GetSJob() == JOB_SMN)
@@ -1661,7 +1663,7 @@ namespace petutils
 			uint16 calcacc = (uint16)((4.83 * mainLevelUpTo75) + (5.96 * mainLevelOver76andUnder99) + (19.85 * mainLevelOver99));
 			uint16 calcdef = (uint16)((4.653 * mainLevelUpTo75) + (5.792 * mainLevelOver76andUnder99) + (20.8 * mainLevelOver99));
 			
-			PPet->addModifier(Mod::HP, calchp);
+//			PPet->addModifier(Mod::HP, calchp);
 			PPet->setModifier(Mod::ATT, calcatt * 2);
 			PPet->setModifier(Mod::ACC, calcacc);
 			PPet->setModifier(Mod::MACC, (uint16)(calcacc * 0.85));

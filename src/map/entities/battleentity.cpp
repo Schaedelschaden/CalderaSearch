@@ -42,6 +42,7 @@
 #include "../roe.h"
 #include "../status_effect_container.h"
 #include "../utils/battleutils.h"
+#include "../utils/charutils.h"
 #include "../utils/petutils.h"
 #include "../utils/puppetutils.h"
 #include "../weapon_skill.h"
@@ -595,6 +596,12 @@ uint16 CBattleEntity::ATT()
 	// Determines character, pet, and mod ATT stat
 	// Base 8 ATT + ATT Mod
     int32 ATT = 8 + m_modStat[Mod::ATT];
+	
+/* 	if (this->GetLocalVar("AuditATT") == 1)
+	{
+		printf("battleentity.cpp ATT  NAME: [%s]  BASE: [%i]\n", this->GetName(), ATT);
+	} */
+	
     auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]);
     // Determine whether the weapon is one-handed or two-handed and calculate ATT from STR
     if (weapon && weapon->isTwoHanded())
@@ -609,6 +616,11 @@ uint16 CBattleEntity::ATT()
     {
         ATT += (STR() * 3) / 4;
     }
+	
+/* 	if (this->GetLocalVar("AuditATT") == 1)
+	{
+		printf("battleentity.cpp ATT  NAME: [%s]  ADD STR: [%i]\n", this->GetName(), ATT);
+	} */
 
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_ENDARK))
         ATT += this->getMod(Mod::ENSPELL_DMG);
@@ -630,6 +642,13 @@ uint16 CBattleEntity::ATT()
     {
         ATT += this->GetSkill(SKILL_AUTOMATON_MELEE);
     }
+	else if (this->objtype == TYPE_MOB && this->objtype != TYPE_PET)
+	{
+		if (weapon)
+        {
+            ATT += GetSkill(weapon->getSkillType());
+        }
+	}
 	
 	int32 ATTP = 0;
 	int32 foodATTP = 0;
@@ -639,6 +658,11 @@ uint16 CBattleEntity::ATT()
 	
 	// Get ATTP Mod from food and determine percent of ATT Mod
 	foodATTP += static_cast<int32>(ATT * (m_modStat[Mod::FOOD_ATTP] / 100.00f));
+	
+	if (this->GetLocalVar("AuditATT") == 1)
+	{
+		printf("battleentity.cpp ATT  NAME: [%s]  BASE: [%i]  ATTP: [%i]  FOOD ATTP: [%i]  FINAL: [%i]\n\n", this->GetName(), ATT, ATTP, foodATTP, ATT + ATTP + std::min<int16>(foodATTP, m_modStat[Mod::FOOD_ATT_CAP]));
+	}
 	
 	// Calculate final ATT stat from Base ATT + ATTP + foodATTP
 	ATT = ATT + ATTP + std::min<int16>(foodATTP, m_modStat[Mod::FOOD_ATT_CAP]);
@@ -699,6 +723,11 @@ uint16 CBattleEntity::RATT(uint8 skill, uint16 bonusSkill)
 	// Get RATTP Mod from food and determine percent of RATT Mod
 	foodRATTP += static_cast<int32>(RATT * (m_modStat[Mod::FOOD_RATTP] / 100.00f));
 	
+	if (this->GetLocalVar("AuditRATT") == 1)
+	{
+		printf("battleentity.cpp RATT  NAME: [%s]  BASE: [%i]  RATTP: [%i]  FOOD RATTP: [%i]  FINAL: [%i]\n\n", this->GetName(), RATT, RATTP, foodRATTP, RATT + RATTP + std::min<int16>(foodRATTP, m_modStat[Mod::FOOD_RATT_CAP]));
+	}
+	
 	// Calculate final RATT stat from Base RATT + RATTP + foodRATTP
 	RATT = RATT + RATTP + std::min<int16>(foodRATTP, m_modStat[Mod::FOOD_RATT_CAP]);
 	
@@ -743,6 +772,11 @@ uint16 CBattleEntity::RACC(uint8 skill, uint16 bonusSkill)
     acc += getMod(Mod::RACC);
     acc += battleutils::GetRangedAccuracyBonuses(this);
     acc += (AGI() * 3) / 4;
+	
+	if (this->GetLocalVar("AuditRACC") == 1)
+	{
+		printf("battleentity.cpp RACC  NAME: [%s]  BASE: [%i]  FINAL: [%i]\n\n", this->GetName(), acc, acc + std::min<int16>(((100 + getMod(Mod::FOOD_RACCP) * acc) / 100), getMod(Mod::FOOD_RACC_CAP)));
+	}
 	
     return acc + std::min<int16>(((100 + getMod(Mod::FOOD_RACCP) * acc) / 100), getMod(Mod::FOOD_RACC_CAP));
 }
@@ -815,7 +849,14 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
         auto PChar = dynamic_cast<CCharEntity *>(this);
         if (PChar)
             ACC += PChar->PMeritPoints->GetMeritValue(MERIT_ACCURACY, PChar);
+			
+		if (this->GetLocalVar("AuditACC") == 1)
+		{
+			printf("battleentity.cpp ACC  NAME: [%s]  BASE: [%i]  FINAL: [%i]\n\n", this->GetName(), ACC, ACC + std::min<int16>((ACC * m_modStat[Mod::FOOD_ACCP] / 100), m_modStat[Mod::FOOD_ACC_CAP]));
+		}
+		
         ACC = ACC + std::min<int16>((ACC * m_modStat[Mod::FOOD_ACCP] / 100), m_modStat[Mod::FOOD_ACC_CAP]);
+		
         return std::max<int16>(0, ACC);
     }
     else if (this->objtype == TYPE_PET && ((CPetEntity*)this)->getPetType() == PETTYPE_AUTOMATON)
@@ -1407,14 +1448,21 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
 	// Retrieve original spell MP cost and calculate Conserve MP trait
 	int16 currentMP = this->health.mp;
 	int16 spellCost = PSpell->getMPCost();
-		
+	int16 costReduction = 0;
+	uint16 reductionPercent = 0;
+	
 	state.SpendCost();
+	
+	// Calculate cost reduction from Conserve MP and store in Character Variable for "Augments Conserve MP" gear set effects
+	if (this->objtype == TYPE_PC)
+	{
+		CCharEntity* PChar = (CCharEntity*)this;
+		costReduction = PSpell->getMPCost() - (currentMP - this->health.mp);
+		reductionPercent = (uint16)(((float)costReduction / (float)spellCost) * 100.0f);
 		
-	// Calculate cost reduction from Conserve MP and overwrite spell's original cost with new value for use with
-	// "Augments Conserve MP" gear sets (Probably hacky but this was the easiest way to get the Conserve MP value into lua)
-	int16 costReduction = PSpell->getMPCost() - (currentMP - this->health.mp);
-	uint16 reductionPercent = (uint16)(((float)costReduction / (float)spellCost) * 100.0f);
-	PSpell->setMPCost(reductionPercent);
+		charutils::SetCharVar(PChar, "AugConserveMP", reductionPercent);
+		// PSpell->setMPCost(reductionPercent);
+	}
 
     // remove effects based on spell cast first
     int16 effectFlags = EFFECTFLAG_INVISIBLE | EFFECTFLAG_MAGIC_BEGIN;
@@ -1570,7 +1618,7 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         {
             state.ApplyEnmity(PTarget, ce, ve);
 			
-			if (this->objtype == TYPE_PC && PTarget->objtype == TYPE_MOB && actionTarget.param > 0)
+			if (this->objtype == TYPE_PC && PTarget->objtype == TYPE_MOB) // && actionTarget.param > 0)
 			{
 				// Trigger Treasure Hunter from magic
 				battleutils::ApplyTreasureHunter(this, PTarget, &actionTarget, false);

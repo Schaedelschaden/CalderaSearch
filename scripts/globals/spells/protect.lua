@@ -32,13 +32,12 @@ function onSpellCast(caster, target, spell)
 		power = power + shieldDEF
 	end
 
-    local power = power + (buff * tier)
-
-	if (caster:hasStatusEffect(tpz.effect.EMBOLDEN)) then
-		power = power * 2
-		duration = duration / 2
-		caster:delStatusEffect(tpz.effect.EMBOLDEN)
+	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+		power = power * 1.5
+		target:delStatusEffect(tpz.effect.EMBOLDEN)
 	end
+
+    local power = power + (buff * tier)
 
     local typeEffect = tpz.effect.PROTECT
         if target:addStatusEffect(typeEffect, power, 0, duration, 0, 0, tier) then

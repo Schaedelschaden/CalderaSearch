@@ -9,5 +9,16 @@ mixins =
 }
 -----------------------------------
 
+function onMobSpawn(mob)
+	
+end
+
+function onMobFight(mob, target)
+	if (mob:hasPet() == false and mob:getLocalVar("DynaWindySMN") == 0) then
+		mob:castSpell()
+		mob:setLocalVar("DynaWindySMN", 1)
+	end
+end
+
 function onMobDeath(mob, player, isKiller)
 end
