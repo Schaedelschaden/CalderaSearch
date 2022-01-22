@@ -18,6 +18,11 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local dmgmod = MobBreathMove(mob, target, 0.167, 1.875, tpz.magic.ele.EARTH, 500)
+	
+				-- Adjust Aspidochelone
+	if (mob:getID() == 17301538) then
+		MobBreathMove(mob, target, 0.167, 1.875, tpz.magic.ele.EARTH, 1500)
+	end
 
     local dmg = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.BREATH, tpz.damageType.EARTH, MOBPARAM_IGNORE_SHADOWS)
     return dmg

@@ -32,6 +32,11 @@ function onUseAbility(player, target, ability)
             local helixPower = helix:getPower() * 2
             local duration = helix:getDuration()
             local remaining = math.floor(helix:getTimeRemaining() / 1000) -- from milliseconds
+			
+			if (helixPower > HELIX_DOT_CAP) then
+				helixPower = HELIX_DOT_CAP
+			end
+	
             -- print(string.format("helix original dot stats: %i, duration: %i, remaining: %i", helixPower / 2, duration, remaining))
             duration = (duration-remaining) + math.floor(remaining * durationMultiplier)
             -- print(string.format("helix new dot stats: %i, remaining: %i", helixPower, duration))

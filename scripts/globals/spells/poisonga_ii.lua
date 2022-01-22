@@ -20,7 +20,7 @@ function onSpellCast(caster, target, spell)
     end
     power = calculatePotency(power, spell:getSkillType(), caster, target)
 
-    local duration = calculateDuration(120, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(120, caster, target, spell)
 
     local params = {}
     params.diff = dINT

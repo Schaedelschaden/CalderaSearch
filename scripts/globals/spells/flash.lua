@@ -35,6 +35,10 @@ function onSpellCast(caster,target,spell)
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 	
+	if (caster:hasStatusEffect(tpz.effect.DIVINE_EMBLEM)) then
+		caster:delStatusEffect(tpz.effect.DIVINE_EMBLEM)
+	end
+	
 	if (caster:getObjType() == tpz.objType.PC or caster:getObjType() == tpz.objType.TRUST) then
 		local enmityList = target:getEnmityList()
 		local targName = {}
@@ -42,7 +46,7 @@ function onSpellCast(caster,target,spell)
 		local currentCE
 
 		for i, v in ipairs(enmityList) do
-			local reduceCE = 100	
+			local reduceCE = 26	
 			targName[i] = v.entity:getName()
 			
 			if (v.entity:isPC()) then
@@ -53,7 +57,7 @@ function onSpellCast(caster,target,spell)
 			
 			currentCE = target:getCE(targ)
 			
-			if (currentCE < 101) then
+			if (currentCE < 26) then
 				reduceCE = currentCE - 1
 			end
 

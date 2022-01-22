@@ -19,13 +19,13 @@ function onUseAbility(player, target, ability)
 	
 	-- Caps at 36 at level 99
     if (player:getMainJob() == tpz.job.SCH and player:getMainLvl() >= 20) then
-        regenbonus = 4 * math.floor((player:getMainLvl() - 9) / 10)
+        regenbonus = math.floor((player:getMainLvl() - 1) / 4)
     end
 
     local helixbonus = 0
 	
     if (player:getMainJob() == tpz.job.SCH and player:getMainLvl() >= 20) then
-        helixbonus = math.floor(player:getMainLvl() / 4)
+        helixbonus = math.floor((player:getMainLvl() / 5) - 3)
     end
 	
     player:resetRecast(tpz.recast.ABILITY, 228)

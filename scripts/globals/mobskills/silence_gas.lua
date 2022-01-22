@@ -23,6 +23,11 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = MobBreathMove(mob, target, 0.25, 2, tpz.magic.ele.WIND, 800)
 
     local dmg = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.BREATH, tpz.damageType.WIND, MOBPARAM_IGNORE_SHADOWS)
+	
+	if (mob:getMainLvl() >= 130) then
+		mob:resetEnmity(target)
+	else
+	end
 
     return dmg
 end

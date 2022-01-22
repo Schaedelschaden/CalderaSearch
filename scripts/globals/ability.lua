@@ -715,13 +715,13 @@ function corsairSetup(caster, ability, action, effect, job)
     caster:addStatusEffectEx(tpz.effect.DOUBLE_UP_CHANCE, tpz.effect.DOUBLE_UP_CHANCE, roll, 0, 45, ability:getID(), effect, job, true)
     caster:setLocalVar("corsairRollTotal", roll)
     action:speceffect(caster:getID(), roll)
-	
-	recast = recast - merits
 
 	-- Halves phantom roll recast timer for all rolls while under the effects of an 11 (upon first hitting 11, phantom roll cooldown is reset in double-up.lua)
     if (checkForElevenRoll(caster)) then
         recast = recast / 2
     end
+	
+	recast = recast - merits
 	
 	ability:setRecast(utils.clamp(recast, 0, recast))
     checkForJobBonus(caster, job)

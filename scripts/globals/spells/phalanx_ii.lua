@@ -13,7 +13,7 @@ end
 function onSpellCast(caster, target, spell)
     local enhskill = caster:getSkillLevel(tpz.skill.ENHANCING_MAGIC)
     local final = 0
-    local duration = calculateDuration(240, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(240, caster, target, spell)
     duration = calculateDurationForLvl(duration, 75, target:getMainLvl())
 
     if enhskill <= 300 then

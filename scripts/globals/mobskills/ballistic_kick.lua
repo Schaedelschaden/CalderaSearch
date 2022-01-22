@@ -20,11 +20,15 @@ end
 function onMobWeaponSkill(target, mob, skill)
 	local typeEffect1 = tpz.effect.ENCUMBERANCE
 	
-	MobStatusEffectMove(mob, target, typeEffect1, 1, 0, 5)	
+	MobStatusEffectMove(mob, target, typeEffect1, 1, 0, 5)
 	
+	local numhits = 1
+    local accmod = 2
     local dmgmod = 1
-    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*2.6, tpz.magic.ele.FIRE, dmgmod, TP_NO_EFFECT)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.FIRE, MOBPARAM_IGNORE_SHADOWS)
+	
+	local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT, 1, 2, 3)
+    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, MOBPARAM_IGNORE_SHADOWS)
+	
 	mob:resetEnmity(target)	
 	
     return dmg

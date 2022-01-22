@@ -926,7 +926,8 @@ function onTrigger(player, npc)
                                 elseif model == 961 then
                                     tpz.limbus.handleLootRolls(battlefield, loot[bfid][i], nil, npc)
                                 elseif model == 962 then
-                                    tpz.limbus.extendTimeLimit(battlefield, 15, tpz.zone.APOLLYON)
+									player:PrintToPlayer(string.format("Time extensions have been disabled."),tpz.msg.channel.SYSTEM_3)
+                                    -- tpz.limbus.extendTimeLimit(battlefield, 15, tpz.zone.APOLLYON)
                                 end
                             end
                         end
@@ -953,7 +954,8 @@ function onTrigger(player, npc)
                                         elseif crateID == itemPH then
                                             tpz.limbus.handleLootRolls(battlefield, loot[bfid][i], nil, npc)
                                         elseif crateID == timePH then
-                                            tpz.limbus.extendTimeLimit(battlefield, 15, tpz.zone.APOLLYON)
+											player:PrintToPlayer(string.format("Time extensions have been disabled."),tpz.msg.channel.SYSTEM_3)
+                                            -- tpz.limbus.extendTimeLimit(battlefield, 15, tpz.zone.APOLLYON)
                                         else
                                             if mimicSpawned == 0 or mimicSpawned == 2 or mimicSpawned == 4 or mimicSpawned == 6 then
                                                 npc:setStatus(tpz.status.DISAPPEAR)
@@ -991,7 +993,8 @@ function onTrigger(player, npc)
                                     elseif model == 961 then
                                         tpz.limbus.handleLootRolls(battlefield, loot[bfid][i], nil, npc)
                                     elseif model == 962 then
-                                        tpz.limbus.extendTimeLimit(battlefield, 15, tpz.zone.APOLLYON)
+										player:PrintToPlayer(string.format("Time extensions have been disabled."),tpz.msg.channel.SYSTEM_3)
+                                        -- tpz.limbus.extendTimeLimit(battlefield, 15, tpz.zone.APOLLYON)
                                     end
                                 end
                             end
@@ -1013,7 +1016,8 @@ function onTrigger(player, npc)
                                 elseif model == 961 then
                                     tpz.limbus.handleLootRolls(battlefield, loot[bfid][i], nil, npc)
                                 elseif model == 962 then
-                                    tpz.limbus.extendTimeLimit(battlefield, 15, tpz.zone.APOLLYON)
+									player:PrintToPlayer(string.format("Time extensions have been disabled."),tpz.msg.channel.SYSTEM_3)
+                                    -- tpz.limbus.extendTimeLimit(battlefield, 15, tpz.zone.APOLLYON)
                                 end
                             end
                         end
@@ -1034,7 +1038,8 @@ function onTrigger(player, npc)
                                 elseif model == 961 then
                                     tpz.limbus.handleLootRolls(battlefield, loot[bfid][i], nil, npc)
                                 elseif model == 962 then
-                                    tpz.limbus.extendTimeLimit(battlefield, 15, tpz.zone.APOLLYON)
+									player:PrintToPlayer(string.format("Time extensions have been disabled."),tpz.msg.channel.SYSTEM_3)
+                                    -- tpz.limbus.extendTimeLimit(battlefield, 15, tpz.zone.APOLLYON)
                                 end
                             end
                         end
@@ -1050,7 +1055,8 @@ function onTrigger(player, npc)
             end,
             [1294] = function() -- CS Apollyon Crate Handling
                 if crateID ~= ID.npc.APOLLYON_CS_CRATE then
-                    tpz.limbus.extendTimeLimit(battlefield, 15, tpz.zone.APOLLYON)
+					player:PrintToPlayer(string.format("Time extensions have been disabled."),tpz.msg.channel.SYSTEM_3)
+                    -- tpz.limbus.extendTimeLimit(battlefield, 15, tpz.zone.APOLLYON)
                 else
                     tpz.limbus.handleLootRolls(battlefield, loot[bfid][1], nil, npc)
                     battlefield:setLocalVar("cutsceneTimer", 10)

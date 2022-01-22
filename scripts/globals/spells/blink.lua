@@ -11,7 +11,7 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local duration = calculateDuration(300, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(300, caster, target, spell)
 	local power = BLINK_SHADOWS
 	
 	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then

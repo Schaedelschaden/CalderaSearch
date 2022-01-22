@@ -24,7 +24,7 @@ function onSpellCast(caster, target, spell)
     basePotency = basePotency + utils.clamp(math.floor(dMND / 5), 0, 10)
     local power = calculatePotency(basePotency, spell:getSkillType(), caster, target)
 
-    local duration = calculateDuration(120, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(300, caster, target, spell)
 
     local params = {}
     params.diff = dMND

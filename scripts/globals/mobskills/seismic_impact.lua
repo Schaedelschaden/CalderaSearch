@@ -21,12 +21,12 @@ function onMobWeaponSkill(target, mob, skill)
 	MobStatusEffectMove(mob, target, typeEffect1, 300, 0, 60)
 	MobStatusEffectMove(mob, target, typeEffect2, 1, 0, 5)
 
-
     local numhits = 1
     local accmod = 1
-    local dmgmod = 5
+    local dmgmod = 4.5
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, MOBPARAM_IGNORE_SHADOWS)
+	
 	mob:resetEnmity(target)
 	
     return dmg

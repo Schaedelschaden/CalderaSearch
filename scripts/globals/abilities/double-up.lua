@@ -38,7 +38,7 @@ function onUseAbility(caster, target, ability, action)
             else
                 roll = roll + 1
             end
-            caster:delStatusEffect(tpz.effect.SNAKE_EYE)
+            caster:delStatusEffect(tpz.effect.SNAKE_EYE)			
         else
             roll = roll + math.random(1,6)
             if (roll > 12) then
@@ -47,9 +47,14 @@ function onUseAbility(caster, target, ability, action)
             end
         end
 		
+		if (checkForElevenRoll(caster) and roll > 11) then
+			roll = 11
+		end
+		
         if (roll == 11) then
-            caster:resetRecast(tpz.recast.ABILITY, 193)
+            caster:resetRecast(193)
         end
+		
         caster:setLocalVar("corsairRollTotal", roll)
         action:speceffect(caster:getID(), roll - prev_roll:getSubPower())
         checkForJobBonus(caster, job)

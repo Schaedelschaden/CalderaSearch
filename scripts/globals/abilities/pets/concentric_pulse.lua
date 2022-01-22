@@ -15,8 +15,12 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
-    local dmg = pet:getHP()
+    local dmg = pet:getHP() * 5
     local master = pet:getMaster()
+	
+	if (master and master:getMod(tpz.mod.AUGMENT_CONCENTRIC_PULSE) > 0) then
+		dmg = pet:getMaxHP() * 5
+	end
 	
     if master then
         target:updateEnmityFromDamage(master, dmg)

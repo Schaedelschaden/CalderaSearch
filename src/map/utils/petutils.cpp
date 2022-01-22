@@ -1637,8 +1637,17 @@ namespace petutils
                 PPet->setModifier(Mod::MATT, 20);
             }
 			
-			// Sets avatar's damage type to blunt
+			// Sets avatar's damage type (formerly all blunt)
 			((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDmgType(DAMAGE_IMPACT);
+			
+			if (PetID == PETID_CARBUNCLE || PetID == PETID_GARUDA || PetID == PETID_CAIT_SITH || PetID == PETID_SIREN)
+			{
+				((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDmgType(DAMAGE_SLASHING);
+			}
+			else if (PetID == PETID_FENRIR || PetID == PETID_LEVIATHAN || PetID == PETID_DIABOLOS)
+			{
+				((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDmgType(DAMAGE_PIERCING);
+			}
 			
 			// Sets the summon's delay based off the value in mob_pools.sql cmbDelay column
 			uint16 delay = g_PPetList.at(PetID)->cmbDelay;

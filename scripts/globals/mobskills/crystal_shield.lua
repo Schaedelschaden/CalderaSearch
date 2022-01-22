@@ -15,9 +15,18 @@ function onMobWeaponSkill(target, mob, skill)
     local power = 50
     local duration = 300
 
-    local typeEffect = tpz.effect.PROTECT
+    local typeEffect1 = tpz.effect.PROTECT
+	local typeEffect2 = tpz.effect.MAGIC_ATK_BOOST
+	
+	
+	if (mob:getMainLvl() >= 136) then
+		skill:setMsg(MobBuffMove(mob, typeEffect1, 100, 0, duration))
+		MobBuffMove(mob, typeEffect2, 200, 0, 300)
+	else
+		skill:setMsg(MobBuffMove(mob, typeEffect1, power, 0, duration))
+	end
 
-    skill:setMsg(MobBuffMove(mob, typeEffect, power, 0, duration))
+    -- skill:setMsg(MobBuffMove(mob, typeEffect, power, 0, duration))
 
-    return typeEffect
+    return typeEffect1
 end

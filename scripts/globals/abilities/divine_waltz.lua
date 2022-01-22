@@ -40,6 +40,15 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
+	if (player:getName() == target:getName()) then
+		local totalTargets = ability:getTotalTargets()
+		player:setLocalVar("CONTRADANCE_COUNTER", totalTargets)
+		-- printf("divine_waltz.lua onUseAbility TOTAL TARGETS: [%i]  PLAYER: [%s]  TARGET: [%s]", totalTargets, player:getName(), target:getName())
+	else
+		player:setLocalVar("CONTRADANCE_COUNTER", player:getLocalVar("CONTRADANCE_COUNTER") - 1)
+		-- printf("divine_waltz.lua onUseAbility COUNTER: [%i]", player:getLocalVar("CONTRADANCE_COUNTER"))
+	end
+
     -- Only remove TP if the player doesn't have Trance, and only deduct once instead of for each target
     if (player:getID() == target:getID() and player:hasStatusEffect(tpz.effect.TRANCE) == false) then
         player:delTP(400)
@@ -80,6 +89,10 @@ function onUseAbility(player, target, ability)
 		target:restoreHP(cure)
 		target:wakeUp()
 		player:updateEnmityFromCure(target, cure)
+	end
+	
+	if (player:getLocalVar("CONTRADANCE_COUNTER") <= 1) then
+		player:delStatusEffectSilent(tpz.effect.CONTRADANCE)
 	end
 
     return cure

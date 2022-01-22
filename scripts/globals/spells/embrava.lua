@@ -21,7 +21,7 @@ function onSpellCast(caster, target, spell)
 
     -- Skill caps at 500
     local skill = math.min(caster:getSkillLevel(tpz.skill.ENHANCING_MAGIC), 500)
-    local duration = calculateDuration(90, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(90, caster, target, spell)
     duration = calculateDurationForLvl(duration, 5, target:getMainLvl())
 
     target:addStatusEffect(tpz.effect.EMBRAVA, skill, 0, duration)

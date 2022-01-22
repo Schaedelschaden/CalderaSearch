@@ -12,7 +12,7 @@ end
 
 function onSpellCast(caster, target, spell)
 	local power = 15
-    local duration = calculateDuration(180, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(180, caster, target, spell)
     duration = calculateDurationForLvl(duration, 48, target:getMainLvl())
 
 	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then

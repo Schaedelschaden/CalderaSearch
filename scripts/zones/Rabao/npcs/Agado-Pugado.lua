@@ -42,14 +42,18 @@ function onTrigger(player, npc)
         player:startEvent(67, 0, 331, 3)
     elseif (TrialByWind == QUEST_ACCEPTED and WhisperOfGales) then
         numitem = 0
+		player:addItem(6267)
+		player:delKeyItem(tpz.ki.WHISPER_OF_GALES)
+		player:PrintToPlayer(string.format("Agado-Pugado : WOWZEEWOO A WHISPER! HERE TAKE THIS!"),tpz.msg.channel.NS_SAY)
+		player:setCharVar("TrialByWind_date", os.date("%j")) -- %M for next minute, %j for next day
 
-        if (player:hasItem(17627)) then numitem = numitem + 1; end  -- Garuda's Dagger
-        if (player:hasItem(13243)) then numitem = numitem + 2; end  -- Wind Belt
-        if (player:hasItem(13562)) then numitem = numitem + 4; end  -- Wind Ring
-        if (player:hasItem(1202)) then numitem = numitem + 8; end   -- Bubbly Water
-        if (player:hasSpell(301)) then numitem = numitem + 32; end  -- Ability to summon Garuda
+        -- if (player:hasItem(17627)) then numitem = numitem + 1; end  -- Garuda's Dagger
+        -- if (player:hasItem(13243)) then numitem = numitem + 2; end  -- Wind Belt
+        -- if (player:hasItem(13562)) then numitem = numitem + 4; end  -- Wind Ring
+        -- if (player:hasItem(1202)) then numitem = numitem + 8; end   -- Bubbly Water
+        -- if (player:hasSpell(301)) then numitem = numitem + 32; end  -- Ability to summon Garuda
 
-        player:startEvent(69, 0, 331, 3, 0, numitem)
+        -- player:startEvent(69, 0, 331, 3, 0, numitem)
     else
         player:startEvent(70) -- Standard dialog
     end

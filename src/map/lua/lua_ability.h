@@ -56,6 +56,7 @@ public:
     int32 setCE(lua_State*);
     int32 setVE(lua_State*);
     int32 setRange(lua_State*);
+	int32 getTotalTargets(lua_State*);
 };
 
 #endif

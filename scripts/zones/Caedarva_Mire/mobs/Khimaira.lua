@@ -9,10 +9,10 @@ require("scripts/globals/titles")
 -----------------------------------
 
 function onMobSpawn(mob)
-	mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
+	mob:setLocalVar("[rage]timer", 1800) -- 30 minutes
 	mob:addMod(tpz.mod.PARALYZERES, 30) -- Resistance to Silence
     mob:addMod(tpz.mod.STUNRES, 100) -- Resistance to Stun
-    mob:addMod(tpz.mod.BINDRES, 30) -- Resistance to Bind
+    mob:addMod(tpz.mod.BINDRES, 100) -- Resistance to Bind
     mob:addMod(tpz.mod.SLOWRES, 30) -- Resistance to Slow
     mob:addMod(tpz.mod.SILENCERES, 30) -- Resistance to Silence
     mob:addMod(tpz.mod.SLEEPRES, 30) -- Resistance to Sleep
@@ -34,5 +34,5 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    mob:setRespawnTime(math.random(48, 72) * 3600) -- 48 to 72 hours, in 1-hour increments
+    -- mob:setRespawnTime(math.random(48, 72) * 3600) -- 48 to 72 hours, in 1-hour increments
 end

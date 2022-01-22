@@ -12,9 +12,15 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local dmgmod = 1
+    -- local dmgmod = 1
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg() * 2, tpz.magic.ele.DARK, dmgmod, TP_MAB_BONUS, 1)
     local shadow = MOBPARAM_1_SHADOW
+	
+	if (mob:getMainLvl() >= 120) then
+		dmgmod = 4
+	else
+		dmgmod = 1
+	end
 
     -- Asanbosam (pool id 256) uses a modified blood drain that ignores shadows
     if mob:getPool() == 256 then

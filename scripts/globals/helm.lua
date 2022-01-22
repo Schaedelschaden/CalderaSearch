@@ -1012,7 +1012,7 @@ local helmInfo =
                     { 430, 1625}, -- Moblin Helm
                     { 480, 1632}, -- Moblin Mail
                     { 290, 1638}, -- Moblin Mask
-                    { 100,  739}, -- Orichalcum Ore
+                    { 700,  739}, -- Orichalcum Ore
                     {1200, 1108}, -- Pinch of Sulfur
                     { 480, 2160}, -- Troll Pauldron
                     { 330, 2161}, -- Troll Vambrace
@@ -1272,7 +1272,7 @@ local helmInfo =
                     { 250,   646}, -- Adaman Ore
                     { 600,   645}, -- Darksteel Ore
                     {1520,  2126}, -- Orpiment
-                    { 100,   739}, -- Orichalcum Ore
+                    { 700,   739}, -- Orichalcum Ore
                     { 220,   769}, -- Colored Rock
                 },
                 points =

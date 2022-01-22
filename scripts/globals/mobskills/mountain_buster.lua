@@ -20,7 +20,7 @@ function onMobWeaponSkill(target, mob, skill)
 	
 	-- Adjust Trial Earth Titan's damage
 	if (mob:getID() == 17633281) then
-		dmgmod = 4.6
+		dmgmod = 3.5
 	end
 	
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 1.35, 1.6)

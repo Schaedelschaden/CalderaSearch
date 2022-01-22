@@ -1,8 +1,9 @@
 -----------------------------------
--- Area: Behemoth's Dominion
---  HNM: King Behemoth
+-- Area: Foret de Hennetiel
+-- Mob: Tchakka
+-- ID: 17850783
+-- !pos -121 0 -525 262
 -----------------------------------
-local ID = require("scripts/zones/Behemoths_Dominion/IDs")
 mixins = {require("scripts/mixins/rage")}
 require("scripts/globals/settings")
 require("scripts/globals/status")
@@ -15,10 +16,9 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
-
-    mob:setLocalVar("[rage]timer", 1800) -- 30 minutes
+    mob:setLocalVar("[rage]timer", 1200) -- 20 minutes
 	mob:addMod(tpz.mod.PARALYZERES, 30) -- Resistance to Silence
-    mob:addMod(tpz.mod.STUNRES, 100) -- Resistance to Stun
+    mob:addMod(tpz.mod.STUNRES, 20) -- Resistance to Stun
     mob:addMod(tpz.mod.BINDRES, 30) -- Resistance to Bind
     mob:addMod(tpz.mod.SLOWRES, 30) -- Resistance to Slow
     mob:addMod(tpz.mod.SILENCERES, 30) -- Resistance to Silence
@@ -31,13 +31,12 @@ function onMobSpawn(mob)
 	mob:addMod(tpz.mod.DEF, 700)
 	mob:addMod(tpz.mod.EVA, 80)
 	mob:addMod(tpz.mod.MACC, 100)
-	mob:addMod(tpz.mod.MATT, 100)
+	mob:addMod(tpz.mod.MATT, 80)
 	mob:addMod(tpz.mod.REGEN, 500)
 	mob:addMod(tpz.mod.REFRESH, 200)
 	-- mob:addMod(tpz.mod.REGAIN, 100)
 	mob:addMod(tpz.mod.WATER_ABSORB, 100)
-	mob:addMod(tpz.mod.DOUBLE_ATTACK, 30)	
-	
+	mob:addMod(tpz.mod.DOUBLE_ATTACK, 30)
 end
 
 function onMobFight(mob)

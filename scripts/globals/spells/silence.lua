@@ -13,7 +13,7 @@ end
 function onSpellCast(caster, target, spell)
     local dMND = (caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND))
 
-    local duration = calculateDuration(120, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(120, caster, target, spell)
 
     --Resist
     local params = {}

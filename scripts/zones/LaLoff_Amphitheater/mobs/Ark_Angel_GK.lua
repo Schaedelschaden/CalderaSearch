@@ -8,7 +8,18 @@ require("scripts/globals/status")
 
 -- TODO: Allegedly has a 12 hp/sec regen.  Determine if true, and add to onMobInitialize if so.
 
+local divineMightID = {17514527, 17514535, 17514543}
+local aaID = {{17514521, 17514522, 17514525, 17514526},
+			  {17514529, 17514530, 17514533, 17514534},
+			  {17514537, 17514538, 17514541, 17514542}}
+
 function onMobSpawn(mob)
+	for i = 1, #divineMightID do
+		if (mob:getID() == divineMightID[i]) then
+			mob:setDropID(0)
+		end
+	end
+
     tpz.mix.jobSpecial.config(mob, {
         specials =
         {
@@ -17,13 +28,13 @@ function onMobSpawn(mob)
         },
     })
 	mob:setMod(tpz.mod.PARALYZERES, 30) -- Resistance to Silence
-    mob:setMod(tpz.mod.STUNRES, 1000) -- Resistance to Stun
+    mob:setMod(tpz.mod.STUNRES, 40) -- Resistance to Stun
     mob:setMod(tpz.mod.BINDRES, 30) -- Resistance to Bind
     mob:setMod(tpz.mod.SLOWRES, 100) -- Resistance to Slow
     mob:setMod(tpz.mod.SILENCERES, 30) -- Resistance to Silence
-    mob:setMod(tpz.mod.SLEEPRES, 30) -- Resistance to Sleep
-    mob:setMod(tpz.mod.LULLABYRES, 30) -- Resistance to Lullaby
-    mob:setMod(tpz.mod.PETRIFYRES, 30) -- Resistance to Pertrify
+    mob:setMod(tpz.mod.SLEEPRES, 100) -- Resistance to Sleep
+    mob:setMod(tpz.mod.LULLABYRES, 100) -- Resistance to Lullaby
+    mob:setMod(tpz.mod.PETRIFYRES, 50) -- Resistance to Pertrify
     mob:setMod(tpz.mod.POISONRES, 30) -- Resistance to Poison
 	-- mob:setMod(tpz.mod.ATT, 1000) -- Attack Stat (Compare to DEF)
 	mob:setMod(tpz.mod.MATT, 100) -- Magic Attack (Compare to MDEF)
@@ -53,8 +64,29 @@ function onMobEngaged(mob, target)
 end
 
 function onMobFight(mob, target)
-    -- TODO: AA GK actively seeks to skillchain to Light off of his own WSs under MS, or other AA's WSs.
+	if (mob:getLocalVar("DROPLIST_SET") == 0) then
+		local battlefield = target:getBattlefield()
+		local battlefieldID = battlefield:getID()
+		local battlefieldArea = battlefield:getArea()
+		local droplistCounter = 0
+		
+		-- printf("Ark_Angel_GK.lua onMobFight BATTLEFIELD ID: [%i]", battlefieldID)
+		
+		for i = 1, #aaID[battlefieldArea] do
+			if (battlefieldID == 293 and GetMobByID(aaID[battlefieldArea][i]):isDead()) then
+				droplistCounter = droplistCounter + 1
+				-- printf("Ark_Angel_GK.lua onMobFight DROP LIST COUNTER: [%i]", droplistCounter)
+			end
+		end
+		
+		if (droplistCounter >= 4) then
+			-- printf("Ark_Angel_GK.lua onMobFight DROP LIST COUNTER >= 4")
+			mob:setDropID(3290)
+			mob:setLocalVar("DROPLIST_SET", 1)
+		end
+	end
 end
 
 function onMobDeath(mob, player, isKiller)
+	
 end

@@ -17,10 +17,19 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local power = 25
-    local duration = 180
+    local duration = 300
 
-    local typeEffect = tpz.effect.WARCRY
-    skill:setMsg(MobBuffMove(mob, typeEffect, power, 0, duration))
+    local typeEffect1 = tpz.effect.WARCRY
+	local typeEffect2 = tpz.effect.MAGIC_ATK_BOOST
+	
+	if (mob:getMainLvl() >= 136) then
+		skill:setMsg(MobBuffMove(mob, typeEffect1, 50, 0, duration))
+		MobBuffMove(mob, typeEffect2, 200, 0, 300)
+	else
+		skill:setMsg(MobBuffMove(mob, typeEffect1, power, 0, duration))
+	end
+	
+    -- skill:setMsg(MobBuffMove(mob, typeEffect, power, 0, duration))
 
-    return typeEffect
+    return typeEffect1
 end

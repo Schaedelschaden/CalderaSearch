@@ -15,7 +15,7 @@ function onSpellCast(caster, target, spell)
     local power = 75 -- power/256 handled below before passing final DMGMAGIC value
     local tier = 5
     local spelllevel = 76
-    local duration = calculateDuration(1800, spell:getSkillType(), spell:getSpellGroup(), caster, target, false)
+    local duration = calculateDuration(1800, caster, target, spell, false)
     duration = calculateDurationForLvl(duration, spelllevel, target:getMainLvl())
 
     local buff = 0

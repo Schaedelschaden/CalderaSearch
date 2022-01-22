@@ -12,7 +12,16 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local typeEffect = tpz.effect.DEFENSE_BOOST
-    skill:setMsg(MobBuffMove(mob, typeEffect, 15, 0, 300))
-    return typeEffect
+    local typeEffect1 = tpz.effect.DEFENSE_BOOST
+	local typeEffect2 = tpz.effect.SHELL
+	
+	if (mob:getMainLvl() >= 130) then
+		skill:setMsg(MobBuffMove(mob, typeEffect1, 50, 0, 300))
+		MobBuffMove(mob, typeEffect2, 90, 0, 300)
+	else
+		skill:setMsg(MobBuffMove(mob, typeEffect1, 15, 0, 300))
+	end
+	
+    -- skill:setMsg(MobBuffMove(mob, typeEffect, 15, 0, 300))
+    return typeEffect1
 end

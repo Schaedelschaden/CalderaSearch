@@ -70,6 +70,7 @@ function onTrigger(player,npc)
 		1815, 3600,		-- Sanctified Lbr
 		2532, 6141,		-- Teak Log
 		4016, 237,		-- Tulfaire Feather
+		3926, 9240,     -- Urunday Log
 		1415, 12255,	-- Urushi
 		1763, 3000,		-- Viridian Urushi
 		693, 366,		-- Walnut Log

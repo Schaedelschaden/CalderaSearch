@@ -83,7 +83,7 @@ end
 
 function onAdditionalEffect(mob, target, damage)
 	params = {}
-	params.power = 150
+	params.power = 75
 	params.chance = 100
 
     return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENSTONE)

@@ -15,6 +15,7 @@ cmdprops =
 function onTrigger(player)
 	local jobMagic = {tpz.job.WHM, tpz.job.BLM, tpz.job.RDM, tpz.job.PLD, tpz.job.DRK, tpz.job.NIN, tpz.job.BLU, tpz.job.SCH, tpz.job.GEO}
 	local jobMagicSkill = {tpz.skill.DIVINE_MAGIC, tpz.skill.ELEMENTAL_MAGIC, tpz.skill.ENFEEBLING_MAGIC, tpz.skill.DIVINE_MAGIC, tpz.skill.ELEMENTAL_MAGIC, tpz.skill.NINJUTSU, tpz.skill.BLUE_MAGIC, tpz.skill.ELEMENTAL_MAGIC, tpz.skill.ELEMENTAL_MAGIC}
+	local jobMagicStat = {tpz.mod.MND, tpz.mod.INT, tpz.mod.INT, tpz.mod.MND, tpz.mod.INT, tpz.mod.NONE, tpz.mod.NONE, tpz.mod.INT, tpz.mod.INT}
 	local mainHandWeapons = {tpz.skill.HAND_TO_HAND, tpz.skill.DAGGER, tpz.skill.SWORD, tpz.skill.AXE, tpz.skill.CLUB, tpz.skill.KATANA, tpz.skill.GREAT_SWORD, tpz.skill.GREAT_AXE, tpz.skill.SCYTHE, tpz.skill.POLEARM, tpz.skill.GREAT_KATANA, tpz.skill.STAFF}
 	local weapons = {tpz.skill.DAGGER, tpz.skill.SWORD, tpz.skill.AXE, tpz.skill.CLUB, tpz.skill.KATANA, tpz.skill.GREAT_SWORD, tpz.skill.GREAT_AXE, tpz.skill.SCYTHE, tpz.skill.POLEARM, tpz.skill.GREAT_KATANA, tpz.skill.STAFF}
 	local rangedWeapons = {tpz.skill.ARCHERY, tpz.skill.MARKSMANSHIP, tpz.skill.THROWING}
@@ -46,7 +47,7 @@ function onTrigger(player)
 	local INT = player:getStat(tpz.mod.INT)
 	local MND = player:getStat(tpz.mod.MND)
 	local CHR = player:getStat(tpz.mod.CHR)
-	local Enmity = player:getMod(tpz.mod.ENMITY) + player:getMerit(tpz.merit.ENMITY_INCREASE) + player:getMerit(tpz.merit.ENMITY_DECREASE)
+	local Enmity = utils.clamp(player:getMod(tpz.mod.ENMITY) + player:getMerit(tpz.merit.ENMITY_INCREASE) + player:getMerit(tpz.merit.ENMITY_DECREASE), -50, 200)
 	local Regen = player:getMod(tpz.mod.REGEN)
 	local Refresh = player:getMod(tpz.mod.REFRESH)
 	local Regain = player:getMod(tpz.mod.REGAIN)
@@ -117,7 +118,7 @@ function onTrigger(player)
 	local RACC = math.floor(((player:getStat(tpz.mod.AGI) * 3) / 4) + player:getMod(tpz.mod.RACC) + rangedWeaponACC)
 	RACC = RACC + (math.min(RACC * (player:getMod(tpz.mod.FOOD_RACCP) / 100), player:getMod(tpz.mod.FOOD_RACC_CAP)))
 	
-	local MACC = player:getMod(tpz.mod.MACC) + player:getILvlMacc(tpz.slot.MAIN) + (player:getILvlMacc(tpz.slot.SUB) / 2)
+	local MACC = player:getMod(tpz.mod.MACC) + player:getILvlMacc(tpz.slot.MAIN) + (player:getILvlMacc(tpz.slot.SUB) / 2) + player:getMerit(tpz.merit.ELEMENTAL_MAGIC_ACCURACY)
 	for i = 1, 9 do
 		if (player:getMainJob() == jobMagic[i]) then
 			MACC = MACC + player:getSkillLevel(jobMagicSkill[i])
@@ -133,6 +134,19 @@ function onTrigger(player)
 			MACC = MACC + (player:getSkillLevel(tpz.skill.SINGING) + player:getSkillLevel(tpz.skill.WIND)) / 2
 		end
 	end
+	
+	if (player:getCursorTarget() ~= nil and player:getCursorTarget():isMob()) then
+		local cursorTarget = player:getCursorTarget()
+		
+		for i = 1, 9 do
+			if (player:getMainJob() == jobMagic[i] and (player:getStat(jobMagicStat[i]) - cursorTarget:getStat(jobMagicStat[i]) <= 10)) then
+				MACC = MACC + (player:getStat(jobMagicStat[i]) - cursorTarget:getStat(jobMagicStat[i]))
+			elseif (player:getMainJob() == jobMagic[i] and (player:getStat(jobMagicStat[i]) - cursorTarget:getStat(jobMagicStat[i]) > 10)) then
+				MACC = MACC + 10 + (((player:getStat(jobMagicStat[i]) - cursorTarget:getStat(jobMagicStat[i])) - 10) / 2)
+			end
+		end
+	end
+	
 	MACC = MACC + (math.min(MACC * (player:getMod(tpz.mod.FOOD_MACCP) / 100), player:getMod(tpz.mod.FOOD_MACC_CAP)))
 	
 	local EVA = player:getSkillLevel(tpz.skill.EVASION)
@@ -180,7 +194,7 @@ function onTrigger(player)
 	local TripleAttack = player:getMod(tpz.mod.TRIPLE_ATTACK) + player:getMerit(tpz.merit.TRIPLE_ATTACK_RATE)
 	local TATripleDMG = player:getMod(tpz.mod.TA_TRIPLE_DAMAGE)
 	local QuadAttack = player:getMod(tpz.mod.QUAD_ATTACK)
-	local KickAttack = player:getMod(tpz.mod.KICK_ATTACK_RATE)
+	local KickAttack = player:getMod(tpz.mod.KICK_ATTACK_RATE) + player:getMerit(tpz.merit.KICK_ATTACK_RATE)
 	local ExtraKickAttack = player:getMod(tpz.mod.EXTRA_KICK_ATTACK)
 	local DualWield = player:getMod(tpz.mod.DUAL_WIELD)
 	local SubtleBlow = player:getMod(tpz.mod.SUBTLE_BLOW)
@@ -193,7 +207,7 @@ function onTrigger(player)
 	local SCDMG = player:getMod(tpz.mod.SKILLCHAINDMG)
 	local Block = player:getMod(tpz.mod.SHIELDBLOCKRATE) + shieldBaseBlockRate
 	local Guard = player:getMod(tpz.mod.GUARD)
-	local Counter = player:getMod(tpz.mod.COUNTER)
+	local Counter = player:getMod(tpz.mod.COUNTER) + player:getMerit(tpz.merit.COUNTER_RATE)
 	local CounterDMG = player:getMod(tpz.mod.COUNTER_DMG)
 	local CounterCHR = player:getMod(tpz.mod.COUNTER_CRIT_HIT_RATE)
 	local ConserveMP = player:getMod(tpz.mod.CONSERVE_MP)
@@ -215,9 +229,10 @@ function onTrigger(player)
 	local SaveTP = player:getMod(tpz.mod.SAVETP)
 	local MoveSPD = player:getMod(tpz.mod.MOVE)
 	local TreasureHunter = player:getMod(tpz.mod.TREASURE_HUNTER)
-	local CPot = player:getMod(tpz.mod.CURE_POTENCY)
-	local CPotII = player:getMod(tpz.mod.CURE_POTENCY_II)
-	local CRPot = player:getMod(tpz.mod.CURE_POTENCY_RCVD)
+	local Gilfinder = player:getMod(tpz.mod.GILFINDER)
+	local CPot = utils.clamp(player:getMod(tpz.mod.CURE_POTENCY), 0, 50)
+	local CPotII = utils.clamp(player:getMod(tpz.mod.CURE_POTENCY_II), 0, 30)
+	local CRPot = utils.clamp(player:getMod(tpz.mod.CURE_POTENCY_RCVD), 0, 30)
 	local SID = player:getMod(tpz.mod.SPELLINTERRUPT) + player:getMerit(tpz.merit.SPELL_INTERUPTION_RATE)
 	local HasteMag = utils.clamp(player:getMod(tpz.mod.HASTE_MAGIC) / 100, 0, 44)
 	local HasteAbil = utils.clamp(player:getMod(tpz.mod.HASTE_ABILITY) / 100, 0, 25)
@@ -304,9 +319,10 @@ function onTrigger(player)
 	
 	player:PrintToPlayer(string.format("PLAYER STATISTICS ---------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  LVL: [%i]  STR: [%i]  DEX: [%i]  VIT: [%i]  AGI: [%i]  INT: [%i]  MND: [%i]  CHR: [%i]  Regen: [%i]  Refresh: [%i]  Regain: [%i]", LVL, STR, DEX, VIT, AGI, INT, MND, CHR, Regen, Refresh, Regain),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  Enmity: [%i%%]  Haste - Gear: [%2.2f%%]  Magic: [%2.2f%%]  Ability: [%2.2f%%]  Blitzer's Roll: [%i%%]  Movement Speed: [%i%%]  Treasure Hunter: [%i]", Enmity, HasteGear, HasteMag, HasteAbil, BlitzerRoll, MoveSPD, TreasureHunter),tpz.msg.channel.SYSTEM_3)
+	player:PrintToPlayer(string.format("  Enmity: [%i%%]  Haste - Gear: [%2.2f%%]  Magic: [%2.2f%%]  Ability: [%2.2f%%]  Blitzer's Roll: [%i%%]  Movement Speed: [%i%%]", Enmity, HasteGear, HasteMag, HasteAbil, BlitzerRoll, MoveSPD),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  Paralyze RES: [%i]  Bind RES: [%i]  Silence RES: [%i]  Gravity RES: [%i]  Petrify RES: [%i]  Slow RES: [%i]  Stun RES: [%i]  Poison RES: [%i]", ParalyzeRES, BindRES, SilenceRES, GravityRES, PetrifyRES, SlowRES, StunRES, PoisonRES),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  Virus RES: [%i]  Amnesia RES: [%i]  Sleep RES: [%i]  Blind RES: [%i]  Curse RES: [%i]  Charm RES: [%i]  Lullaby RES: [%i]  Death RES: [%i]", VirusRES, AmnesiaRES, SleepRES, BlindRES, CurseRES, CharmRES, LullabyRES, DeathRES),tpz.msg.channel.SYSTEM_3)
+	player:PrintToPlayer(string.format("  Treasure Hunter: [%i]  Gilfinder: [%i%%]", TreasureHunter, Gilfinder),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  EXP Bonus: [%i%%]  Dedication: [%i EXP Remaining]", ExpRate, DedicationCap),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("COMBAT STATISTICS ---------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  ATK: [%i]  R.ATK: [%i]  Crit Hit Rate: [%i%%]  Crit Hit DMG: [%i%%]  MAB: [%i]  M.DMG: [%i]  M.Burst DMG: [%i]  M.Crit Rate: [%i]  M.Crit DMG: [%i]" , ATT, RATT, CritHitRate, CritHitDamage, MATT, MDMG, MBurst, MCritRate, MCritDMG),tpz.msg.channel.SYSTEM_3)

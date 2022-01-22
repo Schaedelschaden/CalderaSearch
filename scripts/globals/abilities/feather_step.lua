@@ -29,7 +29,7 @@ end
 function onUseAbility(player, target, ability, action)
 	-- Only remove TP if the player doesn't have Trance.
     if not player:hasStatusEffect(tpz.effect.TRANCE) then
-        player:delTP(100)
+        player:delTP(100 - player:getMod(tpz.mod.STEP_TP_CONSUMED))
     end
 
 	local StepACC = player:getMod(tpz.mod.STEP_ACCURACY)
@@ -65,7 +65,7 @@ function onUseAbility(player, target, ability, action)
 					duration = 60
 				end
 			else
-				if (target:hasStatusEffect(tpz.effect.LETHARGIC_DAZE_1)) then
+				if (target:hasStatusEffect(tpz.effect.BEWILDERED_DAZE_1)) then
 					statusEffect = target:getStatusEffect(tpz.effect.BEWILDERED_DAZE_1)
 					tier = statusEffect:getTier() + 1
 					duration = statusEffect:getDuration() + 30
@@ -82,12 +82,12 @@ function onUseAbility(player, target, ability, action)
         else -- DNC Sub
 			finishingMoves = 1
 		
-			if (target:hasStatusEffect(tpz.effect.LETHARGIC_DAZE_1)) then
+			if (target:hasStatusEffect(tpz.effect.BEWILDERED_DAZE_1)) then
 				statusEffect = target:getStatusEffect(tpz.effect.BEWILDERED_DAZE_1)
 				tier = statusEffect:getTier() + 1
 				duration = statusEffect:getDuration() + 30
 				
-				target:delStatusEffectSilent(tpz.effect.LETHARGIC_DAZE_1)
+				target:delStatusEffectSilent(tpz.effect.BEWILDERED_DAZE_1)
 			else
 				duration = 60
 			end

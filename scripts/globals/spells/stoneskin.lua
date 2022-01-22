@@ -31,7 +31,7 @@ function onSpellCast(caster, target, spell)
     -- pAbs = utils.clamp(1, STONESKIN_CAP) This just always sets it to 350, let's use the actual value, shall we?
     pAbs = utils.clamp(pAbs, 1, STONESKIN_CAP)
 
-    local duration = calculateDuration(300, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(300, caster, target, spell)
     duration = calculateDurationForLvl(duration, 28, target:getMainLvl())
 
     local final = pAbs + pEquipMods

@@ -25,7 +25,7 @@ function onSpellCast(caster, target, spell)
     local subPower = 20 + utils.clamp(math.floor(dMND / 5), 0, 20)
 
     --Duration, including resistance.
-    local duration = calculateDuration(180, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(300, caster, target, spell)
 
     local params = {}
     params.diff = dMND

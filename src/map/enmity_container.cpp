@@ -152,7 +152,7 @@ float CEnmityContainer::CalculateEnmityBonus(CBattleEntity* PEntity)
 		}
     }
 
-    float bonus = (100.f + std::clamp(enmityBonus, -75, 100)) / 100.f;
+    float bonus = (100.f + std::clamp(enmityBonus, -50, 200)) / 100.f;
 
     return bonus;
 }

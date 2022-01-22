@@ -1,6 +1,6 @@
 -----------------------------------
--- Area: Appolyon
--- NPC:  Radiant_Aureole
+-- Area: Apollyon
+-- NPC:  Swirling Vortex
 -- !pos
 -----------------------------------
 require("scripts/globals/bcnm")

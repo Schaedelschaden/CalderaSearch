@@ -16,7 +16,7 @@ function onMobWeaponSkill(target, mob, skill)
     local accmod = 2
     local dmgmod = 2
 	
-					-- Adjust Trial Water Leviathan's damage
+	-- Adjust Trial Water Leviathan's damage
 	if (mob:getID() == 17641473) then
 		dmgmod = 3
 	end

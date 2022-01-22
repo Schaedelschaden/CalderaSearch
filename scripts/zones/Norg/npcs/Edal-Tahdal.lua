@@ -29,14 +29,18 @@ function onTrigger(player, npc)
         player:startEvent(110, 0, tpz.ki.TUNING_FORK_OF_WATER, 2)
     elseif (TrialByWater == QUEST_ACCEPTED and WhisperOfTides) then
         numitem = 0
+		player:addItem(6267)
+		player:delKeyItem(tpz.ki.WHISPER_OF_TIDES)
+		player:PrintToPlayer(string.format("Edal-Tahdal : Eww...why is it......moist?"),tpz.msg.channel.NS_SAY)
+		player:setCharVar("TrialByWind_date", os.date("%j")) -- %M for next minute, %j for next day
 
-        if (player:hasItem(17439)) then numitem = numitem + 1; end  -- Leviathan's Rod
-        if (player:hasItem(13246)) then numitem = numitem + 2; end  -- Water Belt
-        if (player:hasItem(13565)) then numitem = numitem + 4; end  -- Water Ring
-        if (player:hasItem(1204)) then numitem = numitem + 8; end   -- Eye of Nept
-        if (player:hasSpell(300)) then numitem = numitem + 32; end  -- Ability to summon Leviathan
+        -- if (player:hasItem(17439)) then numitem = numitem + 1; end  -- Leviathan's Rod
+        -- if (player:hasItem(13246)) then numitem = numitem + 2; end  -- Water Belt
+        -- if (player:hasItem(13565)) then numitem = numitem + 4; end  -- Water Ring
+        -- if (player:hasItem(1204)) then numitem = numitem + 8; end   -- Eye of Nept
+        -- if (player:hasSpell(300)) then numitem = numitem + 32; end  -- Ability to summon Leviathan
 
-        player:startEvent(112, 0, tpz.ki.TUNING_FORK_OF_WATER, 2, 0, numitem)
+        -- player:startEvent(112, 0, tpz.ki.TUNING_FORK_OF_WATER, 2, 0, numitem)
     else
         player:startEvent(113) -- Standard dialog
     end

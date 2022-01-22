@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------------------------------
--- func: !setTH {mod ID} {power}
+-- func: !setTH {power}
 -- desc: Sets Treasure Hunter on the target monster to the value provided.
 ---------------------------------------------------------------------------------------------------
 
@@ -13,7 +13,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!setTH {mod ID} {power}")
+    player:PrintToPlayer("!setTH {power}")
 end
 
 function onTrigger(player, power)

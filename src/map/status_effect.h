@@ -585,7 +585,7 @@ enum EFFECT
     EFFECT_DEMATERIALIZE            = 518,
     EFFECT_THEURGIC_FOCUS           = 519,
     EFFECT_HEADY_ARTIFICE           = 520, // (None) DEBUG: Please Report. Assigned to Heady Artifice
-    EFFECT_CONTRADANCE              = 521, // (None) DEBUG: Please Report. Assigned to Contradance
+//  EFFECT_NONE                     = 521, // (None) DEBUG: Please Report.
     EFFECT_ELEMENTAL_SFORZO         = 522,
     EFFECT_IGNIS                    = 523,
     EFFECT_GELUS                    = 524,
@@ -646,6 +646,7 @@ enum EFFECT
     EFFECT_COMMITMENT               = 579,
     EFFECT_GEO_HASTE                = 580,
     EFFECT_FLURRY_II                = 581,
+	EFFECT_CONTRADANCE              = 582,
     EFFECT_APOGEE                   = 583,
     EFFECT_ENTRUST                  = 584,
     EFFECT_COSTUME_II               = 585,
@@ -691,10 +692,10 @@ enum EFFECT
 	EFFECT_SIRENS_FAVOR             = 625,
 	EFFECT_NEGATE_SLEEP             = 626,
 	EFFECT_MOBILIZATION             = 627,
-	EFFECT_ZEALOUS_SNORT            = 628, // (None) DEBUG: Please report. Assigned to Zealous Snort
-	EFFECT_FAMILIAR                 = 629, // (None) DEBUG: Please report. Assigned to Familiar
-//	EFFECT_NONE                     = 630, // (None) DEBUG: Please report.
-//	EFFECT_NONE                     = 631, // (None) DEBUG: Please report.
+	EFFECT_HOVER_SHOT               = 628,
+    EFFECT_MOOGLE_AMPLIFIER         = 629,
+	EFFECT_ZEALOUS_SNORT            = 630, // (None) DEBUG: Please report. Assigned to Zealous Snort
+	EFFECT_FAMILIAR                 = 631, // (None) DEBUG: Please report. Assigned to Familiar
 //	EFFECT_NONE                     = 632, // (None) DEBUG: Please report.
 //	EFFECT_NONE                     = 633, // (None) DEBUG: Please report.
 //	EFFECT_NONE                     = 634, // (None) DEBUG: Please report.

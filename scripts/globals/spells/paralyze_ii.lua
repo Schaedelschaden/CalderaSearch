@@ -25,7 +25,7 @@ function onSpellCast(caster, target, spell)
 		potency = 44
 	end
 
-    local duration = calculateDuration(120, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(120, caster, target, spell)
     local params = {}
     params.diff = dMND
     params.skillType = tpz.skill.ENFEEBLING_MAGIC

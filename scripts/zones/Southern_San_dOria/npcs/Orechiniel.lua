@@ -34,6 +34,7 @@ function onTrigger(player,npc)
 		850, 150,		-- Sheep Leather
 		2423, 2514,		-- Frigid Skin
 --		1516, 795,		-- Griffon Hide
+		3445, 25830,    -- Suit of Hahava's Mail
 		1680, 1236,		-- H.Q. Bugard Skin
 		1591, 2580,		-- H.Q. Coeurl Hide
 		1741, 900,		-- H.Q. Eft Skin

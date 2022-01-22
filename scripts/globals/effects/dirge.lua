@@ -26,7 +26,7 @@ function onEffectGain(target, effect)
 		target:addMod(tpz.mod.CHR, setBonus)
 	end
 	
-	target:addMod(tpz.mod.ENMITY, -effect:getPower())
+	target:addMod(tpz.mod.ENMITY, -power)
 	
 	effect:setPower(power)
 end

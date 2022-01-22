@@ -200,33 +200,43 @@ function onTrigger(player,npc)
 	if (player:getCharVar("KillCounter_Byakko") >= 1 and player:getCharVar("KillCounter_Genbu") >= 1 and
 		player:getCharVar("KillCounter_Seiryu") >= 1 and player:getCharVar("KillCounter_Suzaku") >= 1) then
 		t1Unlock = 1
+		-- printf("Vainrachault.lua onTrigger TIER 3 UNLOCKED  [%i]", t1Unlock)
 	end
 	
 	if (player:getCharVar("KillCounter_IxAernDRG") >= 1 and player:getCharVar("KillCounter_IxAernDRK") >= 1 and player:getCharVar("KillCounter_IxAernMNK") >= 1 and
 		player:getCharVar("KillCounter_JailOfFaith") >= 1 and player:getCharVar("KillCounter_JailOfFort") >= 1 and player:getCharVar("KillCounter_JailOfTemp") >= 1) then
 		t2Unlock = 1
+		-- printf("Vainrachault.lua onTrigger TIER 4 UNLOCKED")
 	end
 	
 	if (player:getCharVar("KillCounter_Kirin") >= 1 and player:getCharVar("KillCounter_JailOfLove") >= 1) then
 		t3Unlock = 1
+		-- printf("Vainrachault.lua onTrigger TIER 5 UNLOCKED")
 	end
 	
 	if (player:getCharVar("KillCounter_ShadowLord") >= 1 and player:getCharVar("KillCounter_Kamlanaut") >= 1) then
 		t4Unlock = 1
+		-- printf("Vainrachault.lua onTrigger TIER 6 UNLOCKED")
 	end
 	
 	if (playerLvl >= 99 and t1Unlock == 1 and t2Unlock == 1 and t3Unlock == 1 and t4Unlock == 1) then
 		tpz.shop.general(player, stock_t4_locked)
-	elseif (playerLvl >= 99 and t1Unlock == 1 and t2Unlock == 1 and t3Unlock == 1 and t4Unlock == 0) then
+		-- printf("Vainrachault.lua onTrigger TIER 6 SHOP")
+	elseif (playerLvl >= 99 and t1Unlock == 1 and t2Unlock == 1 and t3Unlock == 1) then
 		tpz.shop.general(player, stock_t3_locked)
-	elseif (playerLvl >= 99 and t1Unlock == 1 and t2Unlock == 1 and t3Unlock == 0 and t4Unlock == 0) then
+		-- printf("Vainrachault.lua onTrigger TIER 5 SHOP")
+	elseif (playerLvl >= 99 and t1Unlock == 1 and t2Unlock == 1) then
 		tpz.shop.general(player, stock_t2_locked)
-	elseif (playerLvl >= 99 and t1Unlock == 1 and t2Unlock == 0 and t3Unlock == 0 and t4Unlock == 0) then
-		tpz.shop.general(player, stock_t1_locked)	
+		-- printf("Vainrachault.lua onTrigger TIER 4 SHOP")
+	elseif (playerLvl >= 99 and t1Unlock == 1) then
+		tpz.shop.general(player, stock_t1_locked)
+		-- printf("Vainrachault.lua onTrigger TIER 3 SHOP")
 	elseif (playerLvl >= 99) then
 		tpz.shop.general(player, stock_over_99_basic)
+		-- printf("Vainrachault.lua onTrigger TIER 2 SHOP")
 	else
 		tpz.shop.general(player, stock_under_99)
+		-- printf("Vainrachault.lua onTrigger TIER 1 SHOP")
 	end
 	
 	player:PrintToPlayer(string.format("Vainrachault : Looking for ranged ammunition? I have a wide variety available for sale!"),tpz.msg.channel.NS_SAY)

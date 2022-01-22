@@ -23,10 +23,11 @@ function onSpellCast(caster, target, spell)
 	end
 	
 	hp = math.ceil(hp * (1 + 0.011 * caster:getMod(tpz.mod.REGEN_MULTIPLIER))) -- spell base times gear multipliers
-    hp = hp + caster:getMerit(tpz.merit.REGEN_EFFECT) -- bonus hp from merits
+    hp = hp + caster:getMerit(tpz.merit.REGEN_EFFECT) + caster:getMod(tpz.mod.REGEN_BASE) -- bonus hp from merits
+	-- printf("regen_v.lua onSpellCast HP: [%i]  MERIT: [%i]  MOD: [%i]", hp, caster:getMerit(tpz.merit.REGEN_EFFECT), caster:getMod(tpz.mod.REGEN_BASE))
     hp = hp + caster:getMod(tpz.mod.LIGHT_ARTS_REGEN) -- bonus hp from light arts
 
-    local duration = calculateDuration(60 + caster:getMod(tpz.mod.REGEN_DURATION), spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(60 + caster:getMod(tpz.mod.REGEN_DURATION), caster, target, spell)
     duration = calculateDurationForLvl(duration, 86, target:getMainLvl())
 
     if target:addStatusEffect(tpz.effect.REGEN, hp, 0, duration) then

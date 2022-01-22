@@ -32,6 +32,12 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 60)
 end
 
+function onMobSpawn(mob)
+	mob:setMod(tpz.mod.GRAVITYRES, 100)
+	mob:setMod(tpz.mod.STUNRES, 100)
+	mob:setMod(tpz.mod.SLEEPRES, 100)
+end
+
 function onSpellPrecast(mob, spell)
     if spell:getID() == 218 then
         spell:setAoE(tpz.magic.aoe.RADIAL)
@@ -47,4 +53,3 @@ function onMobDeath(mob, player, isKiller, noKiller)
         GetNPCByID(ID.npc.APOLLYON_NW_CRATE[5]):setStatus(tpz.status.NORMAL)
     end
 end
-

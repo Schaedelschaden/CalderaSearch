@@ -425,14 +425,15 @@ local loot =
             -- {itemid = 65535, droprate = 1000, amount = 1000000}, -- gil
         -- },
         {
-            {itemid =  21702, droprate = 125}, -- Kladenets
-            {itemid =  20580, droprate = 125}, -- Kustawi
-            {itemid =  21090, droprate = 125}, -- Loxotic Mace
-            {itemid =  21029, droprate = 125}, -- Norifusa
-            {itemid =  20898, droprate = 125}, -- Triska Scythe
-            {itemid =  21159, droprate = 125}, -- Marin Staff
-            {itemid =  21418, droprate = 125}, -- Rigorous Grip
-            {itemid =  20679, droprate = 125}, -- Tanmogayi
+            {itemid =  21702, droprate = 111}, -- Kladenets
+            {itemid =  20580, droprate = 111}, -- Kustawi
+            {itemid =  21090, droprate = 111}, -- Loxotic Mace
+            {itemid =  21029, droprate = 111}, -- Norifusa
+            {itemid =  20898, droprate = 111}, -- Triska Scythe
+            {itemid =  21159, droprate = 111}, -- Marin Staff
+            {itemid =  21418, droprate = 111}, -- Rigorous Grip
+            {itemid =  20679, droprate = 111}, -- Tanmogayi
+			{itemid =  20603, droprate = 112}, -- Ternion Dagger
         },
         {
 			{itemid = 26401, droprate =  145}, -- Forfend

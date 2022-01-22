@@ -23,23 +23,26 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "player_controller.h"
 
 #include "../../ability.h"
-#include "../ai_container.h"
-#include "../../status_effect_container.h"
-#include "../../enmity_container.h"
-#include "../../ai/states/despawn_state.h"
 #include "../../ai/helpers/gambits_container.h"
+#include "../../ai/states/despawn_state.h"
+#include "../../ai/states/range_state.h"
+#include "../../ai/states/magic_state.h"
+#include "../../enmity_container.h"
 #include "../../entities/charentity.h"
 #include "../../entities/trustentity.h"
+#include "../../items/item_weapon.h"
+#include "../../mob_spell_container.h"
 #include "../../packets/char.h"
 #include "../../recast_container.h"
-#include "../../mob_spell_container.h"
-#include "../../ai/states/range_state.h"
-#include "../../items/item_weapon.h"
+#include "../../status_effect_container.h"
+#include "../ai_container.h"
 
 CTrustController::CTrustController(CCharEntity* PChar, CTrustEntity* PTrust)
 : CMobController(PTrust)
+, m_GambitsContainer(std::make_unique<gambits::CGambitsContainer>(PTrust))
+, m_InTransit(false)
 {
-    m_GambitsContainer = std::make_unique<gambits::CGambitsContainer>(PTrust);
+
 }
 
 CTrustController::~CTrustController()
@@ -104,6 +107,12 @@ void CTrustController::DoCombatTick(time_point tick)
         POwner->PAI->Internal_ChangeTarget(POwner->PMaster->GetBattleTargetID());
         m_LastTopEnmity = nullptr;
     }
+	
+	// If busy, don't run around!
+    if (POwner->PAI->IsCurrentState<CMagicState>() || POwner->PAI->IsCurrentState<CRangeState>())
+    {
+        return;
+    }
 
     CTrustEntity* PTrust = static_cast<CTrustEntity*>(POwner);
     CCharEntity* PMaster = static_cast<CCharEntity*>(POwner->PMaster);
@@ -125,48 +134,48 @@ void CTrustController::DoCombatTick(time_point tick)
 
             switch (PTrust->m_MovementType)
             {
-            case NO_MOVE:
-            {
-                if (currentDistanceToMaster > CastingDistance)
-                {
-                    PathOutToDistance(PTarget, 9.0f);
-                }
-                else if (currentDistanceToTarget > CastingDistance)
-                {
-                    PathOutToDistance(PTarget, 9.0f);
-                }
-                break;
-            }
-            case MID_RANGE:
-            {
-                PathOutToDistance(PTarget, 10.0f);
-                break;
-            }
-            case LONG_RANGE:
-            {
-                PathOutToDistance(PTarget, 16.0f);
-                break;
-            }
-            case MELEE_RANGE:
-            default:
-            {
-                std::unique_ptr<CBasicPacket> err;
-                if (!POwner->CanAttack(PTarget, err) && POwner->speed > 0)
-                {
-                    if (currentDistanceToTarget > RoamDistance)
-                    {
-                        if (currentDistanceToTarget < RoamDistance * 3.0f && POwner->PAI->PathFind->PathAround(PTarget->loc.p, RoamDistance, PATHFLAG_RUN | PATHFLAG_WALLHACK))
-                        {
-                            POwner->PAI->PathFind->FollowPath();
-                        }
-                        else if (POwner->GetSpeed() > 0)
-                        {
-                            POwner->PAI->PathFind->StepTo(PTarget->loc.p, true);
-                        }
-                    }
-                }
-                break;
-            }
+				case NO_MOVE:
+				{
+					if (currentDistanceToMaster > CastingDistance)
+					{
+						PathOutToDistance(PTarget, 9.0f);
+					}
+					else if (currentDistanceToTarget > CastingDistance)
+					{
+						PathOutToDistance(PTarget, 9.0f);
+					}
+					break;
+				}
+				case MID_RANGE:
+				{
+					PathOutToDistance(PTarget, 10.0f);
+					break;
+				}
+				case LONG_RANGE:
+				{
+					PathOutToDistance(PTarget, 14.0f);
+					break;
+				}
+				case MELEE_RANGE:
+				default:
+				{
+					std::unique_ptr<CBasicPacket> err;
+					if (!POwner->CanAttack(PTarget, err) && POwner->speed > 0)
+					{
+						if (currentDistanceToTarget > RoamDistance)
+						{
+							if (currentDistanceToTarget < RoamDistance * 3.0f && POwner->PAI->PathFind->PathAround(PTarget->loc.p, RoamDistance, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+							{
+								POwner->PAI->PathFind->FollowPath();
+							}
+							else if (POwner->GetSpeed() > 0)
+							{
+								POwner->PAI->PathFind->StepTo(PTarget->loc.p, true);
+							}
+						}
+					}
+					break;
+				}
             }
 
             if (!POwner->PAI->PathFind->IsFollowingPath())
@@ -399,30 +408,73 @@ bool CTrustController::Cast(uint16 targid, SpellID spellid)
     TracyZoneScoped;
 
     FaceTarget(targid);
+
     if (static_cast<CMobEntity*>(POwner)->PRecastContainer->Has(RECAST_MAGIC, static_cast<uint16>(spellid)))
     {
         return false;
     }
 
-    auto PSpell = spell::GetSpell(spellid);
-	auto element = PSpell->getElement();
-	
-	/* if (POwner->PMaster->GetBattleTarget()->objtype == TYPE_MOB)
-	{
-		auto PMob = dynamic_cast<CMobEntity*>(POwner->PMaster->GetBattleTarget());
-		
-		if (PMob->m_nukeWallTimer[element - 1] >= server_clock::now())
-		{
-			
-		}
-	} */
-	
+    auto* PSpell = spell::GetSpell(spellid);
     if (PSpell->getValidTarget() == TARGET_SELF)
     {
         targid = POwner->targid;
     }
 
-    return CController::Cast(targid, spellid);
+    auto  PTarget      = (CBattleEntity*)POwner->GetEntity(targid, TYPE_MOB | TYPE_PC | TYPE_PET | TYPE_TRUST);
+    auto  PSpellFamily = PSpell->getSpellFamily();
+    bool  canCast      = true;
+
+    static_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember)
+    {
+        if (PMember->objtype == TYPE_TRUST && PMember->PAI->IsCurrentState<CMagicState>())
+        {
+            auto MState = static_cast<CMagicState*>(PMember->PAI->GetCurrentState());
+
+            if (MState)
+            {
+                auto MSpell       = MState->GetSpell();
+                auto MTarget      = MState->GetTarget();
+                auto MSpellFamily = MSpell->getSpellFamily();
+                auto MSpellID     = MSpell->getID();
+
+                if (PSpell->isBuff())
+                {
+                    if (PSpellFamily == MSpellFamily && spellid <= MSpellID)
+                    {
+                        canCast = false;
+                    }
+                }
+                if (PSpell->isCure())
+                {
+                    if (PTarget == MTarget && PTarget->GetHPP() > 50)
+                    {
+                        canCast = false;
+                    }
+                }
+                if (PSpell->isDebuff())
+                {
+                    if (PSpellFamily == MSpellFamily && spellid <= MSpellID)
+                    {
+                        canCast = false;
+                    }
+                }
+                if (PSpell->isNa())
+                {
+                    if (PSpellFamily == MSpellFamily && spellid == MSpellID)
+                    {
+                        canCast = false;
+                    }
+                }
+            }
+        }
+    });
+
+    if (!canCast)
+    {
+        return false;
+    }
+
+    return CMobController::Cast(targid, spellid);
 }
 
 CBattleEntity* CTrustController::GetTopEnmity()

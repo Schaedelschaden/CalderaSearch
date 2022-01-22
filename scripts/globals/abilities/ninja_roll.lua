@@ -34,6 +34,11 @@ function onAbilityCheck(player, target, ability)
 	
     ability:setRange(ability:getRange() + player:getMod(tpz.mod.ROLL_RANGE))
 	
+	if (checkForElevenRoll(player)) then
+		local recast = 30 - player:getMerit(tpz.merit.PHANTOM_ROLL_RECAST) + player:getMod(tpz.mod.PHANTOM_ROLL_RECAST)
+		ability:setRecast(recast)
+	end
+	
     if (player:hasStatusEffect(effectID)) then
         return tpz.msg.basic.ROLL_ALREADY_ACTIVE,0
     elseif atMaxCorsairBusts(player) then

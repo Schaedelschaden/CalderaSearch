@@ -27,28 +27,28 @@ g_mixins.rage = function(mob)
         if mob:getLocalVar("[rage]started") == 0 and os.time() > mob:getLocalVar("[rage]at") then
             mob:setLocalVar("[rage]started", 1)
 
-			local rageStats = {tpz.mod.STR, tpz.mod.DEX, tpz.mod.VIT, tpz.mod.AGI, tpz.mod.INT, tpz.mod.MND, tpz.mod.CHR,
-							   tpz.mod.DEF, tpz.mod.ATT, tpz.mod.ACC, tpz.mod.MATT, tpz.mod.MACC, tpz.mod.EVA, tpz.mod.MEVA,
-							   tpz.mod.REGEN, tpz.mod.REGAIN, tpz.mod.HASTE_MAGIC, tpz.mod.HASTE_ABILITY}
+			local rageStats = {tpz.mod.STR,   tpz.mod.DEX,     tpz.mod.VIT,    tpz.mod.AGI,         tpz.mod.INT,  tpz.mod.MND, tpz.mod.CHR, tpz.mod.MDEF,
+							   tpz.mod.DEF,   tpz.mod.ATT,     tpz.mod.ACC,    tpz.mod.MATT,        tpz.mod.MACC, tpz.mod.EVA, tpz.mod.MEVA,
+							   tpz.mod.REGEN, tpz.mod.REFRESH, tpz.mod.REGAIN, tpz.mod.HASTE_MAGIC, tpz.mod.HASTE_ABILITY}
 
 			-- Boost all combat stats
 			for i = 1, #rageStats do
 				local amt
 			
-				if (i >= 1 and i <= 7) then
-					amt = math.ceil(mob:getStat(i) * 9)
-				elseif (i >= 8 and i <= 14) then
-					
-				elseif (i == 15) then
-					
-				elseif (i == 16) then
-					
-				elseif (i >= 17 and i <= 18) then
-					
+				if (i >= 1 and i <= 8) then
+					amt = 500
+				elseif (i >= 9 and i <= 15) then
+					amt = 5000
+				elseif (i >= 16 and i <= 17) then
+					amt = 3000
+				elseif (i == 18) then
+					amt = 1000
+				elseif (i >= 19 and i <= 20) then
+					amt = 5000
 				end
 				
 				mob:setLocalVar("[rage]mod_" .. i, amt)
-				mob:addMod(i, amt)
+				mob:addMod(rageStats[i], amt)
 			end
 
             -- boost stats
@@ -67,11 +67,21 @@ g_mixins.rage = function(mob)
         if mob:getLocalVar("[rage]started") == 1 then
             mob:setLocalVar("[rage]started", 0)
 
-            -- unboost stats
-            for i = tpz.mod.STR, tpz.mod.CHR do
-                local amt = mob:getLocalVar("[rage]mod_" .. i)
-                mob:delMod(i, amt)
-            end
+			local rageStats = {tpz.mod.STR,   tpz.mod.DEX,     tpz.mod.VIT,    tpz.mod.AGI,         tpz.mod.INT,  tpz.mod.MND, tpz.mod.CHR, tpz.mod.MDEF,
+							   tpz.mod.DEF,   tpz.mod.ATT,     tpz.mod.ACC,    tpz.mod.MATT,        tpz.mod.MACC, tpz.mod.EVA, tpz.mod.MEVA,
+							   tpz.mod.REGEN, tpz.mod.REFRESH, tpz.mod.REGAIN, tpz.mod.HASTE_MAGIC, tpz.mod.HASTE_ABILITY}
+
+			-- Boost all combat stats
+			for i = 1, #rageStats do
+				local amt = mob:getLocalVar("[rage]mod_" .. i)
+				mob:delMod(rageStats[i], amt)
+			end
+
+            -- -- unboost stats
+            -- for i = tpz.mod.STR, tpz.mod.CHR do
+                -- local amt = mob:getLocalVar("[rage]mod_" .. i)
+                -- mob:delMod(i, amt)
+            -- end
 
             -- TODO: ATT, DEF, MACC, MATT, EVA, attack speed all decrease
         end

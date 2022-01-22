@@ -35,14 +35,18 @@ function onTrigger(player, npc)
         player:startEvent(250, 0, tpz.ki.TUNING_FORK_OF_EARTH, 1)
     elseif (TrialByEarth == QUEST_ACCEPTED and WhisperOfTremors) then
         numitem = 0
+		player:addItem(6267)
+		player:delKeyItem(tpz.ki.WHISPER_OF_TREMORS)
+		player:PrintToPlayer(string.format("Juroro : This is just a dusty rock!"),tpz.msg.channel.NS_SAY)
+		player:setCharVar("TrialByWind_date", os.date("%j")) -- %M for next minute, %j for next day
 
-        if (player:hasItem(17438)) then numitem = numitem + 1; end  -- Titan's Cudgel
-        if (player:hasItem(13244)) then numitem = numitem + 2; end  -- Earth Belt
-        if (player:hasItem(13563)) then numitem = numitem + 4; end  -- Earth Ring
-        if (player:hasItem(1205)) then numitem = numitem + 8; end   -- Desert Light
-        if (player:hasSpell(299)) then numitem = numitem + 32; end  -- Ability to summon Titan
+        -- if (player:hasItem(17438)) then numitem = numitem + 1; end  -- Titan's Cudgel
+        -- if (player:hasItem(13244)) then numitem = numitem + 2; end  -- Earth Belt
+        -- if (player:hasItem(13563)) then numitem = numitem + 4; end  -- Earth Ring
+        -- if (player:hasItem(1205)) then numitem = numitem + 8; end   -- Desert Light
+        -- if (player:hasSpell(299)) then numitem = numitem + 32; end  -- Ability to summon Titan
 
-        player:startEvent(252, 0, tpz.ki.TUNING_FORK_OF_EARTH, 1, 0, numitem)
+        -- player:startEvent(252, 0, tpz.ki.TUNING_FORK_OF_EARTH, 1, 0, numitem)
     else
         player:startEvent(253) -- Standard dialog
     end

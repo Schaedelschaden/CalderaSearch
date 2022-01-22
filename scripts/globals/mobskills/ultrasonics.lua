@@ -14,7 +14,13 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.EVASION_DOWN
 
-    skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 25, 0, 180))
+    -- skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 25, 0, 180))
+	
+	if (mob:getMainLvl() >= 120) then
+		skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 500, 0, 180))
+	else
+		skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 25, 0, 180))
+	end
 
 
     return typeEffect

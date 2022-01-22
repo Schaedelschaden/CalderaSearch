@@ -52,7 +52,7 @@ function onSpellCast(caster, target, spell)
 		local currentCE
 
 		for i, v in ipairs(enmityList) do
-			local reduceCE = 100
+			local reduceCE = 26
 			targName[i] = v.entity:getName()
 			
 			if (v.entity:isPC()) then
@@ -63,7 +63,7 @@ function onSpellCast(caster, target, spell)
 			
 			currentCE = target:getCE(targ)
 			
-			if (currentCE < 101) then
+			if (currentCE < 26) then
 				reduceCE = currentCE - 1
 			end
 

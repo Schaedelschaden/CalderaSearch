@@ -12,10 +12,11 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAbilityCheck(player,target,ability)
-	-- Retail behavior for Fly High is 10 second recasts. Caldera is set to 2 second
+	-- Retail behavior for Fly High is 10 second recasts
 	if (player:hasStatusEffect(tpz.effect.FLY_HIGH)) then
-		ability:setRecast(utils.clamp(2, 0, 2))
+		ability:setRecast(10)
 	end
+	
     return 0,0
 end
 
@@ -40,6 +41,7 @@ function onUseAbility(player,target,ability,action)
 		params.atk100 = atkmulti params.atk200 = atkmulti params.atk300 = atkmulti
 		params.bonusTP = player:getMod(tpz.mod.JUMP_TP_BONUS)
 		params.hitsHigh = true
+		
 	if (player:getMod(tpz.mod.FORCE_JUMP_CRIT) > 0) then
 		params.crit100 = 1.0 params.crit200 = 1.0 params.crit300 = 1.0
 	end

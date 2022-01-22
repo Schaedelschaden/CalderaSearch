@@ -414,7 +414,7 @@ local battlefields = {
         { 2,  290,    0},   -- Ark Angels 3 (ZM14)
         { 3,  291,    0},   -- Ark Angels 4 (ZM14)
         { 4,  292,    0},   -- Ark Angels 5 (ZM14)
-        { 5,  293, 1550},   -- Divine Might (ZM14)
+        { 5,  293,    0},   -- Divine Might (ZM14)
      -- { 6,    ?,    0},   -- *Ark Angels 1 (HTMBF)
      -- { 7,    ?,    0},   -- *Ark Angels 2 (HTMBF)
      -- { 8,    ?,    0},   -- *Ark Angels 3 (HTMBF)
@@ -597,7 +597,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 290] = function() return ( npcid == getEntranceOffset(2) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_ENVY)                                                        ) end, -- ZM14: Ark Angels (Mithra)
         [ 291] = function() return ( npcid == getEntranceOffset(3) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_ARROGANCE)                                                   ) end, -- ZM14: Ark Angels (Elvaan)
         [ 292] = function() return ( npcid == getEntranceOffset(4) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_RAGE)                                                        ) end, -- ZM14: Ark Angels (Galka)
-        [ 293] = function() return ( dm1 == QUEST_ACCEPTED or dm2 == QUEST_ACCEPTED                                                                                         ) end, -- ZM14 Divine Might
+        [ 293] = function() return ( player:hasKeyItem(tpz.ki.P_PERPETRATOR_PHANTOM_GEM)                                                                                    ) end, -- ZM14 Divine Might
         [ 320] = function() return ( player:hasKeyItem(tpz.ki.CELESTIAL_NEXUS_PHANTOM_GEM)                                                                                  ) end, -- ZM16: The Celestial Nexus
         [ 416] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_WIND)                                                                                          ) end, -- Quest: Trial by Wind
         [ 417] = function() return ( player:getCharVar("CarbuncleDebacleProgress") == 6                                                                                     ) end, -- Quest: Carbuncle Debacle
@@ -703,7 +703,8 @@ function checkReqs(player, npc, bfid, registrant)
         [ 290] = function() return ( npcid == getEntranceOffset(2) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_ENVY)                                        ) end, -- ZM14: Ark Angels (Mithra)
         [ 291] = function() return ( npcid == getEntranceOffset(3) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_ARROGANCE)                                   ) end, -- ZM14: Ark Angels (Elvaan)
         [ 292] = function() return ( npcid == getEntranceOffset(4) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_RAGE)                                        ) end, -- ZM14: Ark Angels (Galka)
-        [ 416] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_WIND)                                                                          ) end, -- Quest: Trial by Wind
+        [ 320] = function() return ( player:hasKeyItem(tpz.ki.P_PERPETRATOR_PHANTOM_GEM)                                                                    ) end, -- Divine Might
+		[ 416] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_WIND)                                                                          ) end, -- Quest: Trial by Wind
 		[ 448] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_LIGHTNING)                                                                     ) end, -- Quest: Trial by Lightning
 		[ 480] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_ICE)                                                                           ) end, -- Quest: Trial by Ice
 		[ 544] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_FIRE)                                                                          ) end, -- Quest: Trial by Fire

@@ -133,6 +133,15 @@ tpz.trust.canCast = function(caster, spell, not_allowed_trust_ids)
         caster:messageSystem(tpz.msg.system.TRUST_NO_ENMITY)
         return -1
     end
+	
+	local party = caster:getParty()
+	
+	for i, member in pairs(party) do
+		if (member:hasEnmity()) then
+			caster:messageSystem(tpz.msg.system.TRUST_NO_ENMITY)
+			return -1
+		end
+	end
 
     -- Check party for trusts
     local num_pt = 0

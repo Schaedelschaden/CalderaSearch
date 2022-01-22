@@ -103,7 +103,7 @@ function onTrigger(player, npc)
 		1304, 11961,	-- Water Bead
 		1260, 11118,	-- Chunk of Water Ore
 		776, 600,		-- White Rock
-		1301, 4290,		-- Wind Bead
+		1301, 11961,	-- Wind Bead
 		1257, 11118,	-- Chunk of Wind Ore
 		2831, 9142,		-- Yellow Brass Chain
 		771, 600,		-- Yellow Rock

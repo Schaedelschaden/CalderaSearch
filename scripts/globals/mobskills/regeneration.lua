@@ -16,8 +16,14 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local power = mob:getMainLvl()/10 * 4 + 5
+    -- local power = mob:getMainLvl()/10 * 4 + 5
     local duration = 60
+	
+	if (mob:getMainLvl() >= 130) then
+		power = mob:getMainLvl() * 16
+	else
+		power = mob:getMainLvl()/10 * 4 + 5
+	end
 
     local typeEffect = tpz.effect.REGEN
 

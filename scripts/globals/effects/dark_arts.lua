@@ -21,7 +21,7 @@ function onEffectGain(target,effect)
         target:addMod(tpz.mod.WHITE_MAGIC_CAST, 20)
         target:addMod(tpz.mod.WHITE_MAGIC_RECAST, 20)
         target:addMod(tpz.mod.HELIX_EFFECT, helix)
-        target:addMod(tpz.mod.HELIX_DURATION, 72)
+        target:addMod(tpz.mod.HELIX_DURATION, 78)
     end
     target:recalculateSkillsTable()
 end
@@ -46,7 +46,7 @@ function onEffectLose(target,effect)
         target:delMod(tpz.mod.WHITE_MAGIC_CAST, 20)
         target:delMod(tpz.mod.WHITE_MAGIC_RECAST, 20)
         target:delMod(tpz.mod.HELIX_EFFECT, helix)
-        target:delMod(tpz.mod.HELIX_DURATION, 72)
+        target:delMod(tpz.mod.HELIX_DURATION, 78)
     end
     target:recalculateSkillsTable()
 end

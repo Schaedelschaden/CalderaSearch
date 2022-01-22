@@ -43,7 +43,7 @@ function onSpellCast(caster, target, spell)
     local final = finalMagicAdjustments(caster, target, spell, dmg)
 
     -- Calculate duration
-    local duration = calculateDuration(180, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(180, caster, target, spell)
 
     -- Check for Dia
     local dia = target:getStatusEffect(tpz.effect.DIA)

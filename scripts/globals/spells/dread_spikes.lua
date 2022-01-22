@@ -12,7 +12,7 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local duration = calculateDuration(SPIKE_EFFECT_DURATION, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(SPIKE_EFFECT_DURATION, caster, target, spell)
     local typeEffect = tpz.effect.DREAD_SPIKES
     local drainAmount = target:getMaxHP() / 2
 	local EnhSpikes = 1 + (utils.clamp(caster:getMod(tpz.mod.ENH_DREAD_SPIKES), 1, 1000) / 1000)

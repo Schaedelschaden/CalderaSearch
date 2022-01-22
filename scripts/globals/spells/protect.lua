@@ -15,7 +15,7 @@ function onSpellCast(caster, target, spell)
 	local shieldDEF = 0
     local tier = 1
     local spelllevel = 7
-    local duration = calculateDuration(1800, spell:getSkillType(), spell:getSpellGroup(), caster, target, false)
+    local duration = calculateDuration(1800, caster, target, spell, false)
     duration = calculateDurationForLvl(duration, spelllevel, target:getMainLvl())
     local buff = 0
 	

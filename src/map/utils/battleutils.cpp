@@ -3566,7 +3566,7 @@ namespace battleutils
 		CMobEntity* PMob = (CMobEntity*)PDefender;
 		bool triggerProc = false;
 		int16 maxBase = 4;
-		int16 maxTH = 12;
+		int16 maxTH = 8;
 		int16 THLvl = 0;
 		int16 currentMobTH = PMob->m_THLvl;
 		int16 proc = tpzrand::GetRandomNumber(100);
@@ -3581,7 +3581,7 @@ namespace battleutils
 			int16 procChance = std::clamp((THLvl + (THLvl - currentMobTH)) / 2, 1, 8);
 			
 			// https://www.bg-wiki.com/ffxi/Treasure_Hunter
-			// TH can go to a maximum level of 14 for THF, 12 for all other jobs
+			// TH can go to a maximum level of 14 for THF, 8 for all other jobs
 			if (mJob == JOB_THF)
 			{
 				maxBase = 8;
@@ -6136,17 +6136,56 @@ namespace battleutils
 
     uint8 GetSpellAoEType(CBattleEntity* PCaster, CSpell* PSpell)
     {
+		bool casterInParty = false;
+		
+		if (PCaster->objtype == TYPE_PC)
+		{
+			CState* state = static_cast<CMagicState*>(PCaster->PAI->GetCurrentState());
+			uint32 targetID = state->GetTarget()->targid;
+			CBattleEntity* PTarget = (CBattleEntity*)PCaster->GetEntity(targetID, TYPE_PC);
+			
+			if (PTarget != nullptr && PTarget->objtype == TYPE_PC)
+			{
+				if (PTarget->PParty != nullptr)
+				{
+					for (uint8 i = 0; i < PTarget->PParty->members.size(); ++i)
+					{
+						CBattleEntity* member = PTarget->PParty->members.at(i);
+
+						if (PCaster == member && PCaster->isAlive())
+						{
+							casterInParty = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		
+		if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_MAJESTY))
+		{
+			if (casterInParty == true && (PSpell->getSpellFamily() == SPELLFAMILY_CURE || PSpell->getSpellFamily() == SPELLFAMILY_PROTECT))
+			{
+				return SPELLAOE_RADIAL;
+			}
+			else
+			{
+				return SPELLAOE_NONE;
+			}
+		}
         if (PSpell->getAOE() == SPELLAOE_RADIAL_ACCE) // Divine Veil goes here because -na spells have AoE w/ Accession
         {
-            if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_ACCESSION) || (PCaster->objtype == TYPE_PC &&
+            if (casterInParty == true && (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_ACCESSION) || (PCaster->objtype == TYPE_PC &&
                 charutils::hasTrait((CCharEntity*)PCaster, TRAIT_DIVINE_VEIL) && PSpell->isNa() &&
                 (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_DIVINE_SEAL) || PCaster->getMod(Mod::AOE_NA) == 1)) ||
-				(PCaster->objtype == TYPE_PC && tpzrand::GetRandomNumber(100) < PCaster->getMod(Mod::ENH_DIVINE_VEIL) && PSpell->isNa()) ||
-				(PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_MAJESTY) && 
-				(PSpell->getSpellFamily() == 1 || PSpell->getSpellFamily() == 10)))
-                return SPELLAOE_RADIAL;
+				(PCaster->objtype == TYPE_PC && tpzrand::GetRandomNumber(100) < PCaster->getMod(Mod::ENH_DIVINE_VEIL) && PSpell->isNa())))
+			{
+				return SPELLAOE_RADIAL;
+			}
             else
+			{
                 return SPELLAOE_NONE;
+			}
         }
         if (PSpell->getAOE() == SPELLAOE_RADIAL_MANI)
         {
@@ -6761,6 +6800,11 @@ namespace battleutils
                 cast -= (uint32)(base * ((100 - (50 + bonus)) / 100.0f));
                 applyArts = false;
             }
+			else if (PSpell->getAOE() == SPELLAOE_RADIAL_MANI && PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MANIFESTATION) && PSpell->getTotalTargets() > 1)
+			{
+				cast *= 2;
+				applyArts = false;
+			}
             else if (applyArts)
             {
                 if (PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_DARK_ARTS, EFFECT_ADDENDUM_BLACK}))
@@ -6790,6 +6834,11 @@ namespace battleutils
                 cast -= (uint32)(base * ((100 - (50 + bonus)) / 100.0f));
                 applyArts = false;
             }
+			else if (PSpell->getAOE() == SPELLAOE_RADIAL_ACCE && PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_ACCESSION) && PSpell->getTotalTargets() > 1)
+			{
+				cast *= 2;
+				applyArts = false;
+			}
             else if (applyArts)
             {
                 if (PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_LIGHT_ARTS, EFFECT_ADDENDUM_WHITE}))
@@ -6909,9 +6958,9 @@ namespace battleutils
 
         if (PSpell->getSpellGroup() == SPELLGROUP_BLACK)
         {
-            if (PSpell->getAOE() == SPELLAOE_RADIAL_MANI && PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MANIFESTATION))
+            if (PSpell->getAOE() == SPELLAOE_RADIAL_MANI && PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MANIFESTATION) && PSpell->getTotalTargets() > 1)
             {
-                cost *= 2;
+                cost *= 3;
                 applyArts = false;
             }
             if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_PARSIMONY))
@@ -6928,7 +6977,7 @@ namespace battleutils
         }
         else if (PSpell->getSpellGroup() == SPELLGROUP_WHITE)
         {
-            if (PSpell->getAOE() == SPELLAOE_RADIAL_ACCE && PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_ACCESSION))
+            if (PSpell->getAOE() == SPELLAOE_RADIAL_ACCE && PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_ACCESSION) && PSpell->getTotalTargets() > 1)
             {
                 cost *= 2;
                 applyArts = false;
@@ -7027,7 +7076,7 @@ namespace battleutils
         // Light/Dark arts recast bonus/penalties applies after the 80% cap
         if (PSpell->getSpellGroup() == SPELLGROUP_BLACK)
         {
-            if (PSpell->getAOE() == SPELLAOE_RADIAL_MANI && PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MANIFESTATION))
+            if (PSpell->getAOE() == SPELLAOE_RADIAL_MANI && PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MANIFESTATION) && PSpell->getTotalTargets() > 1)
             {
                 if (PEntity->GetMJob() == JOB_SCH)
                 {
@@ -7075,7 +7124,7 @@ namespace battleutils
         }
         else if (PSpell->getSpellGroup() == SPELLGROUP_WHITE)
         {
-            if (PSpell->getAOE() == SPELLAOE_RADIAL_ACCE && PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_ACCESSION))
+            if (PSpell->getAOE() == SPELLAOE_RADIAL_ACCE && PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_ACCESSION) && PSpell->getTotalTargets() > 1)
             {
                 if (PEntity->GetMJob() == JOB_SCH)
                 {

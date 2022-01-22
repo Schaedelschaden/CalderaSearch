@@ -42,6 +42,17 @@ function onMobSpawn(mob)
                         ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.CURE)
 end
 
+-- function onMobFight(mob)
+	-- local isBusy = false
+	
+	-- if act == tpz.act.MOBABILITY_START or act == tpz.act.MOBABILITY_USING or act == tpz.act.MOBABILITY_FINISH or
+	   -- act == tpz.act.MAGIC_START or act == tpz.act.MAGIC_CASTING or act == tpz.act.MAGIC_START then
+        -- isBusy = true 
+    -- end
+	
+	-- printf("trion.lua onMobFight TRION FIGHTING")
+-- end
+
 function onMobDespawn(mob)
     tpz.trust.message(mob, message_page_offset, tpz.trust.message_offset.DESPAWN)
 end

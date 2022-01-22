@@ -32,7 +32,7 @@ function onTrigger(player, npc)
 		1229, 3334,		-- Adaman Nugget
 		646, 10000,		-- Adaman Ore
 		675, 4536,		-- Adaman Scales
-		4058, 2826,		-- Bismuth Ore
+		4058, 80000,	-- Bismuth Ore
 		1232, 36,		-- Bronze Nugget
 		672, 78,		-- Bronze Scales
 		1230, 33,		-- Copper Nugget

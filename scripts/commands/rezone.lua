@@ -25,5 +25,14 @@ function onTrigger(player)
 		return
 	end
 	
+	local party = player:getParty()
+	
+	for i, member in pairs(party) do
+		if (member:hasEnmity()) then
+			player:PrintToPlayer(string.format("You cannot use that command while a member of your party is in combat.", player))
+			return
+		end
+	end
+	
     player:setPos(player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID())
 end

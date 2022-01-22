@@ -9,7 +9,7 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-	if (mob:AnimationSub() == 1) then
+	if (mob:AnimationSub() == 0) then
 		return 0
 	else
 		mob:useMobAbility(2171)
@@ -18,7 +18,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-	mob:setMod(tpz.mod.HUMANOID_KILLER, 70)
+	mob:setMod(tpz.mod.HUMANOID_KILLER, 10)
 	mob:setLocalVar("CalloftheMoon", os.time())
 	skill:setMsg(tpz.msg.basic.NONE)
 	mob:setTP(0)

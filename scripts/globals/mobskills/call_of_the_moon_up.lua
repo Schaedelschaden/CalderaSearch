@@ -18,7 +18,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-	mob:setMod(tpz.mod.HUMANOID_KILLER, 70)
+	mob:setMod(tpz.mod.HUMANOID_KILLER, 15)
 	mob:setLocalVar("CalloftheMoon", os.time())
 	skill:setMsg(tpz.msg.basic.NONE)
 	mob:setTP(0)

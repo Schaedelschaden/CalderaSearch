@@ -140,6 +140,7 @@ STONESKIN_CAP = 500 -- Soft cap for hp absorbed by stoneskin
 BLINK_SHADOWS = 4   -- Number of shadows supplied by Blink spell
 SPIKE_EFFECT_DURATION = 180 -- The duration of RDM, BLM spikes effects (not Reprisal)
 ELEMENTAL_DEBUFF_DURATION = 120 -- Base duration of elemental debuffs
+HELIX_DOT_CAP = 9999 -- Restricts the total amount of damage SCH Helices can do per tock. Retail is 9999.
 AQUAVEIL_COUNTER = 5  -- Base amount of hits Aquaveil absorbs to prevent spell interrupts. Retail is 1.
 ABSORB_SPELL_AMOUNT = 1 -- How much of a stat gets absorbed by DRK absorb spells - expected to be a multiple of 8.
 ABSORB_SPELL_TICK = 9 -- Duration of 1 absorb spell tick

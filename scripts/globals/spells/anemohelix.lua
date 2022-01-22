@@ -48,9 +48,13 @@ function onSpellCast(caster, target, spell)
     -- calculate Damage over time
     dot = target:magicDmgTaken(dot)
 
+	if (dot > HELIX_DOT_CAP) then
+		dot = HELIX_DOT_CAP
+	end
+
     local duration = getHelixDuration(caster) + caster:getMod(tpz.mod.HELIX_DURATION)
 
-    duration = duration * (resist / 2)
+    -- duration = duration * (resist / 2)
 	
     if (dot > 0) then
         target:addStatusEffect(tpz.effect.HELIX, dot, 9, duration)

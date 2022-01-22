@@ -872,7 +872,9 @@ enum class Mod
 	ENMITY_MITIGATES_DMG            = 2823, // Adds -% Damage Taken based on current Enmity (CE + VE)
 	ENMITY_MITIGATES_DMG_DT         = 2824, // Handles the amount of -% Damage Taken provided by ENMITY_MITIGATES_DMG
 	CONVERT_ELEM_DMG_MP             = 2825, // Converts % of elemental magic damage dealt to MP
+	MAGIC_BURST_ACC                 = 2826, // Adds value to magic burst ACC bonus
 	
+	REGEN_BASE                      = 2934, // Adds # to the base regen effect (similar to WHM Regen merits)
 	PHANTOM_ROLL_RECAST             = 2935, // Reduces the recast time of Phantom Roll
 	REVERSE_FLOURISH_BONUS          = 2936, // Adds to the base TP returned by Reverse Flourish
 	SMN_SPELLINTERRUPT              = 2937, // Summoning magic interruption rate down %

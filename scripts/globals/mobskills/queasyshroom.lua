@@ -32,8 +32,15 @@ function onMobWeaponSkill(target, mob, skill)
 
     local typeEffect = tpz.effect.POISON
     local power = mob:getMainLvl() / 4 + 1
+	
+	
+	if (mob:getMainLvl() >= 130) then
+		MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 250, 3, 60)
+	else
+		MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, power, 3, 60)
+	end
 
-    MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, power, 3, 60)
+    -- MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, power, 3, 60)
 
     return dmg
 end

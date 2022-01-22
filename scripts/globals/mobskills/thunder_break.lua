@@ -19,7 +19,14 @@ function onMobWeaponSkill(target, mob, skill)
 
     MobStatusEffectMove(mob, target, typeEffect, 1, 0, 4)
 
-    local dmgmod = 1
+    -- local dmgmod = 1
+	
+	if (mob:getMainLvl() >= 120) then
+		dmgmod = 3
+	else
+		dmgmod = 1
+	end
+	
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*3.2, tpz.magic.ele.THUNDER, dmgmod, TP_MAB_BONUS, 1)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.LIGHTNING, MOBPARAM_WIPE_SHADOWS)
     return dmg

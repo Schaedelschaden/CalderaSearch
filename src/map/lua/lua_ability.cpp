@@ -157,6 +157,13 @@ inline int32 CLuaAbility::setRange(lua_State *L)
     return 0;
 }
 
+inline int32 CLuaAbility::getTotalTargets(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaAbility == nullptr);
+    lua_pushinteger(L, m_PLuaAbility->getTotalTargets());
+    return 1;
+}
+
 /************************************************************************
 *																		*
 *  Инициализация методов в lua											*
@@ -179,5 +186,6 @@ Lunar<CLuaAbility>::Register_t CLuaAbility::methods[] =
     LUNAR_DECLARE_METHOD(CLuaAbility,setCE),
     LUNAR_DECLARE_METHOD(CLuaAbility,setVE),
     LUNAR_DECLARE_METHOD(CLuaAbility,setRange),
+	LUNAR_DECLARE_METHOD(CLuaAbility,getTotalTargets),
     {nullptr,nullptr}
 };

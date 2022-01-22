@@ -253,6 +253,7 @@ local highTierKIs = {
 	[12] = {trade = {2713}, reward = 2469}, -- Dyer's Woad -> Celestial Nexus Phantom Gem
 	[13] = {trade = {918}, reward = 2595}, -- Mistletoe -> Headwind Phantom Gem
 	[14] = {trade = {958}, reward = 2556}, -- Marguerite -> Puppet in Peril Phantom Gem
+	[15] = {trade = {951}, reward = 2476}, -- Wijnruit -> Pentacide Perpetrator Phantom Gem
 }
 
 -----------------------------------

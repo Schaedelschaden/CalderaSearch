@@ -533,14 +533,15 @@ local loot =
             -- {itemid = 65535, droprate = 1000, amount = 1000000}, -- gil
         -- },
         {
-            {itemid =  21688, droprate = 125}, -- Montante
-            {itemid =  20527, droprate = 125}, -- Fists of Fury
-            {itemid =  20804, droprate = 125}, -- Perun
-            {itemid =  20613, droprate = 125}, -- Pukulatmuj
-            {itemid =  20980, droprate = 125}, -- Raicho
-            {itemid =  21162, droprate = 125}, -- Pouwhenua
-            {itemid =  21416, droprate = 125}, -- Refined Grip
-            {itemid =  21690, droprate = 125}, -- Ushenzi
+            {itemid =  21688, droprate = 111}, -- Montante
+            {itemid =  20527, droprate = 111}, -- Fists of Fury
+            {itemid =  20804, droprate = 111}, -- Perun
+            {itemid =  20613, droprate = 111}, -- Pukulatmuj
+            {itemid =  20980, droprate = 111}, -- Raicho
+            {itemid =  21162, droprate = 111}, -- Pouwhenua
+            {itemid =  21416, droprate = 111}, -- Refined Grip
+            {itemid =  21690, droprate = 111}, -- Ushenzi
+			{itemid =  21164, droprate = 112}, -- Ababinili
         },
         {
             {itemid = 26942, droprate =  125}, -- Agony Jerkin

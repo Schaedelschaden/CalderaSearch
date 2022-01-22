@@ -15,7 +15,7 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local duration = calculateDuration(60, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(60, caster, target, spell)
     local maxReflectedDamage = target:getMaxHP() * 2
     local reflectedPercent = 33
     local typeEffect = tpz.effect.REPRISAL

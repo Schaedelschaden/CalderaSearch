@@ -20,6 +20,22 @@ cmdprops =
 function onTrigger(player)
 ---------------------------------------------------------------------------------------------------
 
+-- Test shortening the name of a mob
+	-- local mob = player:getCursorTarget()
+	-- local mobName = mob:getName()
+	-- local shortName = mobName:sub(1, 18)
+	-- player:PrintToPlayer(string.format("test.lua onTrigger  MOB NAME: [%s]  SHORTENED NAME: [%s]", mobName, shortName), tpz.msg.channel.NS_LINKSHELL3)
+
+---------------------------------------------------------------------------------------------------
+
+-- Test creating a worn/cracked BCNM orb
+-- (Does not seem to work in this script but will work in the global bcnm.lua)
+	-- printf("test.lua onTrigger CREATING WORN ITEM")
+	-- local item = getItemById(player, 1551)
+	-- player:createWornItem(item)
+
+---------------------------------------------------------------------------------------------------
+
 -- Test Adoulin obstruction open/close
 	-- 17863388 - Morimar Basalt Fields Boulders at E-10
 
@@ -265,10 +281,10 @@ function onTrigger(player)
 ---------------------------------------------------------------------------------------------------
 
 -- Get NPC ID
-	-- local npc = player:getCursorTarget()
-	-- local pos = npc:getPos()
-	-- -- printf("test.lua onTrigger NPC ID: [%i]  POS X: [%f]  POS Y: [%f]  POS Z: [%f]", npc:getID(), pos.x, pos.y, pos.z)
-	-- player:PrintToPlayer(string.format("NPC ID: [%i]  POS X: [%.3f]  POS Y: [%.3f]  POS Z: [%.3f]", npc:getID(), pos.x, pos.y, pos.z),tpz.msg.channel.SYSTEM_3)
+	local npc = player:getCursorTarget()
+	local pos = npc:getPos()
+	-- printf("test.lua onTrigger NPC ID: [%i]  POS X: [%f]  POS Y: [%f]  POS Z: [%f]", npc:getID(), pos.x, pos.y, pos.z)
+	player:PrintToPlayer(string.format("NPC ID: [%i]  POS X: [%.3f]  POS Y: [%.3f]  POS Z: [%.3f]", npc:getID(), pos.x, pos.y, pos.z),tpz.msg.channel.SYSTEM_3)
 
 ---------------------------------------------------------------------------------------------------
 
@@ -316,7 +332,7 @@ function onTrigger(player)
 
 -- Force an AnimationSub
 	-- local target = player:getCursorTarget()
-	-- target:AnimationSub(2)
+	-- target:AnimationSub(0)
 
 ---------------------------------------------------------------------------------------------------
 

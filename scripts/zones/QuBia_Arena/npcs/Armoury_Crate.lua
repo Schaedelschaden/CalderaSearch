@@ -183,14 +183,15 @@ local loot =
             -- {itemid = 65535, droprate = 1000, amount = 1000000}, -- gil
         -- },
         {
-            {itemid =  20853, droprate = 125}, -- Beheader
-            {itemid =  20521, droprate = 125}, -- Emeici
-            {itemid =  20708, droprate = 125}, -- Demersal Degen
-            {itemid =  20681, droprate = 125}, -- Flyssa
-            {itemid =  21748, droprate = 125}, -- Habilitator
-            {itemid =  21099, droprate = 125}, -- Magesmasher
-            {itemid =  22120, droprate = 125}, -- Imati
-            {itemid =  20987, droprate = 125}, -- Tancho
+            {itemid =  20853, droprate = 111}, -- Beheader
+            {itemid =  20521, droprate = 111}, -- Emeici
+            {itemid =  20708, droprate = 111}, -- Demersal Degen
+            {itemid =  20681, droprate = 111}, -- Flyssa
+            {itemid =  21748, droprate = 111}, -- Habilitator
+            {itemid =  21099, droprate = 111}, -- Magesmasher
+            {itemid =  22120, droprate = 111}, -- Imati
+            {itemid =  20987, droprate = 111}, -- Tancho
+			{itemid =  21222, droprate = 111}, -- Mengado
         },
         {
             {itemid = 28134, droprate =  145}, -- Assiduity Pants

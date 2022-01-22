@@ -28,14 +28,20 @@ function onTrigger(player, npc)
         player:startEvent(271, 0, tpz.ki.TUNING_FORK_OF_FIRE, 0)
     elseif (TrialByFire == QUEST_ACCEPTED and WhisperOfFlames) then
         numitem = 0
+		player:addItem(6267)
+		player:delKeyItem(tpz.ki.WHISPER_OF_FLAMES)
+		player:PrintToPlayer(string.format("Ronta-Onta : THIS WHISPER IS HOT HOT HOT!"),tpz.msg.channel.NS_SAY)
+		player:setCharVar("TrialByWind_date", os.date("%j")) -- %M for next minute, %j for next day
+		
+		
+        -- if (player:hasItem(17665)) then numitem = numitem + 1; end  -- Ifrits Blade
+        -- if (player:hasItem(13241)) then numitem = numitem + 2; end  -- Fire Belt
+        -- if (player:hasItem(13560)) then numitem = numitem + 4; end  -- Fire Ring
+        -- if (player:hasItem(1203)) then numitem = numitem + 8; end   -- Egil's Torch
+        -- if (player:hasSpell(298)) then numitem = numitem + 32; end  -- Ability to summon Ifrit
 
-        if (player:hasItem(17665)) then numitem = numitem + 1; end  -- Ifrits Blade
-        if (player:hasItem(13241)) then numitem = numitem + 2; end  -- Fire Belt
-        if (player:hasItem(13560)) then numitem = numitem + 4; end  -- Fire Ring
-        if (player:hasItem(1203)) then numitem = numitem + 8; end   -- Egil's Torch
-        if (player:hasSpell(298)) then numitem = numitem + 32; end  -- Ability to summon Ifrit
+        -- player:startEvent(273, 0, tpz.ki.TUNING_FORK_OF_FIRE, 0, 0, numitem)
 
-        player:startEvent(273, 0, tpz.ki.TUNING_FORK_OF_FIRE, 0, 0, numitem)
     else
         player:startEvent(274) -- Standard dialog
     end

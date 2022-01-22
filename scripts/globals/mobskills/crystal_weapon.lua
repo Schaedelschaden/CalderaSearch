@@ -23,8 +23,15 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local day = math.random(0, 3)
     local damage_type = tpz.damageType.FIRE + tpz.magic.dayElement[day] - 1
-    local dmgmod = 1
+    -- local dmgmod = 1
     local accmod = 1
+	
+	if (mob:getMainLvl() >= 130) then
+		dmgmod = 4
+	else
+		dmgmod = 1
+	end
+	
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg() * 5, accmod, dmgmod, TP_MAB_BONUS, 1)
     local dmg = MobFinalAdjustments(info.dmg, mob,skill, target,tpz.attackType.MAGICAL, damage_type, MOBPARAM_IGNORE_SHADOWS)
     return dmg

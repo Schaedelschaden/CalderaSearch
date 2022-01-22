@@ -593,7 +593,7 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 
 	-- Caldera custom damage modification for Jug Pets
 	if (mob:isPet() and mob:getMaster():isPC()) then
-		local PetRandom = math.random(1, 3)
+		local PetRandom = math.random(1, 2) + (math.random(100)/100)
 		dmg = dmg * PetRandom
 --		printf("monstertpmoves.cpp MobFinalAdjustments PetRandom: [%i]  DMG: [%i]", PetRandom, dmg)
 	end

@@ -6,7 +6,18 @@ mixins = {require("scripts/mixins/job_special")}
 require("scripts/globals/status")
 -----------------------------------
 
+local divineMightID = {17514526, 17514534, 17514542}
+local aaID = {{17514521, 17514522, 17514525, 17514527},
+			  {17514529, 17514530, 17514533, 17514535},
+			  {17514537, 17514538, 17514541, 17514543}}
+
 function onMobSpawn(mob)
+	for i = 1, #divineMightID do
+		if (mob:getID() == divineMightID[i]) then
+			mob:setDropID(0)
+		end
+	end
+
 	mob:setMobMod(tpz.mobMod.SKILL_LIST, 0)
     tpz.mix.jobSpecial.config(mob, {
         between = 30,
@@ -23,13 +34,13 @@ function onMobSpawn(mob)
         },
     })
 	mob:setMod(tpz.mod.PARALYZERES, 50) -- Resistance to Paralyze
-    mob:setMod(tpz.mod.STUNRES, 80) -- Resistance to Stun
+    mob:setMod(tpz.mod.STUNRES, 50) -- Resistance to Stun
     mob:setMod(tpz.mod.BINDRES, 30) -- Resistance to Bind
     mob:setMod(tpz.mod.SLOWRES, 30) -- Resistance to Slow
     mob:setMod(tpz.mod.SILENCERES, 100) -- Resistance to Silence
     mob:setMod(tpz.mod.SLEEPRES, 100) -- Resistance to Sleep
     mob:setMod(tpz.mod.LULLABYRES, 100) -- Resistance to Lullaby
-    mob:setMod(tpz.mod.PETRIFYRES, 100) -- Resistance to Pertrify
+    mob:setMod(tpz.mod.PETRIFYRES, 50) -- Resistance to Pertrify
     mob:setMod(tpz.mod.POISONRES, 30) -- Resistance to Poison
 	-- mob:setMod(tpz.mod.ATT, 1500) -- Attack Stat (Compare to DEF)
 	mob:setMod(tpz.mod.MATT, 200) -- Magic Attack (Compare to MDEF)
@@ -96,7 +107,30 @@ function onMobFight(mob, target)
         mob:setMobMod(tpz.mobMod.SPAWN_LEASH, 22)
         mob:setSpellList(39)
     end
+	
+	if (mob:getLocalVar("DROPLIST_SET") == 0) then
+		local battlefield = target:getBattlefield()
+		local battlefieldID = battlefield:getID()
+		local battlefieldArea = battlefield:getArea()
+		local droplistCounter = 0
+		
+		-- printf("Ark_Angel_TT.lua onMobFight BATTLEFIELD ID: [%i]", battlefieldID)
+		
+		for i = 1, #aaID[battlefieldArea] do
+			if (battlefieldID == 293 and GetMobByID(aaID[battlefieldArea][i]):isDead()) then
+				droplistCounter = droplistCounter + 1
+				-- printf("Ark_Angel_TT.lua onMobFight DROP LIST COUNTER: [%i]", droplistCounter)
+			end
+		end
+		
+		if (droplistCounter >= 4) then
+			-- printf("Ark_Angel_TT.lua onMobFight DROP LIST COUNTER >= 4")
+			mob:setDropID(3290)
+			mob:setLocalVar("DROPLIST_SET", 1)
+		end
+	end
 end
 
 function onMobDeath(mob, player, isKiller)
+	
 end

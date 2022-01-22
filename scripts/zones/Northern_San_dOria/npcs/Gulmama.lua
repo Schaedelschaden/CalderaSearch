@@ -38,14 +38,18 @@ function onTrigger(player, npc)
         player:startEvent(707, 0, tpz.ki.TUNING_FORK_OF_ICE, 4)
     elseif (TrialByIce == QUEST_ACCEPTED and WhisperOfFrost) then
         local numitem = 0
+		player:addItem(6267)
+		player:delKeyItem(tpz.ki.WHISPER_OF_FROST)
+		player:PrintToPlayer(string.format("Gulmama : OH, THAT'S COLD! COULD CUT GLASS OVER HERE!"),tpz.msg.channel.NS_SAY)
+		player:setCharVar("TrialByWind_date", os.date("%j")) -- %M for next minute, %j for next day
 
-        if (player:hasItem(17492)) then numitem = numitem + 1; end  -- Shiva's Claws
-        if (player:hasItem(13242)) then numitem = numitem + 2; end  -- Ice Belt
-        if (player:hasItem(13561)) then numitem = numitem + 4; end  -- Ice Ring
-        if (player:hasItem(1207)) then numitem = numitem + 8; end   -- Rust 'B' Gone
-        if (player:hasSpell(302)) then numitem = numitem + 32; end  -- Ability to summon Shiva
+        -- if (player:hasItem(17492)) then numitem = numitem + 1; end  -- Shiva's Claws
+        -- if (player:hasItem(13242)) then numitem = numitem + 2; end  -- Ice Belt
+        -- if (player:hasItem(13561)) then numitem = numitem + 4; end  -- Ice Ring
+        -- if (player:hasItem(1207)) then numitem = numitem + 8; end   -- Rust 'B' Gone
+        -- if (player:hasSpell(302)) then numitem = numitem + 32; end  -- Ability to summon Shiva
 
-        player:startEvent(709, 0, tpz.ki.TUNING_FORK_OF_ICE, 4, 0, numitem)
+        -- player:startEvent(709, 0, tpz.ki.TUNING_FORK_OF_ICE, 4, 0, numitem)
     else
         player:startEvent(710) -- Standard dialog
     end

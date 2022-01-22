@@ -17,6 +17,7 @@ function onTrade(player, npc, trade)
     local KindredsCrest = player:getSeals(2)
     local HighKindredsCrest = player:getSeals(3)
     local SacredKindredsCrest = player:getSeals(4)
+	local merits = player:getMeritCount()
 ----------------------------------------------------------------------------------------------------------------------------
 -------- Trading Seals/Crests to Shami -------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------
@@ -45,7 +46,7 @@ function onTrade(player, npc, trade)
 ----------------------------------------------------------------------------------------------------------------------------
     elseif (trade:hasItemQty(1551, 1) and NumberItem == 1) then
         if (player:hasWornItem(1551)) then
-            player:startEvent(22) -- Cloudy Orb is Cracked
+			player:startEvent(22) -- Cloudy Orb is Cracked
         else
             player:startEvent(5)  -- Cloudy Orb is ok, List where you can take the orb.
         end
@@ -84,19 +85,49 @@ function onTrade(player, npc, trade)
         end
     elseif (trade:hasItemQty(1175, 1) and NumberItem == 1) then
         if (player:hasWornItem(1175)) then
-            player:startEvent(22) -- Clotho Orb is Cracked
+			if (merits >= 10) then
+				player:PrintToPlayer(string.format("Shami : (Geeze, you're a bigger sucker than I thought!)."),tpz.msg.channel.NS_SAY)
+				player:PrintToPlayer(string.format("Shami : I'll replace this cracked orb for you for 10 merits."),tpz.msg.channel.NS_SAY)
+				player:tradeComplete(trade)
+				player:setMerits(player:getMeritCount() - 10)
+				player:addItem(1175)
+				player:messageSpecial(ID.text.ITEM_OBTAINED, 1175)
+			else
+				player:startEvent(22) -- Clotho Orb is Cracked
+				player:PrintToPlayer(string.format("Shami : If you have at least 10 merits next time I'll replace the orb for you!"),tpz.msg.channel.NS_SAY)
+			end
         else
             player:startEvent(9) -- Clotho Orb is ok, List where you can take the orb.
         end
     elseif (trade:hasItemQty(1178, 1) and NumberItem == 1) then
         if (player:hasWornItem(1178)) then
-            player:startEvent(22) -- Lachesis Orb is Cracked
+			if (merits >= 25) then
+				player:PrintToPlayer(string.format("Shami : (Geeze, you're a bigger sucker than I thought!)."),tpz.msg.channel.NS_SAY)
+				player:PrintToPlayer(string.format("Shami : I'll replace this cracked orb for you for 25 merits."),tpz.msg.channel.NS_SAY)
+				player:tradeComplete(trade)
+				player:setMerits(player:getMeritCount() - 25)
+				player:addItem(1178)
+				player:messageSpecial(ID.text.ITEM_OBTAINED, 1178)
+			else
+				player:startEvent(22) -- Lachesis Orb is Cracked
+				player:PrintToPlayer(string.format("Shami : If you have at least 25 merits next time I'll replace the orb for you!"),tpz.msg.channel.NS_SAY)
+			end
         else
             player:startEvent(9) -- Lachesis Orb is ok, List where you can take the orb.
         end
     elseif (trade:hasItemQty(1553, 1) and NumberItem == 1) then
         if (player:hasWornItem(1553)) then
-            player:startEvent(22) -- Themis Orb is Cracked
+			if (merits >= 50) then
+				player:PrintToPlayer(string.format("Shami : (Geeze, you're a bigger sucker than I thought!)."),tpz.msg.channel.NS_SAY)
+				player:PrintToPlayer(string.format("Shami : I'll replace this cracked orb for you for 50 merits."),tpz.msg.channel.NS_SAY)
+				player:tradeComplete(trade)
+				player:setMerits(player:getMeritCount() - 50)
+				player:addItem(1553)
+				player:messageSpecial(ID.text.ITEM_OBTAINED, 1553)
+			else
+				player:startEvent(22) -- Themis Orb is Cracked
+				player:PrintToPlayer(string.format("Shami : If you have at least 50 merits next time I'll replace the orb for you!"),tpz.msg.channel.NS_SAY)
+			end
         else
             player:startEvent(11) -- Themis Orb is ok, List where you can take the orb.
         end

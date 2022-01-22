@@ -1101,6 +1101,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 
         // get any available merit recast reduction
         uint8 meritRecastReduction = 0;
+		int16 newRecast = 0;
 
         if (PAbility->getMeritModID() > 0 && !(PAbility->getAddType() & ADDTYPE_MERIT))
         {
@@ -1111,11 +1112,25 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         auto charge = ability::GetCharge(this, PAbility->getRecastId());
         if (charge && PAbility->getID() != ABILITY_SIC)
         {
-            action.recast = charge->chargeTime * PAbility->getRecastTime() - meritRecastReduction;
+			newRecast = (int16)(charge->chargeTime * PAbility->getRecastTime() - meritRecastReduction);
+			
+			if (newRecast < 2)
+			{
+				newRecast = 2;
+			}
+			
+            action.recast = (uint16)newRecast;
         }
         else
         {
-            action.recast = PAbility->getRecastTime() - meritRecastReduction;
+			newRecast = (int16)(PAbility->getRecastTime() - meritRecastReduction);
+			
+			if (newRecast < 2)
+			{
+				newRecast = 2;
+			}
+			
+            action.recast = (uint16)newRecast;
         }
 
         if (PAbility->getID() == ABILITY_LIGHT_ARTS || PAbility->getID() == ABILITY_DARK_ARTS || PAbility->getRecastId() == 231) //stratagems
@@ -1148,7 +1163,9 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             }
         }
 		// Phantom Roll Ability Delay -#
-		else if (PAbility->getID() == ABILITY_PHANTOM_ROLL)
+		else if (PAbility->getID() >= ABILITY_FIGHTERS_ROLL && PAbility->getID() <= ABILITY_TACTICIANS_ROLL ||
+				 PAbility->getID() >= ABILITY_ALLIES_ROLL && PAbility->getID() <= ABILITY_AVENGERS_ROLL ||
+				 PAbility->getID() >= ABILITY_NATURALISTS_ROLL && PAbility->getID() <= ABILITY_RUNEISTS_ROLL)
 		{
 			int16 rollRecast = getMod(Mod::PHANTOM_ROLL_RECAST);
 			action.recast += rollRecast;
@@ -1167,14 +1184,14 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             }
         }
 
-        if (PAbility->getID() == ABILITY_REWARD) {
+       /*  if (PAbility->getID() == ABILITY_REWARD) {
             CItem* PItem = getEquip(SLOT_HEAD);
             if (PItem && (PItem->getID() == 15157 || PItem->getID() == 15158 || PItem->getID() == 16104 || PItem->getID() == 16105)) {
                 //TODO: Transform this into an item Mod::REWARD_RECAST perhaps ?
                 //The Bison/Brave's Warbonnet & Khimaira/Stout Bonnet reduces recast time by 10 seconds.
                 action.recast -= 10;   // remove 10 seconds
             }
-        }
+        } */
 
         action.id = this->id;
         action.actiontype = PAbility->getActionType();
@@ -1256,6 +1273,10 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             float distance = PAbility->getRange();
 
             PAI->TargetFind->findWithinArea(this, AOERADIUS_ATTACKER, distance);
+
+			auto totalTargets = (uint16)PAI->TargetFind->m_targets.size();
+
+			PAbility->setTotalTargets(totalTargets);
 
             uint16 msg = 0;
             for (auto&& PTarget : PAI->TargetFind->m_targets)

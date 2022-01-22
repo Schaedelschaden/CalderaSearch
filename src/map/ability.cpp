@@ -175,6 +175,16 @@ uint16 CAbility::getValidTarget()
     return m_validTarget;
 }
 
+void CAbility::setTotalTargets(uint16 total)
+{
+    m_totalTargets = total;
+}
+
+uint16 CAbility::getTotalTargets()
+{
+    return m_totalTargets;
+}
+
 uint16 CAbility::getAddType()
 {
     return m_addType;

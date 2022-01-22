@@ -23,7 +23,7 @@ function onMobSpawn(mob)
 	mob:addMod(tpz.mod.EVA, 200) -- Evasion (Compare to ACC)
 	mob:addMod(tpz.mod.DEF, 500) -- Defense (Compart to ATT)
 	mob:addMod(tpz.mod.MEVA, 170) -- Magic Evasion (Compare to MACC)
-	mob:addMod(tpz.mod.MDEF, 200) -- Magic Defense (Compare to MATT)
+	-- mob:addMod(tpz.mod.MDEF, 200) -- Magic Defense (Compare to MATT)
 	mob:setMod(tpz.mod.TRIPLE_ATTACK, 10) -- Triple Attack
 	mob:setMod(tpz.mod.DMGPHYS, -30) -- PDT
 	mob:setLocalVar("[rage]timer", 1800) -- 30 minutes

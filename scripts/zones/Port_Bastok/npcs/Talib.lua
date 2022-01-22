@@ -3,6 +3,7 @@
 --  NPC: Talib
 -- Starts Quest: Beauty and the Galka
 -- Starts & Finishes Quest: Shady Business
+-- !pos -100.866 4.650 29.841
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/keyitems")

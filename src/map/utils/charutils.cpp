@@ -728,7 +728,7 @@ namespace charutils
                 uint32 cast_time = Sql_GetUIntData(SqlHandle, 1);
                 uint32 recast = Sql_GetUIntData(SqlHandle, 2);
                 time_t now = time(nullptr);
-                uint32 chargeTime = 0;
+                auto chargeTime = 0;
                 uint8 maxCharges = 0;
                 Charge_t* charge = ability::GetCharge(PChar, Sql_GetUIntData(SqlHandle, 0));
                 if (charge != nullptr)
@@ -5117,7 +5117,7 @@ namespace charutils
             PChar->StatusEffectContainer->DelStatusEffect(EFFECT_ENLIGHTENMENT);
             PChar->StatusEffectContainer->DelStatusEffect(EFFECT_ALTRUISM);
             PChar->StatusEffectContainer->DelStatusEffect(EFFECT_TRANQUILITY);
-            if (PSpell->getAOE() == SPELLAOE_RADIAL_ACCE)
+            if (PSpell->getAOE() == SPELLAOE_RADIAL_ACCE && PSpell->getTotalTargets() > 1)
             {
                 PChar->StatusEffectContainer->DelStatusEffect(EFFECT_ACCESSION);
             }
@@ -5130,7 +5130,7 @@ namespace charutils
             PChar->StatusEffectContainer->DelStatusEffect(EFFECT_ENLIGHTENMENT);
             PChar->StatusEffectContainer->DelStatusEffect(EFFECT_FOCALIZATION);
             PChar->StatusEffectContainer->DelStatusEffect(EFFECT_EQUANIMITY);
-            if (PSpell->getAOE() == SPELLAOE_RADIAL_MANI)
+            if (PSpell->getAOE() == SPELLAOE_RADIAL_MANI && PSpell->getTotalTargets() > 1)
             {
                 PChar->StatusEffectContainer->DelStatusEffect(EFFECT_MANIFESTATION);
             }

@@ -16,6 +16,27 @@ end
 function onTrigger(player, npc)
 	local abyssite = 1444 -- White Stratum Abyssite
 
+	local allianceList = player:getAlliance()
+	local member = {}
+	local spawnDenied = false
+	local troubleMember
+	
+	for i,v in ipairs(allianceList) do
+		member[i] = GetPlayerByName(v:getName())
+		-- printf("Planar_Rift.lua onTrigger BATALLIA DOWNS  MEMBER: [%s]  HAHAVA KC: [%i]  VOIDWROUGHT KC: [%i]  CELAENO KC: [%i]", v:getName(), member[i]:getCharVar("KillCounter_Hahava"), member[i]:getCharVar("KillCounter_Voidwrought"), member[i]:getCharVar("KillCounter_Celaeno"))
+		
+		if (member[i]:getCharVar("KillCounter_Hahava") < 1 or member[i]:getCharVar("KillCounter_Voidwrought") < 1 or member[i]:getCharVar("KillCounter_Celaeno") < 1) then
+			spawnDenied = true
+			troubleMember = member[i]
+			break
+		end
+	end
+	
+	if (spawnDenied == true) then
+		npc:PrintToArea(string.format("Spawn prevented because [%s] does not have the City Voidwatch clears.", troubleMember:getName()),tpz.msg.channel.SYSTEM_1, tpz.msg.area.SHOUT)
+		return
+	end
+
 	if (player:hasKeyItem(tpz.ki.VOIDSTONE1)) then
 		player:startEvent(6001, 14, 16, 0, 0, 0, 0, 49255, abyssite)
 		if (npc:getID() == 17122255) then

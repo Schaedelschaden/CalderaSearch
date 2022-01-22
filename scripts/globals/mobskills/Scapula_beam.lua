@@ -31,7 +31,7 @@ function onMobWeaponSkill(target, mob, skill)
 	MobStatusEffectMove(mob, target, typeEffect6, 80, 0, 60)
 	MobStatusEffectMove(mob, target, typeEffect7, 80, 0, 60)
 	
-    local dmgmod = 1.5
+    local dmgmod = 1.25
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*5, tpz.magic.ele.NONE, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.ELEMENTAL, MOBPARAM_IGNORE_SHADOWS)
 	

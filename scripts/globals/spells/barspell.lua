@@ -39,7 +39,7 @@ function applyBarspell(effectType, caster, target, spell)
     local power = calculateBarspellPower(caster, enhanceSkill)
     local duration = calculateBarspellDuration(caster, enhanceSkill)
 	
-    duration = calculateDuration(duration, tpz.skill.ENHANCING_MAGIC, tpz.magic.spellGroup.WHITE, caster, target)
+    duration = calculateDuration(duration, caster, target, spell)
 	
 	if target:hasStatusEffect(tpz.effect.COMPOSURE) and target == caster then
 		duration = duration * 3

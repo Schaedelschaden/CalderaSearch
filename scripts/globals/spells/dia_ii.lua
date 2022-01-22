@@ -42,7 +42,7 @@ function onSpellCast(caster, target, spell)
     local final = finalMagicAdjustments(caster, target, spell, dmg)
 
     -- Calculate duration and bonus
-    local duration = calculateDuration(120, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(120, caster, target, spell)
     local dotBonus = caster:getMod(tpz.mod.DIA_DOT) -- Dia Wand
 
     -- Check for Bio

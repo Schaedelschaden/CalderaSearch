@@ -72,7 +72,7 @@ function onTrigger(player, npc)
 		2521, 1560,			-- Gnole Claw
 		909, 888,			-- Guivre's Skull
 		1193, 9975,			-- High-Quality Crab Shell
-		3270, 1010,			-- High-Quality Pugil Scale
+		1587, 1010,			-- High-Quality Pugil Scale
 		1473, 10260,		-- High-Quality Scorpion Shell
 		1719, 6000,			-- Harajnite Shell
 		2639, 2052,			-- Hardened Bone

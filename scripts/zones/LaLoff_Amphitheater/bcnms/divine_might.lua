@@ -24,6 +24,7 @@ function onBattlefieldRegister(player, battlefield)
 end
 
 function onBattlefieldEnter(player, battlefield)
+	player:delKeyItem(tpz.ki.P_PERPETRATOR_PHANTOM_GEM)
     player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 1, battlefield:getLocalVar("[cs]bit"), 1)
 end
 
@@ -43,11 +44,14 @@ end
 function onEventFinish(player, csid, option)
     if csid == 32001 then
 		local KCAA = {"KillCounter_AAHM", "KillCounter_AATT", "KillCounter_AAMT", "KillCounter_AAEV", "KillCounter_AAGK"}
+		local kcDM = player:getCharVar("KillCounter_DivineMight")
 		
 		for i = 1, #KCAA do
 			local killCounter = player:getCharVar(KCAA[i])
 			player:setCharVar(KCAA[i], killCounter + 1)
 		end
+		
+		player:setCharVar("KillCounter_DivineMight", kcDM + 1)
 		
         if player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.DIVINE_MIGHT) == QUEST_ACCEPTED then
             player:setCharVar("DivineMight", 2) -- Used to use 2 to track completion, so that's preserved to maintain compatibility

@@ -34,7 +34,7 @@ function onUseAbility(player, target, ability)
 	
 	-- Caps at 24 at level 99
     if (player:getMainJob() == tpz.job.SCH and player:getMainLvl() >= 20) then
-        regenbonus = 3 * math.floor((player:getMainLvl() - 19) / 10)
+        regenbonus = math.floor((player:getMainLvl() - 1) / 4)
     end
 
     player:addStatusEffect(tpz.effect.LIGHT_ARTS, effectbonus, 0, 7200, 0, regenbonus)

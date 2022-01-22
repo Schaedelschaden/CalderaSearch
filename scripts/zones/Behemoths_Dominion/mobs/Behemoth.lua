@@ -35,8 +35,27 @@ function onMobSpawn(mob)
 	mob:addMod(tpz.mod.REGEN, 60)	
 end
 
+function onSpellPrecast(mob, spell)
+    if (spell:getID() == 218) then -- Meteor
+        spell:setAoE(tpz.magic.aoe.RADIAL)
+        spell:setFlag(tpz.magic.spellFlag.HIT_ALL)
+        spell:setRadius(30)
+        spell:setAnimation(280) -- AoE Meteor Animation
+        spell:setMPCost(1)
+    end
+end
+
 function onMobDeath(mob, player, isKiller)
     player:addTitle(tpz.title.BEHEMOTHS_BANE)
+	
+	local playerName = player:getName()
+	local mobName = mob:getName()
+	local KillCounter = player:getCharVar("KillCounter_"..mobName)
+	
+	KillCounter = KillCounter + 1
+	
+	player:setCharVar("KillCounter_"..mobName, KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", mobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
 end
 
 function onMobDespawn(mob)

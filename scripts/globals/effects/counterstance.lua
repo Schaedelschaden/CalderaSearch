@@ -6,8 +6,9 @@
 require("scripts/globals/status")
 -----------------------------------
 
-function onEffectGain(target,effect)
-    power = effect:getPower()
+function onEffectGain(target, effect)
+    local power = effect:getPower()
+	
 	if (power == 10) then
 		target:addMod(tpz.mod.COUNTER, power)
 		target:addMod(tpz.mod.COUNTER_DMG, 150)
@@ -16,10 +17,13 @@ function onEffectGain(target,effect)
 	end
 end
 
-function onEffectTick(target,effect)
+function onEffectTick(target, effect)
+	
 end
 
-function onEffectLose(target,effect)
+function onEffectLose(target, effect)
+	local power = effect:getPower()
+
     if (power == 10) then
 		target:delMod(tpz.mod.COUNTER, power)
 		target:delMod(tpz.mod.COUNTER_DMG, 150)

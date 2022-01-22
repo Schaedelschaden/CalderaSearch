@@ -1031,6 +1031,7 @@ function onTrigger(player,npc)
 					10737,	50000,		-- (Feet) Abyss Sollerets +2
 					-- 25459,	50000,		-- (Neck) Abyssal Bead Necklace
 					10831,	50000,		-- (Waist) Paewr Belt
+					10819,	50000,		-- (Waist) Flume Belt
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
 					10797,	50000,		-- (Ring) Dagaz Ring

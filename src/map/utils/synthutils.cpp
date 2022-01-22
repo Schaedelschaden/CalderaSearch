@@ -317,26 +317,32 @@ uint8 calcSynthResult(CCharEntity* PChar)
             case 4:  chance = 0.5;      break; // 1 in 2
             case 3:  chance = 0.25;     break; // 1 in 4
             case 2:  chance = 0.0625;   break; // 1 in 16
-            case 1:  chance = 0.015625; break; // 1 in 64
+            case 1:  chance = 0.03125;  break; // 1 in 32
             default: chance = 0.000;    break;
         }
 
         if (PChar->CraftContainer->getCraftType() ==  1) //if it's a desynth raise HQ chance
-            chance *= 1.5;
+		{
+			chance *= 1.5;
+		}
 
         int16 modSynthHqRate = PChar->getMod(Mod::SYNTH_HQ_RATE);
 
         // Using x/512 calculation for HQ success rate modifier
         // see: https://www.bluegartr.com/threads/130586-CraftyMath-v2-Post-September-2017-Update
-        chance += (double)modSynthHqRate / 512.;
+        chance += (double)modSynthHqRate / 100.;// 512.;
 
         if(chance > 0 && canHQ) // if there is a chance already and it can HQ, we add myth mods
         {
             //limit max hq chance
             if (PChar->CraftContainer->getCraftType() ==  1)
-                chance = std::clamp(chance, 0., 0.800);
+			{
+                chance = std::clamp(chance, 0., 0.900);
+			}
             else
-                chance = std::clamp(chance, 0., 0.500);
+			{
+                chance = std::clamp(chance, 0., 0.600);
+			}
         }
 
         #ifdef _TPZ_SYNTH_DEBUG_MESSAGES_

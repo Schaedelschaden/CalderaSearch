@@ -32,25 +32,29 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.ELEMENTAL_MAGIC
     -- bonus accuracy from merit
-    params.bonus = merit*3
+    params.bonus = merit * 3
     local resist = applyResistance(caster, target, spell, params)
     -- get the resisted damage
-    dmg = dmg*resist
+    dmg = dmg * resist
     -- add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
     dmg = addBonuses(caster, spell, target, dmg, params)
     -- add in target adjustment
     dmg = adjustForTarget(target, dmg, spell:getElement())
     -- helix MAB merits are actually a percentage increase
-    dmg = dmg * ((100 + merit*2)/100)
+    dmg = dmg * ((100 + merit * 2) / 100)
     -- add in final adjustments
     dmg = finalMagicAdjustments(caster, target, spell, dmg)
 	local dot = dmg
     -- calculate Damage over time
     dot = target:magicDmgTaken(dot)
 
+	if (dot > HELIX_DOT_CAP) then
+		dot = HELIX_DOT_CAP
+	end
+
     local duration = getHelixDuration(caster) + caster:getMod(tpz.mod.HELIX_DURATION)
 
-    duration = duration * (resist/2)
+    -- duration = duration * (resist/2)
 
     if (dot > 0) then
         target:addStatusEffect(tpz.effect.HELIX, dot, 9, duration)

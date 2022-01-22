@@ -135,9 +135,9 @@ function onTrigger(player, mobId)
 	local SDTWater = targ:getMod(tpz.mod.SDT_WATER)
 	local SDTLight = targ:getMod(tpz.mod.SDT_LIGHT)
 	local SDTDark = targ:getMod(tpz.mod.SDT_DARK)
-	local HasteGear = targ:getMod(tpz.mod.HASTE_GEAR)
-	local HasteMagic = targ:getMod(tpz.mod.HASTE_MAGIC)
-	local HasteAbility = targ:getMod(tpz.mod.HASTE_ABILITY)
+	local HasteGear = utils.clamp(targ:getMod(tpz.mod.HASTE_GEAR), 0, 25)
+	local HasteMagic = utils.clamp(targ:getMod(tpz.mod.HASTE_MAGIC), 0, 44)
+	local HasteAbility = utils.clamp(targ:getMod(tpz.mod.HASTE_ABILITY), 0, 25)
 	local MoveSpd = targ:getMod(tpz.mod.MOVE)
 	local HumanoidKiller = targ:getMod(tpz.mod.HUMANOID_KILLER)
 	local BeastKiller = targ:getMod(tpz.mod.BEAST_KILLER)
@@ -182,6 +182,10 @@ function onTrigger(player, mobId)
 	
 	mainJob = jobs[mainJob]
 	subJob = jobs[subJob]
+	
+	if ((player:getMainLvl() + player:getItemLevel()) - MainLvl < 0) then
+		MEVA = MEVA + ((player:getMainLvl() + player:getItemLevel()) - MainLvl) * -2
+	end
 	
     player:PrintToPlayer(string.format("Mob Name: %s  Job: %s/%s ID: %i  Level: %i  HP: %i/%i  MP: %i  TP: %i  Respawn: %i minutes", fixedName, mainJob, subJob, ID, MainLvl, HP, MaxHP, MP, TP, Respawn),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("STR: [%i]  DEX: [%i]  VIT: [%i]  AGI: [%i]  INT: [%i]  MND: [%i]  CHR: [%i]  Regen: [%i]  Haste: [%i%%]  Move Spd: [%i%%]  Speed: [%i]", STR, DEX, VIT, AGI, INT, MND, CHR, Regen, Haste, MoveSpd, targ:speed()),tpz.msg.channel.SYSTEM_3)

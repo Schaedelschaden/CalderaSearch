@@ -30,7 +30,7 @@ function onUseAbility(player,target,ability)
 
     local helixbonus = 0
     if (player:getMainJob() == tpz.job.SCH and player:getMainLvl() >= 20) then
-        helixbonus = math.floor(player:getMainLvl() / 4)
+        helixbonus = math.floor((player:getMainLvl() / 5) - 3)
     end
 
     player:addStatusEffect(tpz.effect.DARK_ARTS,1,0,7200,0,helixbonus)

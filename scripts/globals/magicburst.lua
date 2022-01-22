@@ -75,6 +75,7 @@ end
 
 -- Returns a boolean if the element matches the skillchain property given
 function doesElementMatchWeaponskill(ele, SCProp)
+	-- printf("magicburst.lua doesElementMatchWeaponskill TRIGGERED")
     isMatch = matches[ele + 1][SCProp + 1]
     return (isMatch ~= nil and isMatch > 0)
 end

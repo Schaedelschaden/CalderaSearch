@@ -811,7 +811,11 @@ end
 function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
     local mainLvl = attacker:getMainLvl()
     local defLvl = defender:getMainLvl()
-    local attackerILvl = attacker:getWeaponSkillLevel(tpz.slot.MAIN)
+--    local attackerILvl = attacker:getWeaponSkillLevel(tpz.slot.MAIN)
+
+	if (attacker:getObjType() == tpz.objType.PC) then
+		mainLvl = mainLvl + attacker:getItemLevel()
+	end
 
     local flourisheffect = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
     if flourisheffect ~= nil and flourisheffect:getPower() > 1 then
@@ -820,29 +824,32 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
 --	printf("weaponskills.lua cMeleeRTio ATTACKER: [%s]", attacker:getName())
     local atkmulti = fTP(tp, params.atk100, params.atk200, params.atk300)
     local cratio = (attacker:getStat(tpz.mod.ATT) * atkmulti) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
+	
     cratio = utils.clamp(cratio, 0, 2.25)
+	
     if flourisheffect ~= nil and flourisheffect:getPower() > 1 then
         attacker:delMod(tpz.mod.ATTP, 25 + flourisheffect:getSubPower() / 2)
     end
+	
     local levelcor = 0
     
-    if (attackerILvl > 203) then
-        mainLvl = 119
-    elseif(attackerILvl > 177) then
-        mainLvl = 115
-    elseif(attackerILvl > 153) then
-        mainLvl = 113
-    elseif(attackerILvl > 102) then
-        mainLvl = 109
-    elseif(attackerILvl > 89) then
-        mainLvl = 108
-    elseif(attackerILvl > 76) then
-        mainLvl = 107
-    elseif(attackerILvl > 63) then
-        mainLvl = 106
-    elseif(attackerILvl > 51) then
-        mainLvl = 105
-    end
+    -- if (attackerILvl > 203) then
+        -- mainLvl = 119
+    -- elseif(attackerILvl > 177) then
+        -- mainLvl = 115
+    -- elseif(attackerILvl > 153) then
+        -- mainLvl = 113
+    -- elseif(attackerILvl > 102) then
+        -- mainLvl = 109
+    -- elseif(attackerILvl > 89) then
+        -- mainLvl = 108
+    -- elseif(attackerILvl > 76) then
+        -- mainLvl = 107
+    -- elseif(attackerILvl > 63) then
+        -- mainLvl = 106
+    -- elseif(attackerILvl > 51) then
+        -- mainLvl = 105
+    -- end
     
    if (defLvl < 130) and (mainLvl < defLvl) then
         levelcor = 0.05 * (defLvl - mainLvl)
@@ -1249,6 +1256,10 @@ function handleWSGorgetBelt(attacker)
 								   tpz.mod.SC_FTP_IMPACTION, tpz.mod.SC_FTP_REVERBERATION, tpz.mod.SC_FTP_TRANSFIXION, tpz.mod.SC_FTP_COMPRESSION}
 		local SCProp1, SCProp2, SCProp3 = attacker:getWSSkillchainProp()
 		
+		-- if (attacker:getName() == "Khalum") then
+			-- printf("weaponskills.lua handleWSGorgetBelt SC PROP 1: [%i]  SC PROP 2: [%i]  SC PROP 3: [%i]", SCProp1, SCProp2, SCProp3)
+		-- end
+		
 		if (SCProp1 == nil) then
 			SCProp1 = 0
 		end
@@ -1270,21 +1281,39 @@ function handleWSGorgetBelt(attacker)
 		
 		-- Elemental Gorgets & Belts
 		if (doesElementMatchWeaponskill(wsElement, SCProp1) or doesElementMatchWeaponskill(wsElement, SCProp2) or doesElementMatchWeaponskill(wsElement, SCProp3)) then
+			-- if (attacker:getName() == "Khalum") then
+				-- printf("weaponskills.lua handleWSGorgetBelt SINGLE ELEMENT BELT/GORGET TRIGGERED FTP BONUS: [%i]  WS ELEMENT: [%i]", ftpBonus, wsElement)
+			-- end
 			accBonus = accBonus + attacker:getMod(elementalFTPEquip[wsElement])
-			ftpBonus = ftpBonus + (attacker:getMod(elementalFTPEquip[wsElement]) / 100)
+			ftpBonus = ftpBonus + (attacker:getMod(elementalFTPEquip[wsElement]) * 3.5 / 100)
+			-- if (attacker:getName() == "Khalum") then
+				-- printf("weaponskills.lua handleWSGorgetBelt SINGLE ELEMENT BELT/GORGET FTP BONUS: [%1.2f]", ftpBonus)
+			-- end
 		end
 		
 		-- Fotia Gorget & Belt
 		if (attacker:getMod(tpz.mod.SC_FTP_ALL) > 0) then
+			-- if (attacker:getName() == "Khalum") then
+				-- printf("weaponskills.lua handleWSGorgetBelt ALL ELEMENT BELT/GORGET TRIGGERED FTP BONUS: [%i]", ftpBonus)
+			-- end
 			accBonus = accBonus + attacker:getMod(tpz.mod.SC_FTP_ALL)
 			ftpBonus = ftpBonus + (attacker:getMod(tpz.mod.SC_FTP_ALL) / 100)
+			-- if (attacker:getName() == "Khalum") then
+				-- printf("weaponskills.lua handleWSGorgetBelt ALL ELEMENT BELT/GORGET FTP BONUS: [%1.2f]", ftpBonus)
+			-- end
 		end
 		
 		-- Athos's Gloves, Mekira-oto, Mekira-oto +1, Gavialis Helm
 		if (attacker:getMod(tpz.mod.WS_DAY_FTP_ALL) > 0 and
 		    doesElementMatchWeaponskill(dayElement, SCProp1) or doesElementMatchWeaponskill(dayElement, SCProp2) or doesElementMatchWeaponskill(dayElement, SCProp3)) then
+			-- if (attacker:getName() == "Khalum") then
+				-- printf("weaponskills.lua handleWSGorgetBelt ELEMENT DAY GEAR TRIGGERED FTP BONUS: [%i]", ftpBonus)
+			-- end
 			accBonus = accBonus + attacker:getMod(tpz.mod.WS_DAY_FTP_ALL)
 			ftpBonus = ftpBonus + (attacker:getMod(tpz.mod.WS_DAY_FTP_ALL) / 100)
+			-- if (attacker:getName() == "Khalum") then
+				-- printf("weaponskills.lua handleWSGorgetBelt ELEMENT DAY GEAR FTP BONUS: [%1.2f]", ftpBonus)
+			-- end
 		end
     end
 	

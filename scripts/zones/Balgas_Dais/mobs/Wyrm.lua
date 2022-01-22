@@ -14,31 +14,35 @@ function onMobSpawn(mob)
 	mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1) -- has a bug during flight, like Tiamat
     mob:setTP(3000) -- opens fight with a skill
-	mob:setMod(tpz.mod.STUNRES, 100)
-	mob:setMod(tpz.mod.SILENCERES, 100)
---	mob:addMod(tpz.mod.ADDITIONAL_EFFECT, 1)
-	mob:setMod(tpz.mod.DMGPHYS, 20)
-	mob:setMod(tpz.mod.STUNRES, 100)
---	mob:addMod(tpz.mod.EVA, 100)
+	mob:addMod(tpz.mod.PARALYZERES, 50) -- Resistance to Silence
+    mob:addMod(tpz.mod.BINDRES, 100) -- Resistance to Bind
+    mob:addMod(tpz.mod.SLOWRES, 30) -- Resistance to Slow
+    mob:addMod(tpz.mod.SILENCERES, 80) -- Resistance to Silence
+    mob:addMod(tpz.mod.SLEEPRES, 100) -- Resistance to Sleep
+    mob:addMod(tpz.mod.LULLABYRES, 100) -- Resistance to Lullaby
+    mob:setMod(tpz.mod.STUNRES, 100)
+	mob:addMod(tpz.mod.EVA, 100)
 	mob:addMod(tpz.mod.MEVA, 100)
-	-- mob:addMod(tpz.mod.MACC, 900)
-	mob:addMod(tpz.mod.MATT, 350)
-	mob:addMod(tpz.mod.MDEF, 75)
+	mob:addMod(tpz.mod.ATT, 200)
+	mob:addMod(tpz.mod.ACC, 200)
+	mob:addMod(tpz.mod.DEF, 700)
+	mob:setMod(tpz.mod.MATT, 175)
+	mob:addMod(tpz.mod.MDEF, 25)
+	mob:addMod(tpz.mod.FASTCAST, 50)
 	mob:addMod(tpz.mod.REGEN, 100)
 	mob:addMod(tpz.mod.REFRESH, 100)
+	mob:setMod(tpz.mod.REGAIN, 100)
 end
 
 function onAdditionalEffect(mob, target, damage)
 	params = {}
-	params.power = 200
+	params.power = 100
 	params.chance = 100
 	
     return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENFIRE, params)
 end
 
 function onMobEngaged(mob, target)
-    mob:setMod(tpz.mod.REGAIN, 100) -- very close to the capture by comparing stop watch measures
-    mob:setMod(tpz.mod.REGEN, 500) -- might be higher: capture showed no change in HP with Poison II and Bio III procced
 end
 
 local function notBusy(mob)
@@ -56,6 +60,12 @@ end
 
 function onMobFight(mob, target)
 
+	if mob:AnimationSub() == 1
+		then mob:setMobMod(tpz.mobMod.DRAW_IN, 0)
+	elseif mob:AnimationSub() == 0
+		then mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+	end
+		
 -- Return the selected spell ID.
 function onMonsterMagicPrepare(mob, target)
     -- Suzaku uses     Burn, Fire IV, Firaga III, Flare
@@ -66,10 +76,8 @@ function onMonsterMagicPrepare(mob, target)
         return 176 -- firaga 3
     elseif rnd < 0.7 then
         return 147 -- fire 4
-    elseif rnd < 0.9 then
-        return 204 -- flare
     else
-        return 235 -- burn
+        return 204 -- flare
     end
 end
 

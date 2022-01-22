@@ -26,6 +26,15 @@ end
 
 function onMobDeath(mob, player, isKiller)
     player:addTitle(tpz.title.FAFNIR_SLAYER)
+	
+	local playerName = player:getName()
+	local mobName = mob:getName()
+	local KillCounter = player:getCharVar("KillCounter_"..mobName)
+	
+	KillCounter = KillCounter + 1
+	
+	player:setCharVar("KillCounter_"..mobName, KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", mobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
 end
 
 function onMobDespawn(mob)

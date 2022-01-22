@@ -29,6 +29,7 @@ function onSpellCast(caster,target,spell)
 		params.skillType = tpz.skill.BLUE_MAGIC
 		params.bonus = 0
 		params.effect = tpz.effect.STUN
+		params.resistCap = 0.25
     local resist = applyResistanceEffect(caster, target, spell, params)
     local params = {}
     -- Todo: determine if these param values are retail

@@ -532,7 +532,7 @@ void CAttack::ProcessDamage()
             m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE) ||
             m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_DOUBT)))
     {
-        m_trickAttackDamage += (int32)(m_attacker->DEX() * (1.5f + m_attacker->getMod(Mod::SNEAK_ATK_DEX) / 100));
+        m_trickAttackDamage += (int32)(m_attacker->DEX() * (1.125f + m_attacker->getMod(Mod::SNEAK_ATK_DEX) / 100));
 		PChar->SetLocalVar("SneakAttack_Active", 1);
     }
 
@@ -541,7 +541,7 @@ void CAttack::ProcessDamage()
         m_isFirstSwing &&
         m_attackRound->GetTAEntity() != nullptr)
     {
-        m_trickAttackDamage += (int32)(m_attacker->AGI() * (1.5f + m_attacker->getMod(Mod::TRICK_ATK_AGI) / 100));
+        m_trickAttackDamage += (int32)(m_attacker->AGI() * (1.125f + m_attacker->getMod(Mod::TRICK_ATK_AGI) / 100));
 		PChar->SetLocalVar("TrickAttack_Active", 1);
     }
 
@@ -585,13 +585,13 @@ void CAttack::ProcessDamage()
 	// Caldera Dagger base damage adjustment
 	if (m_attacker->objtype == TYPE_PC && (mainWeapon != nullptr && mainWeapon->getSkillType() == SKILL_DAGGER || subWeapon != nullptr && subWeapon->getSkillType() == SKILL_DAGGER))
 	{
-		m_damage = (uint32)(m_damage * 1.35f);
+		m_damage = (uint32)(m_damage * 1.125f);
 	}
 	
 	// Caldera Katana base damage adjustment
 	if (m_attacker->objtype == TYPE_PC && (mainWeapon != nullptr && mainWeapon->getSkillType() == SKILL_KATANA || subWeapon != nullptr && subWeapon->getSkillType() == SKILL_KATANA))
 	{
-		m_damage = (uint32)(m_damage * 1.50f);
+		m_damage = (uint32)(m_damage * 1.35f);
 	}
 
     // Soul eater.

@@ -14,7 +14,7 @@ function onSpellCast(caster, target, spell)
     local power = 220
     local tier = 5
     local spelllevel = 75
-    local duration = calculateDuration(1800, spell:getSkillType(), spell:getSpellGroup(), caster, target, false)
+    local duration = calculateDuration(1800, caster, target, spell, false)
     duration = calculateDurationForLvl(duration, spelllevel, target:getMainLvl())
     local buff = 0
     if target:getMod(tpz.mod.ENHANCES_PROT_SHELL_RCVD) > 0 then

@@ -20,7 +20,7 @@ function onMobWeaponSkill(target, mob, skill)
     local heal = target:getMaxHP() - target:getHP()
 	
 	if (mob:isNM()) then
-		heal = heal * 0.15
+		heal = heal * 0.05
 	end
 
     skill:setMsg(tpz.msg.basic.SELF_HEAL)

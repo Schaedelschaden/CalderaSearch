@@ -20,6 +20,13 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 1
+	
+	if (mob:getMainLvl() >= 130) then
+		dmgmod = 2.5
+	else
+		dmgmod = 1
+	end
+	
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*3, tpz.magic.ele.EARTH, dmgmod, TP_MAB_BONUS, 1)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.EARTH, MOBPARAM_IGNORE_SHADOWS)
     return dmg

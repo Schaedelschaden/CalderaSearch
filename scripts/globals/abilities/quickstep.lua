@@ -29,7 +29,7 @@ end
 function onUseAbility(player, target, ability, action)
     -- Only remove TP if the player doesn't have Trance.
     if not player:hasStatusEffect(tpz.effect.TRANCE) then
-        player:delTP(100)
+        player:delTP(100 - player:getMod(tpz.mod.STEP_TP_CONSUMED))
     end
 	
 	local StepACC = player:getMod(tpz.mod.STEP_ACCURACY)

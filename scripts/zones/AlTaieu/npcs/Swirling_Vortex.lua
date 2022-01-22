@@ -2,7 +2,8 @@
 -- Area: Al'Taieu
 --  NPC: Swirling_Vortex
 -- Type: Standard NPC
--- !pos ? ? ? 33
+-- !pos -562 -1 444 33
+-- !pos 556 -1 442 33
 -----------------------------------
 local ID = require("scripts/zones/AlTaieu/IDs");
 require("scripts/globals/limbus");

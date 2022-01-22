@@ -11,11 +11,13 @@ function onMobSpawn(mob)
 	if (mob:getID() == 17186822) then
 		mob:setPos(-156.499, -60.000, 278.243)
 		mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
-		mob:setMod(tpz.mod.REGEN, 3000)
+		-- mob:speed(0)
+		-- mob:setMod(tpz.mod.REGEN, 10000)
 		mob:setMod(tpz.mod.UDMGPHYS, -100)
 		mob:setMod(tpz.mod.UDMGBREATH, -100)
 		mob:setMod(tpz.mod.UDMGMAGIC, -100)
 		mob:setMod(tpz.mod.UDMGRANGE, -100)
+		mob:setMod(tpz.mod.CHARMRES, 100)
 		mob:setRespawnTime(10)
 	end
 end
@@ -23,8 +25,10 @@ end
 function onMobFight(mob, target)
 	if (mob:getID() == 17186822) then
 		mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
-		mob:setMod(tpz.mod.REGEN, 3000)
-		mob:setMod(tpz.mod.CHARMRES, 100)
+		-- mob:speed(0)
+		-- mob:setMod(tpz.mod.REGEN, 10000)
+		-- mob:setMod(tpz.mod.CHARMRES, 100)
+		mob:setMod(tpz.mod.MEVA, 1064)
 
 		if (mob:checkDistance(target) >= 25) then
 			mob:disengage()
@@ -44,6 +48,10 @@ function onMobFight(mob, target)
 		mob:setMod(tpz.mod.UDMGBREATH, 0)
 		mob:setMod(tpz.mod.UDMGMAGIC, 0)
 		mob:setMod(tpz.mod.UDMGRANGE, 0)
+		
+		if (mob:getHPP() <= 25) then
+			mob:setHP(1000000)
+		end
 		-- if (mainLevel >= 1 and mainLevel <= 20) then
 			-- mob:setMobLevel(mainLevel)
 			-- mob:setMod(tpz.mod.ATT, 50)
@@ -85,8 +93,11 @@ function onMobFight(mob, target)
 end
 
 function onMobDisengage(mob)
+	mob:setPos(-156.400, -60, 278.243, 125)
 	mob:setMobLevel(1)
+	mob:setHP(1000000)
 	mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
+	-- mob:speed(0)
 	mob:setMod(tpz.mod.UDMGPHYS, -100)
 	mob:setMod(tpz.mod.UDMGBREATH, -100)
 	mob:setMod(tpz.mod.UDMGMAGIC, -100)

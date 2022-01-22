@@ -11,7 +11,7 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local duration = calculateDuration(SPIKE_EFFECT_DURATION, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(SPIKE_EFFECT_DURATION, caster, target, spell)
     local typeEffect = tpz.effect.BLAZE_SPIKES
 
     local int = caster:getStat(tpz.mod.INT)

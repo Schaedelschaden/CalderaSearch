@@ -734,6 +734,7 @@ public:
     float       getRange();
     uint8       getAOE();
     uint16      getValidTarget();
+	uint16      getTotalTargets();
     uint16      getAddType();
     uint16      getMessage();
     uint16      getAoEMsg();
@@ -754,6 +755,7 @@ public:
     void        setRange(float range);
     void        setAOE(uint8 aoe);
     void        setValidTarget(uint16 validTarget);
+	void        setTotalTargets(uint16 total);
     void        setAddType(uint16 addtype);
     void        setMessage(uint16 message);
     void        setRecastTime(uint16 recastTime);
@@ -777,6 +779,7 @@ private:
     float       m_range;
     uint8       m_aoe;
     uint16      m_validTarget;
+	uint16      m_totalTargets {};
     uint16      m_addType;
     uint16      m_message;
     uint16      m_recastTime;

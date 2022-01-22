@@ -23,7 +23,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.BINDRES, 35) -- Resistance to Bind
     mob:setMod(tpz.mod.SLOWRES, 50) -- Resistance to Slow
 	mob:addMod(tpz.mod.ATT, 200) -- Attack Stat (Compare to DEF)
-	mob:addMod(tpz.mod.MATT, 120) -- Magic Attack (Compare to MDEF)
+	mob:addMod(tpz.mod.MATT, 70) -- Magic Attack (Compare to MDEF)
     mob:addMod(tpz.mod.ACC, 200) -- Accuracy (compare to EVA)
 	mob:addMod(tpz.mod.MACC, 100) -- Magic ACC (Compare to MEVA)
 	mob:addMod(tpz.mod.EVA, 150) -- Evasion (Compare to ACC)

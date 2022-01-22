@@ -99,7 +99,7 @@ function calculateMagicDamage(caster, target, spell, params)
 end
 
 function doBoostGain(caster, target, spell, effect)
-    local duration = calculateDuration(300, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(300, caster, target, spell)
 
     --calculate potency
     local magicskill = target:getSkillLevel(spell:getSkillType())
@@ -151,7 +151,7 @@ function doBoostGain(caster, target, spell, effect)
 end
 
 function doEnspell(caster, target, spell, effect)
-    local duration = calculateDuration(180, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = calculateDuration(180, caster, target, spell)
 
     --calculate potency
     local magicskill = target:getSkillLevel(tpz.skill.ENHANCING_MAGIC)
@@ -337,7 +337,8 @@ function applyResistanceEffect(caster, target, spell, params)
     local skill = params.skillType
     local bonus = params.bonus
     local effect = params.effect
---	printf("magic.lua applyResistanceEffect EFFECT: [%s]", effect)
+	local resistCap = params.resistCap or 0.0625
+	-- printf("magic.lua applyResistanceEffect EFFECT: [%s]", effect)
 
     -- If Stymie is active, as long as the mob is not immune then the effect is not resisted
     if (effect ~= nil) then -- Dispel's script doesn't have an "effect" to send here, nor should it.
@@ -358,7 +359,7 @@ function applyResistanceEffect(caster, target, spell, params)
     local magicaccbonus = getSpellBonusAcc(caster, target, spell, params)
 
     if (diff > 10) then
-        magicaccbonus = magicaccbonus + 10 + (diff - 10)/2
+        magicaccbonus = magicaccbonus + 10 + ((diff - 10) / 2)
     else
         magicaccbonus = magicaccbonus + diff
     end
@@ -367,8 +368,8 @@ function applyResistanceEffect(caster, target, spell, params)
         magicaccbonus = magicaccbonus + bonus
     end
 	
-	-- if (caster:getName() == "Khalum") then
-		-- printf("magic.lua applyResistanceEffect EFFECT: [%s]", effect)
+	-- if (caster:getName() == "Khalum" or caster:getName() == "Shumi") then
+		-- printf("magic.lua applyResistanceEffect EFFECT: [%s]  MACC BONUS: [%i]", effect, magicaccbonus)
 	-- end
 	
 	local effectResistance = getEffectResistance(target, effect)
@@ -383,7 +384,13 @@ function applyResistanceEffect(caster, target, spell, params)
 		-- printf("magic.lua applyResistanceEffect EFFECT: [%s]  EFFECT RES: [%i]  MAGIC HIT RATE: [%i]  PERCENT BONUS: [%i]  MAGIC RES: [%i]", effect, effectResistance, p, percentBonus, getMagicResist(p))
 	-- end
 
-    local magicResist = getMagicResist(p)
+    local magicResist
+	
+	if (skill == tpz.skill.DIVINE_MAGIC or skill == tpz.skill.ELEMENTAL_MAGIC or skill == tpz.skill.DARK_MAGIC or skill == tpz.skill.NINJUTSU) then
+		magicResist = getMagicDamageResist(caster, p)
+	else
+		magicResist = getMagicResist(p)
+	end
 	
 	local enfeeblingEffects = {tpz.effect.WEIGHT,        tpz.effect.POISON, tpz.effect.PARALYSIS, tpz.effect.BLINDNESS, tpz.effect.SILENCE,
 							   tpz.effect.PETRIFICATION, tpz.effect.BIND,   tpz.effect.SLOW,      tpz.effect.STUN,      tpz.effect.SLEEP_I, tpz.effect.SLEEP_II}
@@ -407,14 +414,32 @@ function applyResistanceEffect(caster, target, spell, params)
 				end
 				
 				target:addMod(immunities[i], addImmunity)
-				-- printf("magic.lua applyResistanceEffect SPELL LANDED, INCREASING IMMUNITY  CURRENT: [%i]", target:getMod(immunities[i]))
+				-- printf("magic.lua applyResistanceEffect ENFEEBLING SPELL LANDED, INCREASING IMMUNITY  CURRENT: [%i]", target:getMod(immunities[i]))
 			elseif (i >= 10 and i <= 11 and effect == enfeeblingEffects[i]) then
 				if (target:getMod(immunities[10]) > 100 - addImmunity) then
 					addImmunity = 100 - target:getMod(immunities[10])
 				end
 			
 				target:addMod(immunities[10], addImmunity)
-				-- printf("magic.lua applyResistanceEffect SPELL LANDED, INCREASING IMMUNITY  CURRENT: [%i]", target:getMod(immunities[10]))
+				-- printf("magic.lua applyResistanceEffect ENFEEBLING SPELL LANDED, INCREASING IMMUNITY  CURRENT: [%i]", target:getMod(immunities[10]))
+			end
+		end
+	elseif (target:isMob() and skill == tpz.skill.BLUE_MAGIC and magicResist >= resistCap) then
+		for i = 1, #enfeeblingEffects do
+			if (i >= 1 and i <= 9 and effect == enfeeblingEffects[i]) then
+				if (target:getMod(immunities[i]) > 100 - addImmunity) then
+					addImmunity = 100 - target:getMod(immunities[i])
+				end
+				
+				target:addMod(immunities[i], addImmunity)
+				-- printf("magic.lua applyResistanceEffect BLUE MAGIC SPELL LANDED, INCREASING IMMUNITY  CURRENT: [%i]", target:getMod(immunities[i]))
+			elseif (i >= 10 and i <= 11 and effect == enfeeblingEffects[i]) then
+				if (target:getMod(immunities[10]) > 100 - addImmunity) then
+					addImmunity = 100 - target:getMod(immunities[10])
+				end
+			
+				target:addMod(immunities[10], addImmunity)
+				-- printf("magic.lua applyResistanceEffect BLUE MAGIC SPELL LANDED, INCREASING IMMUNITY  CURRENT: [%i]", target:getMod(immunities[10]))
 			end
 		end
 	elseif (target:isMob() and skill == tpz.skill.SKILL_SINGING or skill == tpz.skill.SKILL_STRING_INSTRUMENT or skill == tpz.skill.SKILL_WIND_INSTRUMENT and magicResist >= 0.5) then
@@ -453,6 +478,16 @@ end
 
 function getMagicHitRate(caster, target, skillType, element, percentBonus, bonusAcc)
 	local mainJob = caster:getMainJob()
+	local casterLvl = caster:getMainLvl()
+	local targetLvl = target:getMainLvl()
+	
+	if (caster:isPC()) then
+		casterLvl = casterLvl + caster:getItemLevel()
+	end
+	
+	if (target:isPC()) then
+		targetLvl = targetLvl + target:getItemLevel()
+	end
 
     -- resist everything if magic shield is active
     if (target:hasStatusEffect(tpz.effect.MAGIC_SHIELD)) then
@@ -541,28 +576,100 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
 			magicacc = magicacc * 0.75
 	end
 
-	-- if (caster:getName() == "Preciosa") then
+	-- if (caster:getName() == "Khalum" or caster:getName() == "Shumi") then
 		-- printf("magic.lua getMagicHitRate CASTER:[%s]  MAGICACC: [%i]  TARGET: [%s]", caster:getName(), magicacc, target:getName())
 	-- end
 	
-    return calculateMagicHitRate(magicacc, magiceva, percentBonus, caster:getMainLvl(), target:getMainLvl())
+    return calculateMagicHitRate(caster, magicacc, magiceva, percentBonus, casterLvl, targetLvl)
 end
 
-function calculateMagicHitRate(magicacc, magiceva, percentBonus, casterLvl, targetLvl)
-    local p = 0
-    --add a scaling bonus or penalty based on difference of targets level from caster
-    local levelDiff = utils.clamp(casterLvl - targetLvl, -5, 5)
+function calculateMagicHitRate(caster, magicacc, magiceva, percentBonus, casterLvl, targetLvl)
+    -- local p = 0
+    -- --add a scaling bonus or penalty based on difference of targets level from caster
+    -- local levelDiff = utils.clamp(casterLvl - targetLvl, -5, 5)
+	-- local adjustedPercent = 1
+	
+	-- if (percentBonus <= 100) then
+		-- adjustedPercent = 1 + (percentBonus / 100)
+	-- end
+
+    -- p = (70 - 0.5 * (magiceva - magicacc) + levelDiff * 3) * adjustedPercent
+	
+	local p = 0
+	local levelDiff = casterLvl - targetLvl
+	
+	if (levelDiff < 0) then
+		magiceva = magiceva + (levelDiff * -2)
+	end
+	
+	local dMACC = magicacc - magiceva	
 	local adjustedPercent = 1
 	
 	if (percentBonus <= 100) then
 		adjustedPercent = 1 + (percentBonus / 100)
 	end
-
-    p = (70 - 0.5 * (magiceva - magicacc) + levelDiff * 3) * adjustedPercent
 	
-	-- printf("magic.lua calculateMagicHitRate CASTER MACC: [%i]  TARGET MEVA: [%i]  PERCENTBONUS: [%1.2f]  p: [%i]  CAPPED p: [%i]", magicacc, magiceva, adjustedPercent, p, utils.clamp(p, 5, 95))
+	if (dMACC < 0) then
+		-- if (caster:getName() == "Khalum" or caster:getName() == "Preciosa") then
+			-- printf("magic.lua calculateMagicHitRate dMACC < 0")
+		-- end
+		p = 50 + math.floor(dMACC / 2)
+	else
+		-- if (caster:getName() == "Khalum" or caster:getName() == "Preciosa") then
+			-- printf("magic.lua calculateMagicHitRate dMACC > 0")
+		-- end
+		p = 50 + dMACC
+	end
+	
+	-- if (caster:getName() == "Khalum" or caster:getName() == "Preciosa" or caster:getName() == "Altanea") then
+		-- printf("magic.lua calculateMagicHitRate CASTER MACC: [%i]  TARGET MEVA: [%i]  PERCENTBONUS: [%1.2f]  p: [%i]  CAPPED p: [%i]", magicacc, magiceva, adjustedPercent, p, utils.clamp(p, 5, 95))
+	-- end
 
-    return utils.clamp(p, 0, 100)
+    return utils.clamp(p, 5, 95)
+end
+
+-- Returns resistance value from given magic hit rate (p) for damaging magic spells
+function getMagicDamageResist(caster, magicHitRate)
+	local p = magicHitRate / 100
+	local resist = 1
+	
+	local half = (1- p)
+	local quarter = (1- p) ^ 2
+	local eighth = (1- p) ^ 3
+	
+	local resvar = math.random()
+	
+	-- if (caster:getName() == "Khalum" or caster:getName() == "Preciosa" or caster:getName() == "Altanea") then
+		-- printf("magic.lua getMagicDamageResist CASTER:[%s]  HIT RATE: [%1.2f]  HALF: [%1.4f]  QUARTER: [%1.4f]  EIGHTH: [%1.4f]  RANDOM: [%1.2f]", caster:getName(), p, half, quarter, eighth, resvar)
+	-- end
+	
+	if (resvar < half) then
+		resist = 0.5
+		resvar = math.random()
+		
+		-- if (caster:getName() == "Khalum" or caster:getName() == "Preciosa" or caster:getName() == "Altanea") then
+			-- printf("magic.lua getMagicDamageResist HALF TRIGGERED  NEW RANDOM: [%1.2f]", resvar)
+		-- end
+		
+		if (resvar < quarter) then
+			resist = 0.25
+			resvar = math.random()
+			
+			-- if (caster:getName() == "Khalum" or caster:getName() == "Preciosa" or caster:getName() == "Altanea") then
+				-- printf("magic.lua getMagicDamageResist QUARTER TRIGGERED  NEW RANDOM: [%1.2f]", resvar)
+			-- end
+			
+			if (resvar < eighth) then
+				-- if (caster:getName() == "Khalum" or caster:getName() == "Preciosa" or caster:getName() == "Altanea") then
+					-- printf("magic.lua getMagicDamageResist EIGHTH TRIGGERED")
+				-- end
+				
+				resist = 0.125
+			end
+		end
+	end
+	
+	return resist
 end
 
 -- Returns resistance value from given magic hit rate (p)
@@ -720,7 +827,7 @@ function getSpellBonusAcc(caster, target, spell, params)
 
     --add acc for skillchains
     if (skillchainTier > 0) then
-        magicAccBonus = magicAccBonus + 25
+        magicAccBonus = magicAccBonus + 25 + caster:getMod(tpz.mod.MAGIC_BURST_ACC)
     end
 	
 	-- Add acc for Grimoire: Magic Accuracy mod
@@ -903,11 +1010,11 @@ end
 					-- Tier 5
 					elseif (i > 63 and i <= 69 and spell:getID() == spellTier[i]) then
 						-- printf("magic.lua finalMagicAdjustments TIER 5 ELEMENTAL MAGIC")
-						multiplier = 4.95
+						multiplier = 4.90
 					-- Ancient Magic
 					elseif (i > 69 and i <= 81 and spell:getID() == spellTier[i]) then
 						-- printf("magic.lua finalMagicAdjustments ANCIENT ELEMENTAL MAGIC")
-						multiplier = 5.10
+						multiplier = 5.95
 					-- Non-elemental
 					elseif (i > 81 and i <= 84 and spell:getID() == spellTier[i]) then
 						-- printf("magic.lua finalMagicAdjustments NON-ELEMENTAL MAGIC")
@@ -982,7 +1089,14 @@ end
     else
         target:takeSpellDamage(caster, spell, dmg, tpz.attackType.MAGICAL, tpz.damageType.ELEMENTAL + spell:getElement())
         target:handleAfflatusMiseryDamage(dmg)
-        target:updateEnmityFromDamage(caster, dmg)
+		
+		local adjustedDMG = dmg
+		
+		if (caster:getObjType() == tpz.objType.PC) then
+			adjustedDMG = adjustedDMG * 1.5
+		end
+		
+        target:updateEnmityFromDamage(caster, adjustedDMG)
         -- Only add TP if the target is a mob
         if (target:getObjType() ~= tpz.objType.PC) then
             target:addTP(100)
@@ -1540,6 +1654,7 @@ function getHelixDuration(caster)
 
     local casterLevel = caster:getMainLvl()
     local duration = 30 --fallthrough
+	
     if (casterLevel <= 39) then
         duration = 30
     elseif (casterLevel <= 59) then
@@ -1547,6 +1662,7 @@ function getHelixDuration(caster)
     elseif (casterLevel <= 99) then
         duration = 90
     end
+	
     return duration
 end
 
@@ -1891,7 +2007,10 @@ function calculateDurationForLvl(duration, spellLvl, targetLvl)
     return duration
 end
 
-function calculateDuration(duration, magicSkill, spellGroup, caster, target, useComposure)
+function calculateDuration(duration, caster, target, spell, useComposure)
+	local spellGroup = spell:getSpellGroup()
+	local magicSkill = spell:getSkillType()
+
     if magicSkill == tpz.skill.ENHANCING_MAGIC then -- Enhancing Magic
         -- Gear mods
         duration = duration + duration * caster:getMod(tpz.mod.ENH_MAGIC_DURATION) / 100
@@ -1913,8 +2032,19 @@ function calculateDuration(duration, magicSkill, spellGroup, caster, target, use
 
         -- Perpetuance
         if caster:hasStatusEffect(tpz.effect.PERPETUANCE) and spellGroup == tpz.magic.spellGroup.WHITE then
+			if (caster:getLocalVar("PERPETUANCE_TOGGLE") == 0) then
+				caster:setLocalVar("PERPETUANCE_COUNTER", spell:getTotalTargets())
+				caster:setLocalVar("PERPETUANCE_TOGGLE", 1)
+			else
+				caster:setLocalVar("PERPETUANCE_COUNTER", caster:getLocalVar("PERPETUANCE_COUNTER") - 1)
+			end
+	
             duration = duration * (2 + (caster:getMod(tpz.mod.ENH_PERPETUANCE) / 100))
-			caster:delStatusEffect(tpz.effect.PERPETUANCE)
+			
+			if (caster:getLocalVar("PERPETUANCE_COUNTER") <= 1) then
+				caster:delStatusEffect(tpz.effect.PERPETUANCE)
+				caster:setLocalVar("PERPETUANCE_TOGGLE", 0)
+			end
         end
         
         -- Embolden
@@ -1985,7 +2115,7 @@ function outputMagicHitRateInfo()
                     magicAcc = magicAcc + dINT
                 end
 
-                local magicHitRate = calculateMagicHitRate(magicAcc, magicEva, 0, casterLvl, targetLvl)
+                local magicHitRate = calculateMagicHitRate(caster, magicAcc, magicEva, 0, casterLvl, targetLvl)
 
 --                printf("Lvl: %d vs %d, %d%%, MA: %d, ME: %d", casterLvl, targetLvl, magicHitRate, magicAcc, magicEva)
             end

@@ -15,7 +15,7 @@ function onTrade(player,npc,trade)
 end;
 
 function onTrigger(player,npc)
-	player:PrintToPlayer(string.format("Reja Ygridhi : Get your Rise of the Zilart and Chains of Promathia accessories here!"),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Reja Ygridhi : Get your storyline mission accessories here!"),tpz.msg.channel.NS_SAY)
     
 	local stock =
     {
@@ -32,17 +32,26 @@ function onTrigger(player,npc)
 		15963, 50000,-- Magnetic Earring
 		15964, 50000,-- Hollow Earring
 		15965, 50000,-- Ethereal Earring
-		2127, 75000, -- metal_chip
-		14815, 75000, -- stealth_earring
-		15961, 75000, -- musical_earring
-		14812, 75000, -- loquacious_earring
-		14813, 75000, -- brutal_earring
-		15477, 75000, -- boxers_mantle
-		15488, 75000, -- gunners_mantle
-		15475, 150000, -- charger_mantle
-		15476, 150000, -- jaeger_mantle
-		15244, 150000, -- flawless_ribbon
-    }
+		-- 2127, 75000, -- Metal Chip
+		14815, 75000, -- Stealth Earring
+		15961, 75000, -- Musical Earring
+		14812, 75000, -- Loquacious Earring
+		14813, 75000, -- Brutal Earring
+		15477, 75000, -- Boxers Mantle
+		15488, 75000, -- Gunners Mantle
+		15475, 150000, -- Charger Mantle
+		15476, 150000, -- Jaeger Mantle
+		15244, 150000, -- Flawless Ribbon
+		15807, 200000, -- Balrahn's Ring
+		15808, 200000, -- Ulthalam's Ring
+		15809, 200000, -- Jalzahn's Ring
+		11589, 250000, -- Aesir Torque
+		16057, 250000, -- Aesir Ear Pendant
+		11546, 250000, -- Aesir Mantle
+		11590, 250000, -- Colossus's Torque
+		16058, 250000, -- Colossus's Earring
+		11547, 250000, -- Colossus's Mantle
+	}
 
     tpz.shop.general(player, stock)
 end
