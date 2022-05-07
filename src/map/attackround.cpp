@@ -235,6 +235,43 @@ void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION
         num = PWeapon->getHitCount();
     }
 	
+	// Octave club handling
+	if (PWeapon->getID() == 18852)
+	{
+		if (m_attacker->GetMLevel() % 2 == 0)
+		{
+			num = tpzrand::GetRandomNumber(2);
+		}
+		else if (m_attacker->GetMLevel() % 3 == 0)
+		{
+			num = tpzrand::GetRandomNumber(3);
+		}
+		else if (m_attacker->GetMLevel() % 4 == 0)
+		{
+			num = tpzrand::GetRandomNumber(4);
+		}
+		else if (m_attacker->GetMLevel() % 5 == 0)
+		{
+			num = tpzrand::GetRandomNumber(5);
+		}
+		else if (m_attacker->GetMLevel() % 6 == 0)
+		{
+			num = tpzrand::GetRandomNumber(6);
+		}
+		else if (m_attacker->GetMLevel() % 7 == 0)
+		{
+			num = tpzrand::GetRandomNumber(7);
+		}
+		else if (m_attacker->GetMLevel() % 8 == 0)
+		{
+			num = tpzrand::GetRandomNumber(8);
+		}
+		else if (m_attacker->GetMLevel() == 99)
+		{
+			num = tpzrand::GetRandomNumber(8);
+		}
+	}
+	
 	// Existance of "Occasionally attacks X times" overwrites PWeapon hit count
     if (isPC && m_attacker->getMod(Mod::MAX_SWINGS))
     {

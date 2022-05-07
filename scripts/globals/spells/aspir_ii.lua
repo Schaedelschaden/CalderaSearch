@@ -40,6 +40,7 @@ function onSpellCast(caster,target,spell)
     end
 
     dmg = dmg * DARK_POWER
+	dmg = dmg * (math.random(50, 100) / 100)
 
     if (target:isUndead()) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT) -- No effect

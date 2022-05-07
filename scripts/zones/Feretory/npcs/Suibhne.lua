@@ -31,8 +31,8 @@ function onTrade(player, npc, trade)
 			itemToAug = itemID
 			itemFound = true
 --			printf("Suibhne Trade Item to Augment ID: [%i]\n", itemToAug)
-			if (trade:getItem(i):getReqLvl() < 90 or ilvl > 109) then
-				player:PrintToPlayer(string.format("Suibhne : The item to be augmented must be between level 90 and item level 109."),tpz.msg.channel.NS_SAY)
+			if (trade:getItem(i):getReqLvl() < 91 or ilvl > 113) then
+				player:PrintToPlayer(string.format("Suibhne : The item to be augmented must be between level 90 and item level 113."),tpz.msg.channel.NS_SAY)
 				return
 			end
 			
@@ -108,7 +108,7 @@ function onTrigger(player,npc)
 	player:PrintToPlayer(string.format("Suibhne : 4x Byakko Scraps = Crit Hit Rate +2%%, Crit Hit Damage +2%%, ACC/RACC +10, Subtle Blow +3"),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Suibhne : 4x Suzaku Scraps = MP +15, INT +3, Magic Damage +10, MACC +10"),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Suibhne : 4x Seiryu Scraps = Pet: STR/DEX/VIT +5, Pet: Crit Hit Rate +2%%, Pet: Store TP +3"),tpz.msg.channel.NS_SAY)
-	player:PrintToPlayer(string.format("Suibhne : Trade 1 piece of level 90-109 Head/Body/Hands/Leg/Feet gear, 1 Mythril Bell (furniture), and the items from above."),tpz.msg.channel.NS_SAY)
+	player:PrintToPlayer(string.format("Suibhne : Trade 1 piece of level 90-113 Head/Body/Hands/Leg/Feet gear, 1 Mythril Bell (furniture), and the items from above."),tpz.msg.channel.NS_SAY)
 	player:PrintToPlayer(string.format("Suibhne : Trade me EXACTLY the ingredients requested. Any additional items included will be lost in the trade."),tpz.msg.channel.NS_SAY)
 --	player:PrintToPlayer(string.format("Suibhne : I handle the augments for gear between levels 91 and 109! Please bear with me while I am being built."),tpz.msg.channel.NS_SAY)
 end

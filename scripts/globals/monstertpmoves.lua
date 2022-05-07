@@ -76,6 +76,12 @@ function MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeff
 
     local lvluser = mob:getMainLvl()
     local lvltarget = target:getMainLvl()
+	
+	-- TODO: This needs to be activated when rebalancing mob stats
+	-- if (target:getObjType() == tpz.objType.PC) then
+		-- lvltarget = lvltarget + target:getItemLevel()
+	-- end
+	
     local acc = mob:getACC()
     local eva = target:getEVA()
     if (target:hasStatusEffect(tpz.effect.YONIN) and mob:isFacing(target, 23)) then -- Yonin evasion boost if mob is facing target
@@ -146,7 +152,6 @@ function MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeff
     else
         maxRatio = ratio
     end
-
 
     if (ratio < 0.38) then
         minRatio =  0
@@ -221,7 +226,6 @@ function MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeff
     returninfo.hitslanded = hitslanded
 
     return returninfo
-
 end
 
 -- MAGICAL MOVE
@@ -252,8 +256,8 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
     local mdefBarBonus = 0
 --	printf("monstertpmoves.lua MobMagicalMove  TP: [%i]  ENH SIC/READY: [%i]  TP CALC: [%i]", skill:getTP(), mob:getMod(tpz.mod.ENH_SIC_READY), (((skill:getTP() + mob:getMod(tpz.mod.ENH_SIC_READY))/ 10) + 1))
 	local tp = (((skill:getTP() + mob:getMod(tpz.mod.ENH_SIC_READY))/ 10) + 1) -- Plus 1 prevents the TP DMG BONUS from zeroing out the entire damage calculation
-	local posorneg = math.random(0, 1) -- Determines whether the swing will be positive or negative
-	local randomness = math.random(1, 10) -- Adds a +/-10% random swing to the damage
+	local dmgMulti = dmgmod or 1
+	local randomness = math.random(-10, 10) -- Adds a +/-10% random swing to the damage
 	
     if
         element >= tpz.magic.element.FIRE and
@@ -276,36 +280,31 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
         mab = 0.7
     end
 
-    if (tpeffect==TP_DMG_BONUS) then
+    if (tpeffect == TP_DMG_BONUS) then
         damage = damage * (((tp / 10) * tpvalue) / 100)
     end
 
     -- printf("power: %f, bonus: %f", damage, mab)
     -- Resistance is added last
-    finaldmg = damage * mab * dmgmod
+    finaldmg = damage * mab * dmgMulti
 
     -- Get resistance
     local avatarAccBonus = 0
+	
     if (mob:isPet() and mob:getMaster() ~= nil) then
         local master = mob:getMaster()
         if (master:getPetID() >= 0 and master:getPetID() <= 20) then -- check to ensure pet is avatar
             avatarAccBonus = utils.clamp(master:getSkillLevel(tpz.skill.SUMMONING_MAGIC) - master:getMaxSkillLevel(mob:getMainLvl(), tpz.job.SMN, tpz.skill.SUMMONING_MAGIC), 0, 200)
         end
     end
+	
     resist = applyPlayerResistance(mob, nil, target, mob:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), avatarAccBonus, element)
 
     local magicDefense = getElementalDamageReduction(target, element)
 
     finaldmg = finaldmg * resist * magicDefense
 	
-	-- Tends towards the low end of the randomness range
-	if (posorneg == 0) then
-		randomness = ((100 + randomness) / 100)
-	else
-		randomness = ((100 - randomness) / 100)
-	end
-	
-	finaldmg = finaldmg * randomness -- Throw in a +/-10% swing for randomness
+	finaldmg = finaldmg * (1 + (randomness / 100)) -- Throw in a +/-10% swing for randomness
 
     returninfo.dmg = finaldmg
 
@@ -340,7 +339,7 @@ function applyPlayerResistance(mob, effect, target, diff, bonus, element)
 
     local p = getMagicHitRate(mob, target, 0, element, percentBonus, magicaccbonus)
 
-    return getMagicResist(p)
+    return getMagicResist(mob, p)
 end
 
 function mobAddBonuses(caster, spell, target, dmg, ele)

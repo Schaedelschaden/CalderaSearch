@@ -3,6 +3,10 @@
 --  Mob: Plateau Hare
 -----------------------------------
 
+function onMobFight(mob)
+	
+end
+
 function onMobDeath(mob, player, isKiller)
 	local pet = player:getPet()
 	if (pet == isKiller) then

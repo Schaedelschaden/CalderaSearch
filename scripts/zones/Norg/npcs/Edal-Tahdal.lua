@@ -21,18 +21,21 @@ function onTrigger(player, npc)
     local WhisperOfTides = player:hasKeyItem(tpz.ki.WHISPER_OF_TIDES)
     local realday = tonumber(os.date("%j")) -- %M for next minute, %j for next day
 
-    if ((TrialByWater == QUEST_AVAILABLE and player:getFameLevel(NORG) >= 4) or (TrialByWater == QUEST_COMPLETED and realday ~= player:getCharVar("TrialByWater_date"))) then
+    if (TrialByWater == QUEST_AVAILABLE and player:getFameLevel(NORG) >= 4) then
         player:startEvent(109, 0, tpz.ki.TUNING_FORK_OF_WATER) -- Start and restart quest "Trial by Water"
     elseif (TrialByWater == QUEST_ACCEPTED and player:hasKeyItem(tpz.ki.TUNING_FORK_OF_WATER) == false and WhisperOfTides == false) then
         player:startEvent(190, 0, tpz.ki.TUNING_FORK_OF_WATER) -- Defeat against Avatar : Need new Fork
     elseif (TrialByWater == QUEST_ACCEPTED and WhisperOfTides == false) then
         player:startEvent(110, 0, tpz.ki.TUNING_FORK_OF_WATER, 2)
-    elseif (TrialByWater == QUEST_ACCEPTED and WhisperOfTides) then
+    elseif ((TrialByWater == QUEST_ACCEPTED or TrialByWater == QUEST_COMPLETED) and WhisperOfTides) then
         numitem = 0
 		player:addItem(6267)
+		player:messageSpecial( ID.text.ITEM_OBTAINED, 6267 )
 		player:delKeyItem(tpz.ki.WHISPER_OF_TIDES)
-		player:PrintToPlayer(string.format("Edal-Tahdal : Eww...why is it......moist?"),tpz.msg.channel.NS_SAY)
-		player:setCharVar("TrialByWind_date", os.date("%j")) -- %M for next minute, %j for next day
+		player:PrintToPlayer(string.format("Edal-Tahdal : Eeew...why is it...moist?"),tpz.msg.channel.NS_SAY)
+		player:setCharVar("TrialByWater_date", getMidnight()) -- os.date("%j")) -- %M for next minute, %j for next day
+		player:completeQuest(OUTLANDS, tpz.quest.id.outlands.TRIAL_BY_WATER)
+		return
 
         -- if (player:hasItem(17439)) then numitem = numitem + 1; end  -- Leviathan's Rod
         -- if (player:hasItem(13246)) then numitem = numitem + 2; end  -- Water Belt
@@ -41,6 +44,11 @@ function onTrigger(player, npc)
         -- if (player:hasSpell(300)) then numitem = numitem + 32; end  -- Ability to summon Leviathan
 
         -- player:startEvent(112, 0, tpz.ki.TUNING_FORK_OF_WATER, 2, 0, numitem)
+	elseif (TrialByWater == QUEST_COMPLETED and player:getCharVar("TrialByWater_date") < getMidnight() and player:hasKeyItem(tpz.ki.TUNING_FORK_OF_WATER) == false) then -- realday ~= player:getCharVar("TrialByWater_date")
+		player:PrintToPlayer(string.format("Edal-Tahdal : Ready for another meeting with the prime avatar? Here you go!"),tpz.msg.channel.NS_SAY)
+		player:setCharVar("TrialByWater_date", 0)
+        player:addKeyItem(tpz.ki.TUNING_FORK_OF_WATER)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TUNING_FORK_OF_WATER)
     else
         player:startEvent(113) -- Standard dialog
     end

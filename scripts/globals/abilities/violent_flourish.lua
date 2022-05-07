@@ -31,7 +31,7 @@ end
 function onUseAbility(player, target, ability, action)
     local hit = 4
     --get fstr
-    local fstr = fSTR(player:getStat(tpz.mod.STR),target:getStat(tpz.mod.VIT),player:getWeaponDmgRank())
+    local fstr = fSTR(player, target)
 
     local params = {}
     params.atk100 = 1 params.atk200 = 1 params.atk300 = 1

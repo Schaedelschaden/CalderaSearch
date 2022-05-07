@@ -15,6 +15,12 @@ function onEffectGain(target,effect) --power=30 initially, subpower=20 for enmit
     if yoninMerits ~= 0 then
         target:addMod(tpz.mod.HP, yoninMerits)
     end
+	
+	-- local augYonin = target:getMod(tpz.mod.AUGMENT_YONIN)
+	-- if (augYonin > 0) then
+		-- target:addMod(tpz.mod.COUNTER, augYonin)
+		-- target:setLocalVar("AUG_YONIN", augYonin)
+	-- end
 end
 
 function onEffectTick(target,effect)
@@ -38,4 +44,9 @@ function onEffectLose(target,effect)
     if yoninMerits ~= 0 then
         target:delMod(tpz.mod.HP, yoninMerits)
     end
+	
+	-- if (target:getLocalVar("AUG_YONIN") > 0) then
+		-- target:delMod(tpz.mod.COUNTER, target:getLocalVar("AUG_YONIN"))
+		-- target:setLocalVar("AUG_YONIN", 0)
+	-- end
 end

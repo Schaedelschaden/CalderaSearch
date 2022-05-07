@@ -28,7 +28,7 @@ function onTrigger(player)
 	local party = player:getParty()
 	
 	for i, member in pairs(party) do
-		if (member:hasEnmity()) then
+		if (member:hasEnmity() and player:getGMLevel() < 1) then
 			player:PrintToPlayer(string.format("You cannot use that command while a member of your party is in combat.", player))
 			return
 		end

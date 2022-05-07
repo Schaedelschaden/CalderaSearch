@@ -27,6 +27,7 @@ function onMobRoam(mob)
 		mob:hideName(true)
         mob:untargetable(true)
 		mob:AnimationSub(1)
+		mob:setAggressive(1)
 	end
 end
 

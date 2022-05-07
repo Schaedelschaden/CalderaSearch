@@ -20,14 +20,13 @@ function onAbilityCheck(player, target, ability)
     else
         return 71, 0
     end
-	
 end
 
 function onUseAbility(player, target, ability, action)
     local params = {}
 		params.includemab = true
 		
-    local dmg = (2 * (player:getRangedDmg() + player:getAmmoDmg()) + player:getMod(tpz.mod.QUICK_DRAW_DMG)) * (1 + player:getMod(tpz.mod.QUICK_DRAW_DMG_PERCENT) / 100)
+    local dmg = ((2 * player:getRangedDmg()) + player:getMod(tpz.mod.QUICK_DRAW_DMG)) * (1 + player:getMod(tpz.mod.QUICK_DRAW_DMG_PERCENT) / 100)
     
 	dmg  = addBonusesAbility(player, tpz.magic.ele.EARTH, target, dmg, params)
     

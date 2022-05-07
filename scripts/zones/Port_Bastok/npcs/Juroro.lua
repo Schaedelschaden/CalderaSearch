@@ -27,18 +27,21 @@ function onTrigger(player, npc)
         player:startEvent(257, 0, 1169, 0, 0, 0, 0, 0, 0)
     elseif (ThePuppetMaster == QUEST_ACCEPTED and ThePuppetMasterProgress == 3) then
         player:startEvent(258)
-    elseif ((TrialByEarth == QUEST_AVAILABLE and player:getFameLevel(BASTOK) >= 6) or (TrialByEarth == QUEST_COMPLETED and realday ~= player:getCharVar("TrialByEarth_date"))) then
+    elseif (TrialByEarth == QUEST_AVAILABLE and player:getFameLevel(BASTOK) >= 6) then
         player:startEvent(249, 0, tpz.ki.TUNING_FORK_OF_EARTH) -- Start and restart quest "Trial by Earth"
     elseif (TrialByEarth == QUEST_ACCEPTED and player:hasKeyItem(tpz.ki.TUNING_FORK_OF_EARTH) == false and WhisperOfTremors == false) then
         player:startEvent(284, 0, tpz.ki.TUNING_FORK_OF_EARTH) -- Defeat against Titan : Need new Fork
     elseif (TrialByEarth == QUEST_ACCEPTED and WhisperOfTremors == false) then
         player:startEvent(250, 0, tpz.ki.TUNING_FORK_OF_EARTH, 1)
-    elseif (TrialByEarth == QUEST_ACCEPTED and WhisperOfTremors) then
+    elseif ((TrialByEarth == QUEST_ACCEPTED or TrialByEarth == QUEST_COMPLETED) and WhisperOfTremors) then
         numitem = 0
 		player:addItem(6267)
+		player:messageSpecial( ID.text.ITEM_OBTAINED, 6267 )
 		player:delKeyItem(tpz.ki.WHISPER_OF_TREMORS)
-		player:PrintToPlayer(string.format("Juroro : This is just a dusty rock!"),tpz.msg.channel.NS_SAY)
-		player:setCharVar("TrialByWind_date", os.date("%j")) -- %M for next minute, %j for next day
+		player:PrintToPlayer(string.format("Juroro : Well, this is just a dusty rock!"),tpz.msg.channel.NS_SAY)
+		player:setCharVar("TrialByEarth_date", getMidnight()) -- os.date("%j")) -- %M for next minute, %j for next day
+		player:completeQuest(BASTOK, tpz.quest.id.bastok.TRIAL_BY_EARTH)
+		return
 
         -- if (player:hasItem(17438)) then numitem = numitem + 1; end  -- Titan's Cudgel
         -- if (player:hasItem(13244)) then numitem = numitem + 2; end  -- Earth Belt
@@ -47,6 +50,11 @@ function onTrigger(player, npc)
         -- if (player:hasSpell(299)) then numitem = numitem + 32; end  -- Ability to summon Titan
 
         -- player:startEvent(252, 0, tpz.ki.TUNING_FORK_OF_EARTH, 1, 0, numitem)
+	elseif (TrialByEarth == QUEST_COMPLETED and player:getCharVar("TrialByEarth_date") < getMidnight() and player:hasKeyItem(tpz.ki.TUNING_FORK_OF_EARTH) == false) then -- realday ~= player:getCharVar("TrialByEarth_date")
+		player:PrintToPlayer(string.format("Juroro : Ready for another meeting with the prime avatar? Here you go!"),tpz.msg.channel.NS_SAY)
+		player:setCharVar("TrialByEarth_date", 0)
+        player:addKeyItem(tpz.ki.TUNING_FORK_OF_EARTH)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TUNING_FORK_OF_EARTH)
     else
         player:startEvent(253) -- Standard dialog
     end

@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `mob_skill_lists` (
   PRIMARY KEY (`skill_list_id`,`mob_skill_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.mob_skill_lists: 3,319 rows
+-- Dumping data for table tpzdb.mob_skill_lists: 3,343 rows
 /*!40000 ALTER TABLE `mob_skill_lists` DISABLE KEYS */;
 INSERT INTO `mob_skill_lists` (`skill_list_name`, `skill_list_id`, `mob_skill_id`) VALUES
 	('Adamantoise', 2, 804),
@@ -2597,9 +2597,9 @@ INSERT INTO `mob_skill_lists` (`skill_list_name`, `skill_list_id`, `mob_skill_id
 	('Manananggal', 854, 1779),
 	('Manananggal', 854, 1782),
 	('Manananggal', 854, 1783),
-	('Aggressor_Antlion', 855, 275),
-	('Aggressor_Antlion', 855, 277),
-	('Aggressor_Antlion', 855, 279),
+	('Aggressor_Antlion', 855, 2517),
+	('Berstuk', 857, 2125),
+	('Amun', 856, 439),
 	('Amun', 856, 440),
 	('Berstuk', 857, 2185),
 	('Drekavac', 859, 472),
@@ -2622,14 +2622,14 @@ INSERT INTO `mob_skill_lists` (`skill_list_name`, `skill_list_id`, `mob_skill_id
 	('Itzpapalotl', 864, 1953),
 	('Itzpapalotl', 864, 1955),
 	('Itzpapalotl', 864, 1956),
-	('Kampe_base/mode3', 865, 353),
-	('Kampe_mode1', 866, 348),
-	('Kampe_mode1', 866, 349),
-	('Kampe_mode2', 867, 354),
-	('Kampe_mode2', 867, 355),
+	('Kampe', 865, 353),
+	('Kampe', 865, 348),
+	('Kampe', 865, 349),
+	('Kampe', 865, 354),
+	('Kampe', 865, 355),
 	('Kharon', 868, 484),
 	('Kharon', 868, 485),
-	('Kharon', 868, 2766),
+	('Kharon', 868, 1795),
 	('Maahes', 869, 480),
 	('Maahes', 869, 652),
 	('Maahes', 869, 653),
@@ -3072,6 +3072,8 @@ INSERT INTO `mob_skill_lists` (`skill_list_name`, `skill_list_id`, `mob_skill_id
 	('TRUST_August', 1099, 707),
 	('TRUST_Trion', 1020, 35),
 	('TRUST_Trion', 1020, 42),
+	('Akvan', 1179, 548),
+	('Akvan', 1179, 549),
 	('TRUST_Tenzen', 1023, 1390),
 	('TRUST_Tenzen', 1023, 1391),
 	('TRUST_Tenzen', 1023, 1392),
@@ -3082,7 +3084,7 @@ INSERT INTO `mob_skill_lists` (`skill_list_name`, `skill_list_id`, `mob_skill_id
 	('TRUST_Mihli_Aliapoh', 1024, 166),
 	('TRUST_Mihli_Aliapoh', 1024, 168),
 	('TRUST_Valaineral', 1025, 34),
-	('TRUST_Valaineral', 1025, 41),
+	('TRUST_Valaineral', 1025, 38),
 	('TRUST_Valaineral', 1025, 42),
 	('TRUST_Valaineral', 1025, 238),
 	('TRUST_Prishe', 1028, 3234),
@@ -3340,7 +3342,29 @@ INSERT INTO `mob_skill_lists` (`skill_list_name`, `skill_list_id`, `mob_skill_id
 	('Volatile_Matamata', 1178, 2966),
 	('Volatile_Matamata', 1178, 2967),
 	('Volatile_Matamata', 1178, 2968),
-	('Volatile_Matamata', 1178, 2969);
+	('Volatile_Matamata', 1178, 2969),
+	('Akvan', 1179, 555),
+	('Pil', 1180, 2572),
+	('Pil', 1180, 2775),
+	('Pil', 1180, 2774),
+	('Pil', 1180, 2776),
+	('Blazing_Eruca', 858, 346),
+	('Akvan', 1179, 2768),
+	('Berstuk', 857, 2184),
+	('Berstuk', 857, 2186),
+	('Blazing_Eruca', 858, 344),
+	('Blazing_Eruca', 858, 1791),
+	('Ironclad_Normal_Attacks', 1181, 2616),
+	('Ironclad_Normal_Attacks', 1181, 2617),
+	('Ironclad_Normal_Attacks', 1181, 2618),
+	('Aglaophotis', 1182, 2163),
+	('Aglaophotis', 1182, 2164),
+	('Aglaophotis', 1182, 2165),
+	('Aglaophotis', 1182, 2166),
+	('Aglaophotis', 1182, 2167),
+	('Hahava2', 1183, 2714),
+	('Hahava2', 1183, 2718),
+	('TRUST_Sylvie_UC', 1184, 386);
 /*!40000 ALTER TABLE `mob_skill_lists` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

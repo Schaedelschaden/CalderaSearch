@@ -2,7 +2,7 @@
 -- Area: Beadeaux [S]
 --  Mob: Bres
 -- ID: 17154357
--- POS: 180 40 13
+-- !pos 180 40 13 92
 -- Note: Volte Armor HNM
 -----------------------------------
 local ID = require("scripts/zones/Beadeaux_[S]/IDs")
@@ -36,13 +36,14 @@ function onMobSpawn(mob)
 	mob:addMod(tpz.mod.MACC, 100)
 	mob:addMod(tpz.mod.REGEN, 500)
 	-- mob:addMod(tpz.mod.REGAIN, 100)
-	-- mob:addMod(tpz.mod.DOUBLE_ATTACK, 10)
+	mob:addMod(tpz.mod.DOUBLE_ATTACK, 20)
 	mob:addMod(tpz.mod.COUNTER, 30)
+	mob:addMod(tpz.mod.COUNTER_DMG, 150)
+	mob:setDelay(2250)
 end
 
 function onMobFight(mob)
-	mob:setDelay(2500)
-	mob:setMod(tpz.mod.DOUBLE_ATTACK, 0)
+	-- mob:setDelay(2250)
     local isBusy = false
 	local has2Hrd = mob:getLocalVar("has2Hrd")
 	local act = mob:getCurrentAction()
@@ -55,7 +56,7 @@ end
 
 function onAdditionalEffect(mob, target, damage)
 	params = {}
-	params.power = 35
+	params.power = 100
 	params.chance = 75
 
     return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENDARK, params)
@@ -73,5 +74,5 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-	
+	mob:setRespawnTime(72000)
 end

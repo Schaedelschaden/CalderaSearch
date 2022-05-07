@@ -14,6 +14,7 @@ function onTrigger(player,page)
     if (page == 0 or page == nil) then
 		player:PrintToPlayer(string.format("Please make a choice using one of the following options:"),tpz.msg.channel.SYSTEM_3)
 		player:PrintToPlayer(string.format("!shop 1: Food   !shop 2: Crystals   !shop 3: Crafting Gear   !shop 4: Charged Ammo   !shop 5: Vanity Gear   !shop 6: Seasonal Gear"),tpz.msg.channel.SYSTEM_3)
+		player:PrintToPlayer(string.format("!shop 7: Path Augment Kupons"),tpz.msg.channel.SYSTEM_3)
 		
 	elseif (page == 1) then -- Creates Food shop.
     local stock_1 =
@@ -129,7 +130,19 @@ function onTrigger(player,page)
       }
       tpz.shop.general(player, stock_6)
 
+	elseif (page == 7) then -- Creates Escha Kupon Shop.
+        local stock_7 =
+        {
+			9177,   500000,        -- Kupon AW-GF
+			9176,   500000,        -- Kupon AW-GFII
+			9175,   500000,        -- Kupon AW-GFIII
+			9187,   500000,        -- Kupon AW-GeIV
+			9188,    50000,        -- Kupon W-EMI
+			8730,    50000,        -- Kupon W-EWS
+      }
+      tpz.shop.general(player, stock_7)
+
     else
         player:PrintToPlayer( string.format( "Page %i not found.", page ) );
     end
-end;
+end

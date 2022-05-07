@@ -4,6 +4,7 @@
 --
 -----------------------------------
 require("scripts/globals/status")
+-----------------------------------
 function onEffectGain(target, effect)
     target:addMod(tpz.mod.ATTP, -15)
     target:addMod(tpz.mod.HASTE_ABILITY, -1500)

@@ -24,15 +24,18 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 #include "../../common/cbasetypes.h"
 #include "../../common/mmo.h"
+#include "../event_info.h"
 
-#include <map>
-#include <deque>
-#include <mutex>
 #include <bitset>
+#include <deque>
+#include <map>
+#include <mutex>
 #include <unordered_map>
 
 #include "battleentity.h"
 #include "petentity.h"
+
+#include "../utils/fishingutils.h"
 
 #define MAX_QUESTAREA	 11
 #define MAX_QUESTID     256
@@ -355,6 +358,12 @@ public:
     uint32 GetPlayTime(bool needUpdate = true);		// Get playtime
 
     CItemEquipment*	getEquip(SLOTTYPE slot);
+	
+	fishresponse_t* hookedFish;     // Currently hooked fish/item/monster
+    uint32          nextFishTime;   // When char is allowed to fish again
+    uint32          lastCastTime;   // When char last cast their rod
+    uint32          fishingToken;   // To track fishing process
+    uint16          hookDelay;      // How long it takes to hook a fish
 
     void        ReloadPartyInc();
     void        ReloadPartyDec();
@@ -414,20 +423,24 @@ protected:
 
 
 private:
-
-    std::unique_ptr<CItemContainer>   m_Inventory;
-    std::unique_ptr<CItemContainer>   m_Mogsafe;
-    std::unique_ptr<CItemContainer>   m_Storage;
-    std::unique_ptr<CItemContainer>   m_Tempitems;
-    std::unique_ptr<CItemContainer>   m_Moglocker;
-    std::unique_ptr<CItemContainer>   m_Mogsatchel;
-    std::unique_ptr<CItemContainer>   m_Mogsack;
-    std::unique_ptr<CItemContainer>   m_Mogcase;
-    std::unique_ptr<CItemContainer>   m_Wardrobe;
-    std::unique_ptr<CItemContainer>   m_Mogsafe2;
-    std::unique_ptr<CItemContainer>   m_Wardrobe2;
-    std::unique_ptr<CItemContainer>   m_Wardrobe3;
-    std::unique_ptr<CItemContainer>   m_Wardrobe4;
+	std::unique_ptr<CItemContainer> m_Inventory;
+    std::unique_ptr<CItemContainer> m_Mogsafe;
+    std::unique_ptr<CItemContainer> m_Storage;
+    std::unique_ptr<CItemContainer> m_Tempitems;
+    std::unique_ptr<CItemContainer> m_Moglocker;
+    std::unique_ptr<CItemContainer> m_Mogsatchel;
+    std::unique_ptr<CItemContainer> m_Mogsack;
+    std::unique_ptr<CItemContainer> m_Mogcase;
+    std::unique_ptr<CItemContainer> m_Wardrobe;
+    std::unique_ptr<CItemContainer> m_Mogsafe2;
+    std::unique_ptr<CItemContainer> m_Wardrobe2;
+    std::unique_ptr<CItemContainer> m_Wardrobe3;
+    std::unique_ptr<CItemContainer> m_Wardrobe4;
+    std::unique_ptr<CItemContainer> m_Wardrobe5;
+    std::unique_ptr<CItemContainer> m_Wardrobe6;
+    std::unique_ptr<CItemContainer> m_Wardrobe7;
+    std::unique_ptr<CItemContainer> m_Wardrobe8;
+    std::unique_ptr<CItemContainer> m_RecycleBin;
 
     bool			m_isWeaponSkillKill;
     bool            m_isStyleLocked;

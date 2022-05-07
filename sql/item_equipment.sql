@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `item_equipment` (
   PRIMARY KEY (`itemId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=37 PACK_KEYS=1 CHECKSUM=1;
 
--- Dumping data for table tpzdb.item_equipment: 14,190 rows
+-- Dumping data for table tpzdb.item_equipment: 14,191 rows
 /*!40000 ALTER TABLE `item_equipment` DISABLE KEYS */;
 INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`, `shieldSize`, `scriptType`, `slot`, `rslot`) VALUES
 	(10240, 'hexed_haubert', 99, 0, 8641, 5, 0, 0, 32, 0),
@@ -7011,7 +7011,7 @@ INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`
 	(17294, 'comet_tail', 55, 0, 1057, 24, 0, 0, 4, 8),
 	(17295, 'rising_sun_+1', 68, 0, 299040, 26, 0, 0, 4, 8),
 	(17296, 'pebble', 1, 0, 30639, 23, 0, 0, 8, 4),
-	(17297, 'throwing_coin', 18, 0, 2048, 23, 0, 0, 8, 4),
+	(17297, 'throwing_coin', 99, 119, 4194303, 23, 0, 1, 8, 4),
 	(17298, 'tathlum', 35, 0, 30639, 0, 0, 0, 8, 4),
 	(17299, 'astragalos', 50, 0, 30639, 23, 0, 0, 8, 4),
 	(17300, 'platinum_bullet', 50, 0, 5152, 0, 0, 0, 8, 0),
@@ -8179,7 +8179,7 @@ INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`
 	(18464, 'ark_tachi', 1, 0, 4194303, 588, 0, 0, 1, 0),
 	(18465, 'genjito', 99, 0, 2048, 148, 0, 0, 1, 0),
 	(18466, 'tenkomaru', 99, 0, 2048, 602, 0, 0, 1, 0),
-	(18468, 'bonanza_ball', 1, 0, 4194303, 0, 0, 0, 8, 0),
+	(18468, 'bonanza_ball', 99, 119, 4194303, 0, 0, 1, 8, 0),
 	(18469, 'moogle_moolah', 1, 0, 4194303, 0, 0, 0, 8, 0),
 	(18470, 'cheruski_needle', 99, 0, 4194303, 0, 0, 0, 8, 0),
 	(18471, 'brigantia_pebble', 99, 0, 4194303, 0, 0, 0, 8, 0),
@@ -8254,7 +8254,7 @@ INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`
 	(18545, 'ark_tabar', 1, 0, 4194303, 587, 0, 0, 3, 0),
 	(18546, 'gibbous_axe', 99, 0, 257, 531, 0, 0, 3, 0),
 	(18547, 'ravanas_axe', 99, 0, 256, 600, 0, 0, 3, 0),
-	(18551, 'twilight_scythe', 90, 0, 128, 526, 0, 0, 1, 0),
+	(18551, 'twilight_scythe', 90, 0, 128, 526, 0, 1, 1, 0),
 	(18552, 'maleficus', 89, 0, 8, 350, 0, 0, 1, 0),
 	(18553, 'woeborn', 89, 0, 128, 322, 0, 0, 1, 0),
 	(18554, 'darklinn_scythe', 90, 0, 128, 194, 0, 0, 1, 0),
@@ -8813,7 +8813,7 @@ INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`
 	(19129, 'rapidus_sax', 84, 0, 32, 179, 0, 0, 3, 0),
 	(19130, 'clement_skean', 85, 0, 262704, 163, 0, 0, 3, 0),
 	(19131, 'magnus_dagger', 82, 0, 262688, 163, 0, 0, 3, 0),
-	(19132, 'twilight_knife', 90, 0, 333617, 527, 0, 0, 3, 0),
+	(19132, 'twilight_knife', 90, 0, 333617, 527, 0, 1, 3, 0),
 	(19133, 'triplus_dagger', 89, 0, 32, 177, 0, 0, 3, 0),
 	(19134, 'felibres_dague', 89, 0, 512, 158, 0, 0, 3, 0),
 	(19135, 'acinaces', 89, 0, 65536, 379, 0, 0, 3, 0),
@@ -9816,7 +9816,7 @@ INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`
 	(20703, 'deacon_saber', 99, 119, 32784, 584, 0, 0, 3, 0),
 	(20704, 'deacon_sword', 99, 119, 2097345, 585, 0, 0, 3, 0),
 	(20705, 'brilliance', 99, 119, 64, 750, 0, 0, 3, 0),
-	(20706, 'vampirism', 99, 119, 2143985, 752, 0, 0, 3, 0),
+	(20706, 'vampirism', 99, 119, 2143985, 752, 0, 1, 3, 0),
 	(20707, 'medeina_kilij', 99, 119, 32768, 402, 0, 0, 3, 0),
 	(20708, 'demersal_degen', 99, 119, 336465, 185, 0, 0, 3, 0),
 	(20709, 'demers._degen_+1', 99, 119, 336465, 185, 0, 0, 3, 0),
@@ -9996,7 +9996,7 @@ INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`
 	(20887, 'dacnomania', 99, 119, 128, 773, 0, 0, 1, 0),
 	(20889, 'misanthropy', 99, 119, 128, 759, 0, 0, 1, 0),
 	(20890, 'anguta', 99, 119, 128, 765, 0, 0, 1, 0),
-	(20891, 'brutality', 99, 119, 128, 322, 0, 0, 1, 0),
+	(20891, 'brutality', 99, 119, 128, 322, 0, 1, 1, 0),
 	(20892, 'deathbane', 99, 119, 128, 201, 0, 0, 1, 0),
 	(20893, 'shukuyus_scythe', 99, 119, 385, 197, 0, 0, 1, 0),
 	(20894, 'deacon_scythe', 99, 119, 128, 586, 0, 0, 1, 0),
@@ -10085,8 +10085,8 @@ INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`
 	(20981, 'raicho_+1', 99, 119, 4096, 400, 0, 0, 3, 0),
 	(20982, 'shuhansadamune', 99, 119, 4096, 522, 0, 0, 3, 0),
 	(20983, 'mijin', 99, 119, 4096, 732, 0, 0, 3, 0),
-	(20984, 'kujaku', 99, 119, 4096, 746, 0, 0, 3, 0),
-	(20985, 'kujaku_+1', 99, 119, 4096, 746, 0, 0, 3, 0),
+	(20984, 'kujaku', 99, 119, 4096, 746, 0, 1, 3, 0),
+	(20985, 'kujaku_+1', 99, 119, 4096, 746, 0, 1, 3, 0),
 	(20986, 'achiuchikapu', 99, 119, 4096, 727, 0, 0, 3, 0),
 	(20987, 'tancho', 99, 119, 4096, 312, 0, 0, 3, 0),
 	(20988, 'tancho_+1', 99, 119, 4096, 312, 0, 0, 3, 0),
@@ -10130,8 +10130,8 @@ INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`
 	(21029, 'norifusa', 99, 119, 2048, 155, 0, 0, 1, 0),
 	(21030, 'norifusa_+1', 99, 119, 2048, 155, 0, 0, 1, 0),
 	(21031, 'sensui', 99, 119, 2048, 740, 0, 0, 1, 0),
-	(21032, 'kunitsuna', 99, 119, 2048, 747, 0, 0, 1, 0),
-	(21033, 'kunitsuna_+1', 99, 119, 2048, 747, 0, 0, 1, 0),
+	(21032, 'kunitsuna', 99, 119, 2048, 747, 0, 1, 1, 0),
+	(21033, 'kunitsuna_+1', 99, 119, 2048, 747, 0, 1, 1, 0),
 	(21034, 'kunimune', 99, 119, 2048, 146, 0, 0, 1, 0),
 	(21035, 'kunimune_+1', 99, 119, 2048, 146, 0, 0, 1, 0),
 	(21036, 'atakigiri', 99, 119, 2048, 440, 0, 1, 1, 0),
@@ -10185,7 +10185,7 @@ INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`
 	(21086, 'heartstopper', 1, 0, 4194303, 755, 0, 0, 3, 0),
 	(21087, 'heartstopper_+1', 1, 0, 4194303, 755, 0, 0, 3, 0),
 	(21088, 'divinity', 99, 119, 1048645, 751, 0, 0, 3, 0),
-	(21089, 'rubicundity', 99, 119, 1589276, 753, 0, 0, 3, 0),
+	(21089, 'rubicundity', 99, 119, 1589276, 753, 0, 1, 3, 0),
 	(21090, 'loxotic_mace', 99, 119, 2097281, 103, 0, 0, 3, 0),
 	(21091, 'loxotic_mace_+1', 99, 119, 2097281, 103, 0, 0, 3, 0),
 	(21092, 'nibiru_cudgel', 99, 119, 1622044, 741, 0, 0, 3, 0),
@@ -10404,7 +10404,7 @@ INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`
 	(21311, 'quelling_bolt', 99, 119, 1024, 0, 0, 0, 8, 0),
 	(21312, 'divine_bolt', 99, 119, 1024, 0, 0, 0, 8, 0),
 	(21313, 'gashing_bolt', 99, 115, 1185, 0, 0, 1, 8, 0),
-	(21314, 'abrasion_bolt', 99, 117, 1024, 0, 0, 0, 8, 0),
+	(21314, 'abrasion_bolt', 99, 117, 1024, 0, 0, 1, 8, 0),
 	(21315, 'righteous_bolt', 99, 117, 1024, 0, 0, 0, 8, 0),
 	(21316, 'eminent_bolt', 99, 117, 1024, 0, 0, 0, 8, 0),
 	(21317, 'rakaznar_bolt', 99, 115, 1024, 0, 0, 0, 8, 0),
@@ -10960,7 +10960,7 @@ INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`
 	(22269, 'barathrum', 99, 0, 2101409, 0, 0, 0, 8, 0),
 	(22270, 'expeditious_pinion', 99, 0, 2462754, 0, 0, 0, 8, 0),
 	(22271, 'pemphredo_tathlum', 99, 0, 4194303, 0, 0, 0, 8, 0),
-	(22275, 'pamama_peel', 1, 0, 4194303, 0, 0, 0, 8, 0),
+	(22275, 'pamama_peel', 99, 119, 4194303, 0, 0, 1, 8, 0),
 	(22276, 'sasuke_shuriken', 99, 119, 4096, 30, 0, 0, 8, 4),
 	(22277, 'sasuke_shuriken_+1', 99, 119, 4096, 30, 0, 0, 8, 4),
 	(22278, 'staunch_tathlum', 99, 0, 4194303, 0, 0, 0, 8, 0),
@@ -14218,7 +14218,8 @@ INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`
 	(25592, 'hjarrandi_helm', 99, 119, 8385, 199, 0, 0, 16, 0),
 	(26412, 'kamlanauts_shield', 1, 0, 4194303, 668, 3, 0, 2, 0),
 	(26355, 'acipayam_belt', 99, 0, 2101315, 0, 0, 0, 1024, 0),
-	(21636, 'nihility', 1, 0, 4194303, 749, 0, 0, 3, 0);
+	(21636, 'nihility', 1, 0, 4194303, 749, 0, 0, 3, 0),
+	(26354, 'embla_sash', 99, 0, 1589788, 0, 0, 0, 1024, 0);
 /*!40000 ALTER TABLE `item_equipment` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

@@ -121,6 +121,7 @@ function onPath(mob)
 end
 
 function onMobSpawn(mob)
+	mob:setAggressive(1)
     mob:speed(250)
     onPath(mob)
 end
@@ -138,5 +139,5 @@ end
 
 function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(math.random(172800, 259200)) -- 2 to 3 days
+    -- mob:setRespawnTime(math.random(172800, 259200)) -- 2 to 3 days
 end

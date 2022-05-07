@@ -18,11 +18,12 @@ function onTrigger(player, npc)
     end
 
     player:addStatusEffect(tpz.effect.SILENCE, 0, 0, duration)
-
 end
 
 function onEventUpdate(player, csid, option)
+
 end
 
 function onEventFinish(player, csid, option)
+
 end

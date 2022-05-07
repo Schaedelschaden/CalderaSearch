@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 -- func: !addeffectmob {effect} {power} {duration}
--- desc: Adds the given effect to the given player.
+-- desc: Adds the given effect to the targeted mob.
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/status")

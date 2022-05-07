@@ -421,21 +421,29 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
 {
     // player's already zoned, we dont need to do anything
     if (!PEntity)
+	{
         return false;
+	}
 
     auto found = false;
     if (PEntity->objtype == TYPE_PC)
     {
         auto PChar = dynamic_cast<CCharEntity*>(PEntity);
         if (!(m_Rules & BCRULES::RULES_ALLOW_SUBJOBS))
+		{
             PChar->StatusEffectContainer->DelStatusEffect(EFFECT_SJ_RESTRICTION);
+		}
         if (m_LevelCap)
+		{
             PChar->StatusEffectContainer->DelStatusEffect(EFFECT_LEVEL_RESTRICTION);
+		}
 
         m_EnteredPlayers.erase(m_EnteredPlayers.find(PEntity->id));
 
         if (leavecode != BATTLEFIELD_LEAVE_CODE_WARPDC)
+		{
             m_RegisteredPlayers.erase(m_RegisteredPlayers.find(PEntity->id));
+		}
 
         if (leavecode != 255)
         {
@@ -452,13 +460,27 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
     }
     else
     {
-		auto check = [PEntity, &found](auto entity) { if (PEntity == entity) { found = true; return found; } return false; };
+		auto check = [PEntity, &found](auto entity) {
+			if (PEntity == entity)
+			{
+				found = true;
+				return found;
+			} 
+			return false;
+		};
 
 		if (PEntity->objtype == TYPE_NPC)
 		{
 			PEntity->status = STATUS_DISAPPEAR;
 			PEntity->loc.zone->PushPacket(PEntity, CHAR_INRANGE, new CEntityUpdatePacket(PEntity, ENTITY_DESPAWN, UPDATE_ALL_MOB));
-			m_NpcList.erase(std::remove_if(m_NpcList.begin(), m_NpcList.end(), check), m_NpcList.end());
+			
+			if (auto* PNpcEntity = dynamic_cast<CNpcEntity*>(PEntity))
+            {
+                if (std::find(m_NpcList.begin(), m_NpcList.end(), PNpcEntity) != m_NpcList.end())
+                {
+                    m_NpcList.erase(std::remove_if(m_NpcList.begin(), m_NpcList.end(), check), m_NpcList.end());
+                }
+            }
 		}
 		else if (PEntity->objtype == TYPE_MOB || PEntity->objtype == TYPE_PET)
 		{
@@ -466,21 +488,34 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
 			// allies targid >= 0x700
 			if (PEntity->targid >= 0x700)
 			{
-				if (static_cast<CPetEntity*>(PEntity)->isAlive() && PEntity->PAI->IsSpawned())
-				{
-					static_cast<CPetEntity*>(PEntity)->Die();
-				}
+				if (auto* PPetEntity = dynamic_cast<CPetEntity*>(PEntity))
+                {
+                    if (PPetEntity->isAlive() && PPetEntity->PAI->IsSpawned())
+                    {
+                        PPetEntity->Die();
+                    }
+                }
 
-				if (m_AllyList.size() > 0 && m_AllyList.size() != 24576)
-				{
-					m_AllyList.erase(std::remove_if(m_AllyList.begin(), m_AllyList.end(), check), m_AllyList.end());
-				}
+				if (auto* PMobEntity = dynamic_cast<CMobEntity*>(PEntity))
+                {
+                    if (std::find(m_AllyList.begin(), m_AllyList.end(), PMobEntity) != m_AllyList.end())
+                    {
+                        m_AllyList.erase(std::remove_if(m_AllyList.begin(), m_AllyList.end(), check), m_AllyList.end());
+                    }
+                }
+				
 				PEntity->status = STATUS_DISAPPEAR;
 				return found;
 			}
 			else
 			{
-				auto check = [PEntity, &found](auto entity) { if (entity.PMob == PEntity) { found = true; return found; } return false; };
+				auto check = [PEntity, &found](auto entity) {
+					if (entity.PMob == PEntity)
+					{
+						found = true;
+						return found;
+					} return false;
+				};
 				m_RequiredEnemyList.erase(std::remove_if(m_RequiredEnemyList.begin(), m_RequiredEnemyList.end(), check), m_RequiredEnemyList.end());
 				m_AdditionalEnemyList.erase(std::remove_if(m_AdditionalEnemyList.begin(), m_AdditionalEnemyList.end(), check), m_AdditionalEnemyList.end());
 			}
@@ -489,7 +524,7 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
 	}
 
     // Remove enmity from valid battle entities
-    if (auto PBattleEntity = dynamic_cast<CBattleEntity*>(PEntity))
+    if (auto* PBattleEntity = dynamic_cast<CBattleEntity*>(PEntity))
     {
         PBattleEntity->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION, true);
         PBattleEntity->StatusEffectContainer->DelStatusEffect(EFFECT_LEVEL_RESTRICTION);

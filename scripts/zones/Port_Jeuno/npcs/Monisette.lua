@@ -277,6 +277,8 @@ local reforgedArtifactArmor =
 	[228] = {trade = {tradePiece[8] + 124, remTales[8], tradeMaterial[16], godItem[8]}, reward = rewardPiece[8] + 22}, -- runeist_mitons_+1
 	[229] = {trade = {tradePiece[9] + 117, remTales[9], tradeMaterial[16], godItem[9]}, reward = rewardPiece[9] + 22}, -- runeist_trousers_+1
 	[230] = {trade = {tradePiece[10] + 124, remTales[10], tradeMaterial[16], godItem[10]}, reward = rewardPiece[10] + 22}, -- runeist_bottes_+1
+	-- Reforged Artifact Armor +2 (119) (Slots 231-345 reserved)
+	-- Reforged Artifact Armor +3 (119) (Slots 346-460 reserved)
 }
 
 -- Warrior's Mask +2, Warrior's Lorica +2, Warrior's Mufflers +2, Warrior's Cuisses +2, Warrior's Calligae +2,
@@ -308,227 +310,339 @@ local relicReward = {26624, 26800, 26976, 27152, 27328,
 local reforgedRelicArmor =
 {
 	-- Reforged Relic Armor (109)
-	[231] = {trade = {relicTrade[1], dynaCurrency[1], relicTradeMaterial[1], relicGodItem[1]}, reward = relicReward[1]}, -- agoge_mask
-	[232] = {trade = {relicTrade[2], dynaCurrency[1], relicTradeMaterial[1], relicGodItem[2]}, reward = relicReward[2]}, -- agoge_lorica
-	[233] = {trade = {relicTrade[3], dynaCurrency[1], relicTradeMaterial[1], relicGodItem[3]}, reward = relicReward[3]}, -- agoge_mufflers
-	[234] = {trade = {relicTrade[4], dynaCurrency[1], relicTradeMaterial[1], relicGodItem[4]}, reward = relicReward[4]}, -- agoge_cuisses
-	[235] = {trade = {relicTrade[5], dynaCurrency[1], relicTradeMaterial[1], relicGodItem[5]}, reward = relicReward[5]}, -- agoge_calligae
-	[236] = {trade = {relicTrade[1] + 1, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[1]}, reward = relicReward[1] + 2}, -- hesychasts_crown
-	[237] = {trade = {relicTrade[2] + 1, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[2]}, reward = relicReward[2] + 2}, -- hesychasts_cyclas
-	[238] = {trade = {relicTrade[3] + 1, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[3]}, reward = relicReward[3] + 2}, -- hesychasts_gloves
-	[239] = {trade = {relicTrade[4] + 1, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[4]}, reward = relicReward[4] + 2}, -- hesychasts_hose
-	[240] = {trade = {relicTrade[5] + 1, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[5]}, reward = relicReward[5] + 2}, -- hesychasts_gaiters
-	[241] = {trade = {relicTrade[1] + 2, dynaCurrency[2], relicTradeMaterial[3], relicGodItem[1]}, reward = relicReward[1] + 4}, -- piety_cap
-	[242] = {trade = {relicTrade[2] + 2, dynaCurrency[2], relicTradeMaterial[3], relicGodItem[2]}, reward = relicReward[2] + 4}, -- piety_briault
-	[243] = {trade = {relicTrade[3] + 2, dynaCurrency[2], relicTradeMaterial[3], relicGodItem[3]}, reward = relicReward[3] + 4}, -- piety_mitts
-	[244] = {trade = {relicTrade[4] + 2, dynaCurrency[2], relicTradeMaterial[3], relicGodItem[4]}, reward = relicReward[4] + 4}, -- piety_pantaloons
-	[245] = {trade = {relicTrade[5] + 2, dynaCurrency[2], relicTradeMaterial[3], relicGodItem[5]}, reward = relicReward[5] + 4}, -- piety_duckbills
-	[246] = {trade = {relicTrade[1] + 3, dynaCurrency[3], relicTradeMaterial[3], relicGodItem[1]}, reward = relicReward[1] + 6}, -- archmages_petasos
-	[247] = {trade = {relicTrade[2] + 3, dynaCurrency[3], relicTradeMaterial[3], relicGodItem[2]}, reward = relicReward[2] + 6}, -- archmages_coat
-	[248] = {trade = {relicTrade[3] + 3, dynaCurrency[3], relicTradeMaterial[3], relicGodItem[3]}, reward = relicReward[3] + 6}, -- archmages_gloves
-	[249] = {trade = {relicTrade[4] + 3, dynaCurrency[3], relicTradeMaterial[3], relicGodItem[4]}, reward = relicReward[4] + 6}, -- archmages_tonban
-	[250] = {trade = {relicTrade[5] + 3, dynaCurrency[3], relicTradeMaterial[3], relicGodItem[5]}, reward = relicReward[5] + 6}, -- archmages_sabots
-	[251] = {trade = {relicTrade[1] + 4, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[1]}, reward = relicReward[1] + 8}, -- vitiation_chapeau
-	[252] = {trade = {relicTrade[2] + 4, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[2]}, reward = relicReward[2] + 8}, -- vitiation_tabard
-	[253] = {trade = {relicTrade[3] + 4, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[3]}, reward = relicReward[3] + 8}, -- vitiation_gloves
-	[254] = {trade = {relicTrade[4] + 4, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[4]}, reward = relicReward[4] + 8}, -- vitiation_tights
-	[255] = {trade = {relicTrade[5] + 4, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[5]}, reward = relicReward[5] + 8}, -- vitiation_boots
-	[256] = {trade = {relicTrade[1] + 5, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[1]}, reward = relicReward[1] + 10}, -- plunderers_bonnet
-	[257] = {trade = {relicTrade[2] + 5, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[2]}, reward = relicReward[2] + 10}, -- plunderers_vest
-	[258] = {trade = {relicTrade[3] + 5, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[3]}, reward = relicReward[3] + 10}, -- plunderers_armlets
-	[259] = {trade = {relicTrade[4] + 5, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[4]}, reward = relicReward[4] + 10}, -- plunderers_culottes
-	[260] = {trade = {relicTrade[5] + 5, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[5]}, reward = relicReward[5] + 10}, -- plunderers_poulaines
-	[261] = {trade = {relicTrade[1] + 6, dynaCurrency[2], relicTradeMaterial[1], relicGodItem[1]}, reward = relicReward[1] + 12}, -- caballarius_coronet
-	[262] = {trade = {relicTrade[2] + 6, dynaCurrency[2], relicTradeMaterial[1], relicGodItem[2]}, reward = relicReward[2] + 12}, -- caballarius_surcoat
-	[263] = {trade = {relicTrade[3] + 6, dynaCurrency[2], relicTradeMaterial[1], relicGodItem[3]}, reward = relicReward[3] + 12}, -- caballarius_gauntlets
-	[264] = {trade = {relicTrade[4] + 6, dynaCurrency[2], relicTradeMaterial[1], relicGodItem[4]}, reward = relicReward[4] + 12}, -- caballarius_breeches
-	[265] = {trade = {relicTrade[5] + 6, dynaCurrency[2], relicTradeMaterial[1], relicGodItem[5]}, reward = relicReward[5] + 12}, -- caballarius_leggings
-	[266] = {trade = {relicTrade[1] + 7, dynaCurrency[1], relicTradeMaterial[1], relicGodItem[1]}, reward = relicReward[1] + 14}, -- fallens_burgeonet
-	[267] = {trade = {relicTrade[2] + 7, dynaCurrency[1], relicTradeMaterial[1], relicGodItem[2]}, reward = relicReward[2] + 14}, -- fallens_cuirass
-	[268] = {trade = {relicTrade[3] + 7, dynaCurrency[1], relicTradeMaterial[1], relicGodItem[3]}, reward = relicReward[3] + 14}, -- fallens_finger_gauntlets
-	[269] = {trade = {relicTrade[4] + 7, dynaCurrency[1], relicTradeMaterial[1], relicGodItem[4]}, reward = relicReward[4] + 14}, -- fallens_flanchard
-	[270] = {trade = {relicTrade[5] + 7, dynaCurrency[1], relicTradeMaterial[1], relicGodItem[5]}, reward = relicReward[5] + 14}, -- fallens_sollerets
-	[271] = {trade = {relicTrade[1] + 8, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[1]}, reward = relicReward[1] + 16}, -- ankusa_helm
-	[272] = {trade = {relicTrade[2] + 8, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[2]}, reward = relicReward[2] + 16}, -- ankusa_jackcoat
-	[273] = {trade = {relicTrade[3] + 8, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[3]}, reward = relicReward[3] + 16}, -- ankusa_gloves
-	[274] = {trade = {relicTrade[4] + 8, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[4]}, reward = relicReward[4] + 16}, -- ankusa_trousers
-	[275] = {trade = {relicTrade[5] + 8, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[5]}, reward = relicReward[5] + 16}, -- ankusa_gaiters
-	[276] = {trade = {relicTrade[1] + 9, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[1]}, reward = relicReward[1] + 18}, -- bihu_roundlet
-	[277] = {trade = {relicTrade[2] + 9, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[2]}, reward = relicReward[2] + 18}, -- bihu_justaucorps
-	[278] = {trade = {relicTrade[3] + 9, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[3]}, reward = relicReward[3] + 18}, -- bihu_cuffs
-	[279] = {trade = {relicTrade[4] + 9, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[4]}, reward = relicReward[4] + 18}, -- bihu_cannions
-	[280] = {trade = {relicTrade[5] + 9, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[5]}, reward = relicReward[5] + 18}, -- bihu_slippers
-	[281] = {trade = {relicTrade[1] + 10, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[1]}, reward = relicReward[1] + 20}, -- arcadian_beret
-	[282] = {trade = {relicTrade[2] + 10, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[2]}, reward = relicReward[2] + 20}, -- arcadian_jerkin
-	[283] = {trade = {relicTrade[3] + 10, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[3]}, reward = relicReward[3] + 20}, -- arcadian_bracers
-	[284] = {trade = {relicTrade[4] + 10, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[4]}, reward = relicReward[4] + 20}, -- arcadian_braccae
-	[285] = {trade = {relicTrade[5] + 10, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[5]}, reward = relicReward[5] + 20}, -- arcadian_socks
-	[286] = {trade = {relicTrade[1] + 11, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[1]}, reward = relicReward[1] + 22}, -- sakonji_kabuto
-	[287] = {trade = {relicTrade[2] + 11, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[2]}, reward = relicReward[2] + 22}, -- sakonji_domaru
-	[288] = {trade = {relicTrade[3] + 11, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[3]}, reward = relicReward[3] + 22}, -- sakonji_kote
-	[289] = {trade = {relicTrade[4] + 11, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[4]}, reward = relicReward[4] + 22}, -- sakonji_haidate
-	[290] = {trade = {relicTrade[5] + 11, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[5]}, reward = relicReward[5] + 22}, -- sakonji_sune-ate
-	[291] = {trade = {relicTrade[1] + 12, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[1]}, reward = relicReward[1] + 24}, -- mochizuki_hatsuburi
-	[292] = {trade = {relicTrade[2] + 12, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[2]}, reward = relicReward[2] + 24}, -- mochizuki_chainmail
-	[293] = {trade = {relicTrade[3] + 12, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[3]}, reward = relicReward[3] + 24}, -- mochizuki_tekko
-	[294] = {trade = {relicTrade[4] + 12, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[4]}, reward = relicReward[4] + 24}, -- mochizuki_hakama
-	[295] = {trade = {relicTrade[5] + 12, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[5]}, reward = relicReward[5] + 24}, -- mochizuki_kyahan
-	[296] = {trade = {relicTrade[1] + 13, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[1]}, reward = relicReward[1] + 26}, -- pteroslaver_armet
-	[297] = {trade = {relicTrade[2] + 13, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[2]}, reward = relicReward[2] + 26}, -- pteroslaver_mail
-	[298] = {trade = {relicTrade[3] + 13, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[3]}, reward = relicReward[3] + 26}, -- pteroslaver_finger_gauntlets
-	[299] = {trade = {relicTrade[4] + 13, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[4]}, reward = relicReward[4] + 26}, -- pteroslaver_brais
-	[300] = {trade = {relicTrade[5] + 13, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[5]}, reward = relicReward[5] + 26}, -- pteroslaver_greaves
-	[301] = {trade = {relicTrade[1] + 14, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[1]}, reward = relicReward[1] + 28}, -- glyphic_horn
-	[302] = {trade = {relicTrade[2] + 14, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[2]}, reward = relicReward[2] + 28}, -- glyphic_doublet
-	[303] = {trade = {relicTrade[3] + 14, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[3]}, reward = relicReward[3] + 28}, -- glyphic_bracers
-	[304] = {trade = {relicTrade[4] + 14, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[4]}, reward = relicReward[4] + 28}, -- glyphic_spats
-	[305] = {trade = {relicTrade[5] + 14, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[5]}, reward = relicReward[5] + 28}, -- glyphic_pigaches
-	[306] = {trade = {relicTrade[1] + 15, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[1]}, reward = relicReward[1] + 30}, -- luhlaza_keffiyeh
-	[307] = {trade = {relicTrade[2] + 15, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[2]}, reward = relicReward[2] + 30}, -- luhlaza_jubbah
-	[308] = {trade = {relicTrade[3] + 15, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[3]}, reward = relicReward[3] + 30}, -- luhlaza_bazubands
-	[309] = {trade = {relicTrade[4] + 15, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[4]}, reward = relicReward[4] + 30}, -- luhlaza_shalwar
-	[310] = {trade = {relicTrade[5] + 15, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[5]}, reward = relicReward[5] + 30}, -- luhlaza_charuqs
-	[311] = {trade = {relicTrade[1] + 16, dynaCurrency[1], relicTradeMaterial[3], relicGodItem[1]}, reward = relicReward[1] + 32}, -- lanun_tricorne
-	[312] = {trade = {relicTrade[2] + 16, dynaCurrency[1], relicTradeMaterial[3], relicGodItem[2]}, reward = relicReward[2] + 32}, -- lanun_frac
-	[313] = {trade = {relicTrade[3] + 16, dynaCurrency[1], relicTradeMaterial[3], relicGodItem[3]}, reward = relicReward[3] + 32}, -- lanun_gants
-	[314] = {trade = {relicTrade[4] + 16, dynaCurrency[1], relicTradeMaterial[3], relicGodItem[4]}, reward = relicReward[4] + 32}, -- lanun_trews
-	[315] = {trade = {relicTrade[5] + 16, dynaCurrency[1], relicTradeMaterial[3], relicGodItem[5]}, reward = relicReward[5] + 32}, -- lanun_bottes
-	[316] = {trade = {relicTrade[1] + 17, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[1]}, reward = relicReward[1] + 34}, -- pitre_taj
-	[317] = {trade = {relicTrade[2] + 17, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[2]}, reward = relicReward[2] + 34}, -- pitre_tobe
-	[318] = {trade = {relicTrade[3] + 17, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[3]}, reward = relicReward[3] + 34}, -- pitre_dastanas
-	[319] = {trade = {relicTrade[4] + 17, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[4]}, reward = relicReward[4] + 34}, -- pitre_churidars
-	[320] = {trade = {relicTrade[5] + 17, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[5]}, reward = relicReward[5] + 34}, -- pitre_babouches
-	[321] = {trade = {relicTrade[1] + 18, dynaCurrency[2], relicTradeMaterial[4], relicGodItem[1]}, reward = relicReward[1] + 36}, -- horos_tiara
-	[322] = {trade = {relicTrade[2] + 18, dynaCurrency[2], relicTradeMaterial[4], relicGodItem[2]}, reward = relicReward[2] + 36}, -- horos_casaque
-	[323] = {trade = {relicTrade[3] + 18, dynaCurrency[2], relicTradeMaterial[4], relicGodItem[3]}, reward = relicReward[3] + 36}, -- horos_bangles
-	[324] = {trade = {relicTrade[4] + 18, dynaCurrency[2], relicTradeMaterial[4], relicGodItem[4]}, reward = relicReward[4] + 36}, -- horos_tights
-	[325] = {trade = {relicTrade[5] + 18, dynaCurrency[2], relicTradeMaterial[4], relicGodItem[5]}, reward = relicReward[5] + 36}, -- horos_shoes
-	[326] = {trade = {relicTrade[1] + 19, dynaCurrency[1], relicTradeMaterial[6], relicGodItem[1]}, reward = relicReward[1] + 38}, -- pedagogy_mortarboard
-	[327] = {trade = {relicTrade[2] + 19, dynaCurrency[1], relicTradeMaterial[6], relicGodItem[2]}, reward = relicReward[2] + 38}, -- pedagogy_gown
-	[328] = {trade = {relicTrade[3] + 19, dynaCurrency[1], relicTradeMaterial[6], relicGodItem[3]}, reward = relicReward[3] + 38}, -- pedagogy_bracers
-	[329] = {trade = {relicTrade[4] + 19, dynaCurrency[1], relicTradeMaterial[6], relicGodItem[4]}, reward = relicReward[4] + 38}, -- pedagogy_pants
-	[330] = {trade = {relicTrade[5] + 19, dynaCurrency[1], relicTradeMaterial[6], relicGodItem[5]}, reward = relicReward[5] + 38}, -- pedagogy_loafers
-	[331] = {trade = {{4044, 3}, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[1]}, reward = relicReward[1] + 40}, -- bagua_galero
-	[332] = {trade = {{4043, 3}, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[2]}, reward = relicReward[2] + 40}, -- bagua_tunic
-	[333] = {trade = {{4042, 3}, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[3]}, reward = relicReward[3] + 40}, -- bagua_mitaines
-	[334] = {trade = {{4030, 3}, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[4]}, reward = relicReward[4] + 40}, -- bagua_pants
-	[335] = {trade = {{4045, 3}, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[5]}, reward = relicReward[5] + 40}, -- bagua_sandals
-	[336] = {trade = {{4046, 3}, dynaCurrency[2], relicTradeMaterial[5], relicGodItem[1]}, reward = relicReward[1] + 42}, -- futhark_bandeau
-	[337] = {trade = {{4025, 3}, dynaCurrency[2], relicTradeMaterial[5], relicGodItem[2]}, reward = relicReward[2] + 42}, -- futhark_coat
-	[338] = {trade = {{4047, 3}, dynaCurrency[2], relicTradeMaterial[5], relicGodItem[3]}, reward = relicReward[3] + 42}, -- futhark_mitons
-	[339] = {trade = {{3923, 3}, dynaCurrency[2], relicTradeMaterial[5], relicGodItem[4]}, reward = relicReward[4] + 42}, -- futhark_trousers
-	[340] = {trade = {{4029, 3}, dynaCurrency[2], relicTradeMaterial[5], relicGodItem[5]}, reward = relicReward[5] + 42}, -- futhark_boots
+	[461] = {trade = {relicTrade[1], 	  dynaCurrency[1], relicTradeMaterial[1], relicGodItem[1]}, reward = relicReward[1]}, -- agoge_mask
+	[462] = {trade = {relicTrade[2], 	  dynaCurrency[1], relicTradeMaterial[1], relicGodItem[2]}, reward = relicReward[2]}, -- agoge_lorica
+	[463] = {trade = {relicTrade[3], 	  dynaCurrency[1], relicTradeMaterial[1], relicGodItem[3]}, reward = relicReward[3]}, -- agoge_mufflers
+	[464] = {trade = {relicTrade[4], 	  dynaCurrency[1], relicTradeMaterial[1], relicGodItem[4]}, reward = relicReward[4]}, -- agoge_cuisses
+	[465] = {trade = {relicTrade[5], 	  dynaCurrency[1], relicTradeMaterial[1], relicGodItem[5]}, reward = relicReward[5]}, -- agoge_calligae
+	[466] = {trade = {relicTrade[1] +  1, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[1]}, reward = relicReward[1] + 2}, -- hesychasts_crown
+	[467] = {trade = {relicTrade[2] +  1, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[2]}, reward = relicReward[2] + 2}, -- hesychasts_cyclas
+	[468] = {trade = {relicTrade[3] +  1, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[3]}, reward = relicReward[3] + 2}, -- hesychasts_gloves
+	[469] = {trade = {relicTrade[4] +  1, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[4]}, reward = relicReward[4] + 2}, -- hesychasts_hose
+	[470] = {trade = {relicTrade[5] +  1, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[5]}, reward = relicReward[5] + 2}, -- hesychasts_gaiters
+	[471] = {trade = {relicTrade[1] +  2, dynaCurrency[2], relicTradeMaterial[3], relicGodItem[1]}, reward = relicReward[1] + 4}, -- piety_cap
+	[472] = {trade = {relicTrade[2] +  2, dynaCurrency[2], relicTradeMaterial[3], relicGodItem[2]}, reward = relicReward[2] + 4}, -- piety_briault
+	[473] = {trade = {relicTrade[3] +  2, dynaCurrency[2], relicTradeMaterial[3], relicGodItem[3]}, reward = relicReward[3] + 4}, -- piety_mitts
+	[474] = {trade = {relicTrade[4] +  2, dynaCurrency[2], relicTradeMaterial[3], relicGodItem[4]}, reward = relicReward[4] + 4}, -- piety_pantaloons
+	[475] = {trade = {relicTrade[5] +  2, dynaCurrency[2], relicTradeMaterial[3], relicGodItem[5]}, reward = relicReward[5] + 4}, -- piety_duckbills
+	[476] = {trade = {relicTrade[1] +  3, dynaCurrency[3], relicTradeMaterial[3], relicGodItem[1]}, reward = relicReward[1] + 6}, -- archmages_petasos
+	[477] = {trade = {relicTrade[2] +  3, dynaCurrency[3], relicTradeMaterial[3], relicGodItem[2]}, reward = relicReward[2] + 6}, -- archmages_coat
+	[478] = {trade = {relicTrade[3] +  3, dynaCurrency[3], relicTradeMaterial[3], relicGodItem[3]}, reward = relicReward[3] + 6}, -- archmages_gloves
+	[479] = {trade = {relicTrade[4] +  3, dynaCurrency[3], relicTradeMaterial[3], relicGodItem[4]}, reward = relicReward[4] + 6}, -- archmages_tonban
+	[480] = {trade = {relicTrade[5] +  3, dynaCurrency[3], relicTradeMaterial[3], relicGodItem[5]}, reward = relicReward[5] + 6}, -- archmages_sabots
+	[481] = {trade = {relicTrade[1] +  4, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[1]}, reward = relicReward[1] + 8}, -- vitiation_chapeau
+	[482] = {trade = {relicTrade[2] +  4, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[2]}, reward = relicReward[2] + 8}, -- vitiation_tabard
+	[483] = {trade = {relicTrade[3] +  4, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[3]}, reward = relicReward[3] + 8}, -- vitiation_gloves
+	[484] = {trade = {relicTrade[4] +  4, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[4]}, reward = relicReward[4] + 8}, -- vitiation_tights
+	[485] = {trade = {relicTrade[5] +  4, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[5]}, reward = relicReward[5] + 8}, -- vitiation_boots
+	[486] = {trade = {relicTrade[1] +  5, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[1]}, reward = relicReward[1] + 10}, -- plunderers_bonnet
+	[487] = {trade = {relicTrade[2] +  5, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[2]}, reward = relicReward[2] + 10}, -- plunderers_vest
+	[488] = {trade = {relicTrade[3] +  5, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[3]}, reward = relicReward[3] + 10}, -- plunderers_armlets
+	[489] = {trade = {relicTrade[4] +  5, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[4]}, reward = relicReward[4] + 10}, -- plunderers_culottes
+	[490] = {trade = {relicTrade[5] +  5, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[5]}, reward = relicReward[5] + 10}, -- plunderers_poulaines
+	[491] = {trade = {relicTrade[1] +  6, dynaCurrency[2], relicTradeMaterial[1], relicGodItem[1]}, reward = relicReward[1] + 12}, -- caballarius_coronet
+	[492] = {trade = {relicTrade[2] +  6, dynaCurrency[2], relicTradeMaterial[1], relicGodItem[2]}, reward = relicReward[2] + 12}, -- caballarius_surcoat
+	[493] = {trade = {relicTrade[3] +  6, dynaCurrency[2], relicTradeMaterial[1], relicGodItem[3]}, reward = relicReward[3] + 12}, -- caballarius_gauntlets
+	[494] = {trade = {relicTrade[4] +  6, dynaCurrency[2], relicTradeMaterial[1], relicGodItem[4]}, reward = relicReward[4] + 12}, -- caballarius_breeches
+	[495] = {trade = {relicTrade[5] +  6, dynaCurrency[2], relicTradeMaterial[1], relicGodItem[5]}, reward = relicReward[5] + 12}, -- caballarius_leggings
+	[496] = {trade = {relicTrade[1] +  7, dynaCurrency[1], relicTradeMaterial[1], relicGodItem[1]}, reward = relicReward[1] + 14}, -- fallens_burgeonet
+	[497] = {trade = {relicTrade[2] +  7, dynaCurrency[1], relicTradeMaterial[1], relicGodItem[2]}, reward = relicReward[2] + 14}, -- fallens_cuirass
+	[498] = {trade = {relicTrade[3] +  7, dynaCurrency[1], relicTradeMaterial[1], relicGodItem[3]}, reward = relicReward[3] + 14}, -- fallens_finger_gauntlets
+	[499] = {trade = {relicTrade[4] +  7, dynaCurrency[1], relicTradeMaterial[1], relicGodItem[4]}, reward = relicReward[4] + 14}, -- fallens_flanchard
+	[500] = {trade = {relicTrade[5] +  7, dynaCurrency[1], relicTradeMaterial[1], relicGodItem[5]}, reward = relicReward[5] + 14}, -- fallens_sollerets
+	[501] = {trade = {relicTrade[1] +  8, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[1]}, reward = relicReward[1] + 16}, -- ankusa_helm
+	[502] = {trade = {relicTrade[2] +  8, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[2]}, reward = relicReward[2] + 16}, -- ankusa_jackcoat
+	[503] = {trade = {relicTrade[3] +  8, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[3]}, reward = relicReward[3] + 16}, -- ankusa_gloves
+	[504] = {trade = {relicTrade[4] +  8, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[4]}, reward = relicReward[4] + 16}, -- ankusa_trousers
+	[505] = {trade = {relicTrade[5] +  8, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[5]}, reward = relicReward[5] + 16}, -- ankusa_gaiters
+	[506] = {trade = {relicTrade[1] +  9, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[1]}, reward = relicReward[1] + 18}, -- bihu_roundlet
+	[507] = {trade = {relicTrade[2] +  9, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[2]}, reward = relicReward[2] + 18}, -- bihu_justaucorps
+	[508] = {trade = {relicTrade[3] +  9, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[3]}, reward = relicReward[3] + 18}, -- bihu_cuffs
+	[509] = {trade = {relicTrade[4] +  9, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[4]}, reward = relicReward[4] + 18}, -- bihu_cannions
+	[510] = {trade = {relicTrade[5] +  9, dynaCurrency[1], relicTradeMaterial[2], relicGodItem[5]}, reward = relicReward[5] + 18}, -- bihu_slippers
+	[511] = {trade = {relicTrade[1] + 10, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[1]}, reward = relicReward[1] + 20}, -- arcadian_beret
+	[512] = {trade = {relicTrade[2] + 10, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[2]}, reward = relicReward[2] + 20}, -- arcadian_jerkin
+	[513] = {trade = {relicTrade[3] + 10, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[3]}, reward = relicReward[3] + 20}, -- arcadian_bracers
+	[514] = {trade = {relicTrade[4] + 10, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[4]}, reward = relicReward[4] + 20}, -- arcadian_braccae
+	[515] = {trade = {relicTrade[5] + 10, dynaCurrency[3], relicTradeMaterial[2], relicGodItem[5]}, reward = relicReward[5] + 20}, -- arcadian_socks
+	[516] = {trade = {relicTrade[1] + 11, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[1]}, reward = relicReward[1] + 22}, -- sakonji_kabuto
+	[517] = {trade = {relicTrade[2] + 11, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[2]}, reward = relicReward[2] + 22}, -- sakonji_domaru
+	[518] = {trade = {relicTrade[3] + 11, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[3]}, reward = relicReward[3] + 22}, -- sakonji_kote
+	[519] = {trade = {relicTrade[4] + 11, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[4]}, reward = relicReward[4] + 22}, -- sakonji_haidate
+	[520] = {trade = {relicTrade[5] + 11, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[5]}, reward = relicReward[5] + 22}, -- sakonji_sune-ate
+	[521] = {trade = {relicTrade[1] + 12, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[1]}, reward = relicReward[1] + 24}, -- mochizuki_hatsuburi
+	[522] = {trade = {relicTrade[2] + 12, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[2]}, reward = relicReward[2] + 24}, -- mochizuki_chainmail
+	[523] = {trade = {relicTrade[3] + 12, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[3]}, reward = relicReward[3] + 24}, -- mochizuki_tekko
+	[524] = {trade = {relicTrade[4] + 12, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[4]}, reward = relicReward[4] + 24}, -- mochizuki_hakama
+	[525] = {trade = {relicTrade[5] + 12, dynaCurrency[1], relicTradeMaterial[5], relicGodItem[5]}, reward = relicReward[5] + 24}, -- mochizuki_kyahan
+	[526] = {trade = {relicTrade[1] + 13, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[1]}, reward = relicReward[1] + 26}, -- pteroslaver_armet
+	[527] = {trade = {relicTrade[2] + 13, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[2]}, reward = relicReward[2] + 26}, -- pteroslaver_mail
+	[528] = {trade = {relicTrade[3] + 13, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[3]}, reward = relicReward[3] + 26}, -- pteroslaver_finger_gauntlets
+	[529] = {trade = {relicTrade[4] + 13, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[4]}, reward = relicReward[4] + 26}, -- pteroslaver_brais
+	[530] = {trade = {relicTrade[5] + 13, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[5]}, reward = relicReward[5] + 26}, -- pteroslaver_greaves
+	[531] = {trade = {relicTrade[1] + 14, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[1]}, reward = relicReward[1] + 28}, -- glyphic_horn
+	[532] = {trade = {relicTrade[2] + 14, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[2]}, reward = relicReward[2] + 28}, -- glyphic_doublet
+	[533] = {trade = {relicTrade[3] + 14, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[3]}, reward = relicReward[3] + 28}, -- glyphic_bracers
+	[534] = {trade = {relicTrade[4] + 14, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[4]}, reward = relicReward[4] + 28}, -- glyphic_spats
+	[535] = {trade = {relicTrade[5] + 14, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[5]}, reward = relicReward[5] + 28}, -- glyphic_pigaches
+	[536] = {trade = {relicTrade[1] + 15, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[1]}, reward = relicReward[1] + 30}, -- luhlaza_keffiyeh
+	[537] = {trade = {relicTrade[2] + 15, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[2]}, reward = relicReward[2] + 30}, -- luhlaza_jubbah
+	[538] = {trade = {relicTrade[3] + 15, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[3]}, reward = relicReward[3] + 30}, -- luhlaza_bazubands
+	[539] = {trade = {relicTrade[4] + 15, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[4]}, reward = relicReward[4] + 30}, -- luhlaza_shalwar
+	[540] = {trade = {relicTrade[5] + 15, dynaCurrency[2], relicTradeMaterial[2], relicGodItem[5]}, reward = relicReward[5] + 30}, -- luhlaza_charuqs
+	[541] = {trade = {relicTrade[1] + 16, dynaCurrency[1], relicTradeMaterial[3], relicGodItem[1]}, reward = relicReward[1] + 32}, -- lanun_tricorne
+	[542] = {trade = {relicTrade[2] + 16, dynaCurrency[1], relicTradeMaterial[3], relicGodItem[2]}, reward = relicReward[2] + 32}, -- lanun_frac
+	[543] = {trade = {relicTrade[3] + 16, dynaCurrency[1], relicTradeMaterial[3], relicGodItem[3]}, reward = relicReward[3] + 32}, -- lanun_gants
+	[544] = {trade = {relicTrade[4] + 16, dynaCurrency[1], relicTradeMaterial[3], relicGodItem[4]}, reward = relicReward[4] + 32}, -- lanun_trews
+	[545] = {trade = {relicTrade[5] + 16, dynaCurrency[1], relicTradeMaterial[3], relicGodItem[5]}, reward = relicReward[5] + 32}, -- lanun_bottes
+	[546] = {trade = {relicTrade[1] + 17, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[1]}, reward = relicReward[1] + 34}, -- pitre_taj
+	[547] = {trade = {relicTrade[2] + 17, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[2]}, reward = relicReward[2] + 34}, -- pitre_tobe
+	[548] = {trade = {relicTrade[3] + 17, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[3]}, reward = relicReward[3] + 34}, -- pitre_dastanas
+	[549] = {trade = {relicTrade[4] + 17, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[4]}, reward = relicReward[4] + 34}, -- pitre_churidars
+	[550] = {trade = {relicTrade[5] + 17, dynaCurrency[3], relicTradeMaterial[6], relicGodItem[5]}, reward = relicReward[5] + 34}, -- pitre_babouches
+	[551] = {trade = {relicTrade[1] + 18, dynaCurrency[2], relicTradeMaterial[4], relicGodItem[1]}, reward = relicReward[1] + 36}, -- horos_tiara
+	[552] = {trade = {relicTrade[2] + 18, dynaCurrency[2], relicTradeMaterial[4], relicGodItem[2]}, reward = relicReward[2] + 36}, -- horos_casaque
+	[553] = {trade = {relicTrade[3] + 18, dynaCurrency[2], relicTradeMaterial[4], relicGodItem[3]}, reward = relicReward[3] + 36}, -- horos_bangles
+	[554] = {trade = {relicTrade[4] + 18, dynaCurrency[2], relicTradeMaterial[4], relicGodItem[4]}, reward = relicReward[4] + 36}, -- horos_tights
+	[555] = {trade = {relicTrade[5] + 18, dynaCurrency[2], relicTradeMaterial[4], relicGodItem[5]}, reward = relicReward[5] + 36}, -- horos_shoes
+	[556] = {trade = {relicTrade[1] + 19, dynaCurrency[1], relicTradeMaterial[6], relicGodItem[1]}, reward = relicReward[1] + 38}, -- pedagogy_mortarboard
+	[557] = {trade = {relicTrade[2] + 19, dynaCurrency[1], relicTradeMaterial[6], relicGodItem[2]}, reward = relicReward[2] + 38}, -- pedagogy_gown
+	[558] = {trade = {relicTrade[3] + 19, dynaCurrency[1], relicTradeMaterial[6], relicGodItem[3]}, reward = relicReward[3] + 38}, -- pedagogy_bracers
+	[559] = {trade = {relicTrade[4] + 19, dynaCurrency[1], relicTradeMaterial[6], relicGodItem[4]}, reward = relicReward[4] + 38}, -- pedagogy_pants
+	[560] = {trade = {relicTrade[5] + 19, dynaCurrency[1], relicTradeMaterial[6], relicGodItem[5]}, reward = relicReward[5] + 38}, -- pedagogy_loafers
+	[561] = {trade = {{4044, 3}, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[1]}, reward = relicReward[1] + 40}, -- bagua_galero
+	[562] = {trade = {{4043, 3}, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[2]}, reward = relicReward[2] + 40}, -- bagua_tunic
+	[563] = {trade = {{4042, 3}, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[3]}, reward = relicReward[3] + 40}, -- bagua_mitaines
+	[564] = {trade = {{4030, 3}, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[4]}, reward = relicReward[4] + 40}, -- bagua_pants
+	[565] = {trade = {{4045, 3}, dynaCurrency[3], relicTradeMaterial[4], relicGodItem[5]}, reward = relicReward[5] + 40}, -- bagua_sandals
+	[566] = {trade = {{4046, 3}, dynaCurrency[2], relicTradeMaterial[5], relicGodItem[1]}, reward = relicReward[1] + 42}, -- futhark_bandeau
+	[567] = {trade = {{4025, 3}, dynaCurrency[2], relicTradeMaterial[5], relicGodItem[2]}, reward = relicReward[2] + 42}, -- futhark_coat
+	[568] = {trade = {{4047, 3}, dynaCurrency[2], relicTradeMaterial[5], relicGodItem[3]}, reward = relicReward[3] + 42}, -- futhark_mitons
+	[569] = {trade = {{3923, 3}, dynaCurrency[2], relicTradeMaterial[5], relicGodItem[4]}, reward = relicReward[4] + 42}, -- futhark_trousers
+	[570] = {trade = {{4029, 3}, dynaCurrency[2], relicTradeMaterial[5], relicGodItem[5]}, reward = relicReward[5] + 42}, -- futhark_boots
 	-- Reforged Relic Armor +1 (119)
-	[341] = {trade = {relicTrade[6], dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[7]}, reward = relicReward[6]}, -- agoge_mask_+1
-	[342] = {trade = {relicTrade[7], dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[8]}, reward = relicReward[7]}, -- agoge_lorica_+1
-	[343] = {trade = {relicTrade[8], dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[9]}, reward = relicReward[8]}, -- agoge_mufflers_+1
-	[344] = {trade = {relicTrade[9], dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[10]}, reward = relicReward[9]}, -- agoge_cuisses_+1
-	[345] = {trade = {relicTrade[10], dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[11]}, reward = relicReward[10]}, -- agoge_calligae_+1
-	[346] = {trade = {relicTrade[6] + 2, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[7]}, reward = relicReward[6] + 2}, -- hesychasts_crown_+1
-	[347] = {trade = {relicTrade[7] + 2, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[8]}, reward = relicReward[7] + 2}, -- hesychasts_cyclas_+1
-	[348] = {trade = {relicTrade[8] + 2, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[9]}, reward = relicReward[8] + 2}, -- hesychasts_gloves_+1
-	[349] = {trade = {relicTrade[9] + 2, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[10]}, reward = relicReward[9] + 2}, -- hesychasts_hose_+1
-	[350] = {trade = {relicTrade[10] + 2, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[11]}, reward = relicReward[10] + 2}, -- hesychasts_gaiters_+1
-	[351] = {trade = {relicTrade[6] + 4, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[7]}, reward = relicReward[6] + 4}, -- piety_cap_+1
-	[352] = {trade = {relicTrade[7] + 4, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[8]}, reward = relicReward[7] + 4}, -- piety_briault_+1
-	[353] = {trade = {relicTrade[8] + 4, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[9]}, reward = relicReward[8] + 4}, -- piety_mitts_+1
-	[354] = {trade = {relicTrade[9] + 4, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[10]}, reward = relicReward[9] + 4}, -- piety_pantaloons_+1
-	[355] = {trade = {relicTrade[10] + 4, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[11]}, reward = relicReward[10] + 4}, -- piety_duckbills_+1
-	[356] = {trade = {relicTrade[6] + 6, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[7]}, reward = relicReward[6] + 6}, -- archmages_petasos_+1
-	[357] = {trade = {relicTrade[7] + 6, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[8]}, reward = relicReward[7] + 6}, -- archmages_coat_+1
-	[358] = {trade = {relicTrade[8] + 6, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[9]}, reward = relicReward[8] + 6}, -- archmages_gloves_+1
-	[359] = {trade = {relicTrade[9] + 6, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[10]}, reward = relicReward[9] + 6}, -- archmages_tonban_+1
-	[360] = {trade = {relicTrade[10] + 6, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[11]}, reward = relicReward[10] + 6}, -- archmages_sabots_+1
-	[361] = {trade = {relicTrade[6] + 8, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[7]}, reward = relicReward[6] + 8}, -- vitiation_chapeau_+1
-	[362] = {trade = {relicTrade[7] + 8, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[8]}, reward = relicReward[7] + 8}, -- vitiation_tabard_+1
-	[363] = {trade = {relicTrade[8] + 8, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[9]}, reward = relicReward[8] + 8}, -- vitiation_gloves_+1
-	[364] = {trade = {relicTrade[9] + 8, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[10]}, reward = relicReward[9] + 8}, -- vitiation_tights_+1
-	[365] = {trade = {relicTrade[10] + 8, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[11]}, reward = relicReward[10] + 8}, -- vitiation_boots_+1
-	[366] = {trade = {relicTrade[6] + 10, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[7]}, reward = relicReward[6] + 10}, -- plunderers_bonnet_+1
-	[367] = {trade = {relicTrade[7] + 10, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[8]}, reward = relicReward[7] + 10}, -- plunderers_vest_+1
-	[368] = {trade = {relicTrade[8] + 10, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[9]}, reward = relicReward[8] + 10}, -- plunderers_armlets_+1
-	[369] = {trade = {relicTrade[9] + 10, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[10]}, reward = relicReward[9] + 10}, -- plunderers_culottes_+1
-	[370] = {trade = {relicTrade[10] + 10, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[11]}, reward = relicReward[10] + 10}, -- plunderers_poulaines_+1
-	[371] = {trade = {relicTrade[6] + 12, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[7]}, reward = relicReward[6] + 12}, -- caballarius_coronet_+1
-	[372] = {trade = {relicTrade[7] + 12, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[8]}, reward = relicReward[7] + 12}, -- caballarius_surcoat_+1
-	[373] = {trade = {relicTrade[8] + 12, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[9]}, reward = relicReward[8] + 12}, -- caballarius_gauntlets_+1
-	[374] = {trade = {relicTrade[9] + 12, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[10]}, reward = relicReward[9] + 12}, -- caballarius_breeches_+1
-	[375] = {trade = {relicTrade[10] + 12, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[11]}, reward = relicReward[10] + 12}, -- caballarius_leggings_+1
-	[376] = {trade = {relicTrade[6] + 14, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[7]}, reward = relicReward[6] + 14}, -- fallens_burgeonet_+1
-	[377] = {trade = {relicTrade[7] + 14, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[8]}, reward = relicReward[7] + 14}, -- fallens_cuirass_+1
-	[378] = {trade = {relicTrade[8] + 14, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[9]}, reward = relicReward[8] + 14}, -- fallens_finger_gauntlets_+1
-	[379] = {trade = {relicTrade[9] + 14, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[10]}, reward = relicReward[9] + 14}, -- fallens_flanchard_+1
-	[380] = {trade = {relicTrade[10] + 14, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[11]}, reward = relicReward[10] + 14}, -- fallens_sollerets_+1
-	[381] = {trade = {relicTrade[6] + 16, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[7]}, reward = relicReward[6] + 16}, -- ankusa_helm_+1
-	[382] = {trade = {relicTrade[7] + 16, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[8]}, reward = relicReward[7] + 16}, -- ankusa_jackcoat_+1
-	[383] = {trade = {relicTrade[8] + 16, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[9]}, reward = relicReward[8] + 16}, -- ankusa_gloves_+1
-	[384] = {trade = {relicTrade[9] + 16, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[10]}, reward = relicReward[9] + 16}, -- ankusa_trousers_+1
-	[385] = {trade = {relicTrade[10] + 16, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[11]}, reward = relicReward[10] + 16}, -- ankusa_gaiters_+1
-	[386] = {trade = {relicTrade[6] + 18, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[7]}, reward = relicReward[6] + 18}, -- bihu_roundlet_+1
-	[387] = {trade = {relicTrade[7] + 18, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[8]}, reward = relicReward[7] + 18}, -- bihu_justaucorps_+1
-	[388] = {trade = {relicTrade[8] + 18, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[9]}, reward = relicReward[8] + 18}, -- bihu_cuffs_+1
-	[389] = {trade = {relicTrade[9] + 18, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[10]}, reward = relicReward[9] + 18}, -- bihu_cannions_+1
-	[390] = {trade = {relicTrade[10] + 18, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[11]}, reward = relicReward[10] + 18}, -- bihu_slippers_+1
-	[391] = {trade = {relicTrade[6] + 20, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[7]}, reward = relicReward[6] + 20}, -- arcadian_beret_+1
-	[392] = {trade = {relicTrade[7] + 20, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[8]}, reward = relicReward[7] + 20}, -- arcadian_jerkin_+1
-	[393] = {trade = {relicTrade[8] + 20, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[9]}, reward = relicReward[8] + 20}, -- arcadian_bracers_+1
-	[394] = {trade = {relicTrade[9] + 20, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[10]}, reward = relicReward[9] + 20}, -- arcadian_braccae_+1
-	[395] = {trade = {relicTrade[10] + 20, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[11]}, reward = relicReward[10] + 20}, -- arcadian_socks_+1
-	[396] = {trade = {relicTrade[6] + 22, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[7]}, reward = relicReward[6] + 22}, -- sakonji_kabuto_+1
-	[397] = {trade = {relicTrade[7] + 22, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[8]}, reward = relicReward[7] + 22}, -- sakonji_domaru_+1
-	[398] = {trade = {relicTrade[8] + 22, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[9]}, reward = relicReward[8] + 22}, -- sakonji_kote_+1
-	[399] = {trade = {relicTrade[9] + 22, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[10]}, reward = relicReward[9] + 22}, -- sakonji_haidate_+1
-	[400] = {trade = {relicTrade[10] + 22, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[11]}, reward = relicReward[10] + 22}, -- sakonji_sune-ate_+1
-	[401] = {trade = {relicTrade[6] + 24, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[7]}, reward = relicReward[6] + 24}, -- mochizuki_hatsuburi_+1
-	[402] = {trade = {relicTrade[7] + 24, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[8]}, reward = relicReward[7] + 24}, -- mochizuki_chainmail_+1
-	[403] = {trade = {relicTrade[8] + 24, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[9]}, reward = relicReward[8] + 24}, -- mochizuki_tekko_+1
-	[404] = {trade = {relicTrade[9] + 24, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[10]}, reward = relicReward[9] + 24}, -- mochizuki_hakama_+1
-	[405] = {trade = {relicTrade[10] + 24, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[11]}, reward = relicReward[10] + 24}, -- mochizuki_kyahan_+1
-	[406] = {trade = {relicTrade[6] + 26, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[7]}, reward = relicReward[6] + 26}, -- pteroslaver_armet_+1
-	[407] = {trade = {relicTrade[7] + 26, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[8]}, reward = relicReward[7] + 26}, -- pteroslaver_mail_+1
-	[408] = {trade = {relicTrade[8] + 26, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[9]}, reward = relicReward[8] + 26}, -- pteroslaver_finger_gauntlets_+1
-	[409] = {trade = {relicTrade[9] + 26, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[10]}, reward = relicReward[9] + 26}, -- pteroslaver_brais_+1
-	[410] = {trade = {relicTrade[10] + 26, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[11]}, reward = relicReward[10] + 26}, -- pteroslaver_greaves_+1
-	[411] = {trade = {relicTrade[6] + 28, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[7]}, reward = relicReward[6] + 28}, -- glyphic_horn_+1
-	[412] = {trade = {relicTrade[7] + 28, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[8]}, reward = relicReward[7] + 28}, -- glyphic_doublet_+1
-	[413] = {trade = {relicTrade[8] + 28, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[9]}, reward = relicReward[8] + 28}, -- glyphic_bracers_+1
-	[414] = {trade = {relicTrade[9] + 28, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[10]}, reward = relicReward[9] + 28}, -- glyphic_spats_+1
-	[415] = {trade = {relicTrade[10] + 28, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[11]}, reward = relicReward[10] + 28}, -- glyphic_pigaches_+1
-	[416] = {trade = {relicTrade[6] + 30, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[7]}, reward = relicReward[6] + 30}, -- luhlaza_keffiyeh_+1
-	[417] = {trade = {relicTrade[7] + 30, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[8]}, reward = relicReward[7] + 30}, -- luhlaza_jubbah_+1
-	[418] = {trade = {relicTrade[8] + 30, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[9]}, reward = relicReward[8] + 30}, -- luhlaza_bazubands_+1
-	[419] = {trade = {relicTrade[9] + 30, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[10]}, reward = relicReward[9] + 30}, -- luhlaza_shalwar_+1
-	[420] = {trade = {relicTrade[10] + 30, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[11]}, reward = relicReward[10] + 30}, -- luhlaza_charuqs_+1
-	[421] = {trade = {relicTrade[6] + 32, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[7]}, reward = relicReward[6] + 32}, -- lanun_tricorne_+1
-	[422] = {trade = {relicTrade[7] + 32, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[8]}, reward = relicReward[7] + 32}, -- lanun_frac_+1
-	[423] = {trade = {relicTrade[8] + 32, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[9]}, reward = relicReward[8] + 32}, -- lanun_gants_+1
-	[424] = {trade = {relicTrade[9] + 32, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[10]}, reward = relicReward[9] + 32}, -- lanun_trews_+1
-	[425] = {trade = {relicTrade[10] + 32, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[11]}, reward = relicReward[10] + 32}, -- lanun_bottes_+1
-	[426] = {trade = {relicTrade[6] + 34, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[7]}, reward = relicReward[6] + 34}, -- pitre_taj_+1
-	[427] = {trade = {relicTrade[7] + 34, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[8]}, reward = relicReward[7] + 34}, -- pitre_tobe_+1
-	[428] = {trade = {relicTrade[8] + 34, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[9]}, reward = relicReward[8] + 34}, -- pitre_dastanas_+1
-	[429] = {trade = {relicTrade[9] + 34, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[10]}, reward = relicReward[9] + 34}, -- pitre_churidars_+1
-	[430] = {trade = {relicTrade[10] + 34, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[11]}, reward = relicReward[10] + 34}, -- pitre_babouches_+1
-	[431] = {trade = {relicTrade[6] + 36, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[7]}, reward = relicReward[6] + 36}, -- horos_tiara_+1
-	[432] = {trade = {relicTrade[7] + 36, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[8]}, reward = relicReward[7] + 36}, -- horos_casaque_+1
-	[433] = {trade = {relicTrade[8] + 36, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[9]}, reward = relicReward[8] + 36}, -- horos_bangles_+1
-	[434] = {trade = {relicTrade[9] + 36, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[10]}, reward = relicReward[9] + 36}, -- horos_tights_+1
-	[435] = {trade = {relicTrade[10] + 36, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[11]}, reward = relicReward[10] + 36}, -- horos_shoes_+1
-	[436] = {trade = {relicTrade[6] + 38, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[7]}, reward = relicReward[6] + 38}, -- pedagogy_mortarboard_+1
-	[437] = {trade = {relicTrade[7] + 38, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[8]}, reward = relicReward[7] + 38}, -- pedagogy_gown_+1
-	[438] = {trade = {relicTrade[8] + 38, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[9]}, reward = relicReward[8] + 38}, -- pedagogy_bracers_+1
-	[439] = {trade = {relicTrade[9] + 38, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[10]}, reward = relicReward[9] + 38}, -- pedagogy_pants_+1
-	[440] = {trade = {relicTrade[10] + 38, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[11]}, reward = relicReward[10] + 38}, -- pedagogy_loafers_+1
-	[441] = {trade = {relicTrade[6] + 40, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[7]}, reward = relicReward[6] + 40}, -- bagua_galero_+1
-	[442] = {trade = {relicTrade[7] + 40, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[8]}, reward = relicReward[7] + 40}, -- bagua_tunic_+1
-	[443] = {trade = {relicTrade[8] + 40, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[9]}, reward = relicReward[8] + 40}, -- bagua_mitaines_+1
-	[444] = {trade = {relicTrade[9] + 40, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[10]}, reward = relicReward[9] + 40}, -- bagua_pants_+1
-	[445] = {trade = {relicTrade[10] + 40, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[11]}, reward = relicReward[10] + 40}, -- bagua_sandals_+1
-	[446] = {trade = {relicTrade[6] + 42, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[7]}, reward = relicReward[6] + 42}, -- futhark_bandeau_+1
-	[447] = {trade = {relicTrade[7] + 42, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[8]}, reward = relicReward[7] + 42}, -- futhark_coat_+1
-	[448] = {trade = {relicTrade[8] + 42, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[9]}, reward = relicReward[8] + 42}, -- futhark_mitons_+1
-	[449] = {trade = {relicTrade[9] + 42, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[10]}, reward = relicReward[9] + 42}, -- futhark_trousers_+1
-	[450] = {trade = {relicTrade[10] + 42, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[11]}, reward = relicReward[10] + 42}, -- futhark_boots_+1
+	[571] = {trade = {relicTrade[6], dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[7]}, reward = relicReward[6]}, -- agoge_mask_+1
+	[572] = {trade = {relicTrade[7], dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[8]}, reward = relicReward[7]}, -- agoge_lorica_+1
+	[573] = {trade = {relicTrade[8], dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[9]}, reward = relicReward[8]}, -- agoge_mufflers_+1
+	[574] = {trade = {relicTrade[9], dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[10]}, reward = relicReward[9]}, -- agoge_cuisses_+1
+	[575] = {trade = {relicTrade[10], dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[11]}, reward = relicReward[10]}, -- agoge_calligae_+1
+	[576] = {trade = {relicTrade[6] + 2, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[7]}, reward = relicReward[6] + 2}, -- hesychasts_crown_+1
+	[577] = {trade = {relicTrade[7] + 2, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[8]}, reward = relicReward[7] + 2}, -- hesychasts_cyclas_+1
+	[578] = {trade = {relicTrade[8] + 2, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[9]}, reward = relicReward[8] + 2}, -- hesychasts_gloves_+1
+	[579] = {trade = {relicTrade[9] + 2, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[10]}, reward = relicReward[9] + 2}, -- hesychasts_hose_+1
+	[580] = {trade = {relicTrade[10] + 2, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[11]}, reward = relicReward[10] + 2}, -- hesychasts_gaiters_+1
+	[581] = {trade = {relicTrade[6] + 4, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[7]}, reward = relicReward[6] + 4}, -- piety_cap_+1
+	[582] = {trade = {relicTrade[7] + 4, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[8]}, reward = relicReward[7] + 4}, -- piety_briault_+1
+	[583] = {trade = {relicTrade[8] + 4, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[9]}, reward = relicReward[8] + 4}, -- piety_mitts_+1
+	[584] = {trade = {relicTrade[9] + 4, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[10]}, reward = relicReward[9] + 4}, -- piety_pantaloons_+1
+	[585] = {trade = {relicTrade[10] + 4, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[11]}, reward = relicReward[10] + 4}, -- piety_duckbills_+1
+	[586] = {trade = {relicTrade[6] + 6, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[7]}, reward = relicReward[6] + 6}, -- archmages_petasos_+1
+	[587] = {trade = {relicTrade[7] + 6, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[8]}, reward = relicReward[7] + 6}, -- archmages_coat_+1
+	[588] = {trade = {relicTrade[8] + 6, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[9]}, reward = relicReward[8] + 6}, -- archmages_gloves_+1
+	[589] = {trade = {relicTrade[9] + 6, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[10]}, reward = relicReward[9] + 6}, -- archmages_tonban_+1
+	[590] = {trade = {relicTrade[10] + 6, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[11]}, reward = relicReward[10] + 6}, -- archmages_sabots_+1
+	[591] = {trade = {relicTrade[6] + 8, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[7]}, reward = relicReward[6] + 8}, -- vitiation_chapeau_+1
+	[592] = {trade = {relicTrade[7] + 8, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[8]}, reward = relicReward[7] + 8}, -- vitiation_tabard_+1
+	[593] = {trade = {relicTrade[8] + 8, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[9]}, reward = relicReward[8] + 8}, -- vitiation_gloves_+1
+	[594] = {trade = {relicTrade[9] + 8, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[10]}, reward = relicReward[9] + 8}, -- vitiation_tights_+1
+	[595] = {trade = {relicTrade[10] + 8, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[11]}, reward = relicReward[10] + 8}, -- vitiation_boots_+1
+	[596] = {trade = {relicTrade[6] + 10, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[7]}, reward = relicReward[6] + 10}, -- plunderers_bonnet_+1
+	[597] = {trade = {relicTrade[7] + 10, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[8]}, reward = relicReward[7] + 10}, -- plunderers_vest_+1
+	[598] = {trade = {relicTrade[8] + 10, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[9]}, reward = relicReward[8] + 10}, -- plunderers_armlets_+1
+	[599] = {trade = {relicTrade[9] + 10, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[10]}, reward = relicReward[9] + 10}, -- plunderers_culottes_+1
+	[600] = {trade = {relicTrade[10] + 10, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[11]}, reward = relicReward[10] + 10}, -- plunderers_poulaines_+1
+	[601] = {trade = {relicTrade[6] + 12, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[7]}, reward = relicReward[6] + 12}, -- caballarius_coronet_+1
+	[602] = {trade = {relicTrade[7] + 12, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[8]}, reward = relicReward[7] + 12}, -- caballarius_surcoat_+1
+	[603] = {trade = {relicTrade[8] + 12, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[9]}, reward = relicReward[8] + 12}, -- caballarius_gauntlets_+1
+	[604] = {trade = {relicTrade[9] + 12, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[10]}, reward = relicReward[9] + 12}, -- caballarius_breeches_+1
+	[605] = {trade = {relicTrade[10] + 12, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[11]}, reward = relicReward[10] + 12}, -- caballarius_leggings_+1
+	[606] = {trade = {relicTrade[6] + 14, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[7]}, reward = relicReward[6] + 14}, -- fallens_burgeonet_+1
+	[607] = {trade = {relicTrade[7] + 14, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[8]}, reward = relicReward[7] + 14}, -- fallens_cuirass_+1
+	[608] = {trade = {relicTrade[8] + 14, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[9]}, reward = relicReward[8] + 14}, -- fallens_finger_gauntlets_+1
+	[609] = {trade = {relicTrade[9] + 14, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[10]}, reward = relicReward[9] + 14}, -- fallens_flanchard_+1
+	[610] = {trade = {relicTrade[10] + 14, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[11]}, reward = relicReward[10] + 14}, -- fallens_sollerets_+1
+	[611] = {trade = {relicTrade[6] + 16, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[7]}, reward = relicReward[6] + 16}, -- ankusa_helm_+1
+	[612] = {trade = {relicTrade[7] + 16, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[8]}, reward = relicReward[7] + 16}, -- ankusa_jackcoat_+1
+	[613] = {trade = {relicTrade[8] + 16, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[9]}, reward = relicReward[8] + 16}, -- ankusa_gloves_+1
+	[614] = {trade = {relicTrade[9] + 16, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[10]}, reward = relicReward[9] + 16}, -- ankusa_trousers_+1
+	[615] = {trade = {relicTrade[10] + 16, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[11]}, reward = relicReward[10] + 16}, -- ankusa_gaiters_+1
+	[616] = {trade = {relicTrade[6] + 18, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[7]}, reward = relicReward[6] + 18}, -- bihu_roundlet_+1
+	[617] = {trade = {relicTrade[7] + 18, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[8]}, reward = relicReward[7] + 18}, -- bihu_justaucorps_+1
+	[618] = {trade = {relicTrade[8] + 18, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[9]}, reward = relicReward[8] + 18}, -- bihu_cuffs_+1
+	[619] = {trade = {relicTrade[9] + 18, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[10]}, reward = relicReward[9] + 18}, -- bihu_cannions_+1
+	[620] = {trade = {relicTrade[10] + 18, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[11]}, reward = relicReward[10] + 18}, -- bihu_slippers_+1
+	[621] = {trade = {relicTrade[6] + 20, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[7]}, reward = relicReward[6] + 20}, -- arcadian_beret_+1
+	[622] = {trade = {relicTrade[7] + 20, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[8]}, reward = relicReward[7] + 20}, -- arcadian_jerkin_+1
+	[623] = {trade = {relicTrade[8] + 20, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[9]}, reward = relicReward[8] + 20}, -- arcadian_bracers_+1
+	[624] = {trade = {relicTrade[9] + 20, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[10]}, reward = relicReward[9] + 20}, -- arcadian_braccae_+1
+	[625] = {trade = {relicTrade[10] + 20, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[11]}, reward = relicReward[10] + 20}, -- arcadian_socks_+1
+	[626] = {trade = {relicTrade[6] + 22, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[7]}, reward = relicReward[6] + 22}, -- sakonji_kabuto_+1
+	[627] = {trade = {relicTrade[7] + 22, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[8]}, reward = relicReward[7] + 22}, -- sakonji_domaru_+1
+	[628] = {trade = {relicTrade[8] + 22, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[9]}, reward = relicReward[8] + 22}, -- sakonji_kote_+1
+	[629] = {trade = {relicTrade[9] + 22, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[10]}, reward = relicReward[9] + 22}, -- sakonji_haidate_+1
+	[630] = {trade = {relicTrade[10] + 22, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[11]}, reward = relicReward[10] + 22}, -- sakonji_sune-ate_+1
+	[631] = {trade = {relicTrade[6] + 24, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[7]}, reward = relicReward[6] + 24}, -- mochizuki_hatsuburi_+1
+	[632] = {trade = {relicTrade[7] + 24, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[8]}, reward = relicReward[7] + 24}, -- mochizuki_chainmail_+1
+	[633] = {trade = {relicTrade[8] + 24, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[9]}, reward = relicReward[8] + 24}, -- mochizuki_tekko_+1
+	[634] = {trade = {relicTrade[9] + 24, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[10]}, reward = relicReward[9] + 24}, -- mochizuki_hakama_+1
+	[635] = {trade = {relicTrade[10] + 24, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[11]}, reward = relicReward[10] + 24}, -- mochizuki_kyahan_+1
+	[636] = {trade = {relicTrade[6] + 26, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[7]}, reward = relicReward[6] + 26}, -- pteroslaver_armet_+1
+	[637] = {trade = {relicTrade[7] + 26, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[8]}, reward = relicReward[7] + 26}, -- pteroslaver_mail_+1
+	[638] = {trade = {relicTrade[8] + 26, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[9]}, reward = relicReward[8] + 26}, -- pteroslaver_finger_gauntlets_+1
+	[639] = {trade = {relicTrade[9] + 26, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[10]}, reward = relicReward[9] + 26}, -- pteroslaver_brais_+1
+	[640] = {trade = {relicTrade[10] + 26, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[11]}, reward = relicReward[10] + 26}, -- pteroslaver_greaves_+1
+	[641] = {trade = {relicTrade[6] + 28, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[7]}, reward = relicReward[6] + 28}, -- glyphic_horn_+1
+	[642] = {trade = {relicTrade[7] + 28, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[8]}, reward = relicReward[7] + 28}, -- glyphic_doublet_+1
+	[643] = {trade = {relicTrade[8] + 28, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[9]}, reward = relicReward[8] + 28}, -- glyphic_bracers_+1
+	[644] = {trade = {relicTrade[9] + 28, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[10]}, reward = relicReward[9] + 28}, -- glyphic_spats_+1
+	[645] = {trade = {relicTrade[10] + 28, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[11]}, reward = relicReward[10] + 28}, -- glyphic_pigaches_+1
+	[646] = {trade = {relicTrade[6] + 30, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[7]}, reward = relicReward[6] + 30}, -- luhlaza_keffiyeh_+1
+	[647] = {trade = {relicTrade[7] + 30, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[8]}, reward = relicReward[7] + 30}, -- luhlaza_jubbah_+1
+	[648] = {trade = {relicTrade[8] + 30, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[9]}, reward = relicReward[8] + 30}, -- luhlaza_bazubands_+1
+	[649] = {trade = {relicTrade[9] + 30, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[10]}, reward = relicReward[9] + 30}, -- luhlaza_shalwar_+1
+	[650] = {trade = {relicTrade[10] + 30, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[11]}, reward = relicReward[10] + 30}, -- luhlaza_charuqs_+1
+	[651] = {trade = {relicTrade[6] + 32, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[7]}, reward = relicReward[6] + 32}, -- lanun_tricorne_+1
+	[652] = {trade = {relicTrade[7] + 32, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[8]}, reward = relicReward[7] + 32}, -- lanun_frac_+1
+	[653] = {trade = {relicTrade[8] + 32, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[9]}, reward = relicReward[8] + 32}, -- lanun_gants_+1
+	[654] = {trade = {relicTrade[9] + 32, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[10]}, reward = relicReward[9] + 32}, -- lanun_trews_+1
+	[655] = {trade = {relicTrade[10] + 32, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[11]}, reward = relicReward[10] + 32}, -- lanun_bottes_+1
+	[656] = {trade = {relicTrade[6] + 34, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[7]}, reward = relicReward[6] + 34}, -- pitre_taj_+1
+	[657] = {trade = {relicTrade[7] + 34, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[8]}, reward = relicReward[7] + 34}, -- pitre_tobe_+1
+	[658] = {trade = {relicTrade[8] + 34, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[9]}, reward = relicReward[8] + 34}, -- pitre_dastanas_+1
+	[659] = {trade = {relicTrade[9] + 34, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[10]}, reward = relicReward[9] + 34}, -- pitre_churidars_+1
+	[660] = {trade = {relicTrade[10] + 34, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[11]}, reward = relicReward[10] + 34}, -- pitre_babouches_+1
+	[661] = {trade = {relicTrade[6] + 36, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[7]}, reward = relicReward[6] + 36}, -- horos_tiara_+1
+	[662] = {trade = {relicTrade[7] + 36, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[8]}, reward = relicReward[7] + 36}, -- horos_casaque_+1
+	[663] = {trade = {relicTrade[8] + 36, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[9]}, reward = relicReward[8] + 36}, -- horos_bangles_+1
+	[664] = {trade = {relicTrade[9] + 36, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[10]}, reward = relicReward[9] + 36}, -- horos_tights_+1
+	[665] = {trade = {relicTrade[10] + 36, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[11]}, reward = relicReward[10] + 36}, -- horos_shoes_+1
+	[666] = {trade = {relicTrade[6] + 38, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[7]}, reward = relicReward[6] + 38}, -- pedagogy_mortarboard_+1
+	[667] = {trade = {relicTrade[7] + 38, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[8]}, reward = relicReward[7] + 38}, -- pedagogy_gown_+1
+	[668] = {trade = {relicTrade[8] + 38, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[9]}, reward = relicReward[8] + 38}, -- pedagogy_bracers_+1
+	[669] = {trade = {relicTrade[9] + 38, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[10]}, reward = relicReward[9] + 38}, -- pedagogy_pants_+1
+	[670] = {trade = {relicTrade[10] + 38, dynaCurrency[1], dynaCurrency[4], relicTradeMaterial[11]}, reward = relicReward[10] + 38}, -- pedagogy_loafers_+1
+	[671] = {trade = {relicTrade[6] + 40, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[7]}, reward = relicReward[6] + 40}, -- bagua_galero_+1
+	[672] = {trade = {relicTrade[7] + 40, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[8]}, reward = relicReward[7] + 40}, -- bagua_tunic_+1
+	[673] = {trade = {relicTrade[8] + 40, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[9]}, reward = relicReward[8] + 40}, -- bagua_mitaines_+1
+	[674] = {trade = {relicTrade[9] + 40, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[10]}, reward = relicReward[9] + 40}, -- bagua_pants_+1
+	[675] = {trade = {relicTrade[10] + 40, dynaCurrency[3], dynaCurrency[6], relicTradeMaterial[11]}, reward = relicReward[10] + 40}, -- bagua_sandals_+1
+	[676] = {trade = {relicTrade[6] + 42, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[7]}, reward = relicReward[6] + 42}, -- futhark_bandeau_+1
+	[677] = {trade = {relicTrade[7] + 42, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[8]}, reward = relicReward[7] + 42}, -- futhark_coat_+1
+	[678] = {trade = {relicTrade[8] + 42, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[9]}, reward = relicReward[8] + 42}, -- futhark_mitons_+1
+	[679] = {trade = {relicTrade[9] + 42, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[10]}, reward = relicReward[9] + 42}, -- futhark_trousers_+1
+	[680] = {trade = {relicTrade[10] + 42, dynaCurrency[2], dynaCurrency[5], relicTradeMaterial[11]}, reward = relicReward[10] + 42}, -- futhark_boots_+1
+	-- Reforged Relic Armor +2 (119)
+	[681] = {trade = {26625, {9544, 5}, 4077, {1451, 3}},		  reward = 23063}, -- 	Agoge Mask +2
+	[682] = {trade = {26801, {9588, 5}, 4081,  1451, 1454, 1457}, reward = 23130}, -- 	Agoge Lorica +2
+	[683] = {trade = {26977, {9632, 5}, 4080, {1454, 3}},		  reward = 23197}, -- 	Agoge Mufflers +2
+	[684] = {trade = {27153, {9676, 5}, 4078,  1451, 1454, 1457}, reward = 23264}, -- 	Agoge Cuisses +2
+	[685] = {trade = {27329, {9720, 5}, 4079, {1457, 3}},		  reward = 23331}, -- 	Agoge Calligae +2
+	[686] = {trade = {26627, {9545, 5}, 4077, {1451, 3}},		  reward = 23064}, -- 	Hesychast's Crown +2
+	[687] = {trade = {26803, {9589, 5}, 4081,  1451, 1454, 1457}, reward = 23131}, -- 	Hesychast's Cyclas +2
+	[688] = {trade = {26979, {9633, 5}, 4080, {1454, 3}},		  reward = 23198}, -- 	Hesychast's Gloves +2
+	[689] = {trade = {27155, {9677, 5}, 4078,  1451, 1454, 1457}, reward = 23265}, -- 	Hesychast's Hose +2
+	[690] = {trade = {27331, {9721, 5}, 4079, {1457, 3}},		  reward = 23332}, -- 	Hesychast's Gaiters +2
+	[691] = {trade = {26629, {9546, 5}, 4077, {1451, 3}},		  reward = 23065}, -- 	Piety Cap +2
+	[692] = {trade = {26805, {9590, 5}, 4081,  1451, 1454, 1457}, reward = 23132}, -- 	Piety Briault +2
+	[693] = {trade = {26981, {9634, 5}, 4080, {1454, 3}},		  reward = 23199}, -- 	Piety Mitts +2
+	[694] = {trade = {27157, {9678, 5}, 4078,  1451, 1454, 1457}, reward = 23266}, -- 	Piety Pantaloons +2
+	[695] = {trade = {27333, {9722, 5}, 4079, {1457, 3}},		  reward = 23333}, -- 	Piety Duckbills +2
+	[696] = {trade = {26631, {9547, 5}, 4077, {1451, 3}},		  reward = 23066}, -- 	Archmage's Petasos +2
+	[697] = {trade = {26807, {9591, 5}, 4081,  1451, 1454, 1457}, reward = 23133}, -- 	Archmage's Coat +2
+	[698] = {trade = {26983, {9635, 5}, 4080, {1454, 3}},		  reward = 23200}, -- 	Archmage's gloves +2
+	[699] = {trade = {27159, {9679, 5}, 4078,  1451, 1454, 1457}, reward = 23267}, -- 	Archmage's Tonban +2
+	[700] = {trade = {27335, {9723, 5}, 4079, {1457, 3}},		  reward = 23334}, -- 	Archmage's Sabots +2
+	[701] = {trade = {26633, {9548, 5}, 4077, {1451, 3}},		  reward = 23067}, -- 	Vitiation Chapeau +2
+	[702] = {trade = {26809, {9592, 5}, 4081,  1451, 1454, 1457}, reward = 23134}, -- 	Vitiation Tabard +2
+	[703] = {trade = {26985, {9636, 5}, 4080, {1454, 3}},		  reward = 23201}, -- 	Vitiation Gloves +2
+	[704] = {trade = {27161, {9680, 5}, 4078,  1451, 1454, 1457}, reward = 23268}, -- 	Vitiation Tights +2
+	[705] = {trade = {27337, {9724, 5}, 4079, {1457, 3}},		  reward = 23335}, -- 	Vitiation Boots +2
+	[706] = {trade = {26635, {9549, 5}, 4077, {1451, 3}},		  reward = 23068}, -- 	Plunderer's Bonnet +2
+	[707] = {trade = {26811, {9593, 5}, 4081,  1451, 1454, 1457}, reward = 23135}, -- 	Plunderer's Vest +2
+	[708] = {trade = {26987, {9637, 5}, 4080, {1454, 3}},		  reward = 23202}, -- 	Plunderer's Armlets +2
+	[709] = {trade = {27163, {9681, 5}, 4078,  1451, 1454, 1457}, reward = 23269}, -- 	Plunderer's Culottes +2
+	[710] = {trade = {27339, {9725, 5}, 4079, {1457, 3}},		  reward = 23336}, -- 	Plunderer's Poulaines +2
+	[711] = {trade = {26637, {9550, 5}, 4077, {1451, 3}},		  reward = 23069}, -- 	Caballarius Coronet +2
+	[712] = {trade = {26813, {9594, 5}, 4081,  1451, 1454, 1457}, reward = 23136}, -- 	Caballarius Surcoat +2
+	[713] = {trade = {26989, {9638, 5}, 4080, {1454, 3}},		  reward = 23203}, -- 	Caballarius Gauntlets +2
+	[714] = {trade = {27165, {9682, 5}, 4078,  1451, 1454, 1457}, reward = 23270}, -- 	Caballarius Breeches +2
+	[715] = {trade = {27341, {9726, 5}, 4079, {1457, 3}},		  reward = 23337}, -- 	Caballarius Leggings +2
+	[716] = {trade = {23070, {9551, 5}, 4077, {1451, 3}},		  reward = 23070}, -- 	Fallen's Burgeonet +2
+	[717] = {trade = {26815, {9595, 5}, 4081,  1451, 1454, 1457}, reward = 23137}, -- 	Fallen's Cuirass +2
+	[718] = {trade = {26991, {9639, 5}, 4080, {1454, 3}},		  reward = 23204}, -- 	Fallen's Finger Gauntlets +2
+	[719] = {trade = {27167, {9683, 5}, 4078,  1451, 1454, 1457}, reward = 23271}, -- 	Fallen's Flanchard +2
+	[720] = {trade = {27343, {9727, 5}, 4079, {1457, 3}},		  reward = 23338}, -- 	Fallen's Sollerets +2
+	[721] = {trade = {26641, {9552, 5}, 4077, {1451, 3}},		  reward = 23071}, -- 	Ankusa Helm +2
+	[722] = {trade = {26817, {9596, 5}, 4081,  1451, 1454, 1457}, reward = 23138}, -- 	Ankusa Jackcoat +2
+	[723] = {trade = {26993, {9640, 5}, 4080, {1454, 3}},		  reward = 23205}, -- 	Ankusa Gloves +2
+	[724] = {trade = {27169, {9684, 5}, 4078,  1451, 1454, 1457}, reward = 23272}, -- 	Ankusa Trousers +2
+	[725] = {trade = {27345, {9728, 5}, 4079, {1457, 3}},		  reward = 23339}, -- 	Ankusa Gaiters +2
+	[726] = {trade = {26643, {9553, 5}, 4077, {1451, 3}},		  reward = 23072}, -- 	Bihu Roundlet +2
+	[727] = {trade = {26819, {9597, 5}, 4081,  1451, 1454, 1457}, reward = 23139}, -- 	Bihu Justaucorps +2
+	[728] = {trade = {26995, {9641, 5}, 4080, {1454, 3}},		  reward = 23206}, -- 	Bihu Cuffs +2
+	[729] = {trade = {27171, {9685, 5}, 4078,  1451, 1454, 1457}, reward = 23273}, -- 	Bihu Cannions +2
+	[730] = {trade = {27347, {9729, 5}, 4079, {1457, 3}},		  reward = 23340}, -- 	Bihu Slippers +2
+	[731] = {trade = {26645, {9554, 5}, 4077, {1451, 3}},		  reward = 23073}, -- 	Arcadian Beret +2
+	[732] = {trade = {26821, {9598, 5}, 4081,  1451, 1454, 1457}, reward = 23140}, -- 	Arcadian Jerkin +2
+	[733] = {trade = {26997, {9642, 5}, 4080, {1454, 3}},		  reward = 23207}, -- 	Arcadian Bracers +2
+	[734] = {trade = {27173, {9686, 5}, 4078,  1451, 1454, 1457}, reward = 23274}, -- 	Arcadian Braccae +2
+	[735] = {trade = {27349, {9730, 5}, 4079, {1457, 3}},		  reward = 23341}, -- 	Arcadian Socks +2
+	[736] = {trade = {26647, {9555, 5}, 4077, {1451, 3}},		  reward = 23074}, -- 	Sakonji Kabuto +2
+	[737] = {trade = {26823, {9599, 5}, 4081,  1451, 1454, 1457}, reward = 23141}, -- 	Sakonji Domaru +2
+	[738] = {trade = {26999, {9643, 5}, 4080, {1454, 3}},		  reward = 23208}, -- 	Sakonji Kote +2
+	[739] = {trade = {27175, {9687, 5}, 4078,  1451, 1454, 1457}, reward = 23275}, -- 	Sakonji Haidate +2
+	[740] = {trade = {27351, {9731, 5}, 4079, {1457, 3}},		  reward = 23342}, -- 	Sakonji Sune-Ate +2
+	[741] = {trade = {26649, {9556, 5}, 4077, {1451, 3}},		  reward = 23075}, -- 	Mochizuki Hatsuburi +2
+	[742] = {trade = {26825, {9600, 5}, 4081,  1451, 1454, 1457}, reward = 23142}, -- 	Mochizuki Chainmail +2
+	[743] = {trade = {27001, {9644, 5}, 4080, {1454, 3}},		  reward = 23209}, -- 	Mochizuki Tekko +2
+	[744] = {trade = {27177, {9688, 5}, 4078,  1451, 1454, 1457}, reward = 23276}, -- 	Mochizuki Hakama +2
+	[745] = {trade = {27353, {9732, 5}, 4079, {1457, 3}},		  reward = 23343}, -- 	Mochizuki Kyahan +2
+	[746] = {trade = {26651, {9557, 5}, 4077, {1451, 3}},		  reward = 23076}, -- 	Pteroslaver Armet +2
+	[747] = {trade = {26827, {9601, 5}, 4081,  1451, 1454, 1457}, reward = 23143}, -- 	Pteroslaver Mail +2
+	[748] = {trade = {27003, {9645, 5}, 4080, {1454, 3}},		  reward = 23210}, -- 	Pteroslaver Finger Gauntlets +2
+	[749] = {trade = {27179, {9689, 5}, 4078,  1451, 1454, 1457}, reward = 23277}, -- 	Pteroslaver Brais +2
+	[750] = {trade = {27355, {9733, 5}, 4079, {1457, 3}},		  reward = 23344}, -- 	Pteroslaver Greaves +2
+	[751] = {trade = {26653, {9558, 5}, 4077, {1451, 3}},		  reward = 23077}, -- 	Glyphic Horn +2
+	[752] = {trade = {26829, {9602, 5}, 4081,  1451, 1454, 1457}, reward = 23144}, -- 	Glyphic Doublet +2
+	[753] = {trade = {27005, {9646, 5}, 4080, {1454, 3}},		  reward = 23211}, -- 	Glyphic Bracers +2
+	[754] = {trade = {27181, {9690, 5}, 4078,  1451, 1454, 1457}, reward = 23278}, -- 	Glyphic Spats +2
+	[755] = {trade = {27357, {9734, 5}, 4079, {1457, 3}},		  reward = 23345}, -- 	Glyphic Pigaches +2
+	[756] = {trade = {26655, {9559, 5}, 4077, {1451, 3}},		  reward = 23078}, -- 	Luhlaza Keffiyeh +2
+	[757] = {trade = {26831, {9603, 5}, 4081,  1451, 1454, 1457}, reward = 23145}, -- 	Luhlaza Jubbah +2
+	[758] = {trade = {27007, {9647, 5}, 4080, {1454, 3}},		  reward = 23212}, -- 	Luhlaza Bazubands +2
+	[759] = {trade = {27183, {9691, 5}, 4078,  1451, 1454, 1457}, reward = 23279}, -- 	Luhlaza Shalwar +2
+	[760] = {trade = {27359, {9735, 5}, 4079, {1457, 3}},		  reward = 23346}, -- 	Luhlaza Charuqs +2
+	[761] = {trade = {26657, {9560, 5}, 4077, {1451, 3}},		  reward = 23079}, -- 	Lanun Tricorne +2
+	[762] = {trade = {26833, {9604, 5}, 4081,  1451, 1454, 1457}, reward = 23146}, -- 	Lanun Frac +2
+	[763] = {trade = {27009, {9648, 5}, 4080, {1454, 3}},		  reward = 23213}, -- 	Lanun Gants +2
+	[764] = {trade = {27185, {9692, 5}, 4078,  1451, 1454, 1457}, reward = 23280}, -- 	Lanun Trews +2
+	[765] = {trade = {27361, {9736, 5}, 4079, {1457, 3}},		  reward = 23347}, -- 	Lanun bottes +2
+	[766] = {trade = {26659, {9561, 5}, 4077, {1451, 3}},		  reward = 23080}, -- 	Pitre Taj +2
+	[767] = {trade = {26835, {9605, 5}, 4081,  1451, 1454, 1457}, reward = 23147}, -- 	Pitre Tobe +2
+	[768] = {trade = {27011, {9649, 5}, 4080, {1454, 3}},		  reward = 23214}, -- 	Pitre Dastanas +2
+	[769] = {trade = {27187, {9693, 5}, 4078,  1451, 1454, 1457}, reward = 23281}, -- 	Pitre Churidars +2
+	[770] = {trade = {27363, {9737, 5}, 4079, {1457, 3}},		  reward = 23348}, -- 	Pitre Babouches +2
+	[771] = {trade = {26661, {9562, 5}, 4077, {1451, 3}},		  reward = 23081}, -- 	Horos Tiara +2
+	[772] = {trade = {26837, {9606, 5}, 4081,  1451, 1454, 1457}, reward = 23148}, -- 	Horos Casaque +2
+	[773] = {trade = {27013, {9650, 5}, 4080, {1454, 3}},		  reward = 23215}, -- 	Horos Bangles +2
+	[774] = {trade = {27189, {9694, 5}, 4078,  1451, 1454, 1457}, reward = 23282}, -- 	Horos Tights +2
+	[775] = {trade = {27365, {9738, 5}, 4079, {1457, 3}},		  reward = 23349}, -- 	Horos Toe Shoes +2
+	[776] = {trade = {26663, {9563, 5}, 4077, {1451, 3}},		  reward = 23082}, -- 	Pedagogy Mortarboard +2
+	[777] = {trade = {26839, {9607, 5}, 4081,  1451, 1454, 1457}, reward = 23149}, -- 	Pedagogy Gown +2
+	[778] = {trade = {27015, {9651, 5}, 4080, {1454, 3}},		  reward = 23216}, -- 	Pedagogy Bracers +2
+	[779] = {trade = {27191, {9695, 5}, 4078,  1451, 1454, 1457}, reward = 23283}, -- 	Pedagogy Pants +2
+	[780] = {trade = {27367, {9739, 5}, 4079, {1457, 3}},		  reward = 23350}, -- 	Pedagogy Loafers +2
+	[781] = {trade = {26665, {9564, 5}, 4077, {1451, 3}},		  reward = 23083}, -- 	Bagua Galero +2
+	[782] = {trade = {26841, {9608, 5}, 4081,  1451, 1454, 1457}, reward = 23150}, -- 	Bagua Tunic +2
+	[783] = {trade = {27017, {9652, 5}, 4080, {1454, 3}},		  reward = 23217}, -- 	Bagua Mitaines +2
+	[784] = {trade = {27193, {9696, 5}, 4078,  1451, 1454, 1457}, reward = 23284}, -- 	Bagua Pants +2
+	[785] = {trade = {27369, {9740, 5}, 4079, {1457, 3}},		  reward = 23351}, -- 	Bagua Sandals +2
+	[786] = {trade = {26667, {9565, 5}, 4077, {1451, 3}},		  reward = 23084}, -- 	Futhark Bandeau +2
+	[787] = {trade = {26843, {9609, 5}, 4081,  1451, 1454, 1457}, reward = 23151}, -- 	Futhark Coat +2
+	[788] = {trade = {27019, {9653, 5}, 4080, {1454, 3}},		  reward = 23218}, -- 	Futhark Mitons +2
+	[789] = {trade = {27195, {9697, 5}, 4078,  1451, 1454, 1457}, reward = 23285}, -- 	Futhark Trousers +2
+	[790] = {trade = {27371, {9741, 5}, 4079, {1457, 3}},		  reward = 23352}, -- 	Futhark Boots +2
+	-- Reforged Relic Armor +3 (119) (Slots 791-900 reserved)
 }
 
 -- Ravager's Mask +2, Ravager's Lorica +2, Ravager's Mufflers +2, Ravager's Cuisses +2, Ravager's Calligae +2,
@@ -562,116 +676,118 @@ local empReward = {26740, 26898, 27052, 27237, 27411,
 local reforgedEmpyreanArmor =
 {
 	-- -- Reforged Empyrean Armor (109)
-	[451] = {trade = {empTrade[1], {empSeals[1], 8}, empTradeMaterial[6], empBossItem[1]}, reward = empReward[1]}, -- boii_mask
-	[452] = {trade = {empTrade[2], {empSeals[2], 8}, empTradeMaterial[6], empBossItem[2]}, reward = empReward[2]}, -- boii_lorica
-	[453] = {trade = {empTrade[3], {empSeals[3], 8}, empTradeMaterial[6], empBossItem[3]}, reward = empReward[3]}, -- boii_mufflers
-	[454] = {trade = {empTrade[4], {empSeals[4], 8}, empTradeMaterial[6], empBossItem[4]}, reward = empReward[4]}, -- boii_cuisses
-	[455] = {trade = {empTrade[5], {empSeals[5], 8}, empTradeMaterial[6], empBossItem[5]}, reward = empReward[5]}, -- boii_calligae
-	[456] = {trade = {empTrade[1] + 1, {empSeals[1] + 1, 8}, empTradeMaterial[5], empBossItem[1]}, reward = empReward[1] + 2}, -- bhikku_crown
-	[457] = {trade = {empTrade[2] + 1, {empSeals[2] + 1, 8}, empTradeMaterial[5], empBossItem[2]}, reward = empReward[2] + 2}, -- bhikku_cyclas
-	[458] = {trade = {empTrade[3] + 1, {empSeals[3] + 1, 8}, empTradeMaterial[5], empBossItem[3]}, reward = empReward[3] + 2}, -- bhikku_gloves
-	[459] = {trade = {empTrade[4] + 1, {empSeals[4] + 1, 8}, empTradeMaterial[5], empBossItem[4]}, reward = empReward[4] + 2}, -- bhikku_hose
-	[460] = {trade = {empTrade[5] + 1, {empSeals[5] + 1, 8}, empTradeMaterial[5], empBossItem[5]}, reward = empReward[5] + 2}, -- bhikku_gaiters
-	[461] = {trade = {empTrade[1] + 2, {empSeals[1] + 2, 8}, empTradeMaterial[1], empBossItem[1]}, reward = empReward[1] + 4}, -- ebers_cap
-	[462] = {trade = {empTrade[2] + 2, {empSeals[2] + 2, 8}, empTradeMaterial[1], empBossItem[2]}, reward = empReward[2] + 4}, -- ebers_bliaud
-	[463] = {trade = {empTrade[3] + 2, {empSeals[3] + 2, 8}, empTradeMaterial[1], empBossItem[3]}, reward = empReward[3] + 4}, -- ebers_mitts
-	[464] = {trade = {empTrade[4] + 2, {empSeals[4] + 2, 8}, empTradeMaterial[1], empBossItem[4]}, reward = empReward[4] + 4}, -- ebers_pantaloons
-	[465] = {trade = {empTrade[5] + 2, {empSeals[5] + 2, 8}, empTradeMaterial[1], empBossItem[5]}, reward = empReward[5] + 4}, -- ebers_duckbills
-	[466] = {trade = {empTrade[1] + 3, {empSeals[1] + 3, 8}, empTradeMaterial[3], empBossItem[1]}, reward = empReward[1] + 6}, -- wicce_petasos
-	[467] = {trade = {empTrade[2] + 3, {empSeals[2] + 3, 8}, empTradeMaterial[3], empBossItem[2]}, reward = empReward[2] + 6}, -- wicce_coat
-	[468] = {trade = {empTrade[3] + 3, {empSeals[3] + 3, 8}, empTradeMaterial[3], empBossItem[3]}, reward = empReward[3] + 6}, -- wicce_gloves
-	[469] = {trade = {empTrade[4] + 3, {empSeals[4] + 3, 8}, empTradeMaterial[3], empBossItem[4]}, reward = empReward[4] + 6}, -- wicce_chausses
-	[470] = {trade = {empTrade[5] + 3, {empSeals[5] + 3, 8}, empTradeMaterial[3], empBossItem[5]}, reward = empReward[5] + 6}, -- wicce_sabots
-	[471] = {trade = {empTrade[1] + 4, {empSeals[1] + 4, 8}, empTradeMaterial[11], empBossItem[1]}, reward = empReward[1] + 8}, -- lethargy_chappel
-	[472] = {trade = {empTrade[2] + 4, {empSeals[2] + 4, 8}, empTradeMaterial[11], empBossItem[2]}, reward = empReward[2] + 8}, -- lethargy_sayon
-	[473] = {trade = {empTrade[3] + 4, {empSeals[3] + 4, 8}, empTradeMaterial[11], empBossItem[3]}, reward = empReward[3] + 8}, -- lethargy_gantherots
-	[474] = {trade = {empTrade[4] + 4, {empSeals[4] + 4, 8}, empTradeMaterial[11], empBossItem[4]}, reward = empReward[4] + 8}, -- lethargy_fuseau
-	[475] = {trade = {empTrade[5] + 4, {empSeals[5] + 4, 8}, empTradeMaterial[11], empBossItem[5]}, reward = empReward[5] + 8}, -- lethargy_houseaux
-	[476] = {trade = {empTrade[1] + 5, {empSeals[1] + 5, 8}, empTradeMaterial[4], empBossItem[1]}, reward = empReward[1] + 10}, -- skulkers_bonnet
-	[477] = {trade = {empTrade[2] + 5, {empSeals[2] + 5, 8}, empTradeMaterial[4], empBossItem[2]}, reward = empReward[2] + 10}, -- skulkers_vest
-	[478] = {trade = {empTrade[3] + 5, {empSeals[3] + 5, 8}, empTradeMaterial[4], empBossItem[3]}, reward = empReward[3] + 10}, -- skulkers_armlets
-	[479] = {trade = {empTrade[4] + 5, {empSeals[4] + 5, 8}, empTradeMaterial[4], empBossItem[4]}, reward = empReward[4] + 10}, -- skulkers_culottes
-	[480] = {trade = {empTrade[5] + 5, {empSeals[5] + 5, 8}, empTradeMaterial[4], empBossItem[5]}, reward = empReward[5] + 10}, -- skulkers_poulaines
-	[481] = {trade = {empTrade[1] + 6, {empSeals[1] + 6, 8}, empTradeMaterial[8], empBossItem[1]}, reward = empReward[1] + 12}, -- chevaliers_armet
-	[482] = {trade = {empTrade[2] + 6, {empSeals[2] + 6, 8}, empTradeMaterial[8], empBossItem[2]}, reward = empReward[2] + 12}, -- chevaliers_cuirass
-	[483] = {trade = {empTrade[3] + 6, {empSeals[3] + 6, 8}, empTradeMaterial[8], empBossItem[3]}, reward = empReward[3] + 12}, -- chevaliers_gauntlets
-	[484] = {trade = {empTrade[4] + 6, {empSeals[4] + 6, 8}, empTradeMaterial[8], empBossItem[4]}, reward = empReward[4] + 12}, -- chevaliers_cuisses
-	[485] = {trade = {empTrade[5] + 6, {empSeals[5] + 6, 8}, empTradeMaterial[8], empBossItem[5]}, reward = empReward[5] + 12}, -- chevaliers_sabatons
-	[486] = {trade = {empTrade[1] + 7, {empSeals[1] + 7, 8}, empTradeMaterial[3], empBossItem[1]}, reward = empReward[1] + 14}, -- heathens_burgeonet
-	[487] = {trade = {empTrade[2] + 7, {empSeals[2] + 7, 8}, empTradeMaterial[3], empBossItem[2]}, reward = empReward[2] + 14}, -- heathens_cuirass
-	[488] = {trade = {empTrade[3] + 7, {empSeals[3] + 7, 8}, empTradeMaterial[3], empBossItem[3]}, reward = empReward[3] + 14}, -- heathens_gauntlets
-	[489] = {trade = {empTrade[4] + 7, {empSeals[4] + 7, 8}, empTradeMaterial[3], empBossItem[4]}, reward = empReward[4] + 14}, -- heathens_flanchard
-	[490] = {trade = {empTrade[5] + 7, {empSeals[5] + 7, 8}, empTradeMaterial[3], empBossItem[5]}, reward = empReward[5] + 14}, -- heathens_sollerets
-	[491] = {trade = {empTrade[1] + 8, {empSeals[1] + 8, 8}, empTradeMaterial[6], empBossItem[1]}, reward = empReward[1] + 16}, -- nukumi_cabasset
-	[492] = {trade = {empTrade[2] + 8, {empSeals[2] + 8, 8}, empTradeMaterial[6], empBossItem[2]}, reward = empReward[2] + 16}, -- nukumi_gausape
-	[493] = {trade = {empTrade[3] + 8, {empSeals[3] + 8, 8}, empTradeMaterial[6], empBossItem[3]}, reward = empReward[3] + 16}, -- nukumi_manoplas
-	[494] = {trade = {empTrade[4] + 8, {empSeals[4] + 8, 8}, empTradeMaterial[6], empBossItem[4]}, reward = empReward[4] + 16}, -- nukumi_quijotes
-	[495] = {trade = {empTrade[5] + 8, {empSeals[5] + 8, 8}, empTradeMaterial[6], empBossItem[5]}, reward = empReward[5] + 16}, -- nukumi_ocreae
-	[496] = {trade = {empTrade[1] + 9, {empSeals[1] + 9, 8}, empTradeMaterial[9], empBossItem[1]}, reward = empReward[1] + 18}, -- fili_calot
-	[497] = {trade = {empTrade[2] + 9, {empSeals[2] + 9, 8}, empTradeMaterial[9], empBossItem[2]}, reward = empReward[2] + 18}, -- fili_hongreline
-	[498] = {trade = {empTrade[3] + 9, {empSeals[3] + 9, 8}, empTradeMaterial[9], empBossItem[3]}, reward = empReward[3] + 18}, -- fili_manchettes
-	[499] = {trade = {empTrade[4] + 9, {empSeals[4] + 9, 8}, empTradeMaterial[9], empBossItem[4]}, reward = empReward[4] + 18}, -- fili_rhingrave
-	[500] = {trade = {empTrade[5] + 9, {empSeals[5] + 9, 8}, empTradeMaterial[9], empBossItem[5]}, reward = empReward[5] + 18}, -- fili_cothurnes
-	[501] = {trade = {empTrade[1] + 10, {empSeals[1] + 10, 8}, empTradeMaterial[7], empBossItem[1]}, reward = empReward[1] + 20}, -- amini_gapette
-	[502] = {trade = {empTrade[2] + 10, {empSeals[2] + 10, 8}, empTradeMaterial[7], empBossItem[2]}, reward = empReward[2] + 20}, -- amini_caban
-	[503] = {trade = {empTrade[3] + 10, {empSeals[3] + 10, 8}, empTradeMaterial[7], empBossItem[3]}, reward = empReward[3] + 20}, -- amini_glovelettes
-	[504] = {trade = {empTrade[4] + 10, {empSeals[4] + 10, 8}, empTradeMaterial[7], empBossItem[4]}, reward = empReward[4] + 20}, -- amini_brague
-	[505] = {trade = {empTrade[5] + 10, {empSeals[5] + 10, 8}, empTradeMaterial[7], empBossItem[5]}, reward = empReward[5] + 20}, -- amini_bottillons
-	[506] = {trade = {empTrade[1] + 11, {empSeals[1] + 11, 8}, empTradeMaterial[11], empBossItem[1]}, reward = empReward[1] + 22}, -- kasuga_kabuto
-	[507] = {trade = {empTrade[2] + 11, {empSeals[2] + 11, 8}, empTradeMaterial[11], empBossItem[2]}, reward = empReward[2] + 22}, -- kasuga_domaru
-	[508] = {trade = {empTrade[3] + 11, {empSeals[3] + 11, 8}, empTradeMaterial[11], empBossItem[3]}, reward = empReward[3] + 22}, -- kasuga_kote
-	[509] = {trade = {empTrade[4] + 11, {empSeals[4] + 11, 8}, empTradeMaterial[11], empBossItem[4]}, reward = empReward[4] + 22}, -- kasuga_haidate
-	[510] = {trade = {empTrade[5] + 11, {empSeals[5] + 11, 8}, empTradeMaterial[11], empBossItem[5]}, reward = empReward[5] + 22}, -- kasuga_sune-ate
-	[511] = {trade = {empTrade[1] + 12, {empSeals[1] + 12, 8}, empTradeMaterial[5], empBossItem[1]}, reward = empReward[1] + 24}, -- hattori_zukin
-	[512] = {trade = {empTrade[2] + 12, {empSeals[2] + 12, 8}, empTradeMaterial[5], empBossItem[2]}, reward = empReward[2] + 24}, -- hattori_ningi
-	[513] = {trade = {empTrade[3] + 12, {empSeals[3] + 12, 8}, empTradeMaterial[5], empBossItem[3]}, reward = empReward[3] + 24}, -- hattori_tekko
-	[514] = {trade = {empTrade[4] + 12, {empSeals[4] + 12, 8}, empTradeMaterial[5], empBossItem[4]}, reward = empReward[4] + 24}, -- hattori_hakama
-	[515] = {trade = {empTrade[5] + 12, {empSeals[5] + 12, 8}, empTradeMaterial[5], empBossItem[5]}, reward = empReward[5] + 24}, -- hattori_kyahan
-	[516] = {trade = {empTrade[1] + 13, {empSeals[1] + 13, 8}, empTradeMaterial[2], empBossItem[1]}, reward = empReward[1] + 26}, -- peltasts_mezail
-	[517] = {trade = {empTrade[2] + 13, {empSeals[2] + 13, 8}, empTradeMaterial[2], empBossItem[2]}, reward = empReward[2] + 26}, -- peltasts_plackart
-	[518] = {trade = {empTrade[3] + 13, {empSeals[3] + 13, 8}, empTradeMaterial[2], empBossItem[3]}, reward = empReward[3] + 26}, -- peltasts_vambraces
-	[519] = {trade = {empTrade[4] + 13, {empSeals[4] + 13, 8}, empTradeMaterial[2], empBossItem[4]}, reward = empReward[4] + 26}, -- peltasts_cuissots
-	[520] = {trade = {empTrade[5] + 13, {empSeals[5] + 13, 8}, empTradeMaterial[2], empBossItem[5]}, reward = empReward[5] + 26}, -- peltasts_schynbalds
-	[521] = {trade = {empTrade[1] + 14, {empSeals[1] + 14, 8}, empTradeMaterial[10], empBossItem[1]}, reward = empReward[1] + 28}, -- beckoners_horn
-	[522] = {trade = {empTrade[2] + 14, {empSeals[2] + 14, 8}, empTradeMaterial[10], empBossItem[2]}, reward = empReward[2] + 28}, -- beckoners_doublet
-	[523] = {trade = {empTrade[3] + 14, {empSeals[3] + 14, 8}, empTradeMaterial[10], empBossItem[3]}, reward = empReward[3] + 28}, -- beckoners_bracers
-	[524] = {trade = {empTrade[4] + 14, {empSeals[4] + 14, 8}, empTradeMaterial[10], empBossItem[4]}, reward = empReward[4] + 28}, -- beckoners_spats
-	[525] = {trade = {empTrade[5] + 14, {empSeals[5] + 14, 8}, empTradeMaterial[10], empBossItem[5]}, reward = empReward[5] + 28}, -- beckoners_pigaches
-	[526] = {trade = {empTrade[1] + 15, {empSeals[1] + 15, 8}, empTradeMaterial[2], empBossItem[1]}, reward = empReward[1] + 30}, -- hashishin_kavuk
-	[527] = {trade = {empTrade[2] + 15, {empSeals[2] + 15, 8}, empTradeMaterial[2], empBossItem[2]}, reward = empReward[2] + 30}, -- hashishin_mintan
-	[528] = {trade = {empTrade[3] + 15, {empSeals[3] + 15, 8}, empTradeMaterial[2], empBossItem[3]}, reward = empReward[3] + 30}, -- hashishin_bazubands
-	[529] = {trade = {empTrade[4] + 15, {empSeals[4] + 15, 8}, empTradeMaterial[2], empBossItem[4]}, reward = empReward[4] + 30}, -- hashishin_tayt
-	[530] = {trade = {empTrade[5] + 15, {empSeals[5] + 15, 8}, empTradeMaterial[2], empBossItem[5]}, reward = empReward[5] + 30}, -- hashishin_basmak
-	[531] = {trade = {empTrade[1] + 16, {empSeals[1] + 16, 8}, empTradeMaterial[9], empBossItem[1]}, reward = empReward[1] + 32}, -- chasseurs_tricorne
-	[532] = {trade = {empTrade[2] + 16, {empSeals[2] + 16, 8}, empTradeMaterial[9], empBossItem[2]}, reward = empReward[2] + 32}, -- chasseurs_frac
-	[533] = {trade = {empTrade[3] + 16, {empSeals[3] + 16, 8}, empTradeMaterial[9], empBossItem[3]}, reward = empReward[3] + 32}, -- chasseurs_gants
-	[534] = {trade = {empTrade[4] + 16, {empSeals[4] + 16, 8}, empTradeMaterial[9], empBossItem[4]}, reward = empReward[4] + 32}, -- chasseurs_culottes
-	[535] = {trade = {empTrade[5] + 16, {empSeals[5] + 16, 8}, empTradeMaterial[9], empBossItem[5]}, reward = empReward[5] + 32}, -- chasseurs_bottes
-	[536] = {trade = {empTrade[1] + 17, {empSeals[1] + 17, 8}, empTradeMaterial[7], empBossItem[1]}, reward = empReward[1] + 34}, -- karagoz_capello
-	[537] = {trade = {empTrade[2] + 17, {empSeals[2] + 17, 8}, empTradeMaterial[7], empBossItem[2]}, reward = empReward[2] + 34}, -- karagoz_farsetto
-	[538] = {trade = {empTrade[3] + 17, {empSeals[3] + 17, 8}, empTradeMaterial[7], empBossItem[3]}, reward = empReward[3] + 34}, -- karagoz_guanti
-	[539] = {trade = {empTrade[4] + 17, {empSeals[4] + 17, 8}, empTradeMaterial[7], empBossItem[4]}, reward = empReward[4] + 34}, -- karagoz_pantaloni
-	[540] = {trade = {empTrade[5] + 17, {empSeals[5] + 17, 8}, empTradeMaterial[7], empBossItem[5]}, reward = empReward[5] + 34}, -- karagoz_scarpe
-	[541] = {trade = {empTrade[1] + 18, {empSeals[1] + 18, 8}, empTradeMaterial[4], empBossItem[1]}, reward = empReward[1] + 36}, -- maculele_tiara
-	[542] = {trade = {empTrade[2] + 18, {empSeals[2] + 18, 8}, empTradeMaterial[4], empBossItem[2]}, reward = empReward[2] + 36}, -- maculele_casaque
-	[543] = {trade = {empTrade[3] + 18, {empSeals[3] + 18, 8}, empTradeMaterial[4], empBossItem[3]}, reward = empReward[3] + 36}, -- maculele_bangles
-	[544] = {trade = {empTrade[4] + 18, {empSeals[4] + 18, 8}, empTradeMaterial[4], empBossItem[4]}, reward = empReward[4] + 36}, -- maculele_tights
-	[545] = {trade = {empTrade[5] + 18, {empSeals[5] + 18, 8}, empTradeMaterial[4], empBossItem[5]}, reward = empReward[5] + 36}, -- maculele_toeshoes
-	[546] = {trade = {empTrade[1] + 19, {empSeals[1] + 19, 8}, empTradeMaterial[1], empBossItem[1]}, reward = empReward[1] + 38}, -- arbatel_bonnet
-	[547] = {trade = {empTrade[2] + 19, {empSeals[2] + 19, 8}, empTradeMaterial[1], empBossItem[2]}, reward = empReward[2] + 38}, -- arbatel_gown
-	[548] = {trade = {empTrade[3] + 19, {empSeals[3] + 19, 8}, empTradeMaterial[1], empBossItem[3]}, reward = empReward[3] + 38}, -- arbatel_bracers
-	[549] = {trade = {empTrade[4] + 19, {empSeals[4] + 19, 8}, empTradeMaterial[1], empBossItem[4]}, reward = empReward[4] + 38}, -- arbatel_pants
-	[550] = {trade = {empTrade[5] + 19, {empSeals[5] + 19, 8}, empTradeMaterial[1], empBossItem[5]}, reward = empReward[5] + 38}, -- arbatel_loafers
-	[551] = {trade = {{4044, 3}, {empSeals[6], 8}, empTradeMaterial[10], empBossItem[1]}, reward = empReward[1] + 40}, -- azimuth_hood
-	[552] = {trade = {{4043, 3}, {empSeals[7], 8}, empTradeMaterial[10], empBossItem[2]}, reward = empReward[2] + 40}, -- azimuth_coat
-	[553] = {trade = {{4042, 3}, {empSeals[8], 8}, empTradeMaterial[10], empBossItem[3]}, reward = empReward[3] + 40}, -- azimuth_gloves
-	[554] = {trade = {{4030, 3}, {empSeals[9], 8}, empTradeMaterial[10], empBossItem[4]}, reward = empReward[4] + 40}, -- azimuth_tights
-	[555] = {trade = {{4045, 3}, {empSeals[10], 8}, empTradeMaterial[10], empBossItem[5]}, reward = empReward[5] + 40}, -- azimuth_gaiters
-	[556] = {trade = {{4046, 3}, {empSeals[11], 8}, empTradeMaterial[8], empBossItem[1]}, reward = empReward[1] + 42}, -- erilaz_galea
-	[557] = {trade = {{4025, 3}, {empSeals[12], 8}, empTradeMaterial[8], empBossItem[2]}, reward = empReward[2] + 42}, -- erilaz_surcoat
-	[558] = {trade = {{4047, 3}, {empSeals[13], 8}, empTradeMaterial[8], empBossItem[3]}, reward = empReward[3] + 42}, -- erilaz_gauntlets
-	[559] = {trade = {{3923, 3}, {empSeals[14], 8}, empTradeMaterial[8], empBossItem[4]}, reward = empReward[4] + 42}, -- erilaz_leg_guards
-	[560] = {trade = {{4029, 3}, {empSeals[15], 8}, empTradeMaterial[8], empBossItem[5]}, reward = empReward[5] + 42}, -- erilaz_greaves
+	[901] = {trade = {empTrade[1], {empSeals[1], 8}, empTradeMaterial[6], empBossItem[1]}, reward = empReward[1]}, -- boii_mask
+	[902] = {trade = {empTrade[2], {empSeals[2], 8}, empTradeMaterial[6], empBossItem[2]}, reward = empReward[2]}, -- boii_lorica
+	[903] = {trade = {empTrade[3], {empSeals[3], 8}, empTradeMaterial[6], empBossItem[3]}, reward = empReward[3]}, -- boii_mufflers
+	[904] = {trade = {empTrade[4], {empSeals[4], 8}, empTradeMaterial[6], empBossItem[4]}, reward = empReward[4]}, -- boii_cuisses
+	[905] = {trade = {empTrade[5], {empSeals[5], 8}, empTradeMaterial[6], empBossItem[5]}, reward = empReward[5]}, -- boii_calligae
+	[906] = {trade = {empTrade[1] + 1, {empSeals[1] + 1, 8}, empTradeMaterial[5], empBossItem[1]}, reward = empReward[1] + 2}, -- bhikku_crown
+	[907] = {trade = {empTrade[2] + 1, {empSeals[2] + 1, 8}, empTradeMaterial[5], empBossItem[2]}, reward = empReward[2] + 2}, -- bhikku_cyclas
+	[908] = {trade = {empTrade[3] + 1, {empSeals[3] + 1, 8}, empTradeMaterial[5], empBossItem[3]}, reward = empReward[3] + 2}, -- bhikku_gloves
+	[909] = {trade = {empTrade[4] + 1, {empSeals[4] + 1, 8}, empTradeMaterial[5], empBossItem[4]}, reward = empReward[4] + 2}, -- bhikku_hose
+	[910] = {trade = {empTrade[5] + 1, {empSeals[5] + 1, 8}, empTradeMaterial[5], empBossItem[5]}, reward = empReward[5] + 2}, -- bhikku_gaiters
+	[911] = {trade = {empTrade[1] + 2, {empSeals[1] + 2, 8}, empTradeMaterial[1], empBossItem[1]}, reward = empReward[1] + 4}, -- ebers_cap
+	[912] = {trade = {empTrade[2] + 2, {empSeals[2] + 2, 8}, empTradeMaterial[1], empBossItem[2]}, reward = empReward[2] + 4}, -- ebers_bliaud
+	[913] = {trade = {empTrade[3] + 2, {empSeals[3] + 2, 8}, empTradeMaterial[1], empBossItem[3]}, reward = empReward[3] + 4}, -- ebers_mitts
+	[914] = {trade = {empTrade[4] + 2, {empSeals[4] + 2, 8}, empTradeMaterial[1], empBossItem[4]}, reward = empReward[4] + 4}, -- ebers_pantaloons
+	[915] = {trade = {empTrade[5] + 2, {empSeals[5] + 2, 8}, empTradeMaterial[1], empBossItem[5]}, reward = empReward[5] + 4}, -- ebers_duckbills
+	[916] = {trade = {empTrade[1] + 3, {empSeals[1] + 3, 8}, empTradeMaterial[3], empBossItem[1]}, reward = empReward[1] + 6}, -- wicce_petasos
+	[917] = {trade = {empTrade[2] + 3, {empSeals[2] + 3, 8}, empTradeMaterial[3], empBossItem[2]}, reward = empReward[2] + 6}, -- wicce_coat
+	[918] = {trade = {empTrade[3] + 3, {empSeals[3] + 3, 8}, empTradeMaterial[3], empBossItem[3]}, reward = empReward[3] + 6}, -- wicce_gloves
+	[919] = {trade = {empTrade[4] + 3, {empSeals[4] + 3, 8}, empTradeMaterial[3], empBossItem[4]}, reward = empReward[4] + 6}, -- wicce_chausses
+	[920] = {trade = {empTrade[5] + 3, {empSeals[5] + 3, 8}, empTradeMaterial[3], empBossItem[5]}, reward = empReward[5] + 6}, -- wicce_sabots
+	[921] = {trade = {empTrade[1] + 4, {empSeals[1] + 4, 8}, empTradeMaterial[11], empBossItem[1]}, reward = empReward[1] + 8}, -- lethargy_chappel
+	[922] = {trade = {empTrade[2] + 4, {empSeals[2] + 4, 8}, empTradeMaterial[11], empBossItem[2]}, reward = empReward[2] + 8}, -- lethargy_sayon
+	[923] = {trade = {empTrade[3] + 4, {empSeals[3] + 4, 8}, empTradeMaterial[11], empBossItem[3]}, reward = empReward[3] + 8}, -- lethargy_gantherots
+	[924] = {trade = {empTrade[4] + 4, {empSeals[4] + 4, 8}, empTradeMaterial[11], empBossItem[4]}, reward = empReward[4] + 8}, -- lethargy_fuseau
+	[925] = {trade = {empTrade[5] + 4, {empSeals[5] + 4, 8}, empTradeMaterial[11], empBossItem[5]}, reward = empReward[5] + 8}, -- lethargy_houseaux
+	[926] = {trade = {empTrade[1] + 5, {empSeals[1] + 5, 8}, empTradeMaterial[4], empBossItem[1]}, reward = empReward[1] + 10}, -- skulkers_bonnet
+	[927] = {trade = {empTrade[2] + 5, {empSeals[2] + 5, 8}, empTradeMaterial[4], empBossItem[2]}, reward = empReward[2] + 10}, -- skulkers_vest
+	[928] = {trade = {empTrade[3] + 5, {empSeals[3] + 5, 8}, empTradeMaterial[4], empBossItem[3]}, reward = empReward[3] + 10}, -- skulkers_armlets
+	[929] = {trade = {empTrade[4] + 5, {empSeals[4] + 5, 8}, empTradeMaterial[4], empBossItem[4]}, reward = empReward[4] + 10}, -- skulkers_culottes
+	[930] = {trade = {empTrade[5] + 5, {empSeals[5] + 5, 8}, empTradeMaterial[4], empBossItem[5]}, reward = empReward[5] + 10}, -- skulkers_poulaines
+	[931] = {trade = {empTrade[1] + 6, {empSeals[1] + 6, 8}, empTradeMaterial[8], empBossItem[1]}, reward = empReward[1] + 12}, -- chevaliers_armet
+	[932] = {trade = {empTrade[2] + 6, {empSeals[2] + 6, 8}, empTradeMaterial[8], empBossItem[2]}, reward = empReward[2] + 12}, -- chevaliers_cuirass
+	[933] = {trade = {empTrade[3] + 6, {empSeals[3] + 6, 8}, empTradeMaterial[8], empBossItem[3]}, reward = empReward[3] + 12}, -- chevaliers_gauntlets
+	[934] = {trade = {empTrade[4] + 6, {empSeals[4] + 6, 8}, empTradeMaterial[8], empBossItem[4]}, reward = empReward[4] + 12}, -- chevaliers_cuisses
+	[935] = {trade = {empTrade[5] + 6, {empSeals[5] + 6, 8}, empTradeMaterial[8], empBossItem[5]}, reward = empReward[5] + 12}, -- chevaliers_sabatons
+	[936] = {trade = {empTrade[1] + 7, {empSeals[1] + 7, 8}, empTradeMaterial[3], empBossItem[1]}, reward = empReward[1] + 14}, -- heathens_burgeonet
+	[937] = {trade = {empTrade[2] + 7, {empSeals[2] + 7, 8}, empTradeMaterial[3], empBossItem[2]}, reward = empReward[2] + 14}, -- heathens_cuirass
+	[938] = {trade = {empTrade[3] + 7, {empSeals[3] + 7, 8}, empTradeMaterial[3], empBossItem[3]}, reward = empReward[3] + 14}, -- heathens_gauntlets
+	[939] = {trade = {empTrade[4] + 7, {empSeals[4] + 7, 8}, empTradeMaterial[3], empBossItem[4]}, reward = empReward[4] + 14}, -- heathens_flanchard
+	[940] = {trade = {empTrade[5] + 7, {empSeals[5] + 7, 8}, empTradeMaterial[3], empBossItem[5]}, reward = empReward[5] + 14}, -- heathens_sollerets
+	[941] = {trade = {empTrade[1] + 8, {empSeals[1] + 8, 8}, empTradeMaterial[6], empBossItem[1]}, reward = empReward[1] + 16}, -- nukumi_cabasset
+	[942] = {trade = {empTrade[2] + 8, {empSeals[2] + 8, 8}, empTradeMaterial[6], empBossItem[2]}, reward = empReward[2] + 16}, -- nukumi_gausape
+	[943] = {trade = {empTrade[3] + 8, {empSeals[3] + 8, 8}, empTradeMaterial[6], empBossItem[3]}, reward = empReward[3] + 16}, -- nukumi_manoplas
+	[944] = {trade = {empTrade[4] + 8, {empSeals[4] + 8, 8}, empTradeMaterial[6], empBossItem[4]}, reward = empReward[4] + 16}, -- nukumi_quijotes
+	[945] = {trade = {empTrade[5] + 8, {empSeals[5] + 8, 8}, empTradeMaterial[6], empBossItem[5]}, reward = empReward[5] + 16}, -- nukumi_ocreae
+	[946] = {trade = {empTrade[1] + 9, {empSeals[1] + 9, 8}, empTradeMaterial[9], empBossItem[1]}, reward = empReward[1] + 18}, -- fili_calot
+	[947] = {trade = {empTrade[2] + 9, {empSeals[2] + 9, 8}, empTradeMaterial[9], empBossItem[2]}, reward = empReward[2] + 18}, -- fili_hongreline
+	[948] = {trade = {empTrade[3] + 9, {empSeals[3] + 9, 8}, empTradeMaterial[9], empBossItem[3]}, reward = empReward[3] + 18}, -- fili_manchettes
+	[949] = {trade = {empTrade[4] + 9, {empSeals[4] + 9, 8}, empTradeMaterial[9], empBossItem[4]}, reward = empReward[4] + 18}, -- fili_rhingrave
+	[950] = {trade = {empTrade[5] + 9, {empSeals[5] + 9, 8}, empTradeMaterial[9], empBossItem[5]}, reward = empReward[5] + 18}, -- fili_cothurnes
+	[951] = {trade = {empTrade[1] + 10, {empSeals[1] + 10, 8}, empTradeMaterial[7], empBossItem[1]}, reward = empReward[1] + 20}, -- amini_gapette
+	[952] = {trade = {empTrade[2] + 10, {empSeals[2] + 10, 8}, empTradeMaterial[7], empBossItem[2]}, reward = empReward[2] + 20}, -- amini_caban
+	[953] = {trade = {empTrade[3] + 10, {empSeals[3] + 10, 8}, empTradeMaterial[7], empBossItem[3]}, reward = empReward[3] + 20}, -- amini_glovelettes
+	[954] = {trade = {empTrade[4] + 10, {empSeals[4] + 10, 8}, empTradeMaterial[7], empBossItem[4]}, reward = empReward[4] + 20}, -- amini_brague
+	[955] = {trade = {empTrade[5] + 10, {empSeals[5] + 10, 8}, empTradeMaterial[7], empBossItem[5]}, reward = empReward[5] + 20}, -- amini_bottillons
+	[956] = {trade = {empTrade[1] + 11, {empSeals[1] + 11, 8}, empTradeMaterial[11], empBossItem[1]}, reward = empReward[1] + 22}, -- kasuga_kabuto
+	[957] = {trade = {empTrade[2] + 11, {empSeals[2] + 11, 8}, empTradeMaterial[11], empBossItem[2]}, reward = empReward[2] + 22}, -- kasuga_domaru
+	[958] = {trade = {empTrade[3] + 11, {empSeals[3] + 11, 8}, empTradeMaterial[11], empBossItem[3]}, reward = empReward[3] + 22}, -- kasuga_kote
+	[959] = {trade = {empTrade[4] + 11, {empSeals[4] + 11, 8}, empTradeMaterial[11], empBossItem[4]}, reward = empReward[4] + 22}, -- kasuga_haidate
+	[960] = {trade = {empTrade[5] + 11, {empSeals[5] + 11, 8}, empTradeMaterial[11], empBossItem[5]}, reward = empReward[5] + 22}, -- kasuga_sune-ate
+	[961] = {trade = {empTrade[1] + 12, {empSeals[1] + 12, 8}, empTradeMaterial[5], empBossItem[1]}, reward = empReward[1] + 24}, -- hattori_zukin
+	[962] = {trade = {empTrade[2] + 12, {empSeals[2] + 12, 8}, empTradeMaterial[5], empBossItem[2]}, reward = empReward[2] + 24}, -- hattori_ningi
+	[963] = {trade = {empTrade[3] + 12, {empSeals[3] + 12, 8}, empTradeMaterial[5], empBossItem[3]}, reward = empReward[3] + 24}, -- hattori_tekko
+	[964] = {trade = {empTrade[4] + 12, {empSeals[4] + 12, 8}, empTradeMaterial[5], empBossItem[4]}, reward = empReward[4] + 24}, -- hattori_hakama
+	[965] = {trade = {empTrade[5] + 12, {empSeals[5] + 12, 8}, empTradeMaterial[5], empBossItem[5]}, reward = empReward[5] + 24}, -- hattori_kyahan
+	[966] = {trade = {empTrade[1] + 13, {empSeals[1] + 13, 8}, empTradeMaterial[2], empBossItem[1]}, reward = empReward[1] + 26}, -- peltasts_mezail
+	[967] = {trade = {empTrade[2] + 13, {empSeals[2] + 13, 8}, empTradeMaterial[2], empBossItem[2]}, reward = empReward[2] + 26}, -- peltasts_plackart
+	[968] = {trade = {empTrade[3] + 13, {empSeals[3] + 13, 8}, empTradeMaterial[2], empBossItem[3]}, reward = empReward[3] + 26}, -- peltasts_vambraces
+	[969] = {trade = {empTrade[4] + 13, {empSeals[4] + 13, 8}, empTradeMaterial[2], empBossItem[4]}, reward = empReward[4] + 26}, -- peltasts_cuissots
+	[970] = {trade = {empTrade[5] + 13, {empSeals[5] + 13, 8}, empTradeMaterial[2], empBossItem[5]}, reward = empReward[5] + 26}, -- peltasts_schynbalds
+	[971] = {trade = {empTrade[1] + 14, {empSeals[1] + 14, 8}, empTradeMaterial[10], empBossItem[1]}, reward = empReward[1] + 28}, -- beckoners_horn
+	[972] = {trade = {empTrade[2] + 14, {empSeals[2] + 14, 8}, empTradeMaterial[10], empBossItem[2]}, reward = empReward[2] + 28}, -- beckoners_doublet
+	[973] = {trade = {empTrade[3] + 14, {empSeals[3] + 14, 8}, empTradeMaterial[10], empBossItem[3]}, reward = empReward[3] + 28}, -- beckoners_bracers
+	[974] = {trade = {empTrade[4] + 14, {empSeals[4] + 14, 8}, empTradeMaterial[10], empBossItem[4]}, reward = empReward[4] + 28}, -- beckoners_spats
+	[975] = {trade = {empTrade[5] + 14, {empSeals[5] + 14, 8}, empTradeMaterial[10], empBossItem[5]}, reward = empReward[5] + 28}, -- beckoners_pigaches
+	[976] = {trade = {empTrade[1] + 15, {empSeals[1] + 15, 8}, empTradeMaterial[2], empBossItem[1]}, reward = empReward[1] + 30}, -- hashishin_kavuk
+	[977] = {trade = {empTrade[2] + 15, {empSeals[2] + 15, 8}, empTradeMaterial[2], empBossItem[2]}, reward = empReward[2] + 30}, -- hashishin_mintan
+	[978] = {trade = {empTrade[3] + 15, {empSeals[3] + 15, 8}, empTradeMaterial[2], empBossItem[3]}, reward = empReward[3] + 30}, -- hashishin_bazubands
+	[979] = {trade = {empTrade[4] + 15, {empSeals[4] + 15, 8}, empTradeMaterial[2], empBossItem[4]}, reward = empReward[4] + 30}, -- hashishin_tayt
+	[980] = {trade = {empTrade[5] + 15, {empSeals[5] + 15, 8}, empTradeMaterial[2], empBossItem[5]}, reward = empReward[5] + 30}, -- hashishin_basmak
+	[981] = {trade = {empTrade[1] + 16, {empSeals[1] + 16, 8}, empTradeMaterial[9], empBossItem[1]}, reward = empReward[1] + 32}, -- chasseurs_tricorne
+	[982] = {trade = {empTrade[2] + 16, {empSeals[2] + 16, 8}, empTradeMaterial[9], empBossItem[2]}, reward = empReward[2] + 32}, -- chasseurs_frac
+	[983] = {trade = {empTrade[3] + 16, {empSeals[3] + 16, 8}, empTradeMaterial[9], empBossItem[3]}, reward = empReward[3] + 32}, -- chasseurs_gants
+	[984] = {trade = {empTrade[4] + 16, {empSeals[4] + 16, 8}, empTradeMaterial[9], empBossItem[4]}, reward = empReward[4] + 32}, -- chasseurs_culottes
+	[985] = {trade = {empTrade[5] + 16, {empSeals[5] + 16, 8}, empTradeMaterial[9], empBossItem[5]}, reward = empReward[5] + 32}, -- chasseurs_bottes
+	[986] = {trade = {empTrade[1] + 17, {empSeals[1] + 17, 8}, empTradeMaterial[7], empBossItem[1]}, reward = empReward[1] + 34}, -- karagoz_capello
+	[987] = {trade = {empTrade[2] + 17, {empSeals[2] + 17, 8}, empTradeMaterial[7], empBossItem[2]}, reward = empReward[2] + 34}, -- karagoz_farsetto
+	[988] = {trade = {empTrade[3] + 17, {empSeals[3] + 17, 8}, empTradeMaterial[7], empBossItem[3]}, reward = empReward[3] + 34}, -- karagoz_guanti
+	[989] = {trade = {empTrade[4] + 17, {empSeals[4] + 17, 8}, empTradeMaterial[7], empBossItem[4]}, reward = empReward[4] + 34}, -- karagoz_pantaloni
+	[990] = {trade = {empTrade[5] + 17, {empSeals[5] + 17, 8}, empTradeMaterial[7], empBossItem[5]}, reward = empReward[5] + 34}, -- karagoz_scarpe
+	[991] = {trade = {empTrade[1] + 18, {empSeals[1] + 18, 8}, empTradeMaterial[4], empBossItem[1]}, reward = empReward[1] + 36}, -- maculele_tiara
+	[992] = {trade = {empTrade[2] + 18, {empSeals[2] + 18, 8}, empTradeMaterial[4], empBossItem[2]}, reward = empReward[2] + 36}, -- maculele_casaque
+	[993] = {trade = {empTrade[3] + 18, {empSeals[3] + 18, 8}, empTradeMaterial[4], empBossItem[3]}, reward = empReward[3] + 36}, -- maculele_bangles
+	[994] = {trade = {empTrade[4] + 18, {empSeals[4] + 18, 8}, empTradeMaterial[4], empBossItem[4]}, reward = empReward[4] + 36}, -- maculele_tights
+	[995] = {trade = {empTrade[5] + 18, {empSeals[5] + 18, 8}, empTradeMaterial[4], empBossItem[5]}, reward = empReward[5] + 36}, -- maculele_toeshoes
+	[996] = {trade = {empTrade[1] + 19, {empSeals[1] + 19, 8}, empTradeMaterial[1], empBossItem[1]}, reward = empReward[1] + 38}, -- arbatel_bonnet
+	[997] = {trade = {empTrade[2] + 19, {empSeals[2] + 19, 8}, empTradeMaterial[1], empBossItem[2]}, reward = empReward[2] + 38}, -- arbatel_gown
+	[998] = {trade = {empTrade[3] + 19, {empSeals[3] + 19, 8}, empTradeMaterial[1], empBossItem[3]}, reward = empReward[3] + 38}, -- arbatel_bracers
+	[999] = {trade = {empTrade[4] + 19, {empSeals[4] + 19, 8}, empTradeMaterial[1], empBossItem[4]}, reward = empReward[4] + 38}, -- arbatel_pants
+	[1000] = {trade = {empTrade[5] + 19, {empSeals[5] + 19, 8}, empTradeMaterial[1], empBossItem[5]}, reward = empReward[5] + 38}, -- arbatel_loafers
+	[1001] = {trade = {{4044, 3}, {empSeals[6], 8}, empTradeMaterial[10], empBossItem[1]}, reward = empReward[1] + 40}, -- azimuth_hood
+	[1002] = {trade = {{4043, 3}, {empSeals[7], 8}, empTradeMaterial[10], empBossItem[2]}, reward = empReward[2] + 40}, -- azimuth_coat
+	[1003] = {trade = {{4042, 3}, {empSeals[8], 8}, empTradeMaterial[10], empBossItem[3]}, reward = empReward[3] + 40}, -- azimuth_gloves
+	[1004] = {trade = {{4030, 3}, {empSeals[9], 8}, empTradeMaterial[10], empBossItem[4]}, reward = empReward[4] + 40}, -- azimuth_tights
+	[1005] = {trade = {{4045, 3}, {empSeals[10], 8}, empTradeMaterial[10], empBossItem[5]}, reward = empReward[5] + 40}, -- azimuth_gaiters
+	[1006] = {trade = {{4046, 3}, {empSeals[11], 8}, empTradeMaterial[8], empBossItem[1]}, reward = empReward[1] + 42}, -- erilaz_galea
+	[1007] = {trade = {{4025, 3}, {empSeals[12], 8}, empTradeMaterial[8], empBossItem[2]}, reward = empReward[2] + 42}, -- erilaz_surcoat
+	[1008] = {trade = {{4047, 3}, {empSeals[13], 8}, empTradeMaterial[8], empBossItem[3]}, reward = empReward[3] + 42}, -- erilaz_gauntlets
+	[1009] = {trade = {{3923, 3}, {empSeals[14], 8}, empTradeMaterial[8], empBossItem[4]}, reward = empReward[4] + 42}, -- erilaz_leg_guards
+	[1010] = {trade = {{4029, 3}, {empSeals[15], 8}, empTradeMaterial[8], empBossItem[5]}, reward = empReward[5] + 42}, -- erilaz_greaves
+	-- Reforged Empyrean Armor +2 (119) (Slots 1011-1120 reserved)
+	-- Reforged Empyrean Armor +3 (119) (Slots 1121-1230 reserved)
 }
 
 function onTrade(player, npc, trade)
@@ -726,7 +842,7 @@ function onTrade(player, npc, trade)
 		local checkSeiryu
 		local checkSuzaku
 		
-		if ((tradedCombo >= 116 and tradedCombo <= 230) or (tradedCombo >= 341 and tradedCombo <= 450)) then
+		if ((tradedCombo >= 116 and tradedCombo <= 230) or (tradedCombo >= 571 and tradedCombo <= 680)) then
 			checkGenbu = player:getCharVar("[Aug]SuibhnePathGenbu_"..augItem)
 			checkByakko = player:getCharVar("[Aug]SuibhnePathByakko_"..augItem)
 			checkSeiryu = player:getCharVar("[Aug]SuibhnePathSeiryu_"..augItem)
@@ -747,11 +863,11 @@ function onTrade(player, npc, trade)
 			player:setCharVar("[Aug]SuibhnePathSeiryu_"..augItem, 0)
 		end
 		
-		if (tradedCombo <= 230) then
+		if (tradedCombo <= 460) then
 			reward = reforgedArtifactArmor[tradedCombo].reward
-		elseif (tradedCombo >= 231 and tradedCombo <= 450) then
+		elseif (tradedCombo >= 461 and tradedCombo <= 900) then
 			reward = reforgedRelicArmor[tradedCombo].reward
-		elseif (tradedCombo >= 451 and tradedCombo <= 560) then
+		elseif (tradedCombo >= 901 and tradedCombo <= 1230) then
 			reward = reforgedEmpyreanArmor[tradedCombo].reward
 		end
 		

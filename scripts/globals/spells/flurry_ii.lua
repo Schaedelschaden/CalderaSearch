@@ -15,6 +15,10 @@ function onSpellCast(caster, target, spell)
     local duration = calculateDuration(150, caster, target, spell)
     duration = calculateDurationForLvl(duration, 96, target:getMainLvl())
 
+	if (target:hasStatusEffect(tpz.effect.HASTE)) then
+		target:delStatusEffect(tpz.effect.HASTE)
+	end
+
 	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then
 		power = power * 1.5
 		target:delStatusEffect(tpz.effect.EMBOLDEN)

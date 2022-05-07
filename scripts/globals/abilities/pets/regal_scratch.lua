@@ -15,7 +15,7 @@ end
 function onPetAbility(target, pet, skill, player)
     local animationID = 161
 	local mobName = target:getName()
-	local fixedMobName = string.gsub(mobName, "_", " ")
+	local fixedName = string.gsub(mobName, "_", " ")
 	local numhits = 3
     local accmod = 1
     local dmgmod = 1

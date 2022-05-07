@@ -57,7 +57,7 @@ function onTrigger(player, npc)
 		614, 60,		-- Bulb of Mhaura Garlic
 		629, 36,		-- Ear of Millioncorn
 		5195, 159,		-- Sprig of Misareaux Parsley
-		6466, 840,		-- Bowl of Miso-based Ramen Soup
+		6466, 7400,		-- Bowl of Miso-based Ramen Soup
 		4390, 18,		-- Mithran Tomato
 		4567, 200,		-- Moon Carrot
 		1983, 921,		-- Mushroom Locust

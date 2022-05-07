@@ -31,6 +31,7 @@ function onTrigger(player, npc)
     {
 		638, 111,		-- Sprig of Sage
 		5299, 111,		-- Dish of Salsa
+		9199, 7400,		-- Bowl of Salt-based Ramen Soup
 		4389, 24,		-- San d'Orian Carrot
 		610, 45,		-- Bag of San d'Orian Flour
 		4431, 57,		-- Bunch of San d'Orian Grapes
@@ -49,7 +50,7 @@ function onTrigger(player, npc)
 		2710, 582,		-- Bundle of Soba Noodles
 		4565, 45,		-- Sobbing Fungus
 		5232, 90,		-- Jug of Soy Milk
-		9197, 840,		-- Bowl of Soy-based Ramen Soup
+		9197, 7400,		-- Bowl of Soy-based Ramen Soup
 		2111, 120,		-- Saucer of Soy Stock
 		1776, 900,		-- Serving of Spaghetti
 		1471, 570,		-- Box of Sticky Rice

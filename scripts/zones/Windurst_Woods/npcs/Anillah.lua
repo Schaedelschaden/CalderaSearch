@@ -90,14 +90,14 @@ function onTrigger(player, npc)
 		1991, 3747,			-- Square of Silver Brocade
 		822, 600,			-- Spool of Silver Thread
 --		1313, 250000,		-- Lock of Siren's Hair
-		1409, 4488,			-- Spool of Siren's Macrame
+		-- 1409, 4488,			-- Spool of Siren's Macrame
 		4031, 237,			-- Bottle of Snapweed Secretion
 		4032, 2631,			-- Snapweed Tendril
 --		2199, 100000,		-- Spool of Sparkstrand Thread
 		838, 1980,			-- Spider Web
 		2128, 75,			-- Spindle
 		1279, 4500,			-- Square of Taffeta Cloth
-		2200, 250000,		-- Square of Twill Damask
+		-- 2200, 250000,		-- Square of Twill Damask
 		1295, 3495,			-- Twincoon
 		1278, 2760,			-- Spool of Twinthread
 --		2198, 2820,			-- Water Spider's Web

@@ -22,6 +22,7 @@ function onTrigger(player)
 
 	local weaponType = player:getWeaponSkillType(tpz.slot.MAIN)
 	local rangedWeaponType = player:getWeaponSkillType(tpz.slot.RANGED)
+	local throwingWeaponType = player:getWeaponSkillType(tpz.slot.AMMO)
 	local shieldBaseBlockRate = 0
 	
 	if (player:getShieldSize() ~= 0) then
@@ -73,12 +74,12 @@ function onTrigger(player)
 		end
 	end
 	
-	local RATT = math.floor(8 + player:getMod(tpz.mod.RATT) + rangedWeaponATT)
-	RATT = RATT + (math.min(RATT * (player:getMod(tpz.mod.FOOD_RATTP) / 100), player:getMod(tpz.mod.FOOD_RATT_CAP)))
+	local RATT = math.floor((8 + player:getMod(tpz.mod.RATT) + rangedWeaponATT))
+	RATT = RATT + (RATT * (player:getMod(tpz.mod.RATTP) / 100)) + (math.min(RATT * (player:getMod(tpz.mod.FOOD_RATTP) / 100), player:getMod(tpz.mod.FOOD_RATT_CAP)))
 	
-	local MATT = player:getMod(tpz.mod.MATT)
+	local MATT = player:getMod(tpz.mod.MATT) + player:getMod(tpz.mod.NIN_NUKE_BONUS)
 	local MDMG = player:getMod(tpz.mod.MAGIC_DAMAGE)
-	local MBurst = player:getMod(tpz.mod.MAG_BURST_BONUS)
+	local MBurst = 100 + utils.clamp(player:getMod(tpz.mod.MAG_BURST_BONUS), 0, 40) + player:getMod(tpz.mod.TRAIT_MAG_BURST_BONUS)
 	local MCritRate = player:getMod(tpz.mod.MAGIC_CRITHITRATE)
 	local MCritDMG = player:getMod(tpz.mod.MAGIC_CRIT_DMG_INCREASE)
 	
@@ -102,8 +103,12 @@ function onTrigger(player)
 	
 	local rangedWeaponACC = 0
 	for i = 1, 3 do
-		if (rangedWeaponType == rangedWeapons[i]) then
+		if (rangedWeaponType == rangedWeapons[i] or throwingWeaponType == rangedWeapons[i]) then
 			rangedWeaponACC = player:getSkillLevel(rangedWeapons[i]) + player:getILvlSkill(tpz.slot.RANGED)
+			
+			if (rangedWeaponType == rangedWeapons[i] or throwingWeaponType == rangedWeapons[3]) then
+				rangedWeaponACC = player:getSkillLevel(tpz.skill.THROWING) + player:getILvlSkill(tpz.slot.AMMO)
+			end
 			
 			if (rangedWeaponACC >= 201 and rangedWeaponACC <= 400) then
 				rangedWeaponACC = ((rangedWeaponACC - 200) * 0.9) + 200
@@ -139,9 +144,9 @@ function onTrigger(player)
 		local cursorTarget = player:getCursorTarget()
 		
 		for i = 1, 9 do
-			if (player:getMainJob() == jobMagic[i] and (player:getStat(jobMagicStat[i]) - cursorTarget:getStat(jobMagicStat[i]) <= 10)) then
+			if (player:getMainJob() == jobMagic[i] and jobMagicStat[i] ~= 0 and (player:getStat(jobMagicStat[i]) - cursorTarget:getStat(jobMagicStat[i]) <= 10)) then
 				MACC = MACC + (player:getStat(jobMagicStat[i]) - cursorTarget:getStat(jobMagicStat[i]))
-			elseif (player:getMainJob() == jobMagic[i] and (player:getStat(jobMagicStat[i]) - cursorTarget:getStat(jobMagicStat[i]) > 10)) then
+			elseif (player:getMainJob() == jobMagic[i] and jobMagicStat[i] ~= 0 and (player:getStat(jobMagicStat[i]) - cursorTarget:getStat(jobMagicStat[i]) > 10)) then
 				MACC = MACC + 10 + (((player:getStat(jobMagicStat[i]) - cursorTarget:getStat(jobMagicStat[i])) - 10) / 2)
 			end
 		end
@@ -154,8 +159,12 @@ function onTrigger(player)
 		EVA = ((EVA - 200) * 0.9) + 200
 	end
 	
-	EVA = math.floor((player:getStat(tpz.mod.AGI) / 2) + player:getMod(tpz.mod.EVA) + EVA)
+	EVA = math.floor(EVA + (player:getStat(tpz.mod.AGI) / 2) + player:getMod(tpz.mod.EVA))
+	EVA = EVA + (math.min(EVA * (player:getMod(tpz.mod.FOOD_EVAP) / 100), player:getMod(tpz.mod.FOOD_EVAP_CAP)))
+	
 	local MEVA = player:getMod(tpz.mod.MEVA)
+	MEVA = MEVA + (math.min(MEVA * (player:getMod(tpz.mod.FOOD_MEVAP) / 100), player:getMod(tpz.mod.FOOD_MEVAP_CAP)))
+	
 	local MEVAII = player:getMod(tpz.mod.MAGIC_EVASION_BOOST_II)
 	local MDEF = player:getMod(tpz.mod.MDEF)
 	local DT = utils.clamp(player:getMod(tpz.mod.DMG), -50, 50)
@@ -199,7 +208,7 @@ function onTrigger(player)
 	local DualWield = player:getMod(tpz.mod.DUAL_WIELD)
 	local SubtleBlow = player:getMod(tpz.mod.SUBTLE_BLOW)
 	local SubtleBlowII = player:getMod(tpz.mod.SUBTLE_BLOW_II)
-	local CritHitRate = 5 + player:getMerit(tpz.merit.CRIT_HIT_RATE) + player:getMod(tpz.mod.CRITHITRATE)	
+	local CritHitRate = 5 + player:getMerit(tpz.merit.CRIT_HIT_RATE) + player:getMod(tpz.mod.CRITHITRATE)
 	local CritHitDamage = player:getMod(tpz.mod.CRIT_DMG_INCREASE)
 	local CritHitEVA = -player:getMod(tpz.mod.CRIT_HIT_EVASION)
 	local WSDMG = player:getMod(tpz.mod.ALL_WSDMG_ALL_HITS) + player:getMod(tpz.mod.YAEGASUMI_WS_BONUS)
@@ -233,12 +242,14 @@ function onTrigger(player)
 	local CPot = utils.clamp(player:getMod(tpz.mod.CURE_POTENCY), 0, 50)
 	local CPotII = utils.clamp(player:getMod(tpz.mod.CURE_POTENCY_II), 0, 30)
 	local CRPot = utils.clamp(player:getMod(tpz.mod.CURE_POTENCY_RCVD), 0, 30)
+	local WaltzPot = player:getMod(tpz.mod.WALTZ_POTENTCY)
+	local WaltzPotRecv = player:getMod(tpz.mod.WALTZ_POTENCY_RCVD)
 	local SID = player:getMod(tpz.mod.SPELLINTERRUPT) + player:getMerit(tpz.merit.SPELL_INTERUPTION_RATE)
-	local HasteMag = utils.clamp(player:getMod(tpz.mod.HASTE_MAGIC) / 100, 0, 44)
-	local HasteAbil = utils.clamp(player:getMod(tpz.mod.HASTE_ABILITY) / 100, 0, 25)
-	local HasteGear = utils.clamp(player:getMod(tpz.mod.HASTE_GEAR) / 100, 0, 25)
+	local HasteMag = utils.clamp(player:getMod(tpz.mod.HASTE_MAGIC) / 100, -100, 44)
+	local HasteAbil = utils.clamp(player:getMod(tpz.mod.HASTE_ABILITY) / 100, -100, 25)
+	local HasteGear = utils.clamp(player:getMod(tpz.mod.HASTE_GEAR) / 100, -100, 25)
 	local BlitzerRoll = player:getMod(tpz.mod.DELAYP)
-	local FastCast = player:getMod(tpz.mod.FASTCAST)
+	local FastCast = utils.clamp(player:getMod(tpz.mod.FASTCAST), 0, 80)
 	local UFastCast = player:getMod(tpz.mod.UFASTCAST)
 	local SleepRES = player:getMod(tpz.mod.SLEEPRES) + player:getMod(tpz.mod.ALLSTATUSRES)
 	local PoisonRES = player:getMod(tpz.mod.POISONRES) + player:getMod(tpz.mod.ALLSTATUSRES)
@@ -325,7 +336,7 @@ function onTrigger(player)
 	player:PrintToPlayer(string.format("  Treasure Hunter: [%i]  Gilfinder: [%i%%]", TreasureHunter, Gilfinder),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  EXP Bonus: [%i%%]  Dedication: [%i EXP Remaining]", ExpRate, DedicationCap),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("COMBAT STATISTICS ---------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  ATK: [%i]  R.ATK: [%i]  Crit Hit Rate: [%i%%]  Crit Hit DMG: [%i%%]  MAB: [%i]  M.DMG: [%i]  M.Burst DMG: [%i]  M.Crit Rate: [%i]  M.Crit DMG: [%i]" , ATT, RATT, CritHitRate, CritHitDamage, MATT, MDMG, MBurst, MCritRate, MCritDMG),tpz.msg.channel.SYSTEM_3)
+	player:PrintToPlayer(string.format("  ATK: [%i]  R.ATK: [%i]  Crit Hit Rate: [%i%%]  Crit Hit DMG: [%i%%]  MAB: [%i]  M.DMG: [%i]  M.Burst DMG: [%i%%]  M.Crit Rate: [%i]  M.Crit DMG: [%i]" , ATT, RATT, CritHitRate, CritHitDamage, MATT, MDMG, MBurst, MCritRate, MCritDMG),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  Accuracy: [%i]  Ranged Accuracy: [%i]  Magic Accuracy: [%i]  Evasion: [%i]  Magic EVA: [%i]  Magic EVA II: [%i]  Magic DEF: [%i]", ACC, RACC, MACC, EVA, MEVA, MEVAII, MDEF),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  Damage Taken: [%i%%]  Physical DT: [%i%%]  Physical DT II: [%i%%]  Magic DT: [%i%%]  Magic DT II: [%i%%]  Breath DT: [%i%%]  Crit Hit EVA: [%i%%]", DT, PDT, PDTII, MDT, MDTII, BDT, CritHitEVA),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  SDT Fire: [%i%%]  Ice: [%i%%]  Wind: [%i%%]  Earth: [%i%%]  Lightning: [%i%%]  Water: [%i%%]  Light: [%i%%]  Dark: [%i%%]", SDTFire, SDTIce, SDTWind, SDTEarth, SDTLightning, SDTWater, SDTLight, SDTDark),tpz.msg.channel.SYSTEM_3)
@@ -337,6 +348,7 @@ function onTrigger(player)
 	player:PrintToPlayer(string.format("  Double Attack: [%i%%]  Triple Attack: [%i%%]  Quad Attack: [%i%%]  Kick Attack: [%i%%]  Dual Wield: [%i]", DoubleAttack, TripleAttack, QuadAttack, KickAttack, DualWield),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  Subtle Blow: [%i]  Subtle Blow II: [%i]", SubtleBlow, SubtleBlowII),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  Cure Potency: [%i%%]  Cure Potency II: [%i%%]  Cure Rec. Potency: [%i%%]  Spell Interrupt Down: [%i%%]  Fast Cast: [%i%%]  UFast Cast: [%i%%]", CPot, CPotII, CRPot, SID, FastCast, UFastCast),tpz.msg.channel.SYSTEM_3)
+	player:PrintToPlayer(string.format("  Enh. Magic Duration: [%i%%]  Waltz Potency: [%i%%]  Waltz Rec. Potency: [%i%%]", EnhMagicDuration, WaltzPot, WaltzPotRecv),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  Recycle: [%i%%]  Rapid Shot: [%i%%]  Snapshot: [%i%%]  True Shot: [%i%%]  Dbl Shot: [%i%%]  Tpl Shot: [%i%%]", Recycle, RapidShot, Snapshot, TrueShot, DoubleShot, TripleShot),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  Charm Chance: [%i]  All Killer Effects: [%i]  Augment Reward: [%i]  Call Beast Level: [%i]  Tactical Parry: [%i]", CharmChance, AllKiller, RewardAug, CallBeast, TacticalParry),tpz.msg.channel.SYSTEM_3)	
 	player:PrintToPlayer(string.format("  Ninjutsu Damage: [%i]  Daken Chance: [%i%%]  Tool Expertise: [%i%%]  Utsusemi Cast Time: [%i%%]  Blood Boon: [%i%%]", NinjutsuDMG, Daken, ToolExpertise, UtsusemiCast, BloodBoon),tpz.msg.channel.SYSTEM_3)

@@ -85,7 +85,16 @@ inline int32 CLuaSpell::setFlag(lua_State *L)
     TPZ_DEBUG_BREAK_IF(m_PLuaSpell == nullptr);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
 
-    m_PLuaSpell->setFlag((uint8)lua_tointeger(L, -1));
+    m_PLuaSpell->setFlag((uint16)lua_tointeger(L, -1));
+    return 0;
+}
+
+inline int32 CLuaSpell::setRange(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaSpell == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
+
+    m_PLuaSpell->setRange((uint16)lua_tointeger(L, -1));
     return 0;
 }
 
@@ -217,6 +226,7 @@ Lunar<CLuaSpell>::Register_t CLuaSpell::methods[] =
     LUNAR_DECLARE_METHOD(CLuaSpell,setMsg),
     LUNAR_DECLARE_METHOD(CLuaSpell,setAoE),
     LUNAR_DECLARE_METHOD(CLuaSpell,setFlag),
+	LUNAR_DECLARE_METHOD(CLuaSpell,setRange),
     LUNAR_DECLARE_METHOD(CLuaSpell,setRadius),
     LUNAR_DECLARE_METHOD(CLuaSpell,setAnimation),
     LUNAR_DECLARE_METHOD(CLuaSpell,setMPCost),

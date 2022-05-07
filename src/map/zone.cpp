@@ -946,6 +946,14 @@ void CZone::CharZoneOut(CCharEntity* PChar)
             break;
         }
     }
+	
+	auto PLastAttacker = (CBattleEntity*)PChar->PLastAttacker;
+	
+	// Floor the zoning char's enmity
+	if (PLastAttacker && PLastAttacker->objtype == TYPE_MOB)
+	{
+		((CMobEntity*)PLastAttacker)->PEnmityContainer->LowerEnmityByPercent(PChar, 99, nullptr);
+	}
 
     if (PChar->m_LevelRestriction != 0)
     {

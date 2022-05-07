@@ -11,7 +11,7 @@ require("scripts/globals/monstertpmoves")
 
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
-    if (mob:AnimationSub() == 2 and mob:getHPP() < 50) then 
+    if (mob:AnimationSub() == 2 and mob:getHPP() < 50 and mob:getLocalVar("Stance") == 0) then 
         return 0
 	else
 		return 1
@@ -28,6 +28,7 @@ function onMobWeaponSkill(target, mob, skill)
 	
 	MobStatusEffectMove(mob, target, typeEffect1, 1, 0, 60)
 	MobStatusEffectMove(mob, target, typeEffect2, 1, 0, 30) 
+	mob:setLocalVar("Stance", 1)
 	
 	return dmg
 end

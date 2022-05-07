@@ -3751,6 +3751,35 @@ inline int32 CLuaBaseEntity::getEquippedItem(lua_State *L)
 }
 
 /************************************************************************
+*  Function: getAmmoQuantity()
+*  Purpose : Returns the current stack size of equipped ammunition
+*  Example : player:getAmmoQuantity()
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getAmmoQuantity(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    // TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        auto PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+        CItemEquipment* PAmmo = PChar->getEquip(SLOT_AMMO);
+		
+		if ((PAmmo != nullptr) && PAmmo->isType(ITEM_EQUIPMENT))
+        {
+            lua_pushinteger(L, PAmmo->getQuantity());
+            return 1;
+        }
+    }
+    lua_pushinteger(L, 0);
+    return 1;
+}
+
+/************************************************************************
 *  Function: hasItem()
 *  Purpose : Returns true if a player possesses an item
 *  Example : if (player:hasItem(500) --Second var optional
@@ -3773,11 +3802,12 @@ inline int32 CLuaBaseEntity::hasItem(lua_State *L)
         uint8  locationID = LOC_INVENTORY;
 
         locationID = (uint8)lua_tointeger(L, 2);
-        locationID = (locationID < MAX_CONTAINER_ID ? locationID : LOC_INVENTORY);
+        locationID = (locationID < CONTAINER_ID::MAX_CONTAINER_ID ? locationID : LOC_INVENTORY);
 
         lua_pushboolean(L, PChar->getStorage(locationID)->SearchItem(ItemID) != ERROR_SLOTID);
         return 1;
     }
+	
     lua_pushboolean(L, charutils::HasItem(PChar, ItemID));
     return 1;
 }
@@ -3996,7 +4026,7 @@ int32 CLuaBaseEntity::delItem(lua_State* L)
 
     if (!lua_isnil(L, 3) && lua_isnumber(L, 3))
     {
-        if ((uint32)lua_tointeger(L, 3) < MAX_CONTAINER_ID)
+        if ((uint32)lua_tointeger(L, 3) < CONTAINER_ID::MAX_CONTAINER_ID)
         {
             location = (uint32)lua_tointeger(L, 3);
         }
@@ -4329,7 +4359,7 @@ inline int32 CLuaBaseEntity::changeContainerSize(lua_State *L)
     {
         uint8 LocationID = (uint8)lua_tointeger(L, 1);
 
-        if (LocationID < MAX_CONTAINER_ID)
+        if (LocationID < CONTAINER_ID::MAX_CONTAINER_ID)
         {
             CCharEntity* PChar = ((CCharEntity*)m_PBaseEntity);
 
@@ -4362,7 +4392,7 @@ inline int32 CLuaBaseEntity::getFreeSlotsCount(lua_State *L)
     if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
     {
         locationID = (uint8)lua_tointeger(L, 1);
-        locationID = (locationID < MAX_CONTAINER_ID ? locationID : LOC_INVENTORY);
+        locationID = (locationID < CONTAINER_ID::MAX_CONTAINER_ID ? locationID : LOC_INVENTORY);
     }
 
     uint8 FreeSlots = ((CCharEntity*)m_PBaseEntity)->getStorage(locationID)->GetFreeSlotsCount();
@@ -10958,7 +10988,7 @@ int32 CLuaBaseEntity::checkImbuedItems(lua_State* L)
 
     auto PChar {static_cast<CCharEntity*>(m_PBaseEntity)};
 
-    for (uint8 LocID = 0; LocID < MAX_CONTAINER_ID; ++LocID)
+    for (uint8 LocID = 0; LocID < CONTAINER_ID::MAX_CONTAINER_ID; ++LocID)
     {
         bool found = false;
         PChar->getStorage(LocID)->ForEachItem([&found](CItem* PItem)
@@ -16021,6 +16051,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     // Items
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getEquipID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getEquippedItem),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getAmmoQuantity),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,delItem),

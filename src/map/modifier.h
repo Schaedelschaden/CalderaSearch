@@ -817,6 +817,10 @@ enum class Mod
 
     SUBTLE_BLOW_II            = 973, // Subtle Blow II Effect (Cap 50%) Total Effect (SB + SB_II cap 75%)
     GARDENING_WILT_BONUS      = 975, // Increases the number of Vanadays a plant can survive before it wilts
+	
+	PENGUIN_RING_EFFECT       = 1003, // +2 on fishing arrow delay / fish movement for mini - game
+    ALBATROSS_RING_EFFECT     = 1004, // adds 30 seconds to mini - game time
+    PELICAN_RING_EFFECT       = 1005, // adds extra skillup roll for fishing
 
     // The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     // 570 through 825 used by WS DMG mods these are not spares.
@@ -825,6 +829,13 @@ enum class Mod
     // SPARE = 979, // stuff
 	
 	// Caldera custom Mod IDs
+	FOOD_EVAP                       = 1901, // Evasion +% from food
+	FOOD_EVAP_CAP                   = 1902, // Evasion +% cap from food
+	FOOD_MEVAP                      = 1903, // Magic Evasion +% from food
+	FOOD_MEVAP_CAP                  = 1904, // Magic Evasion +% cap from food
+	TRAIT_MAG_BURST_BONUS           = 1905, // Magic Burst Bonus Job Traits have to be a separate mod for calculation purposes
+	ENSPELL_STAT_BONUS              = 1906, // Adds +ACC/ATK/MACC while under the effect of an en- spell
+	
 	FRONTAL_DMG_REDUCTION           = 2000, // Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the front
 	REAR_DMG_REDUCTION              = 2001, // Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the rear
 	SIDE_DMG_REDUCTION              = 2002, // Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the side
@@ -844,7 +855,8 @@ enum class Mod
 	IMMUNITY_AMNESIA                = 2016, // Tracks how much amnesia resistance is accumulated from multiple castings of amnesia on the target before Immunobreak triggers
 	IMMUNITY_LULLABY                = 2017, // Tracks how much lullaby resistance is accumulated from multiple castings of lullaby on the target before Immunobreak triggers
 	IMMUNITY_DEATH                  = 2018, // Tracks how much death resistance is accumulated from multiple castings of death on the target before Immunobreak triggers
-	MAGIC_SHIELD                    = 2019, // Tracks remaining magical damage before wearing off
+	IMMUNITY_TERROR                 = 2019, // Tracks how much terror resistance is accumulated from multiple castings of terror on the target before Immunobreak triggers
+	MAGIC_SHIELD                    = 2020, // Tracks remaining magical damage before wearing off
 	
 	ENEMY_TP_ACCUM                  = 2800, // Reduces enemy TP accumulation by % when player takes physical damage
 	WALTZ_POTENCY_RCVD              = 2801, // Increases the potency of Waltz's received
@@ -873,6 +885,9 @@ enum class Mod
 	ENMITY_MITIGATES_DMG_DT         = 2824, // Handles the amount of -% Damage Taken provided by ENMITY_MITIGATES_DMG
 	CONVERT_ELEM_DMG_MP             = 2825, // Converts % of elemental magic damage dealt to MP
 	MAGIC_BURST_ACC                 = 2826, // Adds value to magic burst ACC bonus
+	ENSPELL_DURATION_BONUS          = 2827, // Increases the duration of Enspells
+	ENLIGHT_DMG                     = 2828, // Increases the damage of Enlight
+	TERRORRES                       = 2829, // Increases resistance to Terror
 	
 	REGEN_BASE                      = 2934, // Adds # to the base regen effect (similar to WHM Regen merits)
 	PHANTOM_ROLL_RECAST             = 2935, // Reduces the recast time of Phantom Roll

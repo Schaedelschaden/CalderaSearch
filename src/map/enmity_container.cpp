@@ -32,6 +32,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "packets/entity_update.h"
 #include "status_effect_container.h"
 #include "utils/battleutils.h"
+#include "utils/charutils.h"
 #include "utils/zoneutils.h"
 
 /************************************************************************
@@ -119,10 +120,17 @@ float CEnmityContainer::CalculateEnmityBonus(CBattleEntity* PEntity)
     {
         enmityBonus += PChar->PMeritPoints->GetMeritValue(MERIT_ENMITY_INCREASE, PChar) - PChar->PMeritPoints->GetMeritValue(MERIT_ENMITY_DECREASE, PChar);
 
+		// DRK
         if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SOULEATER))
         {
             enmityBonus -= PChar->PMeritPoints->GetMeritValue(MERIT_MUTED_SOUL, PChar);
         }
+		
+		// RNG
+		if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_CAMOUFLAGE))
+		{
+			enmityBonus -= PChar->StatusEffectContainer->GetStatusEffect(EFFECT_CAMOUFLAGE)->GetPower();
+		}
 		
 		if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_DOUBLE_SHOT) && PChar->getMod(Mod::DOUBLE_SHOT_AMMO) > 0)
 		{
@@ -141,6 +149,7 @@ float CEnmityContainer::CalculateEnmityBonus(CBattleEntity* PEntity)
 			enmityBonus -= merit;
         }
 		
+		// SCH
 		if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LIGHT_ARTS) && PChar->getMod(Mod::ENH_ADDENDUM_WHITE) > 0)
 		{
 			enmityBonus -= PChar->getMod(Mod::ENH_ADDENDUM_WHITE);
@@ -386,17 +395,31 @@ void CEnmityContainer::UpdateEnmityFromDamage(CBattleEntity* PEntity, int32 Dama
 	{
 		lvlScalingFactor = 1 - ((level - 49) * 0.014);
 	}
-	else if (level > 99)
+	else if (level > 99 && level <= 120)
 	{
 		lvlScalingFactor = 0.3;
 	}
-	else if (level > 120)
+	else if (level > 120 && level <= 135)
 	{
-		lvlScalingFactor = 0.1;
+		lvlScalingFactor = 0.2;
+	}
+	else if (level > 135)
+	{
+		lvlScalingFactor = 0.15;
+	}
+	
+	if (charutils::GetCharVar((CCharEntity*)PEntity, "AuditEnmity") == 1)
+	{
+		lvlScalingFactor += (charutils::GetCharVar((CCharEntity*)PEntity, "EnmityMult") / 10);
 	}
 
     int32 CE = (int32)(((80.f / damageMod) * Damage) * lvlScalingFactor);
     int32 VE = (int32)(((240.f / damageMod) * Damage) * lvlScalingFactor);
+	
+	if (charutils::GetCharVar((CCharEntity*)PEntity, "AuditEnmity") == 1)
+	{
+		printf("enmity_container.cpp UpdateEnmityFromDamage  PLAYER: [%s]  DMG: [%i]  DMG MOD: [%i]  LVL: [%i]  SCALING FACTOR: [%f]  CE: [%i]  VE: [%i]\n", (CCharEntity*)PEntity->GetName(), Damage, damageMod, level, lvlScalingFactor, CE, VE);
+	}
 
     UpdateEnmity(PEntity, CE, VE);
 

@@ -1052,6 +1052,17 @@ tpz.title =
     LEGENDARY_CULINARIAN                      = 1127,
     ETERNAL_COMMUNER                          = 1128,
     DESTINY_DESTROYER_DESTROYER               = 1129,
+	FULLY_BAKED_HERO                          = 1130,
+    GHDWK_VSHDNHU                             = 1131,
+    LOVE_IS_ALIVE                             = 1132,
+    THE_AWAKENER                              = 1133,
+    GET_OVER_HERE                             = 1134,
+    BOND_RENEWER                              = 1135,
+    TREASURE_OF_OLDUUM                        = 1136,
+    BELOVED_BY_THE_SEA_GOD                    = 1137,
+    DESTINY_MASTER                            = 1138,
+    TIRELESS_TRACKER                          = 1139,
+    GALKAN_HAZARD                             = 1140,
 }
 
 -----------------------------------

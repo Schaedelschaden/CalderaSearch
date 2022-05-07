@@ -165,6 +165,9 @@ tpz.shop =
                 9193,    2500,      tpz.craftRank.AMATEUR,      -- Miso
                 9194,    2500,      tpz.craftRank.AMATEUR,      -- Soy Sauce
                 9195,    2500,      tpz.craftRank.AMATEUR,      -- Dried Bonito
+				6501,      80,      tpz.craftRank.AMATEUR,      -- Konjak Tuber
+				6503,      80,      tpz.craftRank.AMATEUR,      -- Daikon
+				2110,     610,      tpz.craftRank.AMATEUR,      -- Fish Stock
                  610,      60,      tpz.craftRank.RECRUIT,      -- San d'Orian Flour
                  627,      40,      tpz.craftRank.RECRUIT,      -- Maple Sugar
                 4363,      44,      tpz.craftRank.RECRUIT,      -- Faerie Apple
@@ -173,6 +176,7 @@ tpz.shop =
                 4432,      60,     tpz.craftRank.INITIATE,      -- Kazham Pineapple
                 4366,      24,     tpz.craftRank.INITIATE,      -- La Theine Cabbage
                  611,      40,     tpz.craftRank.INITIATE,      -- Rye Flour
+				1590,    5836,     tpz.craftRank.INITIATE,      -- Holy Basil
                 4412,     325,       tpz.craftRank.NOVICE,      -- Thundermelon
                 4491,     200,       tpz.craftRank.NOVICE,      -- Watermelon
                  615,      60,       tpz.craftRank.NOVICE,      -- Selbina Butter
@@ -180,9 +184,11 @@ tpz.shop =
                 1111,     900,   tpz.craftRank.APPRENTICE,      -- Gelatin
                 1776,    3000,   tpz.craftRank.JOURNEYMAN,      -- Spaghetti
                 5164,    2595,   tpz.craftRank.JOURNEYMAN,      -- Ground Wasabi
+				8800,     600,    tpz.craftRank.CRAFTSMAN,      -- Azuki Bean
                  616,    1600,    tpz.craftRank.CRAFTSMAN,      -- Pie Dough
                 2561,    3000,    tpz.craftRank.CRAFTSMAN,      -- Pizza Dough
-                8800,     600,    tpz.craftRank.CRAFTSMAN,      -- Azuki Bean
+				1555,    8153,    tpz.craftRank.CRAFTSMAN,      -- Coriander
+				5650,    9088,    tpz.craftRank.CRAFTSMAN,      -- Nopales
                 8903,     300,      tpz.craftRank.AMATEUR,      -- Cooking Kit 5
                 8904,     400,      tpz.craftRank.AMATEUR,      -- Cooking Kit 10
                 8905,     650,      tpz.craftRank.AMATEUR,      -- Cooking Kit 15

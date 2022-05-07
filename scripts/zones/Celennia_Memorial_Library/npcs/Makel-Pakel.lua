@@ -24,7 +24,6 @@ function onTrigger(player,npc)
 		19021, 35000,	-- Katana Strap
 		19022, 35000,	-- Axe Grip
 		19023, 35000,	-- Staff Strap
-		19024, 35000,	-- Sword Strap
 		19025, 35000,	-- Pole Grip
 		19026, 35000,	-- Spear Strap
 		19027, 35000,	-- Claymore Grip

@@ -33,10 +33,11 @@ function onMobSpawn(mob)
     ]]
     tpz.trust.message(mob, message_page_offset, tpz.trust.message_offset.SPAWN)
 	
-	mob:addMod(tpz.mod.CURE_POTENCY, 20)
+	mob:addMod(tpz.mod.CURE_POTENCY, 50)
 	mob:addMod(tpz.mod.ENMITY, 35)
 	mob:addMod(tpz.mod.SPELLINTERRUPT, 35)
 	mob:addMod(tpz.mod.REFRESH, 2)
+	mob:addMod(tpz.mod.DMG, -8)
 
     mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_HAS_TOP_ENMITY, 0,
                         ai.r.JA, ai.s.SPECIFIC, tpz.ja.PROVOKE)

@@ -53,6 +53,8 @@ function onEffectTick(target, effect)
 end
 
 function onEffectLose(target, effect)
+	printf("ensphere.lua onEffectLose  NAME: [%s]", target:getName())
+
 	if (target:getLocalVar("ENSPHERE_ACTIVE_10") == 1 and target:getHP() <= 0) then
 		target:sendReraise(1)
 	end

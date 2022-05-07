@@ -26,6 +26,7 @@ function onTrigger(player,npc)
 		854, 1767,		-- Cockatrice Skin
 		863, 1800,		-- Coeurl Hide
 		2839, 600,		-- Coquecigrue Skin
+		2655, 1000000,	-- Dark Ixion Tail
 		857, 600,		-- Dhalmel Hide
 		1623, 750,		-- Eft Skin
 		2189, 4350,		-- Fiendish Skin

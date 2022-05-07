@@ -387,7 +387,7 @@ local loot =
             {itemid =  21076, droprate = 100}, -- Septoptic +1
         },
         {
-            {itemid = 26942, droprate = 110},  -- Agony Jerkin +1
+            {itemid = 26943, droprate = 110},  -- Agony Jerkin +1
             {itemid = 25681, droprate = 110},  -- Cohort Cloak +1
             {itemid = 26871, droprate = 110},  -- Emet Harness +1
             {itemid = 26873, droprate = 110},  -- Hime Domaru +1

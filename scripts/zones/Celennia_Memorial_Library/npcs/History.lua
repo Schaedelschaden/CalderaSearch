@@ -28,6 +28,7 @@ local stock_t1_locked = {
 	8983,  250000,			-- Emperor Arthro's Shell
 	8707,  500000,			-- Raaz Hide
 	8709,  500000, 			-- Raaz Tusk
+	2169,  1000000,			-- Cerberus Hide
 	4027,  1000000,			-- Spool of Akaso Thread
 	722,   1000000,			-- Divine Log
 	8725,  1000000,			-- Exalted Log
@@ -131,7 +132,7 @@ function onTrade(player, npc, trade)
 			t1Unlock = 1
 		end
 		
-		if (player:getCharVar("KillCounter_DivineMight") >= 1) then
+		if (player:getCharVar("KillCounter_Akvan") >= 1 and player:getCharVar("KillCounter_Kaggen") >= 1 and player:getCharVar("KillCounter_Pil") >= 1) then
 			t2Unlock = 1
 		end
 		

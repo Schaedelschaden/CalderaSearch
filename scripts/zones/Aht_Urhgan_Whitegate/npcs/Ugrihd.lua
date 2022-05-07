@@ -38,8 +38,8 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    local rank = tpz.besieged.getMercenaryRank(player)
-    local badge = tpz.besieged.badges[rank]
+    local rank = 11 -- tpz.besieged.getMercenaryRank(player)
+    local badge = 909 -- tpz.besieged.badges[rank]
     local points = player:getCurrency("imperial_standing")
     player:startEvent(150, rank, badge, points, 0, 0, 0, 0, 0, 0)
 end
@@ -48,7 +48,7 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option, npc)
-    if csid == 150 and option < 0x40000000 then
+    if csid == 150 and option > 0x00000014 and  option < 0x40000000 then
         local quantity = bit.rshift(option, 0x8)
         local stacks = math.floor(quantity / 99)
         local remainder = quantity % 99

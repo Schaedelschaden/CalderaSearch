@@ -21,7 +21,8 @@ function onSpellCast(caster, target, spell)
     params.bonus = 0
     params.effect = tpz.effect.STUN
     local resist = applyResistanceEffect(caster, target, spell, params)
-    if (resist <= (1/16)) then
+	
+    if (resist <= (1/8)) then
         -- resisted!
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
         return 0

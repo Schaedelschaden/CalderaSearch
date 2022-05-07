@@ -30,11 +30,11 @@ function onMobSpawn(mob)
 	mob:addMod(tpz.mod.EVA, 130)
 	mob:addMod(tpz.mod.MEVA, 200)
 	mob:addMod(tpz.mod.MATT, 200)
-	mob:addMod(tpz.mod.MACC, 100)
+	-- mob:addMod(tpz.mod.MACC, 100)
 	mob:addMod(tpz.mod.REGEN, 500)
 	mob:addMod(tpz.mod.REGAIN, 100)
 	-- mob:addMod(tpz.mod.DOUBLE_ATTACK, 30)
-	-- mob:addMod(tpz.mod.TRIPLE_ATTACK, 10)
+	mob:addMod(tpz.mod.TRIPLE_ATTACK, 10)
 	mob:addMod(tpz.mod.FASTCAST, 60)
 	mob:setMod(tpz.mod.UTSUSEMI_BONUS, 15)
 end
@@ -69,5 +69,5 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-	
+	mob:setRespawnTime(72000)
 end

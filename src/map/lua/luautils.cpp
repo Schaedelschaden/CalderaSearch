@@ -3624,7 +3624,13 @@ namespace luautils
 
     int32 OnAbilityCheck(CBaseEntity* PChar, CBaseEntity* PTarget, CAbility* PAbility, CBaseEntity** PMsgTarget)
     {
-//		printf("luautils.cpp OnAbilityCheck START\n");
+		CCharEntity* PCharAudit = (CCharEntity*)PChar;
+		
+		if (charutils::GetCharVar(PCharAudit, "AuditOnAbilityCheck") == 1)
+		{
+			printf("luautils.cpp OnAbilityCheck START\n");
+		}
+		
         TPZ_DEBUG_BREAK_IF(PAbility == nullptr);
 
         char filePath[40] = "scripts/globals/abilities/%s.lua";
@@ -3637,13 +3643,21 @@ namespace luautils
 
         lua_prepscript(filePath, PAbility->getName());
 		
-//		printf("luautils.cpp OnAbilityCheck ABILITY NAME: [%s]\n", PAbility->getName());
+		if (charutils::GetCharVar(PCharAudit, "AuditOnAbilityCheck") == 1)
+		{
+			printf("luautils.cpp OnAbilityCheck ABILITY NAME: [%s]\n", PAbility->getName());
+		}
 
         lua_pushnil(LuaHandle);
         lua_setglobal(LuaHandle, "onAbilityCheck");
 
         auto ret = luaL_loadfile(LuaHandle, (const char*)File);
-//		printf("luautils.cpp OnAbilityCheck ret: [%i]\n", ret);
+		
+		if (charutils::GetCharVar(PCharAudit, "AuditOnAbilityCheck") == 1)
+		{
+			printf("luautils.cpp OnAbilityCheck ret: [%i]\n", ret);
+		}
+		
         if (ret)
         {
             if (ret != LUA_ERRFILE)

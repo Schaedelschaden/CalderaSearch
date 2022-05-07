@@ -73,7 +73,11 @@ local function teleportMenuUpdate(player, option)
             elseif choice == optionMap.REPLACE_FAVORITE then
                 favorites[bit.rshift(option, 24) + 1] = index
             elseif choice == optionMap.SET_MENU_LAYOUT then
-                favorites[10] = (bit.rshift(option, 16) and 1) or 0
+				if (option == 3) then
+					favorites[10] = 0
+				elseif (option == 65539) then
+					favorites[10] = (bit.rshift(option, 16) and 1)
+				end
             end
 
             player:setTeleportMenu(travelType, favorites)

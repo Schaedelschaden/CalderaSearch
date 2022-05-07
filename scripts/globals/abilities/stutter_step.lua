@@ -96,7 +96,7 @@ function onUseAbility(player, target, ability, action)
 			end
         end
 		
-		power = tier * 3
+		power = tier * 6
 		
 		-- Effect, Power, Tick, Duration, SubID, SubPower, Tier
 		target:addStatusEffect(tpz.effect.WEAKENED_DAZE_1, power, 0, duration, 0, 0, tier)

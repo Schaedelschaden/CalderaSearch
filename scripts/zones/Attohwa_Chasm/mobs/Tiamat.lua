@@ -1,6 +1,8 @@
 -----------------------------------
 -- Area: Attohwa Chasm
 --  Mob: Tiamat
+-- ModId:16806227
+-- Pos: -529 -6 -43
 -----------------------------------
 mixins = {require("scripts/mixins/rage")}
 require("scripts/globals/status")
@@ -11,7 +13,7 @@ require("scripts/globals/titles")
 function onMobSpawn(mob)
     mob:SetMobSkillAttack(0) -- resetting so it doesn't respawn in flight mode.
     mob:AnimationSub(0) -- subanim 0 is only used when it spawns until first flight.
-	mob:setLocalVar("[rage]timer", 1800) -- 30 minutes
+	mob:setLocalVar("[rage]timer", 1200) -- 20 minutes	
 	mob:addMod(tpz.mod.PARALYZERES, 30) -- Resistance to Silence
     mob:addMod(tpz.mod.STUNRES, 100) -- Resistance to Stun
     mob:addMod(tpz.mod.BINDRES, 100) -- Resistance to Bind
@@ -21,15 +23,16 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.LULLABYRES, 30) -- Resistance to Lullaby
     mob:addMod(tpz.mod.PETRIFYRES, 30) -- Resistance to Pertrify
     mob:addMod(tpz.mod.POISONRES, 30) -- Resistance to Poison	
-	mob:addMod(tpz.mod.ATT, 700)	
-	mob:addMod(tpz.mod.DEF, 1000)
+	mob:addMod(tpz.mod.ATT, 300)	
+	mob:addMod(tpz.mod.MATT, 50)
+	mob:addMod(tpz.mod.DEF, 600)
 	mob:addMod(tpz.mod.EVA, 80)
-	mob:addMod(tpz.mod.MEVA, 200)
+	mob:addMod(tpz.mod.MEVA, 80)
 	mob:addMod(tpz.mod.MACC, 100)
-	mob:addMod(tpz.mod.REGEN, 500)
-	mob:addMod(tpz.mod.REFRESH, 200)
-	mob:addMod(tpz.mod.REGAIN, 100)
-	mob:addMod(tpz.mod.DOUBLE_ATTACK, 30)
+	mob:addMod(tpz.mod.REGEN, 300)
+	mob:addMod(tpz.mod.REFRESH, 50)
+	mob:addMod(tpz.mod.REGAIN, 20)
+	mob:addMod(tpz.mod.TRIPLE_ATTACK, 8)
 end
 
 function onMobFight(mob, target)

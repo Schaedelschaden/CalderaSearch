@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `item_basic` (
   PRIMARY KEY (`itemid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=34 PACK_KEYS=1 CHECKSUM=1;
 
--- Dumping data for table tpzdb.item_basic: 21,856 rows
+-- Dumping data for table tpzdb.item_basic: 21,865 rows
 /*!40000 ALTER TABLE `item_basic` DISABLE KEYS */;
 INSERT INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `flags`, `aH`, `NoSale`, `BaseSell`) VALUES
 	(1, 0, 'pile_of_chocobo_bedding', 'chocobo_bedding', 1, 24660, 0, 0, 198),
@@ -6077,8 +6077,8 @@ INSERT INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `f
 	(6463, 0, 'bowl_of_salt_ramen_+1', 'salt_ramen_+1', 12, 1548, 56, 0, 0),
 	(6464, 0, 'behemoth_steak', 'behemoth_steak', 1, 1580, 52, 0, 1000),
 	(6465, 0, 'behemoth_steak_+1', 'behe._steak_+1', 1, 1580, 52, 0, 1000),
-	(6466, 0, 'bowl_of_miso_soup', 'miso_soup', 12, 1548, 55, 0, 280),
-	(6467, 0, 'bowl_of_miso_soup_+1', 'miso_soup_+1', 12, 1548, 55, 0, 0),
+	(6466, 0, 'bowl_of_miso_soup', 'miso_soup', 12, 1548, 55, 0, 1480),
+	(6467, 0, 'bowl_of_miso_soup_+1', 'miso_soup_+1', 12, 1548, 55, 0, 2368),
 	(6468, 0, 'plate_of_sublime_sushi', 'sublime_sushi', 12, 1548, 53, 0, 362),
 	(6469, 0, 'plate_of_sublime_sushi_+1', 'sublime_sushi_+1', 12, 1548, 53, 0, 423),
 	(6473, 0, 'super_revitalizer', 'super_revitalizer', 1, 63040, 0, 0, 0),
@@ -6671,9 +6671,9 @@ INSERT INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `f
 	(9081, 0, 'kitchen_plate', 'kitchen_plate', 1, 61504, 0, 0, 0),
 	(9082, 0, 'clump_of_bee_pollen', 'bee_pollen', 12, 4, 46, 0, 203),
 	(9083, 0, 'mandragora_dewdrop', 'mandra._dewdrop', 12, 4, 46, 0, 203),
-	(9084, 0, 'eschalixir', 'eschalixir', 12, 4, 46, 0, 191),
-	(9085, 0, 'eschalixir_+1', 'eschalixir_+1', 12, 4, 46, 0, 300),
-	(9086, 0, 'eschalixir_+2', 'eschalixir_+2', 12, 4, 46, 0, 400),
+	(9084, 0, 'eschalixir', 'eschalixir', 99, 4, 46, 0, 191),
+	(9085, 0, 'eschalixir_+1', 'eschalixir_+1', 99, 4, 46, 0, 300),
+	(9086, 0, 'eschalixir_+2', 'eschalixir_+2', 99, 4, 46, 0, 400),
 	(9087, 0, 'mog_kupon_aw-vgr', 'kupon_aw-vgr', 99, 28736, 0, 0, 0),
 	(9088, 0, 'mog_kupon_aw-vgrii', 'kupon_aw-vgrii', 99, 28736, 0, 0, 0),
 	(9089, 0, 'mog_kupon_w-pulse', 'kupon_w-pulse', 99, 28736, 0, 0, 0),
@@ -6770,9 +6770,9 @@ INSERT INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `f
 	(9194, 0, 'bottle_of_soy_sauce', 'soy_sauce', 12, 4, 59, 0, 297),
 	(9195, 0, 'handful_of_dried_bonito', 'dried_bonito', 12, 4, 59, 0, 291),
 	(9196, 0, 'container_of_ramen_noodles', 'ramen_noodles', 12, 4, 59, 0, 1000),
-	(9197, 0, 'bowl_of_soy_sauce-based_ramen_soup', 'soy_ramen_soup', 12, 4, 59, 0, 280),
+	(9197, 0, 'bowl_of_soy_sauce-based_ramen_soup', 'soy_ramen_soup', 12, 4, 59, 0, 1480),
 	(9198, 0, 'bowl_of_miso-based_ramen_soup', 'miso_ramen_soup', 12, 4, 59, 0, 280),
-	(9199, 0, 'bowl_of_salt-based_ramen_soup', 'salt_ramen_soup', 12, 4, 59, 0, 0),
+	(9199, 0, 'bowl_of_salt-based_ramen_soup', 'salt_ramen_soup', 12, 4, 59, 0, 1480),
 	(9200, 0, 'dollop_of_wasabi', 'wasabi', 12, 4, 59, 0, 0),
 	(9201, 0, 'handful_of_bamboo_shoots', 'bamboo_shoots', 12, 4, 59, 0, 300),
 	(9202, 0, 'ethereal_droplet', 'ethereal_droplet', 1, 61504, 0, 0, 0),
@@ -14504,7 +14504,7 @@ INSERT INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `f
 	(17294, 0, 'comet_tail', 'comet_tail', 1, 2052, 13, 0, 9384),
 	(17295, 0, 'rising_sun_+1', 'rising_sun_+1', 1, 2080, 13, 0, 4653),
 	(17296, 0, 'pebble', 'pebble', 99, 2052, 15, 0, 1),
-	(17297, 0, 'throwing_coin', 'throwing_coin', 12, 2048, 15, 0, 1),
+	(17297, 0, 'throwing_coin', 'throwing_coin', 99, 14416, 15, 0, 1),
 	(17298, 0, 'tathlum', 'tathlum', 99, 2052, 15, 0, 40),
 	(17299, 0, 'astragalos', 'astragalos', 99, 2052, 15, 0, 42),
 	(17300, 0, 'platinum_bullet', 'platinum_bullet', 99, 2052, 15, 0, 37),
@@ -20700,7 +20700,7 @@ INSERT INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `f
 	(27625, 0, 'morbol_shield', 'morbol_shield', 1, 30784, 0, 0, 0),
 	(27626, 0, 'cassies_shield', 'cassies_shield', 1, 31816, 0, 0, 0),
 	(27627, 0, 'svalinn', 'svalinn', 1, 30804, 0, 0, 0),
-	(27629, 0, 'weathering_shield_+1', 'weather._shield_+1', 1, 34820, 0, 0, 0),
+	(27629, 0, 'weathering_shield_+1', 'weather._shield_+1', 1, 34820, 16, 0, 0),
 	(27630, 0, 'thuellaic_ecu_+1', 'thuellaic_ecu_+1', 1, 34820, 0, 0, 10312),
 	(27631, 0, 'cait_sith_guard', 'cait_sith_guard', 1, 30784, 0, 0, 0),
 	(27632, 0, 'cait_sith_guard_+1', 'cait_sith_gua._+1', 1, 30784, 0, 0, 0),
@@ -21884,7 +21884,16 @@ INSERT INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `f
 	(26355, 0, 'audumbla_sash', 'audumbla_sash', 1, 63572, 0, 0, 0),
 	(6601, 0, 'omelette_sandwich', 'omelette_sandwich', 12, 1548, 56, 0, 0),
 	(6602, 0, 'omelette_sandwich_+1', 'omelette_sandwich_+1', 12, 1548, 56, 0, 0),
-	(21636, 0, 'nihility', 'nihility', 1, 30805, 0, 0, 0);
+	(21636, 0, 'nihility', 'nihility', 1, 30805, 0, 0, 0),
+	(6501, 0, 'konjak_tuber', 'konjak_tuber', 12, 1548, 59, 0, 20),
+	(6502, 0, 'konjak', 'konjak', 12, 1548, 59, 0, 31),
+	(6503, 0, 'daikon', 'daikon', 12, 1548, 59, 0, 25),
+	(6505, 0, 'chikuwa', 'chikuwa', 12, 1548, 59, 0, 100),
+	(6470, 0, 'bowl_of_oden', 'oden', 1, 1580, 54, 0, 362),
+	(6471, 0, 'bowl_of_oden_+1', 'oden_+1', 1, 1580, 54, 0, 527),
+	(6609, 0, 'serving_of_popotoes_con_queso', 'popo._con_queso', 12, 1580, 54, 0, 136),
+	(6610, 0, 'serving_of_popotoes_con_queso_+1', 'popo._con_queso_+1', 12, 1580, 54, 0, 196),
+	(26354, 0, 'embla_sash', 'embla_sash', 1, 63572, 0, 1, 0);
 /*!40000 ALTER TABLE `item_basic` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

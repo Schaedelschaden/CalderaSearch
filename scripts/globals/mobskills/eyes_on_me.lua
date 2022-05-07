@@ -17,6 +17,12 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local dmgmod = mob:getWeaponDmg() * 4
+	
+	if (mob:getMainLvl() >= 135) then
+		dmgmod = mob:getWeaponDmg() * 12
+	else
+		dmgmod = mob:getWeaponDmg() * 4
+	end
 
     local dmg = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.SPECIAL, tpz.damageType.DARK, MOBPARAM_IGNORE_SHADOWS)
 

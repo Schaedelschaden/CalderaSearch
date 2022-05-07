@@ -5,8 +5,12 @@
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-        if (mob:getHPP() > 25) then 
-        return 0
+    if (mob:getHPP() > 25) then 
+            if (target:isBehind(mob, 48) == false) then
+				return 0
+			else
+				return 1
+			end
 	else
 		return 1
     end

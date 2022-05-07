@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area: Western Adoulin
 --  NPC: Heemo-Weemo
--- Type: Skirmish NPC
+-- Type: Delve NPC
 -- !pos 103.05 -0.65 -67.56 256
 -----------------------------------
 require("scripts/globals/quests")

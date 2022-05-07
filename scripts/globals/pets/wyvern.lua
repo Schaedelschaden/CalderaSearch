@@ -4,6 +4,7 @@
 require("scripts/globals/status")
 require("scripts/globals/ability")
 require("scripts/globals/msg")
+require("scripts/globals/utils")
 
 local WYVERN_OFFENSIVE = 1
 local WYVERN_DEFENSIVE = 2
@@ -182,15 +183,20 @@ function onMobSpawn(mob)
     master:addListener("EXPERIENCE_POINTS", "PET_WYVERN_EXP", function(player, exp)
         local pet = player:getPet()
         local prev_exp = pet:getLocalVar("wyvern_exp")
-        if prev_exp < 1000 then
+		local exp = utils.clamp(exp, 0, 200)
+		
+        if (prev_exp < 1000) then
             -- cap exp at 1000 to prevent wyvern leveling up many times from large exp awards
             local currentExp = exp
+			
             if prev_exp + exp > 1000 then
                 currentExp = 1000 - prev_exp
             end
+			
             local diff = math.floor((prev_exp + currentExp) / 200) - math.floor(prev_exp / 200)
+			
             if diff ~= 0 then
-                -- wyvern levelled up (diff is the number of level ups)
+                -- wyvern leveled up (diff is the number of level ups)
                 pet:addMod(tpz.mod.ACC, 6 * diff)
                 pet:addMod(tpz.mod.HPP, 6 * diff)
                 pet:addMod(tpz.mod.ATTP, 5 * diff)
@@ -201,6 +207,7 @@ function onMobSpawn(mob)
                 master:addMod(tpz.mod.HASTE_ABILITY, 200 * diff)
 				master:addMod(tpz.mod.ALL_WSDMG_ALL_HITS, 2 * diff)
             end
+			
             pet:setLocalVar("wyvern_exp", prev_exp + exp)
             pet:setLocalVar("level_Ups", pet:getLocalVar("level_Ups") + diff)
         end

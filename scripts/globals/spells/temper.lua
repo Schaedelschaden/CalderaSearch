@@ -19,6 +19,7 @@ function onSpellCast(caster, target, spell)
     duration = calculateDurationForLvl(duration, 95, target:getMainLvl())
 
     local power = 5
+	
     if enhskill >= 360 then
         power = math.floor((enhskill - 300) / 10)
     else
@@ -29,9 +30,6 @@ function onSpellCast(caster, target, spell)
 		power = power * 1.5
 		target:delStatusEffect(tpz.effect.EMBOLDEN)
 	end
-
-    -- TODO: Investigate rumor that Temper is no longer hard capped at 500 skill
---    power = math.min(power, 20)
 
     if target:addStatusEffect(effect, power, 0, duration) then
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)

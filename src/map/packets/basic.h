@@ -56,25 +56,41 @@ protected:
     bool owner;
 
 public:
-
     CBasicPacket()
-        : data(new uint8[PACKET_SIZE]), type(ref<uint8>(0)), size(ref<uint8>(1)), code(ref<uint16>(2)), owner(true)
+	: data(new uint8[PACKET_SIZE])
+	, type(ref<uint8>(0))
+	, size(ref<uint8>(1))
+	, code(ref<uint16>(2))
+	, owner(true)
     {
         std::fill(data, data + PACKET_SIZE, 0);
     }
 
     CBasicPacket(uint8* _data)
-        : data(_data), type(ref<uint8>(0)), size(ref<uint8>(1)), code(ref<uint16>(2)), owner(false)
-    {}
+	: data(_data)
+	, type(ref<uint8>(0))
+	, size(ref<uint8>(1))
+	, code(ref<uint16>(2))
+	, owner(false)
+    {
+	}
 
     CBasicPacket(const CBasicPacket& other)
-        : data(new uint8[PACKET_SIZE]), type(ref<uint8>(0)), size(ref<uint8>(1)), code(ref<uint16>(2)), owner(true)
+	: data(new uint8[PACKET_SIZE])
+	, type(ref<uint8>(0))
+	, size(ref<uint8>(1))
+	, code(ref<uint16>(2))
+	, owner(true)
     {
         memcpy(data, other.data, PACKET_SIZE);
     }
 
     CBasicPacket(CBasicPacket&& other)
-        : data(other.data), type(ref<uint8>(0)), size(ref<uint8>(1)), code(ref<uint16>(2)), owner(other.owner)
+	: data(other.data)
+	, type(ref<uint8>(0))
+	, size(ref<uint8>(1))
+	, code(ref<uint16>(2))
+	, owner(other.owner)
     {
         other.data = nullptr;
     }
@@ -96,10 +112,12 @@ public:
     {
         return ref<uint16>(0) & 0x1FF;
     }
+	
     std::size_t length()
     {
         return 2 * (ref<uint8>(1) & ~1);
     }
+	
     unsigned short sequence()
     {
         return ref<uint16>(2);

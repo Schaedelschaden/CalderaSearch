@@ -54,7 +54,21 @@ function onTrigger(player)
 		local PetFoodACCP = pet:getMod(tpz.mod.FOOD_ACCP)
 		local PetRACC = pet:getMod(tpz.mod.RACC)
 		local PetFoodRACCP = pet:getMod(tpz.mod.FOOD_RACCP)
-		local PetDEF = pet:getMod(tpz.mod.DEF)
+		local PetDEF = 8 + pet:getMod(tpz.mod.DEF) + (pet:getStat(tpz.mod.VIT) / 2)
+		
+		-- -- Automaton Harlequin, Valoredge, Sharpshot, and Stormwaker frames
+		-- if (player:getPetID() >= 69 and player:getPetID() <= 72) then
+			-- if (player:getPetID() == 69) then -- Harlequin
+				-- PetDEF = 
+			-- elseif () then -- Valoredge
+				-- PetDEF = 
+			-- elseif () then -- Sharpshot
+				-- PetDEF = 
+			-- elseif () then -- Stormwaker
+				-- PetDEF = 
+			-- end
+		-- end
+		
 		local PetFoodDEFP = pet:getMod(tpz.mod.FOOD_DEFP)
 		local PetDEFP = pet:getMod(tpz.mod.DEFP)
 		local PetMDEF = pet:getMod(tpz.mod.MDEF)

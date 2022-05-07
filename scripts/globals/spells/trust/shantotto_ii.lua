@@ -27,6 +27,7 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.MACC, power)
     mob:addMod(tpz.mod.HASTE_MAGIC, 10)
     mob:SetAutoAttackEnabled(false)
+	-- mob:setMobMod(tpz.mobMod.MOBMOD_MAGIC_COOL, 15)
 end
 
 function onMobDespawn(mob)

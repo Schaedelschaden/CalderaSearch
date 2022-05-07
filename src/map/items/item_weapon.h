@@ -41,6 +41,7 @@ public:
     uint16  getILvlMacc();
 	int16	getDelay();
 	int16	getBaseDelay();
+	void setRodNumber(uint16 number);
 	uint16	getDamage();
 	uint16	getDmgType();
     uint8   getAdditionalEffect();

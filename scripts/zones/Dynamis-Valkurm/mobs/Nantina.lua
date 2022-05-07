@@ -13,9 +13,10 @@ mixins =
 -----------------------------------
 
 function onMobSpawn(mob)
+	mob:addMod(tpz.mod.MAIN_DMG_RATING, -10)
 	mob:addMod(tpz.mod.ATT, 300)
-	mob:addMod(tpz.mod.ACC, 100)
-	mob:addMod(tpz.mod.MACC, 100)
+	-- mob:addMod(tpz.mod.ACC, 100)
+	-- mob:addMod(tpz.mod.MACC, 100)
 	mob:addMod(tpz.mod.MATT, 130)
 	mob:addMod(tpz.mod.DEF, 600)
 	mob:addMod(tpz.mod.EVA, 100)

@@ -7,6 +7,11 @@
 mixins = {require("scripts/mixins/job_special")}
 -----------------------------------
 
+function onMobSpawn(mob)
+	mob:setMobMod(tpz.mobMod.NO_DESPAWN, 1)
+	mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 86400)
+end
+
 function onMobDeath(mob, player, isKiller)
 	local playerName = player:getName()
 	local mobName = mob:getName()
@@ -16,4 +21,8 @@ function onMobDeath(mob, player, isKiller)
 	
 	player:setCharVar("KillCounter_"..mobName, KillCounter)
 	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", mobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+end
+
+function onMobDespawn(mob)
+	
 end

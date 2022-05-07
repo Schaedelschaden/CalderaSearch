@@ -24,8 +24,7 @@ function onUseAbility(player,target,ability,action)
 	local pet = player:getPet()
 	local alljumpsbonus = player:getMod(tpz.mod.ALL_JUMPS_WYVERN_HP)
 	
-	local ftp = 1 + (player:getStat(tpz.mod.VIT) / 256)
-	local atkmulti = (player:getMod(tpz.mod.JUMP_ATT_BONUS) + 100) / 100
+	local atkmulti = (100 + player:getMod(tpz.mod.JUMP_ATT_BONUS)) / 100
 	local params = {}
 		params.numHits = 1
 		
@@ -33,11 +32,12 @@ function onUseAbility(player,target,ability,action)
 			params.numHits = 2
 		end
 		
-		params.ftp100 = ftp params.ftp200 = ftp params.ftp300 = ftp
+		params.bonusJumpfSTR = player:getStat(tpz.mod.VIT) / 256
+		params.ftp100 = 1 params.ftp200 = 1 params.ftp300 = 1
 		params.str_wsc = 0.0 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
-		params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0	
+		params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
 		params.canCrit = true
-		params.acc100 = 0.0 params.acc200= 0.0 params.acc300= 0.0
+		params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
 		params.atk100 = atkmulti params.atk200 = atkmulti params.atk300 = atkmulti
 		params.bonusTP = player:getMod(tpz.mod.JUMP_TP_BONUS)
 		params.hitsHigh = true
@@ -56,13 +56,13 @@ function onUseAbility(player,target,ability,action)
     if (tpHits + extraHits > 0) then
         -- Under Spirit Surge, Jump also decreases target defense by 20% for 60 seconds
         if (player:hasStatusEffect(tpz.effect.SPIRIT_SURGE) == true) then
-            if (target:hasStatusEffect(tpz.effect.DEFENSE_DOWN) == false) then
-                target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 20, 0, 60)
-            end
+            target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 20, 0, 60)
         end
+		
         if (criticalHit) then
             action:speceffect(target:getID(), 38)
         end
+		
         action:messageID(target:getID(), tpz.msg.basic.USES_JA_TAKE_DAMAGE)
         action:speceffect(target:getID(), 32)
     else

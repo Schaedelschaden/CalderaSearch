@@ -30,18 +30,21 @@ function onTrigger(player, npc)
     elseif (ClassReunion == 1 and ClassReunionProgress == 5 and player:hasItem(1171) == false) then
         player:startEvent(712, 0, 1171, 0, 0, 0, 0, 0, 0) -- lost the ice pendulum need another one
     ------------------------------------------------------------
-    elseif ((TrialByIce == QUEST_AVAILABLE and player:getFameLevel(SANDORIA) >= 6) or (TrialByIce == QUEST_COMPLETED and realday ~= player:getCharVar("TrialByIce_date"))) then
+    elseif (TrialByIce == QUEST_AVAILABLE and player:getFameLevel(SANDORIA) >= 6) then
         player:startEvent(706, 0, tpz.ki.TUNING_FORK_OF_ICE) -- Start and restart quest "Trial by ice"
     elseif (TrialByIce == QUEST_ACCEPTED and player:hasKeyItem(tpz.ki.TUNING_FORK_OF_ICE) == false and WhisperOfFrost == false) then
         player:startEvent(718, 0, tpz.ki.TUNING_FORK_OF_ICE) -- Defeat against Shiva : Need new Fork
     elseif (TrialByIce == QUEST_ACCEPTED and WhisperOfFrost == false) then
         player:startEvent(707, 0, tpz.ki.TUNING_FORK_OF_ICE, 4)
-    elseif (TrialByIce == QUEST_ACCEPTED and WhisperOfFrost) then
+    elseif ((TrialByIce == QUEST_ACCEPTED or TrialByIce == QUEST_COMPLETED) and WhisperOfFrost) then
         local numitem = 0
 		player:addItem(6267)
+		player:messageSpecial( ID.text.ITEM_OBTAINED, 6267 )
 		player:delKeyItem(tpz.ki.WHISPER_OF_FROST)
-		player:PrintToPlayer(string.format("Gulmama : OH, THAT'S COLD! COULD CUT GLASS OVER HERE!"),tpz.msg.channel.NS_SAY)
-		player:setCharVar("TrialByWind_date", os.date("%j")) -- %M for next minute, %j for next day
+		player:PrintToPlayer(string.format("Gulmama : Oh, that's cold! I hope this doesn't give me frostbite!"),tpz.msg.channel.NS_SAY)
+		player:setCharVar("TrialByIce_date", getMidnight()) -- os.date("%j")) -- %M for next minute, %j for next day
+		player:completeQuest(SANDORIA, tpz.quest.id.sandoria.TRIAL_BY_ICE)
+		return
 
         -- if (player:hasItem(17492)) then numitem = numitem + 1; end  -- Shiva's Claws
         -- if (player:hasItem(13242)) then numitem = numitem + 2; end  -- Ice Belt
@@ -50,6 +53,11 @@ function onTrigger(player, npc)
         -- if (player:hasSpell(302)) then numitem = numitem + 32; end  -- Ability to summon Shiva
 
         -- player:startEvent(709, 0, tpz.ki.TUNING_FORK_OF_ICE, 4, 0, numitem)
+	elseif (TrialByIce == QUEST_COMPLETED and player:getCharVar("TrialByIce_date") < getMidnight() and player:hasKeyItem(tpz.ki.TUNING_FORK_OF_ICE) == false) then -- realday ~= player:getCharVar("TrialByIce_date")
+		player:PrintToPlayer(string.format("Gulmama : Ready for another meeting with the prime avatar? Here you go!"),tpz.msg.channel.NS_SAY)
+		player:setCharVar("TrialByIce_date", 0)
+        player:addKeyItem(tpz.ki.TUNING_FORK_OF_ICE)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TUNING_FORK_OF_ICE)
     else
         player:startEvent(710) -- Standard dialog
     end

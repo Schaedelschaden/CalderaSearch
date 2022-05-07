@@ -9,7 +9,17 @@ require("scripts/globals/magic")
 --------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
-    return 0
+	if (caster:getObjType() == tpz.objType.TRUST and caster:getTrustID() == 968) then -- Adelheid
+		local weakestElement = checkWeakestElement(caster, target, spell)
+		
+		if (weakestElement == 4) then
+			return 0
+		else
+			return 1
+		end
+	else
+		return 0
+	end
 end
 
 function onSpellCast(caster, target, spell)

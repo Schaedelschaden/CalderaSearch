@@ -18,7 +18,7 @@ function onMobSpawn(mob)
 	mob:addMod(tpz.mod.MAIN_DMG_RATING, 100)
 	mob:addMod(tpz.mod.ATT, 900)
 	mob:addMod(tpz.mod.ACC, 100)
-	mob:addMod(tpz.mod.MATT, 200)
+	mob:addMod(tpz.mod.MATT, 170)
 	mob:addMod(tpz.mod.DEF, 700)
 	mob:addMod(tpz.mod.DOUBLE_ATTACK, 50)
 	mob:addMod(tpz.mod.EVA, 100)
@@ -55,7 +55,7 @@ function onSpellPrecast(mob, spell)
     if (spell:getID() == 218) then -- Meteor
         spell:setAoE(tpz.magic.aoe.RADIAL)
         spell:setFlag(tpz.magic.spellFlag.HIT_ALL)
-        spell:setRadius(30)
+        spell:setRadius(25)
         spell:setAnimation(280) -- AoE Meteor Animation
         spell:setMPCost(1)
     end

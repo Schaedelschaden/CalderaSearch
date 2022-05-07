@@ -10,12 +10,15 @@ zones[tpz.zone.SACRIFICIAL_CHAMBER] =
 {
     text =
     {
-        ITEM_CANNOT_BE_OBTAINED = 6383, -- You cannot obtain the <item>. Come back after sorting your inventory.
-        ITEM_OBTAINED           = 6388, -- Obtained: <item>.
-        GIL_OBTAINED            = 6389, -- Obtained <number> gil.
-        KEYITEM_OBTAINED        = 6391, -- Obtained key item: <keyitem>.
-        CONQUEST_BASE           = 7049, -- Tallying conquest results...
-        DOOR_SHUT               = 7690, -- The door is firmly shut.
+        ITEM_CANNOT_BE_OBTAINED = 6384, -- You cannot obtain the <item>. Come back after sorting your inventory.
+        ITEM_OBTAINED           = 6390, -- Obtained: <item>.
+        GIL_OBTAINED            = 6391, -- Obtained <number> gil.
+        KEYITEM_OBTAINED        = 6393, -- Obtained key item: <keyitem>.
+        CARRIED_OVER_POINTS     = 7001, -- You have carried over <number> login point[/s].
+        LOGIN_CAMPAIGN_UNDERWAY = 7002, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
+        LOGIN_NUMBER            = 7003, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
+        CONQUEST_BASE           = 7057, -- Tallying conquest results...
+        DOOR_SHUT               = 7698, -- The door is firmly shut.
     },
     mob =
     {

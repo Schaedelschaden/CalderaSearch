@@ -2,6 +2,7 @@
 -- Area: Arrapago Reef
 -- NPC: ??? (G-5)
 -- Used to spawn Medusa
+-- ID: 16999026
 -- !pos -451.252 -18.141 451.976
 -----------------------------------
 local ID = require("scripts/zones/Arrapago_Reef/IDs")

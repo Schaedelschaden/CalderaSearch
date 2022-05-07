@@ -172,6 +172,7 @@ namespace battleutils
                 PWeaponSkill->setAnimationTime(std::chrono::milliseconds(Sql_GetUIntData(SqlHandle, 7)));
                 PWeaponSkill->setRange(Sql_GetIntData(SqlHandle, 8));
                 PWeaponSkill->setAoe(Sql_GetIntData(SqlHandle, 9));
+				PWeaponSkill->setAoeRange(10);
                 PWeaponSkill->setPrimarySkillchain(Sql_GetIntData(SqlHandle, 10));
                 PWeaponSkill->setSecondarySkillchain(Sql_GetIntData(SqlHandle, 11));
                 PWeaponSkill->setTertiarySkillchain(Sql_GetIntData(SqlHandle, 12));
@@ -426,18 +427,39 @@ namespace battleutils
         if (Tier == 1)
         {
             damage = PAttacker->getMod(Mod::ENSPELL_DMG) + PAttacker->getMod(Mod::ENSPELL_DMG_BONUS);
+			
             auto PChar = dynamic_cast<CCharEntity *>(PAttacker);
             if (PChar)
+			{
                 damage += PChar->PMeritPoints->GetMeritValue(MERIT_ENSPELL_DAMAGE, PChar);
+				
+				int8 auditEnspell = charutils::GetCharVar(PChar, "AuditEnspell");
+			
+				if (auditEnspell == 1)
+				{
+					printf("battleutils.cpp CalculateEnspellDamage TIER 1  ATTACKER NAME: [%s]  DAMAGE: [%i] = ENSPELL DMG: [%i] + DMG BONUS: [%i] + MERITS: [%i]\n", PAttacker->GetName(), damage, PAttacker->getMod(Mod::ENSPELL_DMG), PAttacker->getMod(Mod::ENSPELL_DMG_BONUS), PChar->PMeritPoints->GetMeritValue(MERIT_ENSPELL_DAMAGE, PChar));
+				}
+			}
         }
         else if (Tier == 2)
         {
             //Tier 2 enspells calculate the damage on each hit and increment the potency in Mod::ENSPELL_DMG per hit
             uint16 skill = PAttacker->GetSkill(SKILL_ENHANCING_MAGIC);
-            uint16 cap = 3 + ((6 * skill) / 100);
-            if (skill > 200) {
-                cap = 5 + ((5 * skill) / 100);
+            uint16 cap = (uint16)std::floor(sqrt(skill) - 1);
+			
+            if (skill >= 151 && skill < 401)
+			{
+                cap = (uint16)std::floor((skill / 20) + 5);
             }
+			else if (skill >= 401 && skill < 501)
+			{
+				cap = (uint16)std::floor((skill + 20) / 8);
+			}
+			else if (skill >= 501)
+			{
+				cap = (uint16)std::floor(3 * (skill + 50) / 25);
+			}
+			
             cap *= 2;
 
             if (PAttacker->getMod(Mod::ENSPELL_DMG) > cap)
@@ -454,24 +476,40 @@ namespace battleutils
                 PAttacker->addModifier(Mod::ENSPELL_DMG, 1);
                 damage = PAttacker->getMod(Mod::ENSPELL_DMG) - 1;
             }
+			
             damage += PAttacker->getMod(Mod::ENSPELL_DMG_BONUS);
 
             auto PChar = dynamic_cast<CCharEntity *>(PAttacker);
             if (PChar)
+			{
                 damage += PChar->PMeritPoints->GetMeritValue(MERIT_ENSPELL_DAMAGE, PChar) * 2;
+				
+				int8 auditEnspell = charutils::GetCharVar(PChar, "AuditEnspell");
+			
+				if (auditEnspell == 1)
+				{
+					printf("battleutils.cpp CalculateEnspellDamage TIER 2  ATTACKER NAME: [%s]  CAP: [%i]  DAMAGE: [%i] = ENSPELL DMG: [%i] + DMG BONUS: [%i] + MERITS: [%i]\n", PAttacker->GetName(), cap, damage, PAttacker->getMod(Mod::ENSPELL_DMG), PAttacker->getMod(Mod::ENSPELL_DMG_BONUS), PChar->PMeritPoints->GetMeritValue(MERIT_ENSPELL_DAMAGE, PChar));
+				}
+			}
         }
         else if (Tier == 3) //enlight or endark
         {
             damage = PAttacker->getMod(Mod::ENSPELL_DMG);
 
             if (damage > 1)
+			{
                 PAttacker->delModifier(Mod::ENSPELL_DMG, 1);
+			}
             else
             {
                 if (element == ELEMENT_DARK)
+				{
                     PAttacker->StatusEffectContainer->DelStatusEffect(EFFECT_ENDARK);
+				}
                 else
+				{
                     PAttacker->StatusEffectContainer->DelStatusEffect(EFFECT_ENLIGHT);
+				}
             }
 
             damage += PAttacker->getMod(Mod::ENSPELL_DMG_BONUS);
@@ -540,6 +578,7 @@ namespace battleutils
             // mobs random multiplier
             dBonus += tpzrand::GetRandomNumber(100) / 1000.0f;
         }
+		
         if (WeekDay == strongDay[element] && (obiBonus || tpzrand::GetRandomNumber(100) < 33))
             dBonus += 0.1f;
         else if (WeekDay == weakDay[element] && (obiBonus || tpzrand::GetRandomNumber(100) < 33))
@@ -552,10 +591,34 @@ namespace battleutils
             dBonus -= 0.1f;
         else if (weather == weakWeatherDouble[element] && (obiBonus || tpzrand::GetRandomNumber(100) < 33))
             dBonus -= 0.25f;
+			
+		if (PAttacker->objtype == TYPE_PC)
+		{
+			CCharEntity* PChar = (CCharEntity*)PAttacker;
+			int8 auditEnspell = charutils::GetCharVar(PChar, "AuditEnspell");
+			
+			if (auditEnspell == 1)
+			{
+				printf("battleutils.cpp CalculateEnspellDamage  DAMAGE: [%i]  DAY/WEATHER BONUS: [%1.2f]  RESIST: [%1.2f]  RESVAR: [%1.2f]\n", damage, dBonus, resist, resvar);
+			}
+		}
 
+		// Implement Enspell bypass
+		PDefender->SetLocalVar("Enspell_Active", 1);
+		damage = (int32)(damage * dBonus);
         damage = (int32)(damage * resist);
-        damage = (int32)(damage * dBonus);
         damage = MagicDmgTaken(PDefender, damage, (ELEMENT)(element + 1));
+		
+		if (PAttacker->objtype == TYPE_PC)
+		{
+			CCharEntity* PChar = (CCharEntity*)PAttacker;
+			int8 auditEnspell = charutils::GetCharVar(PChar, "AuditEnspell");
+			
+			if (auditEnspell == 1)
+			{
+				printf("battleutils.cpp CalculateEnspellDamage  FINAL DAMAGE: [%i]\n", damage);
+			}
+		}
 
 		// Reverse the -% Damage Taken from the "Mitigates damage taken based on enmity" item stat
 		if (enmityDmgMitigation > 0)
@@ -568,6 +631,7 @@ namespace battleutils
             damage = std::max(damage - PDefender->getMod(Mod::PHALANX), 0);
             damage = HandleStoneskin(PDefender, damage);
         }
+		
         damage = std::clamp(damage, -99999, 99999);
 
         return damage;
@@ -1158,22 +1222,40 @@ namespace battleutils
                 if (daze == EFFECT_DRAIN_DAZE)
                 {
                     uint16 multiplier = (uint16)(3 + (5.5f * power - 1));
+					uint16 sambaMax = (uint16)((delay * multiplier) / 100 + 1);
+					
+					if (sambaMax < 1 && finaldamage >= 2)
+					{
+						sambaMax = 1;
+					}
+					
                     int8 Samba = tpzrand::GetRandomNumber(1, (delay * multiplier) / 100 + 1);
 
-                    // vary damage based on lvl diff
-                    int8 lvlDiff = (PDefender->GetMLevel() - PAttacker->GetMLevel()) / 2;
+					int8 lvlDefender = PDefender->GetMLevel();
+					int8 lvlAttacker = PAttacker->GetMLevel();
+					
+					if (PAttacker->objtype == TYPE_PC)
+					{
+						lvlAttacker += GetPlayerItemLevel(PChar);
+					}
 
-                    if (lvlDiff < -5) {
+                    // vary damage based on lvl diff
+                    int8 lvlDiff = (lvlDefender - lvlAttacker) / 2;
+
+                    if (lvlDiff < -5)
+					{
                         lvlDiff = -5;
                     }
 
                     Samba -= lvlDiff;
 
-                    if (Samba > (finaldamage / 2)) {
+                    if (Samba > (finaldamage / 2))
+					{
                         Samba = finaldamage / 2;
                     }
 
-                    if (finaldamage <= 2) {
+                    if (finaldamage <= 2)
+					{
                         Samba = 0;
                     }
 
@@ -1187,7 +1269,8 @@ namespace battleutils
                     Action->addEffectParam = Samba;
 
                     PAttacker->addHP(Samba);    // does not do any additional drain to targets HP, only a portion of it
-                    if (PChar != nullptr) {
+                    if (PChar != nullptr)
+					{
                         PChar->updatemask |= UPDATE_HP;
                     }
                 }
@@ -1196,11 +1279,20 @@ namespace battleutils
                     uint16 multiplier = 1 + (2 * power - 1);
                     int8 Samba = tpzrand::GetRandomNumber(1, (delay * multiplier) / 100 + 1);
 
-                    if (Samba >= finaldamage / 4) { Samba = finaldamage / 4; }
+                    if (Samba >= finaldamage / 4)
+					{
+						Samba = finaldamage / 4;
+					}
 
-                    if (finaldamage <= 2) { Samba = 0; }
+                    if (finaldamage <= 2)
+					{
+						Samba = 0;
+					}
 
-                    if (Samba < 0) { Samba = 0; }
+                    if (Samba < 0)
+					{
+						Samba = 0;
+					}
 
                     Action->additionalEffect = SUBEFFECT_MP_DRAIN;
                     Action->addEffectMessage = 162;
@@ -1210,7 +1302,8 @@ namespace battleutils
                     PAttacker->addMP(mpDrained);
                     Action->addEffectParam = mpDrained;
 
-                    if (PChar != nullptr) {
+                    if (PChar != nullptr)
+					{
                         PChar->updatemask |= UPDATE_HP;
                     }
                 }
@@ -1572,13 +1665,17 @@ namespace battleutils
 //			printf("battleutils.cpp GetDamageRatio 4 CRATIO: [%1.4f]  PLAYER LEVEL: [%i]  PLAYER ITEM LEVEL: [%i]\n", cRatio, attackerMLvl, playerILvl);
         }
 		
+		float flashyShot = 0;
+		
 		if (attackerMLvl < defenderMLvl)
 		{
 			cRatio -= 0.025f * (defenderMLvl - attackerMLvl);
+			flashyShot = -(0.025f * (defenderMLvl - attackerMLvl));
 		}
         else if (attackerMLvl > defenderMLvl)
         {
             cRatio += 0.025f * (attackerMLvl - defenderMLvl);
+			flashyShot = 0.025f * (attackerMLvl - defenderMLvl);
         }
 		
 /* 		if (PAttacker->objtype == TYPE_PC)
@@ -1678,7 +1775,15 @@ namespace battleutils
 		//Adjust for Flashy Shot
 		if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_FLASHY_SHOT))
 		{
-			pdif += 0.5f;
+			if (flashyShot < 0)
+			{
+				pdif += -(flashyShot);
+			}
+			else if (flashyShot >= 0)
+			{
+				pdif += flashyShot;
+			}
+			
 /* 			if (PAttacker->objtype == TYPE_PC)
 			{
 				printf("battleutils.cpp GetRangedDamageRatio 10 FLASHY SHOT BONUS pDIF: [%1.4f]\n", pdif);
@@ -1910,14 +2015,16 @@ namespace battleutils
                 base = 55;
                 break;
             case 2: // round
-            case 5: // aegis
-                base = 50;
-                break;
+				base = 40;
+				break;
             case 3: // kite
                 base = 45;
                 break;
             case 4: // tower
                 base = 30;
+                break;
+			case 5: // aegis
+                base = 50;
                 break;
             case 6: // ochain
                 base = 110;
@@ -3577,8 +3684,8 @@ namespace battleutils
 			
 			uint8 mJob = PChar->GetMJob();
 			THLvl = PChar->getMod(Mod::TREASURE_HUNTER);
-			int16 meritFeint = PChar->PMeritPoints->GetMeritValue(MERIT_FEINT, PChar);
-			int16 procChance = std::clamp((THLvl + (THLvl - currentMobTH)) / 2, 1, 8);
+			int16 meritFeint = PChar->PMeritPoints->GetMeritValue(MERIT_FEINT, PChar) / 5;
+			int16 procChance = std::clamp((THLvl + (THLvl - currentMobTH)) / 2, 1, 9);
 			
 			// https://www.bg-wiki.com/ffxi/Treasure_Hunter
 			// TH can go to a maximum level of 14 for THF, 8 for all other jobs
@@ -3599,7 +3706,7 @@ namespace battleutils
 			// Feint merits increase the chance of a proc on the player's next attack after activating Feint
 			if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_FEINT))
 			{
-				procChance = (int16)(procChance * (1 + (meritFeint / 100.0f)));
+				procChance = (int16)(procChance + (meritFeint * 2));
 			}
 			
 			// If the mob hasn't been tagged with TH or the mob has been tagged with TH less
@@ -3659,45 +3766,69 @@ namespace battleutils
         int32 rank = 0;
         int32 fstr = 0;
         float dif = (float)(PAttacker->STR() - PDefender->VIT());
-        if (dif >= 12) {
-            fstr = (int32)((dif + 4) / 2);
+		int8 divisor = 4;
+		
+		if (SlotID == SLOT_RANGED)
+        {
+			divisor = 2;
+		}
+		
+        if (dif >= 12)
+		{
+            fstr = (int32)((dif + 4) / divisor);
         }
-        else if (dif >= 6) {
-            fstr = (int32)((dif + 6) / 2);
+        else if (dif >= 6)
+		{
+            fstr = (int32)((dif + 6) / divisor);
         }
-        else if (dif >= 1) {
-            fstr = (int32)((dif + 7) / 2);
+        else if (dif >= 1)
+		{
+            fstr = (int32)((dif + 7) / divisor);
         }
-        else if (dif >= -2) {
-            fstr = (int32)((dif + 8) / 2);
+        else if (dif >= -2)
+		{
+            fstr = (int32)((dif + 8) / divisor);
         }
-        else if (dif >= -7) {
-            fstr = (int32)((dif + 9) / 2);
+        else if (dif >= -7)
+		{
+            fstr = (int32)((dif + 9) / divisor);
         }
-        else if (dif >= -15) {
-            fstr = (int32)((dif + 10) / 2);
+        else if (dif >= -15)
+		{
+            fstr = (int32)((dif + 10) / divisor);
         }
-        else if (dif >= -21) {
-            fstr = (int32)((dif + 12) / 2);
+        else if (dif >= -21)
+		{
+            fstr = (int32)((dif + 12) / divisor);
         }
-        else {
-            fstr = (int32)((dif + 13) / 2);
+        else
+		{
+            fstr = (int32)((dif + 13) / divisor);
         }
+		
+		// Ranged fSTR Lower & Upper caps
         if (SlotID == SLOT_RANGED)
         {
             rank = PAttacker->GetRangedWeaponRank();
-            //different caps than melee weapons
+            // Ranged Lower cap of fSTR 
             if (fstr <= (-rank * 2))
+			{
                 return (-rank * 2);
-
+			}
+			// Ranged Upper cap of fSTR
             if ((fstr > (-rank * 2)) && (fstr <= (2 * (rank + 8))))
+			{
                 return fstr;
-
+			}
             else
+			{
                 return 2 * (rank + 8);
+			}
         }
+		// Melee fSTR Lower & Upper caps
         else
         {
+			// 
             fstr /= 2;
             if (SlotID == SLOT_MAIN)
             {
@@ -3707,14 +3838,22 @@ namespace battleutils
             {
                 rank = PAttacker->GetSubWeaponRank();
             }
-            // everything else
+			
+            // Lower cap of fSTR
             if (fstr <= (-rank))
+			{
                 return (-rank);
-
+			}
+			
+			// Upper cap of fSTR
             if ((fstr > (-rank)) && (fstr <= rank + 8))
+			{
                 return fstr;
+			}
             else
+			{
                 return rank + 8;
+			}
         }
     }
 
@@ -5593,17 +5732,27 @@ namespace battleutils
 		}
 		
 		// Apply the "Nuke Wall"
-		if (PDefender->objtype == TYPE_MOB && damage > 0)
+		if (PDefender->objtype == TYPE_MOB && damage > 0 && PDefender->GetLocalVar("Enspell_Active") == 0)
 		{
 			CMobEntity* PMob = (CMobEntity*)PDefender;
 			
+			float nukeWallReduction = 0.4f;
+			
+			if (PMob->StatusEffectContainer->HasStatusEffect(EFFECT_RAYKE))
+			{
+				nukeWallReduction = 0.7f;
+			}
+			
 			if (PMob->m_nukeWallTimer[element - 1] >= server_clock::now())
 			{
-				damage = (int32)(damage * 0.4f); // 60% reduction
+				damage = (int32)(damage * nukeWallReduction); // 60% reduction
 			}
 			
 			PMob->m_nukeWallTimer[element - 1] = server_clock::now() + 5s;
 		}
+		
+		// Remove Enspell bypass
+		PDefender->SetLocalVar("Enspell_Active", 0);
 
 //		printf("battleutils.cpp MagicDmgTaken ELEMENT: [%i]  ABSORB: [%i]\n", element, PDefender->getMod(absorb[element - 1]));
 //		printf("battleutils.cpp MagicDmgTaken ELEMENT: [%i]  SDT: [%i]  DAMAGE: [%i]\n", element, PDefender->getMod(sdt[element - 1]), damage);
@@ -5656,6 +5805,10 @@ namespace battleutils
             (tpzrand::GetRandomNumber(100) < PDefender->getMod(absorb[element - 1])) ||
             tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::MAGIC_ABSORB))
 		{
+			if (PDefender->objtype == TYPE_MOB)
+			{
+				PDefender->SetLocalVar("Magic_Absorb_Counter", PDefender->GetLocalVar("Magic_Absorb_Counter") + damage);
+			}
 //			printf("battleutils.cpp MagicDmgTaken ELEMENTAL ABSORB DAMAGE: [%i]\n\n", damage);
             damage = -damage;
 		}
@@ -5676,7 +5829,7 @@ namespace battleutils
 			//Calculate Convert Damage to TP
 			if (PDefender->getMod(Mod::CONVERT_DMG_TO_TP) > 0)
 			{
-				int16 absorbedTP = static_cast<int16>(damage * (float)(PDefender->getMod(Mod::CONVERT_DMG_TO_TP) / 100.0));
+				int16 absorbedTP = static_cast<int16>(damage * (float)(PDefender->getMod(Mod::CONVERT_DMG_TO_TP) / 1000.0));
 //				printf("battleutils.cpp MagicDmgTaken CONVERT DMG TO TP: [%i]\n", absorbedTP);
 				PDefender->addTP(absorbedTP);
 			}
@@ -5728,7 +5881,14 @@ namespace battleutils
 
         if (tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::ABSORB_DMG_CHANCE) ||
             tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::PHYS_ABSORB))
+		{
+			if (PDefender->objtype == TYPE_MOB)
+			{
+				PDefender->SetLocalVar("Phys_Absorb_Counter", PDefender->GetLocalVar("Phys_Absorb_Counter") + damage);
+			}
+			
             damage = -damage;
+		}
         else if (tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::NULL_PHYSICAL_DAMAGE))
             damage = 0;
         else
@@ -5793,7 +5953,14 @@ namespace battleutils
 
         if (tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::ABSORB_DMG_CHANCE) ||
             tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::PHYS_ABSORB))
+		{
+			if (PDefender->objtype == TYPE_MOB)
+			{
+				PDefender->SetLocalVar("Phys_Absorb_Counter", PDefender->GetLocalVar("Phys_Absorb_Counter") + damage);
+			}
+			
             damage = -damage;
+		}
         else if (tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::NULL_PHYSICAL_DAMAGE))
             damage = 0;
         else
@@ -6591,11 +6758,14 @@ namespace battleutils
                 SnapShotReductionPercent += PChar->PMeritPoints->GetMeritValue(MERIT_SNAPSHOT, PChar);
             }
         }
+		
+		// Caps the total bonus from Snapshot to 70
+		SnapShotReductionPercent = std::clamp<int16>(SnapShotReductionPercent, 0, 70);
 
         // Reduction from velocity shot mod
         if (battleEntity->StatusEffectContainer->HasStatusEffect(EFFECT_VELOCITY_SHOT))
         {
-            SnapShotReductionPercent += battleEntity->getMod(Mod::VELOCITY_SNAPSHOT_BONUS);
+            SnapShotReductionPercent += 15 + battleEntity->getMod(Mod::VELOCITY_SNAPSHOT_BONUS);
         }
 
         return (int16)(delay * (100 - SnapShotReductionPercent) / 100.f);
@@ -6800,11 +6970,6 @@ namespace battleutils
                 cast -= (uint32)(base * ((100 - (50 + bonus)) / 100.0f));
                 applyArts = false;
             }
-			else if (PSpell->getAOE() == SPELLAOE_RADIAL_MANI && PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MANIFESTATION) && PSpell->getTotalTargets() > 1)
-			{
-				cast *= 2;
-				applyArts = false;
-			}
             else if (applyArts)
             {
                 if (PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_DARK_ARTS, EFFECT_ADDENDUM_BLACK}))
@@ -6834,11 +6999,6 @@ namespace battleutils
                 cast -= (uint32)(base * ((100 - (50 + bonus)) / 100.0f));
                 applyArts = false;
             }
-			else if (PSpell->getAOE() == SPELLAOE_RADIAL_ACCE && PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_ACCESSION) && PSpell->getTotalTargets() > 1)
-			{
-				cast *= 2;
-				applyArts = false;
-			}
             else if (applyArts)
             {
                 if (PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_LIGHT_ARTS, EFFECT_ADDENDUM_WHITE}))
@@ -6888,7 +7048,7 @@ namespace battleutils
 			cast = (uint32)(cast * (1.0f + (PEntity->getMod(Mod::UTSUSEMI_CAST) / 100.0f)));
 		}
 
-        int16 fastCast = std::clamp<int16>(PEntity->getMod(Mod::FASTCAST), -100, 50);
+        int16 fastCast = std::clamp<int16>(PEntity->getMod(Mod::FASTCAST), -100, 80);
 		
         if (PSpell->getSkillType() == SKILLTYPE::SKILL_ELEMENTAL_MAGIC) // Elemental Celerity reductions
         {
@@ -7019,6 +7179,7 @@ namespace battleutils
         bool applyArts = true;
         uint32 base = PSpell->getRecastTime();
         int32 recast = base;
+		int32 recastCap = (int32)(base * 0.2f); // Maximum reduction is 80% of original recast
 		
 		if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_SPONTANEITY))
 		{
@@ -7027,10 +7188,10 @@ namespace battleutils
 		}
 
         // Apply Fast Cast
-        recast = (int32)(recast * ((100.0f - std::clamp((float)PEntity->getMod(Mod::FASTCAST) / 2.0f, 0.0f, 25.0f)) / 100.0f));
+        recast = (int32)(recast * ((100.0f - std::clamp((float)PEntity->getMod(Mod::FASTCAST) / 2.0f, 0.0f, 40.0f)) / 100.0f));
 
         // Apply Haste (Magic and Gear)
-        int16 haste = PEntity->getMod(Mod::HASTE_MAGIC) + PEntity->getMod(Mod::HASTE_GEAR);
+        int16 haste = (int32)(std::clamp((float)PEntity->getMod(Mod::HASTE_MAGIC), -10000.0f, 4375.0f) + std::clamp((float)PEntity->getMod(Mod::HASTE_GEAR), -10000.0f, 2500.0f));
         recast -= (int32)(recast * haste / 10000.f);
 
         if (PSpell->getSpellGroup() == SPELLGROUP_SONG)
@@ -7164,6 +7325,12 @@ namespace battleutils
 		else if (PSpell->getSpellGroup() == SPELLGROUP_BLUE)
 		{
 			recast = (int32)(recast * (1.0f + PEntity->getMod(Mod::BLUE_MAGIC_RECAST) / 100.0f));
+		}
+
+		// Caps recast reduction at 80% of the spell's original value
+		if (recast < recastCap)
+		{
+			recast = recastCap;
 		}
 
         recast = std::max(recast, 0);

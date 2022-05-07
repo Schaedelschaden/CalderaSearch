@@ -31,18 +31,21 @@ function onTrigger(player, npc)
         player:startEvent(10023, 0, 1172, 0, 0, 0, 0, 0, 0) -- "lost the pendulum?"
     ---------------------------------------------------------------------
     -- Trial by Lightning
-    elseif ((TrialByLightning == QUEST_AVAILABLE and player:getFameLevel(WINDURST) >= 6) or (TrialByLightning == QUEST_COMPLETED and realday ~= player:getCharVar("TrialByLightning_date"))) then
+    elseif (TrialByLightning == QUEST_AVAILABLE and player:getFameLevel(WINDURST) >= 6) then
         player:startEvent(10016, 0, tpz.ki.TUNING_FORK_OF_LIGHTNING) -- Start and restart quest "Trial by Lightning"
     elseif (TrialByLightning == QUEST_ACCEPTED and player:hasKeyItem(tpz.ki.TUNING_FORK_OF_LIGHTNING) == false and WhisperOfStorms == false) then
         player:startEvent(10024, 0, tpz.ki.TUNING_FORK_OF_LIGHTNING) -- Defeat against Ramuh : Need new Fork
     elseif (TrialByLightning == QUEST_ACCEPTED and WhisperOfStorms == false) then
         player:startEvent(10017, 0, tpz.ki.TUNING_FORK_OF_LIGHTNING, 5)
-    elseif (TrialByLightning == QUEST_ACCEPTED and WhisperOfStorms) then
+    elseif ((TrialByLightning == QUEST_ACCEPTED or TrialByLightning == QUEST_COMPLETED) and WhisperOfStorms) then
         numitem = 0
 		player:addItem(6267)
+		player:messageSpecial( ID.text.ITEM_OBTAINED, 6267 )
 		player:delKeyItem(tpz.ki.WHISPER_OF_STORMS)
 		player:PrintToPlayer(string.format("Ripapa : *BZZZZZRRRRRT* AAAAAAH!"),tpz.msg.channel.NS_SAY)
-		player:setCharVar("TrialByWind_date", os.date("%j")) -- %M for next minute, %j for next day
+		player:setCharVar("TrialByLightning_date", getMidnight()) -- os.date("%j")) -- %M for next minute, %j for next day
+		player:completeQuest(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.TRIAL_BY_LIGHTNING)
+		return
 
         -- if (player:hasItem(17531)) then numitem = numitem + 1; end  -- Ramuh's Staff
         -- if (player:hasItem(13245)) then numitem = numitem + 2; end  -- Lightning Belt
@@ -51,6 +54,11 @@ function onTrigger(player, npc)
         -- if (player:hasSpell(303)) then numitem = numitem + 32; end  -- Ability to summon Ramuh
 
         -- player:startEvent(10019, 0, tpz.ki.TUNING_FORK_OF_LIGHTNING, 5, 0, numitem)
+	elseif (TrialByLightning == QUEST_COMPLETED and player:getCharVar("TrialByLightning_date") < getMidnight() and player:hasKeyItem(tpz.ki.TUNING_FORK_OF_LIGHTNING) == false) then -- realday ~= player:getCharVar("TrialByLightning_date")
+		player:PrintToPlayer(string.format("Ripapa : Ready for another meeting with the prime avatar? Here you go!"),tpz.msg.channel.NS_SAY)
+		player:setCharVar("TrialByLightning_date", 0)
+        player:addKeyItem(tpz.ki.TUNING_FORK_OF_LIGHTNING)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TUNING_FORK_OF_LIGHTNING)
     else
         player:startEvent(10020) -- Standard dialog
     end

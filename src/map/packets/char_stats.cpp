@@ -85,8 +85,8 @@ CCharStatsPacket::CCharStatsPacket(CCharEntity * PChar)
 	{
 		ref<uint8>(0x52) = PChar->GetMLevel() == 99 ? 1: 0;
 	}
-	// Unlocks Superior Level 1 after beating Divine Might once
-	if (charutils::GetCharVar(PChar, "KillCounter_DivineMight") >= 1)
+	// Unlocks Superior Level 2 after defeating all T3/SR VW once
+	if (charutils::GetCharVar(PChar, "KillCounter_Akvan") >= 1 && charutils::GetCharVar(PChar, "KillCounter_Kaggen") >= 1 && charutils::GetCharVar(PChar, "KillCounter_Pil") >= 1)
 	{
 		ref<uint8>(0x52) = PChar->GetMLevel() == 99 ? 2: 0;
 	}

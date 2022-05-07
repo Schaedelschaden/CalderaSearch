@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `item_usable` (
   PRIMARY KEY (`itemid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 PACK_KEYS=1 CHECKSUM=1;
 
--- Dumping data for table tpzdb.item_usable: 2,292 rows
+-- Dumping data for table tpzdb.item_usable: 2,297 rows
 /*!40000 ALTER TABLE `item_usable` DISABLE KEYS */;
 INSERT INTO `item_usable` (`itemid`, `name`, `validTargets`, `activation`, `animation`, `animationTime`, `maxCharges`, `useDelay`, `reuseDelay`, `aoe`) VALUES
 	(4096, 'fire_crystal', 1, 0, 0, 0, 0, 0, 0, 0),
@@ -2320,7 +2320,12 @@ INSERT INTO `item_usable` (`itemid`, `name`, `validTargets`, `activation`, `anim
 	(6561, 'worn_sack_of_leaforb_stones_+1', 1, 1, 55, 0, 0, 0, 0, 0),
 	(6562, 'worn_sack_of_leaforb_stones_+2', 1, 1, 55, 0, 0, 0, 0, 0),
 	(6563, 'worn_sack_of_duskorb_stones_+1', 1, 1, 55, 0, 0, 0, 0, 0),
-	(6564, 'worn_sack_of_duskorb_stones_+2', 1, 1, 55, 0, 0, 0, 0, 0);
+	(6564, 'worn_sack_of_duskorb_stones_+2', 1, 1, 55, 0, 0, 0, 0, 0),
+	(6470, 'bowl_of_oden', 1, 1, 27, 0, 0, 0, 0, 0),
+	(6471, 'bowl_of_oden_+1', 1, 1, 27, 0, 0, 0, 0, 0),
+	(6609, 'serving_of_popotoes_con_queso', 1, 1, 27, 0, 0, 0, 0, 0),
+	(6610, 'serving_of_popotoes_con_queso_+1', 1, 1, 27, 0, 0, 0, 0, 0),
+	(6381, 'fishermans_feast', 1, 1, 24, 0, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `item_usable` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

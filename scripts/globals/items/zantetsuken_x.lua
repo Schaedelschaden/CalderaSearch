@@ -15,7 +15,7 @@ function onAdditionalEffect(player, target, damage)
         return 0, 0, 0
     else
         target:delStatusEffect(tpz.effect.DEFENSE_BOOST)
-        target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 100, 0, 60)
+        target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 100, 0, 10)
         return tpz.subEffect.DEFENSE_DOWN, tpz.msg.basic.ADD_EFFECT_STATUS, tpz.effect.DEFENSE_DOWN
     end
 end

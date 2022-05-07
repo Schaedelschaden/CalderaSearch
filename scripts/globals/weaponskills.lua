@@ -19,10 +19,9 @@ require("scripts/globals/msg")
 -- Function to calculate if a hit in a WS misses, criticals, and the respective damage done
 function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
     local criticalHit = false
+	local critHitDmgBonus = 0
     local pdif = 0
     local finaldmg = 0
-    local dmgLimitTrait = (attacker:getMod(tpz.mod.DAMAGE_LIMIT_TRAIT) / 10)
-    local dmgLimitGear = ((100 + attacker:getMod(tpz.mod.DAMAGE_LIMIT_GEAR)) / 100)
 
     local missChance = math.random()
 
@@ -30,19 +29,28 @@ function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
     or calcParams.guaranteedHit
     or (calcParams.melee and math.random() < attacker:getMod(tpz.mod.ZANSHIN)/100))
     and not calcParams.mustMiss then
-        if not shadowAbsorb(target) then
+        if not shadowAbsorb(target, wsParams.ignoreShadows) then
             critChance = math.random() -- See if we land a critical hit
             criticalHit = (wsParams.canCrit and critChance <= calcParams.critRate) or
                           calcParams.forcedFirstCrit or calcParams.mightyStrikesApplicable
             if criticalHit then
                 calcParams.criticalHit = true
                 calcParams.pdif = generatePdif (calcParams.ccritratio[1], calcParams.ccritratio[2], true)
+				critHitDmgBonus = utils.clamp(attacker:getMod(tpz.mod.CRIT_DMG_INCREASE) - target:getMod(tpz.mod.CRIT_DEF_BONUS), 0, 100)
+				
+				-- if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+					-- attacker:PrintToPlayer(string.format("CRITICAL! pDIF CRIT MIN: [%1.4f]  pDIF CRIT MAX: [%1.4f]", calcParams.ccritratio[1], calcParams.ccritratio[2]),tpz.msg.channel.SYSTEM_3)
+					-- attacker:PrintToPlayer(string.format("CRITICAL! HIT DAMAGE: [%i] = (BASE DMG: [%i] * pDIF: [%1.4f]) * CHD BONUS: [%1.2f]", (dmg * calcParams.pdif) * (1 + critHitDmgBonus / 100), dmg, calcParams.pdif, 1 + critHitDmgBonus / 100),tpz.msg.channel.SYSTEM_3)
+				-- end
             else
                 calcParams.pdif = generatePdif (calcParams.cratio[1], calcParams.cratio[2], true)
+				
+				-- if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+					-- attacker:PrintToPlayer(string.format("pDIF MIN: [%1.4f]  pDIF MAX: [%1.4f]", calcParams.cratio[1], calcParams.cratio[2]),tpz.msg.channel.SYSTEM_3)
+					-- attacker:PrintToPlayer(string.format("HIT DAMAGE: [%i] = BASE DMG: [%i] * pDIF: [%1.4f]", dmg * calcParams.pdif, dmg, calcParams.pdif),tpz.msg.channel.SYSTEM_3)
+				-- end
             end
-            -- Apply Damage Limit+ from Job Traits and Physical Damage Limit +% from gear
-            calcParams.pdif = ((calcParams.pdif + dmgLimitTrait) * dmgLimitGear)
-            finaldmg = dmg * calcParams.pdif
+            finaldmg = (dmg * calcParams.pdif) * (1 + critHitDmgBonus / 100)
 
             -- Duplicate the first hit with an added magical component for hybrid WSes
             if calcParams.hybridHit then
@@ -126,6 +134,10 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
          attacker:getStat(tpz.mod.INT) * wsParams.int_wsc + attacker:getStat(tpz.mod.MND) * wsParams.mnd_wsc +
          attacker:getStat(tpz.mod.CHR) * wsParams.chr_wsc) * calcParams.alpha
     local mainBase = calcParams.weaponDamage[1] + wsMods + calcParams.bonusWSmods
+	
+	if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+		attacker:PrintToPlayer(string.format("BASE DAMAGE: [%i] = WEAPON DMG: [%i] + fSTR: [%i] + WS MODS: [%i] + BONUS DMG: [%i]", mainBase, calcParams.weaponDamage[1], calcParams.fSTR, wsMods - calcParams.fSTR, calcParams.bonusWSmods),tpz.msg.channel.SYSTEM_3)
+	end
 
     -- Calculate fTP multiplier
     local ftp = fTP(tp, wsParams.ftp100, wsParams.ftp200, wsParams.ftp300) + calcParams.bonusfTP
@@ -135,6 +147,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
 
     if (wsParams.canCrit) then -- Work out critical hit ratios
         local nativecrit = 0
+		-- Critical Hit Rate has a sliding value from a minimum of wsParams.crit100 at 1000 TP to a maximum of wsParams.crit300 at 3000 TP
         critrate = fTP(tp, wsParams.crit100, wsParams.crit200, wsParams.crit300)
 
         if calcParams.flourishEffect then
@@ -143,13 +156,26 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
             end
         end
 
-        -- Add on native crit hit rate (guesstimated, it actually follows an exponential curve)
-        nativecrit = (attacker:getStat(tpz.mod.DEX) - target:getStat(tpz.mod.AGI))*0.005 -- assumes +0.5% crit rate per 1 dDEX
-        if (nativecrit > 0.2) then -- caps only apply to base rate, not merits and mods
-            nativecrit = 0.2
-        elseif (nativecrit < 0.05) then
-            nativecrit = 0.05
-        end
+		-- Determine dDEX and Critical Hit Rate bonus
+		local dDEX = attacker:getStat(tpz.mod.DEX) - target:getStat(tpz.mod.AGI)
+		
+		if (dDEX <= 6) then
+			nativecrit = 0
+		elseif (dDEX <= 13) then
+			nativecrit = 1
+		elseif (dDEX <= 19) then
+			nativecrit = 2
+		elseif (dDEX <= 29) then
+			nativecrit = 3
+		elseif (dDEX <= 39) then
+			nativecrit = 4
+		elseif (dDEX <= 50) then
+			nativecrit = dDEX - 35
+		end
+		
+		-- Base Critical Hit Rate (5%) + dDEX Critical Hit Rate
+		-- https://www.bg-wiki.com/ffxi/Critical_Hit_Rate
+		nativecrit = (5 + utils.clamp(nativecrit, 0, 15)) / 100
 
         local fencerBonus = calcParams.fencerBonus or 0
         nativecrit = nativecrit + attacker:getMod(tpz.mod.CRITHITRATE)/100 + attacker:getMerit(tpz.merit.CRIT_HIT_RATE)/100
@@ -161,8 +187,21 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
         end
 
         critrate = critrate + nativecrit
+		
+		-- if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+			-- player:PrintToPlayer(string.format("", ),tpz.msg.channel.SYSTEM_3)
+		-- end
     end
     calcParams.critRate = critrate
+	
+	-- Handle Climactic Flourish
+	local climacticFlourishCrits = attacker:getCharVar("ClimacticFlourishCrits")
+    
+    if (attacker:hasStatusEffect(tpz.effect.CLIMACTIC_FLOURISH) and (climacticFlourishCrits > 0)) then
+        mainBase = (mainBase + (attacker:getStat(tpz.mod.CHR) / 2)) * (1 + (attacker:getMod(tpz.mod.ENH_CLIMACTIC_FLOURISH) / 100))
+        calcParams.critRate = 100
+        attacker:setCharVar("ClimacticFlourishCrits", climacticFlourishCrits - 1)
+    end
 
 --	printf("weaponskills.lua calculateRawWSDmg  WS ACC MOD: [%i]  WS BASE DMG: [%i]  CRIT HIT RATE: [%s]  fTP: [%i]", calcParams.hitRate, mainBase, critrate, ftp)
 
@@ -172,19 +211,11 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     calcParams.hitsLanded = 0
     calcParams.shadowsAbsorbed = 0
 
-    -- Calculate the damage from the first hit
-    local dmg = mainBase
-    
-    local climacticflourishcrits = attacker:getCharVar("ClimacticFlourishCrits")
-    
-    if (attacker:hasStatusEffect(tpz.effect.CLIMACTIC_FLOURISH) and (climacticflourishcrits > 0)) then
-        dmg = (dmg + (attacker:getStat(tpz.mod.CHR) / 2)) * (1 + (attacker:getMod(tpz.mod.ENH_CLIMACTIC_FLOURISH) / 100))
-        calcParams.critRate = 100
-        attacker:setCharVar("ClimacticFlourishCrits", climacticflourishcrits - 1)
-    end
+    -- Calculate damage bonuses from JAs
+    local dmgBonusJA = 0
     
     if (attacker:hasStatusEffect(tpz.effect.STRIKING_FLOURISH) or attacker:hasStatusEffect(tpz.effect.TERNARY_FLOURISH)) then
-        dmg = dmg + attacker:getStat(tpz.mod.CHR)
+        dmgBonusJA = attacker:getStat(tpz.mod.CHR)
 		calcParams.critRate = calcParams.critRate + attacker:getMod(tpz.mod.ENH_STRIKING_FLOURISH)
         attacker:delStatusEffectSilent(tpz.effect.STRIKING_FLOURISH)
         attacker:delStatusEffectSilent(tpz.effect.TERNARY_FLOURISH)
@@ -194,13 +225,18 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
 	if (attacker:hasStatusEffect(tpz.effect.CONSUME_MANA)) then
 		local currentMP = attacker:getMP()
 		local consumeMana = currentMP / 5
-		dmg = dmg + consumeMana
+		dmgBonusJA = consumeMana
 		attacker:delStatusEffect(tpz.effect.CONSUME_MANA)
 		attacker:setMP(0)
 	end
-    
-    dmg = dmg * ftp
-    
+	
+    local dmg = math.floor((mainBase + dmgBonusJA) * ftp)
+	
+	if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+		attacker:PrintToPlayer(string.format("ADJUSTED BASE DAMAGE: [%i] = (BASE DMG: [%i] + BONUS DMG: [%i]) * fTP: [%f]", dmg, mainBase, dmgBonusJA, ftp),tpz.msg.channel.SYSTEM_3)
+	end
+	
+	-- Calculate the damage from the first hit
     hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
     
     finaldmg = finaldmg + hitdmg
@@ -238,11 +274,20 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
 --	printf("weaponskills.lua calculateRawWSDmg firstHitBonus: [%f]", firstHitBonus)
 
     -- Reset fTP if it's not supposed to carry over across all hits for this WS
-    if not wsParams.multiHitfTP then ftp = 1 end -- We'll recalculate our mainhand damage after doing offhand
+    if not wsParams.multiHitfTP then
+		ftp = 1
+	end -- We'll recalculate our mainhand damage after doing offhand
 
     -- Do the extra hit for our offhand if applicable
+	-- printf("weaponskills.lua calculateRawWSDmg  EXTRA OFFHAND HIT: [%s]", calcParams.extraOffhandHit)
+	
     if calcParams.extraOffhandHit then
         local offhandDmg = (calcParams.weaponDamage[2] + wsMods) * ftp
+		
+		if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+			attacker:PrintToPlayer(string.format("OFF HAND BASE DMG: [%i] = (WEAPON DMG: [%i] + WS MODS: [%i]) * fTP: [%1.4f]", offhandDmg, calcParams.weaponDamage[2], wsMods, ftp),tpz.msg.channel.SYSTEM_3)
+		end
+		
         hitdmg, calcParams = getSingleHitDamage(attacker, target, offhandDmg, wsParams, calcParams)
         finaldmg = finaldmg + hitdmg
     end
@@ -257,6 +302,11 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     local BarrageTurbineShots = attacker:getMod(tpz.mod.BARRAGE_TURBINE_SHOTS)
     local numHits = getMultiAttacks(attacker, target, wsParams.numHits)
     numHits = numHits + BarrageTurbineShots
+	
+	-- if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+		-- attacker:PrintToPlayer(string.format("DMG: [%i] = BASE DMG: [%i] * fTP: [%2.2f]", dmg, mainBase, ftp),tpz.msg.channel.SYSTEM_3)
+		-- attacker:PrintToPlayer(string.format("MULTI ATTACKS  # OF HITS: [%i] ----------------------------------------", numHits),tpz.msg.channel.SYSTEM_3)
+	-- end
     
     local burden = 15
     if (BarrageTurbineShots > 0) then
@@ -272,9 +322,12 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     end
     calcParams.extraHitsLanded = calcParams.hitsLanded
 
+	local soulEater = 0
+
     -- Apply Souleater bonus
     if calcParams.melee then -- souleaterBonus() checks for the effect inside itself
-        finaldmg = finaldmg + souleaterBonus(attacker, (calcParams.tpHitsLanded + calcParams.extraHitsLanded))
+		soulEater = souleaterBonus(attacker, (calcParams.tpHitsLanded + calcParams.extraHitsLanded))
+        finaldmg = finaldmg + soulEater
     end
 
     -- Factor in "all hits" bonus damage mods
@@ -286,12 +339,22 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     -- Apply Yaegasumi WS Bonus
     local YaegasumiBonus = attacker:getMod(tpz.mod.YAEGASUMI_WS_BONUS)
     bonusdmg = bonusdmg + YaegasumiBonus
+	
+	if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+		attacker:PrintToPlayer(string.format("# OF ADDITIONAL HITS LANDED: [%i]  TOTAL DMG: [%i]", calcParams.hitsLanded, finaldmg - soulEater),tpz.msg.channel.SYSTEM_3)
+		attacker:PrintToPlayer(string.format("SOUL EATER BONUS: [%i]  WS DMG BONUS: [%i%%]", soulEater, bonusdmg),tpz.msg.channel.SYSTEM_3)
+	end
 
     finaldmg = finaldmg * ((100 + bonusdmg)/100) -- Apply our "all hits" WS dmg bonuses
     finaldmg = finaldmg + firstHitBonus -- Finally add in our "first hit" WS dmg bonus from before
+	
+	if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+		attacker:PrintToPlayer(string.format("DAMAGE BEFORE REDUCTIONS: [%i]", finaldmg),tpz.msg.channel.SYSTEM_3)
+	end
 
     -- Return our raw damage to then be modified by enemy reductions based off of melee/ranged
     calcParams.finalDmg = finaldmg
+	
     return calcParams
 end
 
@@ -301,23 +364,43 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
 	local alljumpsdmg = wsParams.alljumpsdmg or 0
     -- Determine cratio and ccritratio
     local ignoredDef = 0
+	
     if (wsParams.ignoresDef == not nil and wsParams.ignoresDef == true) then
         ignoredDef = calculatedIgnoredDef(tp, target:getStat(tpz.mod.DEF), wsParams.ignored100, wsParams.ignored200, wsParams.ignored300)
+		if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+			attacker:PrintToPlayer(string.format("WEAPONSKILL [%i]  IGNORING DEF: [%i]", wsID, ignoredDef),tpz.msg.channel.SYSTEM_3)
+		end
     end
+	
     local cratio, ccritratio = cMeleeRatio(attacker, target, wsParams, ignoredDef, tp)
+	
+	-- printf("weaponskills.lua doPhysicalWeaponskill  cRATIO 1: [%2.4f]  cRATIO 2: [%2.4f]  cCRITRATIO 1: [%2.4f] cCRITRATIO 2: [%2.4f]", cratio[1], cratio[2], ccritratio[1], ccritratio[2])
 
     -- Set up conditions and wsParams used for calculating weaponskill damage
     local gorgetBeltFTP, gorgetBeltAcc = handleWSGorgetBelt(attacker)
-    local attack =
-    {
-        ['type'] = tpz.attackType.PHYSICAL,
-        ['slot'] = tpz.slot.MAIN,
-        ['weaponType'] = attacker:getWeaponSkillType(tpz.slot.MAIN),
-        ['damageType'] = attacker:getWeaponDamageType(tpz.slot.MAIN)
-    }
+    local attack = 
+	{
+		['type'] = tpz.attackType.PHYSICAL,
+		['slot'] = tpz.slot.MAIN,
+		['weaponType'] = attacker:getWeaponSkillType(tpz.slot.MAIN),
+		['damageType'] = attacker:getWeaponDamageType(tpz.slot.MAIN)
+	}
+	
+	-- Prevents shields from triggering the dual wielding condition and granting an additional hit
+	local hasShield = false
+	
+	if (attacker:getObjType() == tpz.objType.PC) then
+		local subWeaponType = attacker:getStorageItem(0, 0, tpz.slot.SUB)
+		
+		if (subWeaponType ~= nil and subWeaponType:isShield()) then
+			hasShield = true
+		end
+	end
+	
     local calcParams = {}
     calcParams.weaponDamage = getMeleeDmg(attacker, attack.weaponType, wsParams.kick)
-    calcParams.fSTR = fSTR(attacker:getStat(tpz.mod.STR), target:getStat(tpz.mod.VIT), attacker:getWeaponDmgRank())
+	calcParams.bonusJumpfSTR = wsParams.bonusJumpfSTR or 0
+    calcParams.fSTR = fSTR(attacker, target) * (1 + calcParams.bonusJumpfSTR)
     calcParams.cratio = cratio
     calcParams.ccritratio = ccritratio
     calcParams.accStat = attacker:getACC()
@@ -333,11 +416,11 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     calcParams.guaranteedHit = calcParams.sneakApplicable or calcParams.trickApplicable
     calcParams.mightyStrikesApplicable = attacker:hasStatusEffect(tpz.effect.MIGHTY_STRIKES)
     calcParams.forcedFirstCrit = calcParams.sneakApplicable or calcParams.assassinApplicable
-    calcParams.extraOffhandHit = attacker:isDualWielding() or attack.weaponType == tpz.skill.HAND_TO_HAND
+    calcParams.extraOffhandHit = (attacker:isDualWielding() and hasShield == false) or attack.weaponType == tpz.skill.HAND_TO_HAND
     calcParams.hybridHit = wsParams.hybridWS
     calcParams.flourishEffect = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
     calcParams.fencerBonus = fencerBonus(attacker)
-    calcParams.bonusTP = wsParams.bonusTP or 0
+    calcParams.bonusTP = wsParams.bonusTP or 0 -- Only applied from DRG Jumps
     calcParams.bonusfTP = gorgetBeltFTP or 0
     calcParams.bonusAcc = (gorgetBeltAcc or 0) + attacker:getMod(tpz.mod.WSACC)
     calcParams.bonusWSmods = wsParams.bonusWSmods or 0
@@ -353,6 +436,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     attacker:delStatusEffect(tpz.effect.SNEAK_ATTACK)
     attacker:delStatusEffectSilent(tpz.effect.BUILDING_FLOURISH)
 
+	-- printf("weaponskills.lua doPhysicalWeaponskill DAMAGE BEFORE REDUCTIONS: [%i]", finaldmg)
     -- Calculate reductions
     if not wsParams.formless then
 		-- Check for special damage reduction based on whether the mob is attacked from the front or behind
@@ -382,28 +466,59 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
             finaldmg = finaldmg * target:getMod(tpz.mod.SLASHRES) / 1000
         end
     end
+	
+	-- printf("weaponskills.lua doPhysicalWeaponskill DAMAGE AFTER REDUCTIONS: [%i]", finaldmg)
 
-    finaldmg = finaldmg * WEAPON_SKILL_POWER -- Add server bonus
-    
-    local posorneg = math.random(0, 1) -- Sets the swing positive or negative
-    local randomness = math.random(1,25) -- 25% swing range
-    
-    if (posorneg == 0) then
-        randomness = ((100 + randomness) / 100)
-    else
-        randomness = ((100 - randomness) / 100)
-    end
-    
-    finaldmg = finaldmg * randomness
+	local weaponMultiplier = 1
+
+	-- Add specific bonus based on weapon type
+	if (attack.weaponType == tpz.skill.HAND_TO_HAND) then
+		-- printf("weaponskills.lua doPhysicalWeaponskill  H2H WEAPONSKILL")
+		weaponMultiplier = 1.85
+	elseif (attack.weaponType == tpz.skill.DAGGER) then
+		weaponMultiplier = 1.00
+	elseif (attack.weaponType == tpz.skill.SWORD) then
+		weaponMultiplier = 1.75
+	elseif (attack.weaponType == tpz.skill.GREAT_SWORD) then
+		weaponMultiplier = 1.10
+	elseif (attack.weaponType == tpz.skill.AXE) then
+		weaponMultiplier = 2.50
+	elseif (attack.weaponType == tpz.skill.GREAT_AXE) then
+		weaponMultiplier = 2.00
+		-- printf("weaponskills.lua doPhysicalWeaponskill  GAXE WEAPONSKILL")
+	elseif (attack.weaponType == tpz.skill.SCYTHE) then
+		weaponMultiplier = 2.00
+	elseif (attack.weaponType == tpz.skill.POLEARM) then
+		weaponMultiplier = 1.50
+	elseif (attack.weaponType == tpz.skill.KATANA) then
+		weaponMultiplier = 2.00
+	elseif (attack.weaponType == tpz.skill.GREAT_KATANA) then
+		weaponMultiplier = 1.75
+	elseif (attack.weaponType == tpz.skill.CLUB) then
+		weaponMultiplier = 2.00
+	elseif (attack.weaponType == tpz.skill.STAFF) then
+		weaponMultiplier = 3.00
+	end
+	
+	finaldmg = finaldmg * weaponMultiplier
+
+	-- Add server bonus
+    finaldmg = finaldmg * WEAPON_SKILL_POWER
 	
 	-- Handle DRG All Jumps: Adds % of wyvern's max HP as additional damage
 	if (alljumpsdmg > 0 and alljumpsdmg ~= nil) then
 		finaldmg = finaldmg + alljumpsdmg
 	end
+	
+	if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+		attacker:PrintToPlayer(string.format("SERVER DAMAGE MULTIPLIER: [%1.2f]  WEAPON DAMAGE MULTIPLIER: [%1.2f]", WEAPON_SKILL_POWER, weaponMultiplier),tpz.msg.channel.SYSTEM_3)
+		attacker:PrintToPlayer(string.format("FINAL DAMAGE: [%i]", finaldmg),tpz.msg.channel.SYSTEM_3)
+	end
     
     calcParams.finalDmg = finaldmg
 	
     finaldmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
+	
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end
 
@@ -415,7 +530,11 @@ end
     local ignoredDef = 0
     if (wsParams.ignoresDef == not nil and wsParams.ignoresDef == true) then
         ignoredDef = calculatedIgnoredDef(tp, target:getStat(tpz.mod.DEF), wsParams.ignored100, wsParams.ignored200, wsParams.ignored300)
+		if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+			attacker:PrintToPlayer(string.format("WEAPONSKILL [%i]  IGNORING DEF: [%i]", wsID, ignoredDef),tpz.msg.channel.SYSTEM_3)
+		end
     end
+
     local cratio, ccritratio = cRangedRatio(attacker, target, wsParams, ignoredDef, tp)
 
     -- Set up conditions and params used for calculating weaponskill damage
@@ -430,7 +549,7 @@ end
     local calcParams =
     {
         weaponDamage = {attacker:getRangedDmg()},
-        fSTR = fSTR2(attacker:getStat(tpz.mod.STR), target:getStat(tpz.mod.VIT), attacker:getRangedDmgRank()),
+        fSTR = fSTR2(attacker, target),
         cratio = cratio,
         ccritratio = ccritratio,
         accStat = attacker:getRACC(),
@@ -456,24 +575,46 @@ end
     local finaldmg = calcParams.finalDmg
 
     -- Calculate reductions
-    finaldmg = target:rangedDmgTaken(finaldmg)
+	-- Check for special damage reduction based on whether the mob is attacked from the front or behind
+	if (target:getMod(tpz.mod.FRONTAL_DMG_REDUCTION) > 0 and attacker:isInfront(target, 64)) then
+		-- printf("weaponskills.lua doRangedWeaponskill FRONTAL DMG WS REDUCTION TRIGGERED  DAMAGE BEFORE: [%i]", finaldmg)
+		finaldmg = finaldmg - (finaldmg * (target:getMod(tpz.mod.FRONTAL_DMG_REDUCTION) / 100))
+		-- printf("weaponskills.lua doRangedWeaponskill FRONTAL DMG WS REDUCTION TRIGGERED  DAMAGE AFTER: [%i]", finaldmg)
+	elseif (target:getMod(tpz.mod.SIDE_DMG_REDUCTION) > 0 and not (attacker:isBehind(target, 64) or attacker:isInfront(target, 64))) then
+		-- printf("weaponskills.lua doRangedWeaponskill SIDE DMG WS REDUCTION TRIGGERED  DAMAGE BEFORE: [%i]", finaldmg)
+		finaldmg = finaldmg - (finaldmg * (target:getMod(tpz.mod.SIDE_DMG_REDUCTION) / 100))
+		-- printf("weaponskills.lua doRangedWeaponskill SIDE DMG WS REDUCTION TRIGGERED  DAMAGE AFTER: [%i]", finaldmg)
+	elseif (target:getMod(tpz.mod.REAR_DMG_REDUCTION) > 0 and attacker:isBehind(target, 64)) then
+		-- printf("weaponskills.lua doRangedWeaponskill REAR DMG WS REDUCTION TRIGGERED  DAMAGE BEFORE: [%i]", finaldmg)
+		finaldmg = finaldmg - (finaldmg * (target:getMod(tpz.mod.REAR_DMG_REDUCTION) / 100))
+		-- printf("weaponskills.lua doRangedWeaponskill REAR DMG WS REDUCTION TRIGGERED  DAMAGE AFTER: [%i]", finaldmg)
+	else
+		finaldmg = target:rangedDmgTaken(finaldmg)
+	end
+	
     finaldmg = finaldmg * target:getMod(tpz.mod.PIERCERES) / 1000
+	
+	local weaponMultiplier = 1
+	
+	if (attack.weaponType == tpz.skill.ARCHERY) then
+		-- printf("weaponskills.lua doRangedWeaponskill  ARCHERY WEAPONSKILL")
+		weaponMultiplier = 2.50
+	elseif (attack.weaponType == tpz.skill.MARKSMANSHIP) then
+		weaponMultiplier = 2.50
+	end
+	
+	finaldmg = finaldmg * weaponMultiplier
 
     finaldmg = finaldmg * WEAPON_SKILL_POWER -- Add server bonus
-    
-    local posorneg = math.random(0, 1) -- Sets the swing positive or negative
-    local randomness = math.random(1,25) -- 25% swing range
-    
-    if (posorneg == 0) then
-        randomness = ((100 + randomness) / 100)
-    else
-        randomness = ((100 - randomness) / 100)
-    end
-    
-    finaldmg = finaldmg * randomness
+	
+	if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+		attacker:PrintToPlayer(string.format("SERVER DAMAGE MULTIPLIER: [%1.2f]  WEAPON DAMAGE MULTIPLIER: [%1.2f]", WEAPON_SKILL_POWER, weaponMultiplier),tpz.msg.channel.SYSTEM_3)
+		attacker:PrintToPlayer(string.format("FINAL DAMAGE: [%i]", finaldmg),tpz.msg.channel.SYSTEM_3)
+	end
     
     calcParams.finalDmg = finaldmg
     finaldmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
+	
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end
 
@@ -509,8 +650,8 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
 			baseDMG = attacker:getRangedDmg()
 			weaponLevel = rangedItem:getReqLvl()
 			
-			-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
-				-- printf("weaponskills.lua doMagicWeaponskill RANGED DMG: [%i]  AMMO DMG: [%i]", attacker:getRangedDmg(), attacker:getAmmoDmg())
+			-- if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+				-- attacker:PrintToPlayer(string.format("RANGED DMG: [%i]  AMMO DMG: [%i]", attacker:getRangedDmg(), attacker:getAmmoDmg()),tpz.msg.channel.SYSTEM_3)
 			-- end
 			
 			if (attacker:getGearILvl(rangedWeaponID) > weaponLevel) then
@@ -529,17 +670,23 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
 		end
 	end
 	
-	-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
-		-- printf("weaponskills.lua doMagicWeaponskill BASE DMG: [%i]", baseDMG)
+	local bonusfTP, bonusacc = handleWSGorgetBelt(attacker)
+	bonusacc = bonusacc + attacker:getMod(tpz.mod.WSACC) + attacker:getMod(tpz.mod.WSACC)
+	
+	-- if (wsParams.skill == tpz.skill.MARKSMANSHIP or wsParams.skill == tpz.skill.ARCHERY) then
+		-- bonusacc = bonusacc + attacker:getRACC()
+	-- else
+		-- bonusacc = bonusacc + attacker:getACC()
 	-- end
 	
-	local bonusfTP, bonusacc = handleWSGorgetBelt(attacker)
-	bonusacc = bonusacc + attacker:getMod(tpz.mod.WSACC)
+	-- if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+		-- attacker:PrintToPlayer(string.format("BASE DMG: [%i]  BONUS ACC: [%i]", baseDMG, bonusacc),tpz.msg.channel.SYSTEM_3)
+	-- end
 	
     local dmg = 0
 
     -- Magic-based WSes never miss, so we don't need to worry about calculating a miss, only if a shadow absorbed it.
-    if not shadowAbsorb(target) then
+    if not shadowAbsorb(target, wsParams.ignoreShadows) then
 
         -- Begin Checks for bonus wsc bonuses. See the following for details:
         -- https://www.bg-wiki.com/bg/Utu_Grip
@@ -593,7 +740,7 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
         local YaegasumiBonus = attacker:getMod(tpz.mod.YAEGASUMI_WS_BONUS)
         bonusdmg = bonusdmg + YaegasumiBonus
 
-		local dSTAT = wsParams.dSTAT or 1
+		local dSTAT = wsParams.dSTAT or 0
 		local magicDamage = attacker:getMod(tpz.mod.MAGIC_DAMAGE)
 		local levelMod = math.floor((weaponLevel - 99) * 2.45)
 		
@@ -601,64 +748,100 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
 			levelMod = 0
 		end
 
-		-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
-			-- printf("weaponskills.lua doMagicWeaponskill BASE DMG: [%i]  LEVEL MOD: [%i]  WSC: [%f]  FTP: [%f]  DSTAT: [%i]  MAGIC DAMAGE: [%i]", baseDMG, levelMod, WSC, ftp, dSTAT, magicDamage)
-		-- end
-
-		dmg = (baseDMG + levelMod + WSC) * ftp + dSTAT + magicDamage
+		dmg = (baseDMG + levelMod + WSC + dSTAT + magicDamage) * ftp
+		
+		if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+			attacker:PrintToPlayer(string.format("DMG [%i] = (BASE DMG: [%i] + LEVEL MOD: [%i] + WSC: [%i] + DSTAT: [%i] + MAGIC DAMAGE: [%i]) * FTP: [%f]", dmg, baseDMG, levelMod, WSC, dSTAT, magicDamage, ftp),tpz.msg.channel.SYSTEM_3)
+		end
 		
 		-- Add in bonusdmg
         dmg = dmg * ((100 + bonusdmg) / 100) -- Apply our "all hits" WS dmg bonuses
         dmg = dmg + ((dmg * attacker:getMod(tpz.mod.ALL_WSDMG_FIRST_HIT) + wsParams.specialWSDMG) / 100) -- Add in our "first hit" WS dmg bonus
 
-		-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
-			-- printf("weaponskills.lua doMagicWeaponskill MAGIC WS DMG 1: [%i]", dmg)
-		-- end
+		if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+			attacker:PrintToPlayer(string.format("MAGIC WS BONUS DMG: [%i]", dmg),tpz.msg.channel.SYSTEM_3)
+		end
+
+		wsParams.mabBonus = attacker:getMod(tpz.mod.MATT)
 
         -- Calculate magical bonuses and reductions
         dmg = addBonusesAbility(attacker, wsParams.ele, target, dmg, wsParams)
 		
-		-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
-			-- printf("weaponskills.lua doMagicWeaponskill MAGIC WS DMG 2: [%i]", dmg)
-		-- end
+		if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+			attacker:PrintToPlayer(string.format("MAGIC WS ABILTIY BONUS DMG: [%i]", dmg),tpz.msg.channel.SYSTEM_3)
+		end
 		
         dmg = dmg * applyResistanceAbility(attacker, target, wsParams.ele, wsParams.skill, bonusacc)
 		
-		-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
-			-- printf("weaponskills.lua doMagicWeaponskill MAGIC WS DMG 3: [%i]", dmg)
-		-- end
+		if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+			attacker:PrintToPlayer(string.format("MAGIC WS DMG AFTER RESISTANCE: [%i]", dmg),tpz.msg.channel.SYSTEM_3)
+		end
 		
         dmg = target:magicDmgTaken(dmg)
 		
-		-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
-			-- printf("weaponskills.lua doMagicWeaponskill MAGIC WS DMG 4: [%i]", dmg)
-		-- end
+		if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+			attacker:PrintToPlayer(string.format("MAGIC WS DMG AFTER -%% DAMAGE TAKEN: [%i]", dmg),tpz.msg.channel.SYSTEM_3)
+		end
 		
         dmg = adjustForTarget(target, dmg, wsParams.ele)
 		
-		-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
-			-- printf("weaponskills.lua doMagicWeaponskill MAGIC WS DMG 5: [%i]", dmg)
-		-- end
+		if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+			attacker:PrintToPlayer(string.format("MAGIC WS DMG AFTER ADJUSTING FOR TARGET: [%i]", dmg),tpz.msg.channel.SYSTEM_3)
+		end
+		
+		-- Add specific bonus based on weapon type
+		if (attack.weaponType == tpz.skill.HAND_TO_HAND) then
+			-- printf("weaponskills.lua doMagicWeaponskill  H2H WEAPONSKILL")
+			weaponMultiplier = 1.00
+		elseif (attack.weaponType == tpz.skill.DAGGER) then
+			weaponMultiplier = 1.00
+		elseif (attack.weaponType == tpz.skill.SWORD and wsID ~= 238) then
+			weaponMultiplier = 2.00
+		elseif (attack.weaponType == tpz.skill.GREAT_SWORD) then
+			weaponMultiplier = 1.10
+		elseif (attack.weaponType == tpz.skill.AXE) then
+			weaponMultiplier = 2.00
+		elseif (attack.weaponType == tpz.skill.GREAT_AXE) then
+			weaponMultiplier = 1.00
+			-- printf("weaponskills.lua doMagicWeaponskill  GAXE WEAPONSKILL")
+		elseif (attack.weaponType == tpz.skill.SCYTHE) then
+			weaponMultiplier = 1.00
+		elseif (attack.weaponType == tpz.skill.POLEARM) then
+			weaponMultiplier = 1.00
+		elseif (attack.weaponType == tpz.skill.KATANA) then
+			weaponMultiplier = 2.50
+		elseif (attack.weaponType == tpz.skill.GREAT_KATANA) then
+			weaponMultiplier = 1.00
+		elseif (attack.weaponType == tpz.skill.CLUB) then
+			weaponMultiplier = 2.00
+		elseif (attack.weaponType == tpz.skill.STAFF) then
+			weaponMultiplier = 3.00
+		elseif (attack.weaponType == tpz.skill.ARCHERY) then
+			-- printf("weaponskills.lua doMagicWeaponskill  ARCHERY WEAPONSKILL")
+			weaponMultiplier = 2.50
+		elseif (attack.weaponType == tpz.skill.MARKSMANSHIP) then
+			weaponMultiplier = 2.50
+		end		
 
         dmg = dmg * WEAPON_SKILL_POWER -- Add server bonus
     else
         calcParams.shadowsAbsorbed = 1
     end
     
-    local posorneg = math.random(0, 1) -- Sets the swing positive or negative
-    local randomness = math.random(1, 10) -- 10% swing range
+    -- local posorneg = math.random(0, 1) -- Sets the swing positive or negative
+    -- local randomness = math.random(1, 10) -- 10% swing range
     
-    if (posorneg == 0) then
-        randomness = ((100 + randomness) / 100)
-    else
-        randomness = ((100 - randomness) / 100)
-    end
+    -- if (posorneg == 0) then
+        -- randomness = ((100 + randomness) / 100)
+    -- else
+        -- randomness = ((100 - randomness) / 100)
+    -- end
     
-    dmg = dmg * randomness
+    -- dmg = dmg * randomness
 	
-	-- if (attacker:getName() == "Las" or attacker:getName() == "Testranged") then
-		-- printf("weaponskills.lua doMagicWeaponskill MAGIC WS DMG 6: [%i]", dmg)
-	-- end
+	if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+		attacker:PrintToPlayer(string.format("MAGIC WS FINAL DMG: [%i]", dmg),tpz.msg.channel.SYSTEM_3)
+	end
 
     calcParams.finalDmg = dmg
     dmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
@@ -669,6 +852,7 @@ end
 -- handles displaying the appropriate action/message, delivering the damage to the mob, and any enmity from it
 function takeWeaponskillDamage(defender, attacker, wsParams, primaryMsg, attack, wsResults, action)
     local finaldmg = wsResults.finalDmg
+	
     if wsResults.tpHitsLanded + wsResults.extraHitsLanded > 0 then
         if finaldmg >= 0 then
             if primaryMsg then
@@ -681,14 +865,19 @@ function takeWeaponskillDamage(defender, attacker, wsParams, primaryMsg, attack,
                 action:reaction(defender:getID(), tpz.reaction.HIT)
                 action:speceffect(defender:getID(), tpz.specEffect.RECOIL)
             end
-        else
+        else		
             if primaryMsg then
                 action:messageID(defender:getID(), tpz.msg.basic.SELF_HEAL)
             else
                 action:messageID(defender:getID(), tpz.msg.basic.SELF_HEAL_SECONDARY)
             end
         end
-        action:param(defender:getID(), finaldmg)
+		
+		if (finaldmg < 0) then
+			action:param(defender:getID(), -finaldmg)
+		else
+			action:param(defender:getID(), finaldmg)
+		end
     elseif wsResults.shadowsAbsorbed > 0 then
         action:messageID(defender:getID(), tpz.msg.basic.SHADOW_ABSORB)
         action:param(defender:getID(), wsResults.shadowsAbsorbed)
@@ -700,9 +889,15 @@ function takeWeaponskillDamage(defender, attacker, wsParams, primaryMsg, attack,
         end
         action:reaction(defender:getID(), tpz.reaction.EVADE)
     end
+	
     local targetTPMult = wsParams.targetTPMult or 1
-    finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attack.type, attack.damageType, attack.slot, primaryMsg, wsResults.tpHitsLanded, (wsResults.extraHitsLanded * 10) + wsResults.bonusTP, targetTPMult)
-    local enmityEntity = wsResults.taChar or attacker
+	
+	if (wsParams.doesNoDamage ~= true) then
+		finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attack.type, attack.damageType, attack.slot, primaryMsg, wsResults.tpHitsLanded, (wsResults.extraHitsLanded * 10) + wsResults.bonusTP, targetTPMult)
+    end
+	
+	local enmityEntity = wsResults.taChar or attacker
+	
     if (wsParams.overrideCE and wsParams.overrideVE) then
         defender:addEnmity(enmityEntity, wsParams.overrideCE, wsParams.overrideVE)
     else
@@ -732,20 +927,25 @@ function souleaterBonus(attacker, numhits)
     if attacker:hasStatusEffect(tpz.effect.SOULEATER) then
         local damage = 0
         local percent = 0.1
+		
         if attacker:getMainJob() ~= tpz.job.DRK then
             percent = percent / 2
         end
+		
         percent = percent + math.min(0.02, 0.01 * attacker:getMod(tpz.mod.SOULEATER_EFFECT))
 
         local hitscounted = 0
+		
         while (hitscounted < numhits) do
             local health = attacker:getHP()
             if health > 10 then
-                damage = damage + health*percent
+                damage = damage + health * percent
             end
             hitscounted = hitscounted + 1
         end
-        attacker:delHP(numhits*0.10*attacker:getHP())
+		
+        attacker:delHP(numhits * 0.10 * attacker:getHP())
+		
         return damage
     else
         return 0
@@ -787,7 +987,9 @@ function getMeleeDmg(attacker, weaponType, kick)
 end
 
 function fTP(tp, ftp1, ftp2, ftp3)
-    if (tp >= 1000 and tp < 2000) then
+	if (tp < 1000) then
+		return ftp1
+    elseif (tp >= 1000 and tp < 2000) then
         return ftp1 + ( ((ftp2 - ftp1) / 1000) * (tp - 1000))
     elseif (tp >= 2000 and tp <= 3500) then
         -- generate a straight line between ftp2 and ftp3 and find point @ tp
@@ -808,223 +1010,228 @@ function calculatedIgnoredDef(tp, def, ignore1, ignore2, ignore3)
 end
 
 -- Given the raw ratio value (atk/def) and levels, returns the cRatio (min then max)
+-- https://www.bg-wiki.com/ffxi/PDIF
 function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
+	local weaponType = attacker:getWeaponSkillType(tpz.slot.MAIN)
     local mainLvl = attacker:getMainLvl()
     local defLvl = defender:getMainLvl()
---    local attackerILvl = attacker:getWeaponSkillLevel(tpz.slot.MAIN)
 
 	if (attacker:getObjType() == tpz.objType.PC) then
 		mainLvl = mainLvl + attacker:getItemLevel()
 	end
 
     local flourisheffect = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
-    if flourisheffect ~= nil and flourisheffect:getPower() > 1 then
+    if (flourisheffect ~= nil and flourisheffect:getPower() > 1) then
         attacker:addMod(tpz.mod.ATTP, 25 + flourisheffect:getSubPower() / 2)
     end
---	printf("weaponskills.lua cMeleeRTio ATTACKER: [%s]", attacker:getName())
+
     local atkmulti = fTP(tp, params.atk100, params.atk200, params.atk300)
-    local cratio = (attacker:getStat(tpz.mod.ATT) * atkmulti) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
+	-- Attack/Defense Ratio
+    local ratio = (attacker:getStat(tpz.mod.ATT) * atkmulti) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
 	
-    cratio = utils.clamp(cratio, 0, 2.25)
+	-- Ratio caps based on melee weapon type
+	local ratioCap
 	
-    if flourisheffect ~= nil and flourisheffect:getPower() > 1 then
+	if (weaponType == tpz.skill.DAGGER or weaponType == tpz.skill.SWORD or weaponType == tpz.skill.AXE or weaponType == tpz.skill.KATANA or weaponType == tpz.skill.CLUB) then
+		ratioCap = 3.625
+	elseif (weaponType == tpz.skill.HAND_TO_HAND or weaponType == tpz.skill.GREAT_KATANA) then
+		ratioCap = 3.875
+	elseif (weaponType == tpz.skill.GREAT_SWORD or weaponType == tpz.skill.GREAT_AXE or weaponType == tpz.skill.SCYTHE or weaponType == tpz.skill.POLEARM or
+			weaponType == tpz.skill.STAFF) then
+		ratioCap = 4.125
+	end
+	
+    ratio = utils.clamp(ratio, 0, ratioCap)
+	
+    if (flourisheffect ~= nil and flourisheffect:getPower() > 1) then
         attacker:delMod(tpz.mod.ATTP, 25 + flourisheffect:getSubPower() / 2)
     end
 	
+	-- Level Correction
     local levelcor = 0
     
-    -- if (attackerILvl > 203) then
-        -- mainLvl = 119
-    -- elseif(attackerILvl > 177) then
-        -- mainLvl = 115
-    -- elseif(attackerILvl > 153) then
-        -- mainLvl = 113
-    -- elseif(attackerILvl > 102) then
-        -- mainLvl = 109
-    -- elseif(attackerILvl > 89) then
-        -- mainLvl = 108
-    -- elseif(attackerILvl > 76) then
-        -- mainLvl = 107
-    -- elseif(attackerILvl > 63) then
-        -- mainLvl = 106
-    -- elseif(attackerILvl > 51) then
-        -- mainLvl = 105
-    -- end
-    
-   if (defLvl < 130) and (mainLvl < defLvl) then
+	if (defLvl < 130 and mainLvl < defLvl) then
         levelcor = 0.05 * (defLvl - mainLvl)
-    elseif (defLvl > 130) and (mainLvl < defLvl) then
-        levelcor = 0.55
+    elseif (defLvl > 130 and mainLvl < defLvl) then
+        levelcor = 0.55 -- Capped at an 11 level difference
     end
 
-    cratio = cratio - levelcor
+    local cratio = ratio - levelcor
 
-    if cratio < 0 then
+    if (cratio < 0) then
         cratio = 0
     end
+	
+	if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+		attacker:PrintToPlayer(string.format("ATK MULTI: [%2.2f]  ATK/DEF RATIO: [%1.4f]  RATIO CAP: [%1.4f]  LVL CORRECTION: [%1.2f]", atkmulti, ratio, ratioCap, levelcor),tpz.msg.channel.SYSTEM_3)
+		attacker:PrintToPlayer(string.format("CRATIO: [%1.4f] = ATK/DEF RATIO: [%1.4f] - LVL CORRECTION: [%1.2f]", cratio, ratio, levelcor),tpz.msg.channel.SYSTEM_3)
+	end
+	
+	-- pDIF calculations
     local pdifmin = 0
     local pdifmax = 0
 
-    -- max
-
-    if cratio < 0.5 then
+    -- qRatio Upper Limit
+	-- (02/02/22)TODO: Need to check these and make sure they're triggering properly
+    if (cratio < 0.5) then
         pdifmax = cratio + 0.5
-    elseif cratio < 0.7 then
-        pdifmax = 1
-    elseif cratio < 1.2 then
-        pdifmax = cratio + 0.3
-    elseif cratio < 1.5 then
-        pdifmax = cratio * 0.25 + cratio
-    elseif cratio < 2.625 then
-        pdifmax = cratio + 0.375
-    else
-        pdifmax = 3
-    end
-    -- min
-
-    if cratio < 0.38 then
-        pdifmin = 0
-    elseif (cratio < 1.25) then
-        pdifmin = cratio * 1176 / 1024 - 448 / 1024
-    elseif cratio < 1.51 then
-        pdifmin = 1
-    elseif cratio < 2.44 then
-        pdifmin = cratio * 1176 / 1024 - 775 / 1024
-    else
-        pdifmin = cratio - 0.375
-    end
-
-    local pdif = {}
-    pdif[1] = pdifmin
-    pdif[2] = pdifmax
-
-    local pdifcrit = {}
-    cratio = cratio + 1
-    cratio = utils.clamp(cratio, 0, 3)
-
---    printf("ratio: %f min: %f max %f", cratio, pdifmin, pdifmax)
-
-    if cratio < 0.5 then
-        pdifmax = cratio + 0.5
-    elseif cratio < 0.7 then
+    elseif (cratio < 0.7) then
         pdifmax = 1
     elseif (cratio < 1.2) then
         pdifmax = cratio + 0.3
-    elseif cratio < 1.5 then
+    elseif (cratio < 1.5) then
         pdifmax = cratio * 0.25 + cratio
-    elseif cratio < 2.625 then
-        pdifmax = cratio + 0.375
     else
-        pdifmax = 3
+        pdifmax = cratio + 0.375
     end
-    -- min
-
-    if cratio < 0.38 then
+	
+    -- qRatio Lower Limit
+	-- (02/02/22)TODO: Need to check these and make sure they're triggering properly
+    if (cratio < 0.38) then
         pdifmin = 0
-    elseif cratio < 1.25 then
-        pdifmin = cratio * 1176 / 1024 - 448 / 1024
-    elseif cratio < 1.51 then
+    elseif (cratio < 1.25) then
+        pdifmin = cratio * (1176 / 1024) - (448 / 1024)
+    elseif (cratio < 1.51) then
         pdifmin = 1
-    elseif cratio < 2.44 then
-        pdifmin = cratio * 1176 / 1024 - 775 / 1024
+    elseif (cratio < 2.44) then
+        pdifmin = cratio * (1176 / 1024) - (775 / 1024)
     else
         pdifmin = cratio - 0.375
     end
 
-    local critbonus = attacker:getMod(tpz.mod.CRIT_DMG_INCREASE) - defender:getMod(tpz.mod.CRIT_DEF_BONUS)
-    critbonus = utils.clamp(critbonus, 0, 100)
-    pdifcrit[1] = pdifmin * (100 + critbonus) / 100
-    pdifcrit[2] = pdifmax * (100 + critbonus) / 100
+	-- qRatio
+    local pdif = {}
+    pdif[1] = pdifmin
+    pdif[2] = pdifmax
+	
+	-- Add +Damage Limit Trait and +% Damage Limit Gear
+	local dmgLimitTrait = attacker:getMod(tpz.mod.DAMAGE_LIMIT_TRAIT) / 10
+    local dmgLimitGear = (100 + attacker:getMod(tpz.mod.DAMAGE_LIMIT_GEAR)) / 100
+	
+	pdif[1] = (pdif[1] + dmgLimitTrait) * dmgLimitGear
+	pdif[2] = (pdif[2] + dmgLimitTrait) * dmgLimitGear
+
+	-- wRatio
+	local pdifcritmin = pdifmin + 1
+    local pdifcritmax = pdifmax + 1
+	
+    local pdifcrit = {}
+
+    pdifcrit[1] = pdif[1] + 1
+    pdifcrit[2] = pdif[2] + 1
+	
+	if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+		attacker:PrintToPlayer(string.format("pDIF MIN: [%1.4f]  pDIF MAX: [%1.4f]  pDIF CRIT MIN: [%1.4f]  pDIF CRIT MAX: [%1.4f]", pdifmin, pdifmax, pdifcritmin, pdifcritmax),tpz.msg.channel.SYSTEM_3)
+		attacker:PrintToPlayer(string.format("DMG LIMIT pDIF MIN: [%1.4f]  pDIF MAX: [%1.4f]  pDIF CRIT MIN: [%1.4f]  pDIF CRIT MAX: [%1.4f]", pdif[1], pdif[2], pdifcrit[1], pdifcrit[2]),tpz.msg.channel.SYSTEM_3)
+	end
 
     return pdif, pdifcrit
 end
 
 function cRangedRatio(attacker, defender, params, ignoredDef, tp)
+	local weaponType = attacker:getWeaponSkillType(tpz.slot.RANGED)
     local mainLvl = attacker:getMainLvl()
     local defLvl = defender:getMainLvl()
-    local attackerILvl = attacker:getWeaponSkillLevel(tpz.slot.MAIN)
+	
+	if (attacker:getObjType() == tpz.objType.PC) then
+		mainLvl = mainLvl + attacker:getItemLevel()
+	end
 
     local atkmulti = fTP(tp, params.atk100, params.atk200, params.atk300)
-    local cratio = attacker:getRATT() / (defender:getStat(tpz.mod.DEF) - ignoredDef)
+	-- ATK/DEF Ratio
+    local ratio = (attacker:getRATT() * atkmulti) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
+	
+	-- Ratio caps based on melee weapon type
+	local ratioCap
+	
+	if (weaponType == tpz.skill.ARCHERY) then
+		ratioCap = 3.25
+	elseif (weaponType == tpz.skill.MARKSMANSHIP) then
+		ratioCap = 3.5
+	end
+
+	ratio = utils.clamp(ratio, 0, ratioCap)
 
     local levelcor = 0
     
-    if (attackerILvl > 203) then
-        mainLvl = 119
-    elseif(attackerILvl > 177) then
-        mainLvl = 115
-    elseif(attackerILvl > 153) then
-        mainLvl = 113
-    elseif(attackerILvl > 102) then
-        mainLvl = 109
-    elseif(attackerILvl > 89) then
-        mainLvl = 108
-    elseif(attackerILvl > 76) then
-        mainLvl = 107
-    elseif(attackerILvl > 63) then
-        mainLvl = 106
-    elseif(attackerILvl > 51) then
-        mainLvl = 105
-    end
-    
-    if (defLvl < 130) and (mainLvl < defLvl) then
+    if (defLvl < 130 and mainLvl < defLvl) then
         levelcor = 0.025 * (defLvl - mainLvl)
-    elseif (defLvl > 130) and (mainLvl < defLvl) then
+    elseif (defLvl > 130 and mainLvl < defLvl) then
         levelcor = 0.275
     end
 
-    cratio = cratio - levelcor
-
-    cratio = cratio * atkmulti
-
-    if (cratio > 3 - levelcor) then
-        cratio = 3 - levelcor
-    end
-
-    if (cratio < 0) then
+    local cratio = ratio - levelcor
+	
+	if cratio < 0 then
         cratio = 0
     end
+	
+	if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+		attacker:PrintToPlayer(string.format("ATK MULTI: [%2.2f]  ATK/DEF RATIO: [%1.4f]  RATIO CAP: [%1.4f]  LVL CORRECTION: [%1.2f]", atkmulti, cratio, ratioCap, levelcor),tpz.msg.channel.SYSTEM_3)
+		attacker:PrintToPlayer(string.format("CRATIO: [%1.4f] = ATK/DEF RATIO: [%1.4f] - LVL CORRECTION: [%1.2f]", cratio, ratio, levelcor),tpz.msg.channel.SYSTEM_3)
+	end
 
-    -- max
+	local pdifmin = 0
     local pdifmax = 0
+	
+	-- qRatio Upper Limit
     if (cratio < 0.9) then
-        pdifmax = cratio * (10/9)
+        pdifmax = cratio * (10 / 9)
     elseif (cratio < 1.1) then
         pdifmax = 1
-    else
+    elseif (cratio < ratioCap) then
         pdifmax = cratio
+	else
+		pdifmax = ratioCap
     end
 
-    -- min
-    local pdifmin = 0
+    -- qRatio Lower Limit
     if (cratio < 0.9) then
         pdifmin = cratio
     elseif (cratio < 1.1) then
         pdifmin = 1
-    else
-        pdifmin = (cratio * (20/19))-(3/19)
+    elseif (cratio < ratioCap) then
+        pdifmin = (cratio * (20 / 19)) - (3 / 19)
+	else
+		pdifmin = ratioCap
     end
 
-    pdif = {}
+    local pdif = {}
     pdif[1] = pdifmin
     pdif[2] = pdifmax
-    -- printf("ratio: %f min: %f max %f\n", cratio, pdifmin, pdifmax)
-    pdifcrit = {}
+    
+	-- Add +Damage Limit Trait and +% Damage Limit Gear
+	local dmgLimitTrait = attacker:getMod(tpz.mod.DAMAGE_LIMIT_TRAIT) / 10
+    local dmgLimitGear = (100 + attacker:getMod(tpz.mod.DAMAGE_LIMIT_GEAR)) / 100
+	
+	pdif[1] = (pdif[1] + dmgLimitTrait) * dmgLimitGear
+	pdif[2] = (pdif[2] + dmgLimitTrait) * dmgLimitGear
 
-    pdifmin = pdifmin * 1.25
-    pdifmax = pdifmax * 1.25
+	-- wRatio
+	local pdifcritmin = pdifmin * 1.25
+    local pdifcritmax = pdifmax * 1.25
+	
+    local pdifcrit = {}
 
-    pdifcrit[1] = pdifmin
-    pdifcrit[2] = pdifmax
+    pdifcrit[1] = pdif[1] * 1.25
+    pdifcrit[2] = pdif[2] * 1.25
+	
+	if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+		attacker:PrintToPlayer(string.format("pDIF MIN: [%1.4f]  pDIF MAX: [%1.4f]  pDIF CRIT MIN: [%1.4f]  pDIF CRIT MAX: [%1.4f]", pdifmin, pdifmax, pdifcritmin, pdifcritmax),tpz.msg.channel.SYSTEM_3)
+		attacker:PrintToPlayer(string.format("DMG LIMIT pDIF MIN: [%1.4f]  pDIF MAX: [%1.4f]  pDIF CRIT MIN: [%1.4f]  pDIF CRIT MAX: [%1.4f]", pdif[1], pdif[2], pdifcrit[1], pdifcrit[2]),tpz.msg.channel.SYSTEM_3)
+	end
 
     return pdif, pdifcrit
-
 end
 
 -- Given the attacker's str and the mob's vit, fSTR is calculated (for melee WS)
-function fSTR(atk_str, def_vit, weapon_rank)
+function fSTR(attacker, defender)
+	local atk_str = attacker:getStat(tpz.mod.STR)
+	local def_vit = defender:getStat(tpz.mod.VIT)
+	local weapon_rank = attacker:getWeaponDmgRank()
     local dSTR = atk_str - def_vit
     local fSTR = 0
+	
     if (dSTR >= 12) then
         fSTR = (dSTR + 4) / 4
     elseif (dSTR >= 6) then
@@ -1045,17 +1252,28 @@ function fSTR(atk_str, def_vit, weapon_rank)
 
     -- Apply fSTR caps.
     local lower_cap = weapon_rank * -1
+	
     if weapon_rank == 0 then
         lower_cap = -1
     end
+	
     fSTR = utils.clamp(fSTR, lower_cap, weapon_rank + 8)
+	
+	if (attacker:getLocalVar("AuditWeaponskill") == 1) then
+		attacker:PrintToPlayer(string.format("dSTR: [%3.2f]  fSTR: [%3.2f]  WEAPON RANK: [%3.2f]  MIN CAP: [%3.2f]  MAX CAP: [%3.2f]", dSTR, fSTR, weapon_rank, lower_cap, weapon_rank + 8),tpz.msg.channel.SYSTEM_3)
+	end
+	
     return fSTR
 end
 
 -- Given the attacker's str and the mob's vit, fSTR2 is calculated (for ranged WS)
-function fSTR2(atk_str, def_vit, weapon_rank)
+function fSTR2(attacker, defender)
+	local atk_str = attacker:getStat(tpz.mod.STR)
+	local def_vit = defender:getStat(tpz.mod.VIT)
+	local weapon_rank = attacker:getWeaponDmgRank()
     local dSTR = atk_str - def_vit
     local fSTR2 = 0
+	
     if (dSTR >= 12) then
         fSTR2 = (dSTR + 4) / 2
     elseif (dSTR >= 6) then
@@ -1081,7 +1299,9 @@ function fSTR2(atk_str, def_vit, weapon_rank)
     elseif weapon_rank == 1 then
         lower_cap = -3
     end
+	
     fSTR2 = utils.clamp(fSTR2, lower_cap, (weapon_rank + 8) * 2)
+	
     return fSTR2
 end
 
@@ -1146,7 +1366,7 @@ function getMultiAttacks(attacker, target, numHits)
 
     -- Add Ambush Augments to Triple Attack
     if (attacker:hasTrait(76) and attacker:isBehind(target, 23)) then -- TRAIT_AMBUSH
-        tripleRate = tripleRate + attacker:getMerit(tpz.merit.AMBUSH) / 3 -- Value of Ambush is 3 per mert, augment gives +1 Triple Attack per merit
+        tripleRate = tripleRate + attacker:getMerit(tpz.merit.AMBUSH) / 3 -- Value of Ambush is 3 per merit, augment gives +1 Triple Attack per merit
     end
 
     -- QA/TA/DA can only proc on the first hit of each weapon or each fist
@@ -1184,10 +1404,12 @@ function getMultiAttacks(attacker, target, numHits)
 end
 
 function generatePdif (cratiomin, cratiomax, melee)
-    local pdif = math.random(cratiomin*1000, cratiomax*1000) / 1000
+    local pdif = math.random(cratiomin * 1000, cratiomax * 1000) / 1000
+	
     if (melee) then
-        pdif = pdif * (math.random(100, 105)/100)
+        pdif = pdif * (math.random(100, 105) / 100)
     end
+	
     return pdif
 end
 
@@ -1285,7 +1507,7 @@ function handleWSGorgetBelt(attacker)
 				-- printf("weaponskills.lua handleWSGorgetBelt SINGLE ELEMENT BELT/GORGET TRIGGERED FTP BONUS: [%i]  WS ELEMENT: [%i]", ftpBonus, wsElement)
 			-- end
 			accBonus = accBonus + attacker:getMod(elementalFTPEquip[wsElement])
-			ftpBonus = ftpBonus + (attacker:getMod(elementalFTPEquip[wsElement]) * 3.5 / 100)
+			ftpBonus = ftpBonus + (attacker:getMod(elementalFTPEquip[wsElement]) / 100)
 			-- if (attacker:getName() == "Khalum") then
 				-- printf("weaponskills.lua handleWSGorgetBelt SINGLE ELEMENT BELT/GORGET FTP BONUS: [%1.2f]", ftpBonus)
 			-- end
@@ -1322,7 +1544,7 @@ function handleWSGorgetBelt(attacker)
     return ftpBonus, accBonus
 end
 
-function shadowAbsorb(target)
+function shadowAbsorb(target, ignoreShadows)
     local targShadows = target:getMod(tpz.mod.UTSUSEMI)
     local shadowType = tpz.mod.UTSUSEMI
 
@@ -1333,7 +1555,7 @@ function shadowAbsorb(target)
         end
     end
 
-    if targShadows > 0 then
+    if (targShadows > 0 and ignoreShadows ~= true) then
         if shadowType == tpz.mod.UTSUSEMI then
             local effect = target:getStatusEffect(tpz.effect.COPY_IMAGE)
             if effect then

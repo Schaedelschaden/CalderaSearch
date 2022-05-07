@@ -648,6 +648,8 @@ void CAttack::ProcessDamage()
 			bonus = 1 + ((float)KillerEffect / 100);
 		}
 		
+		// bonus = 1 + std::clamp<uint16>(((float)KillerEffect / 100), 0, 50);
+		
 //		printf("attack.cpp ProcessDamage DAMAGE: [%i]\n", m_damage);
 		m_damage = (uint32)(m_damage * bonus);
 //		printf("attack.cpp ProcessDamage KILLER EFFECT: [%i]  BONUS: [%1.3f]  DAMAGE: [%i]\n", KillerEffect, bonus, m_damage);

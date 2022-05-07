@@ -24,7 +24,6 @@ function onUseAbility(player,target,ability,action)
 	local pet = player:getPet()
 	local alljumpsbonus = player:getMod(tpz.mod.ALL_JUMPS_WYVERN_HP)
 	
-	local ftp = 1
 	local params = {}
 		params.numHits = 1
 		
@@ -32,15 +31,17 @@ function onUseAbility(player,target,ability,action)
 			params.numHits = 2
 		end
 		
-		params.ftp100 = ftp params.ftp200 = ftp params.ftp300 = ftp
+		params.bonusJumpfSTR = player:getStat(tpz.mod.VIT) / 256
+		params.ftp100 = 1.10 params.ftp200 = 1.10 params.ftp300 = 1.10
 		params.str_wsc = 0.0 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
 		params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
 		params.canCrit = true
-		params.acc100 = 0.0 params.acc200= 0.0 params.acc300= 0.0
+		params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
 		params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 		params.bonusTP = player:getMod(tpz.mod.JUMP_TP_BONUS)
 		params.targetTPMult = 0
 		params.hitsHigh = true
+		
 	if (player:getMod(tpz.mod.FORCE_JUMP_CRIT) > 0) then
 		params.crit100 = 1.0 params.crit200 = 1.0 params.crit300 = 1.0
 	end
@@ -51,9 +52,11 @@ function onUseAbility(player,target,ability,action)
 
     if (target:isMob()) then
         local enmityShed = 50
+		
         if player:getMainJob() ~= tpz.job.DRG then
             enmityShed = 30
         end
+		
         target:lowerEnmity(player, enmityShed + player:getMod(tpz.mod.HIGH_JUMP_ENMITY_REDUCTION)) -- reduce total accumulated enmity
     end
 

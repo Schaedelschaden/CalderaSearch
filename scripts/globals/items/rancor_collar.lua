@@ -23,13 +23,13 @@ function onItemCheck(target, itemCheck)
 	-- end
 
 	if (itemCheck == 1) then --Equip -- and target:getCharVar("EVERYONES_GRUDGE_GEAR") == 0
-		target:addMod(tpz.mod.DMG, -10)
+		target:addMod(tpz.mod.DMG, 10)
 		target:addMod(tpz.mod.CRITHITRATE, 5)
 		-- target:setCharVar("EVERYONES_GRUDGE_GEAR", 1)
 	end
 	
 	if (itemCheck == 2) then -- Unequip -- and target:getCharVar("EVERYONES_GRUDGE_GEAR") == 1
-		target:delMod(tpz.mod.DMG, -10)
+		target:delMod(tpz.mod.DMG, 10)
 		target:delMod(tpz.mod.CRITHITRATE, 5)
 		-- target:setCharVar("EVERYONES_GRUDGE_GEAR", 0)
 	end

@@ -63,6 +63,7 @@ function onTrade(player, npc, trade)
 		return
 	end
 	
+	-- Uses a 100-piece Ancient Currency to force max values
 	if (npcUtil.tradeHas(trade, ancientCurrency[1]) or npcUtil.tradeHas(trade, ancientCurrency[2]) or npcUtil.tradeHas(trade, ancientCurrency[3])) then
 		randomValues = false
 	end

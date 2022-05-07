@@ -261,7 +261,9 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
     {
         return 1700;
     }
+	
     uint16 WeaponDelay = 9999;
+	
     if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]))
     {
         uint16 MinimumDelay = weapon->getDelay(); // Track base delay.  We will need this later.  Mod::DELAY is ignored for now.
@@ -298,6 +300,12 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
         MinimumDelay -= (uint16)(MinimumDelay * 0.8);
         WeaponDelay = (WeaponDelay < MinimumDelay) ? MinimumDelay : WeaponDelay;
     }
+	
+/* 	if (StatusEffectContainer->HasStatusEffect(EFFECT_BOOST))
+    {
+		WeaponDelay = (uint16)(WeaponDelay * 3.0f);
+    } */
+	
     return WeaponDelay;
 }
 
@@ -636,6 +644,13 @@ uint16 CBattleEntity::ATT()
             {
                 ATT += static_cast<int32>(ATT * this->getMod(Mod::SMITE) / 256.f); // Divide smite value by 256
             }
+			
+			// Sword enhancement spells (Enspell) +ACC
+			if (this->getMod(Mod::ENSPELL) > 0)
+			{
+				printf("battleentity.cpp ATT  ENSPELL BONUS: [%i]  BEFORE ATK: [%i]\n", this->getMod(Mod::ENSPELL_STAT_BONUS), ATT);
+				ATT += this->getMod(Mod::ENSPELL_STAT_BONUS);
+			}
         }
     }
     else if (this->objtype == TYPE_PET && ((CPetEntity*)this)->getPetType() == PETTYPE_AUTOMATON)
@@ -845,10 +860,21 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
         {
             ACC += (int16)(DEX() * 0.75);
         }
+		
         ACC = (ACC + m_modStat[Mod::ACC] + offsetAccuracy);
+		
         auto PChar = dynamic_cast<CCharEntity *>(this);
         if (PChar)
+		{
             ACC += PChar->PMeritPoints->GetMeritValue(MERIT_ACCURACY, PChar);
+			
+			// Sword enhancement spells (Enspell) +ACC
+			if (PChar->getMod(Mod::ENSPELL) > 0)
+			{
+				printf("battleentity.cpp ACC  ENSPELL BONUS: [%i]  BEFORE ACC: [%i]\n", this->getMod(Mod::ENSPELL_STAT_BONUS), ACC);
+				ACC += PChar->getMod(Mod::ENSPELL_STAT_BONUS);
+			}
+		}
 			
 		if (this->GetLocalVar("AuditACC") == 1)
 		{
@@ -879,10 +905,30 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
 uint16 CBattleEntity::DEF()
 {
     // Determines character, pet, and mod DEF stat
-	// Base 8 DEF + DEF Mod + (VIT / 2)
-    int32 DEF = 8 + m_modStat[Mod::DEF] + VIT() / 2;
-    if (this->StatusEffectContainer->HasStatusEffect(EFFECT_COUNTERSTANCE, 0)) {
-	return DEF / 2;
+	// Base 8 DEF + (VIT / 2) + DEF Mod
+    int32 DEF = 8 + (VIT() / 2) + m_modStat[Mod::DEF];
+	
+	if (this->objtype & TYPE_PC)
+	{
+		int16 mainLevel = this->GetMLevel();
+		
+		if (mainLevel >= 51 && mainLevel <= 60)
+		{
+			DEF = (VIT() / 2) + ((2 * mainLevel) - 42) + m_modStat[Mod::DEF];
+		}
+		else if (mainLevel >= 61 && mainLevel <= 90)
+		{
+			DEF = (VIT() / 2) + mainLevel + 18 + m_modStat[Mod::DEF];
+		}
+		else if (mainLevel >= 91 && mainLevel <= 99)
+		{
+			DEF = (VIT() / 2) + mainLevel + 18 + (int16)((mainLevel - 89) / 2) + m_modStat[Mod::DEF];
+		}
+	}
+	
+    if (this->StatusEffectContainer->HasStatusEffect(EFFECT_COUNTERSTANCE, 0))
+	{
+		return DEF / 2;
     }
 
 	int32 DEFP = 0;
@@ -907,7 +953,16 @@ uint16 CBattleEntity::EVA()
     if (evasion > 200) { //Evasion skill is 0.9 evasion post-200
         evasion = (int16)(200 + (evasion - 200) * 0.9);
     }
-    return std::max(0, (m_modStat[Mod::EVA] + evasion + AGI() / 2));
+	
+	evasion += std::max(0, m_modStat[Mod::EVA] + (AGI() / 2));
+	
+	int32 foodEVAP = 0;
+	
+	foodEVAP += static_cast<int32>(evasion * (m_modStat[Mod::FOOD_EVAP] / 100.00f));
+	
+	evasion += std::min<int16>(foodEVAP, m_modStat[Mod::FOOD_EVAP_CAP]);
+	
+    return evasion;
 }
 
 /************************************************************************

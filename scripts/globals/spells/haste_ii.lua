@@ -17,6 +17,11 @@ function onSpellCast(caster, target, spell)
 
     local power = 2998 -- 307/1024 ~29.98%
 
+	if (target:hasStatusEffect(tpz.effect.FLURRY) or target:hasStatusEffect(tpz.effect.FLURRY_II)) then
+		target:delStatusEffect(tpz.effect.FLURRY)
+		target:delStatusEffect(tpz.effect.FLURRY_II)
+	end
+
 	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then
 		power = power * 1.5
 		target:delStatusEffect(tpz.effect.EMBOLDEN)

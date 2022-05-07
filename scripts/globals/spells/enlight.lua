@@ -14,9 +14,11 @@ end
 function onSpellCast(caster, target, spell)
     local effect = tpz.effect.ENLIGHT
     local magicskill = target:getSkillLevel(tpz.skill.DIVINE_MAGIC)
-    local potency = (magicskill / 8) + 12.5
+    local potency = (magicskill / 8) + 12.5 + caster:getMod(tpz.mod.ENLIGHT_DMG)
+	local baseDuration = 180 + caster:getMod(tpz.mod.ENSPELL_DURATION_BONUS)
+	local duration = calculateDuration(baseDuration, caster, target, spell)
 
-    if target:addStatusEffect(effect, potency, 0, 180) then
+    if target:addStatusEffect(effect, potency, 0, duration) then
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)
     else
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)

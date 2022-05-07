@@ -29,21 +29,21 @@ g_mixins.rage = function(mob)
 
 			local rageStats = {tpz.mod.STR,   tpz.mod.DEX,     tpz.mod.VIT,    tpz.mod.AGI,         tpz.mod.INT,  tpz.mod.MND, tpz.mod.CHR, tpz.mod.MDEF,
 							   tpz.mod.DEF,   tpz.mod.ATT,     tpz.mod.ACC,    tpz.mod.MATT,        tpz.mod.MACC, tpz.mod.EVA, tpz.mod.MEVA,
-							   tpz.mod.REGEN, tpz.mod.REFRESH, tpz.mod.REGAIN, tpz.mod.HASTE_MAGIC, tpz.mod.HASTE_ABILITY}
+							   tpz.mod.REGEN, tpz.mod.REFRESH, tpz.mod.REGAIN, tpz.mod.MAIN_DMG_RATING, tpz.mod.HASTE_MAGIC, tpz.mod.HASTE_ABILITY}
 
 			-- Boost all combat stats
 			for i = 1, #rageStats do
 				local amt
 			
 				if (i >= 1 and i <= 8) then
-					amt = 500
+					amt = 750
 				elseif (i >= 9 and i <= 15) then
 					amt = 5000
 				elseif (i >= 16 and i <= 17) then
 					amt = 3000
-				elseif (i == 18) then
+				elseif (i == 18 and i <= 19) then
 					amt = 1000
-				elseif (i >= 19 and i <= 20) then
+				elseif (i >= 20 and i <= 21) then
 					amt = 5000
 				end
 				
@@ -57,8 +57,6 @@ g_mixins.rage = function(mob)
                 -- mob:setLocalVar("[rage]mod_" .. i, amt)
                 -- mob:addMod(i, amt)
             -- end
-
-            -- TODO: ATT, DEF, MACC, MATT, EVA, attack speed all increase
         end
     end)
 
@@ -69,7 +67,7 @@ g_mixins.rage = function(mob)
 
 			local rageStats = {tpz.mod.STR,   tpz.mod.DEX,     tpz.mod.VIT,    tpz.mod.AGI,         tpz.mod.INT,  tpz.mod.MND, tpz.mod.CHR, tpz.mod.MDEF,
 							   tpz.mod.DEF,   tpz.mod.ATT,     tpz.mod.ACC,    tpz.mod.MATT,        tpz.mod.MACC, tpz.mod.EVA, tpz.mod.MEVA,
-							   tpz.mod.REGEN, tpz.mod.REFRESH, tpz.mod.REGAIN, tpz.mod.HASTE_MAGIC, tpz.mod.HASTE_ABILITY}
+							   tpz.mod.REGEN, tpz.mod.REFRESH, tpz.mod.REGAIN, tpz.mod.MAIN_DMG_RATING, tpz.mod.HASTE_MAGIC, tpz.mod.HASTE_ABILITY}
 
 			-- Boost all combat stats
 			for i = 1, #rageStats do
@@ -82,8 +80,6 @@ g_mixins.rage = function(mob)
                 -- local amt = mob:getLocalVar("[rage]mod_" .. i)
                 -- mob:delMod(i, amt)
             -- end
-
-            -- TODO: ATT, DEF, MACC, MATT, EVA, attack speed all decrease
         end
     end)
 

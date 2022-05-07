@@ -34,18 +34,21 @@ function onTrigger(player, npc)
         end
     ---------------------------------------------------------------------
     -- Trial by Wind
-    elseif ((TrialByWind == QUEST_AVAILABLE and player:getFameLevel(RABAO) >= 5) or (TrialByWind == QUEST_COMPLETED and realday ~= player:getCharVar("TrialByWind_date"))) then
+    elseif ((TrialByWind == QUEST_AVAILABLE and player:getFameLevel(RABAO) >= 5)) then
         player:startEvent(66, 0, 331) -- Start and restart quest "Trial by Wind"
     elseif (TrialByWind == QUEST_ACCEPTED and player:hasKeyItem(tpz.ki.TUNING_FORK_OF_WIND) == false and WhisperOfGales == false) then
         player:startEvent(107, 0, 331) -- Defeat against Avatar : Need new Fork
     elseif (TrialByWind == QUEST_ACCEPTED and WhisperOfGales == false) then
         player:startEvent(67, 0, 331, 3)
-    elseif (TrialByWind == QUEST_ACCEPTED and WhisperOfGales) then
+    elseif ((TrialByWind == QUEST_ACCEPTED or TrialByWind == QUEST_COMPLETED) and WhisperOfGales) then
         numitem = 0
 		player:addItem(6267)
+		player:messageSpecial( ID.text.ITEM_OBTAINED, 6267 )
 		player:delKeyItem(tpz.ki.WHISPER_OF_GALES)
-		player:PrintToPlayer(string.format("Agado-Pugado : WOWZEEWOO A WHISPER! HERE TAKE THIS!"),tpz.msg.channel.NS_SAY)
-		player:setCharVar("TrialByWind_date", os.date("%j")) -- %M for next minute, %j for next day
+		player:PrintToPlayer(string.format("Agado-Pugado : WOWZEEWOO a whisper! Here take this!"),tpz.msg.channel.NS_SAY)
+		player:setCharVar("TrialByWind_date", getMidnight()) -- os.date("%j")) -- %M for next minute, %j for next day
+		player:completeQuest(OUTLANDS, tpz.quest.id.outlands.TRIAL_BY_WIND)
+		return
 
         -- if (player:hasItem(17627)) then numitem = numitem + 1; end  -- Garuda's Dagger
         -- if (player:hasItem(13243)) then numitem = numitem + 2; end  -- Wind Belt
@@ -54,6 +57,11 @@ function onTrigger(player, npc)
         -- if (player:hasSpell(301)) then numitem = numitem + 32; end  -- Ability to summon Garuda
 
         -- player:startEvent(69, 0, 331, 3, 0, numitem)
+	elseif (TrialByWind == QUEST_COMPLETED and player:getCharVar("TrialByWind_date") < getMidnight() and player:hasKeyItem(tpz.ki.TUNING_FORK_OF_WIND) == false) then -- realday ~= player:getCharVar("TrialByWind_date")
+		player:PrintToPlayer(string.format("Agado-Pugado : Ready for another meeting with the prime avatar? Here you go!"),tpz.msg.channel.NS_SAY)
+		player:setCharVar("TrialByWind_date", 0)
+        player:addKeyItem(tpz.ki.TUNING_FORK_OF_WIND)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TUNING_FORK_OF_WIND)
     else
         player:startEvent(70) -- Standard dialog
     end

@@ -24,6 +24,12 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded)
     
     local typeEffect = tpz.effect.BLINDNESS
+	
+	if (mob:getMainLvl() >= 135) then
+		dmgmod = 7
+	else
+		dmgmod = 2.4
+	end
 
     MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 15, 0, 120)
 

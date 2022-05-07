@@ -1,6 +1,8 @@
 -----------------------------------
 -- Area: King Ranperre's Tomb
 --   NM: Hahava
+-- MOBID: 17555901
+-- POS -116 8.5 62
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
@@ -22,9 +24,9 @@ function onMobSpawn(mob)
 	-- mob:addMod(tpz.mod.MACC, 100)
 	mob:addMod(tpz.mod.REGEN, 200)
 	mob:addMod(tpz.mod.REFRESH, 50)
-	mob:addMod(tpz.mod.REGAIN, 100)
-	mob:addMod(tpz.mod.DOUBLE_ATTACK, 30)
-	
+	-- mob:addMod(tpz.mod.REGAIN, 100)
+	mob:addMod(tpz.mod.DOUBLE_ATTACK, 10)
+	mob:setLocalVar("Stance", 0)
 	mob:AnimationSub(math.random(1, 2))
 end
 
@@ -38,6 +40,13 @@ function onMobFight(mob, target)
 		mob:setMod(tpz.mod.DMGPHYS, 0)
 		mob:setMod(tpz.mod.DMGMAGIC, -50)
 	end
+	
+	-- if (mob:getLocalVar("Stance") == 1) then
+		-- mob:setMobMod(tpz.mobMod.SKILL_LIST, 1183)
+	-- else
+		-- mob:setMobMod(tpz.mobMod.SKILL_LIST, 1171)
+	-- end
+	
 end
 
 function onMobDeath(mob, player, isKiller)

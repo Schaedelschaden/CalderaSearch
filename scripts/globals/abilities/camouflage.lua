@@ -15,5 +15,6 @@ end
 
 function onUseAbility(player,target,ability)
     local duration = math.random(30, 300) * (1 + 0.01 * player:getMod(tpz.mod.CAMOUFLAGE_DURATION))
-    player:addStatusEffect(tpz.effect.CAMOUFLAGE, 1 ,0, math.floor(duration * SNEAK_INVIS_DURATION_MULTIPLIER))
+	
+    player:addStatusEffect(tpz.effect.CAMOUFLAGE, 25, 0, math.floor(duration * SNEAK_INVIS_DURATION_MULTIPLIER))
 end

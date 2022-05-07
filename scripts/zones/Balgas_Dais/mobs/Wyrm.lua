@@ -34,19 +34,12 @@ function onMobSpawn(mob)
 	mob:setMod(tpz.mod.REGAIN, 100)
 end
 
-function onAdditionalEffect(mob, target, damage)
-	params = {}
-	params.power = 100
-	params.chance = 100
-	
-    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENFIRE, params)
-end
-
 function onMobEngaged(mob, target)
 end
 
 local function notBusy(mob)
     local action = mob:getCurrentAction()
+	
     if
         action == tpz.act.MOBABILITY_START or
         action == tpz.act.MOBABILITY_USING or
@@ -59,27 +52,11 @@ local function notBusy(mob)
 end
 
 function onMobFight(mob, target)
-
 	if mob:AnimationSub() == 1
 		then mob:setMobMod(tpz.mobMod.DRAW_IN, 0)
 	elseif mob:AnimationSub() == 0
 		then mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
 	end
-		
--- Return the selected spell ID.
-function onMonsterMagicPrepare(mob, target)
-    -- Suzaku uses     Burn, Fire IV, Firaga III, Flare
-    -- Let's give -ga3 a higher distribution than the others.
-    local rnd = math.random()
-
-    if rnd < 0.5 then
-        return 176 -- firaga 3
-    elseif rnd < 0.7 then
-        return 147 -- fire 4
-    else
-        return 204 -- flare
-    end
-end
 
     -- Return to ground at 33% HP
     if
@@ -116,5 +93,29 @@ end
     end
 end
 
+-- Return the selected spell ID.
+function onMonsterMagicPrepare(mob, target)
+    -- Suzaku uses     Burn, Fire IV, Firaga III, Flare
+    -- Let's give -ga3 a higher distribution than the others.
+    local rnd = math.random()
+
+    if rnd < 0.5 then
+        return 176 -- firaga 3
+    elseif rnd < 0.7 then
+        return 147 -- fire 4
+    else
+        return 204 -- flare
+    end
+end
+
+function onAdditionalEffect(mob, target, damage)
+	params = {}
+	params.power = 100
+	params.chance = 100
+	
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENFIRE, params)
+end
+
 function onMobDeath(mob, player, isKiller)
+	
 end

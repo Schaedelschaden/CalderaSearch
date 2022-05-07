@@ -14,7 +14,8 @@ function onSpellCast(caster, target, spell)
     local effect = tpz.effect.ENDARK
     local magicskill = target:getSkillLevel(tpz.skill.DARK_MAGIC)
     local potency = (magicskill / 8) + 12.5
-	local duration = calculateDuration(180, caster, target, spell)
+	local baseDuration = 180 + caster:getMod(tpz.mod.ENSPELL_DURATION_BONUS)
+	local duration = calculateDuration(baseDuration, caster, target, spell)
 
     if target:addStatusEffect(effect, potency, 0, duration) then
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)

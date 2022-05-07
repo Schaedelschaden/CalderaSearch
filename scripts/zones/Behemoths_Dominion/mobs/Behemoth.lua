@@ -17,7 +17,7 @@ function onMobSpawn(mob)
         SetDropRate(270, 3342, 0) -- do not drop savory_shank
     end
 
-    mob:setLocalVar("[rage]timer", 1800) -- 30 minutes
+    mob:setLocalVar("[rage]timer", 1200) -- 20 minutes
 	
 	mob:addMod(tpz.mod.PARALYZERES, 50)
     mob:addMod(tpz.mod.STUNRES, 40)

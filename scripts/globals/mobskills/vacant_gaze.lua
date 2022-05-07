@@ -20,15 +20,16 @@ function onMobWeaponSkill(target, mob, skill)
 	
     if (target:isFacing(mob)) then
 		for i = 1, 3 do
-		if (target:dispelStatusEffect()) then
-			counter = counter + 1
-		end
+			if (target:dispelStatusEffect()) then
+				counter = counter + 1
+			end
 
-        if (effect == tpz.effect.NONE) then
-            skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT) -- no effect
-        else
-            skill:setMsg(tpz.msg.basic.DISAPPEAR_NUM)
-        end
+			if (effect == tpz.effect.NONE) then
+				skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT) -- no effect
+			else
+				skill:setMsg(tpz.msg.basic.DISAPPEAR_NUM)
+			end
+		end
     else
         skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT) -- no effect
     end

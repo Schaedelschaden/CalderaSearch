@@ -82,6 +82,10 @@ function onMobEngaged(mob, target)
 		end
 	end
 	
+	if (groupSize == 0 or groupSize == nil) then
+		groupSize = 1
+	end
+	
 	if (#groupSize >= 2 and #groupSize <= 4) then
 		mobSpawns = mobSpawns + (#groupSize - 1)
 	elseif (#groupSize >= 5) then

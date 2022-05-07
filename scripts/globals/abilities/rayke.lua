@@ -28,7 +28,7 @@ function onUseAbility(player, target, ability, action)
 	
 	local power = 100
 	local RuneCounter = 0
-	local duration = 30
+	local duration = 30 + 15 -- Merits currently do not work so adding max Rayke duration bonus
 	
 	for i,v in ipairs(RuneEnhancement) do
 		RuneCounter = 0

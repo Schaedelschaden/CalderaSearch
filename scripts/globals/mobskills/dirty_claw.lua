@@ -19,6 +19,10 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 2.4
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
+	
+	if (mob:isNM() and mob:getLocalVar("MOBSKILL_INCREASED_POTENCY") == 1) then
+		target:dispelStatusEffect()
+	end
     
 	return dmg
 end

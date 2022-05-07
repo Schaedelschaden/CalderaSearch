@@ -28,17 +28,21 @@
 #include "../packets/action.h"
 #include "../packets/basic.h"
 #include "../packets/char.h"
+#include "../packets/char_appearance.h"
+#include "../packets/char_health.h"
+#include "../packets/char_recast.h"
 #include "../packets/char_sync.h"
 #include "../packets/char_update.h"
-#include "../packets/char_recast.h"
-#include "../packets/lock_on.h"
+#include "../packets/event.h"
+#include "../packets/event_string.h"
 #include "../packets/inventory_finish.h"
 #include "../packets/key_items.h"
+#include "../packets/lock_on.h"
 #include "../packets/menu_raisetractor.h"
-#include "../packets/char_health.h"
-#include "../packets/char_appearance.h"
-#include "../packets/message_system.h"
 #include "../packets/message_special.h"
+#include "../packets/message_system.h"
+#include "../packets/message_text.h"
+#include "../packets/release.h"
 
 #include "../ai/ai_container.h"
 #include "../ai/controllers/player_controller.h"
@@ -47,37 +51,40 @@
 #include "../ai/states/attack_state.h"
 #include "../ai/states/death_state.h"
 #include "../ai/states/item_state.h"
+#include "../ai/states/magic_state.h"
 #include "../ai/states/raise_state.h"
 #include "../ai/states/range_state.h"
 #include "../ai/states/weaponskill_state.h"
-#include "../ai/states/magic_state.h"
 
-#include "charentity.h"
-#include "automatonentity.h"
-#include "trustentity.h"
 #include "../ability.h"
-#include "../conquest_system.h"
-#include "../spell.h"
 #include "../attack.h"
-#include "../utils/attackutils.h"
-#include "../utils/charutils.h"
-#include "../utils/battleutils.h"
-#include "../utils/petutils.h"
-#include "../utils/gardenutils.h"
-#include "../item_container.h"
-#include "../items/item_weapon.h"
-#include "../items/item_usable.h"
-#include "../items/item_furnishing.h"
-#include "../trade_container.h"
-#include "../universal_container.h"
 #include "../char_recast_container.h"
+#include "../conquest_system.h"
+#include "../enmity_container.h"
+#include "../item_container.h"
+#include "../items/item_furnishing.h"
+#include "../items/item_usable.h"
+#include "../items/item_weapon.h"
+// #include "../job_points.h"
 #include "../latent_effect_container.h"
-#include "../status_effect_container.h"
-#include "../treasure_pool.h"
-#include "../weapon_skill.h"
+#include "../mobskill.h"
+#include "../modifier.h"
 #include "../packets/char_job_extra.h"
 #include "../packets/status_effects.h"
-#include "../mobskill.h"
+#include "../spell.h"
+#include "../status_effect_container.h"
+#include "../trade_container.h"
+#include "../treasure_pool.h"
+#include "../universal_container.h"
+#include "../utils/attackutils.h"
+#include "../utils/battleutils.h"
+#include "../utils/charutils.h"
+#include "../utils/gardenutils.h"
+#include "../utils/petutils.h"
+#include "../weapon_skill.h"
+#include "automatonentity.h"
+#include "charentity.h"
+#include "trustentity.h"
 
 CCharEntity::CCharEntity()
 {
@@ -85,6 +92,13 @@ CCharEntity::CCharEntity()
     m_EcoSystem = SYSTEM_HUMANOID;
 
     m_event.reset();
+	
+	// eventPreparation = new EventPrep();
+    // currentEvent     = new EventInfo();
+	
+	// inSequence = false;
+    // gotMessage = false;
+    // m_Locked   = false;
 
     m_GMlevel = 0;
     m_isGMHidden = false;
@@ -92,23 +106,28 @@ CCharEntity::CCharEntity()
     allegiance = ALLEGIANCE_PLAYER;
 
     TradeContainer = new CTradeContainer();
-    Container = new CTradeContainer();
-    UContainer = new CUContainer();
+    Container      = new CTradeContainer();
+    UContainer     = new CUContainer();
     CraftContainer = new CTradeContainer();
 
-    m_Inventory = std::make_unique<CItemContainer>(LOC_INVENTORY);
-    m_Mogsafe = std::make_unique<CItemContainer>(LOC_MOGSAFE);
-    m_Storage = std::make_unique<CItemContainer>(LOC_STORAGE);
-    m_Tempitems = std::make_unique<CItemContainer>(LOC_TEMPITEMS);
-    m_Moglocker = std::make_unique<CItemContainer>(LOC_MOGLOCKER);
+    m_Inventory  = std::make_unique<CItemContainer>(LOC_INVENTORY);
+    m_Mogsafe    = std::make_unique<CItemContainer>(LOC_MOGSAFE);
+    m_Storage    = std::make_unique<CItemContainer>(LOC_STORAGE);
+    m_Tempitems  = std::make_unique<CItemContainer>(LOC_TEMPITEMS);
+    m_Moglocker  = std::make_unique<CItemContainer>(LOC_MOGLOCKER);
     m_Mogsatchel = std::make_unique<CItemContainer>(LOC_MOGSATCHEL);
-    m_Mogsack = std::make_unique<CItemContainer>(LOC_MOGSACK);
-    m_Mogcase = std::make_unique<CItemContainer>(LOC_MOGCASE);
-    m_Wardrobe = std::make_unique<CItemContainer>(LOC_WARDROBE);
-    m_Mogsafe2 = std::make_unique<CItemContainer>(LOC_MOGSAFE2);
-    m_Wardrobe2 = std::make_unique<CItemContainer>(LOC_WARDROBE2);
-    m_Wardrobe3 = std::make_unique<CItemContainer>(LOC_WARDROBE3);
-    m_Wardrobe4 = std::make_unique<CItemContainer>(LOC_WARDROBE4);
+    m_Mogsack    = std::make_unique<CItemContainer>(LOC_MOGSACK);
+    m_Mogcase    = std::make_unique<CItemContainer>(LOC_MOGCASE);
+    m_Wardrobe   = std::make_unique<CItemContainer>(LOC_WARDROBE);
+    m_Mogsafe2   = std::make_unique<CItemContainer>(LOC_MOGSAFE2);
+    m_Wardrobe2  = std::make_unique<CItemContainer>(LOC_WARDROBE2);
+    m_Wardrobe3  = std::make_unique<CItemContainer>(LOC_WARDROBE3);
+    m_Wardrobe4  = std::make_unique<CItemContainer>(LOC_WARDROBE4);
+    m_Wardrobe5  = std::make_unique<CItemContainer>(LOC_WARDROBE5);
+    m_Wardrobe6  = std::make_unique<CItemContainer>(LOC_WARDROBE6);
+    m_Wardrobe7  = std::make_unique<CItemContainer>(LOC_WARDROBE7);
+    m_Wardrobe8  = std::make_unique<CItemContainer>(LOC_WARDROBE8);
+    m_RecycleBin = std::make_unique<CItemContainer>(LOC_RECYCLEBIN);
 
     memset(&jobs, 0, sizeof(jobs));
     // TODO: -Wno-class-memaccess - clearing an object on non-trivial type use assignment or value-init
@@ -117,6 +136,7 @@ CCharEntity::CCharEntity()
     memset(&equipLoc, 0, sizeof(equipLoc));
     memset(&RealSkills, 0, sizeof(RealSkills));
     memset(&expChain, 0, sizeof(expChain));
+	// memset(&capacityChain, 0, sizeof(capacityChain));
     memset(&nameflags, 0, sizeof(nameflags));
     memset(&menuConfigFlags, 0, sizeof(menuConfigFlags));
 
@@ -130,6 +150,7 @@ CCharEntity::CCharEntity()
     memset(&m_PetCommands, 0, sizeof(m_PetCommands));
     memset(&m_WeaponSkills, 0, sizeof(m_WeaponSkills));
     memset(&m_SetBlueSpells, 0, sizeof(m_SetBlueSpells));
+	// memset(&m_FieldChocobo, 0, sizeof(m_FieldChocobo));
     memset(&m_unlockedAttachments, 0, sizeof(m_unlockedAttachments));
 
     memset(&m_questLog, 0, sizeof(m_questLog));
@@ -162,21 +183,21 @@ CCharEntity::CCharEntity()
     m_mkeCurrent = 0;
     m_asaCurrent = 0;
 
-    m_Costume = 0;
-    m_Monstrosity = 0;
-    m_hasTractor = 0;
-    m_hasRaise = 0;
-    m_hasAutoTarget = 1;
-    m_InsideRegionID = 0;
-    m_LevelRestriction = 0;
+    m_Costume            = 0;
+    m_Monstrosity        = 0;
+    m_hasTractor         = 0;
+    m_hasRaise           = 0;
+    m_hasAutoTarget      = 1;
+    m_InsideRegionID     = 0;
+    m_LevelRestriction   = 0;
     m_lastBcnmTimePrompt = 0;
     m_AHHistoryTimestamp = 0;
-    m_DeathTimestamp = 0;
+    m_DeathTimestamp     = 0;
 
-    m_EquipFlag = 0;
-    m_EquipBlock = 0;
+    m_EquipFlag         = 0;
+    m_EquipBlock        = 0;
     m_StatsDebilitation = 0;
-    m_EquipSwap = false;
+    m_EquipSwap         = false;
 
     MeritMode = false;
 
@@ -188,35 +209,41 @@ CCharEntity::CCharEntity()
     TradePending.clean();
     InvitePending.clean();
 
-    PLinkshell1 = nullptr;
-    PLinkshell2 = nullptr;
-    PTreasurePool = nullptr;
+    PLinkshell1     = nullptr;
+    PLinkshell2     = nullptr;
+	// PUnityChat      = nullptr;
+    PTreasurePool   = nullptr;
     PWideScanTarget = nullptr;
 
-    PAutomaton = nullptr;
-    PClaimedMob = nullptr;
-    PRecastContainer = std::make_unique<CCharRecastContainer>(this);
+    PAutomaton             = nullptr;
+    PClaimedMob            = nullptr;
+    PRecastContainer       = std::make_unique<CCharRecastContainer>(this);
     PLatentEffectContainer = new CLatentEffectContainer(this);
 
     petZoningInfo.respawnPet = false;
-    petZoningInfo.petID = 0;
-    petZoningInfo.petType = PETTYPE_AVATAR;			// dummy data, the bool tells us to respawn if required
-    petZoningInfo.petHP = 0;
-    petZoningInfo.petMP = 0;
-    petZoningInfo.petTP = 0;
+    petZoningInfo.petID      = 0;
+    petZoningInfo.petType    = PETTYPE_AVATAR;			// dummy data, the bool tells us to respawn if required
+    petZoningInfo.petHP      = 0;
+    petZoningInfo.petMP      = 0;
+    petZoningInfo.petTP      = 0;
 
-    m_PlayTime = 0;
-    m_SaveTime = 0;
+    m_PlayTime    = 0;
+    m_SaveTime    = 0;
     m_reloadParty = 0;
 
-    m_LastYell = 0;
-    m_moghouseID = 0;
+    m_LastYell       = 0;
+    m_moghouseID     = 0;
     m_moghancementID = 0;
 
     m_Substate = CHAR_SUBSTATE::SUBSTATE_NONE;
 
-    PAI = std::make_unique<CAIContainer>(this, nullptr, std::make_unique<CPlayerController>(this),
-        std::make_unique<CTargetFind>(this));
+    PAI = std::make_unique<CAIContainer>(this, nullptr, std::make_unique<CPlayerController>(this), std::make_unique<CTargetFind>(this));
+	
+	hookedFish   = nullptr;
+    lastCastTime = 0;
+    nextFishTime = 0;
+    fishingToken = 0;
+    hookDelay    = 13;
 }
 
 CCharEntity::~CCharEntity()
@@ -331,37 +358,60 @@ void CCharEntity::resetPetZoningInfo()
     petZoningInfo.respawnPet = false;
     petZoningInfo.petType = PETTYPE_AVATAR;
 }
+
 /************************************************************************
-*																		*
-*  Возвращаем контейнер с указанным ID. Если ID выходит за рамки, то	*
-*  защищаем сервер от падения использованием контейнера временных		*
-*  предметов в качестве заглушки (из этого контейнера предметы нельзя	*
-*  перемещать, надевать, передавать, продавать и т.д.). Отображаем		*
-*  сообщение о фатальной ошибке.										*
-*																		*
-************************************************************************/
+ *
+ * Return the container with the specified ID. If the ID goes beyond, then
+ * we protect the server from failing the use of temporary container
+ * items as a plug (from this container items can not
+ * move, wear, transmit, sell, etc.) Display fatal error message.
+ *
+ ************************************************************************/
 
 CItemContainer* CCharEntity::getStorage(uint8 LocationID)
 {
     switch (LocationID)
     {
-        case LOC_INVENTORY:	 return m_Inventory.get();
-        case LOC_MOGSAFE:	 return m_Mogsafe.get();
-        case LOC_STORAGE:	 return m_Storage.get();
-        case LOC_TEMPITEMS:	 return m_Tempitems.get();
-        case LOC_MOGLOCKER:	 return m_Moglocker.get();
-        case LOC_MOGSATCHEL: return m_Mogsatchel.get();
-        case LOC_MOGSACK:	 return m_Mogsack.get();
-        case LOC_MOGCASE:	 return m_Mogcase.get();
-        case LOC_WARDROBE:   return m_Wardrobe.get();
-        case LOC_MOGSAFE2:   return m_Mogsafe2.get();
-        case LOC_WARDROBE2:  return m_Wardrobe2.get();
-        case LOC_WARDROBE3:  return m_Wardrobe3.get();
-        case LOC_WARDROBE4:  return m_Wardrobe4.get();
+        case LOC_INVENTORY:
+            return m_Inventory.get();
+        case LOC_MOGSAFE:
+            return m_Mogsafe.get();
+        case LOC_STORAGE:
+            return m_Storage.get();
+        case LOC_TEMPITEMS:
+            return m_Tempitems.get();
+        case LOC_MOGLOCKER:
+            return m_Moglocker.get();
+        case LOC_MOGSATCHEL:
+            return m_Mogsatchel.get();
+        case LOC_MOGSACK:
+            return m_Mogsack.get();
+        case LOC_MOGCASE:
+            return m_Mogcase.get();
+        case LOC_WARDROBE:
+            return m_Wardrobe.get();
+        case LOC_MOGSAFE2:
+            return m_Mogsafe2.get();
+        case LOC_WARDROBE2:
+            return m_Wardrobe2.get();
+        case LOC_WARDROBE3:
+            return m_Wardrobe3.get();
+        case LOC_WARDROBE4:
+            return m_Wardrobe4.get();
+        case LOC_WARDROBE5:
+            return m_Wardrobe5.get();
+        case LOC_WARDROBE6:
+            return m_Wardrobe6.get();
+        case LOC_WARDROBE7:
+            return m_Wardrobe7.get();
+        case LOC_WARDROBE8:
+            return m_Wardrobe8.get();
+        case LOC_RECYCLEBIN:
+            return m_RecycleBin.get();
     }
 
-    TPZ_DEBUG_BREAK_IF(LocationID >= MAX_CONTAINER_ID);	// неразрешенный ID хранилища
-    return 0;
+    TPZ_DEBUG_BREAK_IF(LocationID >= MAX_CONTAINER_ID);	// Unresolved storage ID
+    return nullptr;
 }
 
 int8 CCharEntity::getShieldSize()
@@ -917,7 +967,7 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
         //#TODO: revise parameters
         if (PWeaponSkill->isAoE())
         {
-            PAI->TargetFind->findWithinArea(PBattleTarget, AOERADIUS_TARGET, 10);
+            PAI->TargetFind->findWithinArea(PBattleTarget, AOERADIUS_TARGET, PWeaponSkill->getAoeRange());
         }
         else
         {
@@ -2078,6 +2128,12 @@ void CCharEntity::Die()
 
     battleutils::RelinquishClaim(this);
 	
+	// Floor the dying char's enmity
+	if (PLastAttacker && PLastAttacker->objtype == TYPE_MOB)
+	{
+		((CMobEntity*)PLastAttacker)->PEnmityContainer->LowerEnmityByPercent(this, 99, nullptr);
+	}
+	
 	if (this->PPet != nullptr)
 	{
 		if (!this->PPet->isCharmed)
@@ -2099,6 +2155,16 @@ void CCharEntity::Die()
         float retainPercent = std::clamp(map_config.exp_retain + getMod(Mod::EXPERIENCE_RETAINED) / 100.0f, 0.0f, 1.0f);
         charutils::DelExperiencePoints(this, retainPercent, 0);
     }
+	
+	// Tracks the number of deaths the char has suffered
+	if (charutils::GetCharVar(this, "TotalDeaths") == 0)
+	{
+		charutils::SetCharVar(this, "TotalDeaths", 1);
+	}
+	else
+	{
+		charutils::SetCharVar(this, "TotalDeaths", charutils::GetCharVar(this, "TotalDeaths") + 1);
+	}
 	
 	// Resets the !godmode and !minigodmode character variables so they don't have to be toggled
 	if (charutils::GetCharVar(this, "GodMode") == 1 || charutils::GetCharVar(this, "MiniGodMode") == 1)

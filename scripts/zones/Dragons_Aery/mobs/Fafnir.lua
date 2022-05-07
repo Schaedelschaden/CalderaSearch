@@ -17,7 +17,7 @@ function onMobSpawn(mob)
         SetDropRate(918, 3340, 0) -- do not drop cup_of_sweet_tea
     end
 
-    mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
+    mob:setLocalVar("[rage]timer", 1200) -- 20 minutes
 	
 	mob:addMod(tpz.mod.DEF, 600)
 	mob:addMod(tpz.mod.EVA, 400)

@@ -10,9 +10,10 @@ function onEffectGain(target, effect) --power=30 initially, subpower=20 for enmi
     target:addMod(tpz.mod.EVA, -effect:getPower())
     target:addMod(tpz.mod.ENMITY, -effect:getSubPower())
 	
-	augInnin = target:getMod(tpz.mod.AUGMENT_INNIN)
+	local augInnin = target:getMod(tpz.mod.AUGMENT_INNIN)
 	if (augInnin > 0) then
 		target:addMod(tpz.mod.DOUBLE_ATTACK, augInnin)
+		target:setLocalVar("AUG_INNIN", augInnin)
 	end
 end
 
@@ -31,7 +32,8 @@ function onEffectLose(target, effect)
     target:delMod(tpz.mod.EVA, -effect:getPower())
     target:delMod(tpz.mod.ENMITY, -effect:getSubPower())
 	
-	if (augInnin > 0) then
-		target:delMod(tpz.mod.DOUBLE_ATTACK, augInnin)
+	if (target:getLocalVar("AUG_INNIN") > 0) then
+		target:delMod(tpz.mod.DOUBLE_ATTACK, target:getLocalVar("AUG_INNIN"))
+		target:setLocalVar("AUG_INNIN", 0)
 	end
 end

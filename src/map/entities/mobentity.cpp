@@ -859,71 +859,146 @@ void CMobEntity::DropItems(CCharEntity* PChar)
         //THLvl is the number of 'extra chances' at an item. If the item is obtained, then break out.
         int16 maxRolls = 1 + (m_THLvl > 2 ? 2 : m_THLvl);
         int16 bonus = (m_THLvl > 2 ? (m_THLvl - 2) * 10 : 0);
+		
+		// printf("mobentity.cpp DropItems TREASURE HUNTER: [%i]  MAX ROLLS: [%i]  BONUS: [%i]\n", this->m_THLvl, maxRolls, bonus);
+		
+		// if (charutils::GetCharVar(PChar, "AuditTH") == 1)
+		if (GetLocalVar("AuditTH") == 1)
+		{
+			printf("mobentity.cpp DropItems  NAME: [%s]  MOB: [%s]  MAX ROLLS PER ITEM: [%i]  TH BONUS: [%i]\n", PChar->GetName(), GetName(), maxRolls, bonus);
+		}
 
+		// Handles items from the dropType = 1, groupId = # section of mob_droplist
         for (const DropGroup_t& group : DropList->Groups)
         {
+			// Gives multiple chances to roll the group
             for (int16 roll = 0; roll < maxRolls; ++roll)
             {
-                //Determine if this group should drop an item
-                if (group.GroupRate > 0 && tpzrand::GetRandomNumber(1000) < group.GroupRate * map_config.drop_rate_multiplier + bonus)
+				uint16 groupRoll = tpzrand::GetRandomNumber(1000);
+				
+                // Determine if this group should drop an item
+                if (group.GroupRate > 0 && groupRoll < group.GroupRate * map_config.drop_rate_multiplier + bonus)
                 {
                     //Each item in the group is given its own weight range which is the previous value to the previous value + item.DropRate
                     //Such as 2 items with drop rates of 200 and 800 would be 0-199 and 200-999 respectively
                     uint16 previousRateValue = 0;
-                    uint16 itemRoll = tpzrand::GetRandomNumber(1000);
-                    for (const DropItem_t& item : group.Items)
-                    {
-                        if (previousRateValue + item.DropRate > itemRoll)
-                        {
-                            if (AddItemToPool(item.ItemID, ++dropCount))
-                                return;
-                            break;
-                        }
-                        previousRateValue += item.DropRate;
-                    }
-                    break;
+					int8 itemsInGroup = 0;
+					int * itemGroupDropRate;
+					int * itemGroupItemId;
+					
+					// Determine how many items are in the group
+					for (const DropItem_t& item : group.Items)
+					{
+						++itemsInGroup;
+					}
+					
+					// Set up arrays for number of items in group and their item ID's
+					itemGroupDropRate = new int [itemsInGroup];
+					itemGroupItemId = new int [itemsInGroup];
+					
+					// if (charutils::GetCharVar(PChar, "AuditTH") == 1)
+					// if (GetLocalVar("AuditTH") == 1)
+					// {
+						// printf("mobentity.cpp DropItems  ITEMS IN GROUP: [%i]\n", itemsInGroup);
+					// }
+					
+					int8 counter = 0;
+					int16 maxGroupValue = 0;
+					
+					// Assign the items and ID's in group to their arrays
+					for (const DropItem_t& item : group.Items)
+					{
+						previousRateValue += item.DropRate + bonus;
+						maxGroupValue = previousRateValue;
+						itemGroupDropRate[counter] = previousRateValue;
+						itemGroupItemId[counter] = item.ItemID;
+						
+						// if (charutils::GetCharVar(PChar, "AuditTH") == 1)
+						if (GetLocalVar("AuditTH") == 1)
+						{
+							auto PItem = itemutils::GetItem(item.ItemID);
+							printf("mobentity.cpp DropItems  ITEM NAME: [%s]  ITEM %i MAX RANGE: [%i]\n", PItem->getName(), counter, itemGroupDropRate[counter]);
+						}
+						++counter;
+					}
+					
+					uint16 itemRoll = 0;
+					
+					// Handles "overflow" of TH bonus when drop group items have cumulative drop rate over 1000
+					if (maxGroupValue > 1000)
+					{
+						itemRoll = tpzrand::GetRandomNumber(maxGroupValue);
+					}
+					// "Normal" 100% drop chance
+					else
+					{
+						itemRoll = tpzrand::GetRandomNumber(1000);
+					}
+					
+					if (GetLocalVar("FORCE_DROP_RATE") > 0)
+					{
+						itemRoll = GetLocalVar("FORCE_DROP_RATE");
+					}
+					
+					// if (charutils::GetCharVar(PChar, "AuditTH") == 1)
+					if (GetLocalVar("AuditTH") == 1)
+					{
+						printf("mobentity.cpp DropItems  GROUP ROLL: [%i]\n\n", itemRoll);
+					}
+					
+					// Check the random rolled above against the group's individual item drop rates
+					// Add item to treasure pool if random is lower than item's calculated drop rate
+					if (itemRoll < maxGroupValue)
+					{
+						for (int8 findDrop = 0; findDrop < itemsInGroup; ++findDrop)
+						{
+							if (itemRoll <= itemGroupDropRate[findDrop])
+							{
+								AddItemToPool(itemGroupItemId[findDrop], ++dropCount);
+								break;
+							}
+						}
+						
+						break;
+					}
                 }
             }
         }
 
+		// Handles items from the dropType = 0, groupId = 0 section of mob_droplist
         for (const DropItem_t& item : DropList->Items)
         {
             for (int16 roll = 0; roll < maxRolls; ++roll)
             {
-                if (item.DropRate > 0 && tpzrand::GetRandomNumber(1000) < item.DropRate * map_config.drop_rate_multiplier + bonus)
+				uint16 itemRoll = tpzrand::GetRandomNumber(1000);
+				
+				/* if (charutils::GetCharVar(PChar, "AuditTH") == 1) */
+				if (GetLocalVar("AuditTH") == 1)
+				{
+					auto PItem = itemutils::GetItem(item.ItemID);
+					printf("mobentity.cpp DropItems  ITEM NAME: [%s]  RANDOM: [%i]  ITEM DROP RATE: [%i]\n", PItem->getName(), itemRoll, (uint16)(item.DropRate * map_config.drop_rate_multiplier + bonus));
+				}
+				
+                if (item.DropRate > 0 && itemRoll < item.DropRate * map_config.drop_rate_multiplier + bonus)
                 {
                     if (AddItemToPool(item.ItemID, ++dropCount))
+					{
                         return;
+					}
                     break;
                 }
             }
         }
     }
 
-
-
+	// Check for seal/crest drops
     uint16 Pzone = PChar->getZone();
 
     bool validZone = ((Pzone > 0 && Pzone < 39) || (Pzone > 42 && Pzone < 134) || (Pzone > 135 && Pzone < 185) || (Pzone > 188 && Pzone < 255) || (Pzone == 288));
+	bool isNM = m_Type & MOBTYPE_NOTORIOUS;
 
-/* 	uint8 pCharLvl = PChar->GetMLevel();
-	uint8 mLvl = this->GetMLevel();
-	uint8 iLvl = PChar->m_Weapons[SLOT_MAIN]->getILvl();
-	uint8 riLvl = PChar->m_Weapons[SLOT_RANGED]->getILvl();
-
-	if (iLvl > mLvl)
-	{
-		mLvl = iLvl;
-	}
-		
-	if (riLvl > mLvl)
-	{
-		mLvl = riLvl;
-	} */
-
-    if (validZone && charutils::CheckMob(m_HiPCLvl, GetMLevel()) > EMobDifficulty::TooWeak)
+    if (validZone && charutils::CheckMob(m_HiPCLvl, GetMLevel()) > EMobDifficulty::TooWeak && !isNM)
     {
-
         //check for seal drops
         /* MobLvl >= 1 = Beastmen Seals ID=1126
         >= 50 = Kindred Seals ID=1127
@@ -1001,7 +1076,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
         // Wiki's have conflicting info on mob lv required for Geodes. One says 50 the other 75. I think 50 is correct.
 		dropChance = tpzrand::GetRandomNumber(100);
 		uint8 weekDay = (uint8)CVanaTime::getInstance()->getWeekday();
-		auto weatherElement = zoneutils::GetWeatherElement(battleutils::GetWeather((CBattleEntity*)PChar, false));
+		auto weatherElement = zoneutils::GetWeatherElement(battleutils::GetWeather((CBattleEntity*)PChar, true));
 		
 		if (dropChance < 33 && weatherElement > 0)
         {

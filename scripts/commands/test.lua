@@ -14,10 +14,36 @@ require("scripts/globals/msg")
 cmdprops =
 {
     permission = 1,
-    parameters = "i"
+    parameters = ""
 }
 
 function onTrigger(player)
+---------------------------------------------------------------------------------------------------
+
+	local throwingSkill = player:getSkillLevel(tpz.skill.THROWING)
+	local itemLevelSkill = player:getILvlSkill(tpz.slot.AMMO)
+	printf("test.lua onTrigger  THROWING SKILL: [%i]  ITEM LVL: [%i]", throwingSkill, itemLevelSkill)
+
+---------------------------------------------------------------------------------------------------
+-- Test pulling ammo quantity from the core
+	-- local ammoQty = player:getAmmoQuantity()
+	-- printf("test.lua onTrigger  AMMO QTY: [%i]", ammoQty)
+
+---------------------------------------------------------------------------------------------------
+
+-- Test getSkill function
+	-- local testSkill = ((player:getSkillLevel(tpz.skill.WOODWORKING) / 32))
+	-- printf("test.lua onTrigger  SKILL VALUE: [%3.2f]", testSkill)
+
+---------------------------------------------------------------------------------------------------
+
+-- Despawn all mobs in La Vaule [S]
+	-- for i = 17125377, 17125970 do
+		-- GetMobByID(i):setRespawnTime(3600)
+		-- DespawnMob(i)
+		-- SpawnMob(i)
+	-- end
+	
 ---------------------------------------------------------------------------------------------------
 
 -- Test shortening the name of a mob
@@ -281,10 +307,10 @@ function onTrigger(player)
 ---------------------------------------------------------------------------------------------------
 
 -- Get NPC ID
-	local npc = player:getCursorTarget()
-	local pos = npc:getPos()
-	-- printf("test.lua onTrigger NPC ID: [%i]  POS X: [%f]  POS Y: [%f]  POS Z: [%f]", npc:getID(), pos.x, pos.y, pos.z)
-	player:PrintToPlayer(string.format("NPC ID: [%i]  POS X: [%.3f]  POS Y: [%.3f]  POS Z: [%.3f]", npc:getID(), pos.x, pos.y, pos.z),tpz.msg.channel.SYSTEM_3)
+	-- local npc = player:getCursorTarget()
+	-- local pos = npc:getPos()
+	-- -- printf("test.lua onTrigger NPC ID: [%i]  POS X: [%f]  POS Y: [%f]  POS Z: [%f]", npc:getID(), pos.x, pos.y, pos.z)
+	-- player:PrintToPlayer(string.format("NPC ID: [%i]  POS X: [%.3f]  POS Y: [%.3f]  POS Z: [%.3f]", npc:getID(), pos.x, pos.y, pos.z),tpz.msg.channel.SYSTEM_3)
 
 ---------------------------------------------------------------------------------------------------
 

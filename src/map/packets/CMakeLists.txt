@@ -20,6 +20,10 @@ set(SOURCES
     blacklist.h
     campaign_map.cpp
     campaign_map.h
+	caught_fish.cpp
+    caught_fish.h
+    caught_monster.cpp
+    caught_monster.h
     change_music.cpp
     change_music.h
     char.cpp
@@ -32,6 +36,8 @@ set(SOURCES
     char_check.h
     char_emotion.cpp
     char_emotion.h
+	char_emotion_jump.cpp
+	char_emotion_jump.h
     char_equip.cpp
     char_equip.h
     char_health.cpp
@@ -106,6 +112,8 @@ set(SOURCES
     instance_entry.h
     inventory_assign.cpp
     inventory_assign.h
+	inventory_count.cpp
+    inventory_count.h
     inventory_finish.cpp
     inventory_finish.h
     inventory_item.cpp

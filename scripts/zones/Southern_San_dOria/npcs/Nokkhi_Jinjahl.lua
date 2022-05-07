@@ -30,6 +30,7 @@ function onTrade(player, npc, trade)
         {18158, 5333}, -- arrow, sleep
         {17330, 4219}, -- arrow, stone
         {21305, 6201}, -- arrow, tulfaire
+		{21300, 6417}, -- arrow, divine
 
         {21314, 6278}, -- bolt, abrasion
         {21321, 6203}, -- bolt, achiyalabopa

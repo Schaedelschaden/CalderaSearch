@@ -15,10 +15,17 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local duration = calculateDuration(60, caster, target, spell)
-    local maxReflectedDamage = target:getMaxHP() * 2
+    local duration = 60
+	local useComposure = false
+	duration = calculateDuration(duration, caster, target, spell, useComposure)
+    local maxReflectedDamage = 9999 -- target:getMaxHP() * 2 -- May 2021 version update made Reprisal permanent for its entire duration
     local reflectedPercent = 33
     local typeEffect = tpz.effect.REPRISAL
+	
+	-- Priwen (Increases spike damage by 50%)
+	if (caster:getEquipID(tpz.slot.SUB) == 28648) then
+		reflectedPercent = reflectedPercent * (150 / 100)
+	end
 
     if target:addStatusEffect(typeEffect, reflectedPercent, 0, duration, 0, maxReflectedDamage) then
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)

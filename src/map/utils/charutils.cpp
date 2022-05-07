@@ -507,26 +507,27 @@ namespace charutils
             PChar->profile.fame[14] = (uint16)Sql_GetIntData(SqlHandle, 18);  //Adoulin
         }
 
-        fmtQuery =
-            "SELECT "
-            "inventory,"  // 0
-            "safe,"       // 1
-            "locker,"     // 2
-            "satchel,"    // 3
-            "sack,"       // 4
-            "`case`,"     // 5
-            "wardrobe,"     // 6
-            "wardrobe2,"     // 7
-            "wardrobe3,"     // 8
-            "wardrobe4 "     // 9
-            "FROM char_storage "
-            "WHERE charid = %u;";
+        fmtQuery = "SELECT "
+                   "inventory," // 0
+                   "safe,"      // 1
+                   "locker,"    // 2
+                   "satchel,"   // 3
+                   "sack,"      // 4
+                   "`case`,"    // 5
+                   "wardrobe,"  // 6
+                   "wardrobe2," // 7
+                   "wardrobe3," // 8
+                   "wardrobe4," // 9
+                   "wardrobe5," // 10
+                   "wardrobe6," // 11
+                   "wardrobe7," // 12
+                   "wardrobe8 " // 13
+                   "FROM char_storage "
+                   "WHERE charid = %u;";
 
         ret = Sql_Query(SqlHandle, fmtQuery, PChar->id);
 
-        if (ret != SQL_ERROR &&
-            Sql_NumRows(SqlHandle) != 0 &&
-            Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
         {
             PChar->getStorage(LOC_INVENTORY)->AddBuff((uint8)Sql_GetIntData(SqlHandle, 0));
             PChar->getStorage(LOC_MOGSAFE)->AddBuff((uint8)Sql_GetIntData(SqlHandle, 1));
@@ -541,6 +542,11 @@ namespace charutils
             PChar->getStorage(LOC_WARDROBE2)->AddBuff((uint8)Sql_GetIntData(SqlHandle, 7));
             PChar->getStorage(LOC_WARDROBE3)->AddBuff((uint8)Sql_GetIntData(SqlHandle, 8));
             PChar->getStorage(LOC_WARDROBE4)->AddBuff((uint8)Sql_GetIntData(SqlHandle, 9));
+
+            PChar->getStorage(LOC_WARDROBE5)->AddBuff((uint8)Sql_GetIntData(SqlHandle, 10));
+            PChar->getStorage(LOC_WARDROBE6)->AddBuff((uint8)Sql_GetIntData(SqlHandle, 11));
+            PChar->getStorage(LOC_WARDROBE7)->AddBuff((uint8)Sql_GetIntData(SqlHandle, 12));
+            PChar->getStorage(LOC_WARDROBE8)->AddBuff((uint8)Sql_GetIntData(SqlHandle, 13));
         }
 
         fmtQuery = "SELECT face, race, size, head, body, hands, legs, feet, main, sub, ranged "
@@ -964,7 +970,7 @@ namespace charutils
 
         // apply augments
         // loop over each container
-        for (uint8 i = 0; i < MAX_CONTAINER_ID; ++i)
+        for (uint8 i = 0; i < CONTAINER_ID::MAX_CONTAINER_ID; ++i)
         {
             CItemContainer* PItemContainer = PChar->getStorage(i);
 
@@ -1142,7 +1148,7 @@ namespace charutils
 
     /************************************************************************
     *                                                                       *
-    *  Отправляем персонажу весь его инвентарь                              *
+    *  We send the character all its inventory                              *
     *                                                                       *
     ************************************************************************/
 
@@ -1152,7 +1158,9 @@ namespace charutils
         {
             CItemContainer* container = PChar->getStorage(LocationID);
             if (container == nullptr)
+            {
                 return;
+            }
 
             uint8 size = container->GetSize();
             for (uint8 slotID = 0; slotID <= size; ++slotID)
@@ -1163,12 +1171,18 @@ namespace charutils
                     PChar->pushPacket(new CInventoryItemPacket(PItem, LocationID, slotID));
                 }
             }
+			
+			PChar->pushPacket(new CInventoryFinishPacket(LocationID));
         };
 
         //Send important items first
         //Note: it's possible that non-essential inventory items are sent in response to another packet
-        for (auto&& containerID : {LOC_INVENTORY, LOC_TEMPITEMS, LOC_WARDROBE, LOC_WARDROBE2, LOC_WARDROBE3, LOC_WARDROBE4, LOC_MOGSAFE,
-            LOC_STORAGE, LOC_MOGLOCKER, LOC_MOGSATCHEL, LOC_MOGSACK, LOC_MOGCASE, LOC_MOGSAFE2})
+		
+		// TODO: What order are these sent in?
+        for (auto&& containerID : { LOC_INVENTORY, LOC_TEMPITEMS, LOC_WARDROBE, LOC_WARDROBE2, LOC_WARDROBE3, LOC_WARDROBE4,
+                                    LOC_WARDROBE5, LOC_WARDROBE6, LOC_WARDROBE7, LOC_WARDROBE8,
+                                    LOC_MOGSAFE, LOC_STORAGE,
+                                    LOC_MOGLOCKER, LOC_MOGSATCHEL, LOC_MOGSACK, LOC_MOGCASE, LOC_MOGSAFE2 })
         {
             pushContainer(containerID);
         }
@@ -1207,7 +1221,8 @@ namespace charutils
             PChar->pushPacket(new CInventoryAssignPacket(PItem, INV_LINKSHELL));
             PChar->pushPacket(new CLinkshellEquipPacket(PChar, 2));
         }
-        PChar->pushPacket(new CInventoryFinishPacket());
+		
+        PChar->pushPacket(new CInventoryFinishPacket()); // "Finish" type
     }
 
     /************************************************************************
@@ -1324,7 +1339,7 @@ namespace charutils
 
     bool HasItem(CCharEntity* PChar, uint16 ItemID)
     {
-        for (uint8 LocID = 0; LocID < MAX_CONTAINER_ID; ++LocID)
+        for (uint8 LocID = 0; LocID < CONTAINER_ID::MAX_CONTAINER_ID; ++LocID)
         {
             if (PChar->getStorage(LocID)->SearchItem(ItemID) != ERROR_SLOTID)
             {
@@ -4182,6 +4197,14 @@ namespace charutils
             questslist,
             PChar->id);
     }
+	
+	uint8 getQuestStatus(CCharEntity* PChar, uint8 log, uint8 quest)
+    {
+        uint8 current  = PChar->m_questLog[log].current[quest / 8] & (1 << (quest % 8));
+        uint8 complete = PChar->m_questLog[log].complete[quest / 8] & (1 << (quest % 8));
+
+        return (complete != 0 ? 2 : (current != 0 ? 1 : 0));
+    }
 
     /************************************************************************
     *                                                                       *
@@ -4298,28 +4321,25 @@ namespace charutils
         PChar->m_eminenceCache.lastWriteout = static_cast<uint32>(time(nullptr));
     }
 
-    /************************************************************************
-    *                                                                       *
-    *  Cохраняем список колючевых предметов                                 *
-    *                                                                       *
-    ************************************************************************/
-
     void SaveCharInventoryCapacity(CCharEntity* PChar)
     {
-        const char* Query =
-            "UPDATE char_storage "
-            "SET "
-            "inventory = %u,"
-            "safe = %u,"
-            "locker = %u,"
-            "satchel = %u,"
-            "sack = %u, "
-            "`case` = %u, "
-            "wardrobe = %u, "
-            "wardrobe2 = %u, "
-            "wardrobe3 = %u, "
-            "wardrobe4 = %u "
-            "WHERE charid = %u";
+        const char* Query = "UPDATE char_storage "
+                            "SET "
+                            "inventory = %u,"
+                            "safe = %u,"
+                            "locker = %u,"
+                            "satchel = %u,"
+                            "sack = %u, "
+                            "`case` = %u, "
+                            "wardrobe = %u, "
+                            "wardrobe2 = %u, "
+                            "wardrobe3 = %u, "
+                            "wardrobe4 = %u, "
+                            "wardrobe5 = %u, "
+                            "wardrobe6 = %u, "
+                            "wardrobe7 = %u, "
+                            "wardrobe8 = %u "
+                            "WHERE charid = %u";
 
         Sql_Query(SqlHandle, Query,
             PChar->getStorage(LOC_INVENTORY)->GetSize(),
@@ -4332,6 +4352,10 @@ namespace charutils
             PChar->getStorage(LOC_WARDROBE2)->GetSize(),
             PChar->getStorage(LOC_WARDROBE3)->GetSize(),
             PChar->getStorage(LOC_WARDROBE4)->GetSize(),
+            PChar->getStorage(LOC_WARDROBE5)->GetSize(),
+            PChar->getStorage(LOC_WARDROBE6)->GetSize(),
+            PChar->getStorage(LOC_WARDROBE7)->GetSize(),
+            PChar->getStorage(LOC_WARDROBE8)->GetSize(),
             PChar->id);
     }
 
@@ -4942,6 +4966,8 @@ namespace charutils
 
     void SaveDeathTime(CCharEntity* PChar)
     {
+		charutils::SetCharVar(PChar, "TotalDeaths", charutils::GetCharVar(PChar, "TotalDeaths") + 1);
+		
         const char* fmtQuery = "UPDATE char_stats SET death = %u WHERE charid = %u LIMIT 1;";
         Sql_Query(SqlHandle, fmtQuery, PChar->GetSecondsElapsedSinceDeath(), PChar->id);
     }
@@ -5473,12 +5499,30 @@ namespace charutils
 
         int32 ret = Sql_Query(SqlHandle, fmtQuery, value, PChar->id, var);
 
+        // Line exists in database, update line with new information
         if (ret != SQL_ERROR &&
             Sql_NumRows(SqlHandle) != 0 &&
             Sql_NextRow(SqlHandle) == SQL_SUCCESS)
         {
             return Sql_GetIntData(SqlHandle, 0);
         }
+		// Line does not exist in the database, create new line with new information
+		else if (ret != SQL_ERROR &&
+            Sql_NumRows(SqlHandle) == 0 ||
+            Sql_NextRow(SqlHandle) != SQL_SUCCESS)
+		{
+			fmtQuery = "INSERT INTO char_vars(charid, varname, value) VALUES(%u, '%s', %i) \
+						ON DUPLICATE KEY UPDATE charid = charid;";
+			ret = Sql_Query(SqlHandle, fmtQuery, PChar->id, var, value);
+			
+			if (ret != SQL_ERROR &&
+            Sql_NumRows(SqlHandle) != 0 &&
+            Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+			{
+				return Sql_GetIntData(SqlHandle, 0);
+			}
+		}
+		
         return 0;
     }
 

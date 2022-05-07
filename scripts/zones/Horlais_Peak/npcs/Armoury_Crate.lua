@@ -373,81 +373,83 @@ local loot =
             -- {itemid = 65535, droprate = 1000, amount = 1800000}, -- gil
         -- },
         {
-            {itemid = 20852, droprate = 200},  -- Aizkora +1
-            {itemid = 20607, droprate = 200}, -- Anathema Harpe +1
-            {itemid = 20807, droprate = 200},  -- Buramgh +1
-            {itemid = 20697, droprate = 200},  -- Combuster +1
-            {itemid = 20508, droprate = 200},  -- Comeuppnaces +1
+            {itemid = 20852, droprate = 167}, 	-- Aizkora +1
+            {itemid = 20607, droprate = 167},	-- Anathema Harpe +1
+            {itemid = 20807, droprate = 167}, 	-- Buramgh +1
+            {itemid = 20697, droprate = 167}, 	-- Combuster +1
+            {itemid = 20508, droprate = 166}, 	-- Comeuppances +1
+			{itemid = 21165, droprate = 166}, 	-- Ababinili +1
         },
         {
-            {itemid = 20943, droprate = 200},  -- Gae Derg +1
-            {itemid = 20609, droprate = 200},  -- Jugo Kukri +1
-            {itemid = 21035, droprate = 200}, -- Kunimune +1
-            {itemid = 20800, droprate = 200},  -- Mdomo Axe +1
-            {itemid = 21696, droprate = 200}, -- Nullis +1
+            {itemid = 20943, droprate = 167}, 	-- Gae Derg +1
+            {itemid = 20609, droprate = 167}, 	-- Jugo Kukri +1
+            {itemid = 21035, droprate = 167},	-- Kunimune +1
+            {itemid = 20800, droprate = 167},	-- Mdomo Axe +1
+            {itemid = 21696, droprate = 166},	-- Nullis +1
+			{itemid = 22058, droprate = 166},	-- Contemplator +1
         },
         {
-            {itemid = 26715, droprate = 145},   -- Adorned Helm +1
-            {itemid = 26787, droprate = 145}, -- Alhazen Hat +1
-            {itemid = 25602, droprate = 145},    -- Blistering Sallet +1
-            {itemid = 26785, droprate = 145},   -- Hike Khat +1
-            {itemid = 26710, droprate = 145},   -- Imperial Wing Hairpin +1
-            {itemid = 25636, droprate = 130},   -- Loess Barabuta +1
-            {itemid = 26732, droprate = 145},   -- Stinger Helm +1
+            {itemid = 26715, droprate = 145},	-- Adorned Helm +1
+            {itemid = 26787, droprate = 145},	-- Alhazen Hat +1
+            {itemid = 25602, droprate = 145},	-- Blistering Sallet +1
+            {itemid = 26785, droprate = 145},	-- Hike Khat +1
+            {itemid = 26710, droprate = 145},	-- Imperial Wing Hairpin +1
+            {itemid = 25636, droprate = 130},	-- Loess Barabuta +1
+            {itemid = 26732, droprate = 145},	-- Stinger Helm +1
         },
         {
-            {itemid = 27107, droprate = 145},   -- Asteria Mitts +1
-            {itemid = 27151, droprate = 145}, -- Gazu Bracelets +1
-            {itemid = 27051, droprate = 145},    -- Kachimusha Kote +1
-            {itemid = 27109, droprate = 145},   -- Lamassu Mitts +1
-            {itemid = 27996, droprate = 145},   -- Shigure Tekko +1
-            {itemid = 27994, droprate = 130},   -- Macabre Gauntlets +1
-            {itemid = 27149, droprate = 145},   -- Tatenashi Gate +1
+            {itemid = 27107, droprate = 145},	-- Asteria Mitts +1
+            {itemid = 27151, droprate = 145},	-- Gazu Bracelets +1
+            {itemid = 27051, droprate = 145},	-- Kachimusha Kote +1
+            {itemid = 27109, droprate = 145},	-- Lamassu Mitts +1
+            {itemid = 27996, droprate = 145},	-- Shigure Tekko +1
+            {itemid = 27994, droprate = 130},	-- Macabre Gauntlets +1
+            {itemid = 27149, droprate = 145},	-- Tatenashi Gate +1
         },
 		{
-            {itemid = 3341, droprate = 1000}, -- Beastly Shank
+            {itemid = 3341, droprate = 1000},	-- Beastly Shank
         },
         {
-            {itemid = 4069, droprate = 150},   -- Rem Chapt 6
-            {itemid = 4070, droprate = 150},   -- Rem Chapt 7
-            {itemid = 4071, droprate = 150},   -- Rem Chapt 8
-            {itemid = 4072, droprate = 150},   -- Rem Chapt 9
-            {itemid = 4073, droprate = 150},   -- Rem Chapt 10
-			{itemid =    0, droprate = 250},   -- Nothing
+            {itemid = 4069, droprate = 150},	-- Rem Chapt 6
+            {itemid = 4070, droprate = 150},	-- Rem Chapt 7
+            {itemid = 4071, droprate = 150},	-- Rem Chapt 8
+            {itemid = 4072, droprate = 150},	-- Rem Chapt 9
+            {itemid = 4073, droprate = 150},	-- Rem Chapt 10
+			{itemid =    0, droprate = 250},	-- Nothing
         },
         {
-            {itemid = 4069, droprate = 150},   -- Rem Chapt 6
-            {itemid = 4070, droprate = 150},   -- Rem Chapt 7
-            {itemid = 4071, droprate = 150},   -- Rem Chapt 8
-            {itemid = 4072, droprate = 150},   -- Rem Chapt 9
-            {itemid = 4073, droprate = 150},   -- Rem Chapt 10
-			{itemid =    0, droprate = 250},   -- Nothing
+            {itemid = 4069, droprate = 150},	-- Rem Chapt 6
+            {itemid = 4070, droprate = 150},	-- Rem Chapt 7
+            {itemid = 4071, droprate = 150},	-- Rem Chapt 8
+            {itemid = 4072, droprate = 150},	-- Rem Chapt 9
+            {itemid = 4073, droprate = 150},	-- Rem Chapt 10
+			{itemid =    0, droprate = 250},	-- Nothing
         },
         {
-            {itemid = 8732, droprate = 1000},  -- Kupon I S-3
+            {itemid = 8732, droprate = 1000},	-- Kupon I S-3
         },
         {
-            {itemid = 8747, droprate = 111},  -- Ra'Kaznar Ore
-			{itemid = 4077, droprate = 111},  -- Moonbow Steel
-			{itemid = 4079, droprate = 111},  -- Moonbow Leather
-			{itemid = 4080, droprate = 111},  -- Moonbow Urushi
-			{itemid = 4081, droprate = 111},  -- Moonbow Stone
-			{itemid = 4078, droprate = 111},  -- Moonbow CLoth
-			{itemid = 9251, droprate = 111},  -- Khoma Thread
-			{itemid = 9255, droprate = 111},  -- Cyan Coral
-			{itemid = 4082, droprate = 112},  -- Moonlight Coral
+            {itemid = 8747, droprate = 111},	-- Ra'Kaznar Ore
+			{itemid = 4077, droprate = 111},	-- Moonbow Steel
+			{itemid = 4079, droprate = 111},	-- Moonbow Leather
+			{itemid = 4080, droprate = 111},	-- Moonbow Urushi
+			{itemid = 4081, droprate = 111},	-- Moonbow Stone
+			{itemid = 4078, droprate = 111},	-- Moonbow CLoth
+			{itemid = 9251, droprate = 111},	-- Khoma Thread
+			{itemid = 9255, droprate = 111},	-- Cyan Coral
+			{itemid = 4082, droprate = 112},	-- Moonlight Coral
 			
         },
         {
-            {itemid = 8747, droprate = 111},  -- Ra'Kaznar Ore
-			{itemid = 4077, droprate = 111},  -- Moonbow Steel
-			{itemid = 4079, droprate = 111},  -- Moonbow Leather
-			{itemid = 4080, droprate = 111},  -- Moonbow Urushi
-			{itemid = 4081, droprate = 111},  -- Moonbow Stone
-			{itemid = 4078, droprate = 111},  -- Moonbow CLoth
-			{itemid = 9251, droprate = 111},  -- Khoma Thread
-			{itemid = 9255, droprate = 111},  -- Cyan Coral
-			{itemid = 4082, droprate = 112},  -- Moonlight Coral
+            {itemid = 8747, droprate = 111},	-- Ra'Kaznar Ore
+			{itemid = 4077, droprate = 111},	-- Moonbow Steel
+			{itemid = 4079, droprate = 111},	-- Moonbow Leather
+			{itemid = 4080, droprate = 111},	-- Moonbow Urushi
+			{itemid = 4081, droprate = 111},	-- Moonbow Stone
+			{itemid = 4078, droprate = 111},	-- Moonbow CLoth
+			{itemid = 9251, droprate = 111},	-- Khoma Thread
+			{itemid = 9255, droprate = 111},	-- Cyan Coral
+			{itemid = 4082, droprate = 112},	-- Moonlight Coral
 			
         },
     },

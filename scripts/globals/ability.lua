@@ -902,3 +902,44 @@ function takeAbilityDamage(defender, attacker, params, primary, finaldmg, attack
 
     return finaldmg
 end
+
+function abilityReduceAllianceEnmity(player, target)
+	if (player:getObjType() == tpz.objType.PC or player:getObjType() == tpz.objType.TRUST) then
+		local enmityBonus = utils.clamp(player:getMod(tpz.mod.ENMITY) + player:getMerit(tpz.merit.ENMITY_INCREASE) + player:getMerit(tpz.merit.ENMITY_DECREASE), 0, 200)
+		local enmityList = target:getEnmityList()
+		local enmityListName = {}
+		local targ
+		local currentCE
+		local removeEnmity = true
+
+		for i, v in ipairs(enmityList) do
+			local reduceCE = 50 * (1 + (enmityBonus / 100))
+			enmityListName[i] = v.entity:getName()
+			
+			if (v.entity:isPC()) then
+				targ = GetPlayerByName(enmityListName[i])
+			else
+				targ = v.entity
+			end
+			
+			currentCE = target:getCE(targ)
+			
+			if (currentCE >= 29501) then
+				reduceCE = reduceCE * 5
+			end
+			
+			if (currentCE < reduceCE) then
+				reduceCE = currentCE - 1
+			end
+			
+			if (targ:getMainJob() == tpz.job.PLD or targ:getMainJob() == tpz.job.RUN or targ:getMainJob() == tpz.job.NIN) then
+				removeEnmity = false
+			end
+
+			if (targ:getName() ~= player:getName() and removeEnmity == true) then
+				-- printf("ability.lua abilityReduceAllianceEnmity [%s] REDUCING [%s's] ENMITY BY [%i] FROM [%i] TO [%i]", player:getName(), targ:getName(), reduceCE, target:getCE(targ), target:getCE(targ) - reduceCE)
+				target:setCE(targ, target:getCE(targ) - reduceCE)
+			end
+		end
+	end
+end

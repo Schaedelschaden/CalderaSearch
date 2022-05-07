@@ -1013,20 +1013,26 @@ void SmallPacket0x01C(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x028(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x028(map_session_data_t* PSession, CCharEntity* PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     int32  quantity = data.ref<uint8>(0x04);
     uint8 container = data.ref<uint8>(0x08);
     uint8    slotID = data.ref<uint8>(0x09);
+	
+	CItem* PItem = PChar->getStorage(container)->GetItem(slotID);
+    if (PItem == nullptr)
+    {
+        return;
+    }
+	
+	uint16 ItemID = PItem->getID();
 
-    if (container >= MAX_CONTAINER_ID)
+    if (container >= CONTAINER_ID::MAX_CONTAINER_ID)
     {
         ShowExploit(CL_YELLOW "SmallPacket0x028: Invalid container ID passed to packet %u by %s\n" CL_RESET, container, PChar->GetName());
         return;
     }
-
-    CItem* PItem = PChar->getStorage(container)->GetItem(slotID);
 
     if (PItem != nullptr && !PItem->isSubType(ITEM_LOCKED))
     {
@@ -1072,8 +1078,8 @@ void SmallPacket0x029(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     uint8  FromSlotID = data.ref<uint8>(0x0A);
     uint8  ToSlotID = data.ref<uint8>(0x0B);
 
-    if (ToLocationID >= MAX_CONTAINER_ID ||
-        FromLocationID >= MAX_CONTAINER_ID)
+    if (ToLocationID >= CONTAINER_ID::MAX_CONTAINER_ID ||
+        FromLocationID >= CONTAINER_ID::MAX_CONTAINER_ID)
         return;
 
     CItem* PItem = PChar->getStorage(FromLocationID)->GetItem(FromSlotID);
@@ -1480,7 +1486,7 @@ void SmallPacket0x037(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     uint8  SlotID = data.ref<uint8>(0x0E);
     uint8  StorageID = data.ref<uint8>(0x10);
 
-    if (StorageID >= MAX_CONTAINER_ID)
+    if (StorageID >= CONTAINER_ID::MAX_CONTAINER_ID)
     {
         ShowExploit(CL_YELLOW "SmallPacket0x037: Invalid storage ID passed to packet %u by %s\n" CL_RESET, StorageID, PChar->GetName());
         return;
@@ -1507,7 +1513,7 @@ void SmallPacket0x03A(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
     uint8 container = data.ref<uint8>(0x04);
 
-    if (container >= MAX_CONTAINER_ID)
+    if (container >= CONTAINER_ID::MAX_CONTAINER_ID)
     {
         ShowExploit(CL_YELLOW "SmallPacket0x03A: Invalid container ID passed to packet %u by %s\n" CL_RESET, container, PChar->GetName());
         return;
@@ -2680,7 +2686,7 @@ void SmallPacket0x04E(map_session_data_t* session, CCharEntity* PChar, CBasicPac
             {
                 if (PItem->getFlag() & ITEM_FLAG_RARE)
                 {
-                    for (uint8 LocID = 0; LocID < MAX_CONTAINER_ID; ++LocID)
+                    for (uint8 LocID = 0; LocID < CONTAINER_ID::MAX_CONTAINER_ID; ++LocID)
                     {
                         if (PChar->getStorage(LocID)->SearchItem(itemid) != ERROR_SLOTID)
                         {
@@ -2784,11 +2790,13 @@ void SmallPacket0x050(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     if (PChar->status != STATUS_NORMAL)
         return;
 
-    uint8 slotID = data.ref<uint8>(0x04);        // inventory slot
-    uint8 equipSlotID = data.ref<uint8>(0x05);        // charequip slot
-    uint8 containerID = data.ref<uint8>(0x06);     // container id
+    uint8 slotID      = data.ref<uint8>(0x04); // inventory slot
+    uint8 equipSlotID = data.ref<uint8>(0x05); // charequip slot
+    uint8 containerID = data.ref<uint8>(0x06); // container id
 
-    if (containerID != LOC_INVENTORY && containerID != LOC_WARDROBE && containerID != LOC_WARDROBE2 && containerID != LOC_WARDROBE3 && containerID != LOC_WARDROBE4)
+    if (containerID != LOC_INVENTORY && containerID != LOC_WARDROBE && containerID != LOC_WARDROBE2 && containerID != LOC_WARDROBE3 &&
+	    containerID != LOC_WARDROBE4 && containerID != LOC_WARDROBE5 && containerID != LOC_WARDROBE6 &&  containerID != LOC_WARDROBE7 &&
+		containerID != LOC_WARDROBE8)
     {
         if (equipSlotID != 16 && equipSlotID != 17)
             return;
@@ -2803,6 +2811,7 @@ void SmallPacket0x050(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     PChar->UpdateHealth();
     return;
 }
+
 /************************************************************************
 *                                                                       *
 *  Equip Macro Set                                                      *
@@ -2817,21 +2826,25 @@ void SmallPacket0x051(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
     for (uint8 i = 0; i < data.ref<uint8>(0x04); i++)
     {
-        uint8 slotID = data.ref<uint8>(0x08 + (0x04 * i));        // inventory slot
-        uint8 equipSlotID = data.ref<uint8>(0x09 + (0x04 * i));        // charequip slot
-        uint8 containerID = data.ref<uint8>(0x0A + (0x04 * i));     // container id
-        if (containerID == LOC_INVENTORY || containerID == LOC_WARDROBE || containerID == LOC_WARDROBE2 || containerID == LOC_WARDROBE3 || containerID == LOC_WARDROBE4)
+        uint8 slotID      = data.ref<uint8>(0x08 + (0x04 * i)); // inventory slot
+        uint8 equipSlotID = data.ref<uint8>(0x09 + (0x04 * i)); // charequip slot
+        uint8 containerID = data.ref<uint8>(0x0A + (0x04 * i)); // container id
+		
+        if (containerID == LOC_INVENTORY || containerID == LOC_WARDROBE || containerID == LOC_WARDROBE2 || containerID == LOC_WARDROBE3 ||
+            containerID == LOC_WARDROBE4 || containerID == LOC_WARDROBE5 || containerID == LOC_WARDROBE6 || containerID == LOC_WARDROBE7 ||
+            containerID == LOC_WARDROBE8)
         {
             charutils::EquipItem(PChar, slotID, equipSlotID, containerID);
         }
-
     }
+	
     charutils::SaveCharEquip(PChar);
     charutils::SaveCharLook(PChar);
     luautils::CheckForGearSet(PChar); // check for gear set on gear change
     PChar->UpdateHealth();
     return;
 }
+
 /************************************************************************
 *                                                                        *
 *  Add Equipment to set                                                 *
@@ -3329,20 +3342,7 @@ void SmallPacket0x064(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 void SmallPacket0x066(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
     TracyZoneScoped;
-    //PrintPacket(data);
-
-    //uint32 charid = data.ref<uint32>(0x04);
-    uint16 stamina = data.ref<uint16>(0x08);
-    //uint16 ukn1 = data.ref<uint16>(0x0A); // Seems to always be zero with basic fishing, skill not high enough to test legendary fish.
-    //uint16 targetid = data.ref<uint16>(0x0C);
-    uint8  action = data.ref<uint8>(0x0E);
-    //uint8 ukn2 = data.ref<uint8>(0x0F);
-    uint32 special = data.ref<uint32>(0x10);
-
-    if ((FISHACTION)action != FISHACTION_FINISH || PChar->animation == ANIMATION_FISHING_FISH)
-        fishingutils::FishingAction(PChar, (FISHACTION)action, stamina, special);
-
-    return;
+    fishingutils::HandleFishingAction(PChar, data);
 }
 
 /************************************************************************
@@ -6538,20 +6538,7 @@ void SmallPacket0x10F(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 void SmallPacket0x110(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
     TracyZoneScoped;
-    //PrintPacket(data);
-    if (PChar->animation != ANIMATION_FISHING_START)
-        return;
-
-    //uint32 charid = data.ref<uint32>(0x04);
-    uint16 stamina = data.ref<uint16>(0x08);
-    //uint16 ukn1 = data.ref<uint16>(0x0A); // Seems to always be zero with basic fishing, skill not high enough to test legendary fish.
-    //uint16 targetid = data.ref<uint16>(0x0C);
-    uint8 action = data.ref<uint8>(0x0E);
-    //uint8 ukn2 = data.ref<uint8>(0x0F);
-    uint32 special = data.ref<uint32>(0x10);
-    fishingutils::FishingAction(PChar, (FISHACTION)action, stamina, special);
-
-    return;
+    fishingutils::HandleFishingAction(PChar, data);
 }
 
 /************************************************************************

@@ -28,10 +28,18 @@ function onTrigger(player, npc)
 	
 	local stock =
     {
+		1641, 15000, 	-- Fire Anima
+		1642, 15000, 	-- Ice Anima
+		1643, 15000, 	-- Wind Anima
+		1644, 15000, 	-- Earth Anima
+		1645, 15000, 	-- Lightning Anima
+		1646, 15000, 	-- Water Anima
+		1647, 15000, 	-- Light Anima
+		1648, 15000, 	-- Dark Anima
 		1265, 6000,		-- Four-Leaf Korrigan Bud
 		921, 45,		-- Bottle of Ahriman Tears
 		935, 1032,		-- Ahriman Wing
-		957, 90,		-- Amaryllis
+		-- 957, 90,		-- Amaryllis
 		2361, 2250,		-- Ameretat Vine
 		2752, 3300,		-- Amphiptere Whisker
 		937, 90,		-- Block of Animal Glue
@@ -54,7 +62,7 @@ function onTrigger(player, npc)
 		4246, 8745,		-- Bottle of Cantarella
 		2464, 291,		-- Bottle of Carbon Dioxide
 		932, 582,		-- Loop of Carbon Fiber
-		948, 45,		-- Carnation
+		-- 948, 45,		-- Carnation
 		1120, 900,		-- Casablanca
 		2792, 75,		-- Flasque of Catalytic Oil
 		1413, 900,		-- Cattleya
@@ -63,7 +71,7 @@ function onTrigger(player, npc)
 		1630, 933,		-- Pinch of Cluster Ash
 		927, 630,		-- Coeurl Whisker
 		946, 1269,		-- Pinch of Crystal Dust
-		959, 90,		-- Dahlia
+		-- 959, 90,		-- Dahlia
 		2365, 1002,		-- Vial of Demon Blood
 		1892, 75,		-- Onz of Desalinator
 		2549, 2310,		-- Pinch of Djinn Ash
@@ -98,7 +106,7 @@ function onTrigger(player, npc)
 		2362, 186,		-- Chunk of High Ebonite
 		2309, 771,		-- Bundle of Homunculus Nerves
 		4075, 40425,	-- Hope Crystal
-		2729, 75,		-- Hydrangea
+		-- 2729, 75,		-- Hydrangea
 		2290, 3501,		-- Chunk of Imperial Cermet
 		2840, 0,		-- Imperial Topaz
 		2163, 48,		-- Imp Wing

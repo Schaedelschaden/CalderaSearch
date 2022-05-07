@@ -9,10 +9,10 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-	if (mob:AnimationSub() == 1) then
+	if (mob:AnimationSub() == 1 and mob:actionQueueEmpty() == true) then
 		return 0
 	else
-		mob:useMobAbility(2172)
+		-- mob:useMobAbility(2172)
 		return 1
 	end
 end

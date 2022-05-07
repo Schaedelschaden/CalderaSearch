@@ -23,7 +23,7 @@ function onMobSkillCheck(target, mob, skill)
         end
     end
 
-    if (mob:AnimationSub() == 0) then
+    if (mob:AnimationSub() <= 1 and mob:getLocalVar("Bulwark") == 0) then
         return 0
     else
         return 1
@@ -38,6 +38,9 @@ function onMobWeaponSkill(target, mob, skill)
     if (mob:getFamily() == 313) then -- Tinnin follows this up immediately with Nerve Gas
         mob:useMobAbility(1580)
     end
+	
+	mob:setLocalVar("Bulwark", 1)
+	mob:setLocalVar("BulwarkTime", os.time())
 
     return tpz.effect.MAGIC_SHIELD
 end

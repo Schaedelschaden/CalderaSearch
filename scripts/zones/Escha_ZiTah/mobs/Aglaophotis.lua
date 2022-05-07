@@ -15,7 +15,7 @@ function onMobSpawn(mob) -- When mob spawns (either forced or time)
     mob:setMod(tpz.mod.SLOWRES, 50) -- Resistance to Slow
 	-- mob:setMod(tpz.mod.ATT, 1200) -- Attack Stat (Compare to DEF)
 	-- mob:setMod(tpz.mod.MATT, 450) -- Magic Attack (Compare to MDEF)
-    -- mob:setMod(tpz.mod.ACC, 1050) -- Accuracy (compare to EVA)
+    mob:addMod(tpz.mod.ACC, -30) -- Accuracy (compare to EVA)
 	-- mob:setMod(tpz.mod.MACC, 800) -- Magic ACC (Compare to MEVA)
 	-- mob:setMod(tpz.mod.EVA, 800) -- Evasion (Compare to ACC)
 	-- mob:setMod(tpz.mod.DEF, 480) -- Defense (Compart to ATT)

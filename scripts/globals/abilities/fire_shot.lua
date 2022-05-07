@@ -11,23 +11,22 @@ require("scripts/globals/status")
 function onAbilityCheck(player, target, ability)
     --ranged weapon/ammo: You do not have an appropriate ranged weapon equipped.
     --no card: <name> cannot perform that action.
-    if player:getWeaponSkillType(tpz.slot.RANGED) ~= tpz.skill.MARKSMANSHIP or player:getWeaponSkillType(tpz.slot.AMMO) ~= tpz.skill.MARKSMANSHIP then
-        return 216, 0
-    end
+    -- if player:getWeaponSkillType(tpz.slot.RANGED) ~= tpz.skill.MARKSMANSHIP or player:getWeaponSkillType(tpz.slot.AMMO) ~= tpz.skill.MARKSMANSHIP then
+        -- return 216, 0
+    -- end
 	
-    if player:hasItem(2176, 0) or player:hasItem(2974, 0) then
+    -- if player:hasItem(2176, 0) or player:hasItem(2974, 0) then
         return 0, 0
-    else
-        return 71, 0
-    end
-	
+    -- else
+        -- return 71, 0
+    -- end
 end
 
 function onUseAbility(player, target, ability, action)
     local params = {}
 		params.includemab = true
 		
-    local dmg = (2 * (player:getRangedDmg() + player:getAmmoDmg()) + player:getMod(tpz.mod.QUICK_DRAW_DMG)) * (1 + player:getMod(tpz.mod.QUICK_DRAW_DMG_PERCENT) / 100)
+    local dmg = ((2 * player:getRangedDmg()) + player:getMod(tpz.mod.QUICK_DRAW_DMG)) * (1 + player:getMod(tpz.mod.QUICK_DRAW_DMG_PERCENT) / 100)
     
 	dmg  = addBonusesAbility(player, tpz.magic.ele.FIRE, target, dmg, params)
     

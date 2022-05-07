@@ -16,7 +16,7 @@ function onInitialize(zone)
     zone:registerRegion(1, -462, -4, -420, -455, -1, -392) -- approach the Cutter
 	
 	-- Medusa's spawn ???
-	GetNPCByID(16999024):setPos(-451.252, -18.141, 451.976, 0)
+	GetNPCByID(16999026):setPos(-451.252, -18.141, 451.976, 0)
 end
 
 function onZoneIn(player, prevZone)

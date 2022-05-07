@@ -20,20 +20,21 @@
 */
 
 #include "../common/showmsg.h"
+// #include "../common/logging.h"
 
-#include "utils/guildutils.h"
-#include "utils/instanceutils.h"
+#include "conquest_system.h"
+#include "daily_system.h"
+#include "entities/charentity.h"
+#include "latent_effect_container.h"
+#include "lua/luautils.h"
 #include "roe.h"
 #include "time_server.h"
 #include "timetriggers.h"
 #include "transport.h"
-#include "vana_time.h"
+#include "utils/guildutils.h"
+#include "utils/instanceutils.h"
 #include "utils/zoneutils.h"
-#include "conquest_system.h"
-#include "lua/luautils.h"
-#include "entities/charentity.h"
-#include "latent_effect_container.h"
-#include "daily_system.h"
+#include "vana_time.h"
 
 int32 time_server(time_point tick, CTaskMgr::CTask* PTask)
 {
@@ -146,6 +147,7 @@ int32 time_server(time_point tick, CTaskMgr::CTask* PTask)
 				});
 			});
         }
+		fishingutils::RestockFishingAreas();
     }
 
     CTriggerHandler::getInstance()->triggerTimer();

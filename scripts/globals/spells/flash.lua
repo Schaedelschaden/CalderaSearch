@@ -26,7 +26,7 @@ function onSpellCast(caster,target,spell)
     local duration = 12 * resist
 
     if (resist > 0.0625) then
-        if (target:addStatusEffect(tpz.effect.FLASH, 800, 0, duration)) then
+        if (target:addStatusEffect(tpz.effect.FLASH, 200, 0, duration)) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
@@ -39,34 +39,7 @@ function onSpellCast(caster,target,spell)
 		caster:delStatusEffect(tpz.effect.DIVINE_EMBLEM)
 	end
 	
-	if (caster:getObjType() == tpz.objType.PC or caster:getObjType() == tpz.objType.TRUST) then
-		local enmityList = target:getEnmityList()
-		local targName = {}
-		local targ
-		local currentCE
-
-		for i, v in ipairs(enmityList) do
-			local reduceCE = 26	
-			targName[i] = v.entity:getName()
-			
-			if (v.entity:isPC()) then
-				targ = GetPlayerByName(targName[i])
-			else
-				targ = v.entity
-			end
-			
-			currentCE = target:getCE(targ)
-			
-			if (currentCE < 26) then
-				reduceCE = currentCE - 1
-			end
-
-			if (targ:getName() ~= caster:getName()) then
-				-- printf("flash.lua onSpellCast [%s] REDUCING [%s's] ENMITY BY [%i] FROM [%i] TO [%i]", caster:getName(), targ:getName(), reduceCE, target:getCE(targ), target:getCE(targ) - reduceCE)
-				target:setCE(targ, target:getCE(targ) - reduceCE)
-			end
-		end
-	end
+	magicReduceAllianceEnmity(caster, target)
 	
     return tpz.effect.FLASH
 end

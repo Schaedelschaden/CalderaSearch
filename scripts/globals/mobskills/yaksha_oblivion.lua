@@ -11,7 +11,7 @@ require("scripts/globals/monstertpmoves")
 
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
-    if (mob:AnimationSub() == 1 and mob:getHPP() < 50) then
+    if (mob:AnimationSub() == 1 and mob:getHPP() < 50 and mob:getLocalVar("Stance") == 0) then
         return 0
 	else
 		return 1
@@ -40,6 +40,7 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 4
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 2, 3)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, MOBPARAM_3_SHADOW)
+	mob:setLocalVar("Stance", 1)
 	
     return dmg
 end

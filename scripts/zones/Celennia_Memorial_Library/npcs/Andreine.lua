@@ -1412,7 +1412,8 @@ function onTrigger(player,npc)
 					10720,	50000,		-- (Legs) Scout's Braccae +2
 					10740,	50000,		-- (Feet) Scout's Socks +2
 					-- 25477,	50000,		-- (Neck) Scout's Gorget
-					26337,	50000,		-- (Waist) Kwahu Kachina Belt
+					11735,  50000,		-- (Waist) Impulse Belt
+					--26337,	50000,		-- (Waist) Kwahu Kachina Belt
 					11006,	50000,		-- (Back) Thall Mantle
 					11046,	50000,		-- (Earring) Ouesk Pearl
 					28513,	50000,		-- (Earring) Phawaylla Earring

@@ -7,6 +7,7 @@
 -----------------------------------
 require("scripts/globals/status")
 require("scripts/globals/msg")
+require("scripts/globals/utils")
 -----------------------------------
 
 function cutEmpathyEffectTable(validEffects,i,maxCount)
@@ -55,7 +56,7 @@ function onUseAbility(player,target,ability)
     local pet = player:getPet()
     local healPet = ((drainamount + player:getStat(tpz.mod.MND) + (pet:getMainLvl() * 0.7)) * 2) * (1 + (player:getMod(tpz.mod.SPIRIT_LINK_POTENCY) / 100))
     local petTP = pet:getTP()
-    local regenAmount = player:getMainLvl() / 3 -- level / 3 per tick regen
+    local regenAmount = (player:getMainLvl() + player:getItemLevel()) / 3 -- level / 3 per tick regen
 	
 	-- Damage the triggering player
 	if (player:getMod(tpz.mod.SPIRIT_LINK_HP_COST) > 0) then
@@ -118,6 +119,7 @@ function onUseAbility(player,target,ability)
     -- Empathy status effect copying
     local empathyTotal = player:getMerit(tpz.merit.EMPATHY)
     if empathyTotal > 0 then
+		-- Copies status effects to wyvern
         local effects = player:getStatusEffects()
         local validEffects = { }
         local i = 0 -- highest existing index
@@ -146,6 +148,34 @@ function onUseAbility(player,target,ability)
             pet:addStatusEffect(copyEffect:getType(), copyEffect:getPower(), copyEffect:getTick(), math.ceil((copyEffect:getTimeRemaining()) / 1000)) -- id,power,tick,duration(convert ms to s)
             copyi = copyi + 1
         end
+		
+		-- Increases wyverns level
+		local prev_exp = pet:getLocalVar("wyvern_exp")
+		-- Caps exp at 1000 to prevent wyvern leveling up too many times
+		local exp = utils.clamp(200 * player:getMerit(tpz.merit.EMPATHY), 0, 1000)
+		local currentExp = exp
+		
+		if (prev_exp + exp > 1000) then
+			currentExp = 1000 - prev_exp
+		end
+		
+		local diff = math.floor((prev_exp + currentExp) / 200) - math.floor(prev_exp / 200)
+		
+		if diff ~= 0 then
+			-- wyvern leveled up (diff is the number of level ups)
+			pet:addMod(tpz.mod.ACC, 6 * diff)
+			pet:addMod(tpz.mod.HPP, 6 * diff)
+			pet:addMod(tpz.mod.ATTP, 5 * diff)
+			pet:setHP(pet:getMaxHP())
+			player:messageBasic(tpz.msg.basic.STATUS_INCREASED, 0, 0, pet)
+			player:addMod(tpz.mod.ATTP, 4 * diff)
+			player:addMod(tpz.mod.DEFP, 4 * diff)
+			player:addMod(tpz.mod.HASTE_ABILITY, 200 * diff)
+			player:addMod(tpz.mod.ALL_WSDMG_ALL_HITS, 2 * diff)
+		end
+		
+		pet:setLocalVar("wyvern_exp", prev_exp + exp)
+		pet:setLocalVar("level_Ups", pet:getLocalVar("level_Ups") + diff)
     end
 
     pet:addHP(healPet) --add the hp to pet

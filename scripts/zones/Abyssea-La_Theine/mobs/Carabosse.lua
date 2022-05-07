@@ -7,7 +7,7 @@ function onMobSpawn(mob)
 	mob:setMobMod(tpz.mobMod.SKILL_LIST, 0)
 	mob:setSpellList(0)
 	mob:setMod(tpz.mod.REGEN, 100)
-	mob:setMod(tpz.mod.REFRESH, 50)
+	mob:setMod(tpz.mod.REFRESH, 10)
 	mob:setLocalVar("2hrHPP", math.random(10, 30))
 end
 
@@ -27,7 +27,8 @@ function onMobFight(mob)
 		local castDelay = mob:getLocalVar("CastDelay")
 		local pickSeason = math.random(#season)
 		
-		if (os.time() - mob:getLocalVar("SeasonChangeTime") >= 60 or (hpp <= mob:getLocalVar("SeasonChangeHPP") and mob:getLocalVar("SeasonChangeHPP") > 10)) then
+		if ((hpp > 10 and os.time() - mob:getLocalVar("SeasonChangeTime") >= 60) or (hpp > 10 and hpp <= mob:getLocalVar("SeasonChangeHPP") and mob:getLocalVar("SeasonChangeHPP") > 10)) then
+			-- printf("Carabosse.lua onMobFight CHANGE SEASON  SEASON CHANGE TIME: [%s]  SEASON CHANGE HPP: [%i]", mob:getLocalVar("SeasonChangeTime"), mob:getLocalVar("SeasonChangeHPP"))
 			if (pickSeason == 1) then    -- RDM
 				mob:setLocalVar("CurrentSeason", 1)
 				mob:setLocalVar("CastDelay", 19)
@@ -66,8 +67,9 @@ function onMobFight(mob)
 			local currentTP = mob:getTP()
 			mob:useMobAbility(season[pickSeason])
 			mob:setTP(currentTP)
-		elseif (mob:getLocalVar("SeasonChangeHPP") <= 10) then
-			
+		elseif (hpp <= 10) then
+			mob:setLocalVar("SeasonChangeTime", 1999999999)
+			mob:setLocalVar("SeasonChangeHPP", 11)
 		end
 		
 		-- Use mob skills

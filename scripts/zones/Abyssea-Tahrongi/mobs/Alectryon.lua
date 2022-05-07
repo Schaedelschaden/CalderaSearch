@@ -27,8 +27,8 @@ function onMobFight(mob, target)
 	
 	for i, v in ipairs(allianceList) do
 		if (v:isPC()) then
-			PlayerName[i] = v.entity:getName()
-			local targ = GetPlayerByName(PlayerName[i])
+			playerName[i] = v:getName()
+			local targ = GetPlayerByName(playerName[i])
 			
 			if (targ:hasStatusEffect(tpz.effect.PETRIFICATION)) then
 				mob:setMod(tpz.mod.MAIN_DMG_RATING, 150)

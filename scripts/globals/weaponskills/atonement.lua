@@ -35,7 +35,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
+    params.atk100 = 1.0 params.atk200 = 1.0 params.atk300 = 1.0
     params.enmityMult = 1.5
 
     -- Apply aftermath
@@ -75,7 +75,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
 			local playerLvl = player:getMainLvl() + player:getItemLevel()
 			local ve = target:getVE(player)
 			local ce = target:getCE(player)
-			dmg = (2000 + ((50.421 * playerLvl) * ((ve + ce) / 60000))) * (1 + player:getMod(tpz.mod.ATONEMENT_DMG) / 100)
+			dmg = utils.clamp((2000 + ((50.421 * playerLvl) * ((ve + ce) / 60000))), 0, tp * 3) * (1 + player:getMod(tpz.mod.ATONEMENT_DMG) / 100)
         else
             local effectiveTP = tp + handleWSGorgetBelt(player) * 1000
             effectiveTP = utils.clamp(effectiveTP, 0, 3000) -- necessary because of Gorget/Belt bonus
@@ -98,7 +98,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
             else
                 calcParams.tpHitsLanded = 1
             end
-            -- Atonement always yields the a TP return of a 2 hit WS (unless it does 0 damage), because if one hit lands, both hits do.
+            -- Atonement always yields the TP return of a 2 hit WS (unless it does 0 damage), because if one hit lands, both hits do.
             calcParams.extraHitsLanded = 1
         end
 

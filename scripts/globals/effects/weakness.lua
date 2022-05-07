@@ -15,8 +15,11 @@ function onEffectGain(target, effect)
 
     if effect:getPower() == 2 then
         -- handle double weakness
+		
+		target:addMod(tpz.mod.RATT, -999)
         target:addMod(tpz.mod.RACC, -999)
         target:addMod(tpz.mod.MATT, -999)
+		target:addMod(tpz.mod.MACC, -999)
     end
 end
 
@@ -31,7 +34,9 @@ function onEffectLose(target, effect)
 
     if (effect:getPower() == 2) then
         -- handle double weakness
+		target:delMod(tpz.mod.RATT, -999)
         target:delMod(tpz.mod.RACC, -999)
-        target:delMod(tpz.mod.MATT,-999)
+        target:delMod(tpz.mod.MATT, -999)
+		target:delMod(tpz.mod.MACC, -999)
     end
 end

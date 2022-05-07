@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Valley of Sorrows
 --  HNM: Aspidochelone
+-- MobID: 17301538
 -----------------------------------
 local ID = require("scripts/zones/Valley_of_Sorrows/IDs")
 mixins = {require("scripts/mixins/rage")}
@@ -14,8 +15,7 @@ function onMobSpawn(mob)
         -- GetNPCByID(ID.npc.ADAMANTOISE_QM):setStatus(tpz.status.DISAPPEAR)
     -- end
 
-    mob:setLocalVar("[rage]timer", 1800) -- 30 minutes
-	
+	mob:setLocalVar("[rage]timer", 1200) -- 20 minutes	
 	mob:addMod(tpz.mod.PARALYZERES, 30) -- Resistance to Silence
     mob:addMod(tpz.mod.STUNRES, 100) -- Resistance to Stun
     mob:addMod(tpz.mod.BINDRES, 100) -- Resistance to Bind
@@ -26,13 +26,13 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.PETRIFYRES, 30) -- Resistance to Pertrify
     mob:addMod(tpz.mod.POISONRES, 30) -- Resistance to Poison	
 	-- mob:addMod(tpz.mod.ATT, 700)	
-	mob:addMod(tpz.mod.DEF, 700)
+	mob:addMod(tpz.mod.DEF, 1000)
 	mob:addMod(tpz.mod.EVA, 80)
-	mob:addMod(tpz.mod.MEVA, 200)
-	mob:addMod(tpz.mod.MACC, 100)
-	mob:addMod(tpz.mod.REGEN, 800)
-	mob:addMod(tpz.mod.REFRESH, 200)
-	mob:addMod(tpz.mod.REGAIN, 100)
+	mob:addMod(tpz.mod.MATT, 15)
+	-- mob:addMod(tpz.mod.MACC, 100)
+	mob:addMod(tpz.mod.REGEN, 300)
+	mob:addMod(tpz.mod.REFRESH, 50)
+	mob:addMod(tpz.mod.REGAIN, 20)
 	mob:addMod(tpz.mod.DOUBLE_ATTACK, 30)
 	mob:addMod(tpz.mod.DMGPHYS, -30)	
 	mob:addMod(tpz.mod.FASTCAST, 30)

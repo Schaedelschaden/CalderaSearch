@@ -24,11 +24,15 @@ end
 
 function onMobFight(mob, target)
 	if (mob:getID() == 17186822) then
+		-- mob:setMod(tpz.mod.DEF, 1500)
 		mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
 		-- mob:speed(0)
 		-- mob:setMod(tpz.mod.REGEN, 10000)
 		-- mob:setMod(tpz.mod.CHARMRES, 100)
-		mob:setMod(tpz.mod.MEVA, 1064)
+		-- mob:setMod(tpz.mod.MEVA, 816)
+		-- mob:setMod(tpz.mod.MAIN_DMG_RATING, 1000)
+		
+		mob:setTP(0)
 
 		if (mob:checkDistance(target) >= 25) then
 			mob:disengage()

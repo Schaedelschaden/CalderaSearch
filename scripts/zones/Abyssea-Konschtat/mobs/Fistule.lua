@@ -10,6 +10,7 @@ end
 
 function onMobFight(mob)
 	local isBusy = false
+	local act = mob:getCurrentAction()
 	
 	if act == tpz.act.MOBABILITY_START or act == tpz.act.MOBABILITY_USING or act == tpz.act.MOBABILITY_FINISH or
 	   act == tpz.act.MAGIC_START or act == tpz.act.MAGIC_CASTING or act == tpz.act.MAGIC_START then
