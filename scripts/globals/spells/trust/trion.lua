@@ -25,6 +25,10 @@ function onMobSpawn(mob)
         [tpz.magic.spell.RAHAL] = tpz.trust.message_offset.TEAMWORK_2,
         [tpz.magic.spell.HALVER] = tpz.trust.message_offset.TEAMWORK_3,
     })
+	
+	local defBonus = mob:getMainLvl() * 1.5
+	
+	mob:addMod(tpz.mod.DEF, defBonus)
 
     mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_HAS_TOP_ENMITY, 0,
                         ai.r.JA, ai.s.SPECIFIC, tpz.ja.PROVOKE)

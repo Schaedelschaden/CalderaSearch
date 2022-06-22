@@ -11,7 +11,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("Type !checkenmity with a mob targeted.")
+    player:PrintToPlayer("Type !checkenmitylist with a mob targeted.")
 end
 
 function onTrigger(player, mobId)
@@ -49,6 +49,6 @@ function onTrigger(player, mobId)
 		currentCE = target:getCE(targ)
 		currentVE = target:getVE(targ)
 
-		printf("CheckEnmitylist ENTRY: [%i]  NAME: [%s]  CURRENT CE: [%i]  CURRENT VE: [%i]", i, targName[i], currentCE, currentVE)
+		player:PrintToPlayer(string.format("CheckEnmitylist ENTRY: [%i]  NAME: [%s]  CURRENT CE: [%i]  CURRENT VE: [%i]", i, targName[i], currentCE, currentVE),tpz.msg.channel.SYSTEM_3)
 	end
 end

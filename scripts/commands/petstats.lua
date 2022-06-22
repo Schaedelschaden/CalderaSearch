@@ -120,6 +120,18 @@ function onTrigger(player)
 		local PetBeastKiller = pet:getMod(tpz.mod.BEAST_KILLER)
 		local PetAmorphKiller = pet:getMod(tpz.mod.AMORPH_KILLER)
 		local PetUndeadKiller = pet:getMod(tpz.mod.UNDEAD_KILLER)
+		local PetSDTSlash = pet:getMod(tpz.mod.SLASHRES) / 10
+		local PetSDTPierce = pet:getMod(tpz.mod.PIERCERES) / 10
+		local PetSDTH2H = pet:getMod(tpz.mod.HTHRES) / 10
+		local PetSDTImpact = pet:getMod(tpz.mod.IMPACTRES) / 10
+		local PetSDTFire = 100 - pet:getMod(tpz.mod.FIRERES)
+		local PetSDTIce = 100 - pet:getMod(tpz.mod.ICERES)
+		local PetSDTWind = 100 - pet:getMod(tpz.mod.WINDRES)
+		local PetSDTEarth = 100 - pet:getMod(tpz.mod.EARTHRES)
+		local PetSDTThunder = 100 - pet:getMod(tpz.mod.THUNDERRES)
+		local PetSDTWater = 100 - pet:getMod(tpz.mod.WATERRES)
+		local PetSDTLight = 100 - pet:getMod(tpz.mod.LIGHTRES)
+		local PetSDTDark = 100 - pet:getMod(tpz.mod.DARKRES)
 		
 		PetATT = PetATT + (PetATT * (PetATTP / 100)) + utils.clamp((PetATT * (PetFoodATTP / 100)), 0, pet:getMod(tpz.mod.FOOD_ATT_CAP))
 		PetRATT = PetRATT + (PetRATT * (PetRATTP / 100)) + utils.clamp((PetRATT * (PetFoodRATTP / 100)), 0, pet:getMod(tpz.mod.FOOD_RATT_CAP))
@@ -133,6 +145,9 @@ function onTrigger(player)
 		player:PrintToPlayer(string.format("  Regen: [%i]  Refresh: [%i]  Regain: [%i]  Dbl Atk: [%i%%]  Tpl Atk: [%i%%]  DT: [%i%%]  PDT: [%i%%]  MDT: [%i%%]  Crit Hit Rate: [%i%%]  SC DMG: [%i%%]", PetRegen, PetRefresh, PetRegain, PetDoubleAttack, PetTripleAttack, PetDT, PetPDT, PetMDT, PetCritHitRate, PetSCDMG),tpz.msg.channel.SYSTEM_3)
 		player:PrintToPlayer(string.format("  Enmity: [%i]  TH: [%i]  Store TP: [%i]  Guard: [%i%%]  Counter: [%i%%]  Block: [%i%%]  Shield Bash Delay: [%i]  Shield Mastery: [%i]", PetEnmity, PetTH, PetStoreTP, PetGuard, PetCounter, PetBlock, PetShieldBash, PetShieldMastery) ,tpz.msg.channel.SYSTEM_3)
 		player:PrintToPlayer(string.format("  Haste Gear: [%i%%]  Haste Ability: [%i%%]  Haste Magic: [%i%%]", PetHasteGear, PetHasteAbil, PetHasteMag) ,tpz.msg.channel.SYSTEM_3)
+		player:PrintToPlayer(string.format("SPECIFIC DMG TAKEN ---------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
+		player:PrintToPlayer(string.format("  Slashing: [%3.2f%%]  Piercing: [%3.2f%%]  H2H: [%3.2f%%]  Impact: [%3.2f%%]", PetSDTSlash, PetSDTPierce, PetSDTH2H, PetSDTImpact) ,tpz.msg.channel.SYSTEM_3)
+		player:PrintToPlayer(string.format("  Fire: [%i%%]  Ice: [%i%%]  Wind: [%i%%]  Earth: [%i%%]  Thunder: [%i%%]  Water: [%i%%]  Light: [%i%%]  Dark: [%i%%]", PetSDTFire, PetSDTIce, PetSDTWind, PetSDTEarth, PetSDTThunder, PetSDTWater, PetSDTLight, PetSDTDark) ,tpz.msg.channel.SYSTEM_3)
 		-- player:PrintToPlayer(string.format("  Food ATTP: [%i%%]  Food ACCP: [%i%%]", PetFoodATTP, PetFoodACCP) ,tpz.msg.channel.SYSTEM_3)
 		-- player:PrintToPlayer(string.format("  Beast Killer: [%i%%]  Amorph Killer: [%i%%]  Undead Killer: [%i%%]", PetBeastKiller, PetAmorphKiller, PetUndeadKiller) ,tpz.msg.channel.SYSTEM_3)
 		player:PrintToPlayer(string.format("--------------------------------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)

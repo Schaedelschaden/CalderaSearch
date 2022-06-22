@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `mob_family_system` (
   PRIMARY KEY (`familyid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=128;
 
--- Dumping data for table tpzdb.mob_family_system: 467 rows
+-- Dumping data for table tpzdb.mob_family_system: 477 rows
 /*!40000 ALTER TABLE `mob_family_system` DISABLE KEYS */;
 INSERT INTO `mob_family_system` (`familyid`, `family`, `systemid`, `system`, `mobsize`, `speed`, `HP`, `MP`, `STR`, `DEX`, `VIT`, `AGI`, `INT`, `MND`, `CHR`, `ATT`, `DEF`, `ACC`, `EVA`, `Slash`, `Pierce`, `H2H`, `Impact`, `Fire`, `Ice`, `Wind`, `Earth`, `Lightning`, `Water`, `Light`, `Dark`, `Element`, `detects`, `charmable`) VALUES
 	(1, 'Acrolith', 3, 'Arcana', 1, 40, 90, 90, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 34, 0),
@@ -519,7 +519,17 @@ INSERT INTO `mob_family_system` (`familyid`, `family`, `systemid`, `system`, `mo
 	(504, 'Luopan', 18, 'Unclassified', 3, 40, 150, 120, 1, 3, 4, 3, 3, 3, 4, 3, 5, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0),
 	(506, 'Pet-Siren', 5, 'Avatar', 4, 120, 200, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 0.875, 0.875, 0.875, 0.875, 0.875, 0.875, 0, 0, 0),
 	(505, 'Pet-CaitSith', 5, 'Avatar', 3, 120, 200, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 0.875, 0.875, 0.875, 0.875, 0.875, 0.875, 0.875, 0.875, 0, 0, 0),
-	(507, 'Craver_VW', 12, 'Empty', 0, 40, 120, 90, 1, 3, 4, 3, 6, 6, 5, 2, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 265, 0);
+	(507, 'Craver_VW', 12, 'Empty', 0, 40, 120, 90, 1, 3, 4, 3, 6, 6, 5, 2, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 265, 0),
+	(567, 'Pet-PorterCrabFamiliar', 2, 'Aquan', 0, 80, 98, 100, 4, 3, 1, 5, 3, 3, 4, 1, 1, 4, 3, 1, 1, 1, 1, 1.3, 1.5, 1.3, 1.3, 1.5, 0.7, 1.3, 1.3, 6, 2, 0),
+	(568, 'Pet-JovialEdwin', 2, 'Aquan', 0, 80, 103, 100, 4, 3, 1, 5, 3, 3, 4, 1, 1, 4, 3, 1, 1, 1, 1, 1.3, 1.5, 1.3, 1.3, 1.5, 0.7, 1.3, 1.3, 6, 2, 0),
+	(569, 'Pet-YellowBeetleFamiliar', 20, 'Vermin', 1, 80, 100, 100, 1, 3, 2, 4, 5, 5, 6, 6, 1, 4, 4, 1, 1, 1, 1, 1, 1.15, 1, 1, 1, 1, 1.15, 1, 1, 257, 0),
+	(570, 'Pet-EnergizedSefina', 20, 'Vermin', 1, 80, 104, 100, 1, 3, 2, 4, 5, 5, 6, 6, 1, 4, 4, 1, 1, 1, 1, 1, 1.15, 1, 1, 1, 1, 1.15, 1, 1, 257, 0),
+	(571, 'Pet-LynxFamiliar', 6, 'Beast', 1, 90, 95, 100, 1, 1, 4, 2, 6, 6, 2, 6, 6, 5, 4, 1, 1, 1, 1, 1, 1.15, 1.15, 1.3, 0.6, 1.15, 1.15, 1.15, 5, 257, 0),
+	(572, 'Pet-VivaciousGaston', 6, 'Beast', 1, 90, 100, 100, 1, 1, 4, 2, 6, 6, 2, 6, 6, 4, 4, 1, 1, 1, 1, 1, 1.15, 1.15, 1.3, 0.6, 1.15, 1.15, 1.15, 5, 257, 0),
+	(573, 'Pet-HippogryphFamiliar', 8, 'Bird', 1, 90, 157, 100, 4, 1, 4, 2, 1, 5, 4, 1, 3, 4, 4, 1, 1, 1, 1, 1.15, 1.15, 0.6, 1.35, 0.6, 1.15, 1.15, 1.15, 7, 1, 0),
+	(574, 'Pet-DaringRoland', 8, 'Bird', 1, 90, 162, 100, 4, 1, 4, 2, 1, 5, 4, 1, 3, 4, 4, 1, 1, 1, 1, 1.15, 1.15, 0.6, 1.35, 0.6, 1.15, 1.15, 1.15, 7, 1, 0),
+	(575, 'Pet-SlimeFamiliar', 1, 'Amorph', 1, 80, 78, 100, 1, 3, 3, 4, 3, 6, 1, 5, 5, 5, 4, 0.5, 0.5, 0.25, 0.25, 1.5, 1.5, 1.5, 1.5, 1.5, 0.75, 1.5, 1.5, 6, 258, 0),
+	(576, 'Pet-SultryPatrice', 1, 'Amorph', 1, 80, 80, 100, 1, 3, 3, 4, 3, 6, 1, 4, 5, 4, 4, 0.5, 0.5, 0.25, 0.25, 1.5, 1.5, 1.5, 1.5, 1.5, 0.75, 1.5, 1.5, 6, 258, 0);
 /*!40000 ALTER TABLE `mob_family_system` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

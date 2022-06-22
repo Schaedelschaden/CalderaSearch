@@ -27,5 +27,5 @@ function onUseAbility(player, target, ability)
 	end
 
    -- Sent as positive power because UINTs, man.
-   player:addStatusEffect(tpz.effect.SENTINEL,power,3,30,0,guardian)
+   player:addStatusEffect(tpz.effect.SENTINEL, power, 3, 30, 0, guardian)
 end

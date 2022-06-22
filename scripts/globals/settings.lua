@@ -56,7 +56,7 @@ INITIAL_LEVEL_CAP = 99 -- The initial level cap for new players.  There seems to
 MAX_LEVEL = 99 -- Level max of the server, lowers the attainable cap by disabling Limit Break quests.
 NORMAL_MOB_MAX_LEVEL_RANGE_MIN = 0 -- Lower Bound of Max Level Range for Normal Mobs (0 = Uncapped)
 NORMAL_MOB_MAX_LEVEL_RANGE_MAX = 0 -- Upper Bound of Max Level Range for Normal Mobs (0 = Uncapped)
-START_GIL = 1000 -- Amount of gil given to newly created characters.
+START_GIL =25000 -- Amount of gil given to newly created characters.
 START_INVENTORY = 80 -- Starting inventory and satchel size.  Ignores values < 30.  Do not set above 80!
 NEW_CHARACTER_CUTSCENE = 0 -- Set to 1 to enable opening cutscenes, 0 to disable.
 SUBJOB_QUEST_LEVEL = 0 -- Minimum level to accept either subjob quest.  Set to 0 to start the game with subjobs unlocked.
@@ -70,16 +70,17 @@ BAYLD_RATE      = 1.000 -- Multiples bayld earned from quests.
 EXP_RATE        = 3.500 -- Multiplies exp earned from fov and quests.
 TABS_RATE       = 1.000 -- Multiplies tabs earned from fov.
 ROE_EXP_RATE    = 1.000 -- Multiplies exp earned from records of eminence.
-SPARKS_RATE     = 1.000 -- Multiplies sparks earned from records of eminence.
+SPARKS_RATE     = 0.500 -- Multiplies sparks earned from records of eminence.
 CURE_POWER      = 1.000 -- Multiplies amount healed from Healing Magic, including the relevant Blue Magic.
 ELEMENTAL_POWER = 1.250 -- Multiplies damage dealt by Elemental and non-drain Dark Magic.
 DIVINE_POWER    = 1.000 -- Multiplies damage dealt by Divine Magic.
 NINJUTSU_POWER  = 1.750 -- Multiplies damage dealt by Ninjutsu Magic.
-BLUE_POWER      = 1.100 -- Multiplies damage dealt by Blue Magic.
+BLUE_POWER      = 1.250 -- Multiplies damage dealt by Blue Magic.
 DARK_POWER      = 1.000 -- Multiplies amount drained by Dark Magic.
 ITEM_POWER      = 1.000 -- Multiplies the effect of items such as Potions and Ethers.
 WEAPON_SKILL_POWER  = 1.000 -- Multiplies damage dealt by Weapon Skills.
 WEAPON_SKILL_POINTS = 1.000 -- Multiplies points earned during weapon unlocking.
+MOB_SKILL_POWER     = 1.000 -- TO DO: Multiplies damage dealt by all monster skills (physical and magical)
 USE_ADOULIN_WEAPON_SKILL_CHANGES = true -- true/false. Change to toggle new Adoulin weapon skill damage calculations
 
 -- TRUSTS
@@ -106,8 +107,8 @@ CHEST_MIN_ILLUSION_TIME  = 600  -- 10 minutes
 
 -- Sets spawn type for: Behemoth, Fafnir, Adamantoise, King Behemoth, Nidhog, Aspidochelone.
 -- Use 0 for timed spawns, 1 for force pop only, 2 for both
-LandKingSystem_NQ = 2
-LandKingSystem_HQ = 2
+LandKingSystem_NQ = 1
+LandKingSystem_HQ = 1
 
 -- Multiplier to NM lottery spawn chance. (Default 1.0) eg. 0 = disable lottery spawns. -1 for always 100% chance.
 NM_LOTTERY_CHANCE = 1.0

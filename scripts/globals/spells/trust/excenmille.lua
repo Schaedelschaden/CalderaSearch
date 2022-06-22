@@ -31,17 +31,14 @@ function onMobSpawn(mob)
     tpz.trust.teamworkMessage(mob, message_page_offset, {
         [tpz.magic.spell.RAHAL] = tpz.trust.message_offset.TEAMWORK_1,
     })
+	
+	mob:addMod(tpz.mod.STORETP, 25)
 
-    mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.SENTINEL,
-                        ai.r.JA, ai.s.SPECIFIC, tpz.ja.SENTINEL)
-
-    mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.FLASH,
-                        ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.FLASH)
-
-    mob:addSimpleGambit(ai.t.PARTY, ai.c.HPP_LT, 75,
-                        ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.CURE)
-
-    mob:addMod(tpz.mod.STORETP, 25)
+    mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.SENTINEL, ai.r.JA, ai.s.SPECIFIC, tpz.ja.SENTINEL)
+    mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.FLASH, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.FLASH)
+    mob:addSimpleGambit(ai.t.PARTY, ai.c.HPP_LT, 75, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.CURE)
+	
+	mob:setTrustTPSkillSettings(ai.tp.RANDOM, ai.s.RANDOM)
 end
 
 function onMobDespawn(mob)

@@ -910,10 +910,13 @@ function abilityReduceAllianceEnmity(player, target)
 		local enmityListName = {}
 		local targ
 		local currentCE
-		local removeEnmity = true
+		local currentVE
 
 		for i, v in ipairs(enmityList) do
-			local reduceCE = 50 * (1 + (enmityBonus / 100))
+			local removeEnmity = true
+			local reduceCE = 100 * (1 + (enmityBonus / 100))
+			local reduceVE
+			
 			enmityListName[i] = v.entity:getName()
 			
 			if (v.entity:isPC()) then
@@ -923,22 +926,28 @@ function abilityReduceAllianceEnmity(player, target)
 			end
 			
 			currentCE = target:getCE(targ)
+			currentVE = target:getVE(targ)
 			
 			if (currentCE >= 29501) then
-				reduceCE = reduceCE * 5
+				reduceCE = 1000
 			end
 			
 			if (currentCE < reduceCE) then
 				reduceCE = currentCE - 1
 			end
 			
+			reduceVE = reduceCE * 4
+			
 			if (targ:getMainJob() == tpz.job.PLD or targ:getMainJob() == tpz.job.RUN or targ:getMainJob() == tpz.job.NIN) then
 				removeEnmity = false
 			end
 
+			-- printf("ability.lua abilityReduceAllianceEnmity  TARG NAME: [%s]  CURRENT CE: [%i]  REMOVE ENMITY: [%s]", targ:getName(), currentCE, removeEnmity)
+
 			if (targ:getName() ~= player:getName() and removeEnmity == true) then
 				-- printf("ability.lua abilityReduceAllianceEnmity [%s] REDUCING [%s's] ENMITY BY [%i] FROM [%i] TO [%i]", player:getName(), targ:getName(), reduceCE, target:getCE(targ), target:getCE(targ) - reduceCE)
-				target:setCE(targ, target:getCE(targ) - reduceCE)
+				target:setCE(targ, utils.clamp(target:getCE(targ) - reduceCE, 1, 29999))
+				target:setVE(targ, utils.clamp(target:getVE(targ) - reduceVE, 1, 29999))
 			end
 		end
 	end

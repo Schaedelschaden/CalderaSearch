@@ -109,7 +109,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 ************************************************************************/
 
 // Number of rows in the exp table
-static constexpr int32 ExpTableRowCount = 60;
+static constexpr int32 ExpTableRowCount = 65;
 std::array<std::array<uint16, 20>, ExpTableRowCount> g_ExpTable;
 std::array<uint16, 100> g_ExpPerLevel;
 
@@ -2852,8 +2852,22 @@ namespace charutils
         }
 
         PChar->delModifier(Mod::MEVA, PChar->m_magicEvasion);
-
-        PChar->m_magicEvasion = battleutils::GetMaxSkill(SKILL_ELEMENTAL_MAGIC, JOB_RDM, PChar->GetMLevel());
+		
+		if (PChar->GetMJob() == JOB_WHM || PChar->GetMJob() == JOB_BLM || PChar->GetMJob() == JOB_RDM || PChar->GetMJob() == JOB_BRD ||
+			PChar->GetMJob() == JOB_SMN ||  PChar->GetMJob() == JOB_SCH || PChar->GetMJob() == JOB_GEO)
+		{
+			PChar->m_magicEvasion = battleutils::GetMaxSkill(SKILL_ELEMENTAL_MAGIC, JOB_RDM, PChar->GetMLevel());
+		}
+		else
+		{
+			PChar->m_magicEvasion = battleutils::GetMaxSkill(SKILL_EVASION, PChar->GetMJob(), PChar->GetMLevel());
+		}
+		
+		if (PChar->GetMJob() == JOB_RUN)
+		{
+			PChar->m_magicEvasion = (uint16)(PChar->m_magicEvasion * 1.1f);
+		}
+		
         PChar->addModifier(Mod::MEVA, PChar->m_magicEvasion);
     }
 
@@ -3184,7 +3198,7 @@ namespace charutils
     *                                                                       *
     ************************************************************************/
 
-    int32 hasTrait(CCharEntity* PChar, uint8 TraitID)
+    int32 hasTrait(CCharEntity* PChar, uint16 TraitID)
     {
         if (PChar->objtype != TYPE_PC)
         {
@@ -3194,7 +3208,7 @@ namespace charutils
         return hasBit(TraitID, PChar->m_TraitList, sizeof(PChar->m_TraitList));
     }
 
-    int32 addTrait(CCharEntity* PChar, uint8 TraitID)
+    int32 addTrait(CCharEntity* PChar, uint16 TraitID)
     {
         if (PChar->objtype != TYPE_PC)
         {
@@ -3204,7 +3218,7 @@ namespace charutils
         return addBit(TraitID, PChar->m_TraitList, sizeof(PChar->m_TraitList));
     }
 
-    int32 delTrait(CCharEntity* PChar, uint8 TraitID)
+    int32 delTrait(CCharEntity* PChar, uint16 TraitID)
     {
         if (PChar->objtype != TYPE_PC)
         {
@@ -4966,7 +4980,7 @@ namespace charutils
 
     void SaveDeathTime(CCharEntity* PChar)
     {
-		charutils::SetCharVar(PChar, "TotalDeaths", charutils::GetCharVar(PChar, "TotalDeaths") + 1);
+		// charutils::SetCharVar(PChar, "TotalDeaths", charutils::GetCharVar(PChar, "TotalDeaths") + 1);
 		
         const char* fmtQuery = "UPDATE char_stats SET death = %u WHERE charid = %u LIMIT 1;";
         Sql_Query(SqlHandle, fmtQuery, PChar->GetSecondsElapsedSinceDeath(), PChar->id);

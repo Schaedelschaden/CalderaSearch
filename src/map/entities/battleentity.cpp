@@ -648,7 +648,7 @@ uint16 CBattleEntity::ATT()
 			// Sword enhancement spells (Enspell) +ACC
 			if (this->getMod(Mod::ENSPELL) > 0)
 			{
-				printf("battleentity.cpp ATT  ENSPELL BONUS: [%i]  BEFORE ATK: [%i]\n", this->getMod(Mod::ENSPELL_STAT_BONUS), ATT);
+				// printf("battleentity.cpp ATT  ENSPELL BONUS: [%i]  BEFORE ATK: [%i]\n", this->getMod(Mod::ENSPELL_STAT_BONUS), ATT);
 				ATT += this->getMod(Mod::ENSPELL_STAT_BONUS);
 			}
         }
@@ -871,7 +871,7 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
 			// Sword enhancement spells (Enspell) +ACC
 			if (PChar->getMod(Mod::ENSPELL) > 0)
 			{
-				printf("battleentity.cpp ACC  ENSPELL BONUS: [%i]  BEFORE ACC: [%i]\n", this->getMod(Mod::ENSPELL_STAT_BONUS), ACC);
+				// printf("battleentity.cpp ACC  ENSPELL BONUS: [%i]  BEFORE ACC: [%i]\n", this->getMod(Mod::ENSPELL_STAT_BONUS), ACC);
 				ACC += PChar->getMod(Mod::ENSPELL_STAT_BONUS);
 			}
 		}
@@ -1767,22 +1767,6 @@ CBattleEntity* CBattleEntity::GetBattleTarget()
 bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
 {
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
-	
-/* 	// Potentially handled better by Canary's Cover coding
-	if (PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_COVER) && PTarget->PParty != nullptr)
-	{
-		for (uint8 i = 0; i < PTarget->PParty->members.size(); i++)
-		{
-			if (PTarget->PParty->members.at(i)->GetMJob() == JOB_PLD)
-			{	
-				CBattleEntity* PCoverEntity = PTarget->PParty->members.at(i);
-				if ((abs(PCoverEntity->loc.p.rotation - PTarget->loc.p.rotation) < 23))
-				{
-					PTarget = PCoverEntity;
-				}
-			}
-		}
-	} */
 
     if (PTarget->objtype == TYPE_PC)
     {
@@ -1905,13 +1889,28 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                         int16 naturalh2hDMG = 0;
 						int16 CounterBonusDMG = PTarget->getMod(Mod::COUNTER_DMG);
 						int16 ThirdEyeCounterDMG = PTarget->getMod(Mod::THIRD_EYE_COUNTER_DMG);
+						float counterATTVaries = PTarget->getMod(Mod::COUNTER_ATT_VARIES);
+						
+						if (counterATTVaries > 0)
+						{
+							int32 attackerATT = PTarget->ATT();
+							int32 defenderATT = this->ATT();
+							
+							counterATTVaries = 1 + ((defenderATT - attackerATT) / defenderATT);
+							
+							if (PTarget->objtype == TYPE_PC && charutils::GetCharVar((CCharEntity*)PTarget, "AuditCounter") == 1)
+							{
+								printf("battleentity.cpp OnAttack  COUNTER ATTACKER: [%s]  ATT: [%i]  DEFENDER: [%s]  ATT: [%i]  VARIES: [%1.2f]\n", PTarget->GetName(), attackerATT, this->GetName(), defenderATT, counterATTVaries);
+							}
+						}
+						
                         if (auto targ_weapon = dynamic_cast<CItemWeapon*>(PTarget->m_Weapons[SLOT_MAIN]);
                            (targ_weapon && targ_weapon->getSkillType() == SKILL_HAND_TO_HAND) || (PTarget->objtype == TYPE_MOB && PTarget->GetMJob() == JOB_MNK))
                         {
                             naturalh2hDMG = (int16)((PTarget->GetSkill(SKILL_HAND_TO_HAND) * 0.11f) + 3);
                         }
 
-                        float DamageRatio = battleutils::GetDamageRatio(PTarget, this, attack.IsCritical(), 0.f);
+                        float DamageRatio = battleutils::GetDamageRatio(PTarget, this, attack.IsCritical(), counterATTVaries);
                         auto damage = (int32)((PTarget->GetMainWeaponDmg() + naturalh2hDMG + CounterBonusDMG + ThirdEyeCounterDMG + battleutils::GetFSTR(PTarget, this, SLOT_MAIN)) * DamageRatio);
                         actionTarget.spikesParam = battleutils::TakePhysicalDamage(PTarget, this, attack.GetAttackType(), damage, false, SLOT_MAIN, 1, nullptr, true, false, true);
                         actionTarget.spikesMessage = 33;

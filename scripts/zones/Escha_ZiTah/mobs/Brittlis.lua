@@ -36,6 +36,7 @@ function onMobSpawn(mob) -- When mob spawns (either forced or time)
 	mob:setMod(tpz.mod.DMG, -15)
 	mob:setMod(tpz.mod.MOBMOD_TP_USE_CHANCE, 1000)
 	mob:setMod(tpz.mod.REGAIN, 200)
+	mob:setLocalVar("MOBSKILL_INCREASED_POTENCY", 1)
 end
 
 function onMobFight(mob, target) -- When mob is engaged

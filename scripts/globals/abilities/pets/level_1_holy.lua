@@ -27,7 +27,7 @@ function onPetAbility(target, pet, skill, player)
 	target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.LIGHT)
 	target:updateEnmityFromDamage(pet,damage)
 	
-	pet:PrintToArea(string.format("The %s takes %i points of damage.", fixedName, damage),tpz.msg.channel.NS_SAY, tpz.msg.area.SAY)
+	player:PrintToArea(string.format("The %s takes %i points of damage.", fixedName, damage),tpz.msg.channel.NS_SAY, tpz.msg.area.SAY)
 	-- player:PrintToPlayer(string.format("The %s takes %i damage.", fixedName, damage),tpz.msg.channel.NS_SAY)
 	skill:setMsg(tpz.msg.basic.HIT_DMG)
 

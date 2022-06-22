@@ -575,6 +575,10 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
     magicacc = magicacc + caster:getMerit(tpz.merit.MAGIC_ACCURACY)
 
     magicacc = magicacc + caster:getMerit(tpz.merit.NIN_MAGIC_ACCURACY)
+	
+	if (skillType == tpz.skill.DIVINE_MAGIC and caster:hasStatusEffect(tpz.effect.DIVINE_EMBLEM)) then
+		magicacc = magicacc + 500
+	end
 
     -- Base magic evasion (base magic evasion plus resistances(players), plus elemental defense(mobs)
     local magiceva = target:getMod(tpz.mod.MEVA) + resMod
@@ -1538,7 +1542,7 @@ function addBonuses(caster, spell, target, dmg, params)
         local mab_crit = caster:getMod(tpz.mod.MAGIC_CRITHITRATE) + geoMCHR
 		
         if ( math.random(1, 100) < mab_crit ) then
-           mab = mab + ( 10 + caster:getMod(tpz.mod.MAGIC_CRIT_DMG_INCREASE ) )
+           mab = mab + utils.clamp(10 + caster:getMod(tpz.mod.MAGIC_CRIT_DMG_INCREASE), 0, 40)
         end
 
         local mdefBarBonus = 0
@@ -2276,10 +2280,13 @@ function magicReduceAllianceEnmity(caster, target)
 		local enmityListName = {}
 		local targ
 		local currentCE
-		local removeEnmity = true
+		local currentVE
 
 		for i, v in ipairs(enmityList) do
-			local reduceCE = 50 * (1 + (enmityBonus / 100))
+			local removeEnmity = true
+			local reduceCE = 100 * (1 + (enmityBonus / 100))
+			local reduceVE
+			
 			enmityListName[i] = v.entity:getName()
 			
 			if (v.entity:isPC()) then
@@ -2289,22 +2296,28 @@ function magicReduceAllianceEnmity(caster, target)
 			end
 			
 			currentCE = target:getCE(targ)
+			currentVE = target:getVE(targ)
 			
 			if (currentCE >= 29501) then
-				reduceCE = reduceCE * 5
+				reduceCE = 1000
 			end
 			
 			if (currentCE < reduceCE) then
 				reduceCE = currentCE - 1
 			end
 			
+			reduceVE = reduceCE * 4
+			
 			if (targ:getMainJob() == tpz.job.PLD or targ:getMainJob() == tpz.job.RUN or targ:getMainJob() == tpz.job.NIN) then
 				removeEnmity = false
 			end
+			
+			-- printf("magic.lua magicReduceAllianceEnmity  TARG NAME: [%s]  CURRENT CE: [%i]  REMOVE ENMITY: [%s]", targ:getName(), currentCE, removeEnmity)
 
 			if (targ:getName() ~= caster:getName() and removeEnmity == true) then
-				-- printf("magic.lua magicReduceAllianceEnmity [%s] REDUCING [%s's] ENMITY BY [%i] FROM [%i] TO [%i]", caster:getName(), targ:getName(), reduceCE, target:getCE(targ), target:getCE(targ) - reduceCE)
-				target:setCE(targ, target:getCE(targ) - reduceCE)
+				-- printf("magic.lua magicReduceAllianceEnmity [%s] REDUCING [%s's] CE/VE BY [%i]/[%i] FROM [%i]/[%i] TO [%i]/[%i]", caster:getName(), targ:getName(), reduceCE, reduceCE * 4, target:getCE(targ), target:getVE(targ), target:getCE(targ) - reduceCE, target:getVE(targ) - (reduceCE * 4))
+				target:setCE(targ, utils.clamp(target:getCE(targ) - reduceCE, 1, 29999))
+				target:setVE(targ, utils.clamp(target:getVE(targ) - reduceVE, 1, 29999))
 			end
 		end
 	end
@@ -2315,20 +2328,22 @@ function checkWeakestElement(caster, target, spell)
 	local weakestElement = 0
 	local weakestTracker = 0
 		
-	for i = 1, #tpz.magic.resistMod do -- Check through all resistances for any negatives (weak to element)
-		weakness[i] = target:getMod(tpz.magic.resistMod[i])
-		
-		if ((weakestElement == 0 and weakestTracker == 0) or (weakness[i] < weakestTracker)) then
-			weakestElement = i
-			weakestTracker = target:getMod(tpz.magic.resistMod[i])
-		end
-	end
+	-- if (target ~= nil) then
+		-- for i = 1, #tpz.magic.resistMod do -- Check through all resistances for any negatives (weak to element)
+			-- weakness[i] = target:getMod(tpz.magic.resistMod[i])
+			
+			-- if ((weakestElement == 0 and weakestTracker == 0) or (weakness[i] < weakestTracker)) then
+				-- weakestElement = i
+				-- weakestTracker = target:getMod(tpz.magic.resistMod[i])
+			-- end
+		-- end
+	-- end
 	
-	local dayElement = VanadielDayOfTheWeek()
+	-- local dayElement = VanadielDayOfTheWeek()
 	
-	if (weakestElement == 0 and dayElement) then
-		weakestElement = dayElement
-	end
+	-- if (weakestElement == 0) then
+		-- weakestElement = dayElement
+	-- end
 
 	return weakestElement
 end

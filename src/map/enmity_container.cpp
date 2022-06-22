@@ -418,13 +418,15 @@ void CEnmityContainer::UpdateEnmityFromDamage(CBattleEntity* PEntity, int32 Dama
 	
 	if (charutils::GetCharVar((CCharEntity*)PEntity, "AuditEnmity") == 1)
 	{
-		printf("enmity_container.cpp UpdateEnmityFromDamage  PLAYER: [%s]  DMG: [%i]  DMG MOD: [%i]  LVL: [%i]  SCALING FACTOR: [%f]  CE: [%i]  VE: [%i]\n", (CCharEntity*)PEntity->GetName(), Damage, damageMod, level, lvlScalingFactor, CE, VE);
+		printf("enmity_container.cpp UpdateEnmityFromDamage  PLAYER: [%s]  DMG: [%i]  DMG MOD: [%i]  MOB LVL: [%i]  SCALING FACTOR: [%f]  CE: [%i]  VE: [%i]\n", PEntity->GetName(), Damage, damageMod, level, lvlScalingFactor, CE, VE);
 	}
 
     UpdateEnmity(PEntity, CE, VE);
 
     if (m_EnmityHolder && m_EnmityHolder->m_HiPCLvl < PEntity->GetMLevel())
+	{
         m_EnmityHolder->m_HiPCLvl = PEntity->GetMLevel();
+	}
 }
 
 /************************************************************************
@@ -534,7 +536,7 @@ void CEnmityContainer::DecayEnmity()
 				decayCE = (int16)(playerLevel * 0.3);
 //				printf("enmity_container.cpp DecayEnmity PLAYER LEVEL < 99\n");
 
-				if (PEntity->GetMJob() == JOB_PLD || PEntity->GetMJob() == JOB_NIN || PEntity->GetMJob() == JOB_RUN)
+				if (PEntity->GetMJob() == JOB_PLD || PEntity->GetMJob() == JOB_NIN && !PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_INNIN) || PEntity->GetMJob() == JOB_RUN)
 				{
 					decayVE = 90;
 					decayCE = 20;
@@ -545,7 +547,7 @@ void CEnmityContainer::DecayEnmity()
 				decayVE = 200;
 				decayCE = 30;
 			
-				if (PEntity->GetMJob() == JOB_PLD || PEntity->GetMJob() == JOB_NIN || PEntity->GetMJob() == JOB_RUN)
+				if (PEntity->GetMJob() == JOB_PLD || PEntity->GetMJob() == JOB_NIN && !PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_INNIN) || PEntity->GetMJob() == JOB_RUN)
 				{
 					decayVE = 120;
 					decayCE = 30;
@@ -557,7 +559,7 @@ void CEnmityContainer::DecayEnmity()
 				decayVE = 300;
 				decayCE = 50;
 			
-				if (PEntity->GetMJob() == JOB_PLD || PEntity->GetMJob() == JOB_NIN || PEntity->GetMJob() == JOB_RUN)
+				if (PEntity->GetMJob() == JOB_PLD || PEntity->GetMJob() == JOB_NIN && !PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_INNIN) || PEntity->GetMJob() == JOB_RUN)
 				{
 					decayVE = 150;
 					decayCE = 35;
@@ -569,7 +571,7 @@ void CEnmityContainer::DecayEnmity()
 				decayVE = 500;
 				decayCE = 75;
 			
-				if (PEntity->GetMJob() == JOB_PLD || PEntity->GetMJob() == JOB_NIN || PEntity->GetMJob() == JOB_RUN)
+				if (PEntity->GetMJob() == JOB_PLD || PEntity->GetMJob() == JOB_NIN && !PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_INNIN) || PEntity->GetMJob() == JOB_RUN)
 				{
 					decayVE = 250;
 					decayCE = 45;

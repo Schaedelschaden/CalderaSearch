@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `mob_skills` (
   PRIMARY KEY (`mob_skill_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.mob_skills: 1,794 rows
+-- Dumping data for table tpzdb.mob_skills: 1,798 rows
 /*!40000 ALTER TABLE `mob_skills` DISABLE KEYS */;
 INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_skill_aoe`, `mob_skill_distance`, `mob_anim_time`, `mob_prepare_time`, `mob_valid_targets`, `mob_skill_flag`, `mob_skill_param`, `knockback`, `primary_sc`, `secondary_sc`, `tertiary_sc`) VALUES
 	(32, 1, 'fast_blade', 0, 7.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0),
@@ -962,9 +962,9 @@ INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_
 	(1575, 865, 'suctorial_tentacle', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(1625, 66, '2000_needles', 1, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(1626, 69, '4000_needles', 1, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
-	(1644, 878, 'hypothermal_combustion', 1, 20.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0),
-	(1645, 876, 'freeze_rush', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
-	(1646, 877, 'cold_wave', 4, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
+	(1644, 886, 'hypothermal_combustion', 1, 18.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
+	(1645, 887, 'freeze_rush', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
+	(1646, 886, 'cold_wave', 4, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(1647, 875, 'berserk', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0),
 	(1671, 202, 'ink_jet_alt', 0, 7.0, 2000, 0, 4, 16, 0, 3, 0, 0, 0),
 	(1693, 1164, 'gnash', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
@@ -1691,7 +1691,7 @@ INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_
 	(3517, 1938, 'gloom_spray', 4, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(1472, 3259, 'clarsach_call', 1, 10.0, 175, 1500, 4, 0, 0, 0, 4, 0, 0),
 	(42, 11, 'savage_blade', 0, 7.0, 2000, 0, 4, 0, 0, 0, 12, 4, 0),
-	(3189, 1508, 'king_cobra_clamp', 1, 10.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
+	(3189, 1508, 'king_cobra_clamp', 1, 10.0, 2000, 1000, 4, 0, 0, 0, 4, 5, 0),
 	(1519, 1219, 'provoke', 0, 18.5, 2000, 0, 4, 0, 0, 0, 0, 0, 0),
 	(1891, 1219, 'provoke', 0, 18.5, 2000, 0, 4, 0, 0, 0, 0, 0, 0),
 	(707, 438, 'sentinel', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0),
@@ -1722,7 +1722,7 @@ INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_
 	(1359, 855, 'chthonian_ray', 4, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
 	(2389, 851, '_triclip', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(2533, 855, 'lithic_ray', 0, 10.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0),
-	(2823, 84, 'rhinowrecker', 4, 15.0, 2000, 1500, 4, 0, 0, 1, 6, 0, 0),
+	(2823, 1986, 'rhinowrecker', 4, 15.0, 2000, 1500, 4, 0, 0, 1, 6, 0, 0),
 	(2104, 1438, 'crippling_slam', 4, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
 	(3505, 833, 'geotic_spin', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 8, 0, 0),
 	(3504, 63, 'rancid_breath', 4, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
@@ -1730,8 +1730,8 @@ INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_
 	(3466, 291, 'paralyzing_microtube', 0, 12.5, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(2163, 1549, 'seedspray', 0, 12.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
 	(2164, 1550, 'viscid_emission', 4, 12.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
-	(2165, 1552, 'rotten_stench', 1, 12.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
-	(2166, 1551, 'floral_bouquet', 1, 12.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
+	(2165, 1551, 'rotten_stench', 1, 12.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
+	(2166, 1552, 'floral_bouquet', 1, 12.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
 	(2167, 1553, 'bloody_caress', 0, 12.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
 	(2168, 1553, 'bloody_caress', 0, 12.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
 	(2169, 1554, 'soothing_aroma', 1, 12.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
@@ -1763,7 +1763,7 @@ INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_
 	(2552, 1772, 'epoxy_spread', 1, 18.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(2157, 2095, 'calcifying_mist', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
 	(2186, 1575, 'mucilaginous_ooze', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
-	(1026, 75, 'arbor_storm', 1, 20.0, 2000, 1500, 4, 0, 0, 3, 0, 0, 0),
+	(1026, 75, 'arbor_storm', 1, 30.0, 2000, 1500, 4, 0, 0, 3, 0, 0, 0),
 	(2430, 1708, 'warped_wail', 1, 20.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
 	(1636, 402, 'trebuchet', 1, 25.0, 2000, 2000, 4, 4, 0, 0, 0, 0, 0),
 	(2578, 409, 'colossal_slam', 1, 15.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0),
@@ -1826,7 +1826,11 @@ INSERT INTO `mob_skills` (`mob_skill_id`, `mob_anim_id`, `mob_skill_name`, `mob_
 	(2517, 809, 'quake_blast', 1, 30.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
 	(2616, 1814, 'ironclad_overhead_slash', 4, 6.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0),
 	(2617, 1815, 'ironclad_stomp', 4, 6.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0),
-	(2618, 1816, 'ironclad_side_slash', 4, 6.0, 2000, 0, 4, 0, 0, 3, 0, 0, 0);
+	(2618, 1816, 'ironclad_side_slash', 4, 6.0, 2000, 0, 4, 0, 0, 3, 0, 0, 0),
+	(2769, 1943, 'blighted_bouquet', 1, 12.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0),
+	(481, 289, 'frenzied_rage', 0, 12.5, 2000, 2000, 1, 0, 0, 0, 0, 0, 0),
+	(2645, 171, 'mud_stream', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0),
+	(2638, 902, 'hadal_summons', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `mob_skills` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

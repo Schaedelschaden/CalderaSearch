@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `item_basic` (
   PRIMARY KEY (`itemid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=34 PACK_KEYS=1 CHECKSUM=1;
 
--- Dumping data for table tpzdb.item_basic: 21,865 rows
+-- Dumping data for table tpzdb.item_basic: 21,875 rows
 /*!40000 ALTER TABLE `item_basic` DISABLE KEYS */;
 INSERT INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `flags`, `aH`, `NoSale`, `BaseSell`) VALUES
 	(1, 0, 'pile_of_chocobo_bedding', 'chocobo_bedding', 1, 24660, 0, 0, 198),
@@ -21893,7 +21893,17 @@ INSERT INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `f
 	(6471, 0, 'bowl_of_oden_+1', 'oden_+1', 1, 1580, 54, 0, 527),
 	(6609, 0, 'serving_of_popotoes_con_queso', 'popo._con_queso', 12, 1580, 54, 0, 136),
 	(6610, 0, 'serving_of_popotoes_con_queso_+1', 'popo._con_queso_+1', 12, 1580, 54, 0, 196),
-	(26354, 0, 'embla_sash', 'embla_sash', 1, 63572, 0, 1, 0);
+	(26354, 0, 'embla_sash', 'embla_sash', 1, 63572, 0, 1, 0),
+	(21464, 0, 'jug_of_rancid_broth', 'rancid_broth', 12, 2052, 48, 0, 864),
+	(21465, 0, 'jug_of_pungent_broth', 'pungent_broth', 12, 2052, 48, 0, 1064),
+	(21468, 0, 'jug_of_zestful_sap', 'zestful_sap', 12, 2052, 48, 0, 864),
+	(21469, 0, 'jug_of_gassy_sap', 'gassy_sap', 12, 2052, 48, 0, 1064),
+	(21466, 0, 'jug_of_frizzante_broth', 'frizzante_broth', 12, 2052, 48, 0, 864),
+	(21467, 0, 'jug_of_spumante_broth', 'spumante_broth', 12, 2052, 48, 0, 1064),
+	(21472, 0, 'jug_of_turpid_broth', 'turpid_broth', 12, 2052, 48, 0, 864),
+	(21473, 0, 'jug_of_feculent_broth', 'feculent_broth', 12, 2052, 48, 0, 1064),
+	(21470, 0, 'jug_of_decaying_broth', 'decaying_broth', 12, 2052, 48, 0, 864),
+	(21471, 0, 'jug_of_putrescent_broth', 'putrescent_broth', 12, 2052, 48, 0, 1064);
 /*!40000 ALTER TABLE `item_basic` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

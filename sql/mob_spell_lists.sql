@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `mob_spell_lists` (
   PRIMARY KEY (`spell_list_id`,`spell_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.mob_spell_lists: 3,843 rows
+-- Dumping data for table tpzdb.mob_spell_lists: 3,850 rows
 /*!40000 ALTER TABLE `mob_spell_lists` DISABLE KEYS */;
 INSERT INTO `mob_spell_lists` (`spell_list_name`, `spell_list_id`, `spell_id`, `min_level`, `max_level`) VALUES
 	('Beastmen_WHM', 1, 1, 1, 10),
@@ -3866,7 +3866,14 @@ INSERT INTO `mob_spell_lists` (`spell_list_name`, `spell_list_id`, `spell_id`, `
 	('TRUST_Joachim', 323, 390, 21, 255),
 	('TRUST_Joachim', 323, 391, 41, 255),
 	('TRUST_Joachim', 323, 392, 61, 255),
-	('TRUST_Joachim', 323, 393, 80, 255);
+	('TRUST_Joachim', 323, 393, 80, 255),
+	('Snoll_Tzar', 462, 153, 1, 255),
+	('Snoll_Tzar', 462, 183, 1, 255),
+	('Snoll_Tzar', 462, 207, 1, 255),
+	('Snoll_Tzar', 462, 250, 1, 255),
+	('Kharon', 220, 360, 1, 255),
+	('Kharon', 220, 274, 1, 255),
+	('Kharon', 220, 361, 1, 255);
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

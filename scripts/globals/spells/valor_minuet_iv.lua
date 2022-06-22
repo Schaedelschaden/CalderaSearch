@@ -16,7 +16,9 @@ function onSpellCast(caster, target, spell)
 
     local power = 31
 
-    if (sLvl+iLvl > 300) then
+    if (sLvl+iLvl > 830) then
+		power = 112
+	elseif (sLvl+iLvl > 300) then
         power = power + math.floor((sLvl+iLvl-300) / 6)
     end
 
@@ -26,7 +28,7 @@ function onSpellCast(caster, target, spell)
 
     local iBoost = caster:getMod(tpz.mod.MINUET_EFFECT) + caster:getMod(tpz.mod.ALL_SONGS_EFFECT)
     if (iBoost > 0) then
-        power = power + iBoost*11
+        power = power + iBoost*11.2
     end
 
     power =  power + caster:getMerit(tpz.merit.MINUET_EFFECT)

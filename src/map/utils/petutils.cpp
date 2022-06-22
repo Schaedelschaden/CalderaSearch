@@ -403,13 +403,13 @@ namespace petutils
 			((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetJugWeaponDamage(PMob));
 			((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDmgType(DAMAGE_SLASHING);
 			maxHP = (int16)(16.39 * pow(lvl, growth) * petStats->HPscale);
-			att = (int16)(GetJugBase(PMob, petStats->attRank) * 1.99);
-			def = (int16)(GetJugBase(PMob, petStats->defRank) * 2.33);
+			att = (int16)(GetJugBase(PMob, petStats->attRank) * 2.30);
+			def = (int16)(GetJugBase(PMob, petStats->defRank) * 2.13);
 			acc = (int16)(GetJugBase(PMob, petStats->accRank) * 1.97);
 			eva = (int16)(GetJugBase(PMob, petStats->evaRank) * 1.60);
 			meva = (int16)(5.87 * (lvl < 119 ? lvl - 1 : 119));
 			mdef = (int16)(0.25 * (lvl < 119 ? lvl - 1 : 119));
-			PMob->setModifier(Mod::DOUBLE_ATTACK, 10);
+			PMob->setModifier(Mod::DOUBLE_ATTACK, 15);
 			PMob->setModifier(Mod::CRIT_DMG_INCREASE, 10);
 			PMob->setModifier(Mod::DMG, -6);
 			break;
@@ -420,12 +420,12 @@ namespace petutils
 			PMob->setMobMod(MOBMOD_MULTI_HIT, 1); // Make the pet attack twice
 			maxHP = (int16)(17.32 * pow(lvl, growth) * petStats->HPscale);
 			att = (int16)(GetJugBase(PMob, petStats->attRank) * 1.69);
-			def = (int16)(GetJugBase(PMob, petStats->defRank) * 1.92);
+			def = (int16)(GetJugBase(PMob, petStats->defRank) * 1.72);
 			acc = (int16)(GetJugBase(PMob, petStats->accRank) * 1.88);
 			eva = (int16)(GetJugBase(PMob, petStats->evaRank) * 1.57);
 			meva = (int16)(5.28 * (lvl < 119 ? lvl - 1 : 119));
 			mdef = (int16)(0.25 * (lvl < 119 ? lvl - 1 : 119));
-			PMob->setModifier(Mod::COUNTER, 10);
+			PMob->setModifier(Mod::COUNTER, 15);
 			PMob->setModifier(Mod::CRIT_DMG_INCREASE, 10);
 			break;
 		case JOB_BLM:
@@ -433,7 +433,7 @@ namespace petutils
 			((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDmgType(DAMAGE_IMPACT);
 			maxHP = (int16)(16.87 * pow(lvl, growth) * petStats->HPscale);
 			att = (int16)(GetJugBase(PMob, petStats->attRank) * 2.27);
-			def = (int16)(GetJugBase(PMob, petStats->defRank) * 2.06);
+			def = (int16)(GetJugBase(PMob, petStats->defRank) * 1.99);
 			acc = (int16)(GetJugBase(PMob, petStats->accRank) * 1.93);
 			eva = (int16)(GetJugBase(PMob, petStats->evaRank) * 1.53);
 			meva = (int16)(6.59 * (lvl < 119 ? lvl - 1 : 119));
@@ -446,7 +446,7 @@ namespace petutils
 			((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDmgType(DAMAGE_SLASHING);
 			maxHP = (int16)(16.87 * pow(lvl, growth) * petStats->HPscale);
 			att = (int16)(GetJugBase(PMob, petStats->attRank) * 1.54);
-			def = (int16)(GetJugBase(PMob, petStats->defRank) * 1.99);
+			def = (int16)(GetJugBase(PMob, petStats->defRank) * 1.92);
 			acc = (int16)(GetJugBase(PMob, petStats->accRank) * 2.01);
 			eva = (int16)(GetJugBase(PMob, petStats->evaRank) * 1.65);
 			meva = (int16)(6.75 * (lvl < 119 ? lvl - 1 : 119));
@@ -458,13 +458,13 @@ namespace petutils
 			((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDmgType(DAMAGE_PIERCING);
 			maxHP = (int16)(9.80 * pow(lvl, growth) * petStats->HPscale);
 			att = (int16)(GetJugBase(PMob, petStats->attRank) * 1.53);
-			def = (int16)(GetJugBase(PMob, petStats->defRank) * 1.77);
+			def = (int16)(GetJugBase(PMob, petStats->defRank) * 1.62);
 			acc = (int16)(GetJugBase(PMob, petStats->accRank) * 2.05);
 			eva = (int16)(GetJugBase(PMob, petStats->evaRank) * 1.89);
 			meva = (int16)(5.63 * (lvl < 119 ? lvl - 1 : 119));
 			mdef = (int16)(0.29 * (lvl < 119 ? lvl - 1 : 119));
 			PMob->setModifier(Mod::TREASURE_HUNTER, 2);
-			PMob->setModifier(Mod::TRIPLE_ATTACK, 10);
+			PMob->setModifier(Mod::TRIPLE_ATTACK, 15);
 			PMob->setModifier(Mod::CRITHITRATE, 10);
 			PMob->setModifier(Mod::CRIT_DMG_INCREASE, 30);
 			break;
@@ -487,13 +487,13 @@ namespace petutils
 			((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDmgType(DAMAGE_SLASHING);
 			maxHP = (int16)(16.87 * pow(lvl, growth) * petStats->HPscale);
 			att = (int16)(GetJugBase(PMob, petStats->attRank) * 2.23);
-			def = (int16)(GetJugBase(PMob, petStats->defRank) * 1.96);
+			def = (int16)(GetJugBase(PMob, petStats->defRank) * 1.76);
 			acc = (int16)(GetJugBase(PMob, petStats->accRank) * 1.90);
 			eva = (int16)(GetJugBase(PMob, petStats->evaRank) * 1.53);
 			meva = (int16)(5.14 * (lvl < 119 ? lvl - 1 : 119));
 			mdef = (int16)(0.25 * (lvl < 119 ? lvl - 1 : 119));
-			PMob->setModifier(Mod::CRITHITRATE, 5);
-			PMob->setModifier(Mod::CRIT_DMG_INCREASE, 20);
+			PMob->setModifier(Mod::CRITHITRATE, 10);
+			PMob->setModifier(Mod::CRIT_DMG_INCREASE, 25);
 			PMob->setModifier(Mod::DMG, 12);
 			break;
         default:
@@ -540,6 +540,29 @@ namespace petutils
         PMob->stats.INT = (uint16)((fINT + mINT) * 1.4f); // Adjusts jug pets base INT
         PMob->stats.MND = (uint16)((fMND + mMND) * 1.4f); // Adjusts jug pets base MND
         PMob->stats.CHR = (uint16)((fCHR + mCHR) * 1.4f); // Adjusts jug pets base CHR
+		
+		PMob->setModifier(Mod::SLASHRES, petStats->slashres);
+        PMob->setModifier(Mod::PIERCERES, petStats->pierceres);
+        PMob->setModifier(Mod::HTHRES, petStats->hthres);
+        PMob->setModifier(Mod::IMPACTRES, petStats->impactres);
+
+        PMob->setModifier(Mod::FIREDEF, petStats->firedef); // These are stored as floating percentages
+        PMob->setModifier(Mod::ICEDEF, petStats->icedef); // and need to be adjusted into modifier units.
+        PMob->setModifier(Mod::WINDDEF, petStats->winddef); // Higher DEF = lower damage.
+        PMob->setModifier(Mod::EARTHDEF, petStats->earthdef); // Negatives signify increased damage.
+        PMob->setModifier(Mod::THUNDERDEF, petStats->thunderdef); // Positives signify reduced damage.
+        PMob->setModifier(Mod::WATERDEF, petStats->waterdef); // Ex: 125% damage would be 1.25, 50% damage would be 0.50
+        PMob->setModifier(Mod::LIGHTDEF, petStats->lightdef); // (1.25 - 1) * -1000 = -250 DEF
+        PMob->setModifier(Mod::DARKDEF, petStats->darkdef); // (0.50 - 1) * -1000 = 500 DEF
+
+        PMob->setModifier(Mod::FIRERES, petStats->fireres); // These are stored as floating percentages
+        PMob->setModifier(Mod::ICERES, petStats->iceres); // and need to be adjusted into modifier units.
+        PMob->setModifier(Mod::WINDRES, petStats->windres); // Higher RES = lower damage.
+        PMob->setModifier(Mod::EARTHRES, petStats->earthres); // Negatives signify lower resist chance.
+        PMob->setModifier(Mod::THUNDERRES, petStats->thunderres); // Positives signify increased resist chance.
+        PMob->setModifier(Mod::WATERRES, petStats->waterres);
+        PMob->setModifier(Mod::LIGHTRES, petStats->lightres);
+        PMob->setModifier(Mod::DARKRES, petStats->darkres);
     }
 
     void LoadAutomatonStats(CCharEntity* PMaster, CPetEntity* PPet, Pet_t* petStats)

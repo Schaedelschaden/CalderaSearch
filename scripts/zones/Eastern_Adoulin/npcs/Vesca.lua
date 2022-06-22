@@ -31,11 +31,11 @@ local itemTrades =
     [ 12] = {trade = {1612, {8798, 50}}, reward = 27584}, -- Radiant Memory for Renaye Ring
     [ 13] = {trade = {1613, {8798, 50}}, reward = 16259}, -- Malevolent Memory for Twilight Cape
 	[ 14] = {trade = {1606, {8798, 250}}, reward = 27580}, -- Burning Memory for Adoulin Ring
-	[ 15] = {trade = {{1456, 3}, {8798, 693}}, reward = 27588}, -- Hundred Byne Bill for Vocane Ring
-	[ 16] = {trade = {{1450, 3}, {8798, 693}}, reward = 27587}, -- Lungo-Nango Jadeshell for Karieyh Ring
-	[ 17] = {trade = {{1453, 3}, {8798, 693}}, reward = 27583}, -- Montiont Silverpiece for Janniston Ring
-	[ 18] = {trade = {{1450, 1}, {1453, 1}, {1456, 1}, {8798, 693}}, reward = 27589}, -- Lungo-Nango Jadeshell/Montiont Silverpiece/Hundred Byne Bill for Thurandaut Ring
-	[ 19] = {trade = {{1453, 1}, {1456, 2}, {8798, 693}}, reward = 27586}, -- Montiont Silverpiece x1/Hundred Byne Bill x2 for Haverton Ring
+	[ 15] = {trade = {{1456, 3}, {8798, 495}}, reward = 27588}, -- Hundred Byne Bill for Vocane Ring
+	[ 16] = {trade = {{1450, 3}, {8798, 495}}, reward = 27587}, -- Lungo-Nango Jadeshell for Karieyh Ring
+	[ 17] = {trade = {{1453, 3}, {8798, 495}}, reward = 27583}, -- Montiont Silverpiece for Janniston Ring
+	[ 18] = {trade = {{1450, 1}, {1453, 1}, {1456, 1}, {8798, 495}}, reward = 27589}, -- Lungo-Nango Jadeshell/Montiont Silverpiece/Hundred Byne Bill for Thurandaut Ring
+	[ 19] = {trade = {{1453, 1}, {1456, 2}, {8798, 495}}, reward = 27586}, -- Montiont Silverpiece x1/Hundred Byne Bill x2 for Haverton Ring
 	[ 20] = {trade = {28662, {8798, 20}}, reward = 28654}, -- Beatific Shield +1
 	[ 21] = {trade = {27768, {8798, 20}}, reward = 27728}, -- Cizin Helm +1
 	[ 22] = {trade = {27912, {8798, 20}}, reward = 27874}, -- Cizin Mail +1
@@ -69,7 +69,7 @@ function onTrade(player, npc, trade)
 	local tradedCombo = 0
 	
 	-- Check for matching trade
-	if tradedCombo == 0 and player:getCharVar("KillCounter_Kirin") >= 1 and player:getCharVar("KillCounter_JailofLove") >= 1 then
+	if tradedCombo == 0 then -- and player:getCharVar("KillCounter_Kirin") >= 1 and player:getCharVar("KillCounter_JailofLove") >= 1 then
 		for k, v in pairs(itemTrades) do
 			if npcUtil.tradeHasExactly(trade, v.trade) then
 				tradedCombo = k

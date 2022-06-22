@@ -27,6 +27,10 @@
 #include <vector>
 #include "modifier.h"
 
+// Found under PolUtils String Tables > English > Ability Names
+// Find the trait in the list and subtract 1536 from its index ####
+// Ex. Gilfinder ID is 1556 - 1536 = 20
+
 enum TRAITTYPE
 {
     TRAIT_ACCURACY_BONUS      = 1,
@@ -54,12 +58,12 @@ enum TRAITTYPE
     TRAIT_MARTIAL_ARTS        = 23,
     TRAIT_CLEAR_MIND          = 24,
     TRAIT_SHIELD_MASTERY      = 25,
-	TRAIT_SHIELD_BARRIER      = 26, // (Appears as a blank space in trait list)
-	TRAIT_DAMAGE_LIMIT_UP     = 27,	// (Appears as a blank space in trait list)
-	TRAIT_WS_DAMAGE_BOOST     = 28, // (Appears as a blank space in trait list)
-	TRAIT_TANDEM_STRIKE       = 29, // (Appears as a blank space in trait list)
-	TRAIT_TANDEM_BLOW         = 30, // (Appears as a blank space in trait list)
-//	TRAIT_SPARE?              = 31, // (Appears as a blank space in trait list)
+//	TRAIT_SPARE               = 26, // (Appears as a blank space in trait list)
+//  TRAIT_SPARE               = 27,	// (Appears as a blank space in trait list)
+//	TRAIT_SPARE               = 28, // (Appears as a blank space in trait list)
+//	TRAIT_SPARE               = 29, // (Appears as a blank space in trait list)
+//	TRAIT_SPARE               = 30, // (Appears as a blank space in trait list)
+//	TRAIT_SPARE               = 31, // (Appears as a blank space in trait list)
     TRAIT_BEAST_KILLER        = 32,
     TRAIT_PLANTOID_KILLER     = 33,
     TRAIT_VERMIN_KILLER       = 34,
@@ -68,14 +72,14 @@ enum TRAITTYPE
     TRAIT_AMORPH_KILLER       = 37,
     TRAIT_AQUAN_KILLER        = 38,
     TRAIT_UNDEAD_KILLER       = 39,
-//	TRAIT_SPARE?              = 40,
+//	TRAIT_SPARE               = 40,
     TRAIT_ARCANA_KILLER       = 41,
     TRAIT_DEMON_KILLER        = 42,
     TRAIT_DRAGON_KILLER       = 43,
-//	TRAIT_KILLER_EFFECTS      = 44,
-//	TRAIT_SPARE?              = 45,
-//	TRAIT_SPARE?              = 46,
-//	TRAIT_SPARE?              = 47,
+//	TRAIT_SPARE               = 44,
+//	TRAIT_SPARE               = 45,
+//	TRAIT_SPARE               = 46,
+//	TRAIT_SPARE               = 47,
     TRAIT_RESIST_SLEEP        = 48,
     TRAIT_RESIST_POISON       = 49,
     TRAIT_RESIST_PARALYZE     = 50,
@@ -89,8 +93,8 @@ enum TRAITTYPE
     TRAIT_RESIST_GRAVITY      = 58,
     TRAIT_RESIST_SLOW         = 59,
     TRAIT_RESIST_CHARM        = 60,
-//	TRAIT_SPARE?              = 61,
-//	TRAIT_SPARE?              = 62,
+//	TRAIT_SPARE               = 61,
+//	TRAIT_SPARE               = 62,
     TRAIT_RESIST_AMNESIA      = 63,
     TRAIT_TREASURE_HUNTER_II  = 64,
     TRAIT_TREASURE_HUNTER_III = 65,
@@ -156,11 +160,15 @@ enum TRAITTYPE
     TRAIT_MAGIC_ACC_BONUS     = 125,
     TRAIT_MAGIC_EVA_BONUS     = 126,
     TRAIT_SMITE               = 127,
-//	TRAIT_DAMAGE_LIMIT_UP     = 128,
-//	TRAIT_WS_DAMAGE_BOOST     = 132,
+	TRAIT_DAMAGE_LIMIT_UP     = 129,
+	TRAIT_WS_DAMAGE_BOOST     = 134,
+	TRAIT_MAX_HP_BOOST_II     = 135,
+	TRAIT_SHIELD_BARRIER      = 136,
+	TRAIT_TANDEM_STRIKE       = 137,
+	TRAIT_TANDEM_BLOW         = 138,
   };
 
-#define MAX_TRAIT_ID    128
+#define MAX_TRAIT_ID    139
 
 /************************************************************************
 *                                                                       *
@@ -172,9 +180,9 @@ class CTrait
 {
 public:
 
-    CTrait(uint8 id);
+    CTrait(uint16 id);
 
-    uint8     getID()         const { return m_id; }
+    uint16    getID()         const { return m_id; }
     uint8     getJob()        const { return m_job; }
     uint8     getLevel()      const { return m_level; }
     Mod       getMod()        const { return m_mod; }
@@ -191,7 +199,7 @@ public:
 
 private:
 
-    uint8   m_id {0};
+    uint16  m_id {0};
     uint8   m_job {0};
     uint8   m_level {0};
     Mod     m_mod {Mod::NONE};

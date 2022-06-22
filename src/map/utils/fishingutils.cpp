@@ -1841,7 +1841,7 @@ namespace fishingutils
 
         // Max skill amount increases as level difference gets higher
         const int skillAmountAdd = 1 + (int)std::floor(levelDifference / 5);
-        maxSkillAmount           = std::min(skillAmountAdd, 3);
+        maxSkillAmount           = std::min(skillAmountAdd, 6);
 
         if (tpzrand::GetRandomNumber(skillRoll) < maxChance)
         {

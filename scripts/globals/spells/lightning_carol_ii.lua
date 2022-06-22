@@ -18,8 +18,8 @@ function onSpellCast(caster, target, spell)
     local power = 40
 	local nullChance = 15
 
-    if (sLvl+iLvl > 200) then
-        power = power + math.floor((sLvl+iLvl-200) / 10)
+    if (sLvl+iLvl > 450) then
+        power = power + math.floor((sLvl+iLvl) / 7.5)
     end
 
     local iBoost = caster:getMod(tpz.mod.CAROL_EFFECT) + caster:getMod(tpz.mod.ALL_SONGS_EFFECT)

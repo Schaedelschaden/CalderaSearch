@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `item_weapon` (
   PRIMARY KEY (`itemId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=54 PACK_KEYS=1 CHECKSUM=1;
 
--- Dumping data for table tpzdb.item_weapon: 4,748 rows
+-- Dumping data for table tpzdb.item_weapon: 4,758 rows
 /*!40000 ALTER TABLE `item_weapon` DISABLE KEYS */;
 INSERT INTO `item_weapon` (`itemId`, `name`, `skill`, `subskill`, `ilvl_skill`, `ilvl_parry`, `ilvl_macc`, `dmgType`, `hit`, `delay`, `dmg`, `unlock_points`) VALUES
 	(16385, 'cesti', 1, 0, 0, 0, 0, 4, 1, 528, 1, 0),
@@ -4778,7 +4778,17 @@ INSERT INTO `item_weapon` (`itemId`, `name`, `skill`, `subskill`, `ilvl_skill`, 
 	(21489, 'truly_pristine_sap', 0, 99, 0, 0, 0, 0, 1, 0, 1857, 0),
 	(20672, 'ice_brand', 3, 0, 269, 269, 269, 2, 1, 264, 187, 0),
 	(21568, 'acrontica', 2, 0, 247, 247, 234, 1, 1, 201, 138, 0),
-	(21636, 'nihility', 3, 0, 0, 0, 0, 2, 1, 240, 1, 0);
+	(21636, 'nihility', 3, 0, 0, 0, 0, 2, 1, 240, 1, 0),
+	(21464, 'rancid_broth', 0, 118, 0, 0, 0, 0, 1, 2219, 9554, 0),
+	(21465, 'pungent_broth', 0, 119, 0, 0, 0, 0, 1, 2220, 9555, 0),
+	(21468, 'zestful_sap', 0, 120, 0, 0, 0, 0, 1, 2221, 9556, 0),
+	(21469, 'gassy_sap', 0, 121, 0, 0, 0, 0, 1, 2222, 9557, 0),
+	(21466, 'frizzante_broth', 0, 122, 0, 0, 0, 0, 1, 2223, 9558, 0),
+	(21467, 'spumante_broth', 0, 123, 0, 0, 0, 0, 1, 2224, 9559, 0),
+	(21472, 'turpid_broth', 0, 124, 0, 0, 0, 0, 1, 2225, 9560, 0),
+	(21473, 'feculent_broth', 0, 125, 0, 0, 0, 0, 1, 2226, 9561, 0),
+	(21470, 'decaying_broth', 0, 126, 0, 0, 0, 0, 1, 2227, 9562, 0),
+	(21471, 'putrescent_broth', 0, 127, 0, 0, 0, 0, 1, 2228, 9563, 0);
 /*!40000 ALTER TABLE `item_weapon` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

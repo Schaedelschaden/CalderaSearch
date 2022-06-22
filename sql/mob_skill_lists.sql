@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `mob_skill_lists` (
   PRIMARY KEY (`skill_list_id`,`mob_skill_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.mob_skill_lists: 3,343 rows
+-- Dumping data for table tpzdb.mob_skill_lists: 3,368 rows
 /*!40000 ALTER TABLE `mob_skill_lists` DISABLE KEYS */;
 INSERT INTO `mob_skill_lists` (`skill_list_name`, `skill_list_id`, `mob_skill_id`) VALUES
 	('Adamantoise', 2, 804),
@@ -2639,7 +2639,7 @@ INSERT INTO `mob_skill_lists` (`skill_list_name`, `skill_list_id`, `mob_skill_id
 	('Nightshade', 871, 2210),
 	('Pallid_Percy', 872, 426),
 	('Pallid_Percy', 872, 427),
-	('Pallid_Percy', 872, 2645),
+	('Tejas_Pre50', 875, 844),
 	('Svarbhanu', 873, 646),
 	('Svarbhanu', 873, 648),
 	('Svarbhanu', 873, 649),
@@ -2661,7 +2661,7 @@ INSERT INTO `mob_skill_lists` (`skill_list_name`, `skill_list_id`, `mob_skill_id
 	('Titlacauan', 877, 531),
 	('Titlacauan', 877, 533),
 	('Titlacauan', 877, 1326),
-	('Titlacauan', 877, 1329),
+	('Titlacauan', 877, 532),
 	('Titlacauan', 877, 2638),
 	('Ulhuadshi', 878, 2187),
 	('Ulhuadshi', 878, 2188),
@@ -3364,7 +3364,32 @@ INSERT INTO `mob_skill_lists` (`skill_list_name`, `skill_list_id`, `mob_skill_id
 	('Aglaophotis', 1182, 2167),
 	('Hahava2', 1183, 2714),
 	('Hahava2', 1183, 2718),
-	('TRUST_Sylvie_UC', 1184, 386);
+	('TRUST_Sylvie_UC', 1184, 386),
+	('Aglaophotis', 1182, 2769),
+	('Jug_Beetle_High_Level', 1186, 791),
+	('Jug_Beetle_High_Level', 1186, 707),
+	('Jug_Beetle_High_Level', 1186, 708),
+	('Jug_Beetle_High_Level', 1186, 709),
+	('Jug_Beetle_High_Level', 1186, 710),
+	('Jug_Beetle_High_Level', 1186, 711),
+	('Jug_Crab_High_Level', 1185, 693),
+	('Jug_Crab_High_Level', 1185, 694),
+	('Jug_Crab_High_Level', 1185, 789),
+	('Jug_Crab_High_Level', 1185, 696),
+	('Jug_Crab_High_Level', 1185, 697),
+	('Jug_Lynx', 1187, 730),
+	('Jug_Lynx', 1187, 731),
+	('Jug_Lynx', 1187, 746),
+	('Jug_Lynx', 1187, 790),
+	('Jug_Slime', 1188, 792),
+	('Jug_Slime', 1188, 793),
+	('Jug_Slime', 1188, 794),
+	('TRUST_Yoran_Oran_UC', 1189, 173),
+	('Maahes', 869, 2209),
+	('Maahes', 869, 2602),
+	('Mielikki', 870, 1026),
+	('Nightshade', 871, 2601),
+	('Tejas_post50', 876, 844);
 /*!40000 ALTER TABLE `mob_skill_lists` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

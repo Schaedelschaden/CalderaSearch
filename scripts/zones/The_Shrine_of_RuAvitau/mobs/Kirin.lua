@@ -10,7 +10,7 @@ require("scripts/globals/keyitems")
 -----------------------------------
 
 function onMobInitialize( mob )
-    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 600)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end
 

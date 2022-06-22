@@ -15,10 +15,16 @@ function onMobWeaponSkill(target, mob, skill)
     local accmod = 1
     local dmgmod = 1.25
 	
+	if (mob:isPet()) then
+		dmgmod = 1.75
+	end
+	
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 2, 3)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, MOBPARAM_WIPE_SHADOWS)
 	
-	mob:resetEnmity(target)
+	if not (mob:isPet()) then
+		mob:resetEnmity(target)
+	end
 	
     return dmg
 end

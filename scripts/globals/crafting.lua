@@ -228,6 +228,7 @@ function unionRepresentativeTriggerFinish(player, option, target, guildID, curre
     local rank = player:getSkillRank(guildID + 48)
     local category = bit.band(bit.rshift(option, 2), 3)
     local text = zones[player:getZoneID()].text
+	printf("crafting.lua unionRepresentativeTriggerFinish  GUILD ID: [%i]  OPTION: [%i]  CATEGORY: [%i]", guildID, option, category)
 
     if (bit.tobit(option) == -1 and rank >= 3) then
         local oldGuild = player:getCharVar('[GUILD]currentGuild') - 1
@@ -252,7 +253,15 @@ function unionRepresentativeTriggerFinish(player, option, target, guildID, curre
         end
     elseif (category == 2 or category == 1) then -- item
         local idx = bit.band(option, 3)
-        local i = items[(category - 1) * 4 + idx]
+		local itemDes = (category - 1) * 4 + idx
+		
+		if (guildID == 0 and option > 515 and option < 522) then
+			itemDes = itemDes + 1
+		end
+		
+		local i = items[itemDes]
+		
+		-- printf("crafting.lua unionRepresentativeTriggerFinish  NUMBER: [%i] = CATEGORY: [%i] - 1 * 4 + IDX: [%i]", itemDes, category, idx)
         local quantity = math.min(bit.rshift(option, 9), 12)
         local cost = quantity * i.cost
         if (i and rank >= i.rank) then
@@ -274,6 +283,14 @@ function unionRepresentativeTriggerFinish(player, option, target, guildID, curre
         end
     elseif (category == 0 and option ~= 1073741824) then -- HQ crystal
         local i = HQCrystals[bit.band(bit.rshift(option, 5), 15)]
+		
+		-- Caldera "fix"
+		-- Bypass the Fishing Guild issue with Robber Rig being considered an HQ crystal under this system
+		if (guildID == 0 and option == 515) then
+			i = items[0]
+			-- printf("crafting.lua unionRepresentativeTriggerFinish  ITEM ID: [%i]  RANK: [%i]  COST: [%i]", i.id, i.rank, i.cost)
+		end
+		
         local quantity = bit.rshift(option, 9)
         local cost = quantity * i.cost
         if (i and rank >= 3) then
@@ -294,12 +311,15 @@ end
 function unionRepresentativeTrade(player, npc, trade, csid, guildID)
     local gpItem, remainingPoints = player:getCurrentGPItem(guildID)
     local text = zones[player:getZoneID()].text
+	
+	printf("crafting.lua unionRepresentativeTrade  PLAYER: [%s]  GP ITEM: [%i]  REMAINING POINTS: [%i]", player:getName(), gpItem, remainingPoints)
 
     if (player:getCharVar('[GUILD]currentGuild') - 1 == guildID) then
         if remainingPoints == 0 then
+			printf("crafting.lua unionRepresentativeTrade  PLAYER: [%s]  NPC: [%s]  GUILD ID: [%i]  NO MORE POINTS AVAILABLE", player:getName(), npc:getName(), guildID)
             player:messageText(npc, text.NO_MORE_GP_ELIGIBLE)
         else
-            local totalPoints = 0
+			local totalPoints = 0
             for i = 0, 8 do
                 local items, points = player:addGuildPoints(guildID, i)
                 if items ~= 0 and points ~= 0 then
@@ -307,6 +327,9 @@ function unionRepresentativeTrade(player, npc, trade, csid, guildID)
                     trade:confirmSlot(i, items)
                 end
             end
+			
+			printf("crafting.lua unionRepresentativeTrade  PLAYER: [%s]  POINTS AVAILABLE: [%i]", player:getName(), totalPoints)
+			
             if (totalPoints > 0) then
                 player:confirmTrade()
                 player:startEvent(csid, totalPoints)

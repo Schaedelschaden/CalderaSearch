@@ -22,7 +22,7 @@ function onMobSpawn(mob)
 			mob:addMod(tpz.mod.DEF, 750)
 			mob:addMod(tpz.mod.MDEF, 30)
 			mob:addMod(tpz.mod.EVA, 250)
-			mob:addMod(tpz.mod.MEVA, 500)
+			mob:addMod(tpz.mod.MEVA, 300)
 		end
 	end
 end

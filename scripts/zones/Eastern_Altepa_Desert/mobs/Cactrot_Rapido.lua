@@ -91,7 +91,7 @@ local pathNodes =
     100, -7, -87,
     78, -9, -92,
     74, -9, -96,
-    72, -10, -100,
+    72, -12, -106,
     65, -12, -110,
     57, -12, -123,
     54, -11, -129,
@@ -117,19 +117,26 @@ local pathNodes =
 }
 
 function onPath(mob)
-    tpz.path.patrol(mob, pathNodes, tpz.path.flag.RUN)
+    tpz.path.patrol(mob, pathNodes, tpz.path.flag.NONE)
 end
 
 function onMobSpawn(mob)
-	mob:setAggressive(1)
-    mob:speed(250)
+	-- mob:setAggressive(1)
+	-- mob:setMobMod(tpz.mobMod.ALWAYS_AGGRO, 1)
+	mob:setMobMod(tpz.mobMod.SOUND_RANGE, 30)
+    mob:speed(100)
     onPath(mob)
 end
 
 function onMobRoam(mob)
+	mob:speed(100)
+	-- mob:setAggressive(1)
+	-- mob:setMobMod(tpz.mobMod.ALWAYS_AGGRO, 1)
+	mob:setMobMod(tpz.mobMod.SOUND_RANGE, 30)
+	
     -- move to start position if not moving
     if not mob:isFollowingPath() then
-        mob:pathThrough(tpz.path.first(pathNodes), tpz.path.flag.RUN)
+        mob:pathThrough(tpz.path.first(pathNodes), tpz.path.flag.NONE)
     end
 end
 

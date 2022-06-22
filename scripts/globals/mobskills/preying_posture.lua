@@ -43,7 +43,7 @@ function onMobWeaponSkill(target, mob, skill)
 	if (mob:getHPP() < 50) then
 		mob:setLocalVar("DeathProphet", 1)
 		if (mob:getID() == 17293648 or 17293649) then
-			mob:PrintToArea(string.format("Kaggen: The end is near."),tpz.msg.channel.NS_SAY)
+			-- mob:PrintToArea(string.format("Kaggen: The end is near."),tpz.msg.channel.NS_SAY)
 		end
 	end
 	

@@ -15,6 +15,12 @@ function onSpellCast(caster, target, spell)
     local iLvl = caster:getWeaponSkillLevel(tpz.slot.RANGED)
 
     local power = 12 + math.floor((sLvl + iLvl)/10)
+	
+	if (sLvl+iLvl > 400) then
+		power = 69
+	elseif (sLvl+iLvl > 100) then
+        power = power + math.floor((sLvl+iLvl) / 7)
+    end
 
     if (power >= 69) then
         power = 69
@@ -22,7 +28,7 @@ function onSpellCast(caster, target, spell)
 
     local iBoost = caster:getMod(tpz.mod.MINNE_EFFECT) + caster:getMod(tpz.mod.ALL_SONGS_EFFECT)
     if (iBoost > 0) then
-        power = power + iBoost*7
+        power = power + iBoost*6.89
     end
 
     power =  power + caster:getMerit(tpz.merit.MINNE_EFFECT)

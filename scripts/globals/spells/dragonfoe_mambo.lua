@@ -15,19 +15,21 @@ function onSpellCast(caster, target, spell)
     local iLvl = caster:getWeaponSkillLevel(tpz.slot.RANGED)
 
     -- Since nobody knows the evasion values for mambo, I'll just make it up! (aka - same as madrigal)
-    local power = 9
+    local power = 20
 
-    if (sLvl+iLvl > 130) then
-        power = power + math.floor((sLvl+iLvl-130) / 18)
+    if (sLvl+iLvl > 900) then
+		power = 72
+	elseif (sLvl+iLvl > 300) then
+        power = power + math.floor((sLvl+iLvl) / 11.54)
     end
 
-    if (power >= 48) then
-        power = 48
+    if (power >= 72) then
+        power = 72
     end
 
     local iBoost = caster:getMod(tpz.mod.MAMBO_EFFECT) + caster:getMod(tpz.mod.ALL_SONGS_EFFECT)
     if (iBoost > 0) then
-        power = power + iBoost*7
+        power = power + iBoost*7.1111111
     end
 
     if (caster:hasStatusEffect(tpz.effect.SOUL_VOICE)) then

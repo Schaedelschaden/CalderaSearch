@@ -61,7 +61,7 @@ local augsDarrcuiln = {{514, 9}, {2, 16}, {23, 14}, {71, 1},
 
 -- Ingrid Augs DONE
 -- Path A          	  Dex		ACC		 MACC		Quad ATT		Dampening Tam
-local augsIngrid = {{512, 9}, {23, 14}, {35, 14}, {354, 2},
+local augsIngrid = {{513, 9}, {23, 14}, {35, 14}, {354, 2},
 -- Path B           MP,		  Heal Skill FC		   Conserve MP		Fanatics Gloves
 				   {10, 16}, {289, 9}, {140, 7}, {141, 6},
 -- Path C           MACC	  MATT		FC		  INT				Malevolence

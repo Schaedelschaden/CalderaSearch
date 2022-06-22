@@ -26,6 +26,11 @@ function onMobWeaponSkill(target, mob, skill)
     local accmod = 1
     local dmgmod = 4
 	
+	if (mob:isPet()) then
+		dmgmod = 1.75
+		target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 25, 0, 60)
+	end
+	
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded)
 	

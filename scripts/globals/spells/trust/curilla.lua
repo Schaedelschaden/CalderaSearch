@@ -27,17 +27,17 @@ function onMobSpawn(mob)
         [tpz.magic.spell.HALVER] = tpz.trust.message_offset.TEAMWORK_4,
     })
 	
+	local defBonus = mob:getMainLvl()
+	
+	mob:addMod(tpz.mod.DEF, defBonus)
 	mob:addMod(tpz.mod.CURE_POTENCY, 35)
 	mob:addMod(tpz.mod.WHITE_MAGIC_CAST, -20)
-
-    mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.SENTINEL,
-                        ai.r.JA, ai.s.SPECIFIC, tpz.ja.SENTINEL)
-
-    mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.FLASH,
-                        ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.FLASH)
-
-    mob:addSimpleGambit(ai.t.PARTY, ai.c.HPP_LT, 75,
-                        ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.CURE)
+	
+    mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.SENTINEL, ai.r.JA, ai.s.SPECIFIC, tpz.ja.SENTINEL)
+    mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.FLASH, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.FLASH, 45)
+    mob:addSimpleGambit(ai.t.PARTY, ai.c.HPP_LT, 75, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.CURE)
+	
+	mob:setTrustTPSkillSettings(ai.tp.RANDOM, ai.s.RANDOM)
 end
 
 function onMobDespawn(mob)

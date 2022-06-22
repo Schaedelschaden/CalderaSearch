@@ -21,8 +21,9 @@ function onMobSpawn(mob)
     tpz.trust.message(mob, message_page_offset, tpz.trust.message_offset.SPAWN)
 
     -- On cooldown
-    mob:addSimpleGambit(ai.t.SELF, ai.c.ALWAYS, 0,
-                        ai.r.JA, ai.s.SPECIFIC, tpz.ja.MANTRA)
+    mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.MAX_HP_BOOST, ai.r.JA, ai.s.SPECIFIC, tpz.ja.MANTRA)
+	
+	mob:setTrustTPSkillSettings(ai.tp.RANDOM, ai.s.RANDOM)
 end
 
 function onMobDespawn(mob)

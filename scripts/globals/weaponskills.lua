@@ -489,11 +489,11 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
 	elseif (attack.weaponType == tpz.skill.SCYTHE) then
 		weaponMultiplier = 2.00
 	elseif (attack.weaponType == tpz.skill.POLEARM) then
-		weaponMultiplier = 1.50
+		weaponMultiplier = 1.70
 	elseif (attack.weaponType == tpz.skill.KATANA) then
-		weaponMultiplier = 2.00
+		weaponMultiplier = 1.80
 	elseif (attack.weaponType == tpz.skill.GREAT_KATANA) then
-		weaponMultiplier = 1.75
+		weaponMultiplier = 2.15
 	elseif (attack.weaponType == tpz.skill.CLUB) then
 		weaponMultiplier = 2.00
 	elseif (attack.weaponType == tpz.skill.STAFF) then
@@ -598,9 +598,9 @@ end
 	
 	if (attack.weaponType == tpz.skill.ARCHERY) then
 		-- printf("weaponskills.lua doRangedWeaponskill  ARCHERY WEAPONSKILL")
-		weaponMultiplier = 2.50
+		weaponMultiplier = 2.00
 	elseif (attack.weaponType == tpz.skill.MARKSMANSHIP) then
-		weaponMultiplier = 2.50
+		weaponMultiplier = 2.00
 	end
 	
 	finaldmg = finaldmg * weaponMultiplier

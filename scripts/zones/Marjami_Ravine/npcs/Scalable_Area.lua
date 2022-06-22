@@ -19,10 +19,10 @@ function onTrigger(player, npc)
 		player:startEvent(15, 266, 0, 0, 0, 0, 2, 0, 8)
 	-- !pos 271.483 -59.917 92.095
 	elseif (npc:getID() == 17867178) then
-		player:startEvent(16, 266, 16744959, 0, 719, 193, 3, 711, 0)
+		player:startEvent(16, 266, 0, 0, 0, 0, 3, 0, 8)
 	-- !pos 269.003 -40.124 92.170
 	elseif (npc:getID() == 17867179) then
-		player:startEvent(17, 266, 2529, 1, 0, 0, 4, 94636, 8)
+		player:startEvent(17, 266, 0, 0, 0, 0, 4, 0, 8)
 	-- !pos 227 -59.916 191.476
 	elseif (npc:getID() == 17867180) then
 		player:startEvent(18, 266, 0, 0, 0, 0, 5, 0, 8)
@@ -67,21 +67,21 @@ function onTrigger(player, npc)
 		player:startEvent(31, 266, 0, 0, 0, 0, 18, 0, 8)
 	-- !pos -307.948 -39.913 48.550
 	elseif (npc:getID() == 17867194) then
-		player:startEvent(32, 266, 108, 0, 131, 45374, 19, 375891, 8)
+		player:startEvent(32, 266, 0, 0, 0, 0, 19, 0, 8)
 	-- !pos -307.848 -20.215 50.631
 	elseif (npc:getID() == 17867195) then
-		player:startEvent(33, 266, 5, 1, 0, 0, 20, 0, 8)
+		player:startEvent(33, 266, 0, 0, 0, 0, 20, 0, 8)
 	-- !pos -271.361 -39.906 228.085
 	elseif (npc:getID() == 17867196) then
-		player:startEvent(34, 266, 2237, 0, 0, 0, 21, 0, 8)
+		player:startEvent(34, 266, 0, 0, 0, 0, 21, 0, 8)
 	-- !pos -268.987 -20.116 228.023
 	elseif (npc:getID() == 17867197) then
-		player:startEvent(35, 266, 2040, 1, 0, 0, 22, 0, 8)
+		player:startEvent(35, 266, 0, 0, 0, 0, 22, 0, 8)
 	-- !pos -105.022 -18.100 177.665
 	elseif (npc:getID() == 17867198) then
-		player:startEvent(36, 266, 1, 0, 7, 4063, 23, 1995, 8)
+		player:startEvent(36, 266, 0, 0, 0, 0, 23, 0, 8)
 	-- !pos -106.698 -0.100 179.453
 	elseif (npc:getID() == 17867199) then
-		player:startEvent(37, 266, 1, 1, 7, 0, 24, 61252, 8)
+		player:startEvent(37, 266, 0, 0, 0, 0, 24, 0, 8)
 	end
 end

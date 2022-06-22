@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `pet_list` (
   PRIMARY KEY (`petid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.pet_list: 118 rows
+-- Dumping data for table tpzdb.pet_list: 128 rows
 /*!40000 ALTER TABLE `pet_list` DISABLE KEYS */;
 INSERT INTO `pet_list` (`petid`, `name`, `poolid`, `minLevel`, `maxLevel`, `time`, `element`) VALUES
 	(0, 'FireSpirit', 5830, 1, 99, 0, 1),
@@ -143,7 +143,17 @@ INSERT INTO `pet_list` (`petid`, `name`, `poolid`, `minLevel`, `maxLevel`, `time
 	(114, 'HeraldHenry', 6272, 99, 113, 7200, 0),
 	(115, 'MosquitoFamiliar', 6273, 99, 119, 7200, 0),
 	(116, 'Left-HandedYoko', 6274, 99, 119, 7200, 0),
-	(117, 'BraveHeroGlenn', 6275, 99, 119, 7200, 0);
+	(117, 'BraveHeroGlenn', 6275, 99, 119, 7200, 0),
+	(118, 'P.CrabFamiliar', 6281, 99, 119, 7200, 0),
+	(119, 'JovialEdwin', 6282, 99, 119, 7200, 0),
+	(120, 'Y.BeetleFamiliar', 6283, 99, 119, 7200, 0),
+	(121, 'EnergizedSefina', 6284, 99, 119, 7200, 0),
+	(122, 'LynxFamiliar', 6285, 99, 119, 7200, 0),
+	(123, 'VivaciousGaston', 6286, 99, 119, 7200, 0),
+	(124, 'Hip.Familiar', 6287, 99, 119, 7200, 0),
+	(125, 'DaringRoland', 6288, 99, 119, 7200, 0),
+	(126, 'SlimeFamiliar', 6289, 99, 119, 7200, 0),
+	(127, 'SultryPatrice', 6290, 99, 119, 7200, 0);
 /*!40000 ALTER TABLE `pet_list` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

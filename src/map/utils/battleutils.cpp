@@ -2482,23 +2482,19 @@ namespace battleutils
             switch (PDefender->objtype)
             {
                 case TYPE_MOB:
-                    if (taChar == nullptr)
-					{
-                        ((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(PAttacker, damage);
-					}
-                    else
+                    
+                    if (taChar != nullptr && dsChar == nullptr)
 					{
                         ((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(taChar, damage);
 					}
-
 					// Check for Decoy Shot and redirect enmity if behind a party member
-					if (dsChar == nullptr) //PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_DECOY_SHOT) && PAttacker->PParty != nullptr
+					else if (taChar == nullptr && dsChar != nullptr) //PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_DECOY_SHOT) && PAttacker->PParty != nullptr
 					{
-						((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(PAttacker, damage);
+						((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(dsChar, damage);
 					}
 					else
 					{
-						((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(dsChar, damage);
+                        ((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(PAttacker, damage);
 					}
 
                     if (((CMobEntity*)PDefender)->m_HiPCLvl < PAttacker->GetMLevel())

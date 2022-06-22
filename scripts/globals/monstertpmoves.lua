@@ -596,6 +596,9 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 		dmg = dmg * PetRandom
 --		printf("monstertpmoves.cpp MobFinalAdjustments PetRandom: [%i]  DMG: [%i]", PetRandom, dmg)
 	end
+	
+	-- Global monster skill damage multiplier from settings.lua
+	-- dmg = dmg * MOB_SKILL_POWER
 
     -- Handle Phalanx
     dmg = dmg - target:getMod(tpz.mod.PHALANX)

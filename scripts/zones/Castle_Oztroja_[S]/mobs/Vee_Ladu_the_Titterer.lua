@@ -16,6 +16,7 @@ end
 
 function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 1200) -- 20 minutes
+	mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
 	mob:addMod(tpz.mod.PARALYZERES, 60) -- Resistance to Silence
     mob:addMod(tpz.mod.STUNRES, 30) -- Resistance to Stun
     mob:addMod(tpz.mod.BINDRES, 100) -- Resistance to Bind
@@ -39,8 +40,13 @@ function onMobSpawn(mob)
 	mob:setMod(tpz.mod.UTSUSEMI_BONUS, 15)
 end
 
+function onMobRoam(mob)
+	mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
+end
+
 function onMobFight(mob)
-	mob:setMod(tpz.mod.TRIPLE_ATTACK, 0)
+	mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
+	-- mob:setMod(tpz.mod.TRIPLE_ATTACK, 0)
    	-- if (mob:getHPP() <= 50 and isBusy == false and has2Hrd ~= 1) then
 		-- mob:useMobAbility(690)
 		-- mob:setLocalVar("has2Hrd", 1)
@@ -69,5 +75,5 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-	mob:setRespawnTime(72000)
+	mob:setRespawnTime(21600)
 end

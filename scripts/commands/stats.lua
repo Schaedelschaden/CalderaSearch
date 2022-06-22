@@ -79,9 +79,9 @@ function onTrigger(player)
 	
 	local MATT = player:getMod(tpz.mod.MATT) + player:getMod(tpz.mod.NIN_NUKE_BONUS)
 	local MDMG = player:getMod(tpz.mod.MAGIC_DAMAGE)
-	local MBurst = 100 + utils.clamp(player:getMod(tpz.mod.MAG_BURST_BONUS), 0, 40) + player:getMod(tpz.mod.TRAIT_MAG_BURST_BONUS)
+	local MBurst = 100 + utils.clamp(player:getMod(tpz.mod.MAG_BURST_BONUS), 0, 40) + player:getMod(tpz.mod.MAG_BURST_BONUS_II) + player:getMod(tpz.mod.TRAIT_MAG_BURST_BONUS)
 	local MCritRate = player:getMod(tpz.mod.MAGIC_CRITHITRATE)
-	local MCritDMG = player:getMod(tpz.mod.MAGIC_CRIT_DMG_INCREASE)
+	local MCritDMG = utils.clamp(10 + player:getMod(tpz.mod.MAGIC_CRIT_DMG_INCREASE), 0, 40)
 	
 	local weaponACC = 0
 	for i = 1, 12 do
@@ -161,11 +161,13 @@ function onTrigger(player)
 	
 	EVA = math.floor(EVA + (player:getStat(tpz.mod.AGI) / 2) + player:getMod(tpz.mod.EVA))
 	EVA = EVA + (math.min(EVA * (player:getMod(tpz.mod.FOOD_EVAP) / 100), player:getMod(tpz.mod.FOOD_EVAP_CAP)))
+	EVA = EVA * (1 + (player:getMod(tpz.mod.TP_MOVE_EVASION) / 100))
 	
 	local MEVA = player:getMod(tpz.mod.MEVA)
 	MEVA = MEVA + (math.min(MEVA * (player:getMod(tpz.mod.FOOD_MEVAP) / 100), player:getMod(tpz.mod.FOOD_MEVAP_CAP)))
+	MEVA = MEVA * (1 + (player:getMod(tpz.mod.TP_MOVE_EVASION) / 100))
 	
-	local MEVAII = player:getMod(tpz.mod.MAGIC_EVASION_BOOST_II)
+	-- local MEVAII = player:getMod(tpz.mod.MEVA_II)
 	local MDEF = player:getMod(tpz.mod.MDEF)
 	local DT = utils.clamp(player:getMod(tpz.mod.DMG), -50, 50)
 	local PDT = utils.clamp(player:getMod(tpz.mod.DMGPHYS), -50, 50)
@@ -336,8 +338,8 @@ function onTrigger(player)
 	player:PrintToPlayer(string.format("  Treasure Hunter: [%i]  Gilfinder: [%i%%]", TreasureHunter, Gilfinder),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  EXP Bonus: [%i%%]  Dedication: [%i EXP Remaining]", ExpRate, DedicationCap),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("COMBAT STATISTICS ---------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  ATK: [%i]  R.ATK: [%i]  Crit Hit Rate: [%i%%]  Crit Hit DMG: [%i%%]  MAB: [%i]  M.DMG: [%i]  M.Burst DMG: [%i%%]  M.Crit Rate: [%i]  M.Crit DMG: [%i]" , ATT, RATT, CritHitRate, CritHitDamage, MATT, MDMG, MBurst, MCritRate, MCritDMG),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("  Accuracy: [%i]  Ranged Accuracy: [%i]  Magic Accuracy: [%i]  Evasion: [%i]  Magic EVA: [%i]  Magic EVA II: [%i]  Magic DEF: [%i]", ACC, RACC, MACC, EVA, MEVA, MEVAII, MDEF),tpz.msg.channel.SYSTEM_3)
+	player:PrintToPlayer(string.format("  ATK: [%i]  R.ATK: [%i]  Crit Hit Rate: [%i%%]  Crit Hit DMG: [%i%%]  MAB: [%i]  M.DMG: [%i]  M.Burst DMG: [%i%%]  M.Crit Rate: [%i%%]  M.Crit DMG: [%i%%]" , ATT, RATT, CritHitRate, CritHitDamage, MATT, MDMG, MBurst, MCritRate, MCritDMG),tpz.msg.channel.SYSTEM_3)
+	player:PrintToPlayer(string.format("  Accuracy: [%i]  Ranged Accuracy: [%i]  Magic Accuracy: [%i]  Evasion: [%i]  Magic EVA: [%i]  Magic DEF: [%i]", ACC, RACC, MACC, EVA, MEVA, MDEF),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  Damage Taken: [%i%%]  Physical DT: [%i%%]  Physical DT II: [%i%%]  Magic DT: [%i%%]  Magic DT II: [%i%%]  Breath DT: [%i%%]  Crit Hit EVA: [%i%%]", DT, PDT, PDTII, MDT, MDTII, BDT, CritHitEVA),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  SDT Fire: [%i%%]  Ice: [%i%%]  Wind: [%i%%]  Earth: [%i%%]  Lightning: [%i%%]  Water: [%i%%]  Light: [%i%%]  Dark: [%i%%]", SDTFire, SDTIce, SDTWind, SDTEarth, SDTLightning, SDTWater, SDTLight, SDTDark),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("  Absorb Fire: [%i%%]  Ice: [%i%%]  Wind: [%i%%]  Earth: [%i%%]  Lightning: [%i%%]  Water: [%i%%]  Light: [%i%%]  Dark: [%i%%]", AbsorbFire, AbsorbIce, AbsorbWind, AbsorbEarth, AbsorbLightning, AbsorbWater, AbsorbLight, AbsorbDark),tpz.msg.channel.SYSTEM_3)

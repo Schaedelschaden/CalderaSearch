@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `item_equipment` (
   PRIMARY KEY (`itemId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=37 PACK_KEYS=1 CHECKSUM=1;
 
--- Dumping data for table tpzdb.item_equipment: 14,191 rows
+-- Dumping data for table tpzdb.item_equipment: 14,201 rows
 /*!40000 ALTER TABLE `item_equipment` DISABLE KEYS */;
 INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`, `shieldSize`, `scriptType`, `slot`, `rslot`) VALUES
 	(10240, 'hexed_haubert', 99, 0, 8641, 5, 0, 0, 32, 0),
@@ -14219,7 +14219,17 @@ INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`
 	(26412, 'kamlanauts_shield', 1, 0, 4194303, 668, 3, 0, 2, 0),
 	(26355, 'acipayam_belt', 99, 0, 2101315, 0, 0, 0, 1024, 0),
 	(21636, 'nihility', 1, 0, 4194303, 749, 0, 0, 3, 0),
-	(26354, 'embla_sash', 99, 0, 1589788, 0, 0, 0, 1024, 0);
+	(26354, 'embla_sash', 99, 0, 1589788, 0, 0, 0, 1024, 0),
+	(21464, 'rancid_broth', 99, 0, 256, 0, 0, 0, 8, 0),
+	(21465, 'pungent_broth', 99, 0, 256, 0, 0, 0, 8, 0),
+	(21466, 'frizzante_broth', 99, 0, 256, 0, 0, 0, 8, 0),
+	(21467, 'spumante_broth', 99, 0, 256, 0, 0, 0, 8, 0),
+	(21468, 'zestful_sap', 99, 0, 256, 0, 0, 0, 8, 0),
+	(21469, 'gassy_sap', 99, 0, 256, 0, 0, 0, 8, 0),
+	(21472, 'turpid_broth', 99, 0, 256, 0, 0, 0, 8, 0),
+	(21473, 'feculent_broth', 99, 0, 256, 0, 0, 0, 8, 0),
+	(21470, 'decaying_broth', 99, 0, 256, 0, 0, 0, 8, 0),
+	(21471, 'putrescent_broth', 99, 0, 256, 0, 0, 0, 8, 0);
 /*!40000 ALTER TABLE `item_equipment` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

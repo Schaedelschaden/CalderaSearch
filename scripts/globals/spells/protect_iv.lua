@@ -23,7 +23,7 @@ function onSpellCast(caster, target, spell)
     end
 	
 	-- Add Shield Barrier to base power if the target has a shield equipped
-	if (caster:hasTrait(26) and caster:getShieldSize() ~= 0) then
+	if (caster:hasTrait(136) and caster:getShieldSize() ~= 0) then
 		local shieldItemID = caster:getEquipID(tpz.slot.SUB)
 		if (caster:getItemMod(shieldItemID, 1) ~= nil) then
 			shieldDEF = caster:getItemMod(shieldItemID, 1) -- Check for shield's DEF

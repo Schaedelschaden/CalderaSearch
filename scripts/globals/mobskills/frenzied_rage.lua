@@ -17,11 +17,16 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
+	local typeEffect = tpz.effect.ATTACK_BOOST
     local power = 20
     local duration = 120
-
-    local typeEffect = tpz.effect.ATTACK_BOOST
+	local master = mob:getMaster()
+	
+	if (master ~= nil) then
+		master:addStatusEffect(typeEffect, power, 0, duration)
+	end
 
     skill:setMsg(MobBuffMove(mob, typeEffect, power, 0, duration))
+	
     return typeEffect
 end

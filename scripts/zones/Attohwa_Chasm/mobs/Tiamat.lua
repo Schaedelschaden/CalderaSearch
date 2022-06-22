@@ -70,21 +70,21 @@ function onMobFight(mob, target)
             mob:SetMobSkillAttack(730)
             --and record the time and HP this phase was started
             mob:setLocalVar("changeTime", mob:getBattleTime())
-            mob:setLocalVar("changeHP", mob:getHP()/100)
+            mob:setLocalVar("changeHP", mob:getHP())
         -- subanimation 1 is flight, so check if she should land
-        elseif (mob:AnimationSub() == 1 and (mob:getHP()/100 <= changeHP - 10 or
+        elseif (mob:AnimationSub() == 1 and (mob:getHP() <= changeHP - 80000 or
                 mob:getBattleTime() - changeTime > 120)) then
             mob:useMobAbility(1282)
             mob:setLocalVar("changeTime", mob:getBattleTime())
-            mob:setLocalVar("changeHP", mob:getHP()/100)
+            mob:setLocalVar("changeHP", mob:getHP())
         -- subanimation 2 is grounded mode, so check if she should take off
-        elseif (mob:AnimationSub() == 2 and (mob:getHP()/100 <= changeHP - 10 or
+        elseif (mob:AnimationSub() == 2 and (mob:getHP() <= changeHP - 80000 or
                 mob:getBattleTime() - changeTime > 120)) then
             mob:AnimationSub(1)
             mob:addStatusEffectEx(tpz.effect.TOO_HIGH, 0, 1, 0, 0)
             mob:SetMobSkillAttack(730)
             mob:setLocalVar("changeTime", mob:getBattleTime())
-            mob:setLocalVar("changeHP", mob:getHP()/100)
+            mob:setLocalVar("changeHP", mob:getHP())
         end
     end
 end

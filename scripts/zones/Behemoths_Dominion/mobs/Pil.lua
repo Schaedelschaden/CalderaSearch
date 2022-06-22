@@ -81,12 +81,13 @@ function onMobFight(mob, target)
 			mob:setMod(tpz.mod.UDMGRANGE, -100)
 	end
 
-	if ((mob:getLocalVar("ShahMat") == 1) and os.time() - mob:getLocalVar("ShahMatTime") > 60) then -- 60 second duration
+	if ((mob:getLocalVar("ShahMat") == 1) and os.time() - mob:getLocalVar("ShahMatTime") > 30) then -- 30 second duration
 		mob:setLocalVar("ShahMat", 0)
-	elseif (mob:getLocalVar("ShahMat") == 1 and os.time() - mob:getLocalVar("ShahMatTime") <= 3 and
+	elseif (mob:getLocalVar("ShahMat") == 1 and os.time() - mob:getLocalVar("ShahMatTime") >= 3 and os.time() - mob:getLocalVar("ShahMatTime") <= 30 and
 			target:isFacing(mob) and target:isInfront(mob, 90)) then -- 3 Seconds to turn around
+		printf("Pil.lua onMobFight  SHAH MAT TRIGGER")
 		target:addStatusEffectEx(tpz.effect.TERROR, tpz.effect.TERROR, 1, 0, 5)
-		target:addStatusEffectEx(tpz.effect.DOOM, tpz.effect.DOOM, 1, 0, 10)
+		target:addStatusEffectEx(tpz.effect.DOOM, tpz.effect.DOOM, 1, 0, 60)
 	end
 	
 	if (mob:getLocalVar("FlankAura") == 1) then

@@ -79,6 +79,7 @@ tpz.pet.id =
     PANZER_GALAHAD        = 45,
     CHOPSUEY_CHUCKY       = 46,
     AMIGO_SABOTENDER      = 47,
+	LEFTHANDED_YOKO       = 116,
 
     --  Dragoon
     WYVERN                = 48,
@@ -88,7 +89,6 @@ tpz.pet.id =
 
     --  Geomancer
     LUOPAN                = 75,
-	LEFTHANDED_YOKO        = 116,
 }
 
 -----------------------------------

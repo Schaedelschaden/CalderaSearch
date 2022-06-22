@@ -86,7 +86,7 @@ function onTrade(player, npc, trade)
 			player:addItem(augGear, 1, 513, 9, 512, 6, 516, 6) -- DEX +10, STR +7, INT +7 DONE
 		-- Despair
 		elseif (zitahGearCounter <= 10) then
-			player:addItem(augGear, 1, 2, 17, 23, 14, 31, 19) -- HP +50, ACC +15, EVA +20 DONE
+			player:addItem(augGear, 1, 2, 17, 514, 9, 356, 4) -- HP +50, VIT +10, Cure Pot rec +5 DONE
 		-- Eschite
 		elseif (zitahGearCounter <= 15) then
 			player:addItem(augGear, 1, 3, 15, 39, 6, 54, 3) -- HP +80, ENM +7, PDT -4 DONE

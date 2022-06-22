@@ -9,7 +9,6 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAdditionalEffect(player, target, damage)
-	printf("abrasion_bolt.lua onAdditionalEffect NAME: [%s]", player:getName())
     local chance = 95
 	local targetMLvl = target:getMainLvl()
 	local playerMLvl = player:getMainLvl()

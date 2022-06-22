@@ -25,18 +25,16 @@ function onMobSpawn(mob)
         [tpz.magic.spell.KARAHA_BARUHA] = tpz.trust.message_offset.TEAMWORK_4,
         [tpz.magic.spell.SEMIH_LAFIHNA] = tpz.trust.message_offset.TEAMWORK_5,
     })
+	
+	mob:addMod(tpz.mod.CURE_POTENCY, 25)
+	mob:addMod(tpz.mod.FAST_CAST, 30)
 
-    mob:addSimpleGambit(ai.t.TARGET, ai.c.MB_AVAILABLE, 0,
-                        ai.r.MA, ai.s.MB_ELEMENT, tpz.magic.spellFamily.NONE)
-
-    mob:addSimpleGambit(ai.t.PARTY, ai.c.HPP_LT, 25,
-                        ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.CURE)
-
-    mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.SLOW,
-                        ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.SLOW, 60)
-
-    mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_SC_AVAILABLE, 0,
-                        ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.NONE, 60)
+	mob:addSimpleGambit(ai.t.PARTY, ai.c.HPP_LT, 50, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.CURE)
+	mob:addSimpleGambit(ai.t.TARGET, ai.c.STATUS_FLAG, tpz.effectFlag.DISPELABLE, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.DISPEL,30)
+    mob:addSimpleGambit(ai.t.TARGET, ai.c.MB_AVAILABLE, 0, ai.r.MA, ai.s.MB_ELEMENT, tpz.magic.spellFamily.NONE)
+    mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.SLOW, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.SLOW, 60)
+	mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.PARALYZE,ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.PARALYZE, 60)
+    mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_SC_AVAILABLE, 0, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.NONE, 60)
 end
 
 function onMobDespawn(mob)

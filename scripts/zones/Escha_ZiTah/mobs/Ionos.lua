@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Escha - Zitah
 --   NM: Ionos
+-- MobID: 17957352
 -----------------------------------
  -- Requires are other scripts that this LUA will reference to satisfy values
 mixins = {require("scripts/mixins/job_special")} -- Required for inherant job traits
@@ -19,18 +20,18 @@ function onMobSpawn(mob) -- When mob spawns (either forced or time)
     mob:setMod(tpz.mod.LULLABYRES, 30) -- Resistance to Lullaby
     mob:setMod(tpz.mod.PETRIFYRES, 30) -- Resistance to Pertrify
     -- mob:setMod(tpz.mod.POISONRES, 30) -- Resistance to Poison
-	-- mob:setMod(tpz.mod.ATT, 1250) -- Attack Stat (Compare to DEF)
+	mob:addMod(tpz.mod.ATT, 500) -- Attack Stat (Compare to DEF)
 	-- mob:setMod(tpz.mod.MATT, 200) -- Magic Attack (Compare to MDEF)
-    -- mob:setMod(tpz.mod.ACC, 800) -- Accuracy (compare to EVA)
-	-- mob:setMod(tpz.mod.MACC, 700) -- Magic ACC (Compare to MEVA)
+    mob:setMod(tpz.mod.ACC, 800) -- Accuracy (compare to EVA)
+	mob:setMod(tpz.mod.MACC, 740) -- Magic ACC (Compare to MEVA)
 	-- mob:setMod(tpz.mod.EVA, 800) -- Evasion (Compare to ACC)
-	-- mob:setMod(tpz.mod.DEF, 750) -- Defense (Compart to ATT)
+	mob:addMod(tpz.mod.DEF, 750) -- Defense (Compart to ATT)
 	-- mob:setMod(tpz.mod.MEVA, 800) -- Magic Evasion (Compare to MACC)
 	-- mob:setMod(tpz.mod.MDEF, 400) -- Magic Defense (Compare to MATT)
 	mob:setMod(tpz.mod.DOUBLE_ATTACK, 15) -- Double Attack in %
 	mob:setMod(tpz.mod.DMG, -15)
 	mob:setMod(tpz.mod.MOBMOD_TP_USE_CHANCE, 1000)
-	mob:setMod(tpz.mod.REGAIN, 200)
+	mob:setMod(tpz.mod.REGAIN, 60)
 end
 
 function onMobFight(mob, target) -- When mob is engaged

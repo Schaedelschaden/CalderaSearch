@@ -4,13 +4,13 @@
 -- MobID: 17338585
 -- POS: 133 -36 139
 ------------------------------
-mixins = {require("scripts/mixins/rage")}
+mixins = {require("scripts/mixins/rage"),
+		  require("scripts/mixins/families/amphiptere")}
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/titles")
 require("scripts/globals/magic")
 require("scripts/globals/mobs")
-require("scripts/mixins/families/amphiptere")
 ------------------------------
 
 -- Not targetable when fighting
@@ -35,6 +35,9 @@ function onMobSpawn(mob)
 	mob:addMod(tpz.mod.REGEN, 300)
 	mob:addMod(tpz.mod.REFRESH, 50)
 	mob:addMod(tpz.mod.DOUBLE_ATTACK, 10)
+	mob:hideName(false)
+	mob:untargetable(false)
+	mob:AnimationSub(0)
 	
 end
 

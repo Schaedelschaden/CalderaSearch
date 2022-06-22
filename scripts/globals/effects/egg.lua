@@ -22,7 +22,7 @@ local bonuses = {{tpz.mod.CRITHITRATE, 3}, {tpz.mod.CRITHITRATE, 4}, {tpz.mod.MA
 				 {tpz.mod.FASTCAST, 5}, {tpz.mod.DOUBLE_ATTACK, 3}, {tpz.mod.DOUBLE_ATTACK, 4}, {tpz.mod.RERAISE_I, 1}, {tpz.mod.REGAIN, 5}, {tpz.mod.REFRESH, 1}}
 
 function onEffectGain(target, effect)
-	printf("egg.lua onEffectGain TARGET: [%s]", target:getName())
+	-- printf("egg.lua onEffectGain TARGET: [%s]", target:getName())
 end
 
 function onEffectTick(target, effect)
@@ -38,12 +38,12 @@ function onEffectTick(target, effect)
 		targ = GetPlayerByName(MemberName[i])
 		
 		if (target:getName() ~= targ:getName() and target:checkDistance(targ) <= 10 and targ:getLocalVar("ENSPHERE_ACTIVE_"..effect:getPower()) == 0) then
-			printf("egg.lua onEffectTick [%s] IN RANGE OF [%s]", targ:getName(), target:getName())
+			-- printf("egg.lua onEffectTick [%s] IN RANGE OF [%s]", targ:getName(), target:getName())
 			targ:addStatusEffectEx(tpz.effect.ENSPHERE, tpz.effect.ENSPHERE, 1, 3, 0)
 			targ:setLocalVar("ENSPHERE_ACTIVE_"..effect:getPower(), 1)
 			targ:addMod(bonuses[effect:getPower()][1], bonuses[effect:getPower()][2])
 		elseif (target:getName() ~= targ:getName() and target:checkDistance(targ) > 10 and targ:getLocalVar("ENSPHERE_ACTIVE_"..effect:getPower()) == 1) then
-			printf("egg.lua onEffectTick [%s] NOT IN RANGE OF [%s]", targ:getName(), target:getName())
+			-- printf("egg.lua onEffectTick [%s] NOT IN RANGE OF [%s]", targ:getName(), target:getName())
 			targ:setLocalVar("ENSPHERE_ACTIVE_"..effect:getPower(), 0)
 			targ:delMod(bonuses[effect:getPower()][1], bonuses[effect:getPower()][2])
 			
@@ -73,7 +73,7 @@ function onEffectLose(target, effect)
 	
 	for i = 1, #MemberName do
 		if (target ~= nil and targ ~= nil) then
-			printf("egg.lua onEffectLose MEMBER NAME: [%s]", MemberName[i])
+			-- printf("egg.lua onEffectLose MEMBER NAME: [%s]", MemberName[i])
 			targ = GetPlayerByName(MemberName[i])
 			
 			if (target:getName() ~= targ:getName() and targ:getLocalVar("ENSPHERE_ACTIVE_"..effect:getPower()) == 1) then

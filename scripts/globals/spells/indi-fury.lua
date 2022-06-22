@@ -37,6 +37,11 @@ function onSpellCast(caster, target, spell)
 	if (caster:hasStatusEffect(tpz.effect.BOLSTER)) then
 		power = power * 2
 	end
+	
+	if (caster:getObjType() == tpz.objType.TRUST) then
+		power = 37
+		printf("indi-fury.lua onSpellCast  POWER: [%i]  GEO SKILL: [%i]  HANDBELL SKILL: [%i]", power, caster:getSkillLevel(tpz.skill.GEOMANCY), caster:getSkillLevel(tpz.skill.HANDBELL))
+	end
 
     target:addStatusEffectEx(tpz.effect.COLURE_ACTIVE, tpz.effect.COLURE_ACTIVE, 0, 3, duration, tpz.effect.GEO_ATTACK_BOOST, power, tpz.auraTarget.ALLIES, tpz.effectFlag.AURA)
 	

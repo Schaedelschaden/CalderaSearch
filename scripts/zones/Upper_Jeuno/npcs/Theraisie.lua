@@ -24,24 +24,26 @@ function onTrigger(player, npc)
         21499, 2425,    -- Creepy Broth
         17921, 2853,    -- Muddy Broth
         21449, 3004,    -- Dire Broth
-        17016,  100,    -- Pet Food Alpha
-        17017,  200,    -- Pet Food Beta
-        17018,  350,    -- Pet Food Gamma
-        17019,  500,    -- Pet Food Delta
-        17020,  750,    -- Pet Food Epsilon
-        17021, 1000,    -- Pet Food Zeta
-        17022, 1500,    -- Pet Food Eta
-        17023, 2000,    -- Pet Food Theta
-        19251,  300,    -- Pet Roborant
-        19252,  250,    -- Pet Poultice
+        17016,  1000,    -- Pet Food Alpha
+        17017,  2000,    -- Pet Food Beta
+        17018,  3500,    -- Pet Food Gamma
+        17019,  5000,    -- Pet Food Delta
+        17020,  7500,    -- Pet Food Epsilon
+        17021, 9000,    -- Pet Food Zeta
+        17022, 10500,    -- Pet Food Eta
+        17023, 12000,    -- Pet Food Theta
+        19251,  3000,    -- Pet Roborant
+        19252,  2500,    -- Pet Poultice
     }
 
-    -- player:showText(npc, ID.text.MP_SHOP_DIALOG)
-    -- tpz.shop.general(player, stock)
+    player:showText(npc, ID.text.MP_SHOP_DIALOG)
+    tpz.shop.general(player, stock)
 end
 
 function onEventUpdate(player, csid, option)
+
 end
 
 function onEventFinish(player, csid, option)
+
 end

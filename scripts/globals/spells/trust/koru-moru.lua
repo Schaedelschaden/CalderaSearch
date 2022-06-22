@@ -26,8 +26,7 @@ function onMobSpawn(mob)
         [tpz.magic.spell.AJIDO_MARUJIDO] = tpz.trust.message_offset.TEAMWORK_2,
     })
 
-    mob:addSimpleGambit(ai.t.SELF, ai.c.MPP_LT, 5,
-                        ai.r.JA, ai.s.SPECIFIC, tpz.ja.CONVERT)
+    mob:addSimpleGambit(ai.t.SELF, ai.c.MPP_LT, 5, ai.r.JA, ai.s.SPECIFIC, tpz.ja.CONVERT)
 
     mob:addSimpleGambit(ai.t.PARTY, ai.c.HPP_LT, 50, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.CURE)
 
@@ -38,7 +37,6 @@ function onMobSpawn(mob)
 
     mob:addSimpleGambit(ai.t.TARGET, ai.c.STATUS_FLAG, tpz.effectFlag.DISPELABLE, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.DISPEL)
 
-    mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.DIA, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.DIA, 60)
     mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.SLOW, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.SLOW, 60)
     mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.EVASION_DOWN, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.DISTRACT, 60)
     mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.DIA, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.DIA, 60)

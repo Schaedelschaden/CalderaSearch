@@ -1632,6 +1632,9 @@ tpz.mod =
 	FOOD_MEVAP_CAP                  = 1904, -- Magic Evasion +% cap from food
 	TRAIT_MAG_BURST_BONUS           = 1905, -- Magic Burst Bonus Job Traits have to be a separate mod for calculation purposes
 	ENSPELL_STAT_BONUS              = 1906, -- Adds +ACC/ATK/MACC while under the effect of an en- spell
+	MEVA_II							= 1907, -- Adds Magic Evasion II
+	DA_BASE_DAMAGE                  = 1908, -- Increases "Double Attack" damage/"Double Attack" damage + (in percents, e.g. +20 = +20% damage)
+	TA_BASE_DAMAGE                  = 1909, -- Increases "Triple Attack" damage/"Triple Attack" damage + (in percents, e.g. +20 = +20% damage)
 	
 	FRONTAL_DMG_REDUCTION           = 2000, -- Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the front
 	REAR_DMG_REDUCTION              = 2001, -- Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the rear
@@ -1685,6 +1688,7 @@ tpz.mod =
 	ENSPELL_DURATION_BONUS          = 2827, -- Increases the duration of Enspells
 	ENLIGHT_DMG                     = 2828, -- Increases the damage of Enlight
 	TERRORRES                       = 2829, -- Increases resistance to Terror
+	COUNTER_ATT_VARIES              = 2830, -- Attack during "Counter" varies in proportion to Attack of target (Jolt Counters) (Value of 1 means this effect is active)
 	
 	REGEN_BASE                      = 2934, -- Adds # to the base regen effect (similar to WHM Regen merits)
 	PHANTOM_ROLL_RECAST             = 2935, -- Reduces the recast time of Phantom Roll

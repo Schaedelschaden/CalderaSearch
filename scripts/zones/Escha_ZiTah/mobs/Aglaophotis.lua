@@ -9,6 +9,7 @@ require("scripts/globals/status") -- required for LUA status adjustments
 
 function onMobSpawn(mob) -- When mob spawns (either forced or time)
 	mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 360)
+	mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 	mob:setMod(tpz.mod.PARALYZERES, 50) -- Resistance to Paralyze
     mob:setMod(tpz.mod.STUNRES, 40) -- Resistance to Stun
     mob:setMod(tpz.mod.BINDRES, 35) -- Resistance to Bind
@@ -32,5 +33,14 @@ function onMobFight(mob, target) -- When mob is engaged
 
 end
 
+function onAdditionalEffect(mob, target, damage)
+	local params = {}
+		params.power = math.random(200, 300)
+		params.chance = 100
+	
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENWATER, params)
+end
+
 function onMobDeath(mob, player, isKiller) -- When mob is killed
+	
 end

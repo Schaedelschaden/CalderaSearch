@@ -13,7 +13,13 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 2.5
+	
+	if (mob:isPet()) then
+		dmgmod = 2.00
+	end
+	
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*2.8, tpz.magic.ele.THUNDER, dmgmod, TP_MAB_BONUS, 1)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.LIGHTNING, MOBPARAM_WIPE_SHADOWS)
+	
     return dmg
 end

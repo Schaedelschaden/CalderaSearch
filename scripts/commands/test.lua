@@ -20,9 +20,18 @@ cmdprops =
 function onTrigger(player)
 ---------------------------------------------------------------------------------------------------
 
-	local throwingSkill = player:getSkillLevel(tpz.skill.THROWING)
-	local itemLevelSkill = player:getILvlSkill(tpz.slot.AMMO)
-	printf("test.lua onTrigger  THROWING SKILL: [%i]  ITEM LVL: [%i]", throwingSkill, itemLevelSkill)
+-- Test if an array can have a 0 index
+	local test = {}
+	test[0] = 12345
+	test[1] = 6789
+	printf("test.lua onTrigger  TEST 1: [%i]  TEST 2: [%i]", test[0], test[1])
+
+---------------------------------------------------------------------------------------------------
+
+-- Test the proper set up for pulling Throwing weapon skill levels
+	-- local throwingSkill = player:getSkillLevel(tpz.skill.THROWING)
+	-- local itemLevelSkill = player:getILvlSkill(tpz.slot.AMMO)
+	-- printf("test.lua onTrigger  THROWING SKILL: [%i]  ITEM LVL: [%i]", throwingSkill, itemLevelSkill)
 
 ---------------------------------------------------------------------------------------------------
 -- Test pulling ammo quantity from the core
