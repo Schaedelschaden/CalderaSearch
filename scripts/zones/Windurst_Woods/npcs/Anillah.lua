@@ -104,6 +104,7 @@ function onTrigger(player, npc)
 		2173, 117,			-- Wamoura Cocoon
 		2289, 3261,			-- Square of Wamoura Cloth
 		2337, 450,			-- Clump of Wamoura Hair
+        2198, 2820,         -- Water Spider's Web
 		2011, 936,			-- Clump of Wolf Fur
 		2330, 2283,			-- Yoichi's Sash
 		2145, 225,			-- Spool of Zephyr Thread

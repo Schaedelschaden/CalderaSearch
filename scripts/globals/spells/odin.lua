@@ -31,10 +31,10 @@ function onSpellCast(caster,target,spell)
 --	printf("Spell: Odin onSpellCast SUMMON ODIN")
 
 	-- Create a listener for the end of Zantetsuken to despawn Odin
-    pet:addListener("WEAPONSKILL_STATE_EXIT", "ODIN_ZANTETSUKEN_END", function(pet, skill)
-       local master = pet:getMaster()
-       master:despawnPet()
-       pet:removeListener("ODIN_ZANTETSUKEN_END")
+    pet:timer(10000, function(pet)
+        local master = pet:getMaster()
+
+        master:despawnPet()
     end)
 	
 	pet:useMobAbility(bloodpact, target)

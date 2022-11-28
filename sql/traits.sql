@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `traits` (
   PRIMARY KEY (`traitid`,`job`,`level`,`rank`,`modifier`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.traits: 737 rows
+-- Dumping data for table tpzdb.traits: 736 rows
 /*!40000 ALTER TABLE `traits` DISABLE KEYS */;
 INSERT INTO `traits` (`traitid`, `name`, `job`, `level`, `rank`, `modifier`, `value`, `content_tag`, `meritid`) VALUES
 	(1, 'accuracy bonus', 11, 10, 1, 25, 10, NULL, 0),
@@ -429,7 +429,7 @@ INSERT INTO `traits` (`traitid`, `name`, `job`, `level`, `rank`, `modifier`, `va
 	(70, 'zanshin', 12, 75, 4, 306, 45, 'COP', 0),
 	(70, 'zanshin', 12, 95, 5, 306, 50, 'ABYSSEA', 0),
 	(71, 'savagery', 1, 75, 1, 0, 0, 'TOAU', 2052),
-	(72, 'aggressive aim', 1, 75, 1, 0, 0, 'TOAU', 0),
+	(72, 'aggressive aim', 1, 75, 1, 0, 0, 'TOAU', 2054),
 	(73, 'invigorate', 2, 75, 1, 0, 24, 'TOAU', 0),
 	(74, 'penance', 2, 75, 1, 0, 0, 'TOAU', 0),
 	(75, 'aura steal', 6, 75, 1, 0, 0, 'TOAU', 2372),
@@ -716,7 +716,6 @@ INSERT INTO `traits` (`traitid`, `name`, `job`, `level`, `rank`, `modifier`, `va
 	(13, 'conserve mp', 4, 88, 5, 296, 37, 'ABYSSEA', 0),
 	(13, 'conserve mp', 4, 96, 6, 296, 40, 'ABYSSEA', 0),
 	(80, 'desperate blows', 8, 92, 4, 906, 2000, 'SOA', 0),
-	(115, 'stalwart soul', 8, 99, 5, 907, 70, 'ABYSSEA', 0),
 	(139, 'widescan', 9, 1, 1, 340, 3, NULL, 0),
 	(139, 'widescan', 9, 60, 2, 340, 4, NULL, 0),
 	(139, 'widescan', 9, 80, 3, 340, 5, NULL, 0),

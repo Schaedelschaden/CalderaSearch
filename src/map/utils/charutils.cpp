@@ -2036,7 +2036,7 @@ namespace charutils
         }
         else
         {
-            ShowWarning(CL_YELLOW"Item %i is not equipable in equip slot %i\n" CL_RESET, PItem->getID(), equipSlotID);
+            ShowWarning(CL_YELLOW"[%s] Item %i is not equipable in equip slot %i\n" CL_RESET, PChar->GetName(), PItem->getID(), equipSlotID);
             return false;
         }
         return true;
@@ -5341,6 +5341,17 @@ namespace charutils
             }
             PChar->ReloadPartyDec();
         }
+
+        // Attempt to disband party if the last trust was just released
+        // NOTE: Trusts are not counted as party members, so the current member count will be 1
+        if (PChar->PParty && PChar->PParty->HasOnlyOneMember() && PChar->PTrusts.empty())
+        {
+            // Looks good so far, check OTHER processes to see if we should disband
+            if (PChar->PParty->GetMemberCountAcrossAllProcesses() == 1)
+            {
+                PChar->PParty->DisbandParty();
+            }
+        }
     }
 
     bool IsAidBlocked(CCharEntity* PInitiator, CCharEntity* PTarget) {
@@ -5611,6 +5622,55 @@ namespace charutils
     {
         // Get maximum widescan range from main job or sub job
         return std::max(getWideScanRange(PChar->GetMJob(), PChar->GetMLevel()), getWideScanRange(PChar->GetSJob(), PChar->GetSLevel()));
+    }
+
+    // Search all equipped items for the mod ID given and return the highest mod value if found
+    int16 getMaxGearMod(CCharEntity* PChar, Mod modId)
+    {
+        int16 highestValue = 0;
+
+        for (uint8 i = SLOT_MAIN; i <= SLOT_BACK; i++)
+        {
+            CItemEquipment* PItem = PChar->getEquip((SLOTTYPE)i);
+
+            if (PItem && (PItem->isType(ITEM_EQUIPMENT) || PItem->isType(ITEM_WEAPON)) &&
+                PItem->getModifier(modId) > highestValue)
+            {
+                highestValue = PItem->getModifier(modId);
+            }
+        }
+
+        return highestValue;
+    }
+
+    // Search all equipped item for the augment ID given and return the highest augment value, if found
+    int16 getMaxGearAug(CCharEntity* PChar, uint16 augId)
+    {
+        int16 highestValue = 0;
+
+        for (uint8 i = SLOT_MAIN; i <= SLOT_BACK; i++)
+        {
+            CItemEquipment* PItem = PChar->getEquip((SLOTTYPE)i);
+
+            if (PItem && PItem->getAugment(1) > 0)
+            {
+                for (uint8 i = 0; i < 4; i++)
+                {
+                    auto   augbits    = PItem->getAugment(i);
+                    uint16 augmentid  = (uint16)unpackBitsBE((uint8*)(&augbits), 0, 11);
+                    uint8  augmentVal = (uint8)unpackBitsBE((uint8*)(&augbits), 11, 5);
+
+                    if (augmentid == augId && augmentVal > highestValue)
+                    {
+                        // Augment power must be increased by 1 because most augments add +1 at 0 power
+                        // TODO: Pull augment multiplier to properly scale the offset
+                        highestValue = augmentVal + 1;
+                    }
+                }
+            }
+        }
+
+        return highestValue;
     }
 
     void SendTimerPacket(CCharEntity* PChar, uint32 seconds)

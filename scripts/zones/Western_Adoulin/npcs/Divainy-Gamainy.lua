@@ -56,8 +56,7 @@ function onTrade(player, npc, trade)
 			break
 		end
 	end
-	
-	
+
 	if (augItem == 0) then
 		player:PrintToPlayer(string.format("Divainy-Gamainy : You have to include a Weapon or Armor piece from Promyvion in your trade!"),tpz.msg.channel.NS_SAY)
 		return

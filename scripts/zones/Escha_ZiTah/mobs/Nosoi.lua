@@ -43,4 +43,19 @@ function onAdditionalEffect(mob, target, damage)
 end
 
 function onMobDeath(mob, player, isKiller) -- When mob is killed
+    if player:getCharVar("Escha_Shockmaw_KI") == 0 or player:getCharVar("Escha_Shockmaw_KI") == nil then
+        player:setCharVar("Escha_Shockmaw_KI", 1)
+    elseif player:getCharVar("Escha_Shockmaw_KI") == 1 then
+        player:addKeyItem(tpz.keyItem.SHOCKMAWS_BLUBBER)
+        player:setCharVar("Escha_Shockmaw_KI", 0)
+    end
+
+    local playerName  = player:getName()
+	local mobName     = mob:getName()
+	local KillCounter = player:getCharVar("KillCounter_"..mobName)
+
+	KillCounter = KillCounter + 1
+
+	player:setCharVar("KillCounter_"..mobName, KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", mobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
 end

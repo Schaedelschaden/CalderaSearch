@@ -24,7 +24,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
-	local mobHealth = target:getMaxHP()
+	local mobHealth = target:getHP()
 	local damage = math.random(1,99) / 100
 	
 	if (target:isNM()) then

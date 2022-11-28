@@ -576,6 +576,36 @@ void CAttack::ProcessDamage()
         m_damage = (uint32)((m_attacker->GetRangedWeaponDmg() + battleutils::GetFSTR(m_attacker, m_victim, slot)) * m_damageRatio);
     }
 	
+	// Apply "Double Attack" damage and "Triple Attack" damage mods
+	if (m_attackType == PHYSICAL_ATTACK_TYPE::DOUBLE && m_attacker->objtype == TYPE_PC)
+	{
+		if (m_attacker->objtype == TYPE_PC && PChar != nullptr && charutils::GetCharVar(PChar, "AuditMultiHit") == 1)
+		{
+			printf("attack.cpp ProcessDamage  1  DOUBLE ATTACK DAMAGE: [%i]  MULTIPLIER: [%1.2f]\n", m_damage, (100.0f + m_attacker->getMod(Mod::DOUBLE_ATTACK_DMG)) / 100.0f);
+		}
+		
+		m_damage = (int32)(m_damage * ((100.0f + m_attacker->getMod(Mod::DOUBLE_ATTACK_DMG)) / 100.0f));
+		
+		if (m_attacker->objtype == TYPE_PC && PChar != nullptr && charutils::GetCharVar(PChar, "AuditMultiHit") == 1)
+		{
+			printf("attack.cpp ProcessDamage  2  DOUBLE ATTACK DAMAGE: [%i]\n", m_damage);
+		}
+	}
+	else if (m_attackType == PHYSICAL_ATTACK_TYPE::TRIPLE && m_attacker->objtype == TYPE_PC)
+	{
+		if (m_attacker->objtype == TYPE_PC && PChar != nullptr && charutils::GetCharVar(PChar, "AuditMultiHit") == 1)
+		{
+			printf("attack.cpp ProcessDamage  1  TRIPLE ATTACK DAMAGE: [%i]  MULTIPLIER: [%1.2f]\n", m_damage, (100.0f + m_attacker->getMod(Mod::TRIPLE_ATTACK_DMG)) / 100.0f);
+		}
+		
+		m_damage = (int32)(m_damage * ((100.0f + m_attacker->getMod(Mod::TRIPLE_ATTACK_DMG)) / 100.0f));
+		
+		if (m_attacker->objtype == TYPE_PC && PChar != nullptr && charutils::GetCharVar(PChar, "AuditMultiHit") == 1)
+		{
+			printf("attack.cpp ProcessDamage  2  TRIPLE ATTACK DAMAGE: [%i]\n", m_damage);
+		}
+	}
+	
 	// Caldera H2H base damage adjustment
 	if (m_attacker->objtype == TYPE_PC && (mainWeapon != nullptr && mainWeapon->getSkillType() == SKILL_HAND_TO_HAND))
 	{
@@ -681,22 +711,25 @@ void CAttack::ProcessDamage()
     }
 	
 	// Apply Climactic, Striking, and Ternary Flourishes based off of player CHR
-	if (m_isFirstSwing && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_CLIMACTIC_FLOURISH) ||
+	if (m_isFirstSwing &&
+       (m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_CLIMACTIC_FLOURISH) ||
 		m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_STRIKING_FLOURISH) ||
-		m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_TERNARY_FLOURISH))
+		m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_TERNARY_FLOURISH)))
 	{
 		int32 flourishBonus = m_attacker->stats.CHR + m_attacker->getMod(Mod::CHR);
 
 		if (m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_CLIMACTIC_FLOURISH))
-		{
-			flourishBonus = flourishBonus / 2;
-			int32 climacticflourishcrits = charutils::GetCharVar(PChar, "ClimacticFlourishCrits");
-			if (climacticflourishcrits == 0)
-			{
-				m_attacker->StatusEffectContainer->DelStatusEffect(EFFECT_CLIMACTIC_FLOURISH);
-			}
-		}
-		
+        {
+            CStatusEffect* effect = m_attacker->StatusEffectContainer->GetStatusEffect(EFFECT_CLIMACTIC_FLOURISH);
+            int8 crits            = effect->GetPower();
+            flourishBonus         = (int16)(flourishBonus / 2.0f);
+
+            if (crits == 0)
+            {
+                m_attacker->StatusEffectContainer->DelStatusEffect(EFFECT_CLIMACTIC_FLOURISH);
+            }
+        }
+
 		m_damage = (int32)((m_damage + flourishBonus) * (1 + ((float)m_attacker->getMod(Mod::ENH_CLIMACTIC_FLOURISH) / 100.0f)));
 		m_attacker->StatusEffectContainer->DelStatusEffectSilent(EFFECT_STRIKING_FLOURISH);
 		m_attacker->StatusEffectContainer->DelStatusEffectSilent(EFFECT_TERNARY_FLOURISH);

@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `accounts_banned` (
   PRIMARY KEY (`accid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.accounts_banned: 6 rows
+-- Dumping data for table tpzdb.accounts_banned: 9 rows
 /*!40000 ALTER TABLE `accounts_banned` DISABLE KEYS */;
 INSERT INTO `accounts_banned` (`accid`, `timebann`, `timeunbann`, `banncomment`) VALUES
 	(1040, '2021-06-22 11:59:00', '2100-01-01 00:00:00', 'Zillion - Banned for using 3rd Party Tools which include Truesight and/or Radar Hack'),
@@ -28,7 +28,10 @@ INSERT INTO `accounts_banned` (`accid`, `timebann`, `timeunbann`, `banncomment`)
 	(1167, '2022-03-26 11:59:00', '2100-01-01 00:00:00', 'Preciosa Alt - Banned for toxicity and being a demanding, unhelpful pain in the ass'),
 	(1087, '2022-03-26 11:59:00', '2100-01-01 00:00:00', 'Preciosa Alt - Banned for toxicity and being a demanding, unhelpful pain in the ass'),
 	(1089, '2022-03-26 11:59:00', '2100-01-01 00:00:00', 'Preciosa Alt - Banned for toxicity and being a demanding, unhelpful pain in the ass'),
-	(1090, '2022-03-26 11:59:00', '2100-01-01 00:00:00', 'Preciosa - Banned for toxicity and being a demanding, unhelpful pain in the ass');
+	(1090, '2022-03-26 11:59:00', '2100-01-01 00:00:00', 'Preciosa - Banned for toxicity and being a demanding, unhelpful pain in the ass'),
+	(1545, '2022-07-16 11:59:00', '2100-01-01 00:00:00', 'Ayame - Banned for using 3rd Party Tools which include Project Tako'),
+	(1605, '2022-07-16 11:59:00', '2100-01-01 00:00:00', 'Chaewon - Banned for using 3rd Party Tools which include Project Tako'),
+	(1666, '2022-07-16 11:59:00', '2100-01-01 00:00:00', 'Rachel - Banned for using 3rd Party Tools which include Project Tako');
 /*!40000 ALTER TABLE `accounts_banned` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

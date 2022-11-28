@@ -34,8 +34,12 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     end
 
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
-	
-    player:addMP(damage * 0.025)
-	
+
+    if damage < 0 then
+        player:addMP(-damage * 0.01)
+    else
+        player:addMP(damage * 0.01)
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end

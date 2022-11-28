@@ -29,6 +29,7 @@ function onMobWeaponSkill(target, mob, skill)
 			-- if (mob:getID() == 17531126 or 17531127 or 17531128) then
 				-- mob:PrintToArea(string.format("Akvan: You dare defy me?"), tpz.msg.channel.NS_SAY, tpz.msg.area.SAY)
 			-- end
+            return 0
 		else
 			target:setHP(0)
 			-- if (mob:getID() == 17531126 or 17531127 or 17531128) then
@@ -37,5 +38,5 @@ function onMobWeaponSkill(target, mob, skill)
 		end
 	end
 	
-	return dmg	
+	return dmg
 end

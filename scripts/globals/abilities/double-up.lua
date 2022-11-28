@@ -69,9 +69,9 @@ function onUseAbility(caster, target, ability, action)
         dofile("scripts/globals/abilities/"..prev_ability:getName()..".lua")
         local total = applyRoll(caster,target,ability,action,total)
         local msg = ability:getMsg()
-        if msg == 420 then
+        if total <= 11 then
             ability:setMsg(tpz.msg.basic.DOUBLEUP)
-        elseif msg == 422 then
+        elseif total > 11 then
             ability:setMsg(tpz.msg.basic.DOUBLEUP_FAIL)
         end
         return total

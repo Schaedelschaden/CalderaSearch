@@ -564,6 +564,7 @@ local expRings =
 
 local function conquestRanking()
     -- computes part of argument 3 for gate guard events. represents the conquest standing of the 3 nations. Verified.
+    -- printf("conquest.lua conquestRanking  SANDY: [%i]  BASTOK: [%i]  WINDURST: [%i]  RESULT: [%i]", getNationRank(tpz.nation.SANDORIA), getNationRank(tpz.nation.BASTOK), getNationRank(tpz.nation.WINDURST), getNationRank(tpz.nation.SANDORIA) + 4 * getNationRank(tpz.nation.BASTOK) + 16 * getNationRank(tpz.nation.WINDURST))
     return getNationRank(tpz.nation.SANDORIA) + 4 * getNationRank(tpz.nation.BASTOK) + 16 * getNationRank(tpz.nation.WINDURST)
 end
 

@@ -19,7 +19,7 @@ function onTrigger(player, spell)
 	end
 
     -- set level
-    if target and target:isMob() then
+    if target and (target:isMob() or target:getObjType() == tpz.objType.TRUST) then
         player:PrintToPlayer(string.format("Forcing %s to cast spell %i.", target:getName(), spell), tpz.msg.channel.SYSTEM_3)
 
         target:castSpell(spell)

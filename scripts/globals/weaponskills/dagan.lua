@@ -17,11 +17,14 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     -- Apply aftermath
     tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.EMPYREAN)
 
-    local ftphp = fTP(tp, 0.22, 0.33, 0.52)
-    local ftpmp = fTP(tp, 0.15, 0.22, 0.35)
-	
-    player:addHP(ftphp * player:getMaxHP())
-	player:addMP(ftpmp * player:getMaxMP())
-	
-    return 0, 0, false, ftpmp * player:getMaxMP()
+    local ftpHp     = fTP(tp, 0.22, 0.33, 0.52)
+    local ftpMp     = fTP(tp, 0.15, 0.22, 0.35)
+    local restoreHp = ftpHp * player:getMaxHP()
+    local restoreMp = ftpMp * player:getMaxMP()
+
+    -- Only add HP, MP is handled in the return
+    target:addHP(restoreHp)
+
+    -- Structure: damage, tphitslanded, extra hits landed, MP restore
+    return 1, 0, false, restoreMp
 end

@@ -10,6 +10,7 @@ zones[tpz.zone.PORT_JEUNO] =
 {
     text =
     {
+        CANNOT_OBTAIN_MORE      = 6383, -- You cannot obtain any more.
         ITEM_CANNOT_BE_OBTAINED = 6384, -- You cannot obtain the <item>. Come back after sorting your inventory.
         MYSTIC_RETRIEVER        = 6387, -- You cannot obtain the <item>. Speak with the mystic retriever after sorting your inventory.
         ITEM_OBTAINED           = 6390, -- Obtained: <item>.

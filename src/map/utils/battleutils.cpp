@@ -607,7 +607,7 @@ namespace battleutils
 		PDefender->SetLocalVar("Enspell_Active", 1);
 		damage = (int32)(damage * dBonus);
         damage = (int32)(damage * resist);
-        damage = MagicDmgTaken(PDefender, damage, (ELEMENT)(element + 1));
+        damage = MagicDmgTaken(PDefender, damage, (ELEMENT)element);
 		
 		if (PAttacker->objtype == TYPE_PC)
 		{
@@ -1024,8 +1024,8 @@ namespace battleutils
 			{
 				PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_DRAIN_DAZE);
 				
-				float drainPower = (float(PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_ENDRAIN)->GetPower()) / 100);
-				float draincalc = (drainPower * float(finaldamage));
+				float drainPower = PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_ENDRAIN)->GetPower() / 100.f;
+				float draincalc = (float)(drainPower * finaldamage);
 
 				power += (uint16)(floor(draincalc));
 				
@@ -1043,10 +1043,10 @@ namespace battleutils
 				
 				PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_ASPIR_DAZE);
 				
-				float aspirPower = (float(PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_ENASPIR)->GetPower()) / 100);
-				float draincalc = (aspirPower * float(finaldamage));
+				float aspirPower = PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_ENASPIR)->GetPower() / 100.f;
+				float draincalc = (float)(aspirPower * finaldamage);
 
-				power += (uint16)(floor(aspirPower * float(finaldamage)));
+				power += (uint16)(floor(draincalc));
 				
 				Action->additionalEffect = SUBEFFECT_MP_DRAIN;
 				Action->addEffectMessage = 162;
@@ -3101,10 +3101,8 @@ namespace battleutils
 
     uint8 GetCritHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool ignoreSneakTrickAttack)
     {
-		CCharEntity* PChar = (CCharEntity*)PAttacker;
         int32 crithitrate = 5;
-		int32 climacticflourishcrits = charutils::GetCharVar(PChar, "ClimacticFlourishCrits");
-		
+
         if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_MIGHTY_STRIKES, 0) ||
             PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_MIGHTY_STRIKES))
 		{
@@ -3125,11 +3123,17 @@ namespace battleutils
             if (taChar != nullptr) crithitrate = 100;
         }
 		// Apply and track Climactic Flourish first swing guaranteed crits
-		else if ((PAttacker->objtype == TYPE_PC) && (!ignoreSneakTrickAttack) && (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_CLIMACTIC_FLOURISH)) && (climacticflourishcrits > 0))
+        else if (!ignoreSneakTrickAttack &&
+                 PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_CLIMACTIC_FLOURISH) &&
+                 PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_CLIMACTIC_FLOURISH)->GetPower() > 0)
         {
-			crithitrate = 100;
-			climacticflourishcrits = climacticflourishcrits - 1;
-			charutils::SetCharVar(PChar, "ClimacticFlourishCrits", climacticflourishcrits);
+            CStatusEffect* effect = PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_CLIMACTIC_FLOURISH);
+            uint16 crits          = effect->GetPower();
+
+            crithitrate = 100;
+            crits       = crits - 1;
+
+            effect->SetPower(crits);
         }
         else
         {
@@ -3154,7 +3158,7 @@ namespace battleutils
             {
                 crithitrate -= ((CCharEntity*)PDefender)->PMeritPoints->GetMeritValue(MERIT_ENEMY_CRIT_RATE, (CCharEntity*)PDefender) + PDefender->getMod(Mod::CRIT_HIT_EVASION);
             }
-			
+
 			// Check for Feather Step (Bewildered Daze) on the target
 			if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_BEWILDERED_DAZE_1) || PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_BEWILDERED_DAZE_2) || 
 			PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_BEWILDERED_DAZE_3) || PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_BEWILDERED_DAZE_4) ||
@@ -3162,18 +3166,18 @@ namespace battleutils
 			{
 				crithitrate += PDefender->getMod(Mod::CRIT_HIT_EVASION);
 			}
-			
+
 			if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_STRIKING_FLOURISH) && PAttacker->getMod(Mod::ENH_STRIKING_FLOURISH) > 0)
 			{
 				crithitrate += PAttacker->getMod(Mod::ENH_STRIKING_FLOURISH);
 			}
-			
+
             // Check for Innin crit rate bonus from behind target
             if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_INNIN) && behind(PAttacker->loc.p, PDefender->loc.p, 64))
             {
                 crithitrate += PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_INNIN)->GetPower();
             }
-			
+
             // Check for Yonin enemy crit rate reduction while in front of target
             if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_YONIN) && infront(PDefender->loc.p, PAttacker->loc.p, 64))
             {
@@ -4929,18 +4933,33 @@ namespace battleutils
     ************************************************************************/
     uint16 doSoulEaterEffect(CCharEntity* m_PChar, uint32 damage)
     {
-        // Souleater has no effect <10HP.
+        // https://www.bg-wiki.com/ffxi/Souleater
+        // Souleater has no effect < 10HP.
         if (m_PChar->GetMJob() == JOB_DRK && m_PChar->health.hp >= 10 && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SOULEATER))
         {
-            //lost 10% current hp, converted to damage (displayed as just a strong regular hit)
-            float drainPercent = 0.1f;
+            float  boostPercent = 0.1f;
+            uint32 currentHP    = m_PChar->health.hp;
+            uint32 removedHP    = 0;
+            int16  souleaterMod = m_PChar->getMod(Mod::SOULEATER_EFFECT);
+            int16  souleaterPot = m_PChar->getMod(Mod::SOULEATER_EFFECT_POTENCY);
+            float  stalwartSoul = m_PChar->getMod(Mod::STALWART_SOUL) * 0.001f;
+            float  drainPercent = 0.1f - stalwartSoul;
 
-            //at most 2% bonus from gear
-            auto gearBonusPercent = m_PChar->getMod(Mod::SOULEATER_EFFECT);
-            drainPercent = drainPercent + std::min(0.02f, 0.01f * gearBonusPercent);
+            // Check all PC gear slots for the highest Souleater effect mod
+            if (m_PChar->objtype == TYPE_PC)
+            {
+                souleaterMod = charutils::getMaxGearMod(m_PChar, Mod::SOULEATER_EFFECT);
+            }
 
-            damage += (uint32)(m_PChar->health.hp * drainPercent);
-            m_PChar->addHP(-HandleStoneskin(m_PChar, (int32)(m_PChar->health.hp * (drainPercent - m_PChar->getMod(Mod::STALWART_SOUL) * 0.001f))));
+            // Combine Souleater bonuses (Souleater Modifier + Souleater Augment) and calculate damage bonus
+            boostPercent += (souleaterMod + souleaterPot) * 0.01f;
+            damage += (uint32)(currentHP * boostPercent);
+
+            // Calculate HP to be removed
+            removedHP = (uint32)(currentHP * drainPercent);
+
+            // Remove HP
+            m_PChar->addHP(-HandleStoneskin(m_PChar, removedHP));
         }
         else if (m_PChar->GetSJob() == JOB_DRK &&m_PChar->health.hp >= 10 && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SOULEATER))
         {
@@ -5667,10 +5686,16 @@ namespace battleutils
 
     int32 BreathDmgTaken(CBattleEntity* PDefender, int32 damage)
     {
-		int32 damageTaken = PDefender->getMod(Mod::DMG);
+		int32 damageTaken         = PDefender->getMod(Mod::DMG);
+        float damageTakenCap      = 0.5f;
 		int32 enmityDmgMitigation = PDefender->getMod(Mod::ENMITY_MITIGATES_DMG_DT);
-		int32 breathSDT = PDefender->getMod(Mod::SDT_BREATH);
-		
+		int32 breathSDT           = PDefender->getMod(Mod::SDT_BREATH);
+
+        if (PDefender->objtype == TYPE_PET)
+        {
+            damageTakenCap = 0.125f;
+        }
+
 		if (PDefender->getMod(Mod::COVER_DT) > 0 && PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_COVER))
 		{
 			damageTaken += PDefender->getMod(Mod::COVER_DT);
@@ -5678,21 +5703,29 @@ namespace battleutils
 		
 		float barrierTuskReduction = 0;
         float resist = 1.0f + floor( 256.0f * ( PDefender->getMod(Mod::UDMGBREATH) / 100.0f )  ) / 256.0f;
+
+        // Calculate Uncapped Breath Damage Taken -% and "cap" it at 0% damage taken
         resist = std::max<float>(resist, 0);
         damage = (int32)(damage * resist);
 
+        // Calculate Damage Taken/Breath Damage Taken/Enmity mitigates Damage Taken
         resist = 1.0f + ( floor( 256.0f * ( PDefender->getMod(Mod::DMGBREATH) / 100.0f ) ) / 256.0f )
                       + ( floor( 256.0f * ( damageTaken                       / 100.0f ) ) / 256.0f )
 					  + ( floor( 256.0f * ( enmityDmgMitigation               / 100.0f ) ) / 256.0f );
-        resist = std::clamp(resist, 0.5f, 1.5f); //assuming if its floored at .5f its capped at 1.5f but who's stacking +dmgtaken equip anyway??? (DRK's XD)
-		
+        resist = std::clamp(resist, damageTakenCap, 1.875f); // Assuming its floored at .5f/0.125f its capped at 1.875f but who's stacking +dmgtaken equip anyway??? (DRK's XD)
+
+        // Apply damage reduction
         damage = (int32)(damage * resist);
-		
+
 		// Barrier Tusk bypasses the -50% DT cap and provides -15% DT when under -50% DT or -7.5% DT at cap
 		auto PEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_PHALANX);
 		if (PEffect && PEffect->GetSubPower() == 1)
 		{
+            // Cap resist at 0.5f-1.0f
+            resist               = resist < 0.5f ? 0.5f : resist;
+            resist               = resist > 1.0f ? 1.0f : resist;
 			barrierTuskReduction = 0.15f * resist;
+
 			damage -= (int32)(damage * barrierTuskReduction);
 		}
 
@@ -5714,39 +5747,54 @@ namespace battleutils
 
     int32 MagicDmgTaken(CBattleEntity* PDefender, int32 damage, ELEMENT element)
     {
-        Mod absorb[8] = { Mod::FIRE_ABSORB, Mod::ICE_ABSORB, Mod::WIND_ABSORB, Mod::EARTH_ABSORB, Mod::LTNG_ABSORB, Mod::WATER_ABSORB, Mod::LIGHT_ABSORB, Mod::DARK_ABSORB };
+        Mod absorb[8]    = { Mod::FIRE_ABSORB, Mod::ICE_ABSORB, Mod::WIND_ABSORB, Mod::EARTH_ABSORB, Mod::LTNG_ABSORB, Mod::WATER_ABSORB, Mod::LIGHT_ABSORB, Mod::DARK_ABSORB };
         Mod nullarray[8] = { Mod::FIRE_NULL, Mod::ICE_NULL, Mod::WIND_NULL, Mod::EARTH_NULL, Mod::LTNG_NULL, Mod::WATER_NULL, Mod::LIGHT_NULL, Mod::DARK_NULL };
-		Mod sdt[8] = { Mod::SDT_FIRE, Mod::SDT_ICE, Mod::SDT_WIND, Mod::SDT_EARTH, Mod::SDT_LIGHTNING, Mod::SDT_WATER, Mod::SDT_LIGHT, Mod::SDT_DARK };
-		
-		int32 damageTaken = PDefender->getMod(Mod::DMG);
+		Mod sdt[8]       = { Mod::SDT_FIRE, Mod::SDT_ICE, Mod::SDT_WIND, Mod::SDT_EARTH, Mod::SDT_LIGHTNING, Mod::SDT_WATER, Mod::SDT_LIGHT, Mod::SDT_DARK };
+
+		int32 damageTaken         = PDefender->getMod(Mod::DMG);
+        float damageTakenCap      = 0.5f;
 		int32 enmityDmgMitigation = PDefender->getMod(Mod::ENMITY_MITIGATES_DMG_DT);
-		int32 magicSDT = PDefender->getMod(Mod::SDT_MAGIC);
-		
+		int32 magicSDT            = PDefender->getMod(Mod::SDT_MAGIC);
+
+        if (PDefender->objtype == TYPE_PET)
+        {
+            damageTakenCap = 0.125f;
+        }
+
 		if (PDefender->getMod(Mod::COVER_DT) > 0 && PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_COVER))
 		{
 			damageTaken += PDefender->getMod(Mod::COVER_DT);
 		}
-		
+
 		// Apply the "Nuke Wall"
 		if (PDefender->objtype == TYPE_MOB && damage > 0 && PDefender->GetLocalVar("Enspell_Active") == 0)
 		{
 			CMobEntity* PMob = (CMobEntity*)PDefender;
-			
-			float nukeWallReduction = 0.4f;
-			
-			if (PMob->StatusEffectContainer->HasStatusEffect(EFFECT_RAYKE))
-			{
-				nukeWallReduction = 0.7f;
-			}
-			
-			if (PMob->m_nukeWallTimer[element - 1] >= server_clock::now())
-			{
-				damage = (int32)(damage * nukeWallReduction); // 60% reduction
-			}
-			
-			PMob->m_nukeWallTimer[element - 1] = server_clock::now() + 5s;
+
+            if (PMob->m_Type & MOBTYPE_NOTORIOUS)
+            {
+                // Default value of 30%
+                float nukeWallReduction = 0.7f;
+
+                if (PMob->m_nukeWallTimer[element - 1] > server_clock::now())
+                {
+                    nukeWallReduction = 0.4f;
+                }
+
+                if (PMob->StatusEffectContainer->HasStatusEffect(EFFECT_RAYKE))
+                {
+                    nukeWallReduction = 0.7f;
+                }
+
+                if (PMob->m_nukeWallTimer[element - 1] >= server_clock::now())
+                {
+                    damage = (int32)(damage * nukeWallReduction); // 30-60% reduction
+                }
+
+                PMob->m_nukeWallTimer[element - 1] = server_clock::now() + 5s;
+            }
 		}
-		
+
 		// Remove Enspell bypass
 		PDefender->SetLocalVar("Enspell_Active", 0);
 
@@ -5755,41 +5803,52 @@ namespace battleutils
 
 		float barrierTuskReduction = 0;
         float resist = 1.f + PDefender->getMod(Mod::UDMGMAGIC) / 100.f;
+
+        // Calculate Uncapped Magic Damage Taken -% and "cap" it at 0% damage taken
         resist = std::max(resist, 0.f);
         damage = (int32)(damage * resist);
 
+        // Calculate Damage Taken/Magic Damage Taken/Enmity mitigates Damage Taken
         resist = 1.f + PDefender->getMod(Mod::DMGMAGIC) / 100.f + damageTaken / 100.f + enmityDmgMitigation / 100.f;
-        resist = std::max(resist, 0.5f);
-		
+        // Cap at -50% for players/mobs, -87.5% for pets
+        resist = std::max(resist, damageTakenCap);
+
+        // Add Magic Damage Taken II (exceeds -50% mob/player cap)
         resist += PDefender->getMod(Mod::DMGMAGIC_II) / 100.f;
-        resist = std::max(resist, 0.125f); // Total cap with MDT-% II included is 87.5%
-		
+        // Total cap with MDT-% II included is 87.5%
+        resist = std::max(resist, 0.125f);
+
+        // Apply damage reduction
         damage = (int32)(damage * resist);
-		
+
 		// Barrier Tusk bypasses the -50% DT cap and provides -15% DT when under -50% DT or -7.5% DT at cap
 		auto PEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_PHALANX);
 		if (PEffect && PEffect->GetSubPower() == 1)
 		{
+            // Cap resist at 0.5f-1.0f
+            resist               = resist < 0.5f ? 0.5f : resist;
+            resist               = resist > 1.0f ? 1.0f : resist;
 			barrierTuskReduction = 0.15f * resist;
+
 			damage -= (int32)(damage * barrierTuskReduction);
 		}
-		
+
 		// Handle Specific Damage Taken (SDT)
 		damage += (int32)(damage * (magicSDT / 100.f));
-		
+
 		damage -= PDefender->getMod(Mod::ONE_FOR_ALL_EFFECT);
 
         if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_STEAM_JACKET) > 1)
 		{
             damage = HandleSteamJacket(PDefender, damage, 5);
 		}
-		
+
 		if (PDefender->getMod(sdt[element - 1]) != 0)
 		{
             damage += (int32)((float)damage * ((float)PDefender->getMod(sdt[element - 1]) / 100.f));
-			
+
 //			printf("battleutils.cpp MagicDmgTaken DAMAGE: [%i]\n\n", damage);
-			
+
 			if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_MAGIC_DEF_DOWN) &&
 				PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_MAGIC_DEF_DOWN)->GetSubPower() > 0)
 			{
@@ -5797,9 +5856,14 @@ namespace battleutils
 			}
 		}
 
+        if (PDefender->objtype == TYPE_MOB && PDefender->GetLocalVar("AuditMagicDamage") == 1)
+        {
+            printf("battleutils.cpp MagicDmgTaken  ELEMENT: [%i]  ELEMENT - 1: [%i]", element, element - 1);
+        }
+
         if (tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::ABSORB_DMG_CHANCE) ||
-            (tpzrand::GetRandomNumber(100) < PDefender->getMod(absorb[element - 1])) ||
-            tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::MAGIC_ABSORB))
+            (tpzrand::GetRandomNumber(100) < PDefender->getMod(absorb[element - 1]) ||
+             tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::MAGIC_ABSORB)))
 		{
 			if (PDefender->objtype == TYPE_MOB)
 			{
@@ -5837,10 +5901,16 @@ namespace battleutils
 
     int32 PhysicalDmgTaken(CBattleEntity* PDefender, int32 damage, int16 damageType, bool IsCovered)
     {
-		int32 damageTaken = PDefender->getMod(Mod::DMG);
+		int32 damageTaken         = PDefender->getMod(Mod::DMG);
+        float damageTakenCap      = 0.5f;
 		int32 enmityDmgMitigation = PDefender->getMod(Mod::ENMITY_MITIGATES_DMG_DT);
-		int32 physicalSDT = PDefender->getMod(Mod::SDT_PHYS);
-		
+		int32 physicalSDT         = PDefender->getMod(Mod::SDT_PHYS);
+
+        if (PDefender->objtype == TYPE_PET)
+        {
+            damageTakenCap = 0.125f;
+        }
+
 		if (PDefender->getMod(Mod::COVER_DT) > 0 && PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_COVER))
 		{
 			damageTaken += PDefender->getMod(Mod::COVER_DT);
@@ -5848,24 +5918,35 @@ namespace battleutils
 		
 		float barrierTuskReduction = 0;
         float resist = 1.f + PDefender->getMod(Mod::UDMGPHYS) / 100.f;
+
+        // Calculate Uncapped Physical Damage Taken -% and "cap" it at 0% damage taken
         resist = std::max(resist, 0.f);
         damage = (int32)(damage * resist);
 
+        // Calculate Damage Taken/Physical Damage Taken/Enmity mitigates Damage Taken
         resist = 1.f + PDefender->getMod(Mod::DMGPHYS) / 100.f + damageTaken / 100.f + enmityDmgMitigation / 100.f;
-        resist = std::max(resist, 0.5f); // PDT caps at -50%
-		
-        resist += PDefender->getMod(Mod::DMGPHYS_II) / 100.f; // Add Burtgang reduction after 50% cap. Extends cap to -68%
-		
+        // Caps at -50% players/mobs, -87.5% for pets
+        resist = std::max(resist, damageTakenCap);
+
+        // Add Physical Damage Taken II (exceeds -50% mob/player cap)
+        resist += PDefender->getMod(Mod::DMGPHYS_II) / 100.f;
+        resist = std::max(resist, 0.125f);
+
+        // Apply damage reduction
         damage = (int32)(damage * resist);
-		
+
 		// Barrier Tusk bypasses the -50% DT cap and provides -15% DT when under -50% DT or -7.5% DT at cap
 		auto PEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_PHALANX);
 		if (PEffect && PEffect->GetSubPower() == 1)
 		{
+            // Cap resist at 0.5f-1.0f
+            resist               = resist < 0.5f ? 0.5f : resist;
+            resist               = resist > 1.0f ? 1.0f : resist;
 			barrierTuskReduction = 0.15f * resist;
+
 			damage -= (int32)(damage * barrierTuskReduction);
 		}
-		
+
 		// Handle Specific Damage Taken (SDT)
 		damage += (int32)(damage * (physicalSDT / 100.f));
 
@@ -5909,33 +5990,48 @@ namespace battleutils
 
     int32 RangedDmgTaken(CBattleEntity* PDefender, int32 damage, int16 damageType, bool IsCovered)
     {
-		int32 damageTaken = PDefender->getMod(Mod::DMG);
+		int32 damageTaken         = PDefender->getMod(Mod::DMG);
+        float damageTakenCap      = 0.5f;
 		int32 enmityDmgMitigation = PDefender->getMod(Mod::ENMITY_MITIGATES_DMG_DT);
-		int32 rangedSDT = PDefender->getMod(Mod::SDT_RANGED);
-		
+		int32 rangedSDT           = PDefender->getMod(Mod::SDT_RANGED);
+
+        if (PDefender->objtype == TYPE_PET)
+        {
+            damageTakenCap = 0.125f;
+        }
+
 		if (PDefender->getMod(Mod::COVER_DT) > 0 && PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_COVER))
 		{
 			damageTaken += PDefender->getMod(Mod::COVER_DT);
 		}
 		
-		float barrierTuskReduction;
+		float barrierTuskReduction = 0;
         float resist = 1.0f + PDefender->getMod(Mod::UDMGRANGE) / 100.f;
+
+        // Calculate Uncapped Ranged Damage Taken -% and "cap" it at 0% damage taken
         resist = std::max(resist, 0.f);
         damage = (int32)(damage * resist);
 
+        // Calculate Damage Taken/Ranged Damage Taken/Enmity mitigates Damage Taken
         resist = 1.0f + PDefender->getMod(Mod::DMGRANGE) / 100.f + damageTaken / 100.f + enmityDmgMitigation / 100.f;
-        resist = std::max(resist, 0.5f);
-		
+        // Cap at -50% for players/mobs, -87.5% for pets
+        resist = std::max(resist, damageTakenCap);
+
+        // Apply damage reduction
         damage = (int32)(damage * resist);
-		
+
 		// Barrier Tusk bypasses the -50% DT cap and provides -15% DT when under -50% DT or -7.5% DT at cap
 		auto PEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_PHALANX);
 		if (PEffect && PEffect->GetSubPower() == 1)
 		{
+            // Cap resist at 0.5f-1.0f
+            resist               = resist < 0.5f ? 0.5f : resist;
+            resist               = resist > 1.0f ? 1.0f : resist;
 			barrierTuskReduction = 0.15f * resist;
+
 			damage -= (int32)(damage * barrierTuskReduction);
 		}
-		
+
 		// Handle Specific Damage Taken (SDT)
 		damage += (int32)(damage * (rangedSDT / 100.f));
 
@@ -5954,7 +6050,7 @@ namespace battleutils
 			{
 				PDefender->SetLocalVar("Phys_Absorb_Counter", PDefender->GetLocalVar("Phys_Absorb_Counter") + damage);
 			}
-			
+
             damage = -damage;
 		}
         else if (tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::NULL_PHYSICAL_DAMAGE))
@@ -5964,12 +6060,12 @@ namespace battleutils
             damage = HandleSevereDamage(PDefender, damage, true);
 
             ConvertDmgToMP(PDefender, damage, IsCovered);
-			
+
 			//Calculate Convert Damage to TP
 			if (PDefender->getMod(Mod::CONVERT_DMG_TO_TP) > 0)
 			{
 				int16 absorbedTP = static_cast<int16>(damage * (float)(PDefender->getMod(Mod::CONVERT_DMG_TO_TP) / 100.0));
-				printf("battleutils.cpp RangedDmgTaken CONVERT DMG TO TP: [%i]\n", absorbedTP);
+				// printf("battleutils.cpp RangedDmgTaken CONVERT DMG TO TP: [%i]\n", absorbedTP);
 				PDefender->addTP(absorbedTP);
 			}
 

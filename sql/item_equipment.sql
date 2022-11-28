@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `item_equipment` (
   PRIMARY KEY (`itemId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=37 PACK_KEYS=1 CHECKSUM=1;
 
--- Dumping data for table tpzdb.item_equipment: 14,201 rows
+-- Dumping data for table tpzdb.item_equipment: 14,204 rows
 /*!40000 ALTER TABLE `item_equipment` DISABLE KEYS */;
 INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`, `shieldSize`, `scriptType`, `slot`, `rslot`) VALUES
 	(10240, 'hexed_haubert', 99, 0, 8641, 5, 0, 0, 32, 0),
@@ -11863,8 +11863,8 @@ INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`
 	(25920, 'ahosi_leggings', 99, 119, 2593826, 110, 0, 0, 256, 0),
 	(25921, 'skaoi_boots', 99, 119, 3850780, 168, 0, 0, 256, 0),
 	(25922, 'navon_crackows', 99, 119, 1589788, 186, 0, 0, 256, 0),
-	(25923, 'tatena._sune.', 99, 119, 7171, 160, 0, 0, 256, 0),
-	(25924, 'tatena._sune._+1', 99, 119, 7171, 160, 0, 0, 256, 0),
+	(25923, 'tatena._sune.', 99, 119, 7171, 227, 0, 0, 256, 0),
+	(25924, 'tatena._sune._+1', 99, 119, 7171, 227, 0, 0, 256, 0),
 	(25925, 'sulevias_leggings', 99, 119, 8385, 182, 0, 0, 256, 0),
 	(25926, 'sulev._leggings_+1', 99, 119, 8385, 182, 0, 0, 256, 0),
 	(25927, 'meg._jambeaux', 99, 119, 2426144, 183, 0, 0, 256, 0),
@@ -12083,7 +12083,7 @@ INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`
 	(26336, 'klouskap_sash_+1', 99, 0, 155904, 0, 0, 0, 1024, 0),
 	(26337, 'kwahu_kachina_belt', 99, 0, 66560, 0, 0, 0, 1024, 0),
 	(26338, 'k._kachina_belt_+1', 99, 0, 66560, 0, 0, 0, 1024, 0),
-	(26339, 'comaa_belt', 99, 0, 131074, 0, 0, 0, 1024, 0),
+	(26339, 'khoma_belt', 99, 0, 131074, 0, 0, 0, 1024, 0),
 	(26340, 'moonbow_belt', 99, 0, 131074, 0, 0, 0, 1024, 0),
 	(26341, 'moonbow_belt_+1', 99, 0, 131074, 0, 0, 0, 1024, 0),
 	(26342, 'regal_belt', 99, 0, 16384, 0, 0, 0, 1024, 0),
@@ -14229,7 +14229,10 @@ INSERT INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`
 	(21472, 'turpid_broth', 99, 0, 256, 0, 0, 0, 8, 0),
 	(21473, 'feculent_broth', 99, 0, 256, 0, 0, 0, 8, 0),
 	(21470, 'decaying_broth', 99, 0, 256, 0, 0, 0, 8, 0),
-	(21471, 'putrescent_broth', 99, 0, 256, 0, 0, 0, 8, 0);
+	(21471, 'putrescent_broth', 99, 0, 256, 0, 0, 0, 8, 0),
+	(23353, 'boii_calligae_+2', 99, 119, 1, 282, 0, 0, 256, 0),
+	(23688, 'boii_calligae_+3', 99, 119, 1, 282, 0, 0, 256, 0),
+	(21832, 'agwus_scythe', 99, 119, 128, 883, 0, 0, 1, 0);
 /*!40000 ALTER TABLE `item_equipment` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

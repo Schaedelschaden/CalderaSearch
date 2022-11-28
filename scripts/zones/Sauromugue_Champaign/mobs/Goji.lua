@@ -32,23 +32,22 @@ end
 
 
 function onMobEngaged(mob, target)
-
 end
 
 function onMobFight(mob, target)
 	mob:setMobMod(tpz.mobMod.SKILL_LIST, 0)
 	-- mob:SetAutoAttackEnabled(true)
 	local changeHP = mob:getLocalVar("changeHP")
-	
-	if (mob:AnimationSub() == 0 and (mob:getHP() <= changeHP - 50000)) then
+
+	if mob:AnimationSub() == 0 and (mob:getHP() <= changeHP - 50000) then
 		mob:AnimationSub(1)
 		mob:setLocalVar("changeHP", mob:getHP())
-	elseif (mob:AnimationSub() == 1 and (mob:getHP() <= changeHP - 50000)) then
+	elseif mob:AnimationSub() == 1 and (mob:getHP() <= changeHP - 50000) then
 		mob:AnimationSub(0)
 		mob:setLocalVar("changeHP", mob:getHP())
 	end
-	
-	if (mob:AnimationSub() == 0) then
+
+	if mob:AnimationSub() == 0 then
 		mob:SetMobSkillAttack(1172) -- Mob Skill List 1172 has Bloody Claw
 	else
 		mob:SetMobSkillAttack(1173) -- Mob Skill List 1173 has Dark Mist & Dark Orb

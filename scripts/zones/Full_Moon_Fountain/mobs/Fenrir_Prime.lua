@@ -24,7 +24,7 @@ function onMobSpawn(mob)
 	mob:setMod(tpz.mod.CRITHITRATE, 25)
 	mob:setMod(tpz.mod.PHYS_ABSORB, 5)
 	mob:setMod(tpz.mod.REGAIN, 100)
-	mob:setMod(tpz.mod.REGEN, 1000)
+	mob:setMod(tpz.mod.REGEN, 500)
 	mob:setMod(tpz.mod.MAGIC_ABSORB, 5)
 end
 

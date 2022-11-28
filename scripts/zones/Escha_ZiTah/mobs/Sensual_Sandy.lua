@@ -34,7 +34,7 @@ function onMobSpawn(mob) -- When mob spawns (either forced or time)
 	mob:setMod(tpz.mod.REGAIN, 60)
 	
 	mob:addListener("EFFECT_LOSE", "SKILLCHAIN", function(mob, effect)
-        if (effect:getType() == tpz.effect.SKILLCHAIN and effect:getTier() > 0) then
+        if effect:getType() == tpz.effect.SKILLCHAIN and effect:getTier() > 0 then
             mob:useMobAbility(3504)
         end
     end)
@@ -56,4 +56,20 @@ end
 
 function onMobDeath(mob, player, isKiller) -- When mob is killed
 	mob:removeListener("SKILLCHAIN")
+
+    if player:getCharVar("Escha_Fleetstalker_KI") == 0 or player:getCharVar("Escha_Fleetstalker_KI") == nil then
+        player:setCharVar("Escha_Fleetstalker_KI", 1)
+    elseif player:getCharVar("Escha_Fleetstalker_KI") == 1 then
+        player:addKeyItem(tpz.keyItem.FLEETSTALKERS_CLAW)
+        player:setCharVar("Escha_Fleetstalker_KI", 0)
+    end
+
+    local playerName  = player:getName()
+	local mobName     = mob:getName()
+	local KillCounter = player:getCharVar("KillCounter_"..mobName)
+
+	KillCounter = KillCounter + 1
+
+	player:setCharVar("KillCounter_"..mobName, KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", mobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
 end

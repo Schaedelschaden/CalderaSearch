@@ -25,7 +25,38 @@ zones[tpz.zone.SHIP_BOUND_FOR_SELBINA] =
     },
     mob =
     {
-        ENAGAKURE = 17678351,
+        ENAGAKURE     = 17678351,
+        SEA_HORROR    = 17678350,
+        SEA_HORROR_PH =
+        {
+            17678341, -- Sea Monk
+            17678346, -- Sea Monk
+        },
+        SPAWN_GROUP_1 =
+        {
+            17678337, -- Sea Pugil
+            17678338, -- Ocean Crab
+        },
+        SPAWN_GROUP_2 =
+        {
+            17678339, -- Ocean Pugil
+            17678340, -- Pirate Pugil
+        },
+        SPAWN_GROUP_3 =
+        {
+            17678341, -- Sea Monk
+            17678342, -- Sea Crab
+        },
+        SPAWN_GROUP_4 =
+        {
+            17678343, -- Sea Crab
+            17678344, -- Sea Pugil
+        },
+        SPAWN_GROUP_5 =
+        {
+            17678345, -- Sea Pugil
+            17678346, -- Sea Monk
+        },
     },
     npc =
     {

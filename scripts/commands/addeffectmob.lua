@@ -45,6 +45,7 @@ function onTrigger(player, arg1, arg2, arg3)
 			end
 			if (targ:isNPC()) then
 				error(player, "You cannot target an NPC with that.")
+                return
 			end
 --			printf("addeffectmob.lua onTrigger 1 ID: [%i]  Power: [%i]  Duration: [%i]", id, power, duration)
 		else
@@ -55,6 +56,7 @@ function onTrigger(player, arg1, arg2, arg3)
 			end
 			if (targ:isNPC()) then
 				error(player, "You cannot target an NPC with that.")
+                return
 			end
 			id = tonumber(arg1) or tpz.effect[string.upper(arg1)]
 			power = tonumber(arg2) or 1

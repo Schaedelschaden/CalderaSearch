@@ -10,19 +10,19 @@ require("scripts/globals/keyitems")
 -----------------------------------
 
 function onTrade(player, npc, trade)
-    
+
 end
 
 function onTrigger(player, npc)
-    if (player:hasKeyItem(2896) and npcUtil.popFromQM(player, npc, ID.mob.LUSTFUL_LYDIA, {claim = true, hide = 30})) then
-		GetMobByID(ID.mob.LUSTFUL_LYDIA):setPos(-6.69, 0, -443.5, 0)
-		player:delKeyItem(2896)
-	elseif (player:hasKeyItem(2912) and npcUtil.popFromQM(player, npc, ID.mob.SENSUAL_SANDY, {claim = true, hide = 30})) then
-		GetMobByID(ID.mob.SENSUAL_SANDY):setPos(-6.69, 0, -443.5, 0)
-		player:delKeyItem(2912)
-	else
-		player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
-	end
+    if (player:hasKeyItem(tpz.keyItem.LYDIAS_VINE) and npcUtil.popFromQM(player, npc, ID.mob.LUSTFUL_LYDIA, {claim = true, hide = 30})) then
+        GetMobByID(ID.mob.LUSTFUL_LYDIA):setPos(-6.69, 0, -443.5, 0)
+        player:delKeyItem(tpz.keyItem.LYDIAS_VINE)
+    elseif (player:hasKeyItem(tpz.keyItem.SANDYS_LASHER) and npcUtil.popFromQM(player, npc, ID.mob.SENSUAL_SANDY, {claim = true, hide = 30})) then
+        GetMobByID(ID.mob.SENSUAL_SANDY):setPos(-6.69, 0, -443.5, 0)
+        player:delKeyItem(tpz.keyItem.SANDYS_LASHER)
+    else
+        player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
+    end
 end
 
 function onEventUpdate(player, csid, option)

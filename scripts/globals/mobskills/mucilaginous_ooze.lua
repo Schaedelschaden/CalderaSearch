@@ -1,7 +1,7 @@
 ---------------------------------------------------
 --  Mucilaginous Ooze
 --  Family: Slugs
---  Description: A gummy slime inflicts encumberance and slow.
+--  Description: A gummy slime inflicts encumbrance and slow.
 --  Type: Magical
 --  Utsusemi/Blink absorb: Ignores shadows
 --  Range: AoE

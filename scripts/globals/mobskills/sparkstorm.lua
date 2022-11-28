@@ -12,7 +12,10 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
 
-    local dmgmod = 4.8
+    local ce = mob:getCE(target)
+	local ve = mob:getVE(target)
+	local scale = (ve+ce)/60000
+	local dmgmod = 3+(3*scale)
     local accmod = 1
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*3, tpz.magic.ele.LIGHTNING, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.LIGHTNING, MOBPARAM_IGNORE_SHADOWS)

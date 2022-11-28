@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `item_usable` (
   PRIMARY KEY (`itemid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 PACK_KEYS=1 CHECKSUM=1;
 
--- Dumping data for table tpzdb.item_usable: 2,297 rows
+-- Dumping data for table tpzdb.item_usable: 2,304 rows
 /*!40000 ALTER TABLE `item_usable` DISABLE KEYS */;
 INSERT INTO `item_usable` (`itemid`, `name`, `validTargets`, `activation`, `animation`, `animationTime`, `maxCharges`, `useDelay`, `reuseDelay`, `aoe`) VALUES
 	(4096, 'fire_crystal', 1, 0, 0, 0, 0, 0, 0, 0),
@@ -1341,17 +1341,17 @@ INSERT INTO `item_usable` (`itemid`, `name`, `validTargets`, `activation`, `anim
 	(5547, 'beef_stewpot', 1, 1, 28, 0, 0, 0, 0, 1),
 	(5548, 'prime_beef_stewpot', 1, 1, 28, 0, 0, 0, 0, 1),
 	(5549, 'prized_beef_stewpot', 1, 1, 28, 0, 0, 0, 0, 1),
-	(5550, 'roll_of_buche_au_chocolat', 1, 1, 24, 0, 0, 0, 0, 0),
+	(5550, 'roll_of_buche_au_chocolat', 1, 1, 24, 0, 0, 0, 0, 1),
 	(5551, 'roll_of_sylvan_excursion', 1, 1, 24, 0, 0, 0, 0, 1),
 	(5552, 'serving_of_black_pudding', 1, 1, 24, 0, 0, 0, 0, 1),
 	(5553, 'serving_of_dusky_indulgence', 1, 1, 24, 0, 0, 0, 0, 1),
 	(5554, 'serving_of_squirrels_delight', 1, 1, 24, 0, 0, 0, 0, 0),
 	(5555, 'serving_of_flurry_courante', 1, 1, 29, 0, 0, 0, 0, 0),
 	(5556, 'cone_of_seraphs_kiss', 1, 1, 29, 0, 0, 0, 0, 0),
-	(5557, 'serving_of_mont_blanc', 1, 1, 29, 29, 0, 0, 0, 0),
-	(5558, 'serving_of_golden_royale', 1, 1, 29, 0, 0, 0, 0, 0),
-	(5559, 'serving_of_mille-feuille', 1, 1, 29, 0, 0, 0, 0, 0),
-	(5560, 'serving_of_elysian_eclair', 1, 1, 29, 0, 0, 0, 0, 0),
+	(5557, 'serving_of_mont_blanc', 1, 1, 29, 29, 0, 0, 0, 1),
+	(5558, 'serving_of_golden_royale', 1, 1, 29, 0, 0, 0, 0, 1),
+	(5559, 'serving_of_mille-feuille', 1, 1, 29, 0, 0, 0, 0, 1),
+	(5560, 'serving_of_elysian_eclair', 1, 1, 29, 0, 0, 0, 0, 1),
 	(5561, 'moogle_pie', 1, 1, 27, 0, 0, 0, 0, 0),
 	(5562, 'pot_of_white_honey', 1, 1, 24, 0, 0, 0, 0, 0),
 	(5563, 'chunk_of_orobon_meat', 1, 1, 28, 0, 0, 0, 0, 0),
@@ -1368,8 +1368,8 @@ INSERT INTO `item_usable` (`itemid`, `name`, `validTargets`, `activation`, `anim
 	(5574, 'dried_date_+1', 1, 1, 28, 0, 0, 0, 0, 0),
 	(5575, 'bowl_of_yogurt', 1, 1, 29, 0, 0, 0, 0, 0),
 	(5576, 'flask_of_ayran', 1, 1, 27, 0, 0, 0, 0, 0),
-	(5577, 'bowl_of_sutlac', 1, 1, 29, 0, 0, 0, 0, 0),
-	(5578, 'bowl_of_sutlac_+1', 1, 1, 29, 0, 0, 0, 0, 0),
+	(5577, 'bowl_of_sutlac', 1, 1, 29, 0, 0, 0, 0, 1),
+	(5578, 'bowl_of_sutlac_+1', 1, 1, 29, 0, 0, 0, 0, 1),
 	(5579, 'bowl_of_yayla_corbasi', 1, 1, 28, 0, 0, 0, 0, 0),
 	(5580, 'bowl_of_yayla_corbasi_+1', 1, 1, 28, 0, 0, 0, 0, 0),
 	(5581, 'slice_of_ziz_meat', 1, 1, 28, 0, 0, 0, 0, 0),
@@ -1418,12 +1418,12 @@ INSERT INTO `item_usable` (`itemid`, `name`, `validTargets`, `activation`, `anim
 	(5624, 'dish_of_spaghetti_tonno_rosso_+1', 1, 1, 24, 0, 0, 0, 0, 0),
 	(5625, 'maple_cake', 1, 1, 29, 0, 0, 0, 0, 1),
 	(5626, 'silken_siesta', 1, 1, 29, 0, 0, 0, 0, 1),
-	(5627, 'yogurt_cake', 1, 1, 29, 0, 0, 0, 0, 0),
-	(5628, 'silken_smile', 1, 1, 29, 0, 0, 0, 0, 0),
-	(5629, 'orange_cake', 1, 1, 29, 0, 0, 0, 0, 0),
-	(5630, 'silken_squeeze', 1, 1, 29, 0, 0, 0, 0, 0),
-	(5631, 'pumpkin_cake', 1, 1, 29, 0, 0, 0, 0, 0),
-	(5632, 'silken_sash', 1, 1, 29, 0, 0, 0, 0, 0),
+	(5627, 'yogurt_cake', 1, 1, 29, 0, 0, 0, 0, 1),
+	(5628, 'silken_smile', 1, 1, 29, 0, 0, 0, 0, 1),
+	(5629, 'orange_cake', 1, 1, 29, 0, 0, 0, 0, 1),
+	(5630, 'silken_squeeze', 1, 1, 29, 0, 0, 0, 0, 1),
+	(5631, 'pumpkin_cake', 1, 1, 29, 0, 0, 0, 0, 1),
+	(5632, 'silken_sash', 1, 1, 29, 0, 0, 0, 0, 1),
 	(5633, 'chocolate_cake', 1, 1, 24, 0, 0, 0, 0, 1),
 	(5634, 'silken_spirit', 1, 1, 25, 0, 0, 0, 0, 1),
 	(5635, 'shrimp_cracker', 1, 1, 29, 0, 0, 0, 0, 0),
@@ -2325,7 +2325,14 @@ INSERT INTO `item_usable` (`itemid`, `name`, `validTargets`, `activation`, `anim
 	(6471, 'bowl_of_oden_+1', 1, 1, 27, 0, 0, 0, 0, 0),
 	(6609, 'serving_of_popotoes_con_queso', 1, 1, 27, 0, 0, 0, 0, 0),
 	(6610, 'serving_of_popotoes_con_queso_+1', 1, 1, 27, 0, 0, 0, 0, 0),
-	(6381, 'fishermans_feast', 1, 1, 24, 0, 0, 0, 0, 0);
+	(6381, 'fishermans_feast', 1, 1, 24, 0, 0, 0, 0, 0),
+	(6219, 'warthog_stewpot', 1, 1, 24, 0, 0, 0, 0, 1),
+	(6220, 'prime_warthog_stewpot', 1, 1, 24, 0, 0, 0, 0, 1),
+	(6221, 'prized_warthog_stewpot', 1, 1, 24, 0, 0, 0, 0, 1),
+	(5893, 'marine_stewpot', 1, 1, 24, 0, 0, 0, 0, 1),
+	(5894, 'prime_marine_stewpot', 1, 1, 24, 0, 0, 0, 0, 1),
+	(6180, 'pluton_case', 1, 1, 55, 0, 0, 0, 0, 0),
+	(6183, 'pluton_box', 1, 1, 55, 0, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `item_usable` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

@@ -3818,6 +3818,14 @@ void SmallPacket0x074(map_session_data_t* session, CCharEntity* PChar, CBasicPac
                     ShowDebug(CL_CYAN"%s party added to %s alliance\n" CL_RESET, PChar->GetName(), PInviter->GetName());
                     return;
                 }
+                else if (PChar->PParty->HasTrusts() || PInviter->PParty->HasTrusts())
+                {
+                    ShowDebug(CL_CYAN"Alliance has trusts, invite to %s cancelled\n" CL_RESET, PChar->GetName());
+                    // Cannot form alliance if you have Trusts
+                    PChar->pushPacket(new CMessageStandardPacket(PChar, 0, 0, MsgStd::TrustCannotJoinAlliance));
+                    PChar->InvitePending.clean();
+                    return;
+                }
                 else
                 {
                     //party leaders have no alliance - create a new one!

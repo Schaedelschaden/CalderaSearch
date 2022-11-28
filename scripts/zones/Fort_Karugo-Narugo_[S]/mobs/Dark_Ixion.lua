@@ -36,8 +36,8 @@ function onMobSpawn(mob)
 	mob:setMod(tpz.mod.REGAIN, 200)
 	mob:setMod(tpz.mod.CRITHITRATE, 25)
 	mob:setMod(tpz.mod.CRIT_HIT_EVASION, math.random(15, 25))
-	
-	onMobRoam(mob)
+
+	-- onMobRoam(mob)
 end
 
 function onMobEngaged(mob, target)

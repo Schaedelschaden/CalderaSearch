@@ -22,6 +22,7 @@
 #include "mobentity.h"
 
 #include <string.h>
+#include "../../common/showmsg.h"
 #include "../../common/timer.h"
 #include "../../common/utils.h"
 #include "../ai/ai_container.h"
@@ -33,6 +34,7 @@
 #include "../ai/states/mobskill_state.h"
 #include "../entities/charentity.h"
 #include "../packets/action.h"
+#include "../packets/chat_message.h"
 #include "../packets/entity_update.h"
 #include "../packets/pet_sync.h"
 #include "../utils/battleutils.h"
@@ -53,6 +55,12 @@
 #include "../treasure_pool.h"
 #include "../conquest_system.h"
 #include "../vana_time.h"
+
+#include "../message.h"
+#include "../packets/message_basic.h"
+#include "../packets/message_combat.h"
+#include "../packets/message_special.h"
+#include "../packets/message_standard.h"
 
 CMobEntity::CMobEntity()
 {
@@ -865,6 +873,14 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 		// if (charutils::GetCharVar(PChar, "AuditTH") == 1)
 		if (GetLocalVar("AuditTH") == 1)
 		{
+            // Works but broadcasts the audit to the whole server
+            // std::string msg2          = "MAX ROLLS PER ITEM: [";
+            // std::string printMaxRolls = std::to_string(maxRolls);
+            // std::string msg3          = "] TH BONUS: [";
+            // std::string printTHBonus  = std::to_string(bonus);
+            // std::string msg4          = "]";
+            // std::string printMessage  = msg2 + printMaxRolls + msg3 + printTHBonus + msg4;
+            // message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, printMessage));
 			printf("mobentity.cpp DropItems  NAME: [%s]  MOB: [%s]  MAX ROLLS PER ITEM: [%i]  TH BONUS: [%i]\n", PChar->GetName(), GetName(), maxRolls, bonus);
 		}
 

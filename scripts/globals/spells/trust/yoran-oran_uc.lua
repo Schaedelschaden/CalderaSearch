@@ -22,6 +22,13 @@ end
 function onMobSpawn(mob)
     -- tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
 
+    mob:addMod(tpz.mod.CURE_POTENCY, 50)
+	mob:addMod(tpz.mod.FASTCAST, 50)
+    mob:addMod(tpz.mod.REGAIN, 50)
+
+    -- Does not attack
+	mob:SetAutoAttackEnabled(false)
+
     mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.AFFLATUS_SOLACE, ai.r.JA, ai.s.SPECIFIC, tpz.ja.AFFLATUS_SOLACE)
 
     mob:addSimpleGambit(ai.t.PARTY, ai.c.HPP_LT, 65, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.CURE)
@@ -46,12 +53,9 @@ function onMobSpawn(mob)
     mob:addSimpleGambit(ai.t.PARTY, ai.c.STATUS_FLAG, tpz.effectFlag.ERASABLE, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.ERASE)
 
     mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.STONESKIN, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.STONESKIN)
-    
-	mob:addMod(tpz.mod.CURE_POTENCY, 50)
-	mob:addMod(tpz.mod.FASTCAST, 50)
-    -- BGwiki states 50/tick regain.  Only used for Nott WS -- replaced with DAGAN due to animation issues.
-    mob:addMod(tpz.mod.REGAIN, 50)
-	mob:SetAutoAttackEnabled(false)
+
+    -- Uses Nott/Dagan at 3000 TP
+    -- mob:setTrustTPSkillSettings(ai.tp.CLOSER, ai.s.RANDOM)
 end
 
 function onMobDespawn(mob)

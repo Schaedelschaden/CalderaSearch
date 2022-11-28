@@ -2,14 +2,19 @@
 -- Area: Al Zahbi
 --  NPC: Gadalar
 -- Type: Fireserpent General
--- !pos -105.979 -7 39.692 48
+-- !pos 39 0 -38 48
+-----------------------------------
+require("scripts/globals/besieged")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    tpz.besieged.onTradeCaldera(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:startEvent(266)
+    -- player:startEvent(266)
+
+    tpz.besieged.onTriggerCaldera(player, npc)
 end
 
 function onEventUpdate(player, csid, option)

@@ -2,14 +2,19 @@
 -- Area: Al Zahbi
 --  NPC: Zazarg
 -- Type: Stoneserpent General
--- !pos -41.675 -8 104.452 48
+-- !pos -60.3 -8 40 48
+-----------------------------------
+require("scripts/globals/besieged")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    tpz.besieged.onTradeCaldera(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:startEvent(268)
+    -- player:startEvent(268)
+
+    tpz.besieged.onTriggerCaldera(player, npc)
 end
 
 function onEventUpdate(player, csid, option)

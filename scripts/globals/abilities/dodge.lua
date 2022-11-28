@@ -13,6 +13,13 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player,target,ability)
-    local power = (player:getMainLvl() + 1) + player:getMod(tpz.mod.DODGE_EFFECT)
+    local level = player:getMainLvl()
+    
+    if (player:getMainJob() ~= tpz.job.MNK) then
+        level = player:getSubLvl()
+    end
+    
+    local power = (level + 1) + player:getMod(tpz.mod.DODGE_EFFECT)
+    
     player:addStatusEffect(tpz.effect.DODGE, power, 0, 120)
 end

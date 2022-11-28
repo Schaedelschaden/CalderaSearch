@@ -10,19 +10,19 @@ require("scripts/globals/keyitems")
 -----------------------------------
 
 function onTrade(player, npc, trade)
-    
+
 end
 
 function onTrigger(player, npc)
-    if (player:hasKeyItem(2906) and npcUtil.popFromQM(player, npc, ID.mob.VYALA, {claim = true, hide = 30})) then
-		GetMobByID(ID.mob.VYALA):setPos(596.7, 0, -163.8, 0)
-		player:delKeyItem(2906)
-	-- elseif (player:hasKeyItem(2917) and npcUtil.popFromQM(player, npc, ID.mob.FLEETSTALKER, {claim = true, hide = 30})) then
-		-- GetMobByID(ID.mob.FLEETSTALKER):setPos(596.7, 0, -163.8, 0)
-		-- player:delKeyItem(2917)
-	else
-		player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
-	end
+    if (player:hasKeyItem(tpz.keyItem.VYALAS_PREY) and npcUtil.popFromQM(player, npc, ID.mob.VYALA, {claim = true, hide = 30})) then
+        GetMobByID(ID.mob.VYALA):setPos(596.7, 0, -163.8, 0)
+        player:delKeyItem(tpz.keyItem.VYALAS_PREY)
+    elseif (player:hasKeyItem(tpz.keyItem.FLEETSTALKERS_CLAW) and npcUtil.popFromQM(player, npc, ID.mob.FLEETSTALKER, {claim = true, hide = 30})) then
+        GetMobByID(ID.mob.FLEETSTALKER):setPos(596.7, 0, -163.8, 0)
+        player:delKeyItem(tpz.keyItem.FLEETSTALKERS_CLAW)
+    else
+        player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
+    end
 end
 
 function onEventUpdate(player, csid, option)

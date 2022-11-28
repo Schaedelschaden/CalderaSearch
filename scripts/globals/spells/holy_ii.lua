@@ -17,15 +17,16 @@ function onSpellCast(caster,target,spell)
 	local params = {}
 	
     if caster:hasStatusEffect(tpz.effect.DIVINE_EMBLEM) then
-		params.dmg = math.floor(250 * bonus)
+		params.dmg = math.floor(500 * bonus)
+
 		if target:isUndead() then -- Undead
 			duration = math.random(20, 25)
-			target:addStatusEffect(tpz.effect.AMNESIA,1,0,duration)
+			target:addStatusEffect(tpz.effect.AMNESIA, 1, 0, duration)
 		end
 	else
-		params.dmg = 250
+		params.dmg = 500
 	end
-	
+
     params.multiplier = 2
     params.hasMultipleTargetReduction = false
     params.resistBonus = 0

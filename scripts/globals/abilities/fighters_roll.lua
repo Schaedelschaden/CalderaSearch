@@ -9,17 +9,17 @@
 --
 -- Die Roll    | No WAR  | With WAR
 -- --------    --------  -----------
--- 1           |2%       |8%
--- 2           |2%       |8%
--- 3           |3%       |9%
--- 4           |4%       |10%
--- 5           |12%      |18%
--- 6           |5%       |11%
--- 7           |6%       |12%
--- 8           |7%       |13%
--- 9           |1%       |7%
--- 10          |9%       |15%
--- 11          |18%      |24%
+-- 1           |1%       |6%
+-- 2           |2%       |7%
+-- 3           |3%       |8%
+-- 4           |4%       |9%
+-- 5           |10%      |15%
+-- 6           |5%       |10%
+-- 7           |6%       |11%
+-- 8           |6%       |11%
+-- 9           |1%       |6%
+-- 10          |7%       |12%
+-- 11          |15%      |20%
 -- 12+         |-6%      |-6%
 -----------------------------------
 require("scripts/globals/settings")
@@ -60,23 +60,23 @@ end
 
 function applyRoll(caster, target, ability, action, total)
     local duration = 300 + caster:getMerit(tpz.merit.WINNING_STREAK) + caster:getMod(tpz.mod.PHANTOM_DURATION)
-    local effectpowers = {2, 2, 3, 4, 12, 5, 6, 7, 1, 9, 18, 6}
+    local effectpowers = {1, 2, 3, 4, 10, 5, 6, 6, 1, 7, 15, 6}
     local effectpower = effectpowers[total]
 	local rollPlus = 1 -- Roll +1 Line from BGWiki
 	local effectMod = phantombuffMultiple(caster)
 	local CrookedCardsMod = 1 + (caster:getMod(tpz.mod.PHANTOM_ROLL_EFFECT) / 100)
 	
     if (caster:getLocalVar("corsairRollBonus") == 1 and total < 12) then
-        effectpower = effectpower + 6
+        effectpower = effectpower + 5
     end
 	
---	printf("fighters_roll.lua applyRoll EFFECT POWER: [%i]  EFFECT MOD: [%i]\n", effectpower, effectMod)
+	-- printf("fighters_roll.lua applyRoll EFFECT POWER: [%i]  EFFECT MOD: [%i]\n", effectpower, effectMod)
 	
 	-- Apply 'Phantom Roll +' gear
 	effectMod = effectMod * rollPlus
 	effectpower = (effectpower + effectMod) * CrookedCardsMod
 	
---	printf("fighters_roll.lua applyRoll MODIFIED EFFECT POWER: [%i]\n", effectpower)
+	-- printf("fighters_roll.lua applyRoll MODIFIED EFFECT POWER: [%i]\n", effectpower)
 	
 	-- Check if COR Main or Sub
     if (caster:getMainJob() == tpz.job.COR and caster:getMainLvl() < target:getMainLvl()) then

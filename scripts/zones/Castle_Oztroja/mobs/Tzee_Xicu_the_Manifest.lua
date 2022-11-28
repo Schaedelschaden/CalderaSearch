@@ -64,7 +64,7 @@ function onMobEngaged(mob, target)
 		 [797] = function (x) skillList = 44 end, -- Shiva
 		 [798] = function (x) skillList = 43 end, -- Ramuh
 	}
-		
+
 	avatar:setMobMod(tpz.mobMod.SKILL_LIST, skillList)
 	
 	if (avatar:getCurrentAction() == tpz.act.ROAMING) then

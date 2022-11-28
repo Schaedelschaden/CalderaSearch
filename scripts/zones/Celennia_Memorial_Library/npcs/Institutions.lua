@@ -97,7 +97,7 @@ local ValidAttachments = {
 
 local ValidTrusts = {
 	896, 898, 899, 900, 901, 902, 903, 904, 905, 908, 909, 910, 911, 913, 917, 933,
-	940, 951, 952, 968, 1010, 1019
+	940, 951, 952, 968, 980, 981, 1010, 1019
 }
 
 local function AddAllSpells(player)
@@ -190,6 +190,7 @@ function onTrigger(player, target)
 		AddAllTrusts(player)
 		SetZilart(player)
 		SetCoP(player)
+        player:addKeyItem(tpz.ki.BOARDING_PERMIT)
 		player:PrintToPlayer(string.format("Institutions : Capped all combat/magic skills. Added all spells/songs, COR rolls, and PUP starter attachments. Unlocked all mounts and chairs."),tpz.msg.channel.NS_SAY)
 		player:PrintToPlayer(string.format("Institutions : DRG and PUP pet names have been randomized. Visit Fouvia (DRG) or Abda-Lurabda (PUP) to change them."),tpz.msg.channel.NS_SAY)
 		player:PrintToPlayer(string.format("Institutions : All Rise of the Zilart and Chains of Promathia missions completed."),tpz.msg.channel.NS_SAY)

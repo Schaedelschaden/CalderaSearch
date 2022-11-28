@@ -9904,10 +9904,15 @@ inline int32 CLuaBaseEntity::checkSoloPartyAlliance(lua_State *L)
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
     uint8 SoloPartyAlliance = 0;
+
     if (PChar->PParty != nullptr)
     {
         SoloPartyAlliance = 1;
-        if (PChar->PParty->m_PAlliance != nullptr) SoloPartyAlliance = 2;
+
+        if (PChar->PParty->m_PAlliance != nullptr)
+        {
+            SoloPartyAlliance = 2;
+        }
     }
 
     lua_pushinteger(L, SoloPartyAlliance);
@@ -12056,6 +12061,48 @@ inline int32 CLuaBaseEntity::delLatent(lua_State *L)
 }
 
 /************************************************************************
+ *  Function: getMaxGearMod()
+ *  Purpose : Returns the highest integer value of a specified Mod on all equiped items
+ *  Example : local maxValue = player:getMaxGearMod(xi.mod.GEOMANCY_BONUS)
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::getMaxGearMod(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    CCharEntity* PChar       = dynamic_cast<CCharEntity*>(m_PBaseEntity);
+    int16        maxModValue = 0;
+    Mod          modId       = static_cast<Mod>(lua_tointeger(L, 1));
+
+    if (!PChar)
+    {
+        ShowWarning("CLuaBaseEntity::getMaxGearMod() - m_PBaseEntity is not a player.");
+        return 0;
+    }
+
+    for (uint8 i = 0; i < SLOT_BACK; ++i)
+    {
+        auto* PItem = PChar->getEquip((SLOTTYPE)i);
+        if (PItem && (PItem->isType(ITEM_EQUIPMENT) || PItem->isType(ITEM_WEAPON)))
+        {
+            int16 modValue = PItem->getModifier(modId);
+            if (modValue > maxModValue)
+            {
+                maxModValue = modValue;
+            }
+        }
+    }
+
+    lua_pushinteger(L, maxModValue);
+
+    return 1;
+}
+
+/************************************************************************
 *  Function: fold()
 *  Purpose : Removes the most recent Phantom Roll or Bust effect
 *  Example : target:fold()
@@ -12746,7 +12793,7 @@ inline int32 CLuaBaseEntity::getILvlSkill(lua_State *L)
 
 /************************************************************************
 *  Function: getILvlMacc()
-*  Purpose : Returns the Magic Accuracy value of an equipped Main Weapon
+*  Purpose : Returns the Magic Accuracy value of an equipped weapon
 *  Example : caster:getILvlMacc()
 *  Notes   : Value of m_iLvlMacc (private member of CItemWeapon)
 ************************************************************************/
@@ -12754,19 +12801,26 @@ inline int32 CLuaBaseEntity::getILvlSkill(lua_State *L)
 inline int32 CLuaBaseEntity::getILvlMacc(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-
-	uint16 macc = 0;
-
-    if (auto weaponMain = dynamic_cast<CItemWeapon*>(((CBattleEntity*)m_PBaseEntity)->m_Weapons[SLOT_MAIN]))
-	{
-        macc += weaponMain->getILvlMacc();
-	}
-    if (auto weaponSub = dynamic_cast<CItemWeapon*>(((CBattleEntity*)m_PBaseEntity)->m_Weapons[SLOT_SUB]))
-	{
-        macc += weaponSub->getILvlMacc();
-	}
-	
-	lua_pushinteger(L, macc);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+		uint8 SLOT = (uint8)lua_tointeger(L, 1);
+		
+		TPZ_DEBUG_BREAK_IF(SLOT > 3);
+        
+        CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
+        
+        if (auto weapon = dynamic_cast<CItemWeapon*>(PEntity->m_Weapons[SLOT]))
+		{
+			lua_pushinteger(L, weapon->getILvlMacc());
+			return 1;
+		}
+		else
+		{
+			lua_pushinteger(L, 0);
+		}
+    }
 
     return 1;
 }
@@ -16422,6 +16476,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addLatent),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,delLatent),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMaxGearMod),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,fold),
 /*     LUNAR_DECLARE_METHOD(CLuaBaseEntity,doWildCard), */

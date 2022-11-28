@@ -25,6 +25,37 @@ zones[tpz.zone.SHIP_BOUND_FOR_MHAURA] =
     },
     mob =
     {
+        SEA_HORROR = 17682446,
+        SEA_HORROR_PH =
+        {
+            17682437, -- Sea Monk
+            17682442, -- Sea Monk
+        },
+        SPAWN_GROUP_1 =
+        {
+            17682433, -- Sea Pugil
+            17682434, -- Ocean Crab
+        },
+        SPAWN_GROUP_2 =
+        {
+            17682435, -- Ocean Pugil
+            17682436, -- Pirate Pugil
+        },
+        SPAWN_GROUP_3 =
+        {
+            17682437, -- Sea Monk
+            17682438, -- Sea Crab
+        },
+        SPAWN_GROUP_4 =
+        {
+            17682439, -- Sea Crab
+            17682440, -- Sea Pugil
+        },
+        SPAWN_GROUP_5 =
+        {
+            17682441, -- Sea Pugil
+            17682442, -- Sea Monk
+        },
     },
     npc =
     {

@@ -16,6 +16,7 @@ function onBattlefieldRegister(player, battlefield)
 end
 
 function onBattlefieldEnter(player, battlefield)
+    player:delKeyItem(tpz.ki.MOONLIT_PATH_PHANTOM_GEM)
 end
 
 function onBattlefieldLeave(player, battlefield, leavecode)

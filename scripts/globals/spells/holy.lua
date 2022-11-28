@@ -16,9 +16,9 @@ function onSpellCast(caster,target,spell)
 	local params = {}
 	
     if caster:hasStatusEffect(tpz.effect.DIVINE_EMBLEM) then
-		params.dmg = math.floor(125 * bonus)
+		params.dmg = math.floor(250 * bonus)
 	else
-		params.dmg = 125
+		params.dmg = 250
 	end
 	
     params.multiplier = 1

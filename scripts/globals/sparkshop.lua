@@ -585,7 +585,7 @@ function tpz.sparkshop.onEventUpdate(player,csid,option)
     end
 	
 	-- Restrict access to the sparks shops until players have been present for a Kirin and Jailer of Love kill
-	if (item.cost > 2000) then
+	if (item.id > 20000) then -- item.cost > 2000) then
 		if (player:getCharVar("KillCounter_Kirin") == 0 and player:getCharVar("KillCounter_JailOfLove") == 0) then
 			player:PrintToPlayer(string.format("We're sorry, that option is currently unavailable for purchase. Please return after defeating Kirin and the Jailer of Love!"),tpz.msg.channel.SYSTEM_3)
 			return

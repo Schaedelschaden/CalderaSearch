@@ -74,20 +74,26 @@ public:
 	void ReloadPartyMembers(CCharEntity* PChar);        // oбновляем статусы участников группы для выбранного персонажа
 	void ReloadTreasurePool(CCharEntity* PChar);
 
-    void AddMember(CBattleEntity* PEntity); // добавляем персонажа в группу
-	void AddMember(uint32 id);	// Add party member from outside this server's scope
-    void RemoveMember(CBattleEntity* PEntity);          // удаление персонажа из группы
-	void DelMember(CBattleEntity* PEntity);				// remove a member without invoking chat/db
-    void PopMember(CBattleEntity* PEntity);             // remove a member from memberlist (zoned to different server)
-    void PushMember(CBattleEntity* PEntity);            // add a member without invoking chat/db
-    void SetPartyID(uint32 id);                         // set new party ID
-    void AssignPartyRole(int8* MemberName, uint8 role);	// назначаем роли участникам группы
-    void DisableSync();
-    void SetSyncTarget(int8* MemberName, uint16 message);         // устанавливаем цель синхронизации уровней3
-    void RefreshSync();
-    void SetPartyNumber(uint8 number);
+    void   AddMember(CBattleEntity* PEntity); // добавляем персонажа в группу
+	void   AddMember(uint32 id);	// Add party member from outside this server's scope
+    void   RemoveMember(CBattleEntity* PEntity);          // удаление персонажа из группы
+	void   DelMember(CBattleEntity* PEntity);				// remove a member without invoking chat/db
+    void   PopMember(CBattleEntity* PEntity);             // remove a member from memberlist (zoned to different server)
+    void   PushMember(CBattleEntity* PEntity);            // add a member without invoking chat/db
+    void   SetPartyID(uint32 id);                         // set new party ID
+    void   AssignPartyRole(int8* MemberName, uint8 role);	// назначаем роли участникам группы
+    void   DisableSync();
+    void   SetSyncTarget(int8* MemberName, uint16 message);         // устанавливаем цель синхронизации уровней3
+    void   RefreshSync();
+    void   SetPartyNumber(uint8 number);
+    bool   HasOnlyOneMember() const;
+    bool   IsFull() const;
+    uint32 LoadPartySize() const;
 
     uint32 GetTimeLastMemberJoined();
+    bool   HasTrusts();
+
+    std::size_t GetMemberCountAcrossAllProcesses();
 
     void PushPacket(uint32 senderID, uint16 ZoneID, CBasicPacket* packet);		// отправляем пакет всем членам группы, за исключением PPartyMember
     void PushEffectsPacket();

@@ -69,6 +69,6 @@ function onSpellCast(caster,target,spell)
 		caster:addHP(dmg)
 	end
 	
-    spell:setMsg(tpz.msg.basic.MAGIC_DRAIN_HP) --change msg to 'xxx hp drained from the yyyy.'
+    -- spell:setMsg(tpz.msg.basic.MAGIC_DRAIN_HP) --change msg to 'xxx hp drained from the yyyy.'
     return dmg
 end

@@ -19,7 +19,7 @@ function onTrigger(player, ability)
 	end
 
     -- set level
-    if target and target:isMob() then
+    if target and (target:isMob() or target:getObjType() == tpz.objType.TRUST) then
         player:PrintToPlayer(string.format("Forcing %s to use ability %i.", target:getName(), ability), tpz.msg.channel.SYSTEM_3)
 
         target:useMobAbility(ability)

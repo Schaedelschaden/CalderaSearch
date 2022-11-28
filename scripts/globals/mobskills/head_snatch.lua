@@ -17,15 +17,9 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local targetCurrentHP = target:getHP()
-    local targetmaxHP = target:getMaxHP()
-    local hpset = targetmaxHP * 0.10
-
-    if (targetCurrentHP > hpset) then
-        dmg = targetCurrentHP - hpset
-    else
-        dmg = 0
-    end
+    local currentHP = target:getHP()
+    local damage    = currentHP * 0.9
+    local dmg       = MobFinalAdjustments(damage, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING, MOBPARAM_IGNORE_SHADOWS)
 
     return dmg
 end

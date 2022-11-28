@@ -208,6 +208,9 @@ namespace charutils
     uint16 getWideScanRange(JOBTYPE job, uint8 level);
     uint16 getWideScanRange(CCharEntity* PChar);
 
+    int16 getMaxGearMod(CCharEntity* PChar, Mod modId);
+    int16 getMaxGearAug(CCharEntity* PChar, uint16 augId);
+
     void   SendTimerPacket(CCharEntity* PChar, uint32 seconds);
     void   SendTimerPacket(CCharEntity* PChar, duration dur);
     void   SendClearTimerPacket(CCharEntity* PChar);

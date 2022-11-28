@@ -50,11 +50,11 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     }
     local calcParams =
     {
-        criticalHit = false,
-        tpHitsLanded = 0,
+        criticalHit     = false,
+        tpHitsLanded    = 0,
         extraHitsLanded = 0,
         shadowsAbsorbed = 0,
-        bonusTP = 0
+        bonusTP         = 0
     }
 
     local damage = 0
@@ -72,15 +72,20 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
             -- tp affects enmity multiplier, 1.0 at 1k, 1.5 at 2k, 2.0 at 3k. Gorget/Belt adds 100 tp each.
             params.enmityMult = params.enmityMult + (tp + handleWSGorgetBelt(player) * 1000 - 1000) / 2000
             params.enmityMult = utils.clamp(params.enmityMult, 1.5, 3) -- necessary because of Gorget/Belt bonus
+
 			local playerLvl = player:getMainLvl() + player:getItemLevel()
-			local ve = target:getVE(player)
-			local ce = target:getCE(player)
+			local ve        = target:getVE(player)
+			local ce        = target:getCE(player)
+
 			dmg = utils.clamp((2000 + ((50.421 * playerLvl) * ((ve + ce) / 60000))), 0, tp * 3) * (1 + player:getMod(tpz.mod.ATONEMENT_DMG) / 100)
         else
             local effectiveTP = tp + handleWSGorgetBelt(player) * 1000
+
             effectiveTP = utils.clamp(effectiveTP, 0, 3000) -- necessary because of Gorget/Belt bonus
+
             local ceMod = fTP(effectiveTP, 0.09, 0.11, 0.20) -- CE portion of Atonement
             local veMod = fTP(effectiveTP, 0.11, 0.14, 0.25) -- VE portion of Atonement
+
             dmg = math.floor(target:getCE(player) * ceMod) + math.floor(target:getVE(player) * veMod)
         end
 

@@ -62,6 +62,17 @@ local itemTrades =
 	[ 43] = {trade = {28053, {8798, 20}}, reward = 28020}, -- Iuitl Wristbands +1
 	[ 44] = {trade = {28194, {8798, 20}}, reward = 28162}, -- Iuitl Tights +1
 	[ 45] = {trade = {28334, {8798, 20}}, reward = 28299}, -- Iuitl Gaiters +1
+    [ 46] = {trade = {27585, {8798, 50}, {4059, 15}}, reward = 26197}, -- Gorney ring +1
+    [ 47] = {trade = {27582, {8798, 50}, {4059, 15}}, reward = 26194}, -- Weatherspoon Ring +1
+    [ 48] = {trade = {27590, {8798, 50}, {4059, 15}}, reward = 26202}, -- Shneddick Ring +1
+    [ 49] = {trade = {27581, {8798, 50}, {4059, 15}}, reward = 26193}, -- Woltaris Ring +1
+    [ 50] = {trade = {27584, {8798, 50}, {4059, 15}}, reward = 26196}, -- Renaye Ring +1
+	[ 51] = {trade = {27580, {8798, 50}, {4059, 15}}, reward = 26192}, -- Adoulin Ring +1
+	[ 52] = {trade = {27588, {8798, 50}, {4059, 15}}, reward = 26200}, -- Vocane Ring +1 
+	[ 53] = {trade = {27587, {8798, 50}, {4059, 15}}, reward = 26199}, -- Karieyh Ring +1
+	[ 54] = {trade = {27583, {8798, 50}, {4059, 15}}, reward = 26195}, -- Janniston Ring +1 
+	[ 55] = {trade = {27589, {8798, 50}, {4059, 15}}, reward = 26201}, -- Thurandaut Ring +1 
+	[ 56] = {trade = {27586, {8798, 50}, {4059, 15}}, reward = 26198}, -- Haverton Ring +1
 }
 
 function onTrade(player, npc, trade)

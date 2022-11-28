@@ -17,12 +17,18 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local numhits = 1
-    local accmod = 2
-    local dmgmod = 2
-    local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 2, 3)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
+    local accmod  = 2
+    local dmgmod  = 2
+    local info    = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 2, 3)
+    local dmg     = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
 	
-	skill:setMsg(tpz.msg.basic.HIT_DMG)
+	if info.hitslanded == 0 and dmg == 0 then
+        skill:setMsg(tpz.msg.basic.NORMAL_MISS)
+    elseif info.hitslanded == 1 and dmg == 1 then
+        skill:setMsg(tpz.msg.basic.SHADOW_ABSORB)
+    else
+        skill:setMsg(tpz.msg.basic.HIT_DMG)
+    end
 
     return dmg
 end

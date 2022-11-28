@@ -24,7 +24,7 @@ function onTrade(player, npc, trade)
     local totalFish = MoatCarp + ForestCarp + fishCountVar
 
     if (MoatCarp + ForestCarp > 0 and MoatCarp + ForestCarp == count) then
-        if (player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.THE_RIVALRY) == QUEST_ACCEPTED and totalFish >= 10000) then -- ultimate reward
+        if (player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.THE_RIVALRY) == QUEST_ACCEPTED and totalFish >= 1000) then -- ultimate reward
             player:tradeComplete()
             player:addFame(SANDORIA, 30)
             player:addGil((GIL_RATE*10*MoatCarp) + (GIL_RATE*15*ForestCarp))

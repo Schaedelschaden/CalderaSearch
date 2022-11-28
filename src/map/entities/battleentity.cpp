@@ -645,7 +645,7 @@ uint16 CBattleEntity::ATT()
                 ATT += static_cast<int32>(ATT * this->getMod(Mod::SMITE) / 256.f); // Divide smite value by 256
             }
 			
-			// Sword enhancement spells (Enspell) +ACC
+			// Sword enhancement spells (Enspell) +ATT
 			if (this->getMod(Mod::ENSPELL) > 0)
 			{
 				// printf("battleentity.cpp ATT  ENSPELL BONUS: [%i]  BEFORE ATK: [%i]\n", this->getMod(Mod::ENSPELL_STAT_BONUS), ATT);
@@ -730,7 +730,7 @@ uint16 CBattleEntity::RATT(uint8 skill, uint16 bonusSkill)
 		iLvlSkill = weapon->getILvlSkill();
 	}
 	
-	int32 RATT = 8 + GetSkill(skill) + iLvlSkill + bonusSkill + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + STR() / 2;
+	int32 RATT = 8 + GetSkill(skill) + iLvlSkill + bonusSkill + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + STR();
 	
 	// Get RATTP Mod from buffs/debuffs/gear and determine percent of RATT Mod
 	RATTP += static_cast<int32>(RATT * (m_modStat[Mod::RATTP] / 100.00f));
@@ -1896,7 +1896,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
 							int32 attackerATT = PTarget->ATT();
 							int32 defenderATT = this->ATT();
 							
-							counterATTVaries = 1 + ((defenderATT - attackerATT) / defenderATT);
+							counterATTVaries = 1.0f + (float)((defenderATT - attackerATT) / defenderATT);
 							
 							if (PTarget->objtype == TYPE_PC && charutils::GetCharVar((CCharEntity*)PTarget, "AuditCounter") == 1)
 							{

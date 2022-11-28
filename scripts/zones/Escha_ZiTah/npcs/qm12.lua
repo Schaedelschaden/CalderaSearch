@@ -10,16 +10,16 @@ require("scripts/globals/keyitems")
 -----------------------------------
 
 function onTrade(player, npc, trade)
-    
+
 end
 
 function onTrigger(player, npc)
-    if (player:hasKeyItem(2900) and npcUtil.popFromQM(player, npc, ID.mob.GESTALT, {claim = true, hide = 30})) then
-		GetMobByID(ID.mob.GESTALT):setPos(396, 0, -641, 0)
-		player:delKeyItem(2900)
-	else
-		player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
-	end
+    if (player:hasKeyItem(tpz.keyItem.GESTALTS_RETINA) and npcUtil.popFromQM(player, npc, ID.mob.GESTALT, {claim = true, hide = 30})) then
+        GetMobByID(ID.mob.GESTALT):setPos(396, 0, -641, 0)
+        player:delKeyItem(tpz.keyItem.GESTALTS_RETINA)
+    else
+        player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
+    end
 end
 
 function onEventUpdate(player, csid, option)

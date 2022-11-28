@@ -22,7 +22,7 @@ function onMobSpawn(mob)
     tpz.mix.jobSpecial.config(mob, {
         specials =
         {
-            {id = 689, hpp = math.random(30,55)}, -- uses Benediction once between near 30-55% HPP.
+            {id = 689, hpp = math.random(50,75)}, -- uses Benediction once between near 30-55% HPP.
         },
     })
 	mob:setMod(tpz.mod.SILENCERES, 35)

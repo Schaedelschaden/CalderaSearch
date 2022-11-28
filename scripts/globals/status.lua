@@ -1161,6 +1161,7 @@ tpz.mod =
     MIJIN_RERAISE                   = 258,
     DUAL_WIELD                      = 259,
     DOUBLE_ATTACK                   = 288,
+	DOUBLE_ATTACK_DMG               = 1038, -- Increases "Double Attack" damage/"Double Attack" damage + (in percents, e.g. +20 = +20% damage)
     SUBTLE_BLOW                     = 289,
     SUBTLE_BLOW_II                  = 973, -- Subtle Blow II Effect (Cap 50%) Total Effect (SB + SB_II cap 75%)
     ENF_MAG_POTENCY                 = 290, -- Increases Enfeebling magic potency %
@@ -1178,6 +1179,7 @@ tpz.mod =
     STONESKIN                       = 300,
     PHALANX                         = 301,
     TRIPLE_ATTACK                   = 302,
+	TRIPLE_ATTACK_DMG               = 1039, -- Increases "Triple Attack" damage/"Triple Attack" damage + (in percents, e.g. +20 = +20% damage)
     TREASURE_HUNTER                 = 303,
     TAME                            = 304,
     RECYCLE                         = 305,
@@ -1234,6 +1236,24 @@ tpz.mod =
     SPIKES_DMG                      = 344,
     TP_BONUS                        = 345,
     PERPETUATION_REDUCTION          = 346,
+
+    -- Dark Knight
+    ARCANE_CIRCLE_POTENCY           = 1069, -- Increases the potency of the Arcane Circle effect (e.g. mod value 2 = +2% Arcana Killer)
+    SOULEATER_EFFECT_POTENCY        = 1079, -- Enhances "Souleater" effect augment power in percents (Additive and stacks with Enhances "Souleater" effect gear)
+    ENHANCES_BLOOD_WEAPON           = 1070, -- Enhances "Blood Weapon" effect (increases Blood Weapon's duration in seconds)
+    DARK_MAGIC_CAST                 = 1071, -- Reduces Dark Magic Casting Time by percentage (e.g. mod value -10 = -10% cast time)
+    DARK_MAGIC_DURATION             = 1072, -- Increases Dark Magic spell durations by percentage (e.g. mod value 10 = +10% duration)
+    ENHANCES_DARK_SEAL              = 1073, -- Enhances "Dark Seal" effect (Increases Dark Magic spell durations by 10% per Dark Seal merit while Dark Seal active)
+    ENHANCES_ABSORB_TP              = 1074, -- Enhances "Absorb-TP" effect (Increases TP absorbed by percentage, e.g. mod value 5 = +5% TP absorbed)
+    ENHANCES_DIABOLIC_EYE           = 1075, -- Enhances "Diabolic Eye" effect (Increases duration by <value> seconds per merit, e.g. mod value 6 = +6s)
+    LAST_RESORT_DURATION            = 1076, -- "Last Resort" effect duration + (Increases duration by <value> seconds, e.g. mod value 15 = +15s)
+    ABSORB_DURATION                 = 1077, -- "Absorb" effect duration +% (Increases duration by <value>%, e.g. mod value 10 = +10%)
+    ENHANCES_NETHER_VOID            = 1078, -- Enhances "Nether Void" effect (Increases the potency of the next Absorb or Drain Dark Magic by <value>%, e.g. mod value 50 = +50%)
+    ENHANCES_MUTED_SOUL             = 1080, -- Enhances "Muted Soul" effect (Adds 3% Zanshin rate per MUTED_SOUL merit level)
+    ENHANCES_DESPERATE_BLOWS        = 1081, -- Enhances "Desperate Blows" effect (Adds +3 Subtle Blow per DESPERATE_BLOWS merit level)
+    WEAPON_BASH_CHAINBOUND          = 1082, -- Augments "Weapon Bash" (Adds a Chainbound effect to Weapon Bash)
+    
+
     FIRE_AFFINITY_DMG               = 347,
     ICE_AFFINITY_DMG                = 348,
     WIND_AFFINITY_DMG               = 349,
@@ -1633,8 +1653,6 @@ tpz.mod =
 	TRAIT_MAG_BURST_BONUS           = 1905, -- Magic Burst Bonus Job Traits have to be a separate mod for calculation purposes
 	ENSPELL_STAT_BONUS              = 1906, -- Adds +ACC/ATK/MACC while under the effect of an en- spell
 	MEVA_II							= 1907, -- Adds Magic Evasion II
-	DA_BASE_DAMAGE                  = 1908, -- Increases "Double Attack" damage/"Double Attack" damage + (in percents, e.g. +20 = +20% damage)
-	TA_BASE_DAMAGE                  = 1909, -- Increases "Triple Attack" damage/"Triple Attack" damage + (in percents, e.g. +20 = +20% damage)
 	
 	FRONTAL_DMG_REDUCTION           = 2000, -- Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the front
 	REAR_DMG_REDUCTION              = 2001, -- Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the rear
@@ -1660,7 +1678,6 @@ tpz.mod =
 	
 	ENEMY_TP_ACCUM                  = 2800, -- Reduces enemy TP accumulation by % when player takes physical damage
 	WALTZ_POTENCY_RCVD              = 2801, -- Increases the potency of Waltz's received
-	DARK_MAGIC_DURATION             = 2802, -- Increases the duration of Dark Magic spells
 	CONVERT_DMG_TO_TP               = 2803, -- Converts damage taken to TP
 	TANDEM_STRIKE                   = 2804, -- Grants a bonus to your and your pet's accuracy and magic accuracy when you and your pet are attacking the same target.
 	TANDEM_BLOW                     = 2805, -- Reduces amount of TP gained by enemies when striking them if you and your pet are attacking the same target.
@@ -1675,7 +1692,6 @@ tpz.mod =
 	REFRESH_DURATION_RCVD           = 2814, -- Increases the duration of Refresh effects received
 	STONESKIN_CAST                  = 2815, -- Reduces the cast time of "Stoneskin"
 	GEO_NO_SPELL_MP_DEPLETION       = 2816, -- % to not deplete MP on Geomancy spellcast
-	LAST_RESORT_DURATION            = 2817, -- Increases Last Resort duration
 	ABSORB_EFFECT_DURATION          = 2818, -- Increases "Absorb" spell durations
 	ALL_JUMPS_DOUBLE_ATTACK         = 2819, -- Adds % chance to Double Attack to Jump, High Jump, Spirit Jump, and Soul Jump
 	LIFE_CYCLE_HP                   = 2820, -- Adds % to HP restored by Life Cycle
@@ -1767,7 +1783,6 @@ tpz.mod =
 	CALL_BEAST_RECAST               = 3008, -- "Call Beast" Ability Delay
     SHIELD_BASH_DISPEL              = 3009, -- Shield Bash: Adds Dispel
 	DIVINE_ENMITY_BONUS             = 3010, -- Divine Magic Special Enmity Bonus
-	DARK_MAGIC_CAST                 = 3011, -- Dark Magic Casting Time -%
 	LAST_RESORT_DEF                 = 3012, -- Last Resort Defense Penalty -%
 	NETHER_VOID_BONUS               = 3013, -- Nether Void Absorb Bonus
 	DAMAGE_LIMIT_TRAIT              = 3014, -- Damage Limit+ Job Trait (Flat pDIF Bonus, value of 1 to 6)
@@ -1882,29 +1897,29 @@ tpz.mod =
 	ENH_ENFEEBLE                    = 3210, -- Increases Enfeebling magic potency + (Duelist's Torque/+1/+2)
 	UTSU_ATK_SHADOWS                = 3211, -- Adds Attack for each Utsusemi Shadow Image present
 	
-	ASURAN_FISTS_DMG                = 3300, -- Asuran Fists Damage (H2H)
-	EVISCERATION_DMG                = 3301, -- Evisceration Damage (Dagger)
-	SAVAGE_BLADE_DMG                = 3302, -- Savage Blade Damage (Sword)
-	GROUND_STRIKE_DMG               = 3303, -- Ground Strike Damage (GSword)
-	DECIMATION_DMG                  = 3304, -- Decimation Damage (Axe)
-	STEEL_CYCLONE_DMG               = 3305, -- Steel Cycle Damage (GAxe)
-	SPIRAL_HELL_DMG                 = 3306, -- Spiral Hell Damage (Scythe)
-	IMPULSE_DRIVE_DMG               = 3307, -- Impulse Drive Damage (Polearm)
-	BLADE_KU_DMG                    = 3308, -- Blade: Ku Damage (Katana)
-	TACHI_KASHA_DMG                 = 3309, -- Tachi: Kasha Damage (GKatana)
-	BLACK_HALO_DMG                  = 3310, -- Black Halo Damage (Club)
-	RETRIBUTION_DMG                 = 3311, -- Retribution Damage (Staff)
-	EMPYREAL_ARROW_DMG              = 3312, -- Empyreal Arrow Damage (Archery)
-	DETONATOR_DMG                   = 3313, -- Detonator Damage (Marksmanship)
-	SPINNING_SLASH_DMG              = 3314, -- Spinning Slash Damage (Great Sword)
-	RED_LOTUS_BLADE_DMG             = 3315, -- Red Lotus Blade Damage (Sword)
-	HERCULEAN_SLASH_DMG             = 3316, -- Herculean Slash Damage (Great Sword)
-	GUST_SLASH_DMG                  = 3317, -- Gust Slash Damage (Dagger)
-	CLOUDSPLITTER_DMG				= 3318, -- Cloudsplitter Damage (Axe)
-	SERAPH_STRIKE_DMG               = 3319, -- Seraph Strike Damage (Club)
-	BLAST_SHOT_DMG                  = 3320, -- Blast Shot Damage (Marksmanship)
-	RAIDEN_THRUST_DMG               = 3321, -- Raiden Thrust Damage (Polearm)
-	TACHI_KAGERO_DMG                = 3322, -- Tachi: Kagero Damage (Great Katana)
+	-- ASURAN_FISTS_DMG                = 3300, -- Asuran Fists Damage (H2H)
+	-- EVISCERATION_DMG                = 3301, -- Evisceration Damage (Dagger)
+	-- SAVAGE_BLADE_DMG                = 3302, -- Savage Blade Damage (Sword)
+	-- GROUND_STRIKE_DMG               = 3303, -- Ground Strike Damage (GSword)
+	-- DECIMATION_DMG                  = 3304, -- Decimation Damage (Axe)
+	-- STEEL_CYCLONE_DMG               = 3305, -- Steel Cycle Damage (GAxe)
+	-- SPIRAL_HELL_DMG                 = 3306, -- Spiral Hell Damage (Scythe)
+	-- IMPULSE_DRIVE_DMG               = 3307, -- Impulse Drive Damage (Polearm)
+	-- BLADE_KU_DMG                    = 3308, -- Blade: Ku Damage (Katana)
+	-- TACHI_KASHA_DMG                 = 3309, -- Tachi: Kasha Damage (GKatana)
+	-- BLACK_HALO_DMG                  = 3310, -- Black Halo Damage (Club)
+	-- RETRIBUTION_DMG                 = 3311, -- Retribution Damage (Staff)
+	-- EMPYREAL_ARROW_DMG              = 3312, -- Empyreal Arrow Damage (Archery)
+	-- DETONATOR_DMG                   = 3313, -- Detonator Damage (Marksmanship)
+	-- SPINNING_SLASH_DMG              = 3314, -- Spinning Slash Damage (Great Sword)
+	-- RED_LOTUS_BLADE_DMG             = 3315, -- Red Lotus Blade Damage (Sword)
+	-- HERCULEAN_SLASH_DMG             = 3316, -- Herculean Slash Damage (Great Sword)
+	-- GUST_SLASH_DMG                  = 3317, -- Gust Slash Damage (Dagger)
+	-- CLOUDSPLITTER_DMG				= 3318, -- Cloudsplitter Damage (Axe)
+	-- SERAPH_STRIKE_DMG               = 3319, -- Seraph Strike Damage (Club)
+	-- BLAST_SHOT_DMG                  = 3320, -- Blast Shot Damage (Marksmanship)
+	-- RAIDEN_THRUST_DMG               = 3321, -- Raiden Thrust Damage (Polearm)
+	-- TACHI_KAGERO_DMG                = 3322, -- Tachi: Kagero Damage (Great Katana)
 }
 
 tpz.latent =

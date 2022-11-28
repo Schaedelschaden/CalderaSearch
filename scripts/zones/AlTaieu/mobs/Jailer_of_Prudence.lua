@@ -80,10 +80,10 @@ function onMobDeath(mob, player, isKiller)
 	local playerName = player:getName()
 	local mobName = mob:getName()
 	local fixedMobName = string.gsub(mobName, "_", " ")
-	
-	if (GetMobByID(ID.mob.JAILER_OF_PRUDENCE_1):isDead() and GetMobByID(ID.mob.JAILER_OF_PRUDENCE_2):isDead()) then
+
+	if (firstPrudence:isDead() and secondPrudence:isDead()) then
 		KillCounter = KillCounter + 1
-		
+
 		player:setCharVar("KillCounter_JailOfPrud", KillCounter)
 		player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
 	end

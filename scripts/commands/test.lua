@@ -18,13 +18,56 @@ cmdprops =
 }
 
 function onTrigger(player)
+
+---------------------------------------------------------------------------------------------------
+-- Test bit.band functionality for Encumbrance
+-- printf("test.lua onTrigger  VALUE: [%i]", bit.band(65535, 0x0001))
+
+---------------------------------------------------------------------------------------------------
+-- Test getting player ACC from the core
+    -- local acc = player:getACC()
+    -- printf("test.lua onTrigger  ACC: [%i]", acc)
+
+---------------------------------------------------------------------------------------------------
+
+-- local npcWaveMessages =
+-- {
+    -- {
+        -- " : Shall we begin?",                                 -- NPC name
+        -- " : This one should be more of a challenge.",         -- NPC name
+        -- " : Can you finish the trial?",                       -- NPC name
+    -- },
+    -- {
+        -- " : Mihli has claimed the first right of challenge.", -- NPC name
+        -- " : Gadalar challenges you next!",                    -- NPC name
+        -- " : Najelith joins the fight!",                       -- NPC name
+        -- " : Zazarg approaches!",                              -- NPC name
+        -- " : Can you finish the trial?",                       -- NPC name
+    -- }
+-- }
+
+-- Test array counting
+    -- local test =
+    -- {
+        -- {
+            -- 1
+        -- },
+        -- {
+            -- 1, 2, 3
+        -- },
+        -- {
+            -- 1, 2, 3, 4, 5
+        -- },
+    -- }
+    -- local blurp = #test[3]
+    -- printf("test.lua onTrigger  %s", npcWaveMessages[1][1])
 ---------------------------------------------------------------------------------------------------
 
 -- Test if an array can have a 0 index
-	local test = {}
-	test[0] = 12345
-	test[1] = 6789
-	printf("test.lua onTrigger  TEST 1: [%i]  TEST 2: [%i]", test[0], test[1])
+	-- local test = {}
+	-- test[0] = 12345
+	-- test[1] = 6789
+	-- printf("test.lua onTrigger  TEST 1: [%i]  TEST 2: [%i]", test[0], test[1])
 
 ---------------------------------------------------------------------------------------------------
 
@@ -85,7 +128,20 @@ function onTrigger(player)
 ---------------------------------------------------------------------------------------------------
 
 -- Check if item has augment
-	
+	local equip = player:getStorageItem(0, 0, 0) -- Main weapon
+
+    if equip then
+        local augList  = {{},{},{},{}}
+        local augValue = 0
+
+        for i = 1, 4 do
+            augList[i][1], augList[i][2] = equip:getAugment(i - 1)
+
+            if augList[i][1] > 0 then
+                printf("test.lua onTrigger  AUGMENT FOUND SLOT: [%i]  AUG ID: [%i]  AUG VALUE: [%i]", i - 1, augList[i][1], augList[i][2])
+            end
+        end
+    end
 
 ---------------------------------------------------------------------------------------------------
 
@@ -398,7 +454,7 @@ function onTrigger(player)
 
 ---------------------------------------------------------------------------------------------------
 	-- local mobName = player:getCursorTarget():getName()
-	-- local fixedMobName = string.gsub(mobName, "_", "")
+	-- local fixedMobName = string.gsub(mobName, "_", " ")
 	-- local test = "KillCounter_" ..fixedMobName
 	-- printf("test.lua onTrigger %s", test)
 ---------------------------------------------------------------------------------------------------

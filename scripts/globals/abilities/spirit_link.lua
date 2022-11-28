@@ -162,7 +162,6 @@ function onUseAbility(player,target,ability)
 		local diff = math.floor((prev_exp + currentExp) / 200) - math.floor(prev_exp / 200)
 		
 		if diff > 0 then
-			printf("spirit_link.lua onUseAbility  DIFF: [%i]", diff)
 			-- wyvern leveled up (diff is the number of level ups)
 			pet:addMod(tpz.mod.ACC, 6 * diff)
 			pet:addMod(tpz.mod.HPP, 6 * diff)

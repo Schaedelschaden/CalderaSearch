@@ -18,9 +18,9 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-	local typeEffect1 = tpz.effect.ENCUMBERANCE
+	local typeEffect1 = tpz.effect.ENCUMBRANCE
 	
-	MobStatusEffectMove(mob, target, typeEffect1, 1, 0, 5)
+	MobStatusEffectMove(mob, target, typeEffect1, 65535, 0, 5)
 	
 	local numhits = 1
     local accmod = 2

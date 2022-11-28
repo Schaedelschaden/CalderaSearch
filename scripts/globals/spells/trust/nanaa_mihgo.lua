@@ -33,6 +33,22 @@ function onMobSpawn(mob)
     mob:setTrustTPSkillSettings(ai.tp.OPENER, ai.s.HIGHEST)
 end
 
+function onMobFight(mob, target)
+    local tp = mob:getTP()
+
+    if
+        mob:isBehind(target) and
+        tp >= 999 and
+        os.time() > mob:getLocalVar("TICK_OFFSET")
+    then
+        mob:useJobAbility(44, mob) -- Sneak Attack
+        mob:useMobAbility(3189)    -- King Cobra Clamp
+        mob:setLocalVar("TICK_OFFSET", os.time() + 3)
+    elseif mob:isBehind(target) then
+        mob:useJobAbility(44, mob) -- Sneak Attack
+    end
+end
+
 function onMobDespawn(mob)
     tpz.trust.message(mob, message_page_offset, tpz.trust.message_offset.DESPAWN)
 end

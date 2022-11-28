@@ -8,24 +8,25 @@ require("scripts/globals/npc_util")
 -----------------------------------
 
 function onTrade(player, npc, trade)
-    if npcUtil.tradeHas(trade, 1197) then
-        npc:openDoor(8) -- Open the door if a Sahagin key has been traded
-        player:messageSpecial(ID.text.SAHAGIN_DOOR_TRADED, 0, 1197) -- Give a message telling the PC the item is lost
-        player:confirmTrade()
-    end
+    -- if npcUtil.tradeHas(trade, 1197) then
+        -- npc:openDoor(8) -- Open the door if a Sahagin key has been traded
+        -- player:messageSpecial(ID.text.SAHAGIN_DOOR_TRADED, 0, 1197) -- Give a message telling the PC the item is lost
+        -- player:confirmTrade()
+    -- end
 end
 
 function onTrigger(player, npc)
-    local X = player:getXPos()
-    local Z = player:getZPos()
+    npc:openDoor(8)
+    -- local X = player:getXPos()
+    -- local Z = player:getZPos()
 
-    if X > 94 and Z >= 40 then
-        player:messageSpecial(ID.text.SAHAGIN_DOOR_OUTSIDE) -- Give a message if standing on the "outside" of the door (closest to Norg)
-    elseif X < 104 and X >= 94 and Z <= 40 then
-        player:messageSpecial(ID.text.SAHAGIN_DOOR_INSIDE) -- Give a message if standing on the "inside" of the door
-    end
+    -- if X > 94 and Z >= 40 then
+        -- player:messageSpecial(ID.text.SAHAGIN_DOOR_OUTSIDE) -- Give a message if standing on the "outside" of the door (closest to Norg)
+    -- elseif X < 104 and X >= 94 and Z <= 40 then
+        -- player:messageSpecial(ID.text.SAHAGIN_DOOR_INSIDE) -- Give a message if standing on the "inside" of the door
+    -- end
 
-    return 1 -- Keeps the door closed it should not open onTrigger
+    -- return 1 -- Keeps the door closed it should not open onTrigger
 end
 
 function onEventUpdate(player, csid, option)

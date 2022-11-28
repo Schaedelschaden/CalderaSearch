@@ -13,20 +13,20 @@ function onEffectGain(target,effect)
 end
 
 function onEffectTick(target,effect)
-   local power = effect:getPower()
-   local decayby = 0
-   -- Damage reduction decays until 50% then stops
-   if (power > 50) then
-      -- final tick with feet just has to be odd.
-      if (power == 55) then
-         decayby = 5
-      -- decay by 8% per tick
-      else
-         decayby = 8
-      end
-      effect:setPower(power-decayby)
-      target:delMod(tpz.mod.UDMGPHYS,-decayby)
-   end
+    local power = effect:getPower()
+    local decayby = 0
+    -- Damage reduction decays until 50% then stops
+    if (power > 50) then
+        -- final tick with feet just has to be odd.
+        if (power == 55) then
+            decayby = 5
+        -- decay by 8% per tick
+        else
+            decayby = 8
+        end
+        effect:setPower(power-decayby)
+        target:delMod(tpz.mod.UDMGPHYS,-decayby)
+    end
 end
 
 function onEffectLose(target,effect)

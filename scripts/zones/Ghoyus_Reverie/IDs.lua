@@ -20,6 +20,7 @@ zones[tpz.zone.GHOYUS_REVERIE] =
     },
     mob =
     {
+        SERKET = 17305666,
     },
     npc =
     {

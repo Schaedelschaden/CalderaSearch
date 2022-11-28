@@ -184,7 +184,7 @@ function onTrigger(player,npc)
 			stock_MNK =
 				{
 					16445,	15000,		-- (Hand-to-Hand) Claws +1
-					17298,	20,			-- (Ammunition) Tathlum
+					17298,	120,        -- (Ammunition) Tathlum
 					12539,  10000,      -- (Head) Soil Hachimaki +1
 					12671,  10000,      -- (Body) Soil Gi +1
 					12781,  10000,      -- (Hands) Soil Tekko +1
@@ -885,6 +885,11 @@ function onTrigger(player,npc)
 					10317,	100000,		-- (Hands) Dux Finger Gauntlets +1
 					10347,	100000,		-- (Legs) Dux Cuisses +1
 					10364,	100000,		-- (Feet) Dux Greaves +1
+                    27743,	100000,		-- (Head) Temachtiani Headband
+					27884,	100000,		-- (Body) Temachtiani Shirt
+					28032,	100000,		-- (Hands) Temachtiani Gloves
+					28171,	100000,		-- (Legs) Temachtiani Pants
+					28309,	100000,		-- (Feet) Temachtiani Boots
 					11070,	50000,		-- (Head) Creed Armet +2
 					11090,	50000,		-- (Body) Creed Cuirass +2
 					11110,	50000,		-- (Hands) Creed Gauntlets +2
@@ -2667,17 +2672,19 @@ function onTrigger(player,npc)
 				{
 					20788,	100000,		-- (Great Sword) Hatzoaar Sword +1
 					20786,	100000,		-- (Great Sword) Thurisaz Blade +1
+                    20743,	100000,		-- (Sword) Bihkah Sword +1
 					10435,	100000,		-- (Head) Dux Visor +1
 					10273,	100000,		-- (Body) Dux Scale Mail +1
 					10317,	100000,		-- (Hands) Dux Finger Gauntlets +1
 					10347,	100000,		-- (Legs) Dux Cuisses +1
 					10364,	100000,		-- (Feet) Dux Greaves +1
 					-- 25543,	50000,		-- (Neck) Futhark Torque
-					10831,	50000,		-- (Waist) Paewr Belt
-					10992,	50000,		-- (Back) Vassal's Mantle
-					11057,	50000,		-- (Earring) Ghillie Earring +1
-					10797,	50000,		-- (Ring) Dagaz Ring
+					10819,	50000,		-- (Waist) Flume Belt
+					10996,	50000,		-- (Back) Testudo Mantle
+					11050,	50000,		-- (Earring) Puissant Pearl
+					11039,	50000,		-- (Earring) Brachyura Earring
 					10798,	50000,		-- (Ring) Eihwaz Ring
+					28577,	50000,		-- (Ring) Kunaji Ring
 					4046,   16667,		-- Corroded Ore (Reforged Artifact Material)
 					4025,   16667,		-- Snowsteel Sheet (Reforged Artifact Material)
 					4047,   16667,		-- Redoubtable Silk Thread (Reforged Artifact Material)

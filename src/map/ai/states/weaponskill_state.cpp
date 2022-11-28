@@ -76,6 +76,11 @@ CWeaponSkill* CWeaponSkillState::GetSkill()
 
 void CWeaponSkillState::SpendCost()
 {
+    // if (m_PEntity->objtype == TYPE_TRUST)
+    // {
+        // printf("weaponskill_state.cpp SpendCost  TRUST NAME: [%s]\n", m_PEntity->GetName());
+    // }
+
     int32 tp = 0;
     if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MEIKYO_SHISUI))
     {
@@ -84,12 +89,23 @@ void CWeaponSkillState::SpendCost()
     else if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_SEKKANOKI))
     {
 		int32 currentTP = m_PEntity->health.tp;
+
+        // if (m_PEntity->objtype == TYPE_TRUST)
+        // {
+            // printf("weaponskill_state.cpp SpendCost  TRUST TRIGGERED SEKKANOKI  TP: [%i]\n", currentTP);
+        // }
+
 		tp = m_PEntity->addTP(-1000);
-		
+
 		if (m_PEntity->getMod(Mod::ENH_SEKKANOKI) > 0)
 		{
 			tp = tp + (int32)((currentTP - tp) * ((float)m_PEntity->getMod(Mod::ENH_SEKKANOKI) / 100.0f));
 		}
+
+        // if (m_PEntity->objtype == TYPE_TRUST)
+        // {
+            // printf("weaponskill_state.cpp SpendCost  TP AFTER SEKKANOKI: [%i]\n", tp);
+        // }
 
         m_PEntity->StatusEffectContainer->DelStatusEffect(EFFECT_SEKKANOKI);
     }

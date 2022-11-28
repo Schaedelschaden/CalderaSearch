@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `pet_list` (
   `time` int(10) unsigned NOT NULL DEFAULT 0,
   `element` tinyint(3) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`petid`)
-) ENGINE=MyISAM AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=128 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table tpzdb.pet_list: 128 rows
 /*!40000 ALTER TABLE `pet_list` DISABLE KEYS */;

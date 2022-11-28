@@ -98,6 +98,14 @@ tpz.trust.onTradeCipher = function(player, trade, csid, rovCs, arkAngelCs)
 end
 
 tpz.trust.canCast = function(caster, spell, not_allowed_trust_ids)
+    -- Cap maximum GM summonable trusts at 17 (18-member alliance including caster)
+    local maxTrustCheck = caster:getPartyWithTrusts()
+
+    -- GMs can do what they want (as long as ENABLE_TRUST_CASTING is enabled)
+    if caster:getGMLevel() > 0 and #maxTrustCheck < 18 then
+        return 0
+    end
+
     -- Trusts not allowed in an alliance
     if caster:checkSoloPartyAlliance() == 2 then
         return tpz.msg.basic.TRUST_NO_CAST_TRUST
@@ -186,12 +194,35 @@ tpz.trust.canCast = function(caster, spell, not_allowed_trust_ids)
         return tpz.msg.basic.TRUST_NO_CAST_TRUST
     end
 
+    local skySeaKC = caster:getCharVar("KillCounter_Ullikummi") >= 1 and
+                     caster:getCharVar("KillCounter_Despot") >= 1 and
+                     caster:getCharVar("KillCounter_Olla") >= 1 and
+                     caster:getCharVar("KillCounter_Zipacna") >= 1 and
+                     caster:getCharVar("KillCounter_MotherGlobe") >= 1 and
+                     caster:getCharVar("KillCounter_SteamCleaner") >= 1 and 
+                     caster:getCharVar("KillCounter_Faust") >= 1 and
+                     caster:getCharVar("KillCounter_BrigandishBlade") >= 1 and
+                     caster:getCharVar("KillCounter_IxAernMNK") >= 1 and
+                     caster:getCharVar("KillCounter_IxAernDRK") >= 1 and
+                     caster:getCharVar("KillCounter_IxAernDRG") >= 1 and
+                     caster:getCharVar("KillCounter_JailOfTemp") >= 1 and 
+                     caster:getCharVar("KillCounter_JailOfFort") >= 1 and
+                     caster:getCharVar("KillCounter_JailOfFaith") >= 1
+    local abyT1KC =  caster:getCharVar("KillCounter_Briareus") >= 1 and
+                     caster:getCharVar("KillCounter_Kukulkan") >= 1 and
+                     caster:getCharVar("KillCounter_Glavoid") >= 1
+
     -- Limits set by ROV Key Items
-    if num_trusts >= 3 and not (caster:getCharVar("KillCounter_Briareus") >= 1 and caster:getCharVar("KillCounter_Kukulkan") >= 1 and
-								caster:getCharVar("KillCounter_Glavoid") >= 1) then--caster:hasKeyItem(tpz.ki.RHAPSODY_IN_WHITE) then
+    if
+        num_trusts >= 3 and
+        not (skySeaKC or abyT1KC)
+    then --caster:hasKeyItem(tpz.ki.RHAPSODY_IN_WHITE) then
         caster:messageSystem(tpz.msg.system.TRUST_MAXIMUM_NUMBER)
         return -1
-    elseif num_trusts >= 4 and not caster:hasKeyItem(tpz.ki.RHAPSODY_IN_CRIMSON) then
+    elseif
+        num_trusts >= 4 and
+        not (skySeaKC and abyT1KC)
+    then--caster:hasKeyItem(tpz.ki.RHAPSODY_IN_CRIMSON) then
         caster:messageSystem(tpz.msg.system.TRUST_MAXIMUM_NUMBER)
         return -1
     end

@@ -258,11 +258,8 @@ local loot =
     -- KSNM The Hills are Alive
     [76] =
     {
-	    -- {
-            -- {itemid = 65535, droprate = 1000, amount = 1800000}, -- gil
-        -- },
         {
-            {itemid =  3343, droprate = 1000}, -- Blue Pondweed
+            {itemid = 6183, droprate = 1000},  -- Pluton Box (15-30 Plutons)
         },
         {
             {itemid = 20854, droprate =  180}, -- Beheader +1
@@ -278,7 +275,7 @@ local loot =
             {itemid = 21091, droprate =  180}, -- Loxotic Mace +1
             {itemid = 20899, droprate =  180}, -- Triska Scythe +1
             {itemid = 21030, droprate =  180}, -- Norifusa +1
-            {itemid = 21160, droprate =  100}, -- Marin Staff
+            {itemid = 21160, droprate =  100}, -- Marin Staff +1
         },
         {
             {itemid = 28135, droprate =  250}, -- Assiduity Pants +1

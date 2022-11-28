@@ -27,8 +27,8 @@ function onZoneIn(player, prevZone)
 end
 
 function afterZoneIn(player)
-	player:PrintToPlayer(string.format("You can feel the swirling energies of Escha slowly leech away your communication with Trusts."), tpz.msg.channel.NS_LINKSHELL3)
---	player:PrintToPlayer(string.format("There must be some way to reestablish contact..."), tpz.msg.channel.NS_LINKSHELL3)
+	-- player:PrintToPlayer(string.format("You can feel the swirling energies of Escha slowly leech away your communication with Trusts."), tpz.msg.channel.NS_LINKSHELL3)
+	-- player:PrintToPlayer(string.format("There must be some way to reestablish contact..."), tpz.msg.channel.NS_LINKSHELL3)
 end
 
 function onConquestUpdate(zone, updatetype)

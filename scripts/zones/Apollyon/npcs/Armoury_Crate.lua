@@ -553,14 +553,6 @@ local loot =
                 -- {itemid = 2661, droprate = 340}, -- PUP
                 -- {itemid = 2715, droprate = 170}, -- DNC
             -- },
-			{
-				{itemid =     0, droprate =  600}, -- Nothing
-                {itemid = 25818, droprate =   80}, -- Flamma Manopolas
-				{itemid = 25812, droprate =   80}, -- Tali'ah Gages
-				{itemid = 25820, droprate =   80}, -- Mummu Wrists
-				{itemid = 25810, droprate =   80}, -- Ayanmo Manopolas
-				{itemid = 25822, droprate =   80}, -- Mallquis Cuffs
-            },
             {
                 {itemid =  1987, droprate = 1000}, -- Charcoal Chip
             },
@@ -886,14 +878,6 @@ local loot =
                 {itemid =     0, droprate = 735}, -- Nothing
                 {itemid =  1926, droprate = 265}, -- Omega's Heart
             },
-			{
-				{itemid =     0, droprate = 400}, -- Nothing
-				{itemid = 25779, droprate = 120}, -- Flamma Korazin
-				{itemid = 25764, droprate = 120}, -- Tali'ah Manteel
-				{itemid = 25781, droprate = 120}, -- Mummu Jacket
-				{itemid = 25762, droprate = 120}, -- Ayanmo Corazza
-				{itemid = 25783, droprate = 120}, -- Mallquis Saio
-			},
         },
     },
 }

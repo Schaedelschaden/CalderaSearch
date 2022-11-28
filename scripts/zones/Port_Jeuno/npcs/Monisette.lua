@@ -567,7 +567,7 @@ local reforgedRelicArmor =
 	[713] = {trade = {26989, {9638, 5}, 4080, {1454, 3}},		  reward = 23203}, -- 	Caballarius Gauntlets +2
 	[714] = {trade = {27165, {9682, 5}, 4078,  1451, 1454, 1457}, reward = 23270}, -- 	Caballarius Breeches +2
 	[715] = {trade = {27341, {9726, 5}, 4079, {1457, 3}},		  reward = 23337}, -- 	Caballarius Leggings +2
-	[716] = {trade = {23070, {9551, 5}, 4077, {1451, 3}},		  reward = 23070}, -- 	Fallen's Burgeonet +2
+	[716] = {trade = {26639, {9551, 5}, 4077, {1451, 3}},		  reward = 23070}, -- 	Fallen's Burgeonet +2
 	[717] = {trade = {26815, {9595, 5}, 4081,  1451, 1454, 1457}, reward = 23137}, -- 	Fallen's Cuirass +2
 	[718] = {trade = {26991, {9639, 5}, 4080, {1454, 3}},		  reward = 23204}, -- 	Fallen's Finger Gauntlets +2
 	[719] = {trade = {27167, {9683, 5}, 4078,  1451, 1454, 1457}, reward = 23271}, -- 	Fallen's Flanchard +2

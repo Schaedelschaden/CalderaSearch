@@ -45,6 +45,10 @@ function onMobSpawn(mob)
     mob:setTrustTPSkillSettings(ai.tp.CLOSER, ai.s.RANDOM)
 end
 
+function onMobFight(mob)
+    -- printf("zeid_ii.lua onMobFight  TRIGGER")
+end
+
 function onMobDespawn(mob)
     tpz.trust.message(mob, message_page_offset, tpz.trust.message_offset.DESPAWN)
 end

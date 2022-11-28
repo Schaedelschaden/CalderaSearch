@@ -42,6 +42,10 @@ function onMobEngaged(mob, target)
 end
 
 function onMobFight(mob, target)
+
+    local shifts = mob:getLocalVar("shifts")
+    local shiftTime = mob:getLocalVar("shiftTime")
+
     if (mob:getBattleTime() % 9 <= 2) then
         local orbitalOne = GetMobByID(mob:getID()+3)
         local orbitalTwo = GetMobByID(mob:getID()+4)
@@ -56,6 +60,8 @@ function onMobFight(mob, target)
             orbitalTwo:updateEnmity(target)
         end
     end
+    
+    
 end
 
 function onMobDeath(mob, player, isKiller)

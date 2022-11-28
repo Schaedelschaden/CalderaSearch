@@ -14,16 +14,16 @@ g_mixins.families.dark_ixion = function(mob)
 		SetServerVariable("Dark_Ixion_Alive", 0)
 		mob:setRespawnTime(math.random(43200, 86400))
 	end)
-	
+
 	mob:addListener("ROAM_TICK", "DARK_IXION_ROAM", function(mob)
 		local currentTime = VanadielHour() * 60 + VanadielMinute()
 		local currentZone = mob:getZoneID()
 		local currentID = mob:getID()
 		local DarkIxionAlive = GetServerVariable("Dark_Ixion_Alive")
-		
+
 		if (currentTime >= 1430 and DarkIxionAlive == 1) then
 			newZone = math.random(1, 7)
-			
+
 			if (zones[newZone] ~= currentZone) then
 				DespawnMob(currentID)
 				SpawnMob(id[newZone])

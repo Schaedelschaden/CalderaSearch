@@ -18,7 +18,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     local currentHP = target:getHP()
     -- remove all by 5%
     local damage = 0
@@ -30,10 +29,10 @@ function onMobWeaponSkill(target, mob, skill)
         -- else you die
         damage = currentHP
     end
-	
+
     local dmg = MobFinalAdjustments(damage, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING, MOBPARAM_IGNORE_SHADOWS)
 
     mob:resetEnmity(target)
-	
+
     return dmg
 end

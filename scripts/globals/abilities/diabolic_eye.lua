@@ -15,5 +15,6 @@ end
 
 function onUseAbility(player, target, ability)
 	local merits = player:getMerit(tpz.merit.DIABOLIC_EYE)
+    printf("diabolic_eye.lua onUseAbility  MERITS: [%i]", merits)
     player:addStatusEffect(tpz.effect.DIABOLIC_EYE,merits,0,180)
 end

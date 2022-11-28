@@ -18,7 +18,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.SLASHRES, 0)
     mob:setMod(tpz.mod.PIERCERES, 0)
     mob:setMod(tpz.mod.IMPACTRES, 1000)
-	mob:addMod(tpz.mod.EVA, math.random(100, 200))
+	mob:addMod(tpz.mod.EVA, math.random(50, 100))
     -- Set the magic resists. It always takes no damage from direct magic
     for n =1, #tpz.magic.resistMod, 1 do
         mob:setMod(tpz.magic.resistMod[n], 0)

@@ -3,7 +3,6 @@
 -- Item: Angler's Stewpot
 -- Food Effect: 3 Hrs, All Races
 -----------------------------------------
--- TODO: Group Effect
 -- HP +10% (cap 200)
 -- MP +10
 -- HP Recoverd while healing 5

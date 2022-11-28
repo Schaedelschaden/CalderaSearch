@@ -369,9 +369,9 @@ local loot =
     -- KSNM Horns of War
     [11] =
     {
-	    -- {
-            -- {itemid = 65535, droprate = 1000, amount = 1800000}, -- gil
-        -- },
+        {
+            {itemid = 6183, droprate = 1000},  -- Pluton Box (15-30 Plutons)
+        },
         {
             {itemid = 20852, droprate = 167}, 	-- Aizkora +1
             {itemid = 20607, droprate = 167},	-- Anathema Harpe +1
@@ -405,9 +405,6 @@ local loot =
             {itemid = 27996, droprate = 145},	-- Shigure Tekko +1
             {itemid = 27994, droprate = 130},	-- Macabre Gauntlets +1
             {itemid = 27149, droprate = 145},	-- Tatenashi Gate +1
-        },
-		{
-            {itemid = 3341, droprate = 1000},	-- Beastly Shank
         },
         {
             {itemid = 4069, droprate = 150},	-- Rem Chapt 6

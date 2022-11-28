@@ -13,6 +13,11 @@ function onEffectGain(target,effect)
 	if (effect:getSubPower() > 0) then
 		target:addMod(tpz.mod.MDEF, effect:getSubPower())
 	end
+
+    -- Handle WHM Empyrean Armor Set Effect
+    if effect:getTier() > 0 then
+        target:addMod(tpz.mod.LTNG_NULL, effect:getTier())
+    end
 end
 
 function onEffectTick(target,effect)
@@ -23,5 +28,9 @@ function onEffectLose(target,effect)
 	
 	if (effect:getSubPower() > 0) then
 		target:delMod(tpz.mod.MDEF, effect:getSubPower())
+	end
+
+    if (effect:getTier() > 0) then
+		target:delMod(tpz.mod.LTNG_NULL, effect:getTier())
 	end
 end

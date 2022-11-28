@@ -192,6 +192,7 @@ void CTrustController::DoCombatTick(time_point tick)
         m_GambitsContainer->Tick(tick);
 
         POwner->PAI->EventHandler.triggerListener("COMBAT_TICK", POwner, POwner->PMaster, PTarget);
+        luautils::OnMobFight(static_cast<CBaseEntity*>(PTrust), static_cast<CBaseEntity*>(PTarget));
     }
 }
 

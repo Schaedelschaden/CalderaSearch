@@ -20,6 +20,7 @@ function onSpellCast(caster,target,spell)
 	local targetGear = target:getMod(tpz.mod.ENHANCES_CURSNA_RCVD)
 	local power = (utils.clamp(caster:getSkillLevel(tpz.skill.HEALING_MAGIC) / 12.5, 10, 40) * ((100 + casterGear) / 100)) * ((100 + targetGear) / 100)
     -- local power = utils.clamp(player:getSkillLevel(tpz.skill.HEALING_MAGIC) / 19.2, 10, 26) * ((100 + bonus) / 100)
+    -- printf("cursna.lua onSpellCast BONUSES FROM  -  SKILL: [%i]  CASTER GEAR: [%1.2f]  TARGET GEAR: [%1.2f]", utils.clamp(caster:getSkillLevel(tpz.skill.HEALING_MAGIC) / 12.5, 10, 40), ((100 + casterGear) / 100), ((100 + targetGear) / 100))
 	
 	local PoisonRES = target:getMod(tpz.mod.POISONRES)
 	local ParaRES = target:getMod(tpz.mod.PARALYZERES)
@@ -79,7 +80,9 @@ function onSpellCast(caster,target,spell)
 	end
 
     spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
-    if (target:hasStatusEffect(tpz.effect.DOOM) and power > math.random(1, 100)) then
+    local removeChance = math.random(1, 100)
+    -- printf("cursna.lua onSpellCast  POWER: [%i]  REMOVE THRESHOLD: [%i]", power, removeChance)
+    if (target:hasStatusEffect(tpz.effect.DOOM) and power > removeChance) then
         -- remove doom
         final = tpz.effect.DOOM
         target:delStatusEffect(tpz.effect.DOOM)

@@ -364,11 +364,8 @@ local loot =
     -- KSNM Early Bird Catches the Wyrm
     [107] =
     {
-	    -- {
-            -- {itemid = 65535, droprate = 1000, amount = 1800000}, -- gil
-        -- },
         {
-            {itemid = 3339, droprate = 1000},  -- Jug Of Honey Wine
+            {itemid = 6183, droprate = 1000},  -- Pluton Box (15-30 Plutons)
         },
         {
             {itemid = 21689, droprate = 180},  -- Montante +1

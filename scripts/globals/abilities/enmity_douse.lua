@@ -13,6 +13,6 @@ end
 
 function onUseAbility(player, target, ability)
     if (target:isMob()) then
-        target:lowerEnmity(player, 99)
+        target:lowerEnmity(player, 100)
     end
 end

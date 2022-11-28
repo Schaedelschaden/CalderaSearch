@@ -27,7 +27,11 @@ function onMobWeaponSkill(target, mob, skill)
     local typeEffect = 136 + math.random(0, 6) -- 136 is tpz.effect.STR_DOWN add 0 to 6 for all 7 of the possible attribute reductions
 	
 	-- Goji spams abilities so tone it down a bit
-	if (mob:getID() == 17269127 or mob:getID() == 17269128 or mob:getID() == 17269129) then
+	if
+        mob:getID() == 17269127 or
+        mob:getID() == 17269128 or
+        mob:getID() == 17269129
+    then
 		dmgmod = 0.7
 	end
 

@@ -18,8 +18,6 @@ require("scripts/globals/weaponskills")
 -----------------------------------
 
 function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
-	local mainhandWSBonus = ((100 + player:getMod(tpz.mod.SAVAGE_BLADE_WS_DMG)) / 100)
-    
 	local params = {}
     params.numHits = 2
     params.ftp100 = 1 params.ftp200 = 1.75 params.ftp300 = 3.5
@@ -35,8 +33,6 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     end
 
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
-	
-	damage = damage * mainhandWSBonus
 	
     return tpHits, extraHits, criticalHit, damage
 end

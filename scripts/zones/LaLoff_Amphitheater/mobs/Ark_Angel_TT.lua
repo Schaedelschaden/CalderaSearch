@@ -19,6 +19,7 @@ function onMobSpawn(mob)
 	end
 
 	mob:setMobMod(tpz.mobMod.SKILL_LIST, 0)
+    mob:setMobMod(tpz.mobMod.MOBMOD_TELEPORT_CD, 3000)
     tpz.mix.jobSpecial.config(mob, {
         between = 30,
         specials =
@@ -70,65 +71,69 @@ function onMobEngaged(mob, target)
 end
 
 function onMobFight(mob, target)
-	-- Amon Drive, Spinning Scythe, Guillotine
-	local skills = {935, 944, 945}
-	local tp = mob:getTP()
-	
-	if (tp == 3000) then
-		if (mob:checkDistance(target) <= 7) then
-			mob:setTP(0)
-			mob:useMobAbility(skills[math.random(1, 3)])
-		elseif (mob:checkDistance(target) > 7) then
-			local enmityList = mob:getEnmityList()
-			local PlayerName = {}
-			
-			for i, v in ipairs(enmityList) do		
-				PlayerName[i] = v.entity:getName()
+    if os.time() > mob:getLocalVar("MOB_FIGHT_DELAY") then
+        -- Amon Drive, Spinning Scythe, Guillotine
+        local skills = {935, 944, 945}
+        local tp = mob:getTP()
+        
+        if (tp == 3000) then
+            if (mob:checkDistance(target) <= 7) then
+                mob:setTP(0)
+                mob:useMobAbility(skills[math.random(1, 3)])
+            elseif (mob:checkDistance(target) > 7) then
+                local enmityList = mob:getEnmityList()
+                local PlayerName = {}
+                
+                for i, v in ipairs(enmityList) do		
+                    PlayerName[i] = v.entity:getName()
 
-				local targ = GetPlayerByName(PlayerName[i])
-				
-				if (mob:checkDistance(targ) <= 7) then
-					mob:setTP(0)
-					mob:useMobAbility(skills[math.random(1, 3)], targ)
-				end
-			end
-		end
-	end
+                    local targ = GetPlayerByName(PlayerName[i])
+                    
+                    if (mob:checkDistance(targ) <= 7) then
+                        mob:setTP(0)
+                        mob:useMobAbility(skills[math.random(1, 3)], targ)
+                    end
+                end
+            end
+        end
 
-    if (mob:hasStatusEffect(tpz.effect.BLOOD_WEAPON) and bit.band(mob:getBehaviour(), tpz.behavior.STANDBACK) > 0) then
-        mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.STANDBACK)))
-        mob:setMobMod(tpz.mobMod.TELEPORT_TYPE, 0)
-        mob:setMobMod(tpz.mobMod.SPAWN_LEASH, 0)
-        mob:setSpellList(0)
+        if (mob:hasStatusEffect(tpz.effect.BLOOD_WEAPON) and bit.band(mob:getBehaviour(), tpz.behavior.STANDBACK) > 0) then
+            mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.STANDBACK)))
+            mob:setMobMod(tpz.mobMod.TELEPORT_TYPE, 0)
+            mob:setMobMod(tpz.mobMod.SPAWN_LEASH, 0)
+            mob:setSpellList(0)
+        end
+        if (not mob:hasStatusEffect(tpz.effect.BLOOD_WEAPON) and bit.band(mob:getBehaviour(), tpz.behavior.STANDBACK) == 0) then
+            mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.STANDBACK))
+            mob:setMobMod(tpz.mobMod.TELEPORT_TYPE, 1)
+            mob:setMobMod(tpz.mobMod.SPAWN_LEASH, 22)
+            mob:setSpellList(39)
+        end
+        
+        if (mob:getLocalVar("DROPLIST_SET") == 0) then
+            local battlefield = target:getBattlefield()
+            local battlefieldID = battlefield:getID()
+            local battlefieldArea = battlefield:getArea()
+            local droplistCounter = 0
+            
+            -- printf("Ark_Angel_TT.lua onMobFight BATTLEFIELD ID: [%i]", battlefieldID)
+            
+            for i = 1, #aaID[battlefieldArea] do
+                if (battlefieldID == 293 and GetMobByID(aaID[battlefieldArea][i]):isDead()) then
+                    droplistCounter = droplistCounter + 1
+                    -- printf("Ark_Angel_TT.lua onMobFight DROP LIST COUNTER: [%i]", droplistCounter)
+                end
+            end
+            
+            if (droplistCounter >= 4) then
+                -- printf("Ark_Angel_TT.lua onMobFight DROP LIST COUNTER >= 4")
+                mob:setDropID(3290)
+                mob:setLocalVar("DROPLIST_SET", 1)
+            end
+        end
+
+        mob:setLocalVar("MOB_FIGHT_DELAY", os.time() + 2)
     end
-    if (not mob:hasStatusEffect(tpz.effect.BLOOD_WEAPON) and bit.band(mob:getBehaviour(), tpz.behavior.STANDBACK) == 0) then
-        mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.STANDBACK))
-        mob:setMobMod(tpz.mobMod.TELEPORT_TYPE, 1)
-        mob:setMobMod(tpz.mobMod.SPAWN_LEASH, 22)
-        mob:setSpellList(39)
-    end
-	
-	if (mob:getLocalVar("DROPLIST_SET") == 0) then
-		local battlefield = target:getBattlefield()
-		local battlefieldID = battlefield:getID()
-		local battlefieldArea = battlefield:getArea()
-		local droplistCounter = 0
-		
-		-- printf("Ark_Angel_TT.lua onMobFight BATTLEFIELD ID: [%i]", battlefieldID)
-		
-		for i = 1, #aaID[battlefieldArea] do
-			if (battlefieldID == 293 and GetMobByID(aaID[battlefieldArea][i]):isDead()) then
-				droplistCounter = droplistCounter + 1
-				-- printf("Ark_Angel_TT.lua onMobFight DROP LIST COUNTER: [%i]", droplistCounter)
-			end
-		end
-		
-		if (droplistCounter >= 4) then
-			-- printf("Ark_Angel_TT.lua onMobFight DROP LIST COUNTER >= 4")
-			mob:setDropID(3290)
-			mob:setLocalVar("DROPLIST_SET", 1)
-		end
-	end
 end
 
 function onMobDeath(mob, player, isKiller)

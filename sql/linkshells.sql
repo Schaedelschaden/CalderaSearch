@@ -22,9 +22,9 @@ CREATE TABLE IF NOT EXISTS `linkshells` (
   `postrights` tinyint(3) unsigned NOT NULL DEFAULT 0,
   `broken` tinyint(1) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`linkshellid`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table tpzdb.linkshells: 21 rows
+-- Dumping data for table tpzdb.linkshells: 25 rows
 /*!40000 ALTER TABLE `linkshells` DISABLE KEYS */;
 INSERT INTO `linkshells` (`linkshellid`, `name`, `color`, `poster`, `message`, `messagetime`, `postrights`, `broken`) VALUES
 	(1, 'LifeHapppens', 65535, 'Tierkaintwo', _binary 0x416C6C207472757374732068617665206265656E2072657365742E205573652021616464616C6C74727573747320746F2067657420616C6C20776F726B696E6720747275737473, 1616974507, 2, 0),
@@ -47,7 +47,11 @@ INSERT INTO `linkshells` (`linkshellid`, `name`, `color`, `poster`, `message`, `
 	(18, 'Bombtoss', 61467, '', NULL, 0, 2, 0),
 	(19, 'AcesPlace', 65523, 'Vengeanceace', _binary 0x54656C6C206D6520492063616E27742C20616E642069276C6C2070726F766520746F20796F7520492063616E2E20, 1651720454, 2, 0),
 	(20, 'Friendos', 65391, '', NULL, 0, 2, 0),
-	(21, 'Miyamoto', 61455, '', NULL, 0, 2, 0);
+	(21, 'Miyamoto', 61455, '', NULL, 0, 2, 0),
+	(22, 'FatChocobo', 63487, '', NULL, 0, 2, 0),
+	(23, 'DeathHappens', 61455, '', NULL, 0, 2, 0),
+	(24, 'GhostInTheShell', 65531, '', NULL, 0, 2, 0),
+	(25, 'Casuais', 62481, '', NULL, 0, 2, 1);
 /*!40000 ALTER TABLE `linkshells` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

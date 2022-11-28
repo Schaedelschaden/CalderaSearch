@@ -311,12 +311,9 @@ end
 function unionRepresentativeTrade(player, npc, trade, csid, guildID)
     local gpItem, remainingPoints = player:getCurrentGPItem(guildID)
     local text = zones[player:getZoneID()].text
-	
-	printf("crafting.lua unionRepresentativeTrade  PLAYER: [%s]  GP ITEM: [%i]  REMAINING POINTS: [%i]", player:getName(), gpItem, remainingPoints)
 
     if (player:getCharVar('[GUILD]currentGuild') - 1 == guildID) then
         if remainingPoints == 0 then
-			printf("crafting.lua unionRepresentativeTrade  PLAYER: [%s]  NPC: [%s]  GUILD ID: [%i]  NO MORE POINTS AVAILABLE", player:getName(), npc:getName(), guildID)
             player:messageText(npc, text.NO_MORE_GP_ELIGIBLE)
         else
 			local totalPoints = 0
@@ -327,8 +324,6 @@ function unionRepresentativeTrade(player, npc, trade, csid, guildID)
                     trade:confirmSlot(i, items)
                 end
             end
-			
-			printf("crafting.lua unionRepresentativeTrade  PLAYER: [%s]  POINTS AVAILABLE: [%i]", player:getName(), totalPoints)
 			
             if (totalPoints > 0) then
                 player:confirmTrade()

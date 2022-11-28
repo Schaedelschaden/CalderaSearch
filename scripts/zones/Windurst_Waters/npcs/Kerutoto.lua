@@ -51,8 +51,20 @@ function onTrigger(player, npc)
     local realday = tonumber(os.date("%j")) -- %M for next minute, %j for next day
     local waking_dreams = player:getQuestStatus(WINDURST, tpz.quest.id.windurst.WAKING_DREAMS)
 
+    if (player:hasKeyItem(tpz.ki.WHISPER_OF_DREAMS) == true) then
+        local availRewards = 0
+        if (player:hasItem(17599)) then availRewards = availRewards + 1; end -- Diabolos's Pole
+        if (player:hasItem(14814)) then availRewards = availRewards + 2; end -- Diabolos's Earring
+        if (player:hasItem(15557)) then availRewards = availRewards + 4; end -- Diabolos's Ring
+        if (player:hasItem(15516)) then availRewards = availRewards + 8; end -- Diabolos's Torque
+        if (player:hasSpell(304)) then availRewards = availRewards + 32 -- Pact
+        else availRewards = availRewards + 16 -- Gil
+        end
+        --player:startEvent(920, 17599, 14814, 15557, 15516, 0, 0, 0, availRewards)
+		player:startEvent(920, 622475179, 0, 1757, 0, 65863679, 0, 1, availRewards)
+
     -- Awakening of the Gods --
-    if (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.AWAKENING_OF_THE_GODS and player:getCharVar("MissionStatus") == 0) then
+    elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.AWAKENING_OF_THE_GODS and player:getCharVar("MissionStatus") == 0) then
         player:startEvent(737)
     elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.AWAKENING_OF_THE_GODS and player:getCharVar("MissionStatus") == 1) then
         player:startEvent(736)
@@ -68,17 +80,17 @@ function onTrigger(player, npc)
         player:addQuest(WINDURST, tpz.quest.id.windurst.WAKING_DREAMS)
         player:startEvent(918)--918
 
-    elseif (player:hasKeyItem(tpz.ki.WHISPER_OF_DREAMS) == true) then
-        local availRewards = 0
-        if (player:hasItem(17599)) then availRewards = availRewards + 1; end -- Diabolos's Pole
-        if (player:hasItem(14814)) then availRewards = availRewards + 2; end -- Diabolos's Earring
-        if (player:hasItem(15557)) then availRewards = availRewards + 4; end -- Diabolos's Ring
-        if (player:hasItem(15516)) then availRewards = availRewards + 8; end -- Diabolos's Torque
-        if (player:hasSpell(304)) then availRewards = availRewards + 32 -- Pact
-        else availRewards = availRewards + 16 -- Gil
-        end
-        --player:startEvent(920, 17599, 14814, 15557, 15516, 0, 0, 0, availRewards)
-		player:startEvent(920, 622475179, 0, 1757, 0, 65863679, 0, 1, availRewards)
+    -- elseif (player:hasKeyItem(tpz.ki.WHISPER_OF_DREAMS) == true) then
+        -- local availRewards = 0
+        -- if (player:hasItem(17599)) then availRewards = availRewards + 1; end -- Diabolos's Pole
+        -- if (player:hasItem(14814)) then availRewards = availRewards + 2; end -- Diabolos's Earring
+        -- if (player:hasItem(15557)) then availRewards = availRewards + 4; end -- Diabolos's Ring
+        -- if (player:hasItem(15516)) then availRewards = availRewards + 8; end -- Diabolos's Torque
+        -- if (player:hasSpell(304)) then availRewards = availRewards + 32 -- Pact
+        -- else availRewards = availRewards + 16 -- Gil
+        -- end
+        -- -- player:startEvent(920, 17599, 14814, 15557, 15516, 0, 0, 0, availRewards)
+		-- player:startEvent(920, 622475179, 0, 1757, 0, 65863679, 0, 1, availRewards)
 
     -- Blue Ribbon Blues --
     elseif (BlueRibbonBlues == QUEST_COMPLETED and needZone) then
@@ -207,8 +219,8 @@ function onEventFinish(player, csid, option)
         elseif (option == 4 and player:hasItem(15516) == false) then
 			item = 15516--diaboloss-torque
         elseif (option == 5) then
-            player:addGil(GIL_RATE*15000)
-            player:messageSpecial(ID.text.GIL_OBTAINED, GIL_RATE*15000) -- Gil
+            player:addGil(250000)
+            player:messageSpecial(ID.text.GIL_OBTAINED, 250000) -- Gil
             player:delKeyItem(tpz.ki.WHISPER_OF_DREAMS)
             -- player:setCharVar("Darkness_Named_date", os.date("%j")) -- %M for next minute, %j for next day
             player:completeQuest(WINDURST, tpz.quest.id.windurst.WAKING_DREAMS)

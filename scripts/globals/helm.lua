@@ -1307,7 +1307,7 @@ local helmInfo =
 					{1620,   644}, -- Mythril Ore
 					{1310,  3928}, -- Velkk Necklace
 					{1010,   881}, -- Crab Shell
-                    {910,   4044}, -- Atramenterrane
+                    -- {910,   4044}, -- Atramenterrane
 					{810,    737}, -- Gold Ore
 					{710,    738}, -- Platinum Ore
 					{400,   4023}, -- Snowsteel Ore

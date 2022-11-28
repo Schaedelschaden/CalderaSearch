@@ -94,10 +94,10 @@ function onGameHour(zone)
     local VanadielHour = VanadielHour()
     local qm2 = GetNPCByID(ID.npc.IXAERN_DRK_QM) -- Ix'aern drk
     local qm3 = GetNPCByID(ID.npc.JAILER_OF_FAITH_QM) -- Jailer of Faith
-    local s = math.random(6, 12) -- wait time till change to next spawn pos, random 15~30 mins.
+    -- local s = math.random(6, 12) -- wait time till change to next spawn pos, random 15~30 mins.
 
     -- Jailer of Faith spawn randomiser
-    if (VanadielHour % s == 0) then
+    if (VanadielHour % 12 == 0) then
         -- Hide it for 60 seconds
         qm3:hideNPC(60)
 

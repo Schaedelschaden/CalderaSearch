@@ -59,6 +59,7 @@ struct Trust_t
     float HPscale; // HP boost percentage
     float MPscale; // MP boost percentage
 
+    uint8  cmbSkill;
     uint16 cmbDmgMult;
     uint16 cmbDelay;
     uint8 speed;
@@ -170,7 +171,8 @@ void BuildTrust(uint32 TrustID)
                 mob_family_system.Fire, mob_family_system.Ice, \
                 mob_family_system.Wind, mob_family_system.Earth, \
                 mob_family_system.Lightning, mob_family_system.Water, \
-                mob_family_system.Light, mob_family_system.Dark \
+                mob_family_system.Light, mob_family_system.Dark, \
+                mob_pools.cmbSkill \
                 FROM spell_list, mob_pools, mob_family_system WHERE spell_list.spellid = %u \
                 AND (spell_list.spellid+5000) = mob_pools.poolid AND mob_pools.familyid = mob_family_system.familyid ORDER BY spell_list.spellid";
 
@@ -191,6 +193,7 @@ void BuildTrust(uint32 TrustID)
             trust->sJob           = (uint8)Sql_GetIntData(SqlHandle, 5);
             trust->hasSpellScript = (bool)Sql_GetIntData(SqlHandle, 6);
             trust->spellList      = (uint16)Sql_GetIntData(SqlHandle, 7);
+            trust->cmbSkill       = (uint8)Sql_GetIntData(SqlHandle, 42);
             trust->cmbDmgMult     = (uint16)Sql_GetIntData(SqlHandle, 8);
             trust->cmbDelay       = (uint16)Sql_GetIntData(SqlHandle, 9);
             trust->name_prefix    = (uint8)Sql_GetUIntData(SqlHandle, 10);
@@ -321,24 +324,52 @@ CTrustEntity* LoadTrust(CCharEntity* PMaster, uint32 TrustID)
     LoadTrustStatsAndSkills(PTrust);
 
     // Use Mob formulas to work out base "weapon" damage, but scale down to reasonable values.
-    auto mobStyleDamage = static_cast<float>(mobutils::GetWeaponDamage(PTrust));
-    auto baseDamage = mobStyleDamage * 0.5f;
+    auto mobStyleDamage   = static_cast<float>(mobutils::GetWeaponDamage(PTrust));
+    auto baseDamage       = mobStyleDamage * 0.5f;
     auto damageMultiplier = static_cast<float>(trustData->cmbDmgMult) / 100.0f;
-    auto adjustedDamage = baseDamage * damageMultiplier;
-    auto finalDamage = std::max(adjustedDamage, 1.0f);
+    auto adjustedDamage   = baseDamage * damageMultiplier;
+    auto finalDamage      = static_cast<uint16>(std::max(adjustedDamage, 1.0f));
 
-    (dynamic_cast<CItemWeapon*>(PTrust->m_Weapons[SLOT_MAIN]))->setDamage(static_cast<uint16>(finalDamage));
-    (dynamic_cast<CItemWeapon*>(PTrust->m_Weapons[SLOT_RANGED]))->setDamage(static_cast<uint16>(finalDamage));
-    (dynamic_cast<CItemWeapon*>(PTrust->m_Weapons[SLOT_AMMO]))->setDamage(static_cast<uint16>(finalDamage));
+    // Trust do not really have weapons, but they are modelled internally as
+    // if they do.
+    if (auto* mainWeapon = dynamic_cast<CItemWeapon*>(PTrust->m_Weapons[SLOT_MAIN]))
+    {
+        mainWeapon->setMaxHit(1);
+        mainWeapon->setSkillType(trustData->cmbSkill);
 
-    (dynamic_cast<CItemWeapon*>(PTrust->m_Weapons[SLOT_MAIN]))->setDelay((trustData->cmbDelay * 1000) / 60);
-    (dynamic_cast<CItemWeapon*>(PTrust->m_Weapons[SLOT_MAIN]))->setBaseDelay((trustData->cmbDelay * 1000) / 60);
+        mainWeapon->setDamage(finalDamage);
+        mainWeapon->setDelay((trustData->cmbDelay * 1000) / 60);
+        mainWeapon->setBaseDelay((trustData->cmbDelay * 1000) / 60);
+    }
 
-    (dynamic_cast<CItemWeapon*>(PTrust->m_Weapons[SLOT_RANGED]))->setDelay((trustData->cmbDelay * 1000) / 60);
-    (dynamic_cast<CItemWeapon*>(PTrust->m_Weapons[SLOT_RANGED]))->setBaseDelay((trustData->cmbDelay * 1000) / 60);
+    if (auto* subWeapon = dynamic_cast<CItemWeapon*>(PTrust->m_Weapons[SLOT_SUB]))
+    {
+        subWeapon->setDamage(finalDamage);
+        subWeapon->setDelay((trustData->cmbDelay * 1000) / 60);
+        subWeapon->setBaseDelay((trustData->cmbDelay * 1000) / 60);
+    }
 
-    (dynamic_cast<CItemWeapon*>(PTrust->m_Weapons[SLOT_AMMO]))->setDelay((trustData->cmbDelay * 1000) / 60);
-    (dynamic_cast<CItemWeapon*>(PTrust->m_Weapons[SLOT_AMMO]))->setBaseDelay((trustData->cmbDelay * 1000) / 60);
+    if (auto* rangedWeapon = dynamic_cast<CItemWeapon*>(PTrust->m_Weapons[SLOT_RANGED]))
+    {
+        rangedWeapon->setDamage(finalDamage);
+        rangedWeapon->setDelay((trustData->cmbDelay * 1000) / 60);
+        rangedWeapon->setBaseDelay((trustData->cmbDelay * 1000) / 60);
+    }
+
+    if (auto* ammoWeapon = dynamic_cast<CItemWeapon*>(PTrust->m_Weapons[SLOT_AMMO]))
+    {
+        ammoWeapon->setDamage(finalDamage);
+        ammoWeapon->setDelay((trustData->cmbDelay * 1000) / 60);
+        ammoWeapon->setBaseDelay((trustData->cmbDelay * 1000) / 60);
+    }
+
+    // NOTE: Trusts don't really have weapons, and they don't really have combat skills. They only have
+    // a damage type, and whether or not they are multi-hit. We handle this wrong everywhere.
+    // To give any Trust multi-hit, you need to give them cmbSkill == SKILL_HAND_TO_HAND (1).
+    if (trustData->cmbSkill == SKILL_HAND_TO_HAND)
+    {
+        PTrust->m_dualWield = true;
+    }
 
     // Spell lists
     auto* spellList = mobSpellList::GetMobSpellList(trustData->spellList);

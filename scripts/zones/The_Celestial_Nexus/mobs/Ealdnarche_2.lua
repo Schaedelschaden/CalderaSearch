@@ -23,12 +23,11 @@ function onMobInitialize(mob)
     mob:addMod(tpz.mod.POISONRES, 30) -- Resistance to Poison	
 	mob:addMod(tpz.mod.ATT, 400)
 	mob:addMod(tpz.mod.ACC, 100)
-	mob:setMod(tpz.mod.MATT, 350)	
+	mob:setMod(tpz.mod.MATT, 250)	
 	mob:addMod(tpz.mod.DEF, 300)
 	mob:addMod(tpz.mod.EVA, 200)
 	mob:setMod(tpz.mod.REGEN, 250)
 	mob:addMod(tpz.mod.REFRESH, 200)
-	mob:addMod(tpz.mod.REGAIN, 100)
 end
 
 function onMobSpawn(mob)

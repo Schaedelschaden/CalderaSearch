@@ -34,6 +34,11 @@ function onTrigger(player, mobId)
         end
     end
 
+    if player:getGMLevel() < 1 and (player:hasStatusEffect(tpz.effect.BESIEGED) or targ:hasStatusEffect(tpz.effect.BESIEGED)) then
+        error(player,"You cannot use that command while under the effects of Besieged.")
+        return
+    end
+
     -- Provide mob information.
 	local weaponType = targ:getWeaponSkillType(tpz.slot.MAIN)
 	local mainHandWeapons = {tpz.skill.HAND_TO_HAND, tpz.skill.DAGGER, tpz.skill.SWORD, tpz.skill.AXE, tpz.skill.CLUB, tpz.skill.KATANA, tpz.skill.GREAT_SWORD, tpz.skill.GREAT_AXE, tpz.skill.SCYTHE, tpz.skill.POLEARM, tpz.skill.GREAT_KATANA, tpz.skill.STAFF}
@@ -178,7 +183,7 @@ function onTrigger(player, mobId)
 	DEF = DEF + defbonus
 --	printf("check.lua Adjusted DEF: [%i]\n", DEF)
 	
-	local Haste = (HasteGear + HasteMagic + HasteAbility) / 100
+	local Haste = HasteGear + HasteMagic + HasteAbility
 	
 	mainJob = jobs[mainJob]
 	subJob = jobs[subJob]

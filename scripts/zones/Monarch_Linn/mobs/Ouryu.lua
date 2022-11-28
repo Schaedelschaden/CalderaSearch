@@ -25,6 +25,7 @@ function onMobSpawn(mob)
 	mob:addMod(tpz.mod.REFRESH, 200)
 	mob:addMod(tpz.mod.REGAIN, 100)
 	mob:addMod(tpz.mod.DOUBLE_ATTACK, 15)
+    mob:addMod(tpz.mod.ALL_WSDMG_ALL_HITS, -25)
 end
 
 function onMobFight(mob, target)

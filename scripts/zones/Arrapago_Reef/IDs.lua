@@ -59,6 +59,7 @@ zones[tpz.zone.ARRAPAGO_REEF] =
     },
     npc =
     {
+        QM8_MEDUSA = 16999026,
     },
 }
 

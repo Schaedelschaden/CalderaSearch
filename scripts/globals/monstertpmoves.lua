@@ -207,6 +207,15 @@ function MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeff
         hitsdone = hitsdone + 1
     end
 
+    if
+        mob:hasStatusEffect(tpz.effect.SNEAK_ATTACK) and
+        mob:isBehind(target)
+    then
+        finaldmg = finaldmg + (mob:getStat(tpz.mod.DEX) * (1 + mob:getMod(tpz.mod.SNEAK_ATK_DEX) / 100) * pdif)
+
+        mob:delStatusEffect(tpz.effect.SNEAK_ATTACK)
+    end
+
     -- printf("final: %f, hits: %f, acc: %f", finaldmg, hitslanded, hitrate)
     -- printf("ratio: %f, min: %f, max: %f, pdif, %f hitdmg: %f", ratio, minRatio, maxRatio, pdif, hitdamage)
 
@@ -317,6 +326,12 @@ end
 -- statmod = the stat to account for resist (INT, MND, etc) e.g. tpz.mod.INT
 -- This determines how much the monsters ability resists on the player.
 function applyPlayerResistance(mob, effect, target, diff, bonus, element)
+    if target:hasStatusEffect(tpz.effect.FEALTY) and math.random(1, 100) > 5 and
+       element == tpz.magic.ele.NONE
+       then
+        return 0
+    end
+
     local percentBonus = 0
     local magicaccbonus = 0
 
@@ -332,8 +347,9 @@ function applyPlayerResistance(mob, effect, target, diff, bonus, element)
 
     if (effect ~= nil) then
         percentBonus = percentBonus - getEffectResistance(target, effect)
+
 		-- if (target:getName() == "Khalum") then
-			-- printf("monstertpmoves.lua applyPlayerResistance EFFECT: [%i]  RESISTANCE: [%i]", effect, getEffectResistance(target, effect))
+			-- printf("monstertpmoves.lua applyPlayerResistance EFFECT: [%i]  RESISTANCE: [%i]  PERCENT BONUS: [%i]", effect, getEffectResistance(target, effect), percentBonus)
 		-- end
     end
 
@@ -567,6 +583,9 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 		target:addMod(tpz.mod.ENMITY_MITIGATES_DMG_DT, -enmityDmgMitigation)
 	end
 
+    -- Caldera custom application of All WSD
+    dmg = dmg * (1 + (mob:getMod(tpz.mod.ALL_WSDMG_ALL_HITS) / 100))
+
     if (attackType == tpz.attackType.PHYSICAL) then
 
         dmg = target:physicalDmgTaken(dmg, damageType)
@@ -596,7 +615,7 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 		dmg = dmg * PetRandom
 --		printf("monstertpmoves.cpp MobFinalAdjustments PetRandom: [%i]  DMG: [%i]", PetRandom, dmg)
 	end
-	
+
 	-- Global monster skill damage multiplier from settings.lua
 	-- dmg = dmg * MOB_SKILL_POWER
 
@@ -674,7 +693,7 @@ function MobDrainMove(mob, target, drainType, drain, attackType, damageType)
                 drain = target:getHP()
             end
 
-            target:takeDamage(drain, mob, attackType, damageType)
+            -- target:takeDamage(drain, mob, attackType, damageType)
             mob:addHP(drain)
 
             return tpz.msg.basic.SKILL_DRAIN_HP
@@ -686,7 +705,7 @@ function MobDrainMove(mob, target, drainType, drain, attackType, damageType)
             drain = target:getHP()
         end
 
-        target:takeDamage(drain, mob, attackType, damageType)
+        -- target:takeDamage(drain, mob, attackType, damageType)
         return tpz.msg.basic.DAMAGE
     end
 
@@ -747,6 +766,9 @@ end
 
 -- Adds a status effect to a target
 function MobStatusEffectMove(mob, target, typeEffect, power, tick, duration)
+    if target:hasStatusEffect(tpz.effect.FEALTY) and math.random(1, 100) > 5 then
+        return tpz.msg.basic.SKILL_NO_EFFECT
+    end
 
     if (target:canGainStatusEffect(typeEffect, power)) then
         local statmod = tpz.mod.INT
@@ -764,6 +786,7 @@ function MobStatusEffectMove(mob, target, typeEffect, power, tick, duration)
 
         return tpz.msg.basic.SKILL_MISS -- resist !
     end
+
     return tpz.msg.basic.SKILL_NO_EFFECT -- no effect
 end
 

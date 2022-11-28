@@ -64,8 +64,8 @@ function onUseAbility(player, target, ability)
 	if (player:getMod(tpz.mod.ENH_CLIMACTIC_FLOURISH) > 0) then
 		crits = crits + 1
 	end
-	
-	player:setCharVar("ClimacticFlourishCrits", crits)
-	
-    player:addStatusEffect(tpz.effect.CLIMACTIC_FLOURISH, 1, 0, 60)
+
+    -- Effect Power starts at the maximum number of crits possible
+    -- Critical hits reduce the effect power until it reaches 0 and is removed through the core
+    player:addStatusEffect(tpz.effect.CLIMACTIC_FLOURISH, crits, 0, 60)
 end

@@ -26,6 +26,8 @@ function onTrigger(player, npc)
 		1120, 900,    -- Casablanca
 		1413, 900,    -- Cattleya
 		2713, 546,    -- Dyer's Woad
+        638,  170,    -- Sage
+        835,  225,    -- Flax Flower
         2370, 520,    -- Flower Seeds
     }
 

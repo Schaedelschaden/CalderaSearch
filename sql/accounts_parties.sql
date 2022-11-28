@@ -22,19 +22,15 @@ CREATE TABLE IF NOT EXISTS `accounts_parties` (
   CONSTRAINT `accounts_parties_ibfk_1` FOREIGN KEY (`charid`) REFERENCES `accounts_sessions` (`charid`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table tpzdb.accounts_parties: ~5 rows (approximately)
+-- Dumping data for table tpzdb.accounts_parties: ~7 rows (approximately)
 /*!40000 ALTER TABLE `accounts_parties` DISABLE KEYS */;
 INSERT INTO `accounts_parties` (`charid`, `partyid`, `partyflag`, `allianceid`, `timestamp`) VALUES
-	(45, 49, 0, 0, '2022-06-19 10:20:30'),
-	(49, 49, 4, 0, '2022-06-19 10:20:30'),
-	(610, 610, 4, 0, '2022-06-22 01:03:54'),
-	(678, 610, 0, 0, '2022-06-22 01:04:11'),
-	(722, 760, 0, 0, '2022-06-21 23:07:09'),
-	(728, 760, 0, 0, '2022-06-21 22:44:00'),
-	(729, 760, 0, 0, '2022-06-21 23:07:08'),
-	(760, 760, 4, 0, '2022-06-21 21:44:02'),
-	(835, 760, 0, 0, '2022-06-22 01:57:48'),
-	(855, 760, 0, 0, '2022-06-21 22:51:32');
+	(95, 137, 0, 0, '2022-11-28 11:55:43'),
+	(137, 137, 4, 0, '2022-11-28 11:55:44'),
+	(213, 213, 4, 0, '2022-11-28 10:36:15'),
+	(218, 213, 0, 0, '2022-11-28 10:36:18'),
+	(219, 213, 0, 0, '2022-11-28 10:36:15'),
+	(1166, 1166, 4, 0, '2022-11-28 12:01:53');
 /*!40000 ALTER TABLE `accounts_parties` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

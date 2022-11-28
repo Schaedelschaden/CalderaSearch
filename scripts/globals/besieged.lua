@@ -3,6 +3,7 @@
 --     Functions for Besieged system
 --
 -----------------------------------
+local ID = require("scripts/zones/Al_Zahbi/IDs")
 require("scripts/globals/keyitems")
 require("scripts/globals/npc_util")
 require("scripts/globals/status")
@@ -31,7 +32,7 @@ tpz.besieged.onEventUpdate = function(player, csid, option)
 end
 
 tpz.besieged.onEventFinish = function(player, csid, option)
-    local ID = zones[player:getZoneID()]
+    local zoneID = zones[player:getZoneID()]
     if option == 0 or option == 16 or option == 32 or option == 48 then
         -- Sanction
         if option ~= 0 then
@@ -42,7 +43,7 @@ tpz.besieged.onEventFinish = function(player, csid, option)
         local duration = getSanctionDuration(player)
         local subPower = 0 -- getImperialDefenseStats()
         player:addStatusEffect(tpz.effect.SANCTION, option / 16, 0, duration, subPower)
-        player:messageSpecial(ID.text.SANCTION)
+        player:messageSpecial(zoneID.text.SANCTION)
     elseif bit.band(option, 0xFF) == 17 then
         -- Player bought a map
         local ki = tpz.ki.MAP_OF_MAMOOK + bit.rshift(option, 8)
@@ -101,13 +102,14 @@ end
 tpz.besieged.badges = { 780, 783, 784, 794, 795, 825, 826, 827, 894, 900, 909 }
 
 tpz.besieged.getMercenaryRank = function(player)
-    local rank = 0
+    local rank = 11
 
-    for _, v in ipairs(tpz.besieged.badges) do
-        if player:hasKeyItem(v) then
-            rank = rank + 1
-        end
-    end
+    -- Disabled due to unavailability of assault
+    -- for _, v in ipairs(tpz.besieged.badges) do
+        -- if player:hasKeyItem(v) then
+            -- rank = rank + 1
+        -- end
+    -- end
 
     return rank
 end
@@ -242,4 +244,486 @@ function getISPItem(i)
     end
 
     return nil
+end
+
+-----------------------------------------------------------------
+-- Caldera custom Besieged NPC's/Fights
+-----------------------------------------------------------------
+
+local startingNPCs  = {ID.npc.MIHLI_ALIAPOH, ID.npc.GADALAR, ID.npc.NAJELITH, ID.npc.ZAZARG, ID.npc.RUGHADJEEN}
+
+local besiegedName =
+{
+    "Lamiae Swarm",
+    "Mamool Ja Savages",
+    "Troll Mercenaries",
+    "Monster Leaders",
+    "Serpent Generals",
+}
+
+-- Beseiged effect power matches the besiegedWaves NPC position and determines the "instance"
+-- Mihli is effect power 1 and besiegedWaves position 1, Gadalar is effect power 2 and position 2, etc
+local besiegedWaves =
+{
+    -- Mihli Aliapoh (Lamiae Swarm)
+    -- !pos -40 -0.4 -115 48
+    {
+        {ID.mob.LAMIA_NO_3, ID.mob.LAMIA_NO_34,  ID.mob.LAMIA_NO_21},
+        {ID.mob.LAMIA_NO_2, ID.mob.LAMIA_NO_9,   ID.mob.LAMIA_NO_15},
+        {ID.mob.MEDUSA,     ID.mob.MERROW_NO_12, ID.mob.MERROW_NO_11},
+    },
+    -- Gadalar (Mamool Ja Savages)
+    -- !pos 39 0 -38 48
+    {
+        {ID.mob.SEARING_VOGAAL_JA,  ID.mob.THUNDERCLAP_SAREEL_JA, ID.mob.DECIMATER_MABEL_JA},
+        {ID.mob.SCALDING_FAFOOL_JA, ID.mob.SAGELORD_MOLAAL_JA,    ID.mob.PANURGIC_RYUBOOL_JA},
+        {ID.mob.GULOOL_JA_JA,       ID.mob.EIDOLIC_QUFEEL_JA,     ID.mob.STRIFELORD_BAKOOL_JA},
+    },
+    -- Najelith (Troll Mercenaries)
+    -- !pos 40 -0.4 115 48
+    {
+        {ID.mob.XARHORKUR_THE_CLAVIGER, ID.mob.GIRZORHOR_THE_IMPRUDENT, ID.mob.WORDORBOR_THE_ARTIFICER},
+        {ID.mob.ZURMURWUR_THE_RUTHLESS, ID.mob.DARTORGOR_THE_AUSTERE,   ID.mob.SURMERDAR_THE_UNBRIDLED},
+        {ID.mob.GURFURLUR_THE_MENACING, ID.mob.VORJIRZUR_THE_VALIANT,   ID.mob.VORPORLOR_THE_BARBARIC},
+    },
+    -- Zazarg (Monster Leaders)
+    -- !pos -60.3 -8 40 48
+    {
+        {ID.mob.NEMEAN_LION, ID.mob.PINING_ABAZOHN, ID.mob.BHOOT_INVADER},
+        {ID.mob.GERE,        ID.mob.KILLING_CLAW,   ID.mob.AERIAL_TORPEDO},
+        {ID.mob.ILLUYANKAS,  ID.mob.BRONTOBUGARD,   ID.mob.BATTERINGBUGARD},
+    },
+    -- Rughadjeen (Serpent Generals)
+    -- !pos 80 0 40 48
+    {
+        {ID.mob.GENERAL_MIHLI,    ID.mob.IMPERIAL_TROOPER_MIHLI_1,    ID.mob.IMPERIAL_TROOPER_MIHLI_2},
+        {ID.mob.GENERAL_GADALAR,  ID.mob.VOLUNTEER_GADALAR_1,         ID.mob.VOLUNTEER_GADALAR_2},
+        {ID.mob.GENERAL_NAJELITH, ID.mob.QIQIRN_FREELANCE_NAJELITH_1, ID.mob.QIQIRN_FREELANCE_NAJELITH_2},
+        {ID.mob.GENERAL_ZAZARG,   ID.mob.GOBLIN_LASQUENET_ZAZARG_1,   ID.mob.GOBLIN_LASQUENET_ZAZARG_2},
+        {ID.mob.GENERAL_RUGHA,    ID.mob.IMMORTAL_GUARD_RUGHA_1,      ID.mob.IMMORTAL_GUARD_RUGHA_1},
+    },
+}
+
+local bossDropLists =
+{
+    {3296, 3297}, -- Medusa,       6-man party/alliance drop list
+    {3298, 3299}, -- Gulool Ja Ja, 6-man party/alliance drop list
+    {3300, 3301}, -- Gurfurlur,    6-man party/alliance drop list
+    {3302, 3303}, -- Illuyankas,   6-man party/alliance drop list
+    {3304, 3305}, -- Rughadjeen,   6-man party/alliance drop list
+}
+
+local npcTradeMessages =
+{
+    "%s : The trial begins. Speak to me when you're ready to begin the first wave.", -- NPC name
+    "%s : Someone already started my event.",                                        -- NPC name
+    "%s : This is not %i gil...",                                                    -- NPC name, Gil cost
+    "%s : I'm not sure you're ready for this.",                                      -- NPC name
+    "%s : You can't participate in multiple Besieged events at the same time.",      -- NPC name
+}
+
+local npcTriggerMessages =
+{
+    "%s : You're on your own until you complete the wave.",               -- NPC name
+    "%s : Someone has already started my event.",                         -- NPC name
+    "%s : Will you face the %s? For a mere %i gil you may fight my pets." -- NPC name, Besieged name, Gil cost
+}
+
+local npcWaveMessages =
+{
+    {
+        "%s : Shall we begin?",                                 -- NPC name
+        "%s : This one should be more of a challenge.",         -- NPC name
+        "%s : Can you finish the trial?",                       -- NPC name
+    },
+    {
+        "%s : Mihli has claimed the first right of challenge.", -- NPC name
+        "%s : Gadalar challenges you next!",                    -- NPC name
+        "%s : Najelith joins the fight!",                       -- NPC name
+        "%s : Zazarg approaches!",                              -- NPC name
+        "%s : Can you finish the trial?",                       -- NPC name
+    }
+}
+
+local npcSuccessMessage = "%s : I'm impressed a mercenary could accomplish that." -- NPC name
+
+-----------------------------------------------------------------
+--    LOCAL FUNCTIONS
+-----------------------------------------------------------------
+
+function checkBesiegedEffectMob(mob)
+    local zone           = mob:getZone()
+    local besiegedEffect = mob:getStatusEffect(tpz.effect.BESIEGED)
+    local instanceID     = 0
+    local besiegedActive = false
+
+    -- Besieged effect found
+    if besiegedEffect then
+        instanceID = besiegedEffect:getPower()
+
+        -- Check if any players in the zone have a Besieged effect with matching power/"instance"
+        for _, player in pairs(zone:getPlayers()) do
+            local besiegedEffectPlayer = player:getStatusEffect(tpz.effect.BESIEGED)
+
+            -- Player with matching Besieged power/"instance" found
+            if
+                besiegedEffectPlayer and
+                besiegedEffectPlayer:getPower() == instanceID
+            then
+                besiegedActive = true
+                break
+            end
+        end
+    end
+
+    return besiegedActive
+end
+
+function checkBesiegedEffectPlayer(player, instanceID)
+    local zone           = player:getZone()
+    local besiegedActive = false
+
+    -- Check if any players in the zone have a Besieged effect with matching power/"instance"
+    for _, playerChar in pairs(zone:getPlayers()) do
+        local besiegedEffect = playerChar:getStatusEffect(tpz.effect.BESIEGED)
+
+        -- Player with matching Besieged power/"instance" found
+        if
+            besiegedEffect and
+            besiegedEffect:getPower() == instanceID
+        then
+            besiegedActive = true
+            break
+        end
+    end
+
+    return besiegedActive
+end
+
+function getFixedNPCName(npc)
+    local name = npc:getName()
+	local fixedName = string.gsub(name, "_", " ")
+
+	return fixedName
+end
+
+-----------------------------------------------------------------
+--    NPC FUNCTIONS
+-----------------------------------------------------------------
+
+tpz.besieged.onTradeCaldera = function(player, npc, trade)
+    local npcName
+    local gmLevel       = player:getGMLevel()
+    local effectPower   = 0
+
+    for i = 1, #startingNPCs do
+        if npc:getID() == startingNPCs[i] then
+            effectPower = i
+            npcName = getFixedNPCName(npc)
+        end
+    end
+
+    -- Determine the gil cost for starting Besieged
+    local gilCost = 1000000
+    -- Set the total duration (default is 30 min, highest tier fights 45 min)
+    local eventDuration = 1800 -- 30 minutes; Total time allowed per Besieged event (in seconds)
+
+    if effectPower >= 4 then
+        gilCost       = 2500000
+        eventDuration = 2700 -- 45 minutes
+    end
+
+    -- GM/Dev testing only!
+    -- Trading char must be a T1 or higher GM and trade 1 gil to the NPC
+    -- Sets gil cost to 1g and final boss drop list to 0
+    if
+        gmLevel >= 1 and
+        trade:getGil() == 1
+    then
+        gilCost = 1
+        npc:setLocalVar("GM_Override", 1)
+    end
+
+    -- Prevent one player from starting multiple Besieged "instances"
+    if checkBesiegedEffectPlayer(player, effectPower) == true then
+        player:PrintToPlayer(string.format(npcTradeMessages[5], npcName),tpz.msg.channel.NS_SAY)
+    -- Check if the player has cleared the prerequisites
+    elseif
+        player:getCharVar("KillCounter_Kirin") > 0 and
+        player:getCharVar("KillCounter_JailOfLove") > 0
+    then
+        -- Check that the trade contained the appropriate amount of gil
+		if
+            trade:getGil() == gilCost and
+            npc:getLocalVar("Besieged_Active") == 0
+        then
+            local allianceList = player:getAlliance()
+            local memberName = {}
+
+            -- Set all NPC variables to "active"
+            npc:setLocalVar("Besieged_End_Time", os.time() + eventDuration)
+			npc:setLocalVar("Besieged_Active", 1)
+            npc:setLocalVar("wave", 1)
+            npc:setLocalVar("size", 1)
+
+            -- Get all alliance members in the zone
+            for i, v in ipairs(allianceList) do
+                memberName[i] = v:getName()
+            end
+
+            -- Give alliance members who have fulfilled the prerequisites the Besieged status effect
+			for i = 1, #memberName do
+                local member = GetPlayerByName(memberName[i])
+
+				if
+                    member:getZoneID() == 48 and
+                    not member:hasStatusEffect(tpz.effect.BESIEGED) and
+                    player:getCharVar("KillCounter_Kirin") > 0 and
+                    player:getCharVar("KillCounter_JailOfLove") > 0
+                then
+					member:addStatusEffect(tpz.effect.BESIEGED, effectPower, 0, eventDuration)
+				end
+			end
+
+            -- Parties greater than 6 members will spawn additional monsters
+			if #memberName > 6 then
+				npc:setLocalVar("size", 2)
+			end
+
+            player:tradeComplete()
+
+			player:PrintToPlayer(string.format(npcTradeMessages[1], npcName),tpz.msg.channel.NS_SAY)
+		elseif npc:getLocalVar("Besieged_Active") == 1 then
+            player:PrintToPlayer(string.format(npcTradeMessages[2], npcName),tpz.msg.channel.NS_SAY)
+        else
+			player:PrintToPlayer(string.format(npcTradeMessages[3], npcName, gilCost),tpz.msg.channel.NS_SAY)
+		end
+	else
+		player:PrintToPlayer(string.format(npcTradeMessages[4], npcName),tpz.msg.channel.NS_SAY)
+	end
+end
+
+tpz.besieged.onTriggerCaldera = function(player, npc)
+    local npcName
+    local effectPower  = 0
+    local waveMessages = 1
+
+    -- Validate the starting NPC and determine Besieged "instance" based on NPC's number (1-5)
+    for i = 1, #startingNPCs do
+        if npc:getID() == startingNPCs[i] then
+            effectPower = i
+            npcName = getFixedNPCName(npc)
+        end
+    end
+
+    -- Determine the gil cost for starting Besieged
+    local gilCost = 1000000
+
+    if effectPower >= 4 then
+        gilCost = 2500000
+    end
+
+    -- Determine the wave messages (Rughadjeen has 5 waves, all others have 3)
+    if effectPower == 5 then
+        waveMessages = 2
+    end
+
+    -- Determine the monsters to be spawned
+    local waves = besiegedWaves[effectPower]
+
+    -- Confirm triggering player has the Besieged status effect and a Besieged "instance" is running
+	if
+        player:hasStatusEffect(tpz.effect.BESIEGED) and
+        npc:getLocalVar("Besieged_Active") == 1 and
+        npc:getLocalVar("Besieged_Wave_Alive") == 0
+    then
+        -- Spawns the next wave if the "wave" variable is 0-3 or 0-5
+        if npc:getLocalVar("wave") > 0 and npc:getLocalVar("wave") <= #waves then
+            -- Get the wave message and choose the monsters which will be spawned based off their mob ID's
+            for i = 1, #waves do
+                if npc:getLocalVar("wave") == i then
+                    player:PrintToPlayer(string.format(npcWaveMessages[waveMessages][i], npcName),tpz.msg.channel.NS_SAY)
+
+                    SpawnMob(waves[i][1]) -- Wave "leader"
+
+                    if npc:getLocalVar("size") == 2 then
+                        SpawnMob(waves[i][2]) -- Wave "buddy" 1
+                        SpawnMob(waves[i][3]) -- Wave "buddy" 2
+                    end
+                end
+            end
+
+            -- Assign spawned monsters to the waveMob variable
+            local waveMob =
+            {
+                GetMobByID(waves[npc:getLocalVar("wave")][1]), -- Wave "leader"
+                GetMobByID(waves[npc:getLocalVar("wave")][2]), -- Wave "buddy" 1
+                GetMobByID(waves[npc:getLocalVar("wave")][3]), -- Wave "buddy" 2
+            }
+            local duration = npc:getLocalVar("Besieged_End_Time") - os.time()
+            -- printf("besieged.lua onTriggerCaldera  DURATION: [%i]  END TIME: [%i]", npc:getLocalVar("Besieged_End_Time") - os.time(), npc:getLocalVar("Besieged_End_Time"))
+
+            -- Add the Besieged effect to all monsters spawned
+            -- Duration of effect is calculated above so that monster's Besieged effects do not exceed the alotted time
+            for i,v in ipairs(waveMob) do
+                if v:isAlive() then
+                    v:setLocalVar("Besieged_End_Time", npc:getLocalVar("Besieged_End_Time"))
+                    v:addStatusEffect(tpz.effect.BESIEGED, effectPower, 0, duration)
+                    v:updateClaim(player)
+                end
+            end
+
+            npc:setLocalVar("Besieged_Wave_Alive", 1)
+        -- Completes the Besieged "instance" if all monsters have been defeated
+        elseif npc:getLocalVar("wave") == #waves + 1 then
+            local allianceList = player:getAlliance()
+            local memberName = {}
+            local member
+
+            -- Reset all variables associated with the "instance"
+            npc:setLocalVar("Besieged_End_Time", 0)
+            npc:setLocalVar("Besieged_Active", 0)
+            npc:setLocalVar("wave", 0)
+            npc:setLocalVar("Besieged_Wave_Alive", 0)
+
+            -- Remove the Besieged status effect from all PC's involved in the "instance"
+            for i, v in ipairs(allianceList) do
+                memberName[i] = v:getName()
+                member = GetPlayerByName(memberName[i])
+
+                member:delStatusEffect(tpz.effect.BESIEGED)
+            end
+
+            -- Victory! Success message
+            player:PrintToPlayer(string.format(npcSuccessMessage, npcName),tpz.msg.channel.NS_SAY)
+		end
+    elseif npc:getLocalVar("Besieged_Wave_Alive") == 1 and player:hasStatusEffect(tpz.effect.BESIEGED) then
+        player:PrintToPlayer(string.format(npcTriggerMessages[1], npcName),tpz.msg.channel.NS_SAY)
+    elseif npc:getLocalVar("Besieged_Active") == 1 and not player:hasStatusEffect(tpz.effect.BESIEGED) then
+        player:PrintToPlayer(string.format(npcTriggerMessages[2], npcName),tpz.msg.channel.NS_SAY)
+	else
+		player:PrintToPlayer(string.format(npcTriggerMessages[3], npcName, besiegedName[effectPower], gilCost),tpz.msg.channel.NS_SAY)
+	end
+end
+
+-----------------------------------------------------------------
+--    MOB FUNCTIONS
+-----------------------------------------------------------------
+
+tpz.besieged.setMobDropsCaldera = function(mob, npcID)
+    local startNPC  = GetNPCByID(npcID)
+    local partySize = startNPC:getLocalVar("size")
+    local instance  = 0
+
+    -- Validate the starting NPC and determine Besieged "instance" based on NPC's number (1-5)
+    for i = 1, #startingNPCs do
+        if startNPC:getID() == startingNPCs[i] then
+            instance = i
+        end
+    end
+
+    -- Instance found and drop list set based on party size (6-man or alliance)
+    -- GM Override applied in tpz.besieged.onTradeCaldera
+    if
+        instance ~= 0 and 
+        startNPC:getLocalVar("GM_Override") == 0
+    then
+        mob:setDropID(bossDropLists[instance][partySize])
+    else
+        mob:setDropID(0)
+    end
+end
+
+tpz.besieged.onMobRoamCaldera = function(mob, npcID)
+    local startNPC       = GetNPCByID(npcID)
+    local besiegedActive = checkBesiegedEffectMob(mob)
+
+    -- Mob doesn't have a Besieged effect, despawn mob
+    -- Player with matching Besieged effect not found, despawn mob
+    -- Reset all NPC variables
+    if besiegedActive == false then
+        DespawnMob(mob:getID())
+        startNPC:setLocalVar("Besieged_End_Time", 0)
+        startNPC:setLocalVar("Besieged_Active", 0)
+        startNPC:setLocalVar("wave", 0)
+        startNPC:setLocalVar("Besieged_Wave_Alive", 0)
+    end
+end
+
+tpz.besieged.onMobDespawnCaldera = function(mob, npcID)
+    local startNPC = GetNPCByID(npcID)
+
+    mob:delStatusEffectSilent(tpz.effect.BESIEGED)
+
+    -- Besieged effect duration expired, reset NPC variables
+    if os.time() > startNPC:getLocalVar("Besieged_End_Time") then
+        -- printf("besieged.lua onMobDespawnCaldera  OS TIME: [%i]  BESIEGED TIME: [%i]", os.time(), startNPC:getLocalVar("Besieged_End_Time"))
+        startNPC:setLocalVar("Besieged_Active", 0)
+        startNPC:setLocalVar("wave", 0)
+        startNPC:setLocalVar("Besieged_Wave_Alive", 0)
+        mob:setLocalVar("DeathCheck", 0)
+    end
+end
+
+tpz.besieged.onMobDeathCaldera = function(mob, player, isKiller, npcID)
+    if mob:getLocalVar("DeathCheck") == 0 then
+        local startNPC    = GetNPCByID(npcID)
+        local currentWave = startNPC:getLocalVar("wave")
+        local maxWave     = 3
+        local instanceID  = 0
+
+        -- Validate the starting NPC and determine Besieged "instance" based on NPC's number (1-5)
+        for i = 1, #startingNPCs do
+            if startNPC:getID() == startingNPCs[i] then
+                instanceID = i
+            end
+        end
+
+        -- Rughadjeen's Besieged is currently the only one with 5 waves
+        if instanceID == 5 then
+            maxWave = 5
+        end
+
+        -- printf("besieged.lua onMobDeathCaldera  START NPC ID: [%i]  CURRENT WAVE: [%i]  INSTANCE ID: [%i]", npcID, currentWave, instanceID)
+
+        mob:delStatusEffectSilent(tpz.effect.BESIEGED)
+
+        -- Check if all mobs of the wave are dead before advancing to the next wave
+        if
+            GetMobByID(besiegedWaves[instanceID][currentWave][1]):isDead() and
+            GetMobByID(besiegedWaves[instanceID][currentWave][2]):isDead() and
+            GetMobByID(besiegedWaves[instanceID][currentWave][3]):isDead() and
+            currentWave <= maxWave
+        then
+            startNPC:setLocalVar("wave", currentWave + 1)
+            startNPC:setLocalVar("Besieged_Wave_Alive", 0)
+            mob:setLocalVar("DeathCheck", 1)
+        end
+
+        -- Check if the mob is an "instance" Mega Boss and advance its kill counter
+        if
+            mob:getID() == besiegedWaves[1][3][1] or -- Medusa
+            mob:getID() == besiegedWaves[2][3][1] or -- Gulool Ja Ja
+            mob:getID() == besiegedWaves[3][3][1] or -- Gurfurlur the Menacing
+            mob:getID() == besiegedWaves[4][3][1] or -- Illuyankas
+            mob:getID() == besiegedWaves[5][5][1]    -- General Rughadjeen
+        then
+            if startNPC:getLocalVar("GM_Override") == 0 then
+                -- Track kill counters
+                local mobName = mob:getName()
+                local fixedMobName = string.gsub(mobName, "_", " ")
+                local shortName = mobName:sub(1, 14)
+                -- printf("besieged.lua onMobDeathCaldera  SHORT NAME: [%s]", shortName)
+                local KillCounter = player:getCharVar("KillCounter_BSG_"..shortName)
+
+                KillCounter = KillCounter + 1
+
+                player:setCharVar("KillCounter_BSG_"..shortName, KillCounter)
+                player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+            else
+                -- Reset GM Override
+                startNPC:setLocalVar("GM_Override", 0)
+            end
+        end
+    end
 end

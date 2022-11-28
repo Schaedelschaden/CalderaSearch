@@ -9,17 +9,19 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
-	mob:setMod(tpz.mod.SLEEPRES, 100)
-	mob:setMod(tpz.mod.ATT, 800)
-	-- mob:setMod(tpz.mod.MATT, 100)
-    mob:setMod(tpz.mod.ACC, 800)
-	mob:setMod(tpz.mod.MACC, 400)
-    mob:setMod(tpz.mod.EVA, 500)
-	mob:setMod(tpz.mod.DEF, 800)
-	mob:setMod(tpz.mod.MEVA, 600)
-	mob:setMod(tpz.mod.MDEF, 150)
-	mob:setMod(tpz.mod.DOUBLE_ATTACK, 30)
-	mob:setMod(tpz.mod.CRITHITRATE, 25)
+    if mob:getID() == 17396139 then
+        mob:setMod(tpz.mod.SLEEPRES, 100)
+        mob:setMod(tpz.mod.ATT, 800)
+        -- mob:setMod(tpz.mod.MATT, 100)
+        mob:setMod(tpz.mod.ACC, 800)
+        mob:setMod(tpz.mod.MACC, 400)
+        mob:setMod(tpz.mod.EVA, 500)
+        mob:setMod(tpz.mod.DEF, 800)
+        mob:setMod(tpz.mod.MEVA, 600)
+        mob:setMod(tpz.mod.MDEF, 150)
+        mob:setMod(tpz.mod.DOUBLE_ATTACK, 30)
+        mob:setMod(tpz.mod.CRITHITRATE, 25)
+    end
 end
 
 function onMobDeath(mob, player, isKiller)

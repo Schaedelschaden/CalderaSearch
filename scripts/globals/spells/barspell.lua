@@ -31,6 +31,7 @@ end
 function applyBarspell(effectType, caster, target, spell)
     local enhanceSkill = caster:getSkillLevel(tpz.skill.ENHANCING_MAGIC)
     local mdefBonus = caster:getMerit(tpz.merit.BAR_SPELL_EFFECT) + caster:getMod(tpz.mod.BARSPELL_MDEF_BONUS)
+    local tier = 0
 	
 	if (caster:hasStatusEffect(tpz.effect.AFFLATUS_SOLACE)) then
 		mdefBonus = mdefBonus + caster:getMod(tpz.mod.ENH_AFFLATUS_SOLACE)
@@ -44,13 +45,18 @@ function applyBarspell(effectType, caster, target, spell)
 	if target:hasStatusEffect(tpz.effect.COMPOSURE) and target == caster then
 		duration = duration * 3
 	end
+    
+    -- Set the tier to the WHM Empyrean Armor Set Effect Power
+    if caster:getMod(tpz.mod.BAR_ELEMENT_NULL_CHANCE) > 0 then
+        tier = caster:getMod(tpz.mod.BAR_ELEMENT_NULL_CHANCE)
+    end
 	
 	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then
 		power = power * 1.5
 		target:delStatusEffect(tpz.effect.EMBOLDEN)
 	end
 
-    target:addStatusEffect(effectType, power, 0, duration, 0, mdefBonus, 0)
+    target:addStatusEffect(effectType, power, 0, duration, 0, mdefBonus, tier)
 	
     return effectType
 end

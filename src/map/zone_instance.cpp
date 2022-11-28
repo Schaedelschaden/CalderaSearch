@@ -343,6 +343,7 @@ void CZoneInstance::ZoneServer(time_point tick, bool check_regions)
 
         if ((instance->Failed() || instance->Completed()) && instance->CharListEmpty())
         {
+            ShowDebug("[CZoneInstance]ZoneServer cleaned up Instance %s", (const char*)instance->GetName());
             it = instanceList.erase(it);
             continue;
         }

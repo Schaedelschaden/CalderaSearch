@@ -775,12 +775,12 @@ function phantombuffMultiple(caster)
 	local plusValue = 0
 	local equipWeapon = {caster:getEquipID(tpz.slot.MAIN), caster:getEquipID(tpz.slot.SUB)}
 	local equipAccessory = {caster:getEquipID(tpz.slot.NECK), caster:getEquipID(tpz.slot.RING1), caster:getEquipID(tpz.slot.RING2)}
-	
+
 	-- Lanun Knife, Rostam
 	local weapon = {21580, 21581}
 	-- Regal Necklace, Merirosvo Ring, Barataria Ring
 	local accessory = {26038, 28547, 28548}
-	
+
 	-- Accessories (Regal Necklace, Merirosvo Ring, Barataria Ring) and Weapons (Lanun Knife, Rostam)
 	-- are based off the highest value present and do not stack with each other
 	if (equipAccessory[2] == accessory[2] or equipAccessory[3] == accessory[2]) then

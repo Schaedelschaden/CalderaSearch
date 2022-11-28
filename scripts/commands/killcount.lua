@@ -118,7 +118,13 @@ function onTrigger(player, page)
 	local kcBilberry = player:getCharVar("KillCounter_Sozu_Bilberry")
 	local kcPontifex = player:getCharVar("KillCounter_Tonberry_Pontifex")
 	local kcOgama = player:getCharVar("KillCounter_Ogama")
-	
+    -- Besieged NM
+    local kcBSGMedusa = player:getCharVar("KillCounter_BSG_Medusa")
+    local kcBSGGuloolJaJa = player:getCharVar("KillCounter_BSG_Gulool_Ja_Ja")
+	local kcBSGGurfurlur = player:getCharVar("KillCounter_BSG_Gurfurlur_the_")
+    local kcBSGIlluyankas = player:getCharVar("KillCounter_BSG_Illuyankas")
+    local kcBSGRughadjeen = player:getCharVar("KillCounter_BSG_Rughadjeen")
+
 	if (page == nil) then
 		player:PrintToPlayer(string.format("Please specify page 1 or 2 (e.g. !killcount 1 or !killcount 2)"),tpz.msg.channel.SYSTEM_3)
 	elseif (page == 1) then
@@ -149,5 +155,7 @@ function onTrigger(player, page)
 		player:PrintToPlayer(string.format("  Blubbery Bulge: [%i]  Gochakzuk: [%i]  Dnatbat: [%i]  Gnadgad: [%i]  Gudrud: [%i]  Bakdak: [%i]  Bi'Gho: [%i]  Ga'Bhu: [%i]  Da'Dha: [%i]", kcBlubberyBulge, kcGochakzuk, kcDnatbat, kcGnadgad, kcGudrud, kcBakdak, kcBiGho, kcGaBhu, kcDaDha),tpz.msg.channel.SYSTEM_3)
 		player:PrintToPlayer(string.format("  Ge'Dha: [%i]  Zo'Kho: [%i]  Pallas: [%i]  Alkyoneus: [%i]  Ixtab: [%i]  Hakutaku: [%i]  Friar Rush: [%i]  Sozu Bilberry: [%i]", kcGeDha, kcZoKho, kcPallas, kcAlkyoneus, kcIxtab, kcHakutaku, kcFriarRush, kcBilberry),tpz.msg.channel.SYSTEM_3)
 		player:PrintToPlayer(string.format("  Tonberry Pontifex: [%i]  Ogama: [%i]", kcPontifex, kcOgama),tpz.msg.channel.SYSTEM_3)
+        player:PrintToPlayer(string.format("BESIEGED NM ----------------------------------------------------------------------------------------------------------------------------------------"),tpz.msg.channel.SYSTEM_3)
+        player:PrintToPlayer(string.format("  Medusa: [%i]  Gulool Ja Ja: [%i]  Gurfurlur: [%i]  Illuyankas: [%i]  Rughadjeen: [%i]", kcBSGMedusa, kcBSGGuloolJaJa, kcBSGGurfurlur, kcBSGIlluyankas, kcBSGRughadjeen),tpz.msg.channel.SYSTEM_3)
 	end
 end

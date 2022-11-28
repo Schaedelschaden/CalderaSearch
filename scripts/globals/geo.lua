@@ -70,10 +70,10 @@ end
 function GeomancyPotency(caster)
 	local potency = 0
 	local equip = {caster:getEquipID(tpz.slot.MAIN), caster:getEquipID(tpz.slot.SUB), caster:getEquipID(tpz.slot.RANGED), caster:getEquipID(tpz.slot.NECK)}
-	
+
 	-- [1]Idris 119 I, [2]Idris 119 II, [3]Eminent Bell, [4]Nepote Bell, [5]Dunna, [6]Bagua Charm, [7]Bagua Charm +1, [8]Bagua Charm +2
 	local item = {21070, 21080, 21462, 21463, 21372, 25537, 25538, 25539}
-	
+
 	-- Geomancy potency (Geomancy +) is based off the highest value present
 	-- The modifiers do NOT stack with each other
 	if (equip[3] == item[3]) then

@@ -18,7 +18,7 @@ function onTrigger(player)
         -- Add bonus effects to the pet
         pet:addStatusEffect(tpz.effect.PHYSICAL_SHIELD,2,0,0)
         pet:addStatusEffect(tpz.effect.MAGIC_SHIELD,2,0,0)
-        pet:addStatusEffect(tpz.effect.REGAIN,30,0,0)
+        pet:addStatusEffect(tpz.effect.REGAIN,300,0,0)
         pet:addStatusEffect(tpz.effect.REFRESH,100,0,0)
         pet:addStatusEffect(tpz.effect.REGEN,2000,0,0)
     else

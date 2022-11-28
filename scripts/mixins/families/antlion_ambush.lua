@@ -12,10 +12,15 @@ g_mixins.families.antlion_ambush = function(mob)
         mob:AnimationSub(0)
         mob:wait(2000)
     end)
+
     mob:addListener("ENGAGE", "ANTLION_AMBUSH_ENGAGE", function(mob, target)
         mob:useMobAbility(278) -- Pit Ambush
         mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
+        -- mob:hideName(false)
+        -- mob:untargetable(false)
+        -- mob:AnimationSub(1)
     end)
+
     mob:addListener("DISENGAGE", "ANTLION_AMBUSH_DISENGAGE", function(mob)
 		mob:setLocalVar("AMBUSH", 0)
         mob:hideName(true)

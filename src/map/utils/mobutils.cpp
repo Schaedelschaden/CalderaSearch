@@ -89,70 +89,70 @@ uint16 GetMagicEvasion(CMobEntity* PMob)
     {
 		case JOB_WAR:
             mEvaRank = 3;
-        break;
+            break;
 		case JOB_MNK:
             mEvaRank = 6;
-        break;
+            break;
 		case JOB_WHM:
             mEvaRank = 1;
-        break;
+            break;
 		case JOB_BLM:
             mEvaRank = 1;
-        break;
+            break;
 		case JOB_RDM:
             mEvaRank = 1;
-        break;
+            break;
 		case JOB_THF:
             mEvaRank = 4;
-        break;
+            break;
 		case JOB_PLD:
             mEvaRank = 7;
-        break;
+            break;
 		case JOB_DRK:
             mEvaRank = 7;
-        break;
+            break;
 		case JOB_BST:
             mEvaRank = 4;
-        break;
+            break;
 		case JOB_BRD:
             mEvaRank = 1;
-        break;
+            break;
 		case JOB_RNG:
             mEvaRank = 4;
-        break;
+            break;
 		case JOB_SAM:
             mEvaRank = 5;
-        break;
+            break;
 		case JOB_NIN:
             mEvaRank = 6;
-        break;
+            break;
 		case JOB_DRG:
             mEvaRank = 5;
-        break;
+            break;
 		case JOB_SMN:
             mEvaRank = 1;
-        break;
+            break;
 		case JOB_BLU:
             mEvaRank = 4;
-        break;
+            break;
 		case JOB_COR:
             mEvaRank = 4;
-        break;
+            break;
 		case JOB_PUP:
             mEvaRank = 6;
-        break;
+            break;
 		case JOB_DNC:
             mEvaRank = 4;
-        break;
+            break;
 		case JOB_SCH:
             mEvaRank = 1;
-        break;
+            break;
 		case JOB_GEO:
             mEvaRank = 1;
-        break;
+            break;
 		case JOB_RUN:
             mEvaRank = 4;
-        break;
+            break;
 	}
 
     return GetBase(PMob, mEvaRank);
@@ -230,6 +230,7 @@ uint16 GetBaseToRank(uint8 rank, uint16 lvl)
 uint16 GetBase(CMobEntity * PMob, uint8 rank)
  {
     uint8 lvl = PMob->GetMLevel();
+    
     if (lvl > 99)
 	{
         switch(rank)
@@ -371,7 +372,6 @@ void CalculateStats(CMobEntity * PMob)
             growth = petGrowth;
         }
 
-
         PMob->health.maxhp = (int16)(base * pow(mLvl, growth) * hpScale);
     }
     else
@@ -379,7 +379,7 @@ void CalculateStats(CMobEntity * PMob)
         PMob->health.maxhp = PMob->HPmodifier;
     }
 
-    if(isNM)
+    if (isNM)
     {
         PMob->health.maxhp = (int32)(PMob->health.maxhp * map_config.nm_hp_multiplier);
     }

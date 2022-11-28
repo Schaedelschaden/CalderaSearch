@@ -1,6 +1,6 @@
 ---------------------------------------------
 -- Typhoean Rage
--- Deals heavy physical damage in an area of effect. Additional effect: Encumberance and Muddle
+-- Deals heavy physical damage in an area of effect. Additional effect: Encumbrance and Muddle
 -- Type: Physical
 -- Range: Melee
 ---------------------------------------------
@@ -25,9 +25,9 @@ function onMobWeaponSkill(target, mob, skill)
 
     MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 10, 3, 60)
 	
-	local typeEffect = tpz.effect.ENCUMBERANCE
+	local typeEffect = tpz.effect.ENCUMBRANCE
 
-	MobStatusEffectMove(mob, target, typeEffect, 1, 0, 60)
+	MobStatusEffectMove(mob, target, typeEffect, 65535, 0, 10)
 
     return dmg
 end

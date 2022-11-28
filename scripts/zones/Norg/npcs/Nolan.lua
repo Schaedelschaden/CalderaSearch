@@ -242,9 +242,9 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-	-- local costNQ = 10
-	-- local costHQ1 = 50
-	-- local costHQ2 = 2000
+	-- local costNQ       = 10
+	-- local costHQ1      = 50
+	-- local costHQ2      = 2000
 	-- local eschalixirID
 	-- local cost
 	-- local quantity
