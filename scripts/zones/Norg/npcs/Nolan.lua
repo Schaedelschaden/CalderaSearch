@@ -132,7 +132,7 @@ function onTrade(player, npc, trade)
             player:addItem(augGear, 1, 513, 9, 512, 6, 516, 6) -- DEX +10, STR +7, INT +7 DONE
         -- Despair
         elseif zitahGearCounter <= 10 then
-            player:addItem(augGear, 1, 2, 17, 514, 9, 356, 4) -- HP +50, VIT +10, Cure Pot rec +5 DONE
+            player:addItem(augGear, 1, 2, 17, 514, 9, 356, 4) -- HP +50, VIT +10, Cure Pot Rec +5 DONE
         -- Eschite
         elseif zitahGearCounter <= 15 then
             player:addItem(augGear, 1, 3, 15, 39, 6, 54, 3) -- HP +80, ENM +7, PDT -4 DONE
@@ -148,6 +148,54 @@ function onTrade(player, npc, trade)
         -- Vanya
         elseif zitahGearCounter <= 35 then
             player:addItem(augGear, 1, 10, 17, 329, 6, 40, 5) -- MP +50, Cure potency +7%, Enmity -6 DONE
+        -- Mijin
+        elseif zitahGearCounter == 36 then
+            player:addItem(augGear, 1, 25, 14, 23, 14, 27, 14) -- ATT +15, ACC +15, RACC +15 DONE
+        -- Nibiru Blade
+        elseif zitahGearCounter == 37 then
+            player:addItem(augGear, 1, 513, 9, 23, 19, 35, 14) -- DEX +10, ACC +20, MACC +15 DONE
+        -- Nibiru Bow
+        elseif zitahGearCounter == 38 then
+            player:addItem(augGear, 1, 515, 9, 27, 24, 40, 5) -- AGI +10, RACC +25, Enmity -6 DONE
+        -- Nibiru Chopper
+        elseif zitahGearCounter == 39 then
+            player:addItem(augGear, 1, 2, 17, 512, 9, 23, 24) -- HP +50, STR +10, ACC +25 DONE
+        -- Nibiru Cudgel
+        elseif zitahGearCounter == 40 then
+            player:addItem(augGear, 1, 517, 9, 35, 14, 329, 14) -- MND +10, MACC +15, Cure Potency +15 DONE
+        -- Nibiru Faussar
+        elseif zitahGearCounter == 41 then
+            player:addItem(augGear, 1, 512, 9, 25, 24, 35, 14) -- STR +10, ATT +25, MACC +15 DONE
+        -- Nibiru Gun
+        elseif zitahGearCounter == 42 then
+            player:addItem(augGear, 1, 512, 9, 27, 14, 142, 2) -- STR +10, RACC +15, Store TP +3 DONE
+        -- Nibiru Harp
+        elseif zitahGearCounter == 43 then
+            player:addItem(augGear, 1, 10, 17, 35, 9, 67, 1) -- MP +50, MACC +10, All Songs +2 DONE
+        -- Nibiru Knife
+        elseif zitahGearCounter == 44 then
+            player:addItem(augGear, 1, 23, 19, 25, 14, 31, 19) -- ACC +20, ATT +15, EVA +20 DONE
+        -- Nibiru Lance
+        elseif zitahGearCounter == 45 then
+            player:addItem(augGear, 1, 512, 9, 23, 19, 143, 2) -- STR +10, ACC +20, Double Attack +3 DONE
+        -- Nibiru Sainti
+        elseif zitahGearCounter == 46 then
+            player:addItem(augGear, 1, 23, 24, 512, 6, 195, 6) -- ACC +25, STR +7, Subtle Blow +7 DONE
+        -- Nibiru Shield
+        elseif zitahGearCounter == 47 then
+            player:addItem(augGear, 1, 3, 15, 39, 6, 54, 4) -- HP +80, Enmity +7, PDT -5% DONE
+        -- Nibiru Sickle
+        elseif zitahGearCounter == 48 then
+            player:addItem(augGear, 1, 512, 9, 25, 24, 516, 6) -- STR +10, ATT +25, INT +7 DONE
+        -- Nibiru Staff
+        elseif zitahGearCounter == 49 then
+            player:addItem(augGear, 1, 11, 15, 133, 24, 40, 4) -- MP +80, MAB +25, Enmity -5 DONE
+        -- Nibiru Tabar
+        elseif zitahGearCounter == 50 then
+            player:addItem(augGear, 1, 512, 9, 25, 19, 107, 19) -- STR +10, ATT +20, PET: ATT +20 DONE
+        -- Sensui
+        elseif zitahGearCounter == 51 then
+            player:addItem(augGear, 1, 513, 6, 23, 19, 142, 4) -- DEX +7, ACC +20, Store TP +5 DONE
         end
     -- Path B (Mog Kupon AW-GFII)
     elseif pathKupon == 9176 then
@@ -172,6 +220,54 @@ function onTrade(player, npc, trade)
         -- Vanya
         elseif zitahGearCounter <= 35 then
             player:addItem(augGear, 1, 289, 19, 323, 6, 55, 2) -- Healing Magic Skill +20, Cure Cast Time -7%, MDT -3% DONE
+        -- Mijin
+        elseif zitahGearCounter == 36 then
+            player:addItem(augGear, 1, 23, 14, 27, 14, 142, 4) -- ACC +15, RACC +15, Store TP +5 DONE
+        -- Nibiru Blade
+        elseif zitahGearCounter == 37 then
+            player:addItem(augGear, 1, 512, 9, 25, 19, 142, 2) -- STR +10, ATT +20, Store TP +3 DONE
+        -- Nibiru Bow
+        elseif zitahGearCounter == 38 then
+            player:addItem(augGear, 1, 2, 17, 29, 24, 139, 9) -- HP +50, RATT +25, Rapid Shot +10 DONE
+        -- Nibiru Chopper
+        elseif zitahGearCounter == 39 then
+            player:addItem(augGear, 1, 25, 19, 39, 3, 143, 2) -- ATT +20, Enmity +4, Double Attack +3% DONE
+        -- Nibiru Cudgel
+        elseif zitahGearCounter == 40 then
+            player:addItem(augGear, 1, 10, 17, 516, 9, 133, 14) -- MP +50, INT +10, MAB +15 DONE
+        -- Nibiru Faussar
+        elseif zitahGearCounter == 41 then
+            player:addItem(augGear, 1, 23, 9, 25, 14, 142, 4) -- ACC +10, ATT +15, Store TP +5 DONE
+        -- Nibiru Gun
+        elseif zitahGearCounter == 42 then
+            player:addItem(augGear, 1, 2, 17, 515, 9, 27, 19) -- HP +50, AGI +10, RACC +20 DONE
+        -- Nibiru Harp
+        elseif zitahGearCounter == 43 then
+            player:addItem(augGear, 1, 2, 17, 518, 9, 67, 1) -- HP +50, CHR +10, All Songs +2 DONE
+        -- Nibiru Knife
+        elseif zitahGearCounter == 44 then
+            player:addItem(augGear, 1, 513, 6, 25, 19, 142, 2) -- DEX +7, ATT +20, Store TP +3 DONE
+        -- Nibiru Lance
+        elseif zitahGearCounter == 45 then
+            player:addItem(augGear, 1, 2, 17, 23, 14, 25, 14) -- HP +50, ACC + 15, ATT +15 DONE
+        -- Nibiru Sainti
+        elseif zitahGearCounter == 46 then
+            player:addItem(augGear, 1, 2, 17, 25, 19, 142, 2) -- HP +50, ATT +20, Store TP +3 DONE
+        -- Nibiru Shield
+        elseif zitahGearCounter == 47 then
+            player:addItem(augGear, 1, 3, 15, 11, 15, 140, 6) -- HP +80, MP +80, Fast Cast +7% DONE
+        -- Nibiru Sickle
+        elseif zitahGearCounter == 48 then
+            player:addItem(augGear, 1, 25, 19, 133, 24, 140, 4) -- ATT +20, MAB +25, Fast Cast +5% DONE
+        -- Nibiru Staff
+        elseif zitahGearCounter == 49 then
+            player:addItem(augGear, 1, 55, 2, 517, 9, 35, 24) -- Magic DMG Taken -3%, MND +10, MACC +25 DONE
+        -- Nibiru Tabar
+        elseif zitahGearCounter == 50 then
+            player:addItem(augGear, 1, 23, 14, 25, 14, 142, 4) -- ACC +15, ATT +15, Store TP +5 DONE
+        -- Sensui
+        elseif zitahGearCounter == 51 then
+            player:addItem(augGear, 1, 25, 14, 195, 6, 143, 2) -- ATT +15, Subtle Blow +7, Double Attack +3% DONE
         end
     -- Path C (Mog Kupon AW-GEIII)
     elseif pathKupon == 9175 then
@@ -197,6 +293,54 @@ function onTrade(player, npc, trade)
         -- Vanya
         elseif zitahGearCounter <= 35 then
             player:addItem(augGear, 1, 517, 9, 53, 14, 141, 5) -- MND +10, Spell Interruption Rate -15%, Conserve MP +6 DONE
+        -- Mijin
+        elseif zitahGearCounter == 36 then
+            player:addItem(augGear, 1, 516, 6, 35, 14, 133, 14) -- INT +7, MACC +15, MAB +15 DONE
+        -- Nibiru Blade
+        elseif zitahGearCounter == 37 then
+            player:addItem(augGear, 1, 35, 14, 133, 14, 37, 19) -- MACC +15, MAB +15, MEVA +20 DONE
+        -- Nibiru Bow
+        elseif zitahGearCounter == 38 then
+            player:addItem(augGear, 1, 515, 9, 27, 14, 29, 14) -- AGI +10, RACC +15, RATT +15 DONE
+        -- Nibiru Chopper
+        elseif zitahGearCounter == 39 then
+            player:addItem(augGear, 1, 514, 9, 31, 19, 145, 2) -- VIT +10, EVA +20, Counter +3 DONE
+        -- Nibiru Cudgel
+        elseif zitahGearCounter == 40 then
+            player:addItem(augGear, 1, 23, 14, 35, 14, 140, 2) -- ACC +15, MACC +15, Fast Cast +3% DONE
+        -- Nibiru Faussar
+        elseif zitahGearCounter == 41 then
+            player:addItem(augGear, 1, 31, 19, 37, 19, 140, 4) -- EVA +20, MEVA +20, Fast Cast +5% DONE
+        -- Nibiru Gun
+        elseif zitahGearCounter == 42 then
+            player:addItem(augGear, 1, 512, 9, 27, 14, 29, 14) -- STR +10, RACC +15, RATT +15 DONE
+        -- Nibiru Harp
+        elseif zitahGearCounter == 43 then
+            player:addItem(augGear, 1, 10, 17, 329, 4, 67, 1) -- MP +50, Cure Potency +5%, All Songs +2 DONE
+        -- Nibiru Knife
+        elseif zitahGearCounter == 44 then
+            player:addItem(augGear, 1, 512, 14, 513, 9, 518, 9) -- STR +15, DEX +10, CHR +10 DONE
+        -- Nibiru Lance
+        elseif zitahGearCounter == 45 then
+            player:addItem(augGear, 1, 106, 19, 107, 19, 110, 2) -- Pet: ACC +20, Pet: ATT +20, Pet: Regen +3 Improvised DONE
+        -- Nibiru Sainti
+        elseif zitahGearCounter == 46 then
+            player:addItem(augGear, 1, 31, 19, 39, 6, 54, 2) -- EVA +20, Enmity +7, PDT -3% DONE
+        -- Nibiru Shield
+        elseif zitahGearCounter == 47 then
+            player:addItem(augGear, 1, 517, 14, 329, 4, 356, 4) -- MND +15, Cure Potency +5%, Cure Potency Received +5% DONE
+        -- Nibiru Sickle
+        elseif zitahGearCounter == 48 then
+            player:addItem(augGear, 1, 23, 19, 25, 14, 142, 2) -- ACC +20, ATT +15, Store TP +3 DONE
+        -- Nibiru Staff
+        elseif zitahGearCounter == 49 then
+            player:addItem(augGear, 1, 110, 1, 100, 19, 101, 24) -- Pet: Regen +2, Pet: MACC +20, Pet: MAB +25 DONE
+        -- Nibiru Tabar
+        elseif zitahGearCounter == 50 then
+            player:addItem(augGear, 1, 107, 24, 101, 14, 104, 6) -- Pet: ATT +25, Pet: MAB +15, Pet: Enmity +7 DONE
+        -- Sensui
+        elseif zitahGearCounter == 51 then
+            player:addItem(augGear, 1, 515, 9, 27, 14, 29, 19) -- AGI +10, RACC +15, RATT +20 DONE
         end
     -- Path D (Mog Kupon AW-GeIV)
     elseif pathKupon == 9187 then
@@ -271,6 +415,38 @@ function onTrade(player, npc, trade)
             player:addItem(augGear, 1, 2, 17, 37, 14, 54, 2) -- HP +50, MEVA +15, PDT -3% DONE
         elseif zitahGearCounter == 35 then -- Vanya Clogs
             player:addItem(augGear, 1, 329, 4, 323, 14, 141, 5) -- Cure pot +5%, Cure Cast -15%, Conserve MP +6 DONE
+        elseif zitahGearCounter == 36 then -- Mijin
+            player:addItem(augGear, 1, 31, 19, 37, 19, 39, 3) -- EVA +20, MEVA +20, Enmity +4 DONE
+        elseif zitahGearCounter == 37 then -- Nibiru Blade
+            player:addItem(augGear, 1, 2, 17, 143, 2, 140, 4) -- HP +50, Double Attack +3%, Fast Cast +5% DONE
+        elseif zitahGearCounter == 38 then -- Nibiru Bow
+            player:addItem(augGear, 1, 29, 19, 212, 14, 142, 4) -- RATT +20, Recycle +15, Store TP +5 DONE
+        elseif zitahGearCounter == 39 then -- Nibiru Chopper
+            player:addItem(augGear, 1, 3, 15, 39, 6, 54, 2) -- HP +80, Enmity +7, PDT -3% DONE
+        elseif zitahGearCounter == 40 then -- Nibiru Cudgel
+            player:addItem(augGear, 1, 10, 17, 112, 2, 110, 1) -- MP +50, Pet: DT -3%, Pet: Regen +2 DONE
+        elseif zitahGearCounter == 41 then -- Nibiru Faussar
+            player:addItem(augGear, 1, 514, 9, 23, 24, 54, 3) -- VIT +10, ACC +25, PDT -4% DONE
+        elseif zitahGearCounter == 42 then -- Nibiru Gun
+            player:addItem(augGear, 1, 512, 14, 515, 6, 142, 4) -- STR +15, AGI +7, Store TP +5 DONE
+        elseif zitahGearCounter == 43 then -- Nibiru Harp
+            player:addItem(augGear, 1, 37, 19, 54, 2, 55, 2) -- MEVA +20, PDT -3%, MDT -3% DONE
+        elseif zitahGearCounter == 44 then -- Nibiru Knife
+            player:addItem(augGear, 1, 10, 17, 37, 19, 140, 4) -- MP +50, MEVA +20, Fast Cast +5% DONE
+        elseif zitahGearCounter == 45 then -- Nibiru Lance
+            player:addItem(augGear, 1, 23, 19, 106, 14, 142, 4) -- ACC +20, Pet: ACC +20, Store TP +5 DONE
+        elseif zitahGearCounter == 46 then -- Nibiru Sainti
+            player:addItem(augGear, 1, 107, 19, 106, 19, 108, 19) -- Pet: ATT/RATK +20, Pet: ACC/RACC +20, Pet: MACC/MAB +20 - Improvised DONE
+        elseif zitahGearCounter == 47 then -- Nibiru Shield
+            player:addItem(augGear, 1, 23, 14, 25, 14, 142, 4) -- ACC +15, ATK +15, Store TP +5 DONE
+        elseif zitahGearCounter == 48 then -- Nibiru Sickle
+            player:addItem(augGear, 1, 35, 19, 133, 14, 138, 0) -- MACC +20, MAB +15, Refresh +1 DONE
+        elseif zitahGearCounter == 49 then -- Nibiru Staff
+            player:addItem(augGear, 1, 106, 19, 107, 19, 123, 2) -- Pet: ACC +20, Pet: ATT +20, Pet: Double Attack +3% DONE
+        elseif zitahGearCounter == 50 then -- Nibiru Tabar
+            player:addItem(augGear, 1, 518, 14, 111, 2, 123, 2) -- CHR +15, Pet: Haste +3%, Pet: Double Attack +3% DONE
+        elseif zitahGearCounter == 51 then -- Sensui
+            player:addItem(augGear, 1, 31, 19, 37, 19, 54, 2) -- EVA +20, MEVA +20, PDT -3% DONE
         end
     end
 end
