@@ -780,7 +780,8 @@ namespace petutils
 //			printf("petutils.cpp LoadAutomatonStats ATT: [%i]  ACC: [%i]  MACC: [%i]  DEF: [%i]  EVA: [%i]  MEVA: [%i]  MDEF: [%i]\n\n", calcatt, calcacc, calcacc / 2, calcdef, eva, meva, mdef);
             break;
         case FRAME_VALOREDGE:
-            PPet->m_Weapons[SLOT_SUB]->setShieldSize(3);
+            PPet->setModifier(Mod::SHIELDBLOCKRATE, 45);
+            PPet->setMobMod(MOBMOD_CAN_SHIELD_BLOCK, 1);
 //            PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(5, PPet->GetMLevel());
 //            PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(5, PPet->GetMLevel()));
 			meleeDMG = (uint16)(((PPet->GetSkill(SKILL_AUTOMATON_MELEE) / 9) * 1.50) + (mainLevelOver99 * 1.5));

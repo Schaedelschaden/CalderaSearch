@@ -522,8 +522,8 @@ local optionToItem = {
         [34] = { cost =  7000, id = 21251 }, -- Eminent crossbow
         [35] = { cost =  7000, id = 21281 }, -- Eminent gun
         [36] = { cost =  7000, id = 28656 }, -- Eminent shield
-        -- [37] = { cost =  7000, id = 21453 }, -- Eminent animator
-        -- [38] = { cost =  7000, id = 21383 }, -- Eminent sachet
+        [37] = { cost =  7000, id = 21453 }, -- Eminent animator
+        [38] = { cost =  7000, id = 21383 }, -- Eminent sachet
         [39] = { cost = 5000, id = 28549 }, -- Enlivened ring
         [40] = { cost = 5000, id = 28550 }, -- Vehemence ring
         [41] = { cost = 5000, id = 28551 }, -- Longshot ring

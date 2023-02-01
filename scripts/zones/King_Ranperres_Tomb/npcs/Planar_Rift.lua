@@ -18,11 +18,11 @@ function onTrigger(player, npc)
 
 	if (player:hasKeyItem(tpz.ki.VOIDSTONE1)) then
 		player:startEvent(6001, 14, 16, 0, 0, 0, 0, 49255, abyssite)
-		if (npc:getID() == 17555961) then
+		if (npc:getID() == 17556020) then
 			player:setLocalVar("VOIDWATCH_LOCATION", 1)
-		elseif (npc:getID() == 17555962) then
+		elseif (npc:getID() == 17556021) then
 			player:setLocalVar("VOIDWATCH_LOCATION", 2)
-		elseif (npc:getID() == 17555963) then
+		elseif (npc:getID() == 17556022) then
 			player:setLocalVar("VOIDWATCH_LOCATION", 3)
 		end
 	else
@@ -36,14 +36,14 @@ end
 
 function onEventFinish(player, csid, option)
 	if (option == 1) then
-		if (player:getLocalVar("VOIDWATCH_LOCATION") == 1 and not GetMobByID(17555901):isSpawned()) then
-			SpawnMob(17555901):updateClaim(player)
+		if (player:getLocalVar("VOIDWATCH_LOCATION") == 1 and not GetMobByID(17555773):isSpawned()) then
+			SpawnMob(17555773):updateClaim(player)
 			player:delKeyItem(tpz.ki.VOIDSTONE1)
-		elseif (player:getLocalVar("VOIDWATCH_LOCATION") == 2 and not GetMobByID(17555902):isSpawned()) then
-			SpawnMob(17555902):updateClaim(player)
+		elseif (player:getLocalVar("VOIDWATCH_LOCATION") == 2 and not GetMobByID(17555774):isSpawned()) then
+			SpawnMob(17555774):updateClaim(player)
 			player:delKeyItem(tpz.ki.VOIDSTONE1)
-		elseif (player:getLocalVar("VOIDWATCH_LOCATION") == 3 and not GetMobByID(17555903):isSpawned()) then
-			SpawnMob(17555903):updateClaim(player)
+		elseif (player:getLocalVar("VOIDWATCH_LOCATION") == 3 and not GetMobByID(17555775):isSpawned()) then
+			SpawnMob(17555775):updateClaim(player)
 			player:delKeyItem(tpz.ki.VOIDSTONE1)
 		end
 	end

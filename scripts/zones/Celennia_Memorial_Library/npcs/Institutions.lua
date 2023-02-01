@@ -8,6 +8,7 @@ require("scripts/globals/settings")
 require("scripts/globals/keyitems")
 require("scripts/globals/status")
 require("scripts/globals/missions")
+require("scripts/globals/besieged")
 -----------------------------------
 
 -- All white, black, blue spells and BRD songs
@@ -39,7 +40,7 @@ local ValidSpells =
     660, 661, 662, 663, 664, 665, 666, 667, 668, 669, 670, 671, 672, 673, 674, 675, 676, 677, 678, 679, 680, 681, 682, 683, 684, 685,
     686, 687, 688, 689, 690, 691, 692, 693, 694, 695, 696, 697, 698, 699, 700, 701, 702, 703, 704, 705, 706, 707, 708, 709, 710, 711,
     712, 713, 714, 715, 716, 717, 718, 719, 720, 721, 722, 723, 724, 725, 726, 727, 728, 736, 737, 738, 739, 740, 741, 742, 743, 744,
-    745, 746, 747, 748, 749, 768, 769, 770, 771, 772, 773, 774, 775, 776, 777, 778, 779, 780, 781, 782, 783, 784, 785, 786, 787, 788,
+    745, 746, 747, 748, 749, 750, 751, 752, 753, 768, 769, 770, 771, 772, 773, 774, 775, 776, 777, 778, 779, 780, 781, 782, 783, 784, 785, 786, 787, 788,
     789, 790, 791, 792, 793, 794, 795, 796, 797, 798, 799, 800, 801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 811, 812, 813, 814,
     815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 831, 832, 833, 834, 835, 836, 837, 838, 839, 840,
     841, 842, 843, 844, 845, 846, 848, 849, 850, 851, 852, 853, 854, 855, 856, 857, 858, 859, 860, 861, 862, 863, 864, 865, 866, -- 847: Atomos
@@ -96,8 +97,8 @@ local ValidAttachments = {
 }
 
 local ValidTrusts = {
-	896, 898, 899, 900, 901, 902, 903, 904, 905, 908, 909, 910, 911, 913, 917, 933,
-	940, 951, 952, 968, 980, 981, 1010, 1019
+	896, 898, 899, 900, 901, 902, 903, 904, 905, 908, 909, 910, 911, 913, 915, 917, 933,
+	940, 951, 952, 955, 968, 980, 981, 1010, 1019, 918
 }
 
 local function AddAllSpells(player)
@@ -173,6 +174,15 @@ local function SetCoP(player)
 	player:addItem(14672) -- Tavnazian Ring
 end
 
+local function setRunicPortals(player)
+    tpz.besieged.addRunicPortal(player, tpz.teleport.runic_portal.AZOUPH)
+    tpz.besieged.addRunicPortal(player, tpz.teleport.runic_portal.MAMOOL)
+    tpz.besieged.addRunicPortal(player, tpz.teleport.runic_portal.HALVUNG)
+    tpz.besieged.addRunicPortal(player, tpz.teleport.runic_portal.DVUCCA)
+    tpz.besieged.addRunicPortal(player, tpz.teleport.runic_portal.ILRUSI)
+    tpz.besieged.addRunicPortal(player, tpz.teleport.runic_portal.NYZUL)
+end
+
 function onTrigger(player, target)
 	if (player:getCharVar("HasTriggeredInstitutions") == 0) then
 		player:PrintToPlayer(string.format("Institutions : Please wait. This will take a moment."),tpz.msg.channel.NS_SAY)
@@ -190,10 +200,12 @@ function onTrigger(player, target)
 		AddAllTrusts(player)
 		SetZilart(player)
 		SetCoP(player)
+        setRunicPortals(player)
         player:addKeyItem(tpz.ki.BOARDING_PERMIT)
 		player:PrintToPlayer(string.format("Institutions : Capped all combat/magic skills. Added all spells/songs, COR rolls, and PUP starter attachments. Unlocked all mounts and chairs."),tpz.msg.channel.NS_SAY)
 		player:PrintToPlayer(string.format("Institutions : DRG and PUP pet names have been randomized. Visit Fouvia (DRG) or Abda-Lurabda (PUP) to change them."),tpz.msg.channel.NS_SAY)
 		player:PrintToPlayer(string.format("Institutions : All Rise of the Zilart and Chains of Promathia missions completed."),tpz.msg.channel.NS_SAY)
+        player:PrintToPlayer(string.format("Institutions : All Treasures of Aht Urhgan Runic Portals unlocked."),tpz.msg.channel.NS_SAY)
 		player:PrintToPlayer(string.format("Institutions : Please zone for all changes to display properly."),tpz.msg.channel.NS_SAY)
 		player:setCharVar("HasTriggeredInstitutions", 1)
 		player:setCharVar("HasTriggeredRoZCoP", 1)

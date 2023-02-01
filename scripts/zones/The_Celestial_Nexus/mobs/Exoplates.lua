@@ -14,7 +14,7 @@ end
 function onMobSpawn(mob)
     mob:AnimationSub(0)
     mob:SetAutoAttackEnabled(false)
-    mob:setUnkillable(true)
+    -- mob:setUnkillable(true)
 	mob:addMod(tpz.mod.ATT, 400)
 	mob:addMod(tpz.mod.ACC, 200)		
 	mob:addMod(tpz.mod.DEF, 300)
@@ -40,7 +40,7 @@ function onMobFight(mob, target)
         mob:useMobAbility(1001)
         mob:setLocalVar("shifts", shifts+1)
         mob:setLocalVar("shiftTime", mob:getBattleTime()+5)
-    elseif (mob  :getHPP() <= 67 and mob:AnimationSub() == 0 and mob:getBattleTime() >= shiftTime ) then
+    elseif (mob:getHPP() <= 67 and mob:AnimationSub() == 0 and mob:getBattleTime() >= shiftTime ) then
         mob:AnimationSub(1)
     elseif (mob:getHPP() <= 33 and mob:AnimationSub() == 1 and mob:getBattleTime() >= shiftTime) then
         mob:AnimationSub(2)
@@ -49,6 +49,8 @@ end
 
 function onMobDeath(mob, player, isKiller)
     local eald_narche = GetMobByID(mob:getID() - 1)
+
+    eald_narche:untargetable(false)
     eald_narche:delStatusEffect(tpz.effect.PHYSICAL_SHIELD, 0, 2, 0, 0)
     eald_narche:delStatusEffect(tpz.effect.ARROW_SHIELD, 0, 1, 0, 0)
     eald_narche:delStatusEffect(tpz.effect.MAGIC_SHIELD, 0, 2, 0, 0)

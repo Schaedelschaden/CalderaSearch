@@ -198,21 +198,31 @@ void CPetEntity::OnAbility(CAbilityState& state, action_t& action)
             return;
         }
 
-        action.id = this->id;
-        action.actiontype = PAbility->getActionType();
-        action.actionid = PAbility->getID();
-        actionList_t& actionList = action.getNewActionList();
-        actionList.ActionTargetID = PTarget->id;
+        action.id                    = this->id;
+        action.actiontype            = PAbility->getActionType();
+        action.actionid              = PAbility->getID();
+        actionList_t& actionList     = action.getNewActionList();
+        actionList.ActionTargetID    = PTarget->id;
         actionTarget_t& actionTarget = actionList.getNewActionTarget();
-        actionTarget.reaction = REACTION_NONE;
-        actionTarget.speceffect = SPECEFFECT_RECOIL;
-        actionTarget.animation = PAbility->getAnimationID();
-        actionTarget.param = 0;
+        actionTarget.reaction        = REACTION_NONE;
+        actionTarget.speceffect      = SPECEFFECT_RECOIL;
+        actionTarget.animation       = PAbility->getAnimationID();
+        actionTarget.param           = 0;
+
         auto prevMsg = actionTarget.messageID;
 
         int32 value = luautils::OnUseAbility(this, PTarget, PAbility, &action);
-        if (prevMsg == actionTarget.messageID) actionTarget.messageID = PAbility->getMessage();
-        if (actionTarget.messageID == 0) actionTarget.messageID = MSGBASIC_USES_JA;
+
+        if (prevMsg == actionTarget.messageID)
+        {
+            actionTarget.messageID = PAbility->getMessage();
+        }
+
+        if (actionTarget.messageID == 0)
+        {
+            actionTarget.messageID = MSGBASIC_USES_JA;
+        }
+
         actionTarget.param = value;
 		
 //		printf("petentity.cpp OnAbility prevMsg: [%i]  messageID: [%i]\n", prevMsg, actionTarget.messageID);

@@ -117,6 +117,9 @@ function onSpellCast(caster, target, spell)
 		target:addHP(final)
 
 		target:wakeUp()
+        caster:updateEnmityFromCure(target, final)
+
+        -- updateNotorietyCure(caster, target)
 	end
 
     --Enmity for Cura is fixed, so its CE/VE is set in the SQL and not calculated with updateEnmityFromCure

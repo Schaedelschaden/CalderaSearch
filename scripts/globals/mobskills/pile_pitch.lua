@@ -32,7 +32,7 @@ function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.BIND
     local dmg = currentHP - damage -- MobFinalAdjustments(damage,mob,skill,target,tpz.attackType.MAGICAL,tpz.damageType.NONE,MOBPARAM_IGNORE_SHADOWS)
 	target:setHP(dmg)
-    MobStatusEffectMove(mob, target, typeEffect, 1, 0, 30)
+    MobStatusEffectMove(mob, target, typeEffect, 1, 0, 10)
 	
     mob:resetEnmity(target)
     return damage

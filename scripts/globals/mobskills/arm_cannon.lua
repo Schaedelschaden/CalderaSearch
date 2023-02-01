@@ -18,8 +18,8 @@ function onMobWeaponSkill(target, mob, skill)
 	local typeEffect2 = tpz.effect.MAX_MP_DOWN	
 
     local dmgmod = 2
-    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*2.6, tpz.magic.ele.FIRE, dmgmod, TP_NO_EFFECT)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.FIRE, MOBPARAM_IGNORE_SHADOWS)
+    local info   = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*2.6, tpz.magic.ele.FIRE, dmgmod, TP_NO_EFFECT)
+    local dmg    = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.FIRE, MOBPARAM_IGNORE_SHADOWS)
 
     MobStatusEffectMove(mob, target, typeEffect1, 50, 0, 60)
 	MobStatusEffectMove(mob, target, typeEffect2, 50, 0, 60)

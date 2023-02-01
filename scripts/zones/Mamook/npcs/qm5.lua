@@ -15,7 +15,8 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.NOTHING_HAPPENS)
+    -- player:messageSpecial(ID.text.NOTHING_HAPPENS)
+    player:PrintToPlayer(string.format("You have the feeling that you need a Ninja's Testimony and a Mamook Tanscale Key..."),tpz.msg.channel.NS_SAY)
 end
 
 function onEventUpdate(player, csid, option)

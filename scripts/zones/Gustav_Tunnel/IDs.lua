@@ -74,6 +74,7 @@ zones[tpz.zone.GUSTAV_TUNNEL] =
             [17645772] = 17645774, -- -209.552 -0.257 161.728
         },
         BUNE                      = 17645578,
+        AMIKIRI                   = 17645774,
         GIGAPLASM                 = 17645794,
         BARONIAL_BAT              = 17645809,
     },

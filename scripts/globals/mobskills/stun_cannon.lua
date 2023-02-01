@@ -23,7 +23,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-   local dmgmod = 1.5
+   local dmgmod = 4
    local typeEffect = tpz.effect.PARALYSIS
 
     MobStatusEffectMove(mob, target, typeEffect, 20, 0, 120)

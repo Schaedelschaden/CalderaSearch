@@ -19,6 +19,7 @@ function onMagicCastingCheck(caster, target, spell)
     elseif (caster:getObjType() == tpz.objType.PC) then
         result = avatarMiniFightCheck(caster)
     end
+
     return result
 end
 

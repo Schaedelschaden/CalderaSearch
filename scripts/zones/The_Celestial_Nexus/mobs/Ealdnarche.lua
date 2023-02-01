@@ -15,6 +15,7 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
+    mob:untargetable(true)
     mob:SetAutoAttackEnabled(false)
     mob:setMobMod(tpz.mobMod.GA_CHANCE, 25)
     mob:addStatusEffectEx(tpz.effect.PHYSICAL_SHIELD, 0, 2, 0, 0)
@@ -42,7 +43,6 @@ function onMobEngaged(mob, target)
 end
 
 function onMobFight(mob, target)
-
     local shifts = mob:getLocalVar("shifts")
     local shiftTime = mob:getLocalVar("shiftTime")
 

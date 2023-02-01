@@ -13,6 +13,13 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.HASTE
-    skill:setMsg(MobBuffMove(mob, typeEffect, 1000, 0, 300))
+    local power      = 1000
+
+    if mob:isNM() then
+        power = 2000
+    end
+
+    skill:setMsg(MobBuffMove(mob, typeEffect, power, 0, 300))
+
     return typeEffect
 end

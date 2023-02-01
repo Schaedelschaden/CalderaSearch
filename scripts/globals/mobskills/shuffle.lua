@@ -15,10 +15,11 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local effect = target:dispelStatusEffect()
 
-    if (effect == tpz.effect.NONE) then
-        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT) -- no effect
+    if effect == tpz.effect.NONE then
+        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
     else
         skill:setMsg(tpz.msg.basic.SKILL_ERASE)
     end
+
     return effect
 end

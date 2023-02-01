@@ -721,7 +721,7 @@ void CAttack::ProcessDamage()
 		if (m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_CLIMACTIC_FLOURISH))
         {
             CStatusEffect* effect = m_attacker->StatusEffectContainer->GetStatusEffect(EFFECT_CLIMACTIC_FLOURISH);
-            int8 crits            = effect->GetPower();
+            uint16 crits          = effect->GetPower();
             flourishBonus         = (int16)(flourishBonus / 2.0f);
 
             if (crits == 0)

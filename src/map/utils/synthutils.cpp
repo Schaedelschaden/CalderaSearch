@@ -26,13 +26,19 @@
 #include "../packets/inventory_assign.h"
 #include "../packets/inventory_finish.h"
 #include "../packets/inventory_item.h"
+#include "../packets/chat_message.h"
 #include "../packets/message_basic.h"
+#include "../packets/message_combat.h"
+#include "../packets/message_special.h"
+#include "../packets/message_standard.h"
 #include "../packets/synth_animation.h"
 #include "../packets/synth_message.h"
 #include "../packets/synth_result.h"
 
 #include "../item_container.h"
 #include "../map.h"
+#include "../message.h"
+#include "../status_effect_container.h"
 #include "../trade_container.h"
 #include "../vana_time.h"
 #include "../anticheat.h"
@@ -222,52 +228,73 @@ bool canSynthesizeHQ(CCharEntity* PChar, uint8 skillID)
 
 uint8 calcSynthResult(CCharEntity* PChar)
 {
-    uint8 result = SYNTHESIS_SUCCESS;
-    uint8 hqtier = 0;
+    uint8 result      = SYNTHESIS_SUCCESS;
+    uint8 hqtier      = 0;
     uint8 finalhqtier = 4;
-    bool canHQ = true;
+    bool  canHQ       = true;
 
     double success = 0;
     double chance  = 0;
-    double random = tpzrand::GetRandomNumber(1.);
+    double random  = tpzrand::GetRandomNumber(1.);
 
     for (uint8 skillID = SKILL_WOODWORKING; skillID <= SKILL_COOKING; ++skillID)
     {
         uint8 checkSkill = PChar->CraftContainer->getQuantity(skillID-40);
-        if(checkSkill != 0)
+        if (checkSkill != 0)
         {
             double synthDiff = getSynthDifficulty(PChar, skillID);
             hqtier = 0;
 
-            if(synthDiff <= 0)
+            if (synthDiff <= 0)
             {
                 if (PChar->CraftContainer->getCraftType() ==  1) //if it's a desynth lower success rate
+                {
                     success = 0.45;
+                }
                 else
+                {
                     success = 0.95;
+                }
 
                 if(synthDiff > -11)       //0-10 levels over recipe
+                {
                     hqtier = 1;
+                }
                 else if(synthDiff > -31)  //11-30 levels over recipe
+                {
                     hqtier = 2;
+                }
                 else if(synthDiff > -51)  //31-50 levels over recipe
+                {
                     hqtier = 3;
+                }
                 else                      //51+ levels over recipe
+                {
                     hqtier = 4;
+                }
 
                 if(hqtier < finalhqtier)
+                {
                     finalhqtier = hqtier; //set var to limit possible hq if needed
+                }
             }
             else
             {
                 if (PChar->CraftContainer->getCraftType() ==  1) //if it's a desynth lower success rate
+                {
                     success = 0.45 - (synthDiff / 10);
+                }
                 else
+                {
                     success = 0.95 - (synthDiff / 10);
+                }
 
                 canHQ = false;
+
                 if(success < 0.05)
+                {
                     success = 0.05;
+                }
 
                 #ifdef _TPZ_SYNTH_DEBUG_MESSAGES_
                 ShowDebug(CL_CYAN"SkillID %u: difficulty > 0\n" CL_RESET, skillID);
@@ -278,13 +305,13 @@ uint8 calcSynthResult(CCharEntity* PChar)
             int16 modSynthSuccess = PChar->CraftContainer->getCraftType() == CRAFT_SYNTHESIS ? PChar->getMod(Mod::SYNTH_SUCCESS) : PChar->getMod(Mod::DESYNTH_SUCCESS);
             success += (double)modSynthSuccess * 0.01;
 
-            if(!canSynthesizeHQ(PChar,skillID))
+            if (!canSynthesizeHQ(PChar,skillID))
             {
                 success += 0.01; //the crafting rings that block HQ synthesis all also increase their respective craft's success rate by 1%
                 canHQ = false;   //assuming here that if a crafting ring is used matching a recipe's subsynth, overall HQ will still be blocked
             }
 
-            if(success > 0.99)
+            if (success > 0.99)
             {
                 // Clamp success rate to 0.99
                 // Even if using kitron macaron, breaks can still happen
@@ -299,7 +326,13 @@ uint8 calcSynthResult(CCharEntity* PChar)
             ShowDebug(CL_CYAN"Success: %g  Random: %g\n" CL_RESET, success, random);
             #endif
 
-            if(random >= success) // Synthesis broke
+            if (PChar->GetLocalVar("AuditSynth") == 1)
+            {
+                PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                            fmt::format("SUCCESS RATE: [{}]  RANDOM: [{}]", success, random), "Synth Audit System"));
+            }
+
+            if (random >= success) // Synthesis broke
             {
                 // keep the skill, because of which the synthesis failed.
                 // use the slotID of the crystal cell, because it was removed at the beginning of the synthesis
@@ -310,7 +343,7 @@ uint8 calcSynthResult(CCharEntity* PChar)
         }
     }
 
-    if(result != SYNTHESIS_FAIL) // It has gone through the cycle without breaking
+    if (result != SYNTHESIS_FAIL) // It has gone through the cycle without breaking
     {
         switch(finalhqtier)
         {
@@ -328,20 +361,48 @@ uint8 calcSynthResult(CCharEntity* PChar)
 
         int16 modSynthHqRate = PChar->getMod(Mod::SYNTH_HQ_RATE);
 
+        if (PChar->GetLocalVar("AuditSynth") == 1)
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                        fmt::format("CHANCE TO HQ: [{}] = BASE: [{}] + BONUS: [{}]", chance + (modSynthHqRate / 100.f), chance, (modSynthHqRate / 100.f)), "Synth Audit System"));
+        }
+
         // Using x/512 calculation for HQ success rate modifier
         // see: https://www.bluegartr.com/threads/130586-CraftyMath-v2-Post-September-2017-Update
         chance += (double)modSynthHqRate / 100.;// 512.;
 
-        if(chance > 0 && canHQ) // if there is a chance already and it can HQ, we add myth mods
+        if (chance > 0 && canHQ) // if there is a chance already and it can HQ, we add myth mods
         {
             //limit max hq chance
             if (PChar->CraftContainer->getCraftType() ==  1)
 			{
                 chance = std::clamp(chance, 0., 0.900);
+
+                if (PChar->GetLocalVar("AuditSynth") == 1)
+                {
+                    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                fmt::format("DESYNTHESIS - HQ RATE CAP: [90%]  HQ CHANCE: [{}]", chance), "Synth Audit System"));
+                }
 			}
+            else if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_IMAGERY_1))
+            {
+                chance = std::clamp(chance, 0., 1.000);
+
+                if (PChar->GetLocalVar("AuditSynth") == 1)
+                {
+                    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                fmt::format("SPECIAL SYNTH - HQ RATE CAP: [100%]  HQ CHANCE: [{}]", chance), "Synth Audit System"));
+                }
+            }
             else
 			{
                 chance = std::clamp(chance, 0., 0.600);
+
+                if (PChar->GetLocalVar("AuditSynth") == 1)
+                {
+                    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                fmt::format("NORMAL SYNTH - HQ RATE CAP: [60%]  HQ CHANCE: [{}]", chance), "Synth Audit System"));
+                }
 			}
         }
 
@@ -349,25 +410,59 @@ uint8 calcSynthResult(CCharEntity* PChar)
         ShowDebug(CL_CYAN"HQ Tier: %i HQ Chance: %g Random: %g SkillID: %u\n" CL_RESET, hqtier, chance, random, skillID);
         #endif
 
-        if(random < chance && canHQ) // we try for HQ
+        if (random < chance && canHQ) // we try for HQ
         {
             random = tpzrand::GetRandomNumber(0, 16);
 
             if (random == 0)
+            {
                 result = SYNTHESIS_HQ3;
+
+                if (PChar->GetLocalVar("AuditSynth") == 1)
+                {
+                    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                fmt::format("RANDOM: [{}]  HIGH-QUALITY 3!", random), "Synth Audit System"));
+                }
+            }
             else if (random < 4)
+            {
                 result = SYNTHESIS_HQ2;
+
+                if (PChar->GetLocalVar("AuditSynth") == 1)
+                {
+                    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                fmt::format("RANDOM: [{}]  HIGH-QUALITY 2!", random), "Synth Audit System"));
+                }
+            }
             else
+            {
                 result = SYNTHESIS_HQ;
+
+                if (PChar->GetLocalVar("AuditSynth") == 1)
+                {
+                    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                fmt::format("RANDOM: [{}]  HIGH-QUALITY 1!", random), "Synth Audit System"));
+                }
+            }
+
+            PChar->StatusEffectContainer->DelStatusEffect(EFFECT_IMAGERY_1);
         }
         else
+        {
             result = SYNTHESIS_SUCCESS;
+
+            if (PChar->GetLocalVar("AuditSynth") == 1)
+                {
+                    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                fmt::format("NORMAL QUALITY!"), "Synth Audit System"));
+                }
+        }
     }
 
     // the result of the synthesis is written in the quantity field of the crystal cell.
     PChar->CraftContainer->setQuantity(0, result);
 
-    switch(result)
+    switch (result)
     {
         case SYNTHESIS_FAIL:
             result = RESULT_FAIL;
@@ -400,6 +495,7 @@ uint8 calcSynthResult(CCharEntity* PChar)
             #endif
             break;
     }
+
     return result;
 }
 

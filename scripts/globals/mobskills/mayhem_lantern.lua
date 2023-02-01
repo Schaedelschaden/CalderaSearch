@@ -14,21 +14,18 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    -- if mob:AnimationSub() == 0
+    if mob:AnimationSub() == 0 then
         return 0
-    -- else   
-        -- return 1
-    -- end
+    else   
+        return 1
+    end
 end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.CHARM_I
-    local power = 0
+    local power      = 0
 
-    if
-        not target:isPC() and
-        target:isFacing(mob)
-    then
+    if not target:isPC() then
         skill:setMsg(tpz.msg.basic.SKILL_MISS)
 
         return typeEffect
@@ -42,7 +39,8 @@ function onMobWeaponSkill(target, mob, skill)
 
     skill:setMsg(msg)
 
-    target:addStatusEffect(tpz.effect.SHOCK, 30, 3, 180)
+    target:addStatusEffect(tpz.effect.SHOCK, 30, 3, 60)
+    target:addStatusEffect(tpz.effect.ATTACK_BOOST, 50, 0, 60)
 
     return typeEffect
 end

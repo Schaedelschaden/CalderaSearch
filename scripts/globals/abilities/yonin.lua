@@ -14,7 +14,12 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player,target,ability)
+    local power    = 30
+    local tick     = 15
+    local duration = 300
+    local subPower = 30
+
     target:delStatusEffect(tpz.effect.INNIN)
     target:delStatusEffect(tpz.effect.YONIN)
-    target:addStatusEffect(tpz.effect.YONIN,30,15,300,0,20)
+    target:addStatusEffect(tpz.effect.YONIN, power, tick, duration, 0, subPower)
 end

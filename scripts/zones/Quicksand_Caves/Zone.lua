@@ -54,13 +54,13 @@ end
 
 function getWeight(player)
     local race = player:getRace()
-    if race == tpz.race.GALKA then
+    -- if race == tpz.race.GALKA then
         return 3
-    elseif race == tpz.race.TARU_M or race == tpz.race.TARU_F then
-        return 1
-    else
-        return 2
-    end
+    -- elseif race == tpz.race.TARU_M or race == tpz.race.TARU_F then
+        -- return 1
+    -- else
+        -- return 2
+    -- end
 end
 
 function onRegionEnter(player, region)

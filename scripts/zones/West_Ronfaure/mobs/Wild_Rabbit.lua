@@ -19,6 +19,7 @@ function onMobSpawn(mob)
 		-- mob:setMod(tpz.mod.UDMGRANGE, -100)
 		mob:setMod(tpz.mod.CHARMRES, 100)
 		mob:setRespawnTime(10)
+        mob:setModelId(335)
 	end
 end
 
@@ -27,7 +28,7 @@ function onMobFight(mob, target)
 		-- mob:setMod(tpz.mod.DEF, 1500)
 		mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
         mob:setMod(tpz.mod.FIRE_ABSORB, 0)
-        mob:setMod(tpz.mod.ICE_ABSORB, 100)
+        mob:setMod(tpz.mod.ICE_ABSORB, 0)
         mob:setMod(tpz.mod.WIND_ABSORB, 0)
         mob:setMod(tpz.mod.EARTH_ABSORB, 0)
         mob:setMod(tpz.mod.LTNG_ABSORB, 0)
@@ -117,5 +118,5 @@ function onMobDisengage(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-    
+    mob:setMobFlags(5, mob:getID())
 end

@@ -10,5 +10,5 @@ cmdprops =
 }
 
 function onTrigger(player)
-    player:setPos(-494, -7, 199, 136, 132)
+    player:setPos(-494, -7, 199, 136, 132) -- Abyssea - La Theine Rabbits
 end

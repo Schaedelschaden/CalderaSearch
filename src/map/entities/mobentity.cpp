@@ -123,6 +123,8 @@ CMobEntity::CMobEntity()
     m_maxRoamDistance = 50.0f;
     m_disableScent = false;
 
+    m_Pool = 0;
+
     memset(&m_SpawnPoint, 0, sizeof(m_SpawnPoint));
 
     m_SpellListContainer = nullptr;
@@ -583,6 +585,97 @@ void CMobEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& actio
 {
     CBattleEntity::OnWeaponSkillFinished(state, action);
 
+    auto PWeaponSkill  = state.GetSkill();
+    auto PBattleTarget = static_cast<CBattleEntity*>(state.GetTarget());
+
+    int16 tp = state.GetSpentTP();
+    tp       = battleutils::CalculateWeaponSkillTP(this, PWeaponSkill, tp);
+
+    if (distance(loc.p, PBattleTarget->loc.p) - PBattleTarget->m_ModelSize <= PWeaponSkill->getRange())
+    {
+        PAI->TargetFind->reset();
+        if (PWeaponSkill->isAoE())
+        {
+            PAI->TargetFind->findWithinArea(PBattleTarget, AOERADIUS_TARGET, 10);
+        }
+        else
+        {
+            PAI->TargetFind->findSingleTarget(PBattleTarget);
+        }
+
+        for (auto&& PTarget : PAI->TargetFind->m_targets)
+        {
+            bool primary              = PTarget == PBattleTarget;
+            actionList_t& actionList  = action.getNewActionList();
+            actionList.ActionTargetID = PTarget->id;
+
+            actionTarget_t& actionTarget = actionList.getNewActionTarget();
+
+            uint16         tpHitsLanded;
+            uint16         extraHitsLanded;
+            int32          damage;
+            CBattleEntity* taChar = battleutils::getAvailableTrickAttackChar(this, PTarget);
+
+            actionTarget.reaction                           = REACTION_NONE;
+            actionTarget.speceffect                         = SPECEFFECT_NONE;
+            actionTarget.animation                          = PWeaponSkill->getAnimationId();
+            actionTarget.messageID                          = 0;
+            std::tie(damage, tpHitsLanded, extraHitsLanded) = luautils::OnUseWeaponSkill(this, PTarget, PWeaponSkill, tp, primary, action, taChar);
+
+            if (!battleutils::isValidSelfTargetWeaponskill(PWeaponSkill->getID()))
+            {
+                if (primary && PBattleTarget->objtype == TYPE_MOB)
+                {
+                    luautils::OnWeaponskillHit(PBattleTarget, this, PWeaponSkill->getID());
+                }
+            }
+            else // Self-targetting WS restoring MP
+            {
+                actionTarget.messageID = primary ? 224 : 276; // Restores mp msg
+                actionTarget.reaction  = REACTION_HIT;
+                damage                 = std::max(damage, 0);
+                actionTarget.param     = addMP(damage);
+            }
+
+            if (primary)
+            {
+                if (PWeaponSkill->getPrimarySkillchain() != 0)
+                {
+                    // NOTE: GetSkillChainEffect is INSIDE this if statement because it
+                    //  ALTERS the state of the resonance, which misses and non-elemental skills should NOT do.
+                    SUBEFFECT effect = battleutils::GetSkillChainEffect(PBattleTarget, PWeaponSkill->getPrimarySkillchain(), PWeaponSkill->getSecondarySkillchain(), PWeaponSkill->getTertiarySkillchain());
+                    if (effect != SUBEFFECT_NONE)
+                    {
+                        actionTarget.addEffectParam = battleutils::TakeSkillchainDamage(this, PBattleTarget, damage, taChar);
+                        if (actionTarget.addEffectParam < 0)
+                        {
+                            actionTarget.addEffectParam   = -actionTarget.addEffectParam;
+                            actionTarget.addEffectMessage = 384 + effect;
+                        }
+                        else
+                        {
+                            actionTarget.addEffectMessage = 287 + effect;
+                        } 
+                        actionTarget.additionalEffect = effect;
+                    }
+                }
+            }
+        }
+    }
+    else
+    {
+        actionList_t& actionList  = action.getNewActionList();
+        actionList.ActionTargetID = PBattleTarget->id;
+        action.actiontype         = ACTION_MAGIC_FINISH; // all "too far" messages use cat 4
+
+        actionTarget_t& actionTarget = actionList.getNewActionTarget();
+        actionTarget.animation       = 0x1FC; // seems hardcoded, 2 bits away from 0x1FF.
+        actionTarget.messageID       = MSGBASIC_TOO_FAR_AWAY;
+
+        actionTarget.speceffect = SPECEFFECT_NONE; // It seems most mobs use NONE, but player-like models use BLOOD for their weaponskills
+                                                    // TODO: figure out a good way to differentiate between the two. There does not seem to be a functional difference.
+    }
+
     static_cast<CMobController*>(PAI->GetController())->TapDeaggroTime();
 }
 
@@ -708,7 +801,6 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         target.messageID = PSkill->getMsg();
 //		printf("mobentity.cpp OnMobSkillFinished DEFAULT MESSAGE: [%i]\n", target.messageID);
 
-
         // reset the skill's message back to default
         PSkill->setMsg(defaultMessage);
 
@@ -756,7 +848,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
             target.reaction = REACTION_HIT;
         }
 
-        if (target.speceffect & SPECEFFECT_HIT)
+        if ((target.speceffect & SPECEFFECT_HIT) || (target.speceffect & SPECEFFECT_RECOIL))
         {
             target.speceffect = SPECEFFECT_RECOIL;
             target.knockback = std::clamp(PSkill->getKnockback() - PTarget->getMod(Mod::REDUCE_KNOCKBACK), 0, 15);
@@ -867,21 +959,22 @@ void CMobEntity::DropItems(CCharEntity* PChar)
         //THLvl is the number of 'extra chances' at an item. If the item is obtained, then break out.
         int16 maxRolls = 1 + (m_THLvl > 2 ? 2 : m_THLvl);
         int16 bonus = (m_THLvl > 2 ? (m_THLvl - 2) * 10 : 0);
-		
+
 		// printf("mobentity.cpp DropItems TREASURE HUNTER: [%i]  MAX ROLLS: [%i]  BONUS: [%i]\n", this->m_THLvl, maxRolls, bonus);
-		
-		// if (charutils::GetCharVar(PChar, "AuditTH") == 1)
+
 		if (GetLocalVar("AuditTH") == 1)
 		{
-            // Works but broadcasts the audit to the whole server
-            // std::string msg2          = "MAX ROLLS PER ITEM: [";
+            // Broadcasts to any char participating in the mob's drops
+            // std::string msg1          = "MAX ROLLS PER ITEM: [";
             // std::string printMaxRolls = std::to_string(maxRolls);
-            // std::string msg3          = "] TH BONUS: [";
-            // std::string printTHBonus  = std::to_string(bonus);
-            // std::string msg4          = "]";
-            // std::string printMessage  = msg2 + printMaxRolls + msg3 + printTHBonus + msg4;
-            // message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, printMessage));
-			printf("mobentity.cpp DropItems  NAME: [%s]  MOB: [%s]  MAX ROLLS PER ITEM: [%i]  TH BONUS: [%i]\n", PChar->GetName(), GetName(), maxRolls, bonus);
+            // std::string msg2          = "] TH BONUS: [";
+            // std::string printTHBonus  = std::to_string(bonus / 10);
+            // std::string msg3          = "%]";
+            // std::string printMessage1 = msg1 + printMaxRolls + msg2 + printTHBonus + msg3;
+            // PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, printMessage1, "TH Audit System"));
+            PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                fmt::format("MAX ROLLS PER ITEM: [{}]  TH BONUS: [{}]", maxRolls, bonus / 10), "TH Audit System"));
+			// printf("mobentity.cpp DropItems  NAME: [%s]  MOB: [%s]  MAX ROLLS PER ITEM: [%i]  TH BONUS: [%i]\n", PChar->GetName(), GetName(), maxRolls, bonus);
 		}
 
 		// Handles items from the dropType = 1, groupId = # section of mob_droplist
@@ -911,16 +1004,15 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 					// Set up arrays for number of items in group and their item ID's
 					itemGroupDropRate = new int [itemsInGroup];
 					itemGroupItemId = new int [itemsInGroup];
-					
-					// if (charutils::GetCharVar(PChar, "AuditTH") == 1)
+
 					// if (GetLocalVar("AuditTH") == 1)
 					// {
 						// printf("mobentity.cpp DropItems  ITEMS IN GROUP: [%i]\n", itemsInGroup);
 					// }
-					
+
 					int8 counter = 0;
 					int16 maxGroupValue = 0;
-					
+
 					// Assign the items and ID's in group to their arrays
 					for (const DropItem_t& item : group.Items)
 					{
@@ -928,18 +1020,29 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 						maxGroupValue = previousRateValue;
 						itemGroupDropRate[counter] = previousRateValue;
 						itemGroupItemId[counter] = item.ItemID;
-						
-						// if (charutils::GetCharVar(PChar, "AuditTH") == 1)
+
 						if (GetLocalVar("AuditTH") == 1)
 						{
 							auto PItem = itemutils::GetItem(item.ItemID);
-							printf("mobentity.cpp DropItems  ITEM NAME: [%s]  ITEM %i MAX RANGE: [%i]\n", PItem->getName(), counter, itemGroupDropRate[counter]);
+
+                            // std::string msg4                    = "ITEM NAME: [";
+                            // const char* printItemName           = PItem->getName();
+                            // std::string msg5                    = "] ITEM ";
+                            // std::string printCounter            = std::to_string(counter);
+                            // std::string msg6                    = " MAX RANGE: [";
+                            // std::string printItemGroupDropRate  = std::to_string(itemGroupDropRate[counter]);
+                            // std::string msg7                    = "]";
+                            // std::string printMessage2           = msg4 + printItemName + msg5 + printCounter + msg6 + printItemGroupDropRate + msg7;
+                            // PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, printMessage2, "TH Audit System"));
+                            PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                fmt::format("ITEM NAME: [{}]  ITEM {} MAX RANGE: [{}]", PItem->getName(), counter + 1, itemGroupDropRate[counter]), "TH Audit System"));
+							// printf("mobentity.cpp DropItems  ITEM NAME: [%s]  ITEM %i MAX RANGE: [%i]\n", PItem->getName(), counter, itemGroupDropRate[counter]);
 						}
 						++counter;
 					}
-					
+
 					uint16 itemRoll = 0;
-					
+
 					// Handles "overflow" of TH bonus when drop group items have cumulative drop rate over 1000
 					if (maxGroupValue > 1000)
 					{
@@ -950,18 +1053,25 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 					{
 						itemRoll = tpzrand::GetRandomNumber(1000);
 					}
-					
+
 					if (GetLocalVar("FORCE_DROP_RATE") > 0)
 					{
 						itemRoll = GetLocalVar("FORCE_DROP_RATE");
 					}
-					
+
 					// if (charutils::GetCharVar(PChar, "AuditTH") == 1)
 					if (GetLocalVar("AuditTH") == 1)
 					{
-						printf("mobentity.cpp DropItems  GROUP ROLL: [%i]\n\n", itemRoll);
+                        // std::string msg8          = "GROUP ROLL: [";
+                        // std::string printItemRoll = std::to_string(itemRoll);
+                        // std::string msg9          = "]";
+                        // std::string printMessage3 = msg8 + printItemRoll + msg9;
+                        // PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, printMessage3, "TH Audit System"));
+                        PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                fmt::format("GROUP ROLL: [{}]", itemRoll), "TH Audit System"));
+						// printf("mobentity.cpp DropItems  GROUP ROLL: [%i]\n\n", itemRoll);
 					}
-					
+
 					// Check the random rolled above against the group's individual item drop rates
 					// Add item to treasure pool if random is lower than item's calculated drop rate
 					if (itemRoll < maxGroupValue)
@@ -974,7 +1084,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 								break;
 							}
 						}
-						
+
 						break;
 					}
                 }
@@ -987,14 +1097,17 @@ void CMobEntity::DropItems(CCharEntity* PChar)
             for (int16 roll = 0; roll < maxRolls; ++roll)
             {
 				uint16 itemRoll = tpzrand::GetRandomNumber(1000);
-				
+
 				/* if (charutils::GetCharVar(PChar, "AuditTH") == 1) */
 				if (GetLocalVar("AuditTH") == 1)
 				{
 					auto PItem = itemutils::GetItem(item.ItemID);
-					printf("mobentity.cpp DropItems  ITEM NAME: [%s]  RANDOM: [%i]  ITEM DROP RATE: [%i]\n", PItem->getName(), itemRoll, (uint16)(item.DropRate * map_config.drop_rate_multiplier + bonus));
+
+                    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                fmt::format("ITEM NAME: [{}]  RANDOM: [{}]  ITEM DROP RATE: [{}]", PItem->getName(), itemRoll, (uint16)(item.DropRate * map_config.drop_rate_multiplier + bonus)), "TH Audit System"));
+					// printf("mobentity.cpp DropItems  ITEM NAME: [%s]  RANDOM: [%i]  ITEM DROP RATE: [%i]\n", PItem->getName(), itemRoll, (uint16)(item.DropRate * map_config.drop_rate_multiplier + bonus));
 				}
-				
+
                 if (item.DropRate > 0 && itemRoll < item.DropRate * map_config.drop_rate_multiplier + bonus)
                 {
                     if (AddItemToPool(item.ItemID, ++dropCount))

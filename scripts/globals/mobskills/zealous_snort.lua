@@ -17,22 +17,22 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
 	local typeEffect = tpz.effect.ZEALOUS_SNORT
-	local icon = tpz.effect.COUNTERSTANCE
-	local duration = 90
-	local master = mob:getMaster()
-	local tp = mob:getTP()
-	
-	if (master ~= nil and tp > 1000 and tp <= 2000) then
+	local icon       = tpz.effect.COUNTERSTANCE
+	local duration   = 90
+	local master     = mob:getMaster()
+	local tp         = mob:getTP()
+
+	if master ~= nil and tp > 1000 and tp <= 2000 then
 		duration = 120
-	elseif (master ~= nil and tp > 2000 and tp <= 3000) then
+	elseif master ~= nil and tp > 2000 and tp <= 3000 then
 		duration = 180
 	end
-	
-	if (master ~= nil) then
+
+	if master ~= nil then
 		master:addStatusEffectEx(typeEffect, icon, 1, 0, duration)
 	end
-	
+
     skill:setMsg(MobBuffMoveEx(mob, typeEffect, icon, 1, 0, duration))
-	
+
     return tpz.effect.COUNTERSTANCE
 end

@@ -683,7 +683,9 @@ function BlueFinalAdjustments(caster, target, spell, dmg, params)
 			-- dmg = dmg * (BLUE_POWER + 0.75)
 		-- end
 	-- else
+    if caster:getObjType() == tpz.objType.PC then
 		dmg = dmg * BLUE_POWER
+    end
 	-- end
 
     dmg = dmg - target:getMod(tpz.mod.PHALANX)
@@ -911,6 +913,28 @@ end
 
     -- return duration
 -- end
+
+function handleDiffusion(caster, target, spell, duration)
+    if caster:hasStatusEffect(tpz.effect.DIFFUSION) then
+        if caster:getName() == target:getName() then
+            caster:setLocalVar("DIFFUSION_COUNTER", spell:getTotalTargets())
+        else
+            caster:setLocalVar("DIFFUSION_COUNTER", caster:getLocalVar("DIFFUSION_COUNTER") - 1)
+        end
+
+        local merits = caster:getMerit(tpz.merit.DIFFUSION)
+
+        if merits > 0 then
+            duration = duration + (duration * (merits / 100))
+        end        
+    end
+
+    if caster:getLocalVar("DIFFUSION_COUNTER") <= 1 then
+        caster:delStatusEffect(tpz.effect.DIFFUSION)
+    end
+
+    return duration
+end
 
 ---------------------------------------------
 -- Obtains alpha, used for working out WSC --

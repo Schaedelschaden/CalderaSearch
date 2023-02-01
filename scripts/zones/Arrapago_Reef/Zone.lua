@@ -18,14 +18,14 @@ function onInitialize(zone)
 	-- Medusa's spawn ???
     local qmMedusa = GetNPCByID(16999026)
 
-	qmMedusa:setPos(-451.252, -18.141, 451.976, 0)
+	qmMedusa:setPos(-451.252, -18.141, 451.976)
 end
 
 function onZoneIn(player, prevZone)
     -- Medusa's spawn ???
 	local qmMedusa = GetNPCByID(16999026)
 
-	qmMedusa:setPos(-451.252, -18.141, 451.976, 0)
+	qmMedusa:setPos(-451.252, -18.141, 451.976)
 
     local cs = -1
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then

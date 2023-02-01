@@ -124,14 +124,14 @@ function onTrigger(player)
 		local PetSDTPierce     = pet:getMod(tpz.mod.PIERCERES) / 10
 		local PetSDTH2H        = pet:getMod(tpz.mod.HTHRES) / 10
 		local PetSDTImpact     = pet:getMod(tpz.mod.IMPACTRES) / 10
-		local PetSDTFire       = 100 - pet:getMod(tpz.mod.FIRERES)
-		local PetSDTIce        = 100 - pet:getMod(tpz.mod.ICERES)
-		local PetSDTWind       = 100 - pet:getMod(tpz.mod.WINDRES)
-		local PetSDTEarth      = 100 - pet:getMod(tpz.mod.EARTHRES)
-		local PetSDTThunder    = 100 - pet:getMod(tpz.mod.THUNDERRES)
-		local PetSDTWater      = 100 - pet:getMod(tpz.mod.WATERRES)
-		local PetSDTLight      = 100 - pet:getMod(tpz.mod.LIGHTRES)
-		local PetSDTDark       = 100 - pet:getMod(tpz.mod.DARKRES)
+		local PetSDTFire       = pet:getMod(tpz.mod.FIRERES)
+		local PetSDTIce        = pet:getMod(tpz.mod.ICERES)
+		local PetSDTWind       = pet:getMod(tpz.mod.WINDRES)
+		local PetSDTEarth      = pet:getMod(tpz.mod.EARTHRES)
+		local PetSDTThunder    = pet:getMod(tpz.mod.THUNDERRES)
+		local PetSDTWater      = pet:getMod(tpz.mod.WATERRES)
+		local PetSDTLight      = pet:getMod(tpz.mod.LIGHTRES)
+		local PetSDTDark       = pet:getMod(tpz.mod.DARKRES)
 
 		PetATT  = PetATT + (PetATT * (PetATTP / 100)) + utils.clamp((PetATT * (PetFoodATTP / 100)), 0, pet:getMod(tpz.mod.FOOD_ATT_CAP))
 		PetRATT = PetRATT + (PetRATT * (PetRATTP / 100)) + utils.clamp((PetRATT * (PetFoodRATTP / 100)), 0, pet:getMod(tpz.mod.FOOD_RATT_CAP))

@@ -65,27 +65,27 @@ local loot =
     -- ISNM: Happy Caster
     [1121] =
     {
-        {
-            {itemid =  9270, droprate = 1000}, -- Abdhaljs Metal
-        },
-        {
-            {itemid =  9270, droprate = 1000}, -- Abdhaljs Metal
-        },
-        {
-            {itemid =  9270, droprate = 1000}, -- Abdhaljs Metal
-        },
-        {
-            {itemid = 26207, droprate =  125}, -- Inyanga Ring
-            {itemid = 26205, droprate =  125}, -- Meghanada Ring
-            {itemid = 26210, droprate =  125}, -- Tali'ah Ring
-            {itemid =     0, droprate =  625}, -- Nothing
-        },
-        {
-            {itemid =   790, droprate =  150}, -- Abdhaljs Nugget
-            {itemid =   793, droprate =  150}, -- Abdhaljs Gem
-            {itemid =   811, droprate =  150}, -- Abdhaljs Anima
-            {itemid =     0, droprate =  550}, -- Nothing
-        },
+        -- {
+            -- {itemid =  9270, droprate = 1000}, -- Abdhaljs Metal
+        -- },
+        -- {
+            -- {itemid =  9270, droprate = 1000}, -- Abdhaljs Metal
+        -- },
+        -- {
+            -- {itemid =  9270, droprate = 1000}, -- Abdhaljs Metal
+        -- },
+        -- {
+            -- {itemid = 26207, droprate =  125}, -- Inyanga Ring
+            -- {itemid = 26205, droprate =  125}, -- Meghanada Ring
+            -- {itemid = 26210, droprate =  125}, -- Tali'ah Ring
+            -- {itemid =     0, droprate =  625}, -- Nothing
+        -- },
+        -- {
+            -- {itemid =   790, droprate =  150}, -- Abdhaljs Nugget
+            -- {itemid =   793, droprate =  150}, -- Abdhaljs Gem
+            -- {itemid =   811, droprate =  150}, -- Abdhaljs Anima
+            -- {itemid =     0, droprate =  550}, -- Nothing
+        -- },
         {
             {itemid =     0, droprate =  300}, -- nothing
             {itemid =  3684, droprate =   50}, -- Princess Board

@@ -31,4 +31,5 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+    player:delKeyItem(tpz.ki.CONFIDENTIAL_IMPERIAL_ORDER)
 end

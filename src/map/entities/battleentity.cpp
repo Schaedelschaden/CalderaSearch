@@ -714,7 +714,7 @@ uint16 CBattleEntity::ATT()
 uint16 CBattleEntity::RATT(uint8 skill, uint16 bonusSkill)
 {
     // Determines character, pet, and mod RATT stat
-	// Base 8 RATT + Ranged Skill + iLvl Skill + RATT Mod + RATT Bonus + (STR / 2)
+	// Base 8 RATT + Ranged Skill + iLvl Skill + RATT Mod + RATT Bonus + STR
     auto PWeakness = StatusEffectContainer->GetStatusEffect(EFFECT_WEAKNESS);
     if (PWeakness && PWeakness->GetPower() >= 2)
     {

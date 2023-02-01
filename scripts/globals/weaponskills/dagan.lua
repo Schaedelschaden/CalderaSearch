@@ -14,8 +14,10 @@ require("scripts/globals/weaponskills")
 ---------------------------------------
 
 function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
-    -- Apply aftermath
-    tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.EMPYREAN)
+    if player:getObjType() ~= tpz.objType.TRUST then
+        -- Apply aftermath
+        tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.EMPYREAN)
+    end
 
     local ftpHp     = fTP(tp, 0.22, 0.33, 0.52)
     local ftpMp     = fTP(tp, 0.15, 0.22, 0.35)

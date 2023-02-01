@@ -5,14 +5,15 @@
 -- Mob ID2: 17572220 !pos -380 0 740 194
 -- Mob ID3: 17572221 !pos -480 0 760 194
 -----------------------------------
+mixins = {require("scripts/mixins/families/iron_giant")}
 require("scripts/globals/titles")
 require("scripts/globals/status")
-
+require("scripts/globals/mobs")
 -----------------------------------
 
 function onMobSpawn(mob)
-	mob:SetAutoAttackEnabled(true)
-	mob:SetMobSkillAttack(1181) -- Ironclad "normal" attacks
+	-- mob:SetAutoAttackEnabled(true)
+	-- mob:SetMobSkillAttack(1181) -- Ironclad "normal" attacks
 	mob:setMod(tpz.mod.SILENCERES, 35)
     mob:setMod(tpz.mod.PETRIFYRES, 100)
     mob:setMod(tpz.mod.BINDRES, 35)

@@ -17,12 +17,12 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local numhits = 1
-    local dmgmod = 1
-    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg() * 2, tpz.magic.ele.DARK, dmgmod, TP_MAB_BONUS)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.DARK, MOBPARAM_IGNORE_SHADOWS)
-	
-	MobStatusEffectMove(mob, target, tpz.effect.CURSE_I, 25, 0, 180)
-	MobStatusEffectMove(mob, target, tpz.effect.BIO, 35, 3, 180)
+    local dmgmod  = 1
+    local info    = MobMagicalMove(mob, target, skill, mob:getWeaponDmg() * 2, tpz.magic.ele.DARK, dmgmod, TP_MAB_BONUS)
+    local dmg     = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.DARK, MOBPARAM_IGNORE_SHADOWS)
+
+    MobStatusEffectMove(mob, target, tpz.effect.CURSE_I, 25, 0, 180)
+    MobStatusEffectMove(mob, target, tpz.effect.BIO, 35, 3, 180)
 
     return dmg
 end

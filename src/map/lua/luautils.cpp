@@ -2375,9 +2375,25 @@ namespace luautils
     {
         TPZ_DEBUG_BREAK_IF(PCaster == nullptr || PTarget == nullptr);
 
-        lua_prepscript("scripts/zones/%s/mobs/%s.lua", PCaster->loc.zone->GetName(), PCaster->GetName());
+        if (PCaster->objtype == TYPE_MOB)
+        {
+            lua_prepscript("scripts/zones/%s/mobs/%s.lua", PCaster->loc.zone->GetName(), PCaster->GetName());
 
-        if (prepFile(File, "onMonsterMagicPrepare"))
+            if (prepFile(File, "onMonsterMagicPrepare"))
+            {
+                return {};
+            }
+        }
+        else if (PCaster->objtype == TYPE_TRUST)
+        {
+            lua_prepscript("scripts/globals/spells/trust/%s.lua", PCaster->GetName());
+
+            if (prepFile(File, "onMonsterMagicPrepare"))
+            {
+                return {};
+            }
+        }
+        else if (PCaster->objtype == TYPE_PET)
         {
             return {};
         }

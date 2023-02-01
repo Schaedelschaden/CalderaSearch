@@ -13,24 +13,60 @@ require("scripts/globals/msg")
 
 function onItemCheck(target)
     local result = 0
+
     if target:hasStatusEffect(tpz.effect.FOOD) or target:hasStatusEffect(tpz.effect.FIELD_SUPPORT_FOOD) then
         result = tpz.msg.basic.IS_FULL
     end
+
     return result
 end
 
 function onItemUse(target)
-    target:addStatusEffect(tpz.effect.FOOD, 0, 0, 10800, 5622)
+    local month    = tonumber(os.date("%m"))
+    local duration = 10800
+
+    if month == 1 or month == 2 or month == 12 then
+        duration = 14400
+    end
+
+    target:addStatusEffect(tpz.effect.FOOD, 0, 0, duration, 5622)
 end
 
 function onEffectGain(target, effect)
-    target:addMod(tpz.mod.INT, 4)
-    target:addMod(tpz.mod.MND, 4)
-    target:addMod(tpz.mod.MPHEAL, 2)
+    effect:unsetFlag(tpz.effectFlag.DEATH)
+    local month = tonumber(os.date("%m"))
+
+    -- Caldera seasonal food custom adjustments
+    if month == 1 or month == 2 or month == 12 then
+        target:addMod(tpz.mod.STR, -20)
+        target:addMod(tpz.mod.VIT, -20)
+        target:addMod(tpz.mod.DEX, -20)
+        target:addMod(tpz.mod.AGI, -20)
+        target:addMod(tpz.mod.INT, 30)
+        target:addMod(tpz.mod.MND, 30)
+        target:addMod(tpz.mod.CHR, 30)
+    else
+        target:addMod(tpz.mod.INT, 4)
+        target:addMod(tpz.mod.MND, 4)
+        target:addMod(tpz.mod.MPHEAL, 2)
+    end
 end
 
 function onEffectLose(target, effect)
-    target:delMod(tpz.mod.INT, 4)
-    target:delMod(tpz.mod.MND, 4)
-    target:delMod(tpz.mod.MPHEAL, 2)
+    local month = tonumber(os.date("%m"))
+
+    -- Caldera seasonal food custom adjustments
+    if month == 1 or month == 2 or month == 12 then
+        target:delMod(tpz.mod.STR, -20)
+        target:delMod(tpz.mod.VIT, -20)
+        target:delMod(tpz.mod.DEX, -20)
+        target:delMod(tpz.mod.AGI, -20)
+        target:delMod(tpz.mod.INT, 30)
+        target:delMod(tpz.mod.MND, 30)
+        target:delMod(tpz.mod.CHR, 30)
+    else
+        target:delMod(tpz.mod.INT, 4)
+        target:delMod(tpz.mod.MND, 4)
+        target:delMod(tpz.mod.MPHEAL, 2)
+    end
 end

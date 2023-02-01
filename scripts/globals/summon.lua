@@ -44,7 +44,7 @@ function AvatarPhysicalMove(avatar, target, skill, numberofhits, accmod, dmgmod,
     -- add on native crit hit rate (guesstimated, it actually follows an exponential curve)
     local critrate = (avatar:getStat(tpz.mod.DEX) - target:getStat(tpz.mod.AGI)) * 0.005 -- assumes +0.5% crit rate per 1 dDEX
     critrate = critrate + avatar:getMod(tpz.mod.CRITHITRATE) / 100
-    critrate = utils.clamp(critrate, 0.05, 0.2)
+    critrate = utils.clamp(critrate, 0.05, 1)
 
     -- Applying pDIF
     if ratio <= 1 then
@@ -97,7 +97,9 @@ function AvatarPhysicalMove(avatar, target, skill, numberofhits, accmod, dmgmod,
     end
 
     -- apply ftp bonus
-    if tpeffect == TP_DMG_BONUS then
+    if tpeffect == TP_DMG_BONUS then -- or new var > 0
+    -- mtp100, mtp200, mtp300 = value pulled from avatar ability lua
+    -- wrong place for this. should be up in the on hit calc
         finaldmg = finaldmg * avatarFTP(skill:getTP(), mtp100, mtp200, mtp300)
     end
 	

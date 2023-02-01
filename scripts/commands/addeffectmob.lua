@@ -66,8 +66,10 @@ function onTrigger(player, arg1, arg2, arg3)
     end
 
     if (targ:addStatusEffect(id, power, 3, duration)) then
+        printf("addeffectmob.lua onTrigger  ACTIVE")
         targ:messagePublic(280, targ, id, id)
     else
+        printf("addeffectmob.lua onTrigger  FAILED")
         targ:messagePublic(283, targ, id)
     end
 end

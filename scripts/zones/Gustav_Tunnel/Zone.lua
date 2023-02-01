@@ -10,6 +10,8 @@ require("scripts/globals/conquest")
 function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.BUNE)
     GetMobByID(ID.mob.BUNE):setRespawnTime(math.random(900, 10800))
+
+    -- GetMobByID(ID.mob.AMIKIRI):setRespawnTime(math.random(1800, 3600)) -- 30-60 minutes spawn protection on server restart
 end
 
 function onConquestUpdate(zone, updatetype)

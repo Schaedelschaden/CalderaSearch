@@ -39,7 +39,9 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.enmityMult = 1.5
 
     -- Apply aftermath
-    tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.MYTHIC)
+    if player:getObjType() == tpz.objType.PC then
+        tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.MYTHIC)
+    end
 
     local attack =
     {
@@ -65,19 +67,20 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         end
 
         damage, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
-    else
+    elseif player:getObjType() == tpz.objType.PC then
         local dmg
+
         if USE_ADOULIN_WEAPON_SKILL_CHANGES then
             -- dmg = (target:getCE(player) + target:getVE(player)) / 6
             -- tp affects enmity multiplier, 1.0 at 1k, 1.5 at 2k, 2.0 at 3k. Gorget/Belt adds 100 tp each.
             params.enmityMult = params.enmityMult + (tp + handleWSGorgetBelt(player) * 1000 - 1000) / 2000
             params.enmityMult = utils.clamp(params.enmityMult, 1.5, 3) -- necessary because of Gorget/Belt bonus
 
-			local playerLvl = player:getMainLvl() + player:getItemLevel()
-			local ve        = target:getVE(player)
-			local ce        = target:getCE(player)
+            local playerLvl = player:getMainLvl() + player:getItemLevel()
+            local ve        = target:getVE(player)
+            local ce        = target:getCE(player)
 
-			dmg = utils.clamp((2000 + ((50.421 * playerLvl) * ((ve + ce) / 60000))), 0, tp * 3) * (1 + player:getMod(tpz.mod.ATONEMENT_DMG) / 100)
+            dmg = utils.clamp((2000 + ((50.421 * playerLvl) * ((ve + ce) / 60000))), 0, tp * 3) * (1 + player:getMod(tpz.mod.ATONEMENT_DMG) / 100)
         else
             local effectiveTP = tp + handleWSGorgetBelt(player) * 1000
 
@@ -89,12 +92,8 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
             dmg = math.floor(target:getCE(player) * ceMod) + math.floor(target:getVE(player) * veMod)
         end
 
-        -- dmg = utils.clamp(dmg, 0, player:getMainLvl() * 10) -- Damage is capped to player's level * 10, before WS damage mods
         damage = target:breathDmgTaken(dmg)
-        -- if player:getMod(tpz.mod.WEAPONSKILL_DAMAGE_BASE + wsID) > 0 then
-            -- damage = damage * (100 + player:getMod(tpz.mod.WEAPONSKILL_DAMAGE_BASE + wsID)) / 100
-        -- end
-        -- damage = damage * WEAPON_SKILL_POWER
+
         calcParams.finalDmg = damage
 
         if damage > 0 then
@@ -106,6 +105,20 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
             -- Atonement always yields the TP return of a 2 hit WS (unless it does 0 damage), because if one hit lands, both hits do.
             calcParams.extraHitsLanded = 1
         end
+
+        damage = takeWeaponskillDamage(target, player, params, primary, attack, calcParams, action)
+    elseif player:getObjType() == tpz.objType.TRUST then
+        local dmg  = 0
+        local mLvl = player:getMainLvl()
+        local ve   = target:getVE(player)
+        local ce   = target:getCE(player)
+
+        dmg    = ((28.421 * mLvl) * ((ve + ce) / 60000)) * (1 + player:getMod(tpz.mod.ATONEMENT_DMG) / 100)
+        damage = target:breathDmgTaken(dmg)
+
+        params.enmityMult          = fTP(tp, 1.0, 1.5, 2.0)
+        calcParams.finalDmg        = damage
+        calcParams.extraHitsLanded = 1
 
         damage = takeWeaponskillDamage(target, player, params, primary, attack, calcParams, action)
     end

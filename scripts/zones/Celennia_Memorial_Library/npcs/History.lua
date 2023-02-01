@@ -10,14 +10,18 @@ require("scripts/globals/status")
 require("scripts/globals/missions")
 -----------------------------------
 
-local acceptedTrades = {{3690, 200000}, -- Fighter Board
-						{3689, 250000}, -- Wizardess Board
-						{3686, 300000}, -- Duelist Board
-						{3684, 350000}, -- Princess Board
-						{3691, 400000}, -- Guardian Board
-						{3685, 500000}} -- Empress Board
-						
-local stock_t1_locked = {
+local acceptedTrades =
+{
+    {3690, 200000}, -- Fighter Board
+    {3689, 250000}, -- Wizardess Board
+    {3686, 300000}, -- Duelist Board
+    {3684, 350000}, -- Princess Board
+    {3691, 400000}, -- Guardian Board
+    {3685, 500000}, -- Empress Board
+}
+
+local stock_t1_locked =
+{
 	8992,  250000,			-- Jester Malatrix's Shard
 	8990,  250000,			-- Largantua's Shard
 	8977,  250000,			-- Ironhorn Baldurno's Horn
@@ -57,7 +61,8 @@ local stock_t1_locked = {
 	21393, 5000000,			-- Arasy Sachet
 }
 	
-local stock_t2_locked = {
+local stock_t2_locked =
+{
 	9249, 1500000,			-- Chunk of Ruthenium Ore
 	9247, 1500000,			-- Chunk of Niobium Ore
 	8721, 1500000,			-- Chunk of Hepatizon Ore

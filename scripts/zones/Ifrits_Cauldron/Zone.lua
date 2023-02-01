@@ -13,6 +13,8 @@ function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.ASH_DRAGON)
     GetMobByID(ID.mob.ASH_DRAGON):setRespawnTime(math.random(900, 10800))
 
+    -- GetMobByID(ID.mob.ASH_DRAGON):setRespawnTime(math.random(1800, 3600)) -- 30-60 minutes spawn protection on server restart
+
     tpz.treasure.initZone(zone)
     tpz.helm.initZone(zone, tpz.helm.type.MINING)
 end

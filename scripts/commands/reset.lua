@@ -16,21 +16,50 @@ function error(player, msg)
 end
 
 function onTrigger(player, target)
-    -- validate target
+    -- Validate target
     local targ
-    if (target == nil) then
+
+    if not target then
         targ = player
     else
         targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format( "Player named '%s' not found!", target ) )
+
+        if targ == nil then
+            error(player, string.format( "Player named '%s' not found!", target ))
+
             return
         end
     end
 
-    -- reset target recasts
+    -- Reset target recasts
     targ:resetRecasts()
-    if (targ:getID() ~= player:getID()) then
+
+    if targ:getID() ~= player:getID() then
         player:PrintToPlayer( string.format( "Reset %s's recast timers.", targ:getName() ) )
+    end
+
+    -- Clear debilitating effects from player
+    player:eraseAllStatusEffect()
+
+    -- Table of non-erasable effects
+    local effects =
+    {
+        tpz.effect.TERROR,
+        tpz.effect.SLEEP_I,
+        tpz.effect.SLEEP_II,
+        tpz.effect.LULLABY,
+        tpz.effect.STUN,
+        tpz.effect.SILENCE,
+        tpz.effect.WEAKNESS,
+        tpz.effect.PARALYSIS,
+        tpz.effect.BLINDNESS,
+        tpz.effect.AMNESIA,
+        tpz.effect.CHARM_I,
+        tpz.effect.CHARM_II,
+        tpz.effect.POISON,
+    }
+
+    for _, v in pairs(effects) do
+        player:delStatusEffect(v)
     end
 end

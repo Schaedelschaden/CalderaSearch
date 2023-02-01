@@ -7,24 +7,24 @@ require("scripts/globals/status")
 --------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
-    if (caster:getObjType() == tpz.objType.TRUST and caster:getTrustID() == 968) then -- Adelheid
-		local player = caster:getMaster()
-		local mob = player:getCursorTarget()
+    -- if (caster:getObjType() == tpz.objType.TRUST and caster:getTrustID() == 968) then -- Adelheid
+		-- local player = caster:getMaster()
+		-- local mob = player:getCursorTarget()
 	
-		local weakestElement = checkWeakestElement(caster, mob, spell)
+		-- local weakestElement = checkWeakestElement(caster, mob, spell)
 		
-		if (weakestElement == 2
-			and not target:hasStatusEffect(tpz.effect.FIRESTORM) and not target:hasStatusEffect(tpz.effect.HAILSTORM)
-			and not target:hasStatusEffect(tpz.effect.WINDSTORM) and not target:hasStatusEffect(tpz.effect.THUNDERSTORM)
-			and not target:hasStatusEffect(tpz.effect.SANDSTORM) and not target:hasStatusEffect(tpz.effect.RAINSTORM)
-			and not target:hasStatusEffect(tpz.effect.AURORASTORM) and not target:hasStatusEffect(tpz.effect.VOIDSTORM)) then
-			return 0
-		else
-			return 1
-		end
-	else
+		-- if (weakestElement == 2
+			-- and not target:hasStatusEffect(tpz.effect.FIRESTORM) and not target:hasStatusEffect(tpz.effect.HAILSTORM)
+			-- and not target:hasStatusEffect(tpz.effect.WINDSTORM) and not target:hasStatusEffect(tpz.effect.THUNDERSTORM)
+			-- and not target:hasStatusEffect(tpz.effect.SANDSTORM) and not target:hasStatusEffect(tpz.effect.RAINSTORM)
+			-- and not target:hasStatusEffect(tpz.effect.AURORASTORM) and not target:hasStatusEffect(tpz.effect.VOIDSTORM)) then
+			-- return 0
+		-- else
+			-- return 1
+		-- end
+	-- else
 		return 0
-	end
+	-- end
 end
 
 function onSpellCast(caster, target, spell)

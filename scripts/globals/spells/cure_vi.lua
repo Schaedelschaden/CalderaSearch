@@ -72,6 +72,8 @@ function onSpellCast(caster,target,spell)
 
         target:wakeUp()
         caster:updateEnmityFromCure(target,final)
+
+        -- updateNotorietyCure(caster, target)
     else
         if (target:isUndead()) then
             spell:setMsg(tpz.msg.basic.MAGIC_DMG)

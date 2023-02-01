@@ -93,6 +93,8 @@ function onSpellCast(caster, target, spell)
 
         target:wakeUp()
         caster:updateEnmityFromCure(target, 65535)
+        
+        -- updateNotorietyCure(caster, target)
     else
         if (target:isUndead()) then -- e.g. PCs healing skeles for damage (?)
             spell:setMsg(tpz.msg.basic.MAGIC_DMG)

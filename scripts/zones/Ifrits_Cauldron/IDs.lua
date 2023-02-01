@@ -74,6 +74,7 @@ zones[tpz.zone.IFRITS_CAULDRON] =
             [17617129] = 17617130,
         },
         PIRATES_COVE_NMS = 17616897,
+        TYRANNIC_TUNNOK  = 17616999,
         ASH_DRAGON       = 17617147,
         MIMIC            = 17617157,
         BOMB_QUEEN       = 17617158,

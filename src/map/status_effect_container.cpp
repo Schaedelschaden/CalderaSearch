@@ -246,6 +246,11 @@ uint8 CStatusEffectContainer::GetLowestFreeSlot()
 
 bool CStatusEffectContainer::CanGainStatusEffect(CStatusEffect* PStatusEffect)
 {
+    if (m_POwner->GetLocalVar("AuditAddEffect") == 1)
+    {
+        printf("status_effect_container.cpp CanGainStatusEffect  TRIGGER\n");
+    }
+
     EFFECT statusEffect = PStatusEffect->GetStatusID();
     // check for immunities first
     switch (statusEffect) {
@@ -275,7 +280,15 @@ bool CStatusEffectContainer::CanGainStatusEffect(CStatusEffect* PStatusEffect)
             if (m_POwner->hasImmunity(IMMUNITY_STUN)) return false;
             break;
         case EFFECT_SILENCE:
-            if (m_POwner->hasImmunity(IMMUNITY_SILENCE)) return false;
+            if (m_POwner->hasImmunity(IMMUNITY_SILENCE))
+            {
+                if (m_POwner->GetLocalVar("AuditAddEffect") == 1)
+                {
+                    printf("status_effect_container.cpp CanGainStatusEffect  IMMUNE TO SILENCE\n");
+                }
+
+                return false;
+            }
             break;
         case EFFECT_PARALYSIS:
 		case EFFECT_GEO_PARALYSIS:
@@ -416,6 +429,11 @@ bool CStatusEffectContainer::AddStatusEffect(CStatusEffect* PStatusEffect, bool 
 
     if (CanGainStatusEffect(PStatusEffect))
     {
+        if (m_POwner->GetLocalVar("AuditAddEffect") == 1)
+        {
+            printf("status_effect_container.cpp AddStatusEffect  CAN GAIN EFFECT\n");
+        }
+
         // check for minimum duration
         if (PStatusEffect->GetDuration() < effects::EffectsParams[statusId].MinDuration) {
             PStatusEffect->SetDuration(effects::EffectsParams[statusId].MinDuration);
@@ -476,6 +494,11 @@ bool CStatusEffectContainer::AddStatusEffect(CStatusEffect* PStatusEffect, bool 
     }
     else
     {
+        if (m_POwner->GetLocalVar("AuditAddEffect") == 1)
+        {
+            printf("status_effect_container.cpp AddStatusEffect  CANNOT GAIN EFFECT\n");
+        }
+
         delete PStatusEffect;
     }
 

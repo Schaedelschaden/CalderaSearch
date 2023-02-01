@@ -18,9 +18,9 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.PREPARATIONS
-	local duration = 30
+	local duration   = 30
 
     skill:setMsg(MobBuffMove(mob, typeEffect, 1, 0, duration))
-	
+
     return typeEffect
 end

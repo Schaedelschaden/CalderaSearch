@@ -9,7 +9,14 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
+    if
+        mob:isNM() and -- NM's replace Gnash with Deathgnash below 50% HP
+        mob:getHPP() <= 50
+    then
+        return 0
+    end
 
+    return 1
 end
 
 function onMobWeaponSkill(target, mob, skill)

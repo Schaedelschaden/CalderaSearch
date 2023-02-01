@@ -20,11 +20,12 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local effect = tpz.effect.MIGAWARI
-    local ninjutsu = target:getSkillLevel(tpz.skill.NINJUTSU)
+    local duration          = 300
+    local effect            = tpz.effect.MIGAWARI
+    local ninjutsu          = target:getSkillLevel(tpz.skill.NINJUTSU)
     local negationThreshold = 100 - (math.floor(ninjutsu / 15.5) - caster:getMod(tpz.mod.ENH_MIGAWARI))
-	
-    caster:addStatusEffect(effect, negationThreshold, 0, 60, 0, 100)
-	
+
+    caster:addStatusEffect(effect, negationThreshold, 0, duration, 0, 100)
+
     return effect
 end

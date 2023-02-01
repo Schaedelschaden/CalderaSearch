@@ -138,7 +138,7 @@ local battlefields = {
      { 0, 1299,    0},   -- Northern Tower
      { 1, 1300,    0},   -- Eastern Tower
      { 2, 1298,    0},   -- Western Tower
-     { 3, 1306,   -1},   -- Central 4th Floor (multiple items needed: 1907, 1908, 1986)
+     { 3, 1306,    0},   -- Central 4th Floor (multiple items needed: 1907, 1908, 1986) Formerly { 3, 1306,   -1}
      { 4, 1305, 1904},   -- Central 3rd Floor
      { 5, 1304, 1905},   -- Central 2nd Floor
      { 6, 1303, 1906},   -- Central 1st Floor
@@ -153,7 +153,7 @@ local battlefields = {
      { 1, 1290,    0},   -- NW Apollyon
      { 2, 1293,    0},   -- SE Apollyon
      { 3, 1292,    0},   -- NE Apollyon
-     { 4, 1296,   -2},   -- Central Apollyon (multiple items needed: 1909 1910 1987 1988)
+     { 4, 1296,    0},   -- Central Apollyon (multiple items needed: 1909 1910 1987 1988) Formerly {4, 1296, -2}
      { 5, 1294, 2127},   -- CS Apollyon
      { 6, 1295,    0},   -- CS Apollyon II
      { 7, 1297,    0},   -- Central Apollyon II
@@ -712,7 +712,8 @@ function checkReqs(player, npc, bfid, registrant)
         [ 290] = function() return ( npcid == getEntranceOffset(2) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_ENVY)                                        ) end, -- ZM14: Ark Angels (Mithra)
         [ 291] = function() return ( npcid == getEntranceOffset(3) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_ARROGANCE)                                   ) end, -- ZM14: Ark Angels (Elvaan)
         [ 292] = function() return ( npcid == getEntranceOffset(4) and player:hasKeyItem(tpz.ki.PHANTOM_GEM_OF_RAGE)                                        ) end, -- ZM14: Ark Angels (Galka)
-        [ 320] = function() return ( player:hasKeyItem(tpz.ki.P_PERPETRATOR_PHANTOM_GEM)                                                                    ) end, -- Divine Might
+        [ 293] = function() return ( player:hasKeyItem(tpz.ki.P_PERPETRATOR_PHANTOM_GEM)                                                                    ) end, -- ZM14 Divine Might
+        [ 320] = function() return ( player:hasKeyItem(tpz.ki.CELESTIAL_NEXUS_PHANTOM_GEM)                                                                  ) end, -- ZM16: The Celestial Nexus
 		[ 416] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_WIND)                                                                          ) end, -- Quest: Trial by Wind
 		[ 448] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_LIGHTNING)                                                                     ) end, -- Quest: Trial by Lightning
 		[ 480] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_ICE)                                                                           ) end, -- Quest: Trial by Ice

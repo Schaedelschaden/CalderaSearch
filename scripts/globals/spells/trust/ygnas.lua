@@ -11,3 +11,7 @@ end
 function onSpellCast(caster, target, spell)
     return tpz.trust.spawn(caster, spell)
 end
+
+function onMobSpawn(mob)
+    tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
+end

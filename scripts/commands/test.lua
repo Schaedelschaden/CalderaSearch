@@ -20,6 +20,63 @@ cmdprops =
 function onTrigger(player)
 
 ---------------------------------------------------------------------------------------------------
+
+    local target = GetMobByID(17662479)
+
+    target:setHP(0)
+
+---------------------------------------------------------------------------------------------------
+
+-- Test pulling the mob's weapon damage
+    -- local target = player:getCursorTarget()
+    -- printf("test.lua onTrigger  MOB WEAPON DMG: [%i]", target:getWeaponDmg())
+
+---------------------------------------------------------------------------------------------------
+
+-- Test player countdowns
+    -- Numeric value in seconds
+    -- Set to 0 to remove countdown box
+    -- player:countdown(0)
+
+---------------------------------------------------------------------------------------------------
+
+-- Test elemental resistances in a table (Adelheid Storm and Helix selection)
+        -- local target   = player:getCursorTarget()
+        -- local weakness = 0
+        -- local storms   =
+        -- {
+            -- [tpz.mod.FIRERES   ] = {tpz.effect.FIRESTORM,    tpz.magic.spell.FIRESTORM   },
+            -- [tpz.mod.ICERES    ] = {tpz.effect.HAILSTORM,    tpz.magic.spell.HAILSTORM   },
+            -- [tpz.mod.WINDRES   ] = {tpz.effect.WINDSTORM,    tpz.magic.spell.WINDSTORM   },
+            -- [tpz.mod.EARTHRES  ] = {tpz.effect.SANDSTORM,    tpz.magic.spell.SANDSTORM   },
+            -- [tpz.mod.THUNDERRES] = {tpz.effect.THUNDERSTORM, tpz.magic.spell.THUNDERSTORM},
+            -- [tpz.mod.WATERRES  ] = {tpz.effect.RAINSTORM,    tpz.magic.spell.RAINSTORM   },
+            -- [tpz.mod.LIGHTRES  ] = {tpz.effect.AURORASTORM,  tpz.magic.spell.AURORASTORM },
+            -- [tpz.mod.DARKRES   ] = {tpz.effect.VOIDSTORM,    tpz.magic.spell.VOIDSTORM   },
+        -- }
+
+        -- -- Ex. FIRERES -25 is weak to Fire
+        -- for i = tpz.mod.FIRERES, tpz.mod.DARKRES do
+            -- if target:getMod(i) < weakness then
+                -- weakness = i
+-- printf("test.lua onTrigger  MOD: [%i]  WEAKNESS: [%i]", i, weakness)
+            -- end
+        -- end
+
+-- printf("test.lua onTrigger  WEAKNESS: [%i]  EFFECT: [%i]  SPELL: [%i]", weakness, storms[weakness][1], storms[weakness][2])
+
+---------------------------------------------------------------------------------------------------
+
+-- Test LUA table formatting
+    -- local test =
+    -- {
+        -- --Structure: [Mob ID] = { Power, Damage Mod },
+        -- [16801793] = {1, 4},
+        -- [16801794] = {100, 4},
+        -- [16801795] = {100, 4},
+    -- }
+    -- printf("test.lua onTrigger  VAR 1: [%i]", test[16801793][1])
+---------------------------------------------------------------------------------------------------
 -- Test bit.band functionality for Encumbrance
 -- printf("test.lua onTrigger  VALUE: [%i]", bit.band(65535, 0x0001))
 
@@ -128,20 +185,20 @@ function onTrigger(player)
 ---------------------------------------------------------------------------------------------------
 
 -- Check if item has augment
-	local equip = player:getStorageItem(0, 0, 0) -- Main weapon
+	-- local equip = player:getStorageItem(0, 0, 0) -- Main weapon
 
-    if equip then
-        local augList  = {{},{},{},{}}
-        local augValue = 0
+    -- if equip then
+        -- local augList  = {{},{},{},{}}
+        -- local augValue = 0
 
-        for i = 1, 4 do
-            augList[i][1], augList[i][2] = equip:getAugment(i - 1)
+        -- for i = 1, 4 do
+            -- augList[i][1], augList[i][2] = equip:getAugment(i - 1)
 
-            if augList[i][1] > 0 then
-                printf("test.lua onTrigger  AUGMENT FOUND SLOT: [%i]  AUG ID: [%i]  AUG VALUE: [%i]", i - 1, augList[i][1], augList[i][2])
-            end
-        end
-    end
+            -- if augList[i][1] > 0 then
+                -- printf("test.lua onTrigger  AUGMENT FOUND SLOT: [%i]  AUG ID: [%i]  AUG VALUE: [%i]", i - 1, augList[i][1], augList[i][2])
+            -- end
+        -- end
+    -- end
 
 ---------------------------------------------------------------------------------------------------
 

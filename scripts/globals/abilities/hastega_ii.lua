@@ -17,8 +17,10 @@ end
 
 function onUseAbility(player, target, ability)
 	local pet = player:getPet()
-	local bloodpact = 3993 -- mob_skill_id from mob_skills.sql
+	-- local bloodpact = 3993 -- mob_skill_id from mob_skills.sql
 
---	printf("Hastega II PLAYER onUseAbility\n")
-	pet:useMobAbility(bloodpact, target)
+-- --	printf("Hastega II PLAYER onUseAbility\n")
+	-- pet:useMobAbility(bloodpact, target)
+    pet:useJobAbility(602, pet)
+    pritnf("hastega_ii.lua onUseAbility  USER: [%s]", player:getName())
 end

@@ -9,14 +9,18 @@ require("scripts/globals/regimes")
 require("scripts/globals/mobs")
 -----------------------------------
 
-function onMobInitialize(mob)
+function onMobSpawn(mob)
     if mob:getID() == ID.mob.BLOODSUCKER then
         mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1) -- "Has an Additional Effect of Drain on normal attacks"
+        mob:setSpawn(-60.459, 17.009, -140.136)
+        mob:setPos(-60.459, 17.009, -140.136, 0)
     end
 end
 
 function onAdditionalEffect(mob, target, damage)
-    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.HP_DRAIN)
+    local dmg = 100
+
+    return tpz.mob.onAddEffect(mob, target, dmg, tpz.mob.ae.HP_DRAIN, {chance = 100})
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -25,7 +29,8 @@ end
 
 function onMobDespawn(mob)
     if mob:getID() == ID.mob.BLOODSUCKER then
-        UpdateNMSpawnPoint(mob)
+        -- UpdateNMSpawnPoint(mob)
         mob:setRespawnTime(3600)
+        mob:setSpawn(-60.459, 17.009, -140.136)
     end
 end

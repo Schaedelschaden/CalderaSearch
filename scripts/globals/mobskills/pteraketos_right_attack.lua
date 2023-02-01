@@ -13,7 +13,6 @@ function onMobSkillCheck(target, mob, skill)
     local targetPosition = mob:getFacingAngle(target)
 
     if targetPosition >= 52 and targetPosition <= 84 then
-        printf("pteraketos_right_attack.lua onMobSkillCheck  targetPosition: [%i]", targetPosition)
         return 0
     else
         return 1

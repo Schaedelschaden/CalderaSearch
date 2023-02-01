@@ -19,7 +19,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-	local baseDmg = 500 * skill:getTotalTargets()
+	local baseDmg = mob:getMainLvl() * 9
     local dmgmod  = 1
 
     if mob:getName() == "Snoll_Tzar" then
@@ -27,7 +27,7 @@ function onMobWeaponSkill(target, mob, skill)
     end
 
     local info = MobMagicalMove(mob, target, skill, baseDmg, tpz.magic.ele.ICE, dmgmod, TP_MAB_BONUS, 1)
-    local dmg  = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.ICE, MOBPARAM_IGNORE_SHADOWS)
+    local dmg  = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.ICE, MOBPARAM_WIPE_SHADOWS)
 
 	if not mob:isNM() then
 		mob:setHP(0)

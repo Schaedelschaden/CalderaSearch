@@ -17,10 +17,10 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local tpReduced = 0
-	
+
     target:setTP(tpReduced)
 	mob:resetEnmity(target)
-	
+
 	mob:setMod(tpz.mod.WIND_ABSORB, 100)
 	mob:AnimationSub(2)
 	mob:setLocalVar("Amphiptere_ReavingWind", os.time())

@@ -20,7 +20,7 @@ function onSpellCast(caster, target, spell)
 end
 
 function onMobSpawn(mob)
-    -- tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
+    tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
 
     mob:addMod(tpz.mod.CURE_POTENCY, 50)
 	mob:addMod(tpz.mod.FASTCAST, 50)
@@ -36,8 +36,8 @@ function onMobSpawn(mob)
     mob:addSimpleGambit(ai.t.PARTY, ai.c.STATUS, tpz.effect.SLEEP_I, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.CURAGA)
     mob:addSimpleGambit(ai.t.PARTY, ai.c.STATUS, tpz.effect.SLEEP_II, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.CURAGA)
 
-    mob:addSimpleGambit(ai.t.PARTY, ai.c.NOT_STATUS, tpz.effect.PROTECT, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.PROTECTRA)
-    mob:addSimpleGambit(ai.t.PARTY, ai.c.NOT_STATUS, tpz.effect.SHELL, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.SHELLRA)
+    mob:addSimpleGambit(ai.t.MASTER, ai.c.NOT_STATUS, tpz.effect.PROTECT, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.PROTECTRA)
+    mob:addSimpleGambit(ai.t.MASTER, ai.c.NOT_STATUS, tpz.effect.SHELL, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.SHELLRA)
 
     mob:addSimpleGambit(ai.t.MELEE, ai.c.NOT_STATUS, tpz.effect.HASTE, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.HASTE)
 
@@ -59,9 +59,9 @@ function onMobSpawn(mob)
 end
 
 function onMobDespawn(mob)
-    -- tpz.trust.message(mob, tpz.trust.message_offset.DESPAWN)
+    tpz.trust.message(mob, tpz.trust.message_offset.DESPAWN)
 end
 
 function onMobDeath(mob)
-    -- tpz.trust.message(mob, tpz.trust.message_offset.DEATH)
+    tpz.trust.message(mob, tpz.trust.message_offset.DEATH)
 end

@@ -2,7 +2,7 @@
 -- Area: Rolanberry Fields [S]
 --   NM: Dyinyinga
 ------------------------------
-require("scripts/globals/hunts")
+-- require("scripts/globals/hunts")
 ------------------------------
 
 function onMobDeath(mob, player, isKiller)

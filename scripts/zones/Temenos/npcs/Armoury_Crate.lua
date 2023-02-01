@@ -1204,20 +1204,14 @@ local loot =
                 {itemid = 1875, droprate = 1000},
             },
             {
-                {itemid = 1920, droprate = 659},
-                {itemid = 1924, droprate = 394},
-                {itemid = 1923, droprate = 388},
-                {itemid = 1922, droprate = 404},
+                {itemid = 25663, droprate = 250},
+                {itemid = 25929, droprate = 250},
+                {itemid = 25804, droprate = 250},
+                {itemid = 25862, droprate = 250},
             },
             {
-                {itemid = 1924, droprate = 394},
-                {itemid = 1922, droprate = 402},
-                {itemid = 1920, droprate = 659},
-                {itemid = 1923, droprate = 383},
-            },
-            {
-                {itemid = 1921, droprate = 265},
-                {itemid =    0, droprate = 735},
+                {itemid = 25749, droprate = 100},
+                {itemid =    0, droprate = 900},
             },
         },
     -- central temenos floor 4 side loot

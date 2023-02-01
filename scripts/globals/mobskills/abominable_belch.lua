@@ -9,13 +9,24 @@ require("scripts/globals/status")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    return 0
+    if
+        mob:isNM() and -- NM's replace Vile Belch with Abominable Belch below 50% HP
+        mob:getHPP() <= 50
+    then
+        return 0
+    end
+
+    return 1
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    skill:setMsg(MobStatusEffectMove(mob, target, tpz.effect.PLAGUE, 1, 3, 120))
-    skill:setMsg(MobStatusEffectMove(mob, target, tpz.effect.SILENCE, 1, 0, 120))
-    skill:setMsg(MobStatusEffectMove(mob, target, tpz.effect.PARALYSIS, 25, 0, 120))
+    local numEffects = 3
 
-    return tpz.effect.PLAGUE
+    MobStatusEffectMove(mob, target, tpz.effect.SILENCE, 1, 0, 120)
+    MobStatusEffectMove(mob, target, tpz.effect.PLAGUE, 25, 3, 120)
+    MobStatusEffectMove(mob, target, tpz.effect.PARALYSIS, 25, 0, 120)
+
+    skill:setMsg(tpz.msg.basic.MULTIPLE_ENFEEBLE)
+
+    return numEffects
 end

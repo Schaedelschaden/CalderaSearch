@@ -18,7 +18,7 @@ function onSpellCast(caster, target, spell)
 end
 
 function onMobSpawn(mob)
-    tpz.trust.message(mob, message_page_offset, tpz.trust.message_offset.SPAWN)
+    tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
 
     -- On cooldown
     mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.MAX_HP_BOOST, ai.r.JA, ai.s.SPECIFIC, tpz.ja.MANTRA)
@@ -27,9 +27,9 @@ function onMobSpawn(mob)
 end
 
 function onMobDespawn(mob)
-    tpz.trust.message(mob, message_page_offset, tpz.trust.message_offset.DESPAWN)
+    tpz.trust.message(mob, tpz.trust.message_offset.DESPAWN)
 end
 
 function onMobDeath(mob)
-    tpz.trust.message(mob, message_page_offset, tpz.trust.message_offset.DEATH)
+    tpz.trust.message(mob, tpz.trust.message_offset.DEATH)
 end

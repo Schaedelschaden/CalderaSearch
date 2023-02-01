@@ -7,36 +7,35 @@ require("scripts/globals/status")
 require("scripts/globals/trust")
 -----------------------------------
 --Notes to Self/Bart
-	--Abilities:
-		--Shiko no Mitate
-			--Yagudo Parry
-		--Rinpyotosha
-			--Warcry
-	
-	--Weaponskills
-		--Happobarai
-			--Yagudo Sweep
-				--Reverberation
-				--Impaction
-		--Hane Fubuki
-			--Feather Storm
-				--Transfitpzon
-		--Shibaraku
-			--AoE
-				--Darkness
-				--Gravitation
-		
-	--Special Abilities
-		--Shiko no Mitate
-			--DEF+
-			--Stoneskin
-			--Issekigan
-		--Rinpyotosha
-			--25% ATK+ Warcry 
-				--3 Min Duration
-				--5 Min Recast
+    --Abilities:
+        --Shiko no Mitate
+            --Yagudo Parry
+        --Rinpyotosha
+            --Warcry
+
+    --Weaponskills
+        --Happobarai
+            --Yagudo Sweep
+                --Reverberation
+                --Impaction
+        --Hane Fubuki
+            --Feather Storm
+                --Transfitpzon
+        --Shibaraku
+            --AoE
+                --Darkness
+                --Gravitation
+
+    --Special Abilities
+        --Shiko no Mitate
+            --DEF+
+            --Stoneskin
+            --Issekigan
+        --Rinpyotosha
+            --25% ATK+ Warcry
+                --3 Min Duration
+                --5 Min Recast
 -----------------------------------
-local spell_object = {}
 
 function onMagicCastingCheck(caster, target, spell)
     return tpz.trust.canCast(caster, spell)
@@ -58,47 +57,82 @@ function onMobSpawn(mob)
             tpz.trust.message(mobArg, tpz.trust.message_offset.SPECIAL_MOVE_1)
         end
     end)
-    
+
     mob:addListener("COMBAT_TICK", "GESSHO_CTICK", function(mobArg, target, wsid, tp, action)
-        if (mob:hasStatusEffect(tpz.effect.WARCRY) == false) then
-            mob:useMobAbility(3260)
-            mob:addStatusEffect(tpz.effect.WARCRY, 25, 0, 180)
+        if os.time() > mobArg:getLocalVar("CTICK_DELAY") then
+            local isBusy = false
+            local act    = mobArg:getCurrentAction()
+
+            if
+                act == tpz.act.WEAPONSKILL_START or
+                act == tpz.act.WEAPONSKILL_FINISH or
+                act == tpz.act.MOBABILITY_START or
+                act == tpz.act.MOBABILITY_USING or
+                act == tpz.act.MOBABILITY_FINISH or
+                act == tpz.act.MAGIC_START or
+                act == tpz.act.MAGIC_CASTING or
+                act == tpz.act.MAGIC_START
+            then
+                isBusy = true 
+            end
+
+            if isBusy == false then
+                if not mobArg:hasStatusEffect(tpz.effect.WARCRY) then
+                    mobArg:useMobAbility(3260) --Rinpyotosha
+                end
+
+                local mlvl   = mobArg:getMainLvl()
+                local target = mobArg:getTarget()
+
+                --UTSUSEMI
+                if
+                    not mobArg:hasStatusEffect(tpz.effect.COPY_IMAGE) and
+                    mlvl > 11 and mlvl < 37
+                then
+                    mobArg:castSpell(338, mobArg)
+                elseif
+                    not mobArg:hasStatusEffect(tpz.effect.COPY_IMAGE) and
+                    mlvl > 36
+                then
+                    mobArg:castSpell(339, mobArg)
+                end
+
+                if
+                    not mobArg:hasStatusEffect(tpz.effect.MIGAWARI) and
+                    mlvl > 87
+                then
+                    mobArg:castSpell(510, mobArg)
+                end
+
+                if not mobArg:hasStatusEffect(tpz.effect.DEFENSE_BOOST) then
+                   mobArg:useMobAbility(3258) --Shiko no Mitate
+                end
+            end
+
+            mobArg:setLocalVar("CTICK_DELAY", os.time() + 1)
         end
     end)
-    
-    mob:addListener("TAKE_DAMAGE", "GESSHO_TAKE_DAMAGE", function(mobArg, target, wsid, tp, action)
-        if (mob:hasStatusEffect(tpz.effect.DEFENSE_BOOST) == false) then
-            mob:useMobAbility(3258)
-            mob:addStatusEffect(tpz.effect.DEFENSE_BOOST, 15, 0, 300)
-        end
-    end)
-    
+
+    mob:addMod(tpz.mod.DOUBLE_ATTACK, 25)
+    mob:addMod(tpz.mod.ENMITY, 100)
+    mob:addMod(tpz.mod.PARRY_RATE_BONUS, 25)
 
     -- Shadows are represented by tpz.effect.COPY_IMAGE, but with different icons depending on the tier
     mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.YONIN, ai.r.JA, ai.s.SPECIFIC, tpz.ja.YONIN) --Yonin first to enhance ninja tools and add enmity
-    mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.COPY_IMAGE, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.UTSUSEMI) --will use highest first, then sub in lower tiers
-    
-    mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_HAS_TOP_ENMITY, 0, ai.r.JA, ai.s.SPECIFIC, tpz.ja.PROVOKE) --provoke is third priority after defense
-    --mob:addSimpleGambit(ai.t.PARTY, ai.c.NOT_PT_HAS_TANK, ai.r.JA, ai.s.SPECIFIC, tpz.ja.PROVOKE) --once LSB upgrades are added he will only use provoke if the party doesn't have a tank.
-    
-    --this section is for ninja debuffs, will use these on cooldown 
-    mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.BLINDNESS, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.KURAYAMI, 60)
-    mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.SLOW, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.HOJO, 60)
-	mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.POISON, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.DOKUMORI, 60)
-	mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.PARALYSIS, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.JUBAKU, 60)
+    mob:addSimpleGambit(ai.t.TARGET, ai.c.ALWAYS, 0, ai.r.JA, ai.s.SPECIFIC, tpz.ja.PROVOKE) --provoke is priority
 
-    
-
-    mob:setTrustTPSkillSettings(ai.tp.CLOSER, ai.s.HIGHEST) --currently looks for closers asap.
+    --mob:setTrustTPSkillSettings(ai.tp.CLOSER, ai.s.HIGHEST) --currently looks for closers asap.
     --mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.HIGHEST, 1500) -- this is for after LSB upgrades to hold for closers until 1500 then dump.
 end
 
 function onMobDespawn(mob)
     tpz.trust.message(mob, tpz.trust.message_offset.DESPAWN)
+    mob:removeListener("GESSHO_WEAPONSKILL_USE")
+    mob:removeListener("GESSHO_CTICK")
 end
 
 function onMobDeath(mob)
     tpz.trust.message(mob, tpz.trust.message_offset.DEATH)
+    mob:removeListener("GESSHO_WEAPONSKILL_USE")
+    mob:removeListener("GESSHO_CTICK")
 end
-
-return spell_object

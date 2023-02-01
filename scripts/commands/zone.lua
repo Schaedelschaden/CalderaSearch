@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 cmdprops =
 {
-    permission = 1,
+    permission = 0,
     parameters = "b"
 }
 
@@ -306,7 +306,7 @@ function onTrigger(player, bytes)
 		-- player:PrintToPlayer(string.format("That command cannot be used in this zone. Please exit the area and try again."),tpz.msg.channel.SYSTEM_3)
 		-- return
 	-- else
-		if (player:getGMLevel() > 0) then -- or player:getMentor() > 0) then
+		if (player:getGMLevel() > 0 or player:getName() == "VengeanceAce" or player:getName() == "Acewrap" or player:getName() == "Acebandage") then
 			local x = 0
 			local y = 0
 			local z = 0

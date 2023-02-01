@@ -133,7 +133,7 @@ namespace attackutils
     {
         if (facing(PDefender->loc.p, PAttacker->loc.p, 64) && !PDefender->StatusEffectContainer->HasPreventActionEffect())
         {
-            return(tpzrand::GetRandomNumber(100) < battleutils::GetBlockRate(PAttacker, PDefender));
+            return(tpzrand::GetRandomNumber<float>(100) < battleutils::GetBlockRate(PAttacker, PDefender));
         }
         return false;
     }

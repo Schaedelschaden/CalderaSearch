@@ -14,8 +14,8 @@ function onTrade(player,npc,trade)
 end
 
 function onTrigger(player,npc)
-	
 		player:PrintToPlayer(string.format("Geography : These thrown away abjuration armors might interest you!"),tpz.msg.channel.NS_SAY)
+
 		local stock =
 				{
 					10409,	100000,		-- Iaso Mitra

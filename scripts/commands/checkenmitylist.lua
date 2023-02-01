@@ -5,7 +5,7 @@
 
 cmdprops =
 {
-    permission = 1,
+    permission = 0,
     parameters = "i"
 }
 
@@ -17,30 +17,37 @@ end
 function onTrigger(player, mobId)
     -- validate mobId
     local target
-    if (mobId == nil) then
+
+    if mobId == nil then
         target = player:getCursorTarget()
-        if (target == nil or not target:isMob()) then
+
+        if target == nil or not target:isMob() then
             error(player,"You must target a mob.")
+            return
+        end
+
+        if not target:isEngaged() then
+            error(player,"Your target must be in combat.")
             return
         end
     else
         target = GetMobByID(mobId)
-        if (target == nil) then
+        if target == nil then
             error(player,"Invalid mobID.")
             return
         end
     end
-	
+
 	local enmityList = target:getEnmityList()
-	local targName = {}
+	local targName   = {}
 	local targ
 	local currentCE
 	local currentVE
 
 	for i, v in ipairs(enmityList) do
 		targName[i] = v.entity:getName()
-		
-		if (v.entity:isPC()) then
+
+		if v.entity:isPC() then
 			targ = GetPlayerByName(targName[i])
 		else
 			targ = v.entity

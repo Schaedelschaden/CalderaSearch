@@ -1,5 +1,5 @@
 ---------------------------------------------
---  Syphon Discharge
+--  Siphon Discharge
 --
 --  Family: Xzomit
 --  Type: Breath
@@ -20,10 +20,10 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local dmgmod = MobBreathMove(mob, target, 0.1, 1.25, tpz.magic.ele.WATER, 200)
-    local dmg = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.BREATH, tpz.damageType.WATER, MOBPARAM_IGNORE_SHADOWS)
+    local dmg    = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.BREATH, tpz.damageType.WATER, MOBPARAM_IGNORE_SHADOWS)
 	
 	-- Khalamari Enwater additional effect
-	if (mob:getID() == 16838820) then
+	if mob:getID() == 16838820 then
 		mob:setLocalVar("Khalamari_EnwaterTimer", os.time())
 		mob:setLocalVar("Khalamari_EnblindTimer", 0)
 	end

@@ -32,8 +32,8 @@ function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.SKEWER_SAM)
     GetMobByID(ID.mob.SKEWER_SAM):setRespawnTime(math.random(900, 10800))
 
-    UpdateNMSpawnPoint(ID.mob.SERKET)
-    GetMobByID(ID.mob.SERKET):setRespawnTime(math.random(900, 10800))
+    -- UpdateNMSpawnPoint(ID.mob.SERKET)
+    -- GetMobByID(ID.mob.SERKET):setRespawnTime(math.random(1800, 3600)) -- 30-60 minutes spawn protection on server restart
 
     tpz.treasure.initZone(zone)
 end

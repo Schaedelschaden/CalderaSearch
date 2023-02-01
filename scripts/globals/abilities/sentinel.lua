@@ -9,9 +9,13 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onAbilityCheck(player, target, ability)
-	if (player:getObjType() == tpz.objType.TRUST and player:getName() == "curilla") then
+	if
+        player:getObjType() == tpz.objType.TRUST and
+        player:getName() == "curilla"
+    then
 		ability:setRecast(250)
 	end
+
     return 0,0
 end
 
@@ -22,7 +26,10 @@ function onUseAbility(player, target, ability)
 
     local guardian = player:getMerit(tpz.merit.GUARDIAN)
 	
-	if (player:getObjType() == tpz.objType.TRUST and player:getName() == "curilla") then
+	if
+        player:getObjType() == tpz.objType.TRUST and
+        player:getName() == "curilla"
+    then
 		guardian = 95
 	end
 

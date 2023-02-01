@@ -15,12 +15,15 @@ function error(player)
 end
 
 function onTrigger(player)
-	if (player:getHP() < player:getMaxHP()) then
+	if
+        player:getHP() < player:getMaxHP() and
+        player:getGMLevel() == 0
+    then
 		player:PrintToPlayer(string.format("You must have full HP to use this command!", player))
 		return
 	end
 	
-	if (player:hasStatusEffect(tpz.effect.BUST)) then
+	if player:hasStatusEffect(tpz.effect.BUST) then
 		player:PrintToPlayer(string.format("You must wait for certain status effects to wear off before using that command.", player))
 		return
 	end
@@ -28,7 +31,7 @@ function onTrigger(player)
 	local party = player:getParty()
 	
 	for i, member in pairs(party) do
-		if (member:hasEnmity() and player:getGMLevel() < 1) then
+		if member:hasEnmity() and player:getGMLevel() < 1 then
 			player:PrintToPlayer(string.format("You cannot use that command while a member of your party is in combat.", player))
 			return
 		end

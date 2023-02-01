@@ -14,14 +14,15 @@ require("scripts/globals/weaponskills")
 -----------------------------------
 
 function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
-    local skill = player:getSkillLevel(tpz.skill.CLUB)
-    local damage = skill * 0.11
+    local skill     = player:getSkillLevel(tpz.skill.CLUB)
+    local damage    = skill * 0.11
     local damagemod = damage * fTP(tp, 2.25, 3.50, 4.75)
+
     damagemod = damagemod * WEAPON_SKILL_POWER
-	
+
 	target:addMP(damagemod)
-	
+
 	action:param(target:getID(), damagemod)
-	
+
     return 1, 0, false, damagemod
 end

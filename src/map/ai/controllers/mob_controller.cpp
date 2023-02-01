@@ -154,11 +154,12 @@ void CMobController::TryLink()
         return;
     }
 
-    //handle pet behaviour on the targets behalf (faster than in ai_pet_dummy)
+    // Handle pet behaviour on the targets behalf (faster than in ai_pet_dummy)
     // Avatars defend masters by attacking mobs if the avatar isn't attacking anything currently (bodyguard behaviour)
+    // Caldera adjustment allows SMN avatars/spirits, BST jug pets, and PUP puppets to "link" with their master
     if (PTarget->PPet != nullptr && PTarget->PPet->GetBattleTargetID() == 0)
     {
-        if (PTarget->PPet->objtype == TYPE_PET && ((CPetEntity*)PTarget->PPet)->getPetType() == PETTYPE_AVATAR)
+        if (PTarget->PPet->objtype == TYPE_PET) // && ((CPetEntity*)PTarget->PPet)->getPetType() == PETTYPE_AVATAR)
         {
             petutils::AttackTarget(PTarget, PMob);
         }
@@ -409,38 +410,33 @@ bool CMobController::TryCastSpell()
 
     m_LastMagicTime = m_Tick - std::chrono::milliseconds(tpzrand::GetRandomNumber(PMob->getBigMobMod(MOBMOD_MAGIC_COOL) / 2));
 
-    if (PMob->m_HasSpellScript)
+    // find random spell
+    std::optional<SpellID> chosenSpellId;
+
+    if (m_firstSpell)
     {
-        // skip logic and follow script
-        auto chosenSpellId = luautils::OnMonsterMagicPrepare(PMob, PTarget);
-        if (chosenSpellId)
-        {
-            CastSpell(chosenSpellId.value());
-            return true;
-        }
+        // mobs first spell, should be aggro spell
+        chosenSpellId = PMob->SpellContainer->GetAggroSpell();
+        m_firstSpell  = false;
     }
     else
     {
-        // find random spell
-        std::optional<SpellID> chosenSpellId;
-        if (m_firstSpell)
-        {
-            // mobs first spell, should be aggro spell
-            chosenSpellId = PMob->SpellContainer->GetAggroSpell();
-            m_firstSpell = false;
-        }
-        else
-        {
-            chosenSpellId = PMob->SpellContainer->GetSpell();
-        }
-
-        if (chosenSpellId)
-        {
-            //#TODO: select target based on spell type
-            CastSpell(chosenSpellId.value());
-            return true;
-        }
+        chosenSpellId = PMob->SpellContainer->GetSpell();
     }
+
+    // Try to get an override spell from the script (if available)
+    auto possibleOverriddenSpell = luautils::OnMonsterMagicPrepare(PMob, PTarget);
+    if (possibleOverriddenSpell)
+    {
+        chosenSpellId = possibleOverriddenSpell;
+    }
+
+    if (chosenSpellId)
+    {
+        CastSpell(chosenSpellId.value());
+        return true;
+    }
+
     return false;
 }
 

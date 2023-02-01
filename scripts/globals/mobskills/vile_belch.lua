@@ -9,18 +9,28 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    return 0
+    if
+        mob:isNM() and -- NM's replace this with Abominable Belch below 50% HP
+        mob:getHPP() > 50
+    then
+        return 0
+    elseif not mob:isNM() then
+        return 0
+    end
+
+    return 1
 end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect1 = tpz.effect.SILENCE
     local typeEffect2 = tpz.effect.PLAGUE
+    local numEffects  = 2
     local duration    = math.random(60, 90)
-    local dmgmod      = MobBreathMove(mob, target, 0.25, 3, tpz.magic.ele.EARTH, 500)
-    local dmg         = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.BREATH, tpz.damageType.EARTH, MOBPARAM_IGNORE_SHADOWS)
 
     MobStatusEffectMove(mob, target, typeEffect1, 1, 0, duration)
     MobStatusEffectMove(mob, target, typeEffect2, 10, 0, duration)
 
-    return dmg
+    skill:setMsg(tpz.msg.basic.MULTIPLE_ENFEEBLE)
+
+    return numEffects
 end

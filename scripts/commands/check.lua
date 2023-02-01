@@ -140,9 +140,9 @@ function onTrigger(player, mobId)
 	local SDTWater = targ:getMod(tpz.mod.SDT_WATER)
 	local SDTLight = targ:getMod(tpz.mod.SDT_LIGHT)
 	local SDTDark = targ:getMod(tpz.mod.SDT_DARK)
-	local HasteGear = utils.clamp(targ:getMod(tpz.mod.HASTE_GEAR), 0, 25)
-	local HasteMagic = utils.clamp(targ:getMod(tpz.mod.HASTE_MAGIC), 0, 44)
-	local HasteAbility = utils.clamp(targ:getMod(tpz.mod.HASTE_ABILITY), 0, 25)
+	local HasteGear = utils.clamp(targ:getMod(tpz.mod.HASTE_GEAR), -10000, 2500)
+	local HasteMagic = utils.clamp(targ:getMod(tpz.mod.HASTE_MAGIC), -10000, 4400)
+	local HasteAbility = utils.clamp(targ:getMod(tpz.mod.HASTE_ABILITY), -10000, 2500)
 	local MoveSpd = targ:getMod(tpz.mod.MOVE)
 	local HumanoidKiller = targ:getMod(tpz.mod.HUMANOID_KILLER)
 	local BeastKiller = targ:getMod(tpz.mod.BEAST_KILLER)
@@ -183,7 +183,7 @@ function onTrigger(player, mobId)
 	DEF = DEF + defbonus
 --	printf("check.lua Adjusted DEF: [%i]\n", DEF)
 	
-	local Haste = HasteGear + HasteMagic + HasteAbility
+	local Haste = (HasteGear + HasteMagic + HasteAbility) / 100
 	
 	mainJob = jobs[mainJob]
 	subJob = jobs[subJob]
@@ -193,7 +193,7 @@ function onTrigger(player, mobId)
 	end
 	
     player:PrintToPlayer(string.format("Mob Name: %s  Job: %s/%s ID: %i  Level: %i  HP: %i/%i  MP: %i  TP: %i  Respawn: %i minutes", fixedName, mainJob, subJob, ID, MainLvl, HP, MaxHP, MP, TP, Respawn),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("STR: [%i]  DEX: [%i]  VIT: [%i]  AGI: [%i]  INT: [%i]  MND: [%i]  CHR: [%i]  Regen: [%i]  Haste: [%i%%]  Move Spd: [%i%%]  Speed: [%i]", STR, DEX, VIT, AGI, INT, MND, CHR, Regen, Haste, MoveSpd, targ:speed()),tpz.msg.channel.SYSTEM_3)
+	player:PrintToPlayer(string.format("STR: [%i]  DEX: [%i]  VIT: [%i]  AGI: [%i]  INT: [%i]  MND: [%i]  CHR: [%i]  Regen: [%i]  Haste: [%2.2f%%]  Move Spd: [%i%%]  Speed: [%i]", STR, DEX, VIT, AGI, INT, MND, CHR, Regen, Haste, MoveSpd, targ:speed()),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("ATK: [%i]  DEF: [%i]  MDEF: [%i]  ACC: [%i]  EVA: [%i]  MEVA: [%i]  MACC: [%i]  MATT: [%i]  Store TP: [%i]  Crit Hit EVA: [%i%%]", ATT, DEF, MDEF, ACC, EVA, MEVA, MACC, MATT, StoreTP, CritHitEVA),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("DMG Taken - All: [%i%%]  Physical: [%i%%]  Ranged: [%i%%]  Magic: [%i%%]  Breath: [%i%%]", DT, PDT, RDT, MDT, BDT),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("Absorb - Fire: [%i%%]  Ice: [%i%%]  Wind: [%i%%]  Earth: [%i%%]  Lightning: [%i%%]  Water: [%i%%]  Light: [%i%%]  Dark: [%i%%]", AbsorbFire, AbsorbIce, AbsorbWind, AbsorbEarth, AbsorbThunder, AbsorbWater, AbsorbLight, AbsorbDark),tpz.msg.channel.SYSTEM_3)

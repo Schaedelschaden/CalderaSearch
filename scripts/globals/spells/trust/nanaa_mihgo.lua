@@ -19,11 +19,11 @@ function onSpellCast(caster, target, spell)
 end
 
 function onMobSpawn(mob)
-	if (mob:getMainLvl() > 105) then
+	if mob:getMainLvl() > 105 then
 		mob:addMod(tpz.mod.TREASURE_HUNTER, 1)
 	end
 
-    tpz.trust.teamworkMessage(mob, message_page_offset, {
+    tpz.trust.teamworkMessage(mob, {
         [tpz.magic.spell.ROMAA_MIHGO] = tpz.trust.message_offset.TEAMWORK_1,
     })
 
@@ -50,9 +50,9 @@ function onMobFight(mob, target)
 end
 
 function onMobDespawn(mob)
-    tpz.trust.message(mob, message_page_offset, tpz.trust.message_offset.DESPAWN)
+    tpz.trust.message(mob, tpz.trust.message_offset.DESPAWN)
 end
 
 function onMobDeath(mob)
-    tpz.trust.message(mob, message_page_offset, tpz.trust.message_offset.DEATH)
+    tpz.trust.message(mob, tpz.trust.message_offset.DEATH)
 end

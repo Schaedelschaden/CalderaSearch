@@ -1,5 +1,5 @@
 ---------------------------------------------
--- Vermilion Wind
+-- Vermillion Wind
 --
 -- Description: Destructive winds deal Wind damage to players in range. Additional effect: Lowers all 7 attributes
 -- Type: Magical
@@ -23,11 +23,10 @@ function onMobWeaponSkill(target, mob, skill)
 	local typeEffect5 = tpz.effect.MND_DOWN
 	local typeEffect6 = tpz.effect.INT_DOWN
 	local typeEffect7 = tpz.effect.CHR_DOWN
-	
 
 	local dmgmod = 2.4
-    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*3.5, tpz.magic.ele.WIND, dmgmod, TP_NO_EFFECT)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.WIND, MOBPARAM_WIPE_SHADOWS)
+    local info   = MobMagicalMove(mob, target, skill, mob:getWeaponDmg() * 3.5, tpz.magic.ele.WIND, dmgmod, TP_NO_EFFECT)
+    local dmg    = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.WIND, MOBPARAM_WIPE_SHADOWS)
 	
 	MobStatusEffectMove(mob, target, typeEffect1, 110, 0, 60)
 	MobStatusEffectMove(mob, target, typeEffect2, 110, 0, 60) 

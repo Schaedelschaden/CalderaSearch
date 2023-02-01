@@ -50,8 +50,8 @@ function onTrigger(player, hp, target)
 		else
 			player:PrintToPlayer(string.format("%s is currently dead.", targ:getName()))
 		end
-	elseif (targ:isPC() and hp == 0) then
-		player:PrintToPlayer(string.format("Do they really need to die?"))
+	-- elseif (targ:isPC() and hp == 0) then
+		-- player:PrintToPlayer(string.format("Do they really need to die?"))
 	else
 		-- validate amount
 		if hp == nil or tonumber(hp) == nil then

@@ -104,7 +104,7 @@ tpz.besieged.badges = { 780, 783, 784, 794, 795, 825, 826, 827, 894, 900, 909 }
 tpz.besieged.getMercenaryRank = function(player)
     local rank = 11
 
-    -- Disabled due to unavailability of assault
+    -- -- Disabled due to unavailability of assault
     -- for _, v in ipairs(tpz.besieged.badges) do
         -- if player:hasKeyItem(v) then
             -- rank = rank + 1
@@ -411,6 +411,17 @@ end
 --    NPC FUNCTIONS
 -----------------------------------------------------------------
 
+tpz.besieged.onSpawnCaldera = function(npc)
+    -- Sets up a periodic trigger that checks if the NPC's mobs are still actively engaged
+    -- Mobs should despawn and NPC should reset when there are no Players with an active Besieged "instance"
+
+    -- triggerID is an ID unique to the NPC
+    -- period is the time in vanadiel minutes that separates two triggers of the event
+    -- minute offset is the time in vanadiel minutes after the se epoch that the trigger period should synchronize to
+    -- npc:addPeriodicTrigger(triggerID, period, minuteOffset)
+    npc:addPeriodicTrigger(0, 25, 0) -- Checks every 60s
+end
+
 tpz.besieged.onTradeCaldera = function(player, npc, trade)
     local npcName
     local gmLevel       = player:getGMLevel()
@@ -450,7 +461,8 @@ tpz.besieged.onTradeCaldera = function(player, npc, trade)
     -- Check if the player has cleared the prerequisites
     elseif
         player:getCharVar("KillCounter_Kirin") > 0 and
-        player:getCharVar("KillCounter_JailOfLove") > 0
+        player:getCharVar("KillCounter_JailOfLove") > 0 or
+        npc:getLocalVar("GM_Override") > 0
     then
         -- Check that the trade contained the appropriate amount of gil
 		if
@@ -465,6 +477,11 @@ tpz.besieged.onTradeCaldera = function(player, npc, trade)
 			npc:setLocalVar("Besieged_Active", 1)
             npc:setLocalVar("wave", 1)
             npc:setLocalVar("size", 1)
+
+            -- Set up timer to despawn all mobs and reset Besieged
+            -- npc:timer(eventDuration * 1000, function(npcArg)
+                
+            -- end)
 
             -- Get all alliance members in the zone
             for i, v in ipairs(allianceList) do
@@ -577,7 +594,7 @@ tpz.besieged.onTriggerCaldera = function(player, npc)
         -- Completes the Besieged "instance" if all monsters have been defeated
         elseif npc:getLocalVar("wave") == #waves + 1 then
             local allianceList = player:getAlliance()
-            local memberName = {}
+            local memberName   = {}
             local member
 
             -- Reset all variables associated with the "instance"
@@ -604,6 +621,49 @@ tpz.besieged.onTriggerCaldera = function(player, npc)
 	else
 		player:PrintToPlayer(string.format(npcTriggerMessages[3], npcName, besiegedName[effectPower], gilCost),tpz.msg.channel.NS_SAY)
 	end
+end
+
+tpz.besieged.onTimeTriggerCaldera = function(npc, triggerID)
+    if
+        triggerID == 0 and
+        npc:getLocalVar("Besieged_Active") == 1
+    then
+        local instanceID    = 0
+        local playersInZone = npc:getZone():getPlayers()
+        local despawnMobs   = true
+
+        -- Obtain the "instance" ID from the NPC
+        for i = 1, #startingNPCs do
+            if npc:getID() == startingNPCs[i] then
+                instanceID = i
+            end
+        end
+
+        -- Check all players in the zone for the "instanced" Besieged effect
+        -- If even one player has the "instance" status in the zone it will not despawn the mobs
+        for _, player in pairs(playersInZone) do
+            if
+                player:hasStatusEffect(tpz.effect.BESIEGED) and
+                player:getStatusEffect(tpz.effect.BESIEGED):getPower() == instanceID
+            then
+                despawnMobs = false
+            end
+        end
+
+        if despawnMobs == true then
+            printf("besieged.lua onTimeTriggerCaldera  %s INACTIVE, DESPAWNING MOBS, RESETTING NPC", npc:getName())
+            npc:setLocalVar("Besieged_End_Time", 0)
+            npc:setLocalVar("Besieged_Active", 0)
+            npc:setLocalVar("wave", 0)
+            npc:setLocalVar("Besieged_Wave_Alive", 0)
+
+            for i = 1, #besiegedWaves[instanceID] do
+                DespawnMob(besiegedWaves[instanceID][1][i])
+                DespawnMob(besiegedWaves[instanceID][2][i])
+                DespawnMob(besiegedWaves[instanceID][3][i])
+            end
+        end
+    end
 end
 
 -----------------------------------------------------------------
@@ -708,11 +768,14 @@ tpz.besieged.onMobDeathCaldera = function(mob, player, isKiller, npcID)
             mob:getID() == besiegedWaves[4][3][1] or -- Illuyankas
             mob:getID() == besiegedWaves[5][5][1]    -- General Rughadjeen
         then
-            if startNPC:getLocalVar("GM_Override") == 0 then
+            if
+                startNPC:getLocalVar("GM_Override") == 0 and
+                player ~= nil
+            then
                 -- Track kill counters
-                local mobName = mob:getName()
+                local mobName      = mob:getName()
                 local fixedMobName = string.gsub(mobName, "_", " ")
-                local shortName = mobName:sub(1, 14)
+                local shortName    = mobName:sub(1, 14)
                 -- printf("besieged.lua onMobDeathCaldera  SHORT NAME: [%s]", shortName)
                 local KillCounter = player:getCharVar("KillCounter_BSG_"..shortName)
 

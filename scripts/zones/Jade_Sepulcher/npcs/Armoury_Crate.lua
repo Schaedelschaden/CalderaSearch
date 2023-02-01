@@ -65,27 +65,27 @@ local loot =
     -- ISNM: Shadows of the Mind
     [1153] =
     {
-        {
-            {itemid =  9270, droprate = 1000}, -- Abdhaljs Metal
-        },
-        {
-            {itemid =  9270, droprate = 1000}, -- Abdhaljs Metal
-        },
-        {
-            {itemid =  9270, droprate = 1000}, -- Abdhaljs Metal
-        },
-        {
-            {itemid = 26212, droprate =  125}, -- Mummu Ring
-            {itemid = 26213, droprate =  125}, -- Mallquis Ring
-            {itemid = 26208, droprate =  125}, -- Jhakri Ring
-            {itemid =     0, droprate =  625}, -- Nothing
-        },
-        {
-            {itemid =   790, droprate =  150}, -- Abdhaljs Nugget
-            {itemid =   793, droprate =  150}, -- Abdhaljs Gem
-            {itemid =   811, droprate =  150}, -- Abdhaljs Anima
-            {itemid =     0, droprate =  550}, -- Nothing
-        },
+        -- {
+            -- {itemid =  9270, droprate = 1000}, -- Abdhaljs Metal
+        -- },
+        -- {
+            -- {itemid =  9270, droprate = 1000}, -- Abdhaljs Metal
+        -- },
+        -- {
+            -- {itemid =  9270, droprate = 1000}, -- Abdhaljs Metal
+        -- },
+        -- {
+            -- {itemid = 26212, droprate =  125}, -- Mummu Ring
+            -- {itemid = 26213, droprate =  125}, -- Mallquis Ring
+            -- {itemid = 26208, droprate =  125}, -- Jhakri Ring
+            -- {itemid =     0, droprate =  625}, -- Nothing
+        -- },
+        -- {
+            -- {itemid =   790, droprate =  150}, -- Abdhaljs Nugget
+            -- {itemid =   793, droprate =  150}, -- Abdhaljs Gem
+            -- {itemid =   811, droprate =  150}, -- Abdhaljs Anima
+            -- {itemid =     0, droprate =  550}, -- Nothing
+        -- },
         {
             {itemid =     0, droprate =  300}, -- nothing
             {itemid =  3684, droprate =   50}, -- Princess Board

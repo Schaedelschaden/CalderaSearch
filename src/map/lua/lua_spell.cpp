@@ -85,7 +85,7 @@ inline int32 CLuaSpell::setFlag(lua_State *L)
     TPZ_DEBUG_BREAK_IF(m_PLuaSpell == nullptr);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
 
-    m_PLuaSpell->setFlag((uint16)lua_tointeger(L, -1));
+    m_PLuaSpell->setFlag((uint8)lua_tointeger(L, -1));
     return 0;
 }
 

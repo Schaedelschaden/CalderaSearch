@@ -23,8 +23,8 @@ function onMobSpawn(mob) -- When mob spawns (either forced or time)
     -- mob:addMod(tpz.mod.BINDRES, 30) -- Resistance to Bind
     -- mob:addMod(tpz.mod.SLOWRES, 30) -- Resistance to Slow
     -- mob:addMod(tpz.mod.SILENCERES, 100) -- Resistance to Silence
-    -- mob:addMod(tpz.mod.SLEEPRES, 100) -- Resistance to Sleep
-    -- mob:addMod(tpz.mod.LULLABYRES, 100) -- Resistance to Lullaby
+    mob:addMod(tpz.mod.SLEEPRES, 100) -- Resistance to Sleep
+    mob:addMod(tpz.mod.LULLABYRES, 100) -- Resistance to Lullaby
     -- mob:addMod(tpz.mod.PETRIFYRES, 100) -- Resistance to Pertrify
     -- mob:addMod(tpz.mod.POISONRES, 30) -- Resistance to Poison
 	-- mob:addMod(tpz.mod.ATT, 500) -- Attack Stat (Compare to DEF)

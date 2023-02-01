@@ -460,34 +460,34 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     end
 
     local calcParams = {}
-    calcParams.attackInfo = attack
-    calcParams.weaponDamage = getMeleeDmg(attacker, attack.weaponType, wsParams.kick)
-    calcParams.bonusJumpfSTR = wsParams.bonusJumpfSTR or 0
-    calcParams.fSTR = fSTR(attacker, target) * (1 + calcParams.bonusJumpfSTR)
-    calcParams.cratio = cratio
-    calcParams.ccritratio = ccritratio
-    calcParams.accStat = attacker:getACC()
-    calcParams.melee = true
-    calcParams.mustMiss = target:hasStatusEffect(tpz.effect.PERFECT_DODGE) or
-                          (target:hasStatusEffect(tpz.effect.TOO_HIGH) and not wsParams.hitsHigh)
-    calcParams.sneakApplicable = attacker:hasStatusEffect(tpz.effect.SNEAK_ATTACK) and
-                                 (attacker:isBehind(target) or attacker:hasStatusEffect(tpz.effect.HIDE) or
-                                 target:hasStatusEffect(tpz.effect.DOUBT))
-    calcParams.taChar = taChar
-    calcParams.trickApplicable = calcParams.taChar ~= nil
-    calcParams.assassinApplicable = calcParams.trickApplicable and attacker:hasTrait(68)
-    calcParams.guaranteedHit = calcParams.sneakApplicable or calcParams.trickApplicable
+    calcParams.attackInfo              = attack
+    calcParams.weaponDamage            = getMeleeDmg(attacker, attack.weaponType, wsParams.kick)
+    calcParams.bonusJumpfSTR           = wsParams.bonusJumpfSTR or 0
+    calcParams.fSTR                    = fSTR(attacker, target) * (1 + calcParams.bonusJumpfSTR)
+    calcParams.cratio                  = cratio
+    calcParams.ccritratio              = ccritratio
+    calcParams.accStat                 = attacker:getACC()
+    calcParams.melee                   = true
+    calcParams.mustMiss                = target:hasStatusEffect(tpz.effect.PERFECT_DODGE) or
+                                         (target:hasStatusEffect(tpz.effect.TOO_HIGH) and not wsParams.hitsHigh)
+    calcParams.sneakApplicable         = attacker:hasStatusEffect(tpz.effect.SNEAK_ATTACK) and
+                                         (attacker:isBehind(target) or attacker:hasStatusEffect(tpz.effect.HIDE) or
+                                          target:hasStatusEffect(tpz.effect.DOUBT))
+    calcParams.taChar                  = taChar
+    calcParams.trickApplicable         = calcParams.taChar ~= nil
+    calcParams.assassinApplicable      = calcParams.trickApplicable and attacker:hasTrait(68)
+    calcParams.guaranteedHit           = calcParams.sneakApplicable or calcParams.trickApplicable
     calcParams.mightyStrikesApplicable = attacker:hasStatusEffect(tpz.effect.MIGHTY_STRIKES)
-    calcParams.forcedFirstCrit = calcParams.sneakApplicable or calcParams.assassinApplicable
-    calcParams.extraOffhandHit = (attacker:isDualWielding() and hasShield == false) or attack.weaponType == tpz.skill.HAND_TO_HAND
-    calcParams.hybridHit = wsParams.hybridWS
-    calcParams.flourishEffect = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
-    calcParams.fencerBonus = fencerBonus(attacker)
-    calcParams.bonusTP = wsParams.bonusTP or 0 -- Only applied from DRG Jumps
-    calcParams.bonusfTP = gorgetBeltFTP or 0
-    calcParams.bonusAcc = (gorgetBeltAcc or 0) + attacker:getMod(tpz.mod.WSACC)
-    calcParams.bonusWSmods = wsParams.bonusWSmods or 0
-    calcParams.hitRate = attacker:getHitRate(target, 0, calcParams.bonusAcc)
+    calcParams.forcedFirstCrit         = calcParams.sneakApplicable or calcParams.assassinApplicable
+    calcParams.extraOffhandHit         = (attacker:isDualWielding() and hasShield == false) or attack.weaponType == tpz.skill.HAND_TO_HAND
+    calcParams.hybridHit               = wsParams.hybridWS
+    calcParams.flourishEffect          = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
+    calcParams.fencerBonus             = fencerBonus(attacker)
+    calcParams.bonusTP                 = wsParams.bonusTP or 0 -- Only applied from DRG Jumps
+    calcParams.bonusfTP                = gorgetBeltFTP or 0
+    calcParams.bonusAcc                = (gorgetBeltAcc or 0) + attacker:getMod(tpz.mod.WSACC)
+    calcParams.bonusWSmods             = wsParams.bonusWSmods or 0
+    calcParams.hitRate                 = attacker:getHitRate(target, 0, calcParams.bonusAcc)
 
     -- Send our wsParams off to calculate our raw WS damage, hits landed, and shadows absorbed
     calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)

@@ -69,12 +69,8 @@ function applyRoll(caster, target, ability, action, total)
         effectpower = effectpower + 8
     end
 	
-	printf("maguss_roll.lua applyRoll EFFECT POWER: [%i]  EFFECT MOD: [%i]\n", effectpower, effectMod)
-	
 	-- Apply 'Phantom Roll +' gear
 	effectpower = (effectpower + effectMod) * CrookedCardsMod
-	
-	printf("maguss_roll.lua applyRoll MODIFIED EFFECT POWER: [%i]\n", effectpower)
 	
 	-- Check if COR Main or Sub
     if (caster:getMainJob() == tpz.job.COR and caster:getMainLvl() < target:getMainLvl()) then

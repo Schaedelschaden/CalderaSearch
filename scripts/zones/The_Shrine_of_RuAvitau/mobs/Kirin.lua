@@ -37,16 +37,16 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.MATT, 100)
     mob:addMod(tpz.mod.REFRESH, 25)
     mob:setLocalVar("numAdds", 90) -- Based off Kirin's HPP now. Spawns first "pet" at 90% HP
-    mob:setLocalVar("2hrHPP", math.random(40, 55))
+    mob:setLocalVar("2hrHPP", math.random(45, 55))
 
     mob:setHP(999999999)
 end
 
 function onMobFight(mob, target)
     local isBusy = false
-	local act    = mob:getCurrentAction()
+    local act    = mob:getCurrentAction()
 
-	if
+    if
         act == tpz.act.MOBABILITY_START or
         act == tpz.act.MOBABILITY_USING or
         act == tpz.act.MOBABILITY_FINISH or

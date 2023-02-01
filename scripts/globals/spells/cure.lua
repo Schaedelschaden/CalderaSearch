@@ -89,6 +89,8 @@ function onSpellCast(caster, target, spell)
 
         target:wakeUp()
         caster:updateEnmityFromCure(target, final)
+
+        -- updateNotorietyCure(caster, target)
     else
         -- no effect if player casted on mob
 

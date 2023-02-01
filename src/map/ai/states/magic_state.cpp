@@ -305,7 +305,7 @@ void CMagicState::ApplyEnmity(CBattleEntity* PTarget, int ce, int ve)
     {
         m_PEntity->addModifier(Mod::ENMITY, -m_PEntity->StatusEffectContainer->GetStatusEffect(EFFECT_EQUANIMITY)->GetPower());
     }
-    if (m_PSpell->isNa())
+    if (m_PSpell && m_PSpell->isNa())
     {
         m_PEntity->addModifier(Mod::ENMITY, -(m_PEntity->getMod(Mod::DIVINE_BENISON) >> 1)); // Half of divine benison mod amount = -enmity
     }

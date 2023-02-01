@@ -228,7 +228,7 @@ function unionRepresentativeTriggerFinish(player, option, target, guildID, curre
     local rank = player:getSkillRank(guildID + 48)
     local category = bit.band(bit.rshift(option, 2), 3)
     local text = zones[player:getZoneID()].text
-	printf("crafting.lua unionRepresentativeTriggerFinish  GUILD ID: [%i]  OPTION: [%i]  CATEGORY: [%i]", guildID, option, category)
+	-- printf("crafting.lua unionRepresentativeTriggerFinish  GUILD ID: [%i]  OPTION: [%i]  CATEGORY: [%i]", guildID, option, category)
 
     if (bit.tobit(option) == -1 and rank >= 3) then
         local oldGuild = player:getCharVar('[GUILD]currentGuild') - 1

@@ -16,7 +16,7 @@ function onAbilityCheck(player,target,ability)
 	if (player:hasStatusEffect(tpz.effect.FLY_HIGH)) then
 		ability:setRecast(10)
 	end
-	
+
     return 0,0
 end
 

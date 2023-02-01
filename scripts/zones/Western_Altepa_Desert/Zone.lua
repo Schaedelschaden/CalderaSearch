@@ -18,7 +18,7 @@ end
 
 function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.KING_VINEGARROON)
-    GetMobByID(ID.mob.KING_VINEGARROON):setRespawnTime(math.random(900, 10800))
+    -- GetMobByID(ID.mob.KING_VINEGARROON):setRespawnTime(math.random(1800, 3600)) -- 30-60 minutes spawn protection on server restart
 
     tpz.bmt.updatePeddlestox(tpz.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
 end
@@ -58,11 +58,11 @@ function onEventFinish(player, csid, option)
 end
 
 function onZoneWeatherChange(weather)
-    local KV = GetMobByID(ID.mob.KING_VINEGARROON)
+    -- local KV = GetMobByID(ID.mob.KING_VINEGARROON)
 
-    if KV:getCurrentAction() == tpz.act.DESPAWN and (weather == tpz.weather.DUST_STORM or weather == tpz.weather.SAND_STORM) then
-        KV:spawn()
-    elseif KV:getCurrentAction() == tpz.act.ROAMING and weather ~= tpz.weather.DUST_STORM and weather ~= tpz.weather.SAND_STORM then
-        DespawnMob(ID.mob.KING_VINEGARROON)
-    end
+    -- if KV:getCurrentAction() == tpz.act.DESPAWN and (weather == tpz.weather.DUST_STORM or weather == tpz.weather.SAND_STORM) then
+        -- KV:spawn()
+    -- elseif KV:getCurrentAction() == tpz.act.ROAMING and weather ~= tpz.weather.DUST_STORM and weather ~= tpz.weather.SAND_STORM then
+        -- DespawnMob(ID.mob.KING_VINEGARROON)
+    -- end
 end

@@ -288,6 +288,19 @@ function getCureAsNukeFinal(caster, spell, power, divisor, constant, basepower)
     return getCureFinal(caster, spell, power, divisor, constant, basepower)
 end
 
+function updateNotorietyCure(caster, target)
+    -- Checks the spell target's notoriety list and adds enmity to all mobs aggro'd on the target
+    if caster:isPC() then
+        local targetNotoriety = target:getNotorietyList()
+
+        for i = 1, #targetNotoriety do
+            local combatTarget = GetMobByID(targetNotoriety[i]:getID())
+
+            combatTarget:addEnmity(caster, 1, 1)
+        end
+    end
+end
+
 function isValidHealTarget(caster, target)
     -- Curse II prevents healing
     if not (target:hasStatusEffect(20)) then
@@ -393,8 +406,12 @@ function applyResistanceEffect(caster, target, spell, params)
 
     local effectResistance = getEffectResistance(target, effect)
 
-    if (effect ~= nil) then
+    if effect ~= nil then
         percentBonus = percentBonus - effectResistance
+        
+        if caster:getLocalVar("AuditMagic") == 1 then
+            caster:PrintToPlayer(string.format("EFFECT: [%i]  EFFECT RESISTANCE: [%i]", effect, effectResistance),tpz.msg.channel.SYSTEM_3)
+        end
     end
 
     local p = getMagicHitRate(caster, target, skill, element, percentBonus, magicaccbonus)
@@ -425,17 +442,17 @@ function applyResistanceEffect(caster, target, spell, params)
         addImmunity = 3
     end
 
-    if (target:isMob() and skill == tpz.skill.ENFEEBLING_MAGIC and magicResist >= 0.5) then
+    if target:isMob() and skill == tpz.skill.ENFEEBLING_MAGIC and magicResist >= 0.5 then
         for i = 1, #enfeeblingEffects do
-            if (i >= 1 and i <= 9 and effect == enfeeblingEffects[i]) then
-                if (target:getMod(immunities[i]) > 100 - addImmunity) then
+            if i >= 1 and i <= 9 and effect == enfeeblingEffects[i] then
+                if target:getMod(immunities[i]) > 100 - addImmunity then
                     addImmunity = 100 - target:getMod(immunities[i])
                 end
 
                 target:addMod(immunities[i], addImmunity)
                 -- printf("magic.lua applyResistanceEffect ENFEEBLING SPELL LANDED, INCREASING IMMUNITY  CURRENT: [%i]", target:getMod(immunities[i]))
-            elseif (i >= 10 and i <= 11 and effect == enfeeblingEffects[i]) then
-                if (target:getMod(immunities[10]) > 100 - addImmunity) then
+            elseif i >= 10 and i <= 11 and effect == enfeeblingEffects[i] then
+                if target:getMod(immunities[10]) > 100 - addImmunity then
                     addImmunity = 100 - target:getMod(immunities[10])
                 end
 
@@ -443,17 +460,17 @@ function applyResistanceEffect(caster, target, spell, params)
                 -- printf("magic.lua applyResistanceEffect ENFEEBLING SPELL LANDED, INCREASING IMMUNITY  CURRENT: [%i]", target:getMod(immunities[10]))
             end
         end
-    elseif (target:isMob() and skill == tpz.skill.BLUE_MAGIC and magicResist >= resistCap) then
+    elseif target:isMob() and skill == tpz.skill.BLUE_MAGIC and magicResist >= resistCap then
         for i = 1, #enfeeblingEffects do
-            if (i >= 1 and i <= 9 and effect == enfeeblingEffects[i]) then
-                if (target:getMod(immunities[i]) > 100 - addImmunity) then
+            if i >= 1 and i <= 9 and effect == enfeeblingEffects[i] then
+                if target:getMod(immunities[i]) > 100 - addImmunity then
                     addImmunity = 100 - target:getMod(immunities[i])
                 end
 
                 target:addMod(immunities[i], addImmunity)
                 -- printf("magic.lua applyResistanceEffect BLUE MAGIC SPELL LANDED, INCREASING IMMUNITY  CURRENT: [%i]", target:getMod(immunities[i]))
-            elseif (i >= 10 and i <= 11 and effect == enfeeblingEffects[i]) then
-                if (target:getMod(immunities[10]) > 100 - addImmunity) then
+            elseif i >= 10 and i <= 11 and effect == enfeeblingEffects[i] then
+                if target:getMod(immunities[10]) > 100 - addImmunity then
                     addImmunity = 100 - target:getMod(immunities[10])
                 end
 
@@ -461,15 +478,15 @@ function applyResistanceEffect(caster, target, spell, params)
                 -- printf("magic.lua applyResistanceEffect BLUE MAGIC SPELL LANDED, INCREASING IMMUNITY  CURRENT: [%i]", target:getMod(immunities[10]))
             end
         end
-    elseif (target:isMob() and skill == tpz.skill.SKILL_SINGING or skill == tpz.skill.SKILL_STRING_INSTRUMENT or skill == tpz.skill.SKILL_WIND_INSTRUMENT and magicResist >= 0.5) then
-        if (effect == tpz.effect.LULLABY) then
-            if (target:getMod(tpz.mod.IMMUNITY_LULLABY) > 70) then
+    elseif target:isMob() and skill == tpz.skill.SKILL_SINGING or skill == tpz.skill.SKILL_STRING_INSTRUMENT or skill == tpz.skill.SKILL_WIND_INSTRUMENT and magicResist >= 0.5 then
+        if effect == tpz.effect.LULLABY then
+            if target:getMod(tpz.mod.IMMUNITY_LULLABY) > 70 then
                 addImmunity = 100 - target:getMod(tpz.mod.IMMUNITY_LULLABY)
             end
 
             target:addMod(tpz.mod.IMMUNITY_LULLABY, addImmunity)
-        elseif (effect == tpz.effect.ELEGY) then
-            if (target:getMod(tpz.mod.IMMUNITY_SLOW) > 70) then
+        elseif effect == tpz.effect.ELEGY then
+            if target:getMod(tpz.mod.IMMUNITY_SLOW) > 70 then
                 addImmunity = 100 - target:getMod(tpz.mod.IMMUNITY_SLOW)
             end
 
@@ -548,7 +565,7 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
     if (skillType ~= 0) then
         -- Reduce MACC for jobs without Enfeebling Magic Skill
         if ((mainJob ~= tpz.job.BLM and mainJob ~= tpz.job.DRK and mainJob ~= tpz.job.GEO and
-             mainJob ~= tpz.job.RDM and mainJob ~= tpz.job.SCH and mainJob ~= tpz.job.WHM) and
+             mainJob ~= tpz.job.RDM and mainJob ~= tpz.job.SCH and mainJob ~= tpz.job.WHM and mainJob ~= tpz.job.BRD) and
              skillType == tpz.skill.ENFEEBLING_MAGIC and not caster:isPet()) then
             -- if (caster:getName() == "Khalum") then
                 -- printf("magic.lua getMagicHitRate  2  MACC: [%i]  =  MACC: [%i] * SKILL LVL: [%i]", magicacc * (caster:getSkillLevel(skillType) / 414), magicacc, caster:getSkillLevel(skillType) / 414)
@@ -719,7 +736,7 @@ function getMagicDamageResist(caster, magicHitRate)
     local resvar = math.random()
 
     if (caster:getLocalVar("AuditMagic") == 1) then
-        caster:PrintToPlayer(string.format("CASTER:[%s]  HIT RATE: [%1.2f]  RANDOM: [%1.2f]  HALF: [%1.4f]  QUARTER: [%1.4f]  EIGHTH: [%1.4f]", caster:getName(), p, resvar, half, quarter, eighth),tpz.msg.channel.SYSTEM_3)
+        caster:PrintToPlayer(string.format("CASTER: [%s]  HIT RATE: [%1.2f]  RANDOM: [%1.2f]  HALF: [%1.4f]  QUARTER: [%1.4f]  EIGHTH: [%1.4f]", caster:getName(), p, resvar, half, quarter, eighth),tpz.msg.channel.SYSTEM_3)
     end
 
     if (resvar < half) then
@@ -846,7 +863,7 @@ end
 -- Returns the amount of resistance the
 -- target has to the given effect (stun, sleep, etc..)
 function getEffectResistance(target, effect)
-    -- if (target:getName() == "Khalum") then
+    -- if target:getLocalVar("AuditMagic") == 1 then
         -- printf("magic.lua getEffectResistance EFFECT: [%s]", effect)
     -- end
 
@@ -962,7 +979,8 @@ function getEffectResistance(target, effect)
     local statusAllRes   = target:getMod(tpz.mod.ALLSTATUSRES)
 
     if modRes ~= 0 then
-        -- if target:getName() == "Khalum" then
+        -- if target:getLocalVar("AuditMagic") == 1 then
+            -- printf("magic.lua getEffectResistance RESIST: [%i]  IMMUNITY: [%i]", modRes, modImmunity)
             -- printf("magic.lua getEffectResistance EFFECT RESISTANCE: [%i]  STATUS RES: [%i]  IMMUNITY: [%i]", statusResist, statusAllRes, statusImmunity)
         -- end
 
@@ -1852,11 +1870,13 @@ function getHelixDuration(caster)
     local casterLevel = caster:getMainLvl()
     local duration = 30 --fallthrough
 
-    if (casterLevel <= 39) then
+    if casterLevel <= 39 then
         duration = 30
-    elseif (casterLevel <= 59) then
+    elseif casterLevel <= 59 then
         duration = 60
-    elseif (casterLevel <= 99) then
+    elseif casterLevel <= 99 then
+        duration = 90
+    elseif casterLevel >= 100 then
         duration = 90
     end
 
@@ -1943,7 +1963,7 @@ function canOverwrite(target, effect, power, mod)
 end
 
 function doElementalNuke(caster, spell, target, spellParams)
---  printf("magic.lua doElementalNuke CASTER: [%s]  SPELL: [%i]  TARGET: [%s]", caster:getName(), spell:getID(), target:getName())
+ -- printf("magic.lua doElementalNuke CASTER: [%s]  SPELL: [%i]  TARGET: [%s]", caster:getName(), spell:getID(), target:getName())
     local DMG = 0
     local dINT = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     local V = 0
@@ -2060,7 +2080,7 @@ function doElementalNuke(caster, spell, target, spellParams)
         -- printf("magic.lua doElementalNuke > finalMagicAdjustments  CASTER: [%s]  DMG: [%i]", caster:getName(), DMG)
     -- end
 
-    if (DMG < 0) then
+    if DMG < 0 then
         spell:setMsg(tpz.msg.basic.MAGIC_RECOVERS_HP)
     end
 
@@ -2129,65 +2149,144 @@ function doNinjutsuNuke(caster, target, spell, params)
 end
 
 function doNuke(caster, target, spell, params)
+    local auditRawDmg       = 0
+    local auditResist       = 0
+    local auditBaseDmg      = 0
+    local auditNinDmg       = 0
+    local auditFutaeBonus   = 0
+    local auditFutaeDmg     = 0
+    local auditElementBonus = 0
+    local auditFinalDmg     = 0
+
     local skill = spell:getSkillType()
 
     --calculate raw damage
     local dmg = calculateMagicDamage(caster, target, spell, params)
+    -- Audit value
+    auditRawDmg = dmg
 
     --get resist multiplier (1x if no resist)
     local resist = applyResistance(caster, target, spell, params)
+    -- Audit value
+    auditResist = resist
 
     --get the resisted damage
-    dmg = dmg*resist
+    dmg = dmg * resist
+    -- Audit value
+    auditBaseDmg = dmg
 
-    if (skill == tpz.skill.NINJUTSU) then
-        if (caster:getMainJob() == tpz.job.NIN) then -- NIN main gets a bonus to their ninjutsu nukes
+    if caster:getLocalVar("AuditMagic") == 1 then
+        caster:PrintToPlayer(string.format("BASE DAMAGE: [%i] = RAW DAMAGE: [%i] * RESIST: [%1.4f]", auditBaseDmg, auditRawDmg, auditResist),tpz.msg.channel.SYSTEM_3)        
+    end
+
+    if skill == tpz.skill.NINJUTSU then
+        if caster:getMainJob() == tpz.job.NIN then -- NIN main gets a bonus to their ninjutsu nukes
             local ninSkillBonus = 100
-            if (spell:getID() % 3 == 2) then -- ichi nuke spell ids are 320, 323, 326, 329, 332, and 335
-                ninSkillBonus = 100 + math.floor((caster:getSkillLevel(tpz.skill.NINJUTSU) - 50)/2) -- getSkillLevel includes bonuses from merits and modifiers (ie. gear)
-            elseif (spell:getID() % 3 == 0) then -- ni nuke spell ids are 1 more than their corresponding ichi spell
-                ninSkillBonus = 100 + math.floor((caster:getSkillLevel(tpz.skill.NINJUTSU) - 125)/2)
+
+            if spell:getID() % 3 == 2 then -- ichi nuke spell ids are 320, 323, 326, 329, 332, and 335
+                ninSkillBonus = 100 + math.floor((caster:getSkillLevel(tpz.skill.NINJUTSU) - 50) / 2) -- getSkillLevel includes bonuses from merits and modifiers (ie. gear)
+            elseif spell:getID() % 3 == 0 then -- ni nuke spell ids are 1 more than their corresponding ichi spell
+                ninSkillBonus = 100 + math.floor((caster:getSkillLevel(tpz.skill.NINJUTSU) - 125) / 2)
             else -- san nuke spell, also has ids 1 more than their corresponding ni spell
-                ninSkillBonus = 100 + math.floor((caster:getSkillLevel(tpz.skill.NINJUTSU) - 275)/2)
+                ninSkillBonus = 100 + math.floor((caster:getSkillLevel(tpz.skill.NINJUTSU) - 275) / 2)
             end
+
             ninSkillBonus = utils.clamp(ninSkillBonus, 100, 200) -- bonus caps at +100%, and does not go negative
-            dmg = dmg * ninSkillBonus/100
+
+            -- Audit value
+            auditNinDmg = dmg
+
+            dmg = dmg * ninSkillBonus / 100
+
+            if caster:getLocalVar("AuditMagic") == 1 then
+                caster:PrintToPlayer(string.format("NINJUTSU MODIFIED DAMAGE: [%i] = BASE DAMAGE: [%i] * SKILL BONUS: [%1.2f]", dmg, auditNinDmg, ninSkillBonus),tpz.msg.channel.SYSTEM_3)        
+            end
         end
+
         -- boost with Futae
-        if (caster:hasStatusEffect(tpz.effect.FUTAE)) then
+        if caster:hasStatusEffect(tpz.effect.FUTAE) then
+            -- Audit value
+            auditFutaeBonus = 1.50 + (caster:getMod(tpz.mod.ENH_FUTAE) / 100)
+
+            -- Audit value
+            auditFutaeDmg = dmg
+
             dmg = math.floor(dmg * (1.50 + (caster:getMod(tpz.mod.ENH_FUTAE) / 100)))
+
+            if caster:getLocalVar("AuditMagic") == 1 then
+                caster:PrintToPlayer(string.format("FUTAE MODIFIED DAMAGE: [%i] = BASE DAMAGE: [%i] * (1.50 + FUTAE BONUS: [%1.2f])", dmg, auditFutaeDmg, auditFutaeBonus),tpz.msg.channel.SYSTEM_3)        
+            end
+
             caster:delStatusEffect(tpz.effect.FUTAE)
         end
     end
 
-    --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
+    -- Audit value
+    auditElementBonus = dmg
+    -- add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
     dmg = addBonuses(caster, spell, target, dmg, params)
-    --add in target adjustment
+
+    if caster:getLocalVar("AuditMagic") == 1 then
+        caster:PrintToPlayer(string.format("BONUS MODIFIED DAMAGE: [%i] = BASE DAMAGE: [%i] + BONUS DAMAGE: [%i]", dmg, auditElementBonus, dmg - auditElementBonus),tpz.msg.channel.SYSTEM_3)        
+    end
+
+    -- add in target adjustment
 --    dmg = adjustForTarget(target, dmg, spell:getElement())
-    --add in final adjustments
+    -- Audit value
+    auditFinalDmg = dmg
+    -- add in final adjustments
     dmg = finalMagicAdjustments(caster, target, spell, dmg)
+
+    if caster:getLocalVar("AuditMagic") == 1 then
+        caster:PrintToPlayer(string.format("FINAL DAMAGE: [%i] = BASE DAMAGE: [%i] + FINAL ADJUSTMENTS: [%i]", dmg, auditFinalDmg, dmg - auditFinalDmg),tpz.msg.channel.SYSTEM_3)        
+    end
+
     return dmg
 end
 
 function doDivineBanishNuke(caster, target, spell, params)
+    local auditRawDmg       = 0
+    local auditElementBonus = 0
+    local auditFinalDmg     = 0
+
     params.skillType = tpz.skill.DIVINE_MAGIC
     params.attribute = tpz.mod.MND
 
     --calculate raw damage
     local dmg = calculateMagicDamage(caster, target, spell, params)
+    auditRawDmg = dmg
     --get resist multiplier (1x if no resist)
     local resist = applyResistance(caster, target, spell, params)
+    
     --get the resisted damage
-    dmg = dmg*resist
+    dmg = dmg * resist
 
+    if caster:getLocalVar("AuditMagic") == 1 then
+        caster:PrintToPlayer(string.format("BASE DAMAGE: [%i] = RAW DAMAGE: [%i] * RESIST: [%1.4f]", dmg, auditRawDmg, resist),tpz.msg.channel.SYSTEM_3)        
+    end
+
+    -- Audit value
+    auditElementBonus = dmg
     --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
     dmg = addBonuses(caster, spell, target, dmg, params)
+
+    if caster:getLocalVar("AuditMagic") == 1 then
+        caster:PrintToPlayer(string.format("BONUS MODIFIED DAMAGE: [%i] = BASE DAMAGE: [%i] + BONUS DAMAGE: [%i]", dmg, auditElementBonus, dmg - auditElementBonus),tpz.msg.channel.SYSTEM_3)        
+    end
+
     --add in target adjustment
 --    dmg = adjustForTarget(target, dmg, spell:getElement())
     --handling afflatus misery
     dmg = handleAfflatusMisery(caster, spell, dmg)
+    -- Audit value
+    auditFinalDmg = dmg
     --add in final adjustments
     dmg = finalMagicAdjustments(caster, target, spell, dmg)
+
+    if caster:getLocalVar("AuditMagic") == 1 then
+        caster:PrintToPlayer(string.format("FINAL DAMAGE: [%i] = BASE DAMAGE: [%i] + FINAL ADJUSTMENTS: [%i]", dmg, auditFinalDmg, dmg - auditFinalDmg),tpz.msg.channel.SYSTEM_3)        
+    end
+
     return dmg
 end
 

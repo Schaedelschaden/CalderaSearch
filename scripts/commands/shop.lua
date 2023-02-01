@@ -109,6 +109,7 @@ function onTrigger(player,page)
 			10811,   10000,        -- Chocobo Shield
 			10810,   10000,        -- Moogle Guard +1
 			10807,   10000,        -- Mandraguard
+            26490,   10000,        -- Ark Shield
 			10429,   10000,        -- Moogle Masque
 			10250,   10000,        -- Moogle Suit
 			26968,   10000,        -- Cossie Top +1
@@ -130,15 +131,24 @@ function onTrigger(player,page)
       }
       tpz.shop.general(player, stock_6)
 
-	elseif (page == 7) then -- Creates Escha Kupon Shop.
+	elseif (page == 7) then -- Creates Augment Path Item Shop.
         local stock_7 =
         {
-			9177,   500000,        -- Kupon AW-GF
-			9176,   500000,        -- Kupon AW-GFII
-			9175,   500000,        -- Kupon AW-GFIII
-			9187,   500000,        -- Kupon AW-GeIV
-			9188,    50000,        -- Kupon W-EMI
-			8730,    50000,        -- Kupon W-EWS
+			9177,   500000, -- Kupon AW-GF
+			9176,   500000, -- Kupon AW-GFII
+			9175,   500000, -- Kupon AW-GFIII
+			9187,   500000, -- Kupon AW-GeIV
+			9188,    50000, -- Kupon W-EMI
+			8730,    50000, -- Kupon W-EWS
+            28800,   25000, -- Maze Rune 001
+            28801,   25000, -- Maze Rune 002
+            28802,   25000, -- Maze Rune 003
+            28803,   25000, -- Maze Rune 004
+            28804,   25000, -- Maze Rune 005
+            28805,   25000, -- Maze Rune 006
+            28806,   25000, -- Maze Rune 007
+            28807,   25000, -- Maze Rune 008
+            28808,   25000, -- Maze Rune 009
       }
       tpz.shop.general(player, stock_7)
 

@@ -9,6 +9,12 @@ require("scripts/globals/regimes")
 require("scripts/globals/mobs")
 -----------------------------------
 
+function onMobSpawn(mob)
+    if mob:getID() == 17428673 or mob:getID() == 17428675 then
+        mob:setMobLevel(130)
+    end
+end
+
 function onMobDeath(mob, player, isKiller)
     tpz.regime.checkRegime(player, mob, 790, 1, tpz.regime.type.GROUNDS)
     tpz.regime.checkRegime(player, mob, 791, 1, tpz.regime.type.GROUNDS)
@@ -19,5 +25,5 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.TONBERRY_KINQ_PH, 10, 21600) -- 6 hours, 10% pop chance
+    -- tpz.mob.phOnDespawn(mob, ID.mob.TONBERRY_KINQ_PH, 10, 21600) -- 6 hours, 10% pop chance
 end

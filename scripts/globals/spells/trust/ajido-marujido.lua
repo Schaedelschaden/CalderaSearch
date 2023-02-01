@@ -18,10 +18,10 @@ function onSpellCast(caster, target, spell)
 end
 
 function onMobSpawn(mob)
-    tpz.trust.teamworkMessage(mob, message_page_offset, {
-        [tpz.magic.spell.SHANTOTTO] = tpz.trust.message_offset.TEAMWORK_1,
-        [tpz.magic.spell.STAR_SIBYL] = tpz.trust.message_offset.TEAMWORK_2,
-        [tpz.magic.spell.KORU_MORU] = tpz.trust.message_offset.TEAMWORK_3,
+    tpz.trust.teamworkMessage(mob, {
+        [tpz.magic.spell.SHANTOTTO]     = tpz.trust.message_offset.TEAMWORK_1,
+        [tpz.magic.spell.STAR_SIBYL]    = tpz.trust.message_offset.TEAMWORK_2,
+        [tpz.magic.spell.KORU_MORU]     = tpz.trust.message_offset.TEAMWORK_3,
         [tpz.magic.spell.KARAHA_BARUHA] = tpz.trust.message_offset.TEAMWORK_4,
         [tpz.magic.spell.SEMIH_LAFIHNA] = tpz.trust.message_offset.TEAMWORK_5,
     })
@@ -38,9 +38,9 @@ function onMobSpawn(mob)
 end
 
 function onMobDespawn(mob)
-    tpz.trust.message(mob, message_page_offset, tpz.trust.message_offset.DESPAWN)
+    tpz.trust.message(mob, tpz.trust.message_offset.DESPAWN)
 end
 
 function onMobDeath(mob)
-    tpz.trust.message(mob, message_page_offset, tpz.trust.message_offset.DEATH)
+    tpz.trust.message(mob, tpz.trust.message_offset.DEATH)
 end

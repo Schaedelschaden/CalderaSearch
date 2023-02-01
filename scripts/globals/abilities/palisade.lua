@@ -9,10 +9,12 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
 
-function onAbilityCheck(player,target,ability)
+function onAbilityCheck(player, target, ability)
 	return 0,0
 end
 
-function onUseAbility(player,target,ability)
-	player:addStatusEffect(tpz.effect.PALISADE,1,0,60)
+function onUseAbility(player, target, ability)
+    local power = 30
+
+	player:addStatusEffect(tpz.effect.PALISADE, power, 0, 60)
 end

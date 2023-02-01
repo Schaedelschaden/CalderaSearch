@@ -32,11 +32,11 @@ end
 
 function onMobFight(mob, target)
 	-- Yaksha Stance
-    if (mob:AnimationSub() == 1) then
+    if mob:AnimationSub() == 1 then
 		mob:setMod(tpz.mod.DMGPHYS, -50)
 		mob:setMod(tpz.mod.DMGMAGIC, 0)
 	-- Raksha Stance
-	elseif (mob:AnimationSub() == 2) then
+	elseif mob:AnimationSub() == 2 then
 		mob:setMod(tpz.mod.DMGPHYS, 0)
 		mob:setMod(tpz.mod.DMGMAGIC, -50)
 	end

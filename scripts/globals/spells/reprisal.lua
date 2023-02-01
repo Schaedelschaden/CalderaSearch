@@ -7,7 +7,10 @@ require("scripts/globals/status")
 -----------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
-	if caster:getShieldSize() == 0 then
+	if
+        caster:getShieldSize() == 0 and
+        not caster:getObjType() == tpz.objType.TRUST
+    then
         return tpz.msg.basic.REQUIRES_SHIELD, 0
 	else
 		return 0

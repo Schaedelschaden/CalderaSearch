@@ -55,6 +55,8 @@ function onSpellCast(caster, target, spell)
 end
 
 function onMobSpawn(mob)
+    tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
+
 	mob:addMod(tpz.mod.DMG, -25)
     mob:addMod(tpz.mod.REGAIN, 50)
 
@@ -79,35 +81,47 @@ function onMobSpawn(mob)
     mob:addListener("COMBAT_TICK", "SYLVIE_ENTRUSTED_CAST", function(mobArg, targetArg)
         local master       = mobArg:getMaster()
         local masterJob    = master:getMainJob()
-        local castSpell    = 0
-        local entrustSpell =
-        {
-            tpz.magic.spell.INDI_FRAILTY, tpz.magic.spell.INDI_REFRESH, tpz.magic.spell.INDI_REGEN,
-            tpz.magic.spell.INDI_ACUMEN,  tpz.magic.spell.INDI_LANGUOR
-        }
-        local jobs =
-        {
-            tpz.job.WAR, tpz.job.MNK, tpz.job.THF, tpz.job.BST, tpz.job.DRK, tpz.job.RNG, -- (01) - (06): Indi-Frailty
-            tpz.job.DRG, tpz.job.SAM, tpz.job.BLU, tpz.job.COR, tpz.job.PUP, tpz.job.DNC, -- (07) - (12): Indi-Frailty
-            tpz.job.PLD, tpz.job.RUN, tpz.job.BLM, tpz.job.RDM, tpz.job.SCH,              -- (13) - (17): Indi-Refresh
-            tpz.job.NIN,                                                                  -- (18) - (18): Indi-Regen
-            tpz.job.WHM, tpz.job.BRD, tpz.job.SMN,                                        -- (19) - (21): Indi-Acumen
-            tpz.job.GEO                                                                   -- (22) - (22): Indi-Languor
-        }
+        local castSpell    = tpz.magic.spell.INDI_FRAILTY
 
-        for i = 1, #jobs do
-            if masterJob == jobs[i] and i >= 1 and i <= 12 then
-                castSpell = entrustSpell[1]
-            elseif masterJob == jobs[i] and i >= 13 and i <= 17 then
-                castSpell = entrustSpell[2]
-            elseif masterJob == jobs[i] and i == 18 then
-                castSpell = entrustSpell[3]
-            elseif masterJob == jobs[i] and i >= 19 and i <= 21 then
-                castSpell = entrustSpell[4]
-            elseif masterJob == jobs[i] and i == 22 then
-                castSpell = entrustSpell[5]
-            end
-        end
+        -- Indi-Frailty: WAR, MNK, THF, DRK, BST, RNG, SAM, DRG, BLU, COR, PUP, DNC
+        -- Indi-Refresh: BLM, RDM, PLD, SCH, RUN
+        -- Indi-Regen  : NIN
+        -- Indi-Acumen : WHM, BRD, SMN
+        -- Indi-Languor: GEO
+
+        switch (masterJob): caseof
+        {
+            [ 3] = function () -- WHM
+                castSpell = tpz.magic.spell.INDI_ACUMEN
+            end,
+            [ 4] = function () -- BLM
+                castSpell = tpz.magic.spell.INDI_REFRESH
+            end,
+            [ 5] = function () -- RDM
+                castSpell = tpz.magic.spell.INDI_REFRESH
+            end,
+            [ 7] = function () -- PLD
+                castSpell = tpz.magic.spell.INDI_REFRESH
+            end,
+            [10] = function () -- BRD
+                castSpell = tpz.magic.spell.INDI_ACUMEN
+            end,
+            [13] = function () -- NIN
+                castSpell = tpz.magic.spell.INDI_REGEN
+            end,
+            [15] = function () -- SMN
+                castSpell = tpz.magic.spell.INDI_ACUMEN
+            end,
+            [20] = function () -- SCH
+                castSpell = tpz.magic.spell.INDI_REFRESH
+            end,
+            [21] = function () -- GEO
+                castSpell = tpz.magic.spell.INDI_LANGUOR
+            end,
+            [22] = function () -- RUN
+                castSpell = tpz.magic.spell.INDI_REFRESH
+            end,
+        }
 
         if mobArg:hasStatusEffect(tpz.effect.ENTRUST) then
             mobArg:castSpell(castSpell, master)
@@ -292,6 +306,7 @@ function onMobDespawn(mob)
     mob:removeListener("SYLVIE_ENTRUST")
     mob:removeListener("SYLVIE_ENTRUSTED_CAST")
     mob:removeListener("SYLVIE_MAGIC_END")
+    tpz.trust.message(mob, tpz.trust.message_offset.DESPAWN)
 end
 
 function onMobDeath(mob)
@@ -299,4 +314,5 @@ function onMobDeath(mob)
     mob:removeListener("SYLVIE_ENTRUST")
     mob:removeListener("SYLVIE_ENTRUSTED_CAST")
     mob:removeListener("SYLVIE_MAGIC_END")
+    tpz.trust.message(mob, tpz.trust.message_offset.DEATH)
 end

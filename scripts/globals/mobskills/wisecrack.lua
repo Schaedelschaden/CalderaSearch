@@ -22,9 +22,19 @@ function onMobWeaponSkill(target, mob, skill)
     end
 
     local msg = MobStatusEffectMove(mob, target, typeEffect, 0, 3, 60)
+
     if msg == tpz.msg.basic.SKILL_ENFEEB_IS then
         mob:charm(target)
     end
+
+    if -- ISNM Making a Mockery - Mocking Colibri
+        mob:getID() == 17051649 or
+        mob:getID() == 17051651 or
+        mob:getID() == 17051653
+    then
+        target:dispelAllStatusEffect()
+    end
+
     skill:setMsg(msg)
 
     return typeEffect

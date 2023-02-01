@@ -31,6 +31,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../../entities/charentity.h"
 #include "../../entities/trustentity.h"
 #include "../../items/item_weapon.h"
+#include "../../mob_modifier.h"
 #include "../../mob_spell_container.h"
 #include "../../packets/char.h"
 #include "../../recast_container.h"
@@ -410,7 +411,20 @@ bool CTrustController::Cast(uint16 targid, SpellID spellid)
 
     FaceTarget(targid);
 
+    auto overrideSpellId = luautils::OnMonsterMagicPrepare(static_cast<CBattleEntity*>(POwner), (CBattleEntity*)POwner->GetEntity(targid, TYPE_MOB | TYPE_PC | TYPE_PET | TYPE_TRUST));
+
+    if (overrideSpellId)
+    {
+        // std::optional<SpellID> spellid = overrideSpellId;
+    }
+
     if (static_cast<CMobEntity*>(POwner)->PRecastContainer->Has(RECAST_MAGIC, static_cast<uint16>(spellid)))
+    {
+        return false;
+    }
+
+    // Caldera Custom Trust spell recast (mod in milliseconds)
+    if (m_Tick <= m_LastMagicTime + std::chrono::milliseconds(static_cast<CBattleEntity*>(POwner)->getMod(Mod::TRUST_GENERIC_SPELL_RECAST)))
     {
         return false;
     }
@@ -440,28 +454,32 @@ bool CTrustController::Cast(uint16 targid, SpellID spellid)
 
                 if (PSpell->isBuff())
                 {
-                    if (PSpellFamily == MSpellFamily && spellid <= MSpellID)
+                    if (PSpellFamily == MSpellFamily && spellid <= MSpellID &&
+                        m_Tick <= m_LastMagicTime + std::chrono::milliseconds(static_cast<CBattleEntity*>(POwner)->getMod(Mod::TRUST_BUFF_SPELL_RECAST)))
                     {
                         canCast = false;
                     }
                 }
                 if (PSpell->isCure())
                 {
-                    if (PTarget == MTarget && PTarget->GetHPP() > 50)
+                    if (PTarget == MTarget && PTarget->GetHPP() > 50 &&
+                        m_Tick <= m_LastMagicTime + std::chrono::milliseconds(static_cast<CBattleEntity*>(POwner)->getMod(Mod::TRUST_CURE_SPELL_RECAST)))
                     {
                         canCast = false;
                     }
                 }
                 if (PSpell->isDebuff())
                 {
-                    if (PSpellFamily == MSpellFamily && spellid <= MSpellID)
+                    if (PSpellFamily == MSpellFamily && spellid <= MSpellID &&
+                        m_Tick <= m_LastMagicTime + std::chrono::milliseconds(static_cast<CBattleEntity*>(POwner)->getMod(Mod::TRUST_DEBUFF_SPELL_RECAST)))
                     {
                         canCast = false;
                     }
                 }
                 if (PSpell->isNa())
                 {
-                    if (PSpellFamily == MSpellFamily && spellid == MSpellID)
+                    if (PSpellFamily == MSpellFamily && spellid == MSpellID &&
+                        m_Tick <= m_LastMagicTime + std::chrono::milliseconds(static_cast<CBattleEntity*>(POwner)->getMod(Mod::TRUST_NA_SPELL_RECAST)))
                     {
                         canCast = false;
                     }
@@ -474,6 +492,8 @@ bool CTrustController::Cast(uint16 targid, SpellID spellid)
     {
         return false;
     }
+
+    m_LastMagicTime = m_Tick;
 
     return CMobController::Cast(targid, spellid);
 }

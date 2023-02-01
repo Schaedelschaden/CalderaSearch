@@ -375,6 +375,7 @@ function onTrigger(player,npc)
 					21133,	100000,		-- (Club) Sasah Wand +1
 					21132,	100000,		-- (Club) Aedold
 					21208,	100000,		-- (Staff) Lehbrailg
+                    17277,	20000,		-- (Ammunition) Hedgehog Bomb
 					19780,	30000,		-- (Ammunition) Mana Ampulla
 					27743,	100000,		-- (Head) Temachtiani Headband
 					27884,	100000,		-- (Body) Temachtiani Shirt
@@ -395,6 +396,7 @@ function onTrigger(player,npc)
 					10712,	50000,		-- (Legs) Cleric's Pantaloons +2
 					10732,	50000,		-- (Feet) Cleric's Duckbills +2
 					-- 25429,	50000,		-- (Neck) Cleric's Torque
+                    10826,	100000,		-- (Waist) Witful Belt
 					28455,	50000,		-- (Waist) Ovate Rope
 					28596,	50000,		-- (Back) Oretania's Cape +1
 					-- 28474,	50000,		-- (Earring) Mendicant's Earring
@@ -496,6 +498,7 @@ function onTrigger(player,npc)
 					21133,	100000,		-- (Club) Sasah Wand +1
 					21208,	100000,		-- (Staff) Lehbrailg
 					-- 21362,	30000,		-- (Ammunition) Ombre Tathlum +1
+                    17277,	20000,		-- (Ammunition) Hedgehog Bomb
 					27743,	100000,		-- (Head) Temachtiani Headband
 					27884,	100000,		-- (Body) Temachtiani Shirt
 					28032,	100000,		-- (Hands) Temachtiani Gloves
@@ -515,6 +518,7 @@ function onTrigger(player,npc)
 					10713,	50000,		-- (Legs) Sorcerer's Tonban +2
 					10733,	50000,		-- (Feet) Sorcerer's Sabots +2
 					-- 25435,	50000,		-- (Neck) Sorcerer's Stole
+                    10826,	100000,		-- (Waist) Witful Belt
 					10839,	50000,		-- (Waist) Othila Sash
 					28601,	50000,		-- (Back) Seshaw Cape
 					11682,	30000,		-- (Earring) Snow Earring
@@ -620,6 +624,7 @@ function onTrigger(player,npc)
 					20743,	100000,		-- (Sword) Bihkah Sword +1
 					28668,  100000,     -- (Shield) Matamata Shield +1
 					21207,	100000,		-- (Staff) Hemolele Staff +1
+                    17277,	20000,		-- (Ammunition) Hedgehog Bomb
 					-- 21362,	30000,		-- (Ammunition) Ombre Tathlum +1
 					27743,	100000,		-- (Head) Temachtiani Headband
 					27884,	100000,		-- (Body) Temachtiani Shirt
@@ -640,6 +645,7 @@ function onTrigger(player,npc)
 					10714,	50000,		-- (Legs) Duelist's Tights +2
 					10734,	50000,		-- (Feet) Duelist's Boots +2
 					-- 25441,	50000,		-- (Neck) Duelist's Torque
+                    10826,	100000,		-- (Waist) Witful Belt
 					10839,	50000,		-- (Waist) Othila Sash
 					28455,	50000,		-- (Waist) Ovate Rope
 					28596,	50000,		-- (Back) Oretania's Cape +1
@@ -1274,7 +1280,7 @@ function onTrigger(player,npc)
 					10719,	50000,		-- (Legs) Bard's Cannions +2
 					10739,	50000,		-- (Feet) Bard's Slippers +2
 					-- 25471,	50000,		-- (Neck) Bard's Charm
-					10826,	50000,		-- (Waist) Witful Belt
+					10826,	100000,		-- (Waist) Witful Belt
 					11012,	50000,		-- (Back) Gwyddion's Cape
 					11036,	50000,		-- (Earring) Enchanter's Earring
 					11701,	50000,		-- (Earring) Skald Breloque
@@ -1861,6 +1867,7 @@ function onTrigger(player,npc)
 			stock_SMN =
 				{
 					21208,	100000,		-- (Staff) Lehbrailg
+                    17277,	20000,		-- (Ammunition) Hedgehog Bomb
 					19780,	30000,		-- (Ammunition) Mana Ampulla
 					27743,	100000,		-- (Head) Temachtiani Headband
 					27884,	100000,		-- (Body) Temachtiani Shirt
@@ -1881,6 +1888,7 @@ function onTrigger(player,npc)
 					10724,	50000,		-- (Legs) Summoner's Spats +2
 					10744,	50000,		-- (Feet) Summoner's Pigaches +2
 					-- 25501,	50000,		-- (Neck) Summoner's Collar
+                    10826,	100000,		-- (Waist) Witful Belt
 					10842,	50000,		-- (Waist) Bougonia Rope
 					27607,	50000,		-- (Back) Thaumaturge's Cape
 					11021,	30000,		-- (Earring) Darkness Pearl
@@ -1995,6 +2003,7 @@ function onTrigger(player,npc)
 					10725,	50000,		-- (Legs) Mirage Shalwar +2
 					10745,	50000,		-- (Feet) Mirage Charuqs +2
 					-- 25507,	50000,		-- (Neck) Mirage Stole
+                    10826,	100000,		-- (Waist) Witful Belt
 					10831,	50000,		-- (Waist) Paewr Belt
 					10992,	50000,		-- (Back) Vassal's Mantle
 					11057,	50000,		-- (Earring) Ghillie Earring +1
@@ -2453,6 +2462,7 @@ function onTrigger(player,npc)
 				{
 					21133,	100000,		-- (Club) Sasah Wand +1
 					21208,	100000,		-- (Staff) Lehbrailg
+                    17277,	20000,		-- (Ammunition) Hedgehog Bomb
 					-- 21362,	30000,		-- (Ammunition) Ombre Tathlum +1
 					27743,	100000,		-- (Head) Temachtiani Headband
 					27884,	100000,		-- (Body) Temachtiani Shirt
@@ -2473,6 +2483,7 @@ function onTrigger(player,npc)
 					10729,	50000,		-- (Legs) Argute Pants +2
 					10749,	50000,		-- (Feet) Argute Loafers +2
 					-- 25531,	50000,		-- (Neck) Argute Stole
+                    10826,	100000,		-- (Waist) Witful Belt
 					28455,	50000,		-- (Waist) Ovate Rope
 					10839,	50000,		-- (Waist) Othila Sash
 					28596,	50000,		-- (Back) Oretania's Cape +1
@@ -2570,6 +2581,7 @@ function onTrigger(player,npc)
 				{
 					21133,	100000,		-- (Club) Sasah Wand +1
 					21461,	50000,		-- (Handbell) Filiae Bell
+                    17277,	20000,		-- (Ammunition) Hedgehog Bomb
 					-- 21362,	30000,		-- (Ammunition) Ombre Tathlum +1
 					27743,	100000,		-- (Head) Temachtiani Headband
 					27884,	100000,		-- (Body) Temachtiani Shirt
@@ -2577,6 +2589,7 @@ function onTrigger(player,npc)
 					28171,	100000,		-- (Legs) Temachtiani Pants
 					28309,	100000,		-- (Feet) Temachtiani Boots
 					-- 25537,	50000,		-- (Neck) Bagua Charm
+                    10826,	100000,		-- (Waist) Witful Belt
 					10839,	50000,		-- (Waist) Othila Sash
 					28601,	50000,		-- (Back) Seshaw Cape
 					11682,	30000,		-- (Earring) Snow Earring

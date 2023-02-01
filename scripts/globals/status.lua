@@ -1237,6 +1237,16 @@ tpz.mod =
     TP_BONUS                        = 345,
     PERPETUATION_REDUCTION          = 346,
 
+    -- Paladin
+    ENHANCES_CHIVALRY               = 1061, -- Enhances "Chivalry" effect (increases the base TP modifier by the provided value / 100, e.g. mod value 5 = +0.05)
+    ENHANCES_DIVINE_EMBLEM          = 1062, -- Enhances "Divine Emblem" effect/"Divine Emblem" + (increases the ability's special enmity bonus by the provided value)
+    ENHANCES_FEALTY                 = 1063, -- Enhances "Fealty" effect (increases Fealty's duration by 4 seconds per Fealty merit)
+    ENHANCES_IRON_WILL              = 1064, -- Enhances "Iron Will" effect (adds +3% Fast Cast per Iron Will merit to Rampart)
+    ENHANCES_GUARDIAN               = 1065, -- Enhances "Guardian" effect (increases Sentinel's duration by 2 seconds per Guardian merit)
+    PALISADE_BLOCK_BONUS            = 1066, -- Increases base block rate while under the effects of Palisade (additive, not multiplicative)
+    REPRISAL_BLOCK_BONUS            = 1067, -- Increases block rate while under the effects of Reprisal (multiplicative, not additive)
+    REPRISAL_SPIKES_BONUS           = 1068, -- Increases Reprisal spikes damage by percentage (e.g. mod value of 50 will increase spikes damage by 50%)
+
     -- Dark Knight
     ARCANE_CIRCLE_POTENCY           = 1069, -- Increases the potency of the Arcane Circle effect (e.g. mod value 2 = +2% Arcana Killer)
     SOULEATER_EFFECT_POTENCY        = 1079, -- Enhances "Souleater" effect augment power in percents (Additive and stacks with Enhances "Souleater" effect gear)
@@ -1920,6 +1930,13 @@ tpz.mod =
 	-- BLAST_SHOT_DMG                  = 3320, -- Blast Shot Damage (Marksmanship)
 	-- RAIDEN_THRUST_DMG               = 3321, -- Raiden Thrust Damage (Polearm)
 	-- TACHI_KAGERO_DMG                = 3322, -- Tachi: Kagero Damage (Great Katana)
+
+    TRUST_GENERIC_SPELL_RECAST      = 4000, -- Generic spell recast modifier for trusts
+    TRUST_CURE_SPELL_RECAST         = 4001, -- Healing spell recast modifier for trusts
+    TRUST_BUFF_SPELL_RECAST         = 4002, -- Enhancing spell recast modifier for trusts
+    TRUST_DEBUFF_SPELL_RECAST       = 4003, -- Enfeebling spell recast modifier for trusts
+    TRUST_NA_SPELL_RECAST           = 4004, -- -na spell recast modifier for trusts
+    TRUST_BLUEMAGIC_SPELL_RECAST    = 4005, -- Blue Magic recast modifier for trusts
 }
 
 tpz.latent =
@@ -2612,7 +2629,7 @@ tpz.mobMod =
     -- 16 Available for use
     NO_DESPAWN          = 17, -- do not despawn when too far from spawn. Gob Diggers have this.
     VAR                 = 18, -- temp var for whatever. Gets cleared on spawn
-    -- 19 Available for use
+    CAN_SHIELD_BLOCK    = 19, -- Toggle shield use for mobs without physical shields (trusts)
     TP_USE_CHANCE       = 20, -- % chance to use tp
     PET_SPELL_LIST      = 21, -- set pet spell list
     NA_CHANCE           = 22, -- % chance to cast -na

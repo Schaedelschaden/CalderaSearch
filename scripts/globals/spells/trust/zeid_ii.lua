@@ -20,27 +20,17 @@ function onSpellCast(caster, target, spell)
 end
 
 function onMobSpawn(mob)
-    tpz.trust.message(mob, message_page_offset, tpz.trust.message_offset.SPAWN)
+    tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
 
     -- Stun all the things!
-    mob:addSimpleGambit(ai.t.TARGET, ai.c.READYING_WS, 0,
-                        ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.STUN)
-
-    mob:addSimpleGambit(ai.t.TARGET, ai.c.READYING_MS, 0,
-                        ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.STUN)
-
-    mob:addSimpleGambit(ai.t.TARGET, ai.c.READYING_JA, 0,
-                        ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.STUN)
-
-    mob:addSimpleGambit(ai.t.TARGET, ai.c.CASTING_MA, 0,
-                        ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.STUN)
+    mob:addSimpleGambit(ai.t.TARGET, ai.c.READYING_WS, 0, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.STUN)
+    mob:addSimpleGambit(ai.t.TARGET, ai.c.READYING_MS, 0, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.STUN)
+    mob:addSimpleGambit(ai.t.TARGET, ai.c.READYING_JA, 0, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.STUN)
+    mob:addSimpleGambit(ai.t.TARGET, ai.c.CASTING_MA, 0, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.STUN)
 
     -- Non-stun things
-    mob:addSimpleGambit(ai.t.SELF, ai.c.ALWAYS, 0,
-                        ai.r.JA, ai.s.SPECIFIC, tpz.ja.SOULEATER)
-
-    mob:addSimpleGambit(ai.t.SELF, ai.c.ALWAYS, 0,
-                        ai.r.JA, ai.s.SPECIFIC, tpz.ja.LAST_RESORT)
+    mob:addSimpleGambit(ai.t.SELF, ai.c.ALWAYS, 0, ai.r.JA, ai.s.SPECIFIC, tpz.ja.SOULEATER)
+    mob:addSimpleGambit(ai.t.SELF, ai.c.ALWAYS, 0, ai.r.JA, ai.s.SPECIFIC, tpz.ja.LAST_RESORT)
 
     mob:setTrustTPSkillSettings(ai.tp.CLOSER, ai.s.RANDOM)
 end
@@ -50,9 +40,9 @@ function onMobFight(mob)
 end
 
 function onMobDespawn(mob)
-    tpz.trust.message(mob, message_page_offset, tpz.trust.message_offset.DESPAWN)
+    tpz.trust.message(mob, tpz.trust.message_offset.DESPAWN)
 end
 
 function onMobDeath(mob)
-    tpz.trust.message(mob, message_page_offset, tpz.trust.message_offset.DEATH)
+    tpz.trust.message(mob, tpz.trust.message_offset.DEATH)
 end

@@ -126,6 +126,10 @@ function MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeff
         hitdamage = 1
     end
 
+    if dmgmod == nil then
+        printf("monstertpmoves.lua MobPhysicalMove  MOB SKILL: [%i] DMGMOD IS NIL!", skill:getID())
+    end
+
     hitdamage = hitdamage * dmgmod
 
     if (tpeffect == TP_DMG_VARIES) then

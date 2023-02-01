@@ -16,7 +16,7 @@ function onBattlefieldRegister(player, battlefield)
 end
 
 function onBattlefieldEnter(player, battlefield)
-	player:delKeyItem(tpz.ki.PHANTOM_GEM_OF_RAGE)
+    player:delKeyItem(tpz.ki.PHANTOM_GEM_OF_RAGE)
 end
 
 function onBattlefieldLeave(player, battlefield, leavecode)
@@ -34,10 +34,10 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 32001 then
-		-- player:delKeyItem(tpz.ki.PHANTOM_GEM_OF_RAGE)
-		local killCounter = player:getCharVar("KillCounter_AAGK")
-		player:setCharVar("KillCounter_AAGK", killCounter + 1)
-	
+        -- player:delKeyItem(tpz.ki.PHANTOM_GEM_OF_RAGE)
+        local killCounter = player:getCharVar("KillCounter_AAGK")
+        player:setCharVar("KillCounter_AAGK", killCounter + 1)
+
         if player:getCurrentMission(ZILART) == tpz.mission.id.zilart.ARK_ANGELS and player:getCharVar("ZilartStatus") == 1 then
             player:addKeyItem(tpz.ki.SHARD_OF_RAGE)
             player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.SHARD_OF_RAGE)
@@ -53,13 +53,20 @@ function onEventFinish(player, csid, option)
                 player:setCharVar("ZilartStatus", 0)
             end
         end
-		
-		if (player:hasPet() == true) then
-			player:despawnPet()
-			player:resetRecast(104) -- Call Beast
-			player:resetRecast(163) -- Call Wyvern
-			player:resetRecast(205) -- Activate
-			player:PrintToPlayer(string.format("WARNING: WAIT TO RESUMMON YOUR PET UNTIL YOU ARE OUTSIDE OF THE BATTLEFIELD ZONE."), tpz.msg.channel.SYSTEM_1)
-		end
+
+        if player:hasPet() == true then
+            player:despawnPet()
+            player:resetRecast(104) -- Call Beast
+            player:resetRecast(163) -- Call Wyvern
+            player:resetRecast(205) -- Activate
+            player:PrintToPlayer(string.format("WARNING: WAIT TO RESUMMON YOUR PET UNTIL YOU ARE OUTSIDE OF THE BATTLEFIELD ZONE."), tpz.msg.channel.SYSTEM_1)
+        end
+
+        if
+            player:getCharVar("KillCounter_AAGK") > 0 and
+            not player:hasSpell(996)
+        then
+            player:addSpell(996, false, true)
+        end
     end
 end

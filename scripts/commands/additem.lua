@@ -15,7 +15,7 @@ function error(player, msg)
 end
 
 function onTrigger(player, itemId, quantity)--, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val, trialId)
-	if (player:getGMLevel() > 0 or player:getName() == "Benji" or player:getName() == "Pheliont") then
+	if (player:getGMLevel() > 0 or player:getName() == "Benji" or player:getName() == "Pheliont" or player:getName() == "VengeanceAce") then
 		-- Load needed text ids for players current zone..
 		local ID = zones[player:getZoneID()]
 

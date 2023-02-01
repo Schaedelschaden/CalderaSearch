@@ -64,6 +64,7 @@ private:
     CBattleEntity* m_LastTopEnmity;
 
     time_point m_LastRepositionTime;
+    time_point m_LastMagicTime;
     uint8      m_failedRepositionAttempts;
     bool       m_InTransit;
 

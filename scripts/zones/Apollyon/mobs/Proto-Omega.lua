@@ -9,7 +9,7 @@ local ID = require("scripts/zones/Apollyon/IDs")
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:setMod(tpz.mod.COUNTER, 10) -- "Possesses a Counter trait"
-    mob:setMod(tpz.mod.REGEN, 250) -- "Posseses an Auto-Regen (low to moderate)"
+    -- mob:setMod(tpz.mod.REGEN, 250) -- "Posseses an Auto-Regen (low to moderate)"
 end
 
 function onMobSpawn(mob)
@@ -17,8 +17,29 @@ function onMobSpawn(mob)
     mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
     mob:setMod(tpz.mod.UDMGPHYS, -75)
     mob:setMod(tpz.mod.UDMGRANGE, -75)
-    mob:setMod(tpz.mod.UDMGMAGIC, 0)
+    mob:setMod(tpz.mod.UDMGMAGIC, 30)
     mob:setMod(tpz.mod.MOVE, 100) -- "Moves at Flee Speed in Quadrupedal stance and in the Final Form"
+    mob:addMod(tpz.mod.PARALYZERES, 30)
+    mob:addMod(tpz.mod.STUNRES, 30)
+    mob:addMod(tpz.mod.BINDRES, 30)
+    mob:addMod(tpz.mod.SLOWRES, 30)
+    mob:addMod(tpz.mod.SILENCERES, 30)
+    mob:addMod(tpz.mod.SLEEPRES, 30)
+    mob:addMod(tpz.mod.LULLABYRES, 30)
+    mob:addMod(tpz.mod.PETRIFYRES, 30)
+    mob:addMod(tpz.mod.POISONRES, 30)
+	mob:addMod(tpz.mod.ATT, 250)
+	mob:addMod(tpz.mod.EVA, 75)
+	mob:addMod(tpz.mod.DEF, 275)
+	mob:addMod(tpz.mod.MEVA, 200)
+	mob:addMod(tpz.mod.MDEF, 50)
+	mob:addMod(tpz.mod.STR, 110)
+    mob:addMod(tpz.mod.DEX, 110)
+    mob:addMod(tpz.mod.AGI, 110)
+    mob:addMod(tpz.mod.VIT, 110)
+    mob:addMod(tpz.mod.MND, 110)
+    mob:addMod(tpz.mod.CHR, 110)
+    mob:addMod(tpz.mod.INT, 110)
 end
 
 function onMobFight(mob, target)
@@ -31,8 +52,8 @@ function onMobFight(mob, target)
         currentForm = 1
         mob:setLocalVar("form", currentForm)
         formTime = os.time()
-        mob:setMod(tpz.mod.UDMGPHYS, 0)
-        mob:setMod(tpz.mod.UDMGRANGE, 0)
+        mob:setMod(tpz.mod.UDMGPHYS, 30)
+        mob:setMod(tpz.mod.UDMGRANGE, 30)
         mob:setMod(tpz.mod.UDMGMAGIC, -75)
         mob:setMod(tpz.mod.MOVE, 0)
     end

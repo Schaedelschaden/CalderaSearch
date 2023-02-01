@@ -32,6 +32,6 @@ function onTrigger(player, modelID)
     end
 
     -- Set model
-    targ:setModelId()
+    targ:setModelId(modelID)
     player:PrintToPlayer( string.format("Set %s model to %i.", targ:getName(), modelID) )
 end

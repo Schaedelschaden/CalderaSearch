@@ -14,7 +14,10 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:AnimationSub() == 1 and mob:getFamily() == 165) then -- Imps without horn
+    if
+        mob:AnimationSub() == 1 and
+        mob:getFamily()    == 165
+    then -- Imps without horn
         return 1
     else
         return 0
@@ -28,5 +31,6 @@ function onMobWeaponSkill(target, mob, skill)
     local duration = 60
 
     skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, power, 0, duration))
+
     return typeEffect
 end

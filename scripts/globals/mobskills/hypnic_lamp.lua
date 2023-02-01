@@ -16,7 +16,7 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.SLEEP_I
 
-    if (target:isFacing(mob)) then
+    if target:isFacing(mob) then
         skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 1, 0, 60))
     end
 

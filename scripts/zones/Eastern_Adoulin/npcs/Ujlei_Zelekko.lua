@@ -121,11 +121,11 @@ local itemTrades =
 	[	98	] = {trade = {2557, gilCost[1], {1453, 3}}, 			 reward = 9651}, -- 	Handshard: SCH
 	[	99	] = {trade = {2557, gilCost[2],  1450,		1453, 1456}, reward = 9695}, -- 	Legshard: SCH
 	[	100	] = {trade = {2557, gilCost[1], {1456, 3}}, 			 reward = 9739}, -- 	Footshard: SCH
-	[	101	] = {trade = {9178, gilCost[1], {1450, 3}}, 			 reward = 9564}, -- 	Headshard: GEO
-	[	102	] = {trade = {9178, gilCost[3],  1450,		1453, 1456}, reward = 9608}, -- 	Torsoshard: GEO
-	[	103	] = {trade = {9178, gilCost[1], {1453, 3}}, 			 reward = 9652}, -- 	Handshard: GEO
-	[	104	] = {trade = {9178, gilCost[2],  1450,		1453, 1456}, reward = 9696}, -- 	Legshard: GEO
-	[	105	] = {trade = {9178, gilCost[1], {1456, 3}}, 			 reward = 9740}, -- 	Footshard: GEO
+	[	101	] = {trade = {9188, gilCost[1], {1450, 3}}, 			 reward = 9564}, -- 	Headshard: GEO
+	[	102	] = {trade = {9188, gilCost[3],  1450,		1453, 1456}, reward = 9608}, -- 	Torsoshard: GEO
+	[	103	] = {trade = {9188, gilCost[1], {1453, 3}}, 			 reward = 9652}, -- 	Handshard: GEO
+	[	104	] = {trade = {9188, gilCost[2],  1450,		1453, 1456}, reward = 9696}, -- 	Legshard: GEO
+	[	105	] = {trade = {9188, gilCost[1], {1456, 3}}, 			 reward = 9740}, -- 	Footshard: GEO
 	[	106	] = {trade = {8730, gilCost[1], {1450, 3}}, 			 reward = 9565}, -- 	Headshard: RUN
 	[	107	] = {trade = {8730, gilCost[3],  1450,		1453, 1456}, reward = 9609}, -- 	Torsoshard: RUN
 	[	108	] = {trade = {8730, gilCost[1], {1453, 3}}, 			 reward = 9653}, -- 	Handshard: RUN

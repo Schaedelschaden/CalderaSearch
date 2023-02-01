@@ -29,6 +29,7 @@ function onTrigger(player,npc)
 		2655, 1000000,	-- Dark Ixion Tail
 		857, 600,		-- Dhalmel Hide
 		1623, 750,		-- Eft Skin
+        1767, 50000,    -- Eltoro Leather
 		2189, 4350,		-- Fiendish Skin
 		2773, 117,		-- Fine Parchment
 		2139, 1035,		-- Fr. Dhalmel Hide

@@ -102,5 +102,5 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-	mob:setRespawnTime(72000)
+	-- mob:setRespawnTime(72000)
 end

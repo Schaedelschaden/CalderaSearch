@@ -12,7 +12,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local numhits = 1
+    local numhits = math.random(1, 2)
     local accmod  = 1
     local dmgmod  = 4.5
     local info    = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)

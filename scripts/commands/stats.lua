@@ -64,14 +64,24 @@ function onTrigger(player, page)
     local ATT = math.floor(8 + player:getMod(tpz.mod.ATT) + weaponATT)
     ATT = ATT + (ATT * (player:getMod(tpz.mod.ATTP) / 100)) + (math.min(ATT * (player:getMod(tpz.mod.FOOD_ATTP) / 100), player:getMod(tpz.mod.FOOD_ATT_CAP)))
 
-    local rangedWeaponATT = 0
+    local rangedBaseATT    = 8
+    local rangedSkill      = player:getSkillLevel(tpz.skill.ARCHERY)
+    local rangedILvlSkill  = player:getILvlSkill(tpz.slot.RANGED)
+    local rangedBonusSkill = 0
+    local rangedATTMod     = player:getMod(tpz.mod.RATT)
+    local rangedATTBonus   = 0
+    local rangedSTR        = player:getStat(tpz.mod.STR)
+
     for i = 1, 3 do
-        if rangedWeaponType == rangedWeapons[i] then
-            rangedWeaponATT = (player:getStat(tpz.mod.STR) / 2) + player:getSkillLevel(rangedWeapons[i]) + player:getILvlSkill(tpz.slot.RANGED)
+        if rangedWeaponType == rangedWeapons[2] then
+            rangedSkill = player:getSkillLevel(tpz.skill.MARKSMANSHIP)
+        elseif rangedWeaponType == rangedWeapons[3] or throwingWeaponType == rangedWeapons[3] then
+            rangedSkill      = player:getSkillLevel(tpz.skill.THROWING)
+            rangedILvlSkill  = player:getILvlSkill(tpz.slot.AMMO)
         end
     end
 
-    local RATT = math.floor((8 + player:getMod(tpz.mod.RATT) + rangedWeaponATT))
+    local RATT = math.floor(rangedBaseATT + rangedSkill + rangedILvlSkill + rangedBonusSkill + rangedATTMod + rangedATTBonus + rangedSTR)
     RATT = RATT + (RATT * (player:getMod(tpz.mod.RATTP) / 100)) + (math.min(RATT * (player:getMod(tpz.mod.FOOD_RATTP) / 100), player:getMod(tpz.mod.FOOD_RATT_CAP)))
 
     local MATT      = player:getMod(tpz.mod.MATT) + player:getMod(tpz.mod.NIN_NUKE_BONUS)
@@ -104,16 +114,16 @@ function onTrigger(player, page)
         if rangedWeaponType == rangedWeapons[i] or throwingWeaponType == rangedWeapons[i] then
             rangedWeaponACC = player:getSkillLevel(rangedWeapons[i]) + player:getILvlSkill(tpz.slot.RANGED)
 
-            if rangedWeaponType == rangedWeapons[i] or throwingWeaponType == rangedWeapons[3] then
+            if rangedWeaponType == rangedWeapons[3] or throwingWeaponType == rangedWeapons[3] then
                 rangedWeaponACC = player:getSkillLevel(tpz.skill.THROWING) + player:getILvlSkill(tpz.slot.AMMO)
             end
 
-            if rangedWeaponACC >= 201 and rangedWeaponACC <= 400 then
-                rangedWeaponACC = ((rangedWeaponACC - 200) * 0.9) + 200
+            if rangedWeaponACC >= 601 then
+                rangedWeaponACC = ((rangedWeaponACC - 600) * 0.9) + 540
             elseif rangedWeaponACC >= 401 and rangedWeaponACC <= 600 then
                 rangedWeaponACC = ((rangedWeaponACC - 400) * 0.8) + 380
-            elseif rangedWeaponACC >= 601 then
-                rangedWeaponACC = ((rangedWeaponACC - 600) * 0.9) + 540
+            elseif rangedWeaponACC >= 201 and rangedWeaponACC <= 400 then
+                rangedWeaponACC = ((rangedWeaponACC - 200) * 0.9) + 200
             end
         end
     end

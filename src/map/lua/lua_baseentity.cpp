@@ -3533,7 +3533,7 @@ inline int32 CLuaBaseEntity::resetPlayer(lua_State *L)
 
 
 
-    // send the player to lower jeuno
+    // send the player to Celennia Memorial Library
     Query =
         "UPDATE chars "
         "SET "
@@ -3548,17 +3548,17 @@ inline int32 CLuaBaseEntity::resetPlayer(lua_State *L)
         "WHERE charid = %u;";
 
     Sql_Query(SqlHandle, Query,
-        245,        // lower jeuno
-        122,        // prev zone
-        86,         // rotation
-        33.464f,    // x
-        -5.000f,    // y
-        69.162f,    // z
-        0,          //boundary,
-        0,          //moghouse,
+        284,       // Celennia Memorial Library
+        284,       // prev zone
+        224,       // rotation
+        -105.000f, // x
+        -2.150f,   // y
+        -95.000f,  // z
+        0,         //boundary,
+        0,         //moghouse,
         id);
 
-    ShowDebug("Player reset was successful.\n");
+    ShowDebug("%s's position reset was successful.\n", lua_tostring(L, 1));
 
     return 1;
 }
@@ -15257,11 +15257,9 @@ inline int32 CLuaBaseEntity::setMobMod(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
 
-    // putting this in here to find elusive bug
-    if (!(m_PBaseEntity->objtype & TYPE_MOB))
+    if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
     {
-        // this once broke on an entity (17532673) but it could not be found
-        ShowError("CLuaBaseEntity::setMobMod Expected type mob (%d) but its a (%d)\n", m_PBaseEntity->id, m_PBaseEntity->objtype);
+        ShowError("CLuaBaseEntity::setMobMod function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return 0;
     }
 
@@ -15642,6 +15640,52 @@ inline int32 CLuaBaseEntity::useMobAbility(lua_State* L)
 }
 
 /************************************************************************
+*  Function: useWeaponskill()
+*  Purpose : Instruct a Mob or Trust to use a specified Weaponskill
+*  Example : mob:useWeaponskill(114, target) -- Specifying mob/trust to use Raiden Thrust on a target
+*  Notes   : Inserts directly into queue stack with 0ms delay
+************************************************************************/
+
+inline int32 CLuaBaseEntity::useWeaponskill(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_TRUST && m_PBaseEntity->objtype != TYPE_MOB && m_PBaseEntity->objtype != TYPE_PC);
+
+    if (lua_isnumber(L, 1))
+    {
+        auto wsid {(uint16)lua_tointeger(L, 1)};
+        CBattleEntity* PTarget {nullptr};
+        auto PWeaponSkill {battleutils::GetWeaponSkill(wsid)};
+
+        if (!PWeaponSkill)
+        {
+            return 0;
+        }
+
+        if (!lua_isnil(L, 2) && lua_isuserdata(L, 2))
+        {
+            CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 2);
+            PTarget = (CBattleEntity*)PLuaBaseEntity->m_PBaseEntity;
+        }
+
+        m_PBaseEntity->PAI->QueueAction(queueAction_t(0ms, true, [PTarget, wsid, PWeaponSkill](auto PEntity)
+        {
+            if (battleutils::isValidSelfTargetWeaponskill(wsid))
+            {
+                PEntity->PAI->Internal_WeaponSkill(PEntity->targid, wsid);
+            }
+
+            if (PTarget)
+            {
+                PEntity->PAI->Internal_WeaponSkill(PTarget->targid, wsid);
+            }
+        }));
+    }
+
+    return 0;
+}
+
+/************************************************************************
 *  Function: hasTPMoves()
 *  Purpose : Returns true if a Mob has TP moves in its skill list
 *  Example : if (mob:hasTPMoves()) then
@@ -15731,14 +15775,14 @@ inline int32 CLuaBaseEntity::getPool(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
 
-    if (m_PBaseEntity->objtype != TYPE_MOB)
-    {
-        lua_pushnil(L);
-    }
-    else
+    if (m_PBaseEntity->objtype == TYPE_MOB || m_PBaseEntity->objtype == TYPE_TRUST)
     {
         CMobEntity* PMob = (CMobEntity*)m_PBaseEntity;
         lua_pushinteger(L, PMob->m_Pool);
+    }
+    else
+    {
+        lua_pushnil(L);
     }
 
     return 1;
@@ -16650,6 +16694,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,castSpell),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,useJobAbility),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,useMobAbility),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,useWeaponskill),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasTPMoves),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,weaknessTrigger),

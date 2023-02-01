@@ -14,8 +14,8 @@ function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.PHANDURON_THE_CONDEMNED)
     GetMobByID(ID.mob.PHANDURON_THE_CONDEMNED):setRespawnTime(math.random(900, 10800))
 
-    UpdateNMSpawnPoint(ID.mob.BLOODSUCKER)
-    GetMobByID(ID.mob.BLOODSUCKER):setRespawnTime(3600)
+    -- UpdateNMSpawnPoint(ID.mob.BLOODSUCKER)
+    -- GetMobByID(ID.mob.BLOODSUCKER):setRespawnTime(3600)
 end
 
 function onZoneIn(player, prevZone)

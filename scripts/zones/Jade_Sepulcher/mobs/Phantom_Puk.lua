@@ -6,22 +6,28 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onMobSpawn(mob)
-	-- mob:setMod(tpz.mod.SILENCERES, 35)
-    -- mob:setMod(tpz.mod.STUNRES, 35)
-    -- mob:setMod(tpz.mod.BINDRES, 35)
-    -- mob:setMod(tpz.mod.SLOWRES, 35)
-	-- mob:addMod(tpz.mod.ATT, 150)
-	-- mob:addMod(tpz.mod.MATT, 165)
-    -- mob:addMod(tpz.mod.ACC, 500)
-    -- mob:addMod(tpz.mod.EVA, 100)
-	-- mob:addMod(tpz.mod.DEF, 800)
-	-- mob:setMod(tpz.mod.MDEF, 100)
-	-- mob:setMod(tpz.mod.DMGPHYS, 50)
-	-- mob:setMod(tpz.mod.DOUBLE_ATTACK, 40)
-	-- mob:addMod(tpz.mod.LIGHT_ABSORB, 50)
-	-- mob:addMod(tpz.mod.REGEN, 250)
-	-- mob:addMod(tpz.mod.REFRESH, 200)
-	-- mob:addMod(tpz.mod.REGAIN, 100)
+	mob:addMod(tpz.mod.PARALYZERES, 30) -- Resistance to Silence
+    mob:addMod(tpz.mod.STUNRES, 30) -- Resistance to Stun
+    mob:addMod(tpz.mod.BINDRES, 30) -- Resistance to Bind
+    mob:addMod(tpz.mod.SLOWRES, 30) -- Resistance to Slow
+    mob:addMod(tpz.mod.SILENCERES, 30) -- Resistance to Silence
+    mob:addMod(tpz.mod.SLEEPRES, 30) -- Resistance to Sleep
+    mob:addMod(tpz.mod.LULLABYRES, 30) -- Resistance to Lullaby
+    mob:addMod(tpz.mod.PETRIFYRES, 30) -- Resistance to Pertrify
+    mob:addMod(tpz.mod.POISONRES, 30) -- Resistance to Poison
+	mob:addMod(tpz.mod.ATT, 500) -- Attack Stat (Compare to DEF)
+	mob:addMod(tpz.mod.MATT, 100) -- Magic Attack (Compare to MDEF)
+	mob:addMod(tpz.mod.EVA, 150) -- Evasion (Compare to ACC)
+	mob:addMod(tpz.mod.DEF, 700) -- Defense (Compart to ATT)
+	mob:addMod(tpz.mod.MEVA, 200) -- Magic Evasion (Compare to MACC)
+	mob:addMod(tpz.mod.MDEF, 100) -- Magic Defense (Compare to MATT)
+	mob:addMod(tpz.mod.STR, 130)
+    mob:addMod(tpz.mod.DEX, 130)
+    mob:addMod(tpz.mod.AGI, 130)
+    mob:addMod(tpz.mod.VIT, 130)
+    mob:addMod(tpz.mod.MND, 130)
+    mob:addMod(tpz.mod.CHR, 130)
+    mob:addMod(tpz.mod.INT, 130)
     mob:removeListener("GEARS_CTICK")
 end
 

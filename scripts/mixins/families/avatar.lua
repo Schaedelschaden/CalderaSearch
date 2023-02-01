@@ -4,23 +4,23 @@ g_mixins = g_mixins or {}
 g_mixins.families = g_mixins.families or {}
 
 g_mixins.families.avatar = function(mob)
-    mob:addListener("SPAWN", "AVATAR_SPAWN", function(mob)
-        mob:setModelId(math.random(791, 798))
-        mob:hideName(false)
-        mob:untargetable(true)
-        mob:setUnkillable(true)
-        mob:SetAutoAttackEnabled(false)
-        mob:SetMagicCastingEnabled(false)
+    mob:addListener("SPAWN", "AVATAR_SPAWN", function(mobArg)
+        mobArg:setModelId(math.random(791, 798))
+        mobArg:hideName(false)
+        mobArg:untargetable(true)
+        mobArg:setUnkillable(true)
+        mobArg:SetAutoAttackEnabled(false)
+        mobArg:SetMagicCastingEnabled(false)
     end)
 
-    mob:addListener("TICK", "TIMED_ASTRAL_FLOW", function(mob)
+    mob:addListener("TICK", "TIMED_ASTRAL_FLOW", function(mobArg)
         if
-            (mob:getLocalVar("AstralFlowTimer") == 0 or
-             os.time() >= mob:getLocalVar("AstralFlowTimer")) and
-            mob:getLocalVar("AstralFlowUsed") == 0
+            (mobArg:getLocalVar("AstralFlowTimer") == 0 or
+             os.time() >= mobArg:getLocalVar("AstralFlowTimer")) and
+            mobArg:getLocalVar("AstralFlowUsed") == 0
         then
             local abilityID = nil
-            local modelID = mob:getModelId()
+            local modelID   = mobArg:getModelId()
 
             switch (modelID) : caseof
             {
@@ -34,16 +34,16 @@ g_mixins.families.avatar = function(mob)
                 [798] = function (x) abilityID = 918 end, -- Ramuh
             }
 
-            if (abilityID ~= nil) then
-                mob:useMobAbility(abilityID)
-                mob:setLocalVar("AstralFlowUsed", 1)
+            if abilityID ~= nil then
+                mobArg:useMobAbility(abilityID)
+                mobArg:setLocalVar("AstralFlowUsed", 1)
             end
         end
     end)
 
-    mob:addListener("WEAPONSKILL_STATE_EXIT", "AVATAR_MOBSKILL_FINISHED", function(mob)
-        mob:setUnkillable(false)
-        mob:setHP(0)
+    mob:addListener("WEAPONSKILL_STATE_EXIT", "AVATAR_MOBSKILL_FINISHED", function(mobArg)
+        mobArg:setUnkillable(false)
+        mobArg:setHP(0)
     end)
 end
 

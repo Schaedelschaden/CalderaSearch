@@ -239,24 +239,25 @@ local relicArmorPlusOne =
 -- [combinationId] = {trade = {flower}, reward = keyItem},
 -----------------------------------
 local highTierKIs = {
-	[1] =  {trade = {636},  reward = 2470}, -- Chamomile     -> Stellar Fulcrum Phantom Gem
-	[2] =  {trade = {941},  reward = 2473}, -- Red Rose      -> Phantom Gem of Envy
-	[3] =  {trade = {949},  reward = 2471}, -- Rain Lily     -> Phantom Gem of Apathy
-	[4] =  {trade = {956},  reward = 2474}, -- Lilac         -> Phantom Gem of Cowardice
-	[5] =  {trade = {957},  reward = 2475}, -- Amaryllis     -> Phantom Gem of Rage
-	[6] =  {trade = {948},  reward = 2472}, -- Carnation     -> Phantom Gem of Arrogance
-	[7] =  {trade = {1524}, reward = 2468}, -- Fresh Mugwort -> Shadow Lord Phantom Gem
-	[8] =  {trade = {2960}, reward = 2987}, -- Water Lily    -> Feared One Phantom Gem
-	[9] =  {trade = {959},  reward = 2546}, -- Dahlia        -> Warriors Path Phantom Gem
-	[10] = {trade = {1120}, reward = 2545}, -- Casablanca    -> Savages Phantom Gem
-	[11] = {trade = {2713}, reward = 2469}, -- Dyer's Woad   -> Celestial Nexus Phantom Gem
-	[12] = {trade = {918},  reward = 2595}, -- Mistletoe     -> Headwind Phantom Gem
-	[13] = {trade = {958},  reward = 2556}, -- Marguerite    -> Puppet in Peril Phantom Gem
-	[14] = {trade = {951},  reward = 2476}, -- Wijnruit      -> Pentacide Perpetrator Phantom Gem
-    [15] = {trade = {638},  reward = 2925}, -- Sage          -> Waking Dreams Phantom Gem
-    [16] = {trade = {835},  reward = 2923}, -- Flax Flower   -> Moonlit Path Phantom Gem
-    [17] = {trade = {1413}, reward = 2924}, -- Cattleya      -> Waking the Beast Phantom Gem
-    [18] = {trade = {2370}, reward =  808}, -- Flower Seeds  -> Secret Imperial Order
+    [  1] = {trade = { 636}, reward = tpz.ki.STELLAR_FULCRUM_PHANTOM_GEM  }, -- Chamomile     -> Stellar Fulcrum Phantom Gem
+    [  2] = {trade = { 941}, reward = tpz.ki.PHANTOM_GEM_OF_ENVY          }, -- Red Rose      -> Phantom Gem of Envy
+    [  3] = {trade = { 949}, reward = tpz.ki.PHANTOM_GEM_OF_APATHY        }, -- Rain Lily     -> Phantom Gem of Apathy
+    [  4] = {trade = { 956}, reward = tpz.ki.PHANTOM_GEM_OF_COWARDICE     }, -- Lilac         -> Phantom Gem of Cowardice
+    [  5] = {trade = { 957}, reward = tpz.ki.PHANTOM_GEM_OF_RAGE          }, -- Amaryllis     -> Phantom Gem of Rage
+    [  6] = {trade = { 948}, reward = tpz.ki.PHANTOM_GEM_OF_ARROGANCE     }, -- Carnation     -> Phantom Gem of Arrogance
+    [  7] = {trade = {1524}, reward = tpz.ki.SHADOW_LORD_PHANTOM_GEM      }, -- Fresh Mugwort -> Shadow Lord Phantom Gem
+    [  8] = {trade = {2960}, reward = tpz.ki.FEARED_ONE_PHANTOM_GEM       }, -- Water Lily    -> Feared One Phantom Gem
+    [  9] = {trade = { 959}, reward = tpz.ki.WARRIORS_PATH_PHANTOM_GEM    }, -- Dahlia        -> Warriors Path Phantom Gem
+    [ 10] = {trade = {1120}, reward = tpz.ki.SAVAGES_PHANTOM_GEM          }, -- Casablanca    -> Savages Phantom Gem
+    [ 11] = {trade = {2713}, reward = tpz.ki.CELESTIAL_NEXUS_PHANTOM_GEM  }, -- Dyer's Woad   -> Celestial Nexus Phantom Gem
+    [ 12] = {trade = { 918}, reward = tpz.ki.HEAD_WIND_PHANTOM_GEM        }, -- Mistletoe     -> Head Wind Phantom Gem
+    [ 13] = {trade = { 958}, reward = tpz.ki.PUPPET_IN_PERIL_PHANTOM_GEM  }, -- Marguerite    -> Puppet in Peril Phantom Gem
+    [ 14] = {trade = { 951}, reward = tpz.ki.P_PERPETRATOR_PHANTOM_GEM    }, -- Wijnruit      -> Pentacide Perpetrator Phantom Gem
+    [ 15] = {trade = { 638}, reward = tpz.ki.WAKING_DREAMS_PHANTOM_GEM    }, -- Sage          -> Waking Dreams Phantom Gem
+    [ 16] = {trade = { 835}, reward = tpz.ki.MOONLIT_PATH_PHANTOM_GEM     }, -- Flax Flower   -> Moonlit Path Phantom Gem
+    [ 17] = {trade = {1413}, reward = tpz.ki.WAKING_THE_BEAST_PHANTOM_GEM }, -- Cattleya      -> Waking the Beast Phantom Gem
+    [ 18] = {trade = {2370}, reward = tpz.ki.SECRET_IMPERIAL_ORDER        }, -- Flower Seeds  -> Secret Imperial Order
+    -- [ 19] = {trade = {    }, reward = tpz.ki.CONFIDENTIAL_IMPERIAL_ORDER }, -- UNASSIGNED    -> Confidential Imperial Order
     -- Lycopodium Flower, Tahrongi Cactus
 }
 
@@ -301,19 +302,19 @@ end
 function onTrade(player, npc, trade)
     local count = trade:getItemCount()
     local afUpgrade = player:getCharVar("AFupgrade")
-	
-	local lastHighTierKITrade = {
-		"Gem_StellarFulcrum_TIME",
-		"Gem_Envy_TIME",
-		"Gem_Apathy_TIME",
-		"Gem_Cowardice_TIME",
-		"Gem_Rage_TIME",
-		"Gem_Arrogance_TIME",
-		"Gem_ShadowLord_TIME",
-		"Gem_FearedOne_TIME",
-		"Gem_WarriorsPath_TIME",
-		"Gem_Savages_TIME",
-		"Gem_CelestialNexus_TIME",
+
+    local lastHighTierKITrade = {
+        "Gem_StellarFulcrum_TIME",
+        "Gem_Envy_TIME",
+        "Gem_Apathy_TIME",
+        "Gem_Cowardice_TIME",
+        "Gem_Rage_TIME",
+        "Gem_Arrogance_TIME",
+        "Gem_ShadowLord_TIME",
+        "Gem_FearedOne_TIME",
+        "Gem_WarriorsPath_TIME",
+        "Gem_Savages_TIME",
+        "Gem_CelestialNexus_TIME",
         "Gem_Headwind_TIME",
         "Gem_PuppetInPeril_TIME",
         "Gem_PentacidePerp_TIME",
@@ -321,46 +322,46 @@ function onTrade(player, npc, trade)
         "Gem_MoonlitPath_TIME",
         "Gem_WakingTheBeast_TIME",
         "Order_SecretImperial_TIME",
-	}
-	
-	local tradedCombo = 0
-	
-	-- Check for High Tier KI Trades
-	if tradedCombo == 0 and player:getCharVar("KillCounter_Kirin") >= 1 and player:getCharVar("KillCounter_JailofLove") >= 1 then
-		for k, v in pairs(highTierKIs) do
-			if npcUtil.tradeHasExactly(trade, v.trade) then
-				tradedCombo = k
-				break
-			end
-		end
-	end
-	
-	-- Found a match
-	-- if tradedCombo > 0 and player:getCharVar(lastHighTierKITrade[tradedCombo]) <= os.time() and
-	if tradedCombo > 0 and player:getCharVar(lastHighTierKITrade[tradedCombo]) < getMidnight()
-	and not player:hasKeyItem(highTierKIs[tradedCombo].reward) then
-		local ID = zones[player:getZoneID()]
-		local reward = highTierKIs[tradedCombo].reward
-	
-		player:confirmTrade()
-		player:addKeyItem(reward)
-		player:messageSpecial(ID.text.KEYITEM_OBTAINED, reward)
-		player:setCharVar(lastHighTierKITrade[tradedCombo], getMidnight())-- os.time() + 86400)
-	elseif (player:hasKeyItem(highTierKIs[tradedCombo].reward)) then
-		player:messageSpecial(ID.text.CANNOT_OBTAIN_MORE)
-	else
-		local timeRemainingHours = math.floor(((player:getCharVar(lastHighTierKITrade[tradedCombo]) - os.time()) / 60) / 60) -- ((player:getCharVar(lastHighTierKITrade[tradedCombo]) - os.time()) / 60)
-		local timeRemainingMinutes = (((player:getCharVar(lastHighTierKITrade[tradedCombo]) - os.time()) / 60) / 60)%1 * 60 -- ((player:getCharVar(lastHighTierKITrade[tradedCombo]) - os.time()) / 60)
-		
-		if (timeRemainingHours <= 1) then
-			player:PrintToPlayer(string.format("Sagheera : You must wait %i minutes until you can receive that key item.", timeRemainingMinutes),tpz.msg.channel.NS_SAY)
-		else
-			-- timeRemaining = timeRemaining / 60
-			player:PrintToPlayer(string.format("Sagheera : You must wait %i hours %i minutes until you can receive that key item.", timeRemainingHours, timeRemainingMinutes),tpz.msg.channel.NS_SAY)
-		end
-		
-		return
-	end
+    }
+
+    local tradedCombo = 0
+
+    -- Check for High Tier KI Trades
+    if tradedCombo == 0 and player:getCharVar("KillCounter_Kirin") >= 1 and player:getCharVar("KillCounter_JailofLove") >= 1 then
+        for k, v in pairs(highTierKIs) do
+            if npcUtil.tradeHasExactly(trade, v.trade) then
+                tradedCombo = k
+                break
+            end
+        end
+    end
+
+    -- Found a match
+    -- if tradedCombo > 0 and player:getCharVar(lastHighTierKITrade[tradedCombo]) <= os.time() and
+    if tradedCombo > 0 and player:getCharVar(lastHighTierKITrade[tradedCombo]) < getMidnight()
+    and not player:hasKeyItem(highTierKIs[tradedCombo].reward) then
+        local ID = zones[player:getZoneID()]
+        local reward = highTierKIs[tradedCombo].reward
+
+        player:confirmTrade()
+        player:addKeyItem(reward)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, reward)
+        player:setCharVar(lastHighTierKITrade[tradedCombo], getMidnight())-- os.time() + 86400)
+    elseif (player:hasKeyItem(highTierKIs[tradedCombo].reward)) then
+        player:messageSpecial(ID.text.CANNOT_OBTAIN_MORE)
+    else
+        local timeRemainingHours   = math.floor(((player:getCharVar(lastHighTierKITrade[tradedCombo]) - os.time()) / 60) / 60) -- ((player:getCharVar(lastHighTierKITrade[tradedCombo]) - os.time()) / 60)
+        local timeRemainingMinutes = (((player:getCharVar(lastHighTierKITrade[tradedCombo]) - os.time()) / 60) / 60)%1 * 60 -- ((player:getCharVar(lastHighTierKITrade[tradedCombo]) - os.time()) / 60)
+
+        if timeRemainingHours <= 1 then
+            player:PrintToPlayer(string.format("Sagheera : You must wait %i minutes until you can receive that key item.", timeRemainingMinutes),tpz.msg.channel.NS_SAY)
+        else
+            -- timeRemaining = timeRemaining / 60
+            player:PrintToPlayer(string.format("Sagheera : You must wait %i hours %i minutes until you can receive that key item.", timeRemainingHours, timeRemainingMinutes),tpz.msg.channel.NS_SAY)
+        end
+
+        return
+    end
 
     -- store ancient beastcoins
     if trade:hasItemQty(1875, count) then
@@ -474,11 +475,11 @@ function onEventFinish(player, csid, option)
 
     -- purchase cosmocleanse
     elseif csid == 310 and option == 3 then
-        -- local cosmoTime = getCosmoCleanseTime(player)
-        -- if cosmoTime == COSMO_READY and player:delGil(15000) then
-            -- npcUtil.giveKeyItem(player, tpz.ki.COSMOCLEANSE)
-        -- end
-		player:PrintToPlayer(string.format("Sagheera : Unfortunately, I haven't gotten any shipments of Cosmocleanse yet."),tpz.msg.channel.NS_SAY)
+        local cosmoTime = getCosmoCleanseTime(player)
+        if cosmoTime == COSMO_READY then
+            npcUtil.giveKeyItem(player, tpz.ki.COSMOCLEANSE)
+        end
+        -- player:PrintToPlayer(string.format("Sagheera : Unfortunately, I haven't gotten any shipments of Cosmocleanse yet."),tpz.msg.channel.NS_SAY)
 
     -- purchase item using ancient beastcoins
     elseif csid == 310 and abcShop[option] then

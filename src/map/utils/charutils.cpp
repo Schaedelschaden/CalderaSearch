@@ -709,17 +709,17 @@ namespace charutils
         Sql_Query(SqlHandle, "UPDATE char_stats SET zoning = 0 WHERE charid = %u", PChar->id);
 
         if (zoning == 2)
-		{
+        {
             ShowDebug("Player <%s> logging in to zone <%u>\n", PChar->name.c_str(), PChar->getZone());
-			
-			//Schaedel - Handle login message
-			std::string msg1 = "^(o.o)> ";
-			std::string charName = PChar->name.c_str();
-			std::string msg2 = " has logged in <(o.o)^";
-			std::string loginmsg = msg1 + charName + msg2;
-			
-			message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, loginmsg));
-		}
+
+            //Schaedel - Handle login message
+            std::string msg1 = "^(o.o)> ";
+            std::string charName = PChar->name.c_str();
+            std::string msg2 = " has logged in <(o.o)^";
+            std::string loginmsg = msg1 + charName + msg2;
+
+            message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, loginmsg));
+        }
 
         PChar->SetMLevel(PChar->jobs.job[PChar->GetMJob()]);
         PChar->SetSLevel(PChar->jobs.job[PChar->GetSJob()]);
@@ -1171,14 +1171,14 @@ namespace charutils
                     PChar->pushPacket(new CInventoryItemPacket(PItem, LocationID, slotID));
                 }
             }
-			
-			PChar->pushPacket(new CInventoryFinishPacket(LocationID));
+
+            PChar->pushPacket(new CInventoryFinishPacket(LocationID));
         };
 
         //Send important items first
         //Note: it's possible that non-essential inventory items are sent in response to another packet
-		
-		// TODO: What order are these sent in?
+
+        // TODO: What order are these sent in?
         for (auto&& containerID : { LOC_INVENTORY, LOC_TEMPITEMS, LOC_WARDROBE, LOC_WARDROBE2, LOC_WARDROBE3, LOC_WARDROBE4,
                                     LOC_WARDROBE5, LOC_WARDROBE6, LOC_WARDROBE7, LOC_WARDROBE8,
                                     LOC_MOGSAFE, LOC_STORAGE,
@@ -1221,7 +1221,7 @@ namespace charutils
             PChar->pushPacket(new CInventoryAssignPacket(PItem, INV_LINKSHELL));
             PChar->pushPacket(new CLinkshellEquipPacket(PChar, 2));
         }
-		
+
         PChar->pushPacket(new CInventoryFinishPacket()); // "Finish" type
     }
 
@@ -1587,12 +1587,12 @@ namespace charutils
 
     void UnequipItem(CCharEntity* PChar, uint8 equipSlotID, bool update)
     {
-		CPetEntity* PPet = nullptr;
-		if (PChar->PPet != nullptr)
-		{
-			PPet = (CPetEntity*)PChar->PPet;
-		}
-		
+        CPetEntity* PPet = nullptr;
+        if (PChar->PPet != nullptr)
+        {
+            PPet = (CPetEntity*)PChar->PPet;
+        }
+
         CItem* PItem = PChar->getEquip((SLOTTYPE)equipSlotID);
 
         if ((PItem != nullptr) && PItem->isType(ITEM_EQUIPMENT))
@@ -1753,12 +1753,12 @@ namespace charutils
                 PChar->m_EquipSwap = true;
                 PChar->updatemask |= UPDATE_LOOK;
             }
-			
-			if (PPet != nullptr && PPet->getPetType() == PETTYPE_WYVERN && PPet->StatusEffectContainer->HasStatusEffect(EFFECT_FOOD) &&
-			PChar->getMod(Mod::FOOD_AFFECTS_WYVERN) == 0)
-			{
-				PPet->StatusEffectContainer->DelStatusEffectSilent(EFFECT_FOOD);
-			}
+
+            if (PPet != nullptr && PPet->getPetType() == PETTYPE_WYVERN && PPet->StatusEffectContainer->HasStatusEffect(EFFECT_FOOD) &&
+            PChar->getMod(Mod::FOOD_AFFECTS_WYVERN) == 0)
+            {
+                PPet->StatusEffectContainer->DelStatusEffectSilent(EFFECT_FOOD);
+            }
         }
     }
 
@@ -2168,12 +2168,12 @@ namespace charutils
 
     void EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 containerID)
     {
-		CPetEntity* PPet = nullptr;
-		if (PChar->PPet != nullptr)
-		{
-			PPet = (CPetEntity*)PChar->PPet;
-		}
-		
+        CPetEntity* PPet = nullptr;
+        if (PChar->PPet != nullptr)
+        {
+            PPet = (CPetEntity*)PChar->PPet;
+        }
+
         CItemEquipment* PItem = (CItemEquipment*)PChar->getStorage(containerID)->GetItem(slotID);
 
         if (PItem && PItem == PChar->getEquip((SLOTTYPE)equipSlotID))
@@ -2274,14 +2274,14 @@ namespace charutils
             PChar->pushPacket(new CCharAbilitiesPacket(PChar));
         }
 
-		if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_FOOD) && PPet != nullptr && PPet->getPetType() == PETTYPE_WYVERN &&
-			PChar->getMod(Mod::FOOD_AFFECTS_WYVERN) > 0)
-		{
-			CStatusEffect* food = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_FOOD);
-			uint16 foodID = food->GetSubID();
-			uint16 duration = food->GetDuration();
-			PPet->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_FOOD, EFFECT_FOOD, 0, 0, duration, foodID));
-		}
+        if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_FOOD) && PPet != nullptr && PPet->getPetType() == PETTYPE_WYVERN &&
+            PChar->getMod(Mod::FOOD_AFFECTS_WYVERN) > 0)
+        {
+            CStatusEffect* food = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_FOOD);
+            uint16 foodID = food->GetSubID();
+            uint16 duration = food->GetDuration();
+            PPet->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_FOOD, EFFECT_FOOD, 0, 0, duration, foodID));
+        }
 
         charutils::BuildingCharSkillsTable(PChar);
 
@@ -2467,7 +2467,7 @@ namespace charutils
         memset(&PChar->m_PetCommands, 0, sizeof(PChar->m_PetCommands));
 
         if (PetID == 0) // Technically Fire Spirit but we're using this to null the abilities shown
-		{
+        {
             PChar->pushPacket(new CCharAbilitiesPacket(PChar));
             return;
         }
@@ -2482,22 +2482,22 @@ namespace charutils
 
                 if (PPet->GetMLevel() >= PAbility->getLevel() && (PetID >= 8 && PetID <= 20 || PetID == 76) && CheckAbilityAddtype(PChar, PAbility))
                 {
-					// Carbuncle
+                    // Carbuncle
                     if (PetID == 8)
                     {
                         if ((PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_SOOTHING_RUBY) || (PAbility->getID() == ABILITY_PACIFYING_RUBY))
                         {
                             if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_SOOTHING_RUBY)
-							{
-								addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
-							}
-							if (PAbility->getID() == ABILITY_PACIFYING_RUBY)
-							{
-								addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
-							}
+                            {
+                                addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
+                            }
+                            if (PAbility->getID() == ABILITY_PACIFYING_RUBY)
+                            {
+                                addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
+                            }
                         }
                     }
-					// Fenrir, Ifrit, Titan, Leviathan, Garuda, Shiva, Ramuh
+                    // Fenrir, Ifrit, Titan, Leviathan, Garuda, Shiva, Ramuh
                     else if (PetID >= 9 && PetID <= 15)
                     {
                         if (PAbility->getID() >= (ABILITY_HEALING_RUBY + ((PetID - 8) * 16)) && PAbility->getID() < (ABILITY_HEALING_RUBY + ((PetID - 7) * 16)))
@@ -2505,7 +2505,7 @@ namespace charutils
                             addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
                         }
                     }
-					// Diabolos
+                    // Diabolos
                     else if (PetID == 16)
                     {
                         if (PAbility->getID() >= ABILITY_CAMISADO && PAbility->getID() <= ABILITY_BLINDSIDE)
@@ -2513,7 +2513,7 @@ namespace charutils
                             addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
                         }
                     }
-					// Alexander
+                    // Alexander
                     else if (PetID == 17)
                     {
                         if (PAbility->getID() == ABILITY_PERFECT_DEFENSE)
@@ -2521,7 +2521,7 @@ namespace charutils
                             addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
                         }
                     }
-					// Odin
+                    // Odin
                     else if (PetID == 18)
                     {
                         if (PAbility->getID() == ABILITY_ZANTETSUKEN)
@@ -2529,7 +2529,7 @@ namespace charutils
                             addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
                         }
                     }
-					// Atomos
+                    // Atomos
                     else if (PetID == 19)
                     {
                         if (PAbility->getID() == ABILITY_DECONSTRUCTION || PAbility->getID() == ABILITY_CHRONOSHIFT)
@@ -2537,42 +2537,42 @@ namespace charutils
                             addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
                         }
                     }
-					// Cait Sith
+                    // Cait Sith
                     else if (PetID == 20)
                     {
-//						printf("charutils.cpp BuildingCharPetAbilityTable CAIT SITH SUMMONED\n");
+//                      printf("charutils.cpp BuildingCharPetAbilityTable CAIT SITH SUMMONED\n");
                         if ((PAbility->getID() >= ABILITY_REGAL_SCRATCH && PAbility->getID() <= ABILITY_ALTANAS_FAVOR) || (PAbility->getID() == ABILITY_REGAL_GASH))
                         {
-							if (PAbility->getID() >= ABILITY_REGAL_SCRATCH && PAbility->getID() <= ABILITY_ALTANAS_FAVOR)
-							{
-								addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
-							}
-							if (PAbility->getID() == ABILITY_REGAL_GASH)
-							{
-								addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
-							}
+                            if (PAbility->getID() >= ABILITY_REGAL_SCRATCH && PAbility->getID() <= ABILITY_ALTANAS_FAVOR)
+                            {
+                                addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
+                            }
+                            if (PAbility->getID() == ABILITY_REGAL_GASH)
+                            {
+                                addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
+                            }
                         }
                     }
-					// Siren
-					else if (PetID == 76)
-					{
-//						printf("charutils.cpp BuildingCharPetAbilityTable SIREN SUMMONED\n");
-						if (PAbility->getID() >= ABILITY_CLARSACH_CALL && PAbility->getID() <= ABILITY_HYSTERIC_ASSAULT)
-						{
-//							printf("charutils.cpp BuildingCharPetAbilityTable ADDING ABILITY: [%i]  MINUS HEALING RUBY: [%i]\n", PAbility->getID(), PAbility->getID() - ABILITY_HEALING_RUBY);
-							addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
-						}
-					}
+                    // Siren
+                    else if (PetID == 76)
+                    {
+//                      printf("charutils.cpp BuildingCharPetAbilityTable SIREN SUMMONED\n");
+                        if (PAbility->getID() >= ABILITY_CLARSACH_CALL && PAbility->getID() <= ABILITY_HYSTERIC_ASSAULT)
+                        {
+//                          printf("charutils.cpp BuildingCharPetAbilityTable ADDING ABILITY: [%i]  MINUS HEALING RUBY: [%i]\n", PAbility->getID(), PAbility->getID() - ABILITY_HEALING_RUBY);
+                            addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
+                        }
+                    }
                 }
             }
         }
         if (PPet->getPetType() == PETTYPE_JUG_PET)
         {
-//			printf("charutils.cpp BuildingCharPetAbilityTable JUG PET\n");
+//          printf("charutils.cpp BuildingCharPetAbilityTable JUG PET\n");
             auto skillList {battleutils::GetMobSkillList(PPet->m_MobSkillList)};
             for (auto&& abilityid : skillList)
             {
-//				printf("charutils.cpp BuildingCharPetAbilityTable ADDING ABILITY: [%i]  MINUS HEALING RUBY: [%i]\n", abilityid, abilityid - ABILITY_HEALING_RUBY);
+//              printf("charutils.cpp BuildingCharPetAbilityTable ADDING ABILITY: [%i]  MINUS HEALING RUBY: [%i]\n", abilityid, abilityid - ABILITY_HEALING_RUBY);
                 addPetAbility(PChar, abilityid - ABILITY_HEALING_RUBY);
             }
         }
@@ -2598,10 +2598,10 @@ namespace charutils
         {
             CAbility* PAbility = AbilitiesList.at(i);
 
-			if (charutils::GetCharVar(PChar, "AuditAbilities") == 1)
-			{
-				printf("charutils.cpp BuildingCharAbilityTable CHAR NAME: [%s]  JOB: [%i]  ABILITY ID: [%i]\n", PChar->GetName(), PChar->GetMJob(), PAbility->getID());
-			}
+            if (charutils::GetCharVar(PChar, "AuditAbilities") == 1)
+            {
+                printf("charutils.cpp BuildingCharAbilityTable CHAR NAME: [%s]  JOB: [%i]  ABILITY ID: [%i]\n", PChar->GetName(), PChar->GetMJob(), PAbility->getID());
+            }
 
             if (PAbility == nullptr) {
                 continue;
@@ -2609,20 +2609,20 @@ namespace charutils
 
             if (PChar->GetMLevel() >= PAbility->getLevel())
             {
-				if (charutils::GetCharVar(PChar, "AuditAbilities") == 1)
-				{
-					printf("charutils.cpp BuildingCharAbilityTable CHAR NAME: [%s]  MAIN LVL: [%i]  ABILITY LVL: [%i]\n", PChar->GetName(), PChar->GetMLevel(), PAbility->getLevel());
-				}
-				
+                if (charutils::GetCharVar(PChar, "AuditAbilities") == 1)
+                {
+                    printf("charutils.cpp BuildingCharAbilityTable CHAR NAME: [%s]  MAIN LVL: [%i]  ABILITY LVL: [%i]\n", PChar->GetName(), PChar->GetMLevel(), PAbility->getLevel());
+                }
+
                 if (PAbility->getID() < ABILITY_HEALING_RUBY && PAbility->getID() != ABILITY_PET_COMMANDS && CheckAbilityAddtype(PChar, PAbility))
                 {
                     addAbility(PChar, PAbility->getID());
-					
-					if (charutils::GetCharVar(PChar, "AuditAbilities") == 1)
-					{
-						printf("charutils.cpp BuildingCharAbilityTable CHAR NAME: [%s]  ADDING ABILITY ID: [%i]\n", PChar->GetName(), PAbility->getID());
-					}
-					
+
+                    if (charutils::GetCharVar(PChar, "AuditAbilities") == 1)
+                    {
+                        printf("charutils.cpp BuildingCharAbilityTable CHAR NAME: [%s]  ADDING ABILITY ID: [%i]\n", PChar->GetName(), PAbility->getID());
+                    }
+
                     Charge_t* charge = ability::GetCharge(PChar, PAbility->getRecastId());
                     auto chargeTime = 0;
                     auto maxCharges = 0;
@@ -2784,13 +2784,13 @@ namespace charutils
             meritIndex++;
 
             skillBonus += PChar->getMod(static_cast<Mod>(i + 79));
-			
-			// Handles Geomancy and Handbell skill modifiers
-			if (i >= 44 && i <= 45)
-			{
-				skillBonus += PChar->getMod(static_cast<Mod>(i + 917));
-			}
-			
+
+            // Handles Geomancy and Handbell skill modifiers
+            if (i >= 44 && i <= 45)
+            {
+                skillBonus += PChar->getMod(static_cast<Mod>(i + 917));
+            }
+
             PChar->WorkingSkills.rank[i] = battleutils::GetSkillRank((SKILLTYPE)i, PChar->GetMJob());
 
             if (MaxMSkill != 0)
@@ -2852,22 +2852,22 @@ namespace charutils
         }
 
         PChar->delModifier(Mod::MEVA, PChar->m_magicEvasion);
-		
-		if (PChar->GetMJob() == JOB_WHM || PChar->GetMJob() == JOB_BLM || PChar->GetMJob() == JOB_RDM || PChar->GetMJob() == JOB_BRD ||
-			PChar->GetMJob() == JOB_SMN ||  PChar->GetMJob() == JOB_SCH || PChar->GetMJob() == JOB_GEO)
-		{
-			PChar->m_magicEvasion = battleutils::GetMaxSkill(SKILL_ELEMENTAL_MAGIC, JOB_RDM, PChar->GetMLevel());
-		}
-		else
-		{
-			PChar->m_magicEvasion = battleutils::GetMaxSkill(SKILL_EVASION, PChar->GetMJob(), PChar->GetMLevel());
-		}
-		
-		if (PChar->GetMJob() == JOB_RUN)
-		{
-			PChar->m_magicEvasion = (uint16)(PChar->m_magicEvasion * 1.1f);
-		}
-		
+
+        if (PChar->GetMJob() == JOB_WHM || PChar->GetMJob() == JOB_BLM || PChar->GetMJob() == JOB_RDM || PChar->GetMJob() == JOB_BRD ||
+            PChar->GetMJob() == JOB_SMN ||  PChar->GetMJob() == JOB_SCH || PChar->GetMJob() == JOB_GEO)
+        {
+            PChar->m_magicEvasion = battleutils::GetMaxSkill(SKILL_ELEMENTAL_MAGIC, JOB_RDM, PChar->GetMLevel());
+        }
+        else
+        {
+            PChar->m_magicEvasion = battleutils::GetMaxSkill(SKILL_EVASION, PChar->GetMJob(), PChar->GetMLevel());
+        }
+
+        if (PChar->GetMJob() == JOB_RUN)
+        {
+            PChar->m_magicEvasion = (uint16)(PChar->m_magicEvasion * 1.1f);
+        }
+
         PChar->addModifier(Mod::MEVA, PChar->m_magicEvasion);
     }
 
@@ -3158,11 +3158,11 @@ namespace charutils
 
     int32 addAbility(CCharEntity* PChar, uint16 AbilityID)
     {
-		if (charutils::GetCharVar(PChar, "AuditAbilities") == 1)
-		{
-			printf("charutils.cpp addAbility CHAR NAME: [%s]  ABILITY ID: [%i]\n", PChar->GetName(), AbilityID);
-		}
-		
+        if (charutils::GetCharVar(PChar, "AuditAbilities") == 1)
+        {
+            printf("charutils.cpp addAbility CHAR NAME: [%s]  ABILITY ID: [%i]\n", PChar->GetName(), AbilityID);
+        }
+
         return addBit(AbilityID, PChar->m_Abilities, sizeof(PChar->m_Abilities));
     }
 
@@ -3298,66 +3298,66 @@ namespace charutils
     EMobDifficulty CheckMob(uint8 charlvl, uint8 moblvl)
     {
         uint32 baseExp = GetRealExp(charlvl, moblvl);
-		int32 lvlDiff = (moblvl - charlvl) + 11; // Mobs 11 levels or more below level 99+ players are Too Weak
+        int32 lvlDiff = (moblvl - charlvl) + 11; // Mobs 11 levels or more below level 99+ players are Too Weak
 
-		// Use the new system for player (item) levels over 99
-		if (charlvl >= 100)
-		{
-//			printf("charutils.cpp CheckMob NEW SYSTEM lvlDiff: [%i]\n", lvlDiff);
-			if (lvlDiff >= 19)
-			{
-//				printf("charutils.cpp CheckMob INCREDIBLY TOUGH\n");
-				return EMobDifficulty::IncrediblyTough;
-			}
-			else if (lvlDiff >= 18)
-			{
-//				printf("charutils.cpp CheckMob VERY TOUGH\n");
-				return EMobDifficulty::VeryTough;
-			}
-			else if (lvlDiff >= 12)
-			{
-//				printf("charutils.cpp CheckMob TOUGH\n");
-				return EMobDifficulty::Tough;
-			}
-			else if (lvlDiff >= 11)
-			{
-//				printf("charutils.cpp CheckMob EVEN MATCH\n");
-				return EMobDifficulty::EvenMatch;
-			}
-			else if (lvlDiff >= 10)
-			{
-//				printf("charutils.cpp CheckMob DECENT CHALLENGE\n");
-				return EMobDifficulty::DecentChallenge;
-			}
-			else if (lvlDiff >= 5)
-			{
-//				printf("charutils.cpp CheckMob EASY PREY\n");
-				return EMobDifficulty::EasyPrey;
-			}
-			else if (lvlDiff >= 0)
-			{
-//				printf("charutils.cpp CheckMob INCREDIBLY EASY PREY\n");
-				return EMobDifficulty::IncrediblyEasyPrey;
-			}
-			else if (lvlDiff < 0)
-			{
-//				printf("charutils.cpp CheckMob TOO WEAK\n");
-				return EMobDifficulty::TooWeak;
-			}
-		}
+        // Use the new system for player (item) levels over 99
+        if (charlvl >= 100)
+        {
+//          printf("charutils.cpp CheckMob NEW SYSTEM lvlDiff: [%i]\n", lvlDiff);
+            if (lvlDiff >= 19)
+            {
+//              printf("charutils.cpp CheckMob INCREDIBLY TOUGH\n");
+                return EMobDifficulty::IncrediblyTough;
+            }
+            else if (lvlDiff >= 18)
+            {
+//              printf("charutils.cpp CheckMob VERY TOUGH\n");
+                return EMobDifficulty::VeryTough;
+            }
+            else if (lvlDiff >= 12)
+            {
+//              printf("charutils.cpp CheckMob TOUGH\n");
+                return EMobDifficulty::Tough;
+            }
+            else if (lvlDiff >= 11)
+            {
+//              printf("charutils.cpp CheckMob EVEN MATCH\n");
+                return EMobDifficulty::EvenMatch;
+            }
+            else if (lvlDiff >= 10)
+            {
+//              printf("charutils.cpp CheckMob DECENT CHALLENGE\n");
+                return EMobDifficulty::DecentChallenge;
+            }
+            else if (lvlDiff >= 5)
+            {
+//              printf("charutils.cpp CheckMob EASY PREY\n");
+                return EMobDifficulty::EasyPrey;
+            }
+            else if (lvlDiff >= 0)
+            {
+//              printf("charutils.cpp CheckMob INCREDIBLY EASY PREY\n");
+                return EMobDifficulty::IncrediblyEasyPrey;
+            }
+            else if (lvlDiff < 0)
+            {
+//              printf("charutils.cpp CheckMob TOO WEAK\n");
+                return EMobDifficulty::TooWeak;
+            }
+        }
 
-		// Use the old system for player levels under 99
-		if (charlvl <= 99)
-		{
-//			printf("charutils.cpp CheckMob OLD SYSTEM\n");
-			if (baseExp >= 400) return EMobDifficulty::IncrediblyTough;
-			if (baseExp >= 350) return EMobDifficulty::VeryTough;
-			if (baseExp >= 220) return EMobDifficulty::Tough;
-			if (baseExp >= 200) return EMobDifficulty::EvenMatch;
-			if (baseExp >= 160) return EMobDifficulty::DecentChallenge;
-			if (baseExp >= 60) return EMobDifficulty::EasyPrey;
-			if (baseExp >= 14) return EMobDifficulty::IncrediblyEasyPrey;
-		}
+        // Use the old system for player levels under 99
+        if (charlvl <= 99)
+        {
+//          printf("charutils.cpp CheckMob OLD SYSTEM\n");
+            if (baseExp >= 400) return EMobDifficulty::IncrediblyTough;
+            if (baseExp >= 350) return EMobDifficulty::VeryTough;
+            if (baseExp >= 220) return EMobDifficulty::Tough;
+            if (baseExp >= 200) return EMobDifficulty::EvenMatch;
+            if (baseExp >= 160) return EMobDifficulty::DecentChallenge;
+            if (baseExp >= 60) return EMobDifficulty::EasyPrey;
+            if (baseExp >= 14) return EMobDifficulty::IncrediblyEasyPrey;
+        }
 
         return EMobDifficulty::TooWeak;
     }
@@ -3370,9 +3370,9 @@ namespace charutils
 
     uint32 GetRealExp(uint8 charlvl, uint8 moblvl)
     {
-/* 		// created adjusted character lvl to handle fix for ilvl stat adjustments --klutix 09192020
+/*      // created adjusted character lvl to handle fix for ilvl stat adjustments --klutix 09192020
         int32 adjCharlvl = (charlvl <= 99 ? charlvl : 99);
-		const int32 levelDif = moblvl - adjCharlvl + 44; */
+        const int32 levelDif = moblvl - adjCharlvl + 44; */
         const int32 levelDif = moblvl - charlvl + 44;
 
         if ((charlvl > 0) && (charlvl < 125))
@@ -3465,8 +3465,8 @@ namespace charutils
         uint8 bonus = 0;
         if (auto PMob = dynamic_cast<CMobEntity*>(PEntity))
         {
-			uint16 THLvl = PMob->m_THLvl;
-			
+            uint16 THLvl = PMob->m_THLvl;
+
             //THLvl is the number of 'extra chances' at an item. If the item is obtained, then break out.
             tries = 0;
             maxTries = 1 + (THLvl > 2 ? 2 : THLvl);
@@ -3493,13 +3493,13 @@ namespace charutils
     {
         uint8 pcinzone = 0;
         uint8 minlevel = 0, maxlevel = PChar->GetMLevel();
-		uint16 ilvl = battleutils::GetPlayerItemLevel(PChar);
-		
-		if (ilvl > 0)
-		{
-			maxlevel = maxlevel + ilvl;
-		}
-		
+        uint16 ilvl = battleutils::GetPlayerItemLevel(PChar);
+
+        if (ilvl > 0)
+        {
+            maxlevel = maxlevel + ilvl;
+        }
+
         REGIONTYPE region = PChar->loc.zone->GetRegionID();
 
         if (PChar->PParty)
@@ -3522,7 +3522,7 @@ namespace charutils
         }
 
         PChar->ForAlliance([&pcinzone, &PMob, &minlevel, &maxlevel](CBattleEntity* PMember) {
-			
+
             if (PMember->getZone() == PMob->getZone() && distance(PMember->loc.p, PMob->loc.p) < 100)
             {
                 if (PMember->PPet != nullptr && PMember->PPet->GetMLevel() > maxlevel && PMember->PPet->objtype != TYPE_PET)
@@ -3555,12 +3555,12 @@ namespace charutils
 
             uint8 moblevel = PMob->GetMLevel();
             uint8 memberlevel = PMember->GetMLevel();
-			uint16 memberILvl = battleutils::GetPlayerItemLevel(PMember);
-			
-			if (memberILvl > 0)
-			{
-				memberlevel = memberlevel + memberILvl;
-			}
+            uint16 memberILvl = battleutils::GetPlayerItemLevel(PMember);
+
+            if (memberILvl > 0)
+            {
+                memberlevel = memberlevel + memberILvl;
+            }
 
             EMobDifficulty mobCheck = CheckMob(maxlevel, moblevel);
             float exp = (float)GetRealExp(maxlevel, moblevel);
@@ -3572,7 +3572,7 @@ namespace charutils
                     if (map_config.exp_party_gap_penalties == 1)
                     {
                         // if (maxlevel > 50 || maxlevel > (memberlevel + 7))
-						if (maxlevel > (memberlevel + 9))
+                        if (maxlevel > (memberlevel + 9))
                         {
                             exp *= 0.03f; // memberlevel / (float)maxlevel;
                         }
@@ -3671,7 +3671,7 @@ namespace charutils
                             else PMember->expChain.chainTime = gettick() + 360000;
                             PMember->expChain.chainNumber = 1;
                         }
-						
+
                         // Sets EXP Chains time between kills before the chain is lost. Currently based on level
                         if (chainactive && PMember->GetMLevel() <= 10)
                         {
@@ -3974,47 +3974,47 @@ namespace charutils
 
             // Cruor Drops in Abyssea zones.
             uint16 Pzone = PChar->getZone();
-			CMobEntity* PCurrentMob = (CMobEntity*)PMob;
+            CMobEntity* PCurrentMob = (CMobEntity*)PMob;
             if (zoneutils::GetCurrentRegion(Pzone) == REGION_ABYSSEA)
             {
                 uint16 TextID = luautils::GetTextIDVariable(Pzone, "CRUOR_OBTAINED");
                 uint32 Total = charutils::GetPoints(PChar, "cruor");
                 uint32 Cruor = 0; // Need to work out how to do cruor chains, until then no cruor will drop unless this line is customized for non retail play.
-				
-				if (Pzone == ZONE_ABYSSEA_KONSCHTAT || Pzone == ZONE_ABYSSEA_TAHRONGI || Pzone == ZONE_ABYSSEA_LA_THEINE)
-				{
-					if (PCurrentMob->m_Type & MOBTYPE_NOTORIOUS)
-					{
-						Cruor = 200;
-					}
-					else
-					{
-						Cruor = 50;
-					}
-				}
-				else if (Pzone == ZONE_ABYSSEA_ATTOHWA || Pzone == ZONE_ABYSSEA_MISAREAUX || Pzone == ZONE_ABYSSEA_VUNKERL)
-				{
-					if (PCurrentMob->m_Type & MOBTYPE_NOTORIOUS)
-					{
-						Cruor = 250;
-					}
-					else
-					{
-						Cruor = 75;
-					}
-				}
-				else if (Pzone == ZONE_ABYSSEA_ALTEPA || Pzone == ZONE_ABYSSEA_ULEGUERAND || Pzone == ZONE_ABYSSEA_GRAUBERG)
-				{
-					if (PCurrentMob->m_Type & MOBTYPE_NOTORIOUS)
-					{
-						Cruor = 300;
-					}
-					else
-					{
-						Cruor = 100;
-					}
-				}
-				
+
+                if (Pzone == ZONE_ABYSSEA_KONSCHTAT || Pzone == ZONE_ABYSSEA_TAHRONGI || Pzone == ZONE_ABYSSEA_LA_THEINE)
+                {
+                    if (PCurrentMob->m_Type & MOBTYPE_NOTORIOUS)
+                    {
+                        Cruor = 200;
+                    }
+                    else
+                    {
+                        Cruor = 50;
+                    }
+                }
+                else if (Pzone == ZONE_ABYSSEA_ATTOHWA || Pzone == ZONE_ABYSSEA_MISAREAUX || Pzone == ZONE_ABYSSEA_VUNKERL)
+                {
+                    if (PCurrentMob->m_Type & MOBTYPE_NOTORIOUS)
+                    {
+                        Cruor = 250;
+                    }
+                    else
+                    {
+                        Cruor = 75;
+                    }
+                }
+                else if (Pzone == ZONE_ABYSSEA_ALTEPA || Pzone == ZONE_ABYSSEA_ULEGUERAND || Pzone == ZONE_ABYSSEA_GRAUBERG)
+                {
+                    if (PCurrentMob->m_Type & MOBTYPE_NOTORIOUS)
+                    {
+                        Cruor = 300;
+                    }
+                    else
+                    {
+                        Cruor = 100;
+                    }
+                }
+
                 if (TextID == 0)
                 {
                     ShowWarning(CL_YELLOW"Failed to fetch Cruor Message ID for zone: %i\n" CL_RESET, Pzone);
@@ -4026,39 +4026,39 @@ namespace charutils
                     charutils::AddPoints(PChar, "cruor", Cruor);
                 }
             }
-			
-			// Add Escha Silt on kill
-			if (Pzone == ZONE_ESCHA_ZITAH || Pzone == ZONE_ESCHA_RUAUN)
-			{
-				uint16 TextID = 0;
-				uint32 Total = 0;
-                uint32 Silt = 0;
-				uint8 Bead = 0;
-				
-				if (PCurrentMob->m_Type & MOBTYPE_NOTORIOUS)
-				{
-					Bead = tpzrand::GetRandomNumber(3, 10);
-				}
-				else
-				{
-					Silt = (uint32)(exp * 0.02f);
-				}
-				
-				if (Silt >= 1)
+
+            // Add Escha Silt on kill
+            if (Pzone == ZONE_ESCHA_ZITAH || Pzone == ZONE_ESCHA_RUAUN)
+            {
+                uint32 total  = 0;
+                uint32 silt   = 0;
+                uint8  bead   = 0;
+
+                if (PCurrentMob->m_Type & MOBTYPE_NOTORIOUS)
                 {
-					uint16 TextID = luautils::GetTextIDVariable(Pzone, "SILT_OBTAINED");
-					Total = charutils::GetPoints(PChar, "escha_silt");
-                    PChar->pushPacket(new CMessageSpecialPacket(PChar, TextID, Silt, Total + Silt, 0, 0));
-					charutils::AddPoints(PChar, "escha_silt", Silt);
+                    bead = tpzrand::GetRandomNumber(15, 30);
                 }
-				if (Bead >= 1)
-				{
-					uint16 TextID = luautils::GetTextIDVariable(Pzone, "BEAD_OBTAINED");
-					Total = charutils::GetPoints(PChar, "escha_bead");
-                    PChar->pushPacket(new CMessageSpecialPacket(PChar, TextID, Bead, Total + Bead, 0, 0));
-					charutils::AddPoints(PChar, "escha_bead", Bead);
-				}
-			}
+                else
+                {
+                    silt = (uint32)(exp * 0.02f);
+                }
+
+                if (silt >= 1)
+                {
+                    uint16 textID = luautils::GetTextIDVariable(Pzone, "SILT_OBTAINED");
+                    total = charutils::GetPoints(PChar, "escha_silt");
+                    PChar->pushPacket(new CMessageSpecialPacket(PChar, textID, silt, total + silt, 0, 0));
+                    charutils::AddPoints(PChar, "escha_silt", silt);
+                }
+
+                if (bead >= 1)
+                {
+                    uint16 textID = luautils::GetTextIDVariable(Pzone, "BEAD_OBTAINED");
+                    total = charutils::GetPoints(PChar, "escha_bead");
+                    PChar->pushPacket(new CMessageSpecialPacket(PChar, textID, bead, total + bead, 0, 0));
+                    charutils::AddPoints(PChar, "escha_bead", bead);
+                }
+            }
         }
 
         PChar->PAI->EventHandler.triggerListener("EXPERIENCE_POINTS", PChar, exp);
@@ -4211,8 +4211,8 @@ namespace charutils
             questslist,
             PChar->id);
     }
-	
-	uint8 getQuestStatus(CCharEntity* PChar, uint8 log, uint8 quest)
+
+    uint8 getQuestStatus(CCharEntity* PChar, uint8 log, uint8 quest)
     {
         uint8 current  = PChar->m_questLog[log].current[quest / 8] & (1 << (quest % 8));
         uint8 complete = PChar->m_questLog[log].complete[quest / 8] & (1 << (quest % 8));
@@ -4924,7 +4924,7 @@ namespace charutils
     uint16 AvatarPerpetuationReduction(CCharEntity* PChar)
     {
         uint16 reduction = PChar->getMod(Mod::PERPETUATION_REDUCTION);
-		bool dayBonusApplied = false;
+        bool dayBonusApplied = false;
 
         static const Mod strong[8] = {
             Mod::FIRE_AFFINITY_PERP,
@@ -4944,29 +4944,29 @@ namespace charutils
 
         if (battleutils::GetDayElement() == element)
         {
-			if (PChar->getMod(Mod::DAY_REDUCTION) >= 50)
-			{
-				reduction += (uint16)((float)PChar->getMod(Mod::AVATAR_PERPETUATION) / 2.0f) + (PChar->getMod(Mod::DAY_REDUCTION) - 50);
-				dayBonusApplied = true;
-			}
-			else
-			{
-				reduction += reduction + PChar->getMod(Mod::DAY_REDUCTION);
-			}
+            if (PChar->getMod(Mod::DAY_REDUCTION) >= 50)
+            {
+                reduction += (uint16)((float)PChar->getMod(Mod::AVATAR_PERPETUATION) / 2.0f) + (PChar->getMod(Mod::DAY_REDUCTION) - 50);
+                dayBonusApplied = true;
+            }
+            else
+            {
+                reduction += reduction + PChar->getMod(Mod::DAY_REDUCTION);
+            }
         }
 
         WEATHER weather = battleutils::GetWeather(PChar, false);
 
         if (battleutils::WeatherMatchesElement(weather, element))
         {
-			if (PChar->getMod(Mod::WEATHER_REDUCTION) >= 50 && dayBonusApplied == false)
-			{
-				reduction += (uint16)((float)PChar->getMod(Mod::AVATAR_PERPETUATION) / 2.0f) + (PChar->getMod(Mod::WEATHER_REDUCTION) - 50);
-			}
-			else
-			{
-				reduction += reduction + PChar->getMod(Mod::WEATHER_REDUCTION);
-			}
+            if (PChar->getMod(Mod::WEATHER_REDUCTION) >= 50 && dayBonusApplied == false)
+            {
+                reduction += (uint16)((float)PChar->getMod(Mod::AVATAR_PERPETUATION) / 2.0f) + (PChar->getMod(Mod::WEATHER_REDUCTION) - 50);
+            }
+            else
+            {
+                reduction += reduction + PChar->getMod(Mod::WEATHER_REDUCTION);
+            }
         }
 
         return reduction;
@@ -4980,8 +4980,8 @@ namespace charutils
 
     void SaveDeathTime(CCharEntity* PChar)
     {
-		// charutils::SetCharVar(PChar, "TotalDeaths", charutils::GetCharVar(PChar, "TotalDeaths") + 1);
-		
+        // charutils::SetCharVar(PChar, "TotalDeaths", charutils::GetCharVar(PChar, "TotalDeaths") + 1);
+
         const char* fmtQuery = "UPDATE char_stats SET death = %u WHERE charid = %u LIMIT 1;";
         Sql_Query(SqlHandle, fmtQuery, PChar->GetSecondsElapsedSinceDeath(), PChar->id);
     }
@@ -5042,25 +5042,25 @@ namespace charutils
 
     bool CheckAbilityAddtype(CCharEntity* PChar, CAbility* PAbility)
     {
-		int16 addType = 0;
-		
+        int16 addType = 0;
+
         if (PAbility->getAddType() & ADDTYPE_MERIT)
         {
-			addType = 1;
-			
-			// GEO has no merit mods so skip this
-			if (PChar->GetMJob() != JOBTYPE::JOB_GEO)
-			{
-				if (!(PChar->PMeritPoints->GetMerit((MERIT_TYPE)PAbility->getMeritModID())->count > 0))
-				{
-					return false;
-				}
-			}
+            addType = 1;
+
+            // GEO has no merit mods so skip this
+            if (PChar->GetMJob() != JOBTYPE::JOB_GEO)
+            {
+                if (!(PChar->PMeritPoints->GetMerit((MERIT_TYPE)PAbility->getMeritModID())->count > 0))
+                {
+                    return false;
+                }
+            }
         }
         if (PAbility->getAddType() & ADDTYPE_ASTRAL_FLOW)
         {
-			addType = 2;
-			
+            addType = 2;
+
             if (!PChar->StatusEffectContainer->HasStatusEffect(EFFECT_ASTRAL_FLOW))
             {
                 return false;
@@ -5068,8 +5068,8 @@ namespace charutils
         }
         if (PAbility->getAddType() & ADDTYPE_LEARNED)
         {
-			addType = 3;
-			
+            addType = 3;
+
             if (!hasLearnedAbility(PChar, PAbility->getID()))
             {
                 return false;
@@ -5077,8 +5077,8 @@ namespace charutils
         }
         if (PAbility->getAddType() & ADDTYPE_LIGHT_ARTS)
         {
-			addType = 4;
-			
+            addType = 4;
+
             if (!PChar->StatusEffectContainer->HasStatusEffect({EFFECT_LIGHT_ARTS, EFFECT_ADDENDUM_WHITE}))
             {
                 return false;
@@ -5086,8 +5086,8 @@ namespace charutils
         }
         if (PAbility->getAddType() & ADDTYPE_DARK_ARTS)
         {
-			addType = 5;
-			
+            addType = 5;
+
             if (!PChar->StatusEffectContainer->HasStatusEffect({EFFECT_DARK_ARTS, EFFECT_ADDENDUM_BLACK}))
             {
                 return false;
@@ -5095,8 +5095,8 @@ namespace charutils
         }
         if ((PAbility->getAddType() & (ADDTYPE_JUGPET | ADDTYPE_CHARMPET)) == (ADDTYPE_JUGPET | ADDTYPE_CHARMPET))
         {
-			addType = 6;
-			
+            addType = 6;
+
             if (!PChar->PPet || !(PChar->PPet->objtype == TYPE_MOB || (PChar->PPet->objtype == TYPE_PET && static_cast<CPetEntity*>(PChar->PPet)->getPetType() == PETTYPE_JUG_PET)))
             {
                 return false;
@@ -5104,8 +5104,8 @@ namespace charutils
         }
         if ((PAbility->getAddType() & (ADDTYPE_JUGPET | ADDTYPE_CHARMPET)) == ADDTYPE_JUGPET)
         {
-			addType = 7;
-			
+            addType = 7;
+
             if (!PChar->PPet || PChar->PPet->objtype != TYPE_PET || static_cast<CPetEntity*>(PChar->PPet)->getPetType() != PETTYPE_JUG_PET)
             {
                 return false;
@@ -5113,8 +5113,8 @@ namespace charutils
         }
         if ((PAbility->getAddType() & (ADDTYPE_JUGPET | ADDTYPE_CHARMPET)) == ADDTYPE_CHARMPET)
         {
-			addType = 8;
-			
+            addType = 8;
+
             if (!PChar->PPet || PChar->PPet->objtype != TYPE_MOB)
             {
                 return false;
@@ -5122,8 +5122,8 @@ namespace charutils
         }
         if (PAbility->getAddType() & ADDTYPE_AVATAR)
         {
-			addType = 9;
-			
+            addType = 9;
+
             if (!PChar->PPet || PChar->PPet->objtype != TYPE_PET || static_cast<CPetEntity*>(PChar->PPet)->getPetType() != PETTYPE_AVATAR)
             {
                 return false;
@@ -5131,19 +5131,19 @@ namespace charutils
         }
         if (PAbility->getAddType() & ADDTYPE_AUTOMATON)
         {
-			addType = 10;
-			
+            addType = 10;
+
             if (!PChar->PPet || PChar->PPet->objtype != TYPE_PET || static_cast<CPetEntity*>(PChar->PPet)->getPetType() != PETTYPE_AUTOMATON)
             {
                 return false;
             }
         }
-		
-		if (charutils::GetCharVar(PChar, "AuditAbilities") == 1)
-		{
-			printf("charutils.cpp CheckAbilityAddtype CHAR NAME: [%s]  ABILITY TYPE: [%i]\n", PChar->GetName(), addType);
-		}
-		
+
+        if (charutils::GetCharVar(PChar, "AuditAbilities") == 1)
+        {
+            printf("charutils.cpp CheckAbilityAddtype CHAR NAME: [%s]  ABILITY TYPE: [%i]\n", PChar->GetName(), addType);
+        }
+
         return true;
     }
 
@@ -5517,8 +5517,8 @@ namespace charutils
         }
         return 0;
     }
-	
-	int32 SetCharVar(CCharEntity* PChar, const char* var, int32 value)
+
+    int32 SetCharVar(CCharEntity* PChar, const char* var, int32 value)
     {
         const char* fmtQuery = "UPDATE char_vars SET value = %i WHERE charid = %u AND varname = '%s' LIMIT 1;";
 
@@ -5531,23 +5531,23 @@ namespace charutils
         {
             return Sql_GetIntData(SqlHandle, 0);
         }
-		// Line does not exist in the database, create new line with new information
-		else if (ret != SQL_ERROR &&
+        // Line does not exist in the database, create new line with new information
+        else if (ret != SQL_ERROR &&
             Sql_NumRows(SqlHandle) == 0 ||
             Sql_NextRow(SqlHandle) != SQL_SUCCESS)
-		{
-			fmtQuery = "INSERT INTO char_vars(charid, varname, value) VALUES(%u, '%s', %i) \
-						ON DUPLICATE KEY UPDATE charid = charid;";
-			ret = Sql_Query(SqlHandle, fmtQuery, PChar->id, var, value);
-			
-			if (ret != SQL_ERROR &&
+        {
+            fmtQuery = "INSERT INTO char_vars(charid, varname, value) VALUES(%u, '%s', %i) \
+                        ON DUPLICATE KEY UPDATE charid = charid;";
+            ret = Sql_Query(SqlHandle, fmtQuery, PChar->id, var, value);
+
+            if (ret != SQL_ERROR &&
             Sql_NumRows(SqlHandle) != 0 &&
             Sql_NextRow(SqlHandle) == SQL_SUCCESS)
-			{
-				return Sql_GetIntData(SqlHandle, 0);
-			}
-		}
-		
+            {
+                return Sql_GetIntData(SqlHandle, 0);
+            }
+        }
+
         return 0;
     }
 
