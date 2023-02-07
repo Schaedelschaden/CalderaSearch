@@ -83,6 +83,9 @@ WEAPON_SKILL_POINTS = 1.000 -- Multiplies points earned during weapon unlocking.
 MOB_SKILL_POWER     = 1.000 -- TO DO: Multiplies damage dealt by all monster skills (physical and magical)
 USE_ADOULIN_WEAPON_SKILL_CHANGES = true -- true/false. Change to toggle new Adoulin weapon skill damage calculations
 
+-- Caldera Custom settings
+SHURIKEN_DMG_BONUS  = 1.000 -- Multiplies damage dealt by Ninja shurikens (including Daken attacks)
+
 -- TRUSTS
 ENABLE_TRUST_QUESTS = 1
 

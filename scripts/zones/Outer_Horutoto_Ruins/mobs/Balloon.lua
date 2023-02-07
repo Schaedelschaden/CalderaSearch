@@ -10,5 +10,5 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    func.balloonOnDespawn(mob)
+    -- func.balloonOnDespawn(mob)
 end

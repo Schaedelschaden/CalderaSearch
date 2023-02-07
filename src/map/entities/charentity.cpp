@@ -1574,7 +1574,9 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
                 }
 
                 damage = (int32)((this->GetRangedWeaponDmg() + battleutils::GetFSTR(this, PTarget, slot)) * pdif);
-				
+
+                // printf("charentity.cpp OnRangedAttack  DAMAGE: [%i] = RANGED WEAPON DAMAGE: [%i] + fSTR: [%i] * pDIF: [%1.4f]\n", damage, this->GetRangedWeaponDmg(), battleutils::GetFSTR(this, PTarget, slot), pdif);
+
 				// Ranged attack distance correction ideal distances
 				// https://www.bg-wiki.com/ffxi/Distance_Correction
 				// https://ffxiclopedia.fandom.com/wiki/Distance
@@ -1583,16 +1585,25 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 				// Throwing (Ranged or Ammo slot)
 				if (rangedThrowing == true || ammoThrowing == true)
 				{
-					if (rangedDistance >= 1.0f && rangedDistance <= 3.5f && rangedThrowing == true)
+					if (rangedDistance >= 1.0f && rangedDistance <= 3.5f)
 					{
 						damage = (int32)(damage * distanceCorrection);
 						distanceSweetSpot = true;
 					}
-					else if (rangedDistance > 3.5f && rangedThrowing == true)
+					else if (rangedDistance > 3.5f)
 					{
 						damagePenalty = (100.0f - rangedDistance) / 100.0f;
 						damage = (int32)(damage * damagePenalty);
 					}
+
+                    if (PAmmo && PAmmo->getSubSkillType() == SUBSKILL_SHURIKEN)
+                    {
+                        float shurikenBonus = luautils::GetSettingsVariable("SHURIKEN_DMG_BONUS");
+
+                        // printf("charentity.cpp OnRangedAttack  THROWING DMG: [%i] = BASE: [%i] * SHURIKEN DMG BONUS: [%1.4f]\n", (int32)(damage * shurikenBonus), damage, shurikenBonus);
+
+                        damage = (uint32)(damage * shurikenBonus);
+                    }
 				}
 				
 				if (PItem != nullptr && PItem->getSkillType() == SKILL_MARKSMANSHIP)

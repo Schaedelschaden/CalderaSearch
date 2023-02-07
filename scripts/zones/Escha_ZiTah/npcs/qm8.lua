@@ -17,8 +17,8 @@ function onTrigger(player, npc)
     if (player:hasKeyItem(tpz.keyItem.REVETAURS_HORN) and npcUtil.popFromQM(player, npc, ID.mob.REVETAUR, {claim = true, hide = 30})) then
         GetMobByID(ID.mob.REVETAUR):setPos(461, 0, -279.4, 0)
         player:delKeyItem(tpz.keyItem.REVETAURS_HORN)
-    elseif (player:hasKeyItem(tpz.keyItem.IONOSS_WEBBING) and npcUtil.popFromQM(player, npc, ID.mob.IONIS, {claim = true, hide = 30})) then
-        GetMobByID(ID.mob.IONIS):setPos(461, 0, -279.4, 0)
+    elseif (player:hasKeyItem(tpz.keyItem.IONOSS_WEBBING) and npcUtil.popFromQM(player, npc, ID.mob.IONOS, {claim = true, hide = 30})) then
+        GetMobByID(ID.mob.IONOS):setPos(461, 0, -279.4, 0)
         player:delKeyItem(tpz.keyItem.IONOSS_WEBBING)
     else
         player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)

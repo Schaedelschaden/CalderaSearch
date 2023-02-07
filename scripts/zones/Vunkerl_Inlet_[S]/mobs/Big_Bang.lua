@@ -36,5 +36,6 @@ function onMobSpawn(mob) -- When mob spawns (either forced or time)
 end
 
 function onMobDeath(mob, player, isKiller)
+    mob:setRespawnTime(14400)
     -- tpz.hunts.checkHunt(mob, player, 488)
 end

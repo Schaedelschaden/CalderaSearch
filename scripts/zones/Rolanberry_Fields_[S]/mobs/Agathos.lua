@@ -26,6 +26,7 @@ function onMobSpawn(mob)
 	-- mob:addMod(tpz.mod.STR, 150)
 	mob:addMod(tpz.mod.REGEN, 300)
 	mob:setMod(tpz.mod.FAST_CAST, 15)
+    mob:setMod(tpz.mod.ALL_WSDMG_ALL_HITS, -20)
 end
 
 function onMobDeath(mob, player, isKiller)

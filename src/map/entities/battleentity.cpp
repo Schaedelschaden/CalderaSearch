@@ -796,7 +796,7 @@ uint16 CBattleEntity::RACC(uint8 skill, uint16 bonusSkill)
     return acc + std::min<int16>(((100 + getMod(Mod::FOOD_RACCP) * acc) / 100), getMod(Mod::FOOD_RACC_CAP));
 }
 
-uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
+uint16 CBattleEntity::ACC(uint8 attackNumber, int16 offsetAccuracy)
 {
 	// Determines character, pet, and mod ACC stat
     if (this->objtype & TYPE_PC)
@@ -1952,9 +1952,24 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 // Not critical hit.
                 else
                 {
-                    actionTarget.reaction = REACTION_HIT;
+                    actionTarget.reaction   = REACTION_HIT;
                     actionTarget.speceffect = SPECEFFECT_HIT;
-                    actionTarget.messageID = attack.GetAttackType() == PHYSICAL_ATTACK_TYPE::DAKEN ? 352 : 1;
+                    // actionTarget.messageID = attack.GetAttackType() == PHYSICAL_ATTACK_TYPE::DAKEN ? 352 : 1;
+                    actionTarget.messageID  = 1;
+
+                    if (attack.GetAttackType() == PHYSICAL_ATTACK_TYPE::DAKEN)
+                    {
+                        float rangedDistance = distance(this->loc.p, PTarget->loc.p); // attacker, target
+
+                        if (rangedDistance >= 1.0f && rangedDistance <= 3.5f)
+                        {
+                            actionTarget.messageID = 577; // Ranged attack strikes true, pummeling
+                        }
+                        else if (rangedDistance >= 3.5f)
+                        {
+                            actionTarget.messageID = 576; // Ranged attack strikes squarely
+                        }
+                    }
                 }
 
                 // Guarded. TODO: Stuff guards that shouldn't.

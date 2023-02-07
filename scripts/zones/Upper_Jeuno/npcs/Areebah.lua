@@ -29,6 +29,10 @@ function onTrigger(player, npc)
         638,  170,    -- Sage
         835,  225,    -- Flax Flower
         2370, 520,    -- Flower Seeds
+        574,  280,    -- Fruit Seeds
+        573,  280,    -- Vegetable Seeds
+        575,  280,    -- Grain Seeds
+        572,  280,    -- Herb Seeds
     }
 
     player:showText(npc, ID.text.MP_SHOP_DIALOG)

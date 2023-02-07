@@ -248,7 +248,7 @@ local battlefields = {
      -- {14,   14, 1130},   -- Shots in the Dark (BS60) -- TODO: Warmachine combat behavior
         {15,   15, 1175},   -- Double Dragonian (KS30) -- TODO: Chaos Blade strengthens after 2hr
      -- {16,   16, 1178},   -- Today's Horoscope (KS30)
-     -- {17,   17, 1180},   -- Contaminated Colosseum (KS30) -- TODO: Extremely Bad Breath mobskill
+        {17,   17, 1180},   -- Contaminated Colosseum (KS30) -- TODO: Extremely Bad Breath mobskill
      -- {18,   18, 3351},   -- Kindergarten Cap (KC30)
      -- {19,   19, 3352},   -- Last Orc-Shunned Hero (KC50)
         {20,   20,    0},   -- Beyond Infinity (Quest)
@@ -305,7 +305,7 @@ local battlefields = {
     },
 
     [tpz.zone.BALGAS_DAIS] =
-    {
+    { 
         { 0,   96,    0},   -- The Rank 2 Final Mission (Mission 2-3)
         { 1,   97, 1131},   -- Steamed Sprouts (BS40)
         { 2,   98, 1130},   -- Divine Punishers (BS60)
@@ -323,7 +323,7 @@ local battlefields = {
         {14,  110, 1175},   -- Wild Wild Whiskers (BS60) -- TODO: should use petrifactive breath more often than other mobskill. Message before spellcasting.
      -- {15,  111, 1175},   -- Seasons Greetings (KS30)
      -- {16,  112, 1178},   -- Royale Ramble (KS30)
-     -- {17,  113, 1180},   -- Moa Constrictors (KS30)
+        {17,  113, 1180},   -- Moa Constrictors (KS30)
      -- {18,  114, 3351},   -- The V Formation (KC30)
      -- {19,  115, 3352},   -- Avian Apostates (KC50)
         {20,  116,    0},   -- Beyond Infinity (Quest)
@@ -377,7 +377,7 @@ local battlefields = {
         { 4,  196, 1439},   -- Shattering Stars (DRG LB5)
      -- { 5,  197,    0},   -- Cactuar Suave (KS30)
         { 6,  198, 1178},   -- Eye of the Storm (KS30)
-     -- { 7,  199, 1180},   -- The Scarlet King (KS30)
+        { 7,  199, 1180},   -- The Scarlet King (KS30)
      -- { 8,  200,    0},   -- Roar! A Cat Burglar Bares Her Fangs (MKD10)
      -- { 9,  201, 3352},   -- Dragon Scales (KC50)
      -- {10,    ?, 4063},   -- *Legion XI Comitatensis (SKC20)
@@ -472,7 +472,7 @@ local battlefields = {
         { 0,  512,    0},   -- The Rank 5 Mission (Mission 5-1)
      -- { 1,  513, 1175},   -- Come Into My Parlor (KS30)
      -- { 2,  514, 1178},   -- E-vase-ive Action (KS30)
-     -- { 3,  515, 1180},   -- Infernal Swarm (KS30)
+        { 3,  515, 1180},   -- Infernal Swarm (KS30)
         { 4,  516,    0},   -- The Heir to the Light (Sandy 9-2)
         { 5,  517, 1432},   -- Shattering Stars (PLD LB5)
         { 6,  518, 1433},   -- Shattering Stars (DRK LB5)

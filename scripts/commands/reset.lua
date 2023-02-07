@@ -57,6 +57,8 @@ function onTrigger(player, target)
         tpz.effect.CHARM_I,
         tpz.effect.CHARM_II,
         tpz.effect.POISON,
+        tpz.effect.CURSE_I,
+        tpz.effect.CURSE_II,
     }
 
     for _, v in pairs(effects) do

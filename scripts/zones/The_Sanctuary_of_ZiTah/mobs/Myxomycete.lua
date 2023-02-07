@@ -10,15 +10,15 @@ require("scripts/globals/mobs")
 -----------------------------------
 
 function onMobRoam(mob)
-    local weather = mob:getWeather()
+    -- local weather = mob:getWeather()
 
-    if weather == tpz.weather.RAIN or weather == tpz.weather.SQUALL then
-        if tpz.mob.phOnDespawn(mob, ID.mob.NOBLE_MOLD_PH, 100, math.random(43200, 57600), true) then -- 12 to 16 hours
-            local p = mob:getPos()
-            GetMobByID(ID.mob.NOBLE_MOLD):setSpawn(p.x, p.y, p.z, p.rot)
-            DespawnMob(mob:getID())
-        end
-    end
+    -- if weather == tpz.weather.RAIN or weather == tpz.weather.SQUALL then
+        -- if tpz.mob.phOnDespawn(mob, ID.mob.NOBLE_MOLD_PH, 100, math.random(43200, 57600), true) then -- 12 to 16 hours
+            -- local p = mob:getPos()
+            -- GetMobByID(ID.mob.NOBLE_MOLD):setSpawn(p.x, p.y, p.z, p.rot)
+            -- DespawnMob(mob:getID())
+        -- end
+    -- end
 end
 
 function onMobDeath(mob, player, isKiller)

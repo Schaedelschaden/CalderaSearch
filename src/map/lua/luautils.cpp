@@ -195,7 +195,7 @@ namespace luautils
         lua_rawset(LuaHandle, -3);
         lua_pop(LuaHandle, 1);
 
-        contentRestrictionEnabled = (GetSettingsVariable("RESTRICT_CONTENT") != 0);
+        contentRestrictionEnabled = (bool)(GetSettingsVariable("RESTRICT_CONTENT") != 0);
 
         TracyReportLuaMemory(LuaHandle);
 
@@ -1372,7 +1372,7 @@ namespace luautils
     *                                                                       *
     ************************************************************************/
 
-    uint8 GetSettingsVariable(const char* variable)
+    float GetSettingsVariable(const char* variable)
     {
         lua_pushnil(LuaHandle);
         lua_setglobal(LuaHandle, variable);
@@ -1395,7 +1395,7 @@ namespace luautils
             return 0;
         }
 
-        uint8 value = (uint8)lua_tonumber(LuaHandle, -1);
+        float value = (float)lua_tonumber(LuaHandle, -1);
         lua_pop(LuaHandle, -1);
         return value;
     }

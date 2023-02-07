@@ -726,8 +726,9 @@ tpz.besieged.onMobDespawnCaldera = function(mob, npcID)
 end
 
 tpz.besieged.onMobDeathCaldera = function(mob, player, isKiller, npcID)
+    local startNPC = GetNPCByID(npcID)
+
     if mob:getLocalVar("DeathCheck") == 0 then
-        local startNPC    = GetNPCByID(npcID)
         local currentWave = startNPC:getLocalVar("wave")
         local maxWave     = 3
         local instanceID  = 0
@@ -759,34 +760,34 @@ tpz.besieged.onMobDeathCaldera = function(mob, player, isKiller, npcID)
             startNPC:setLocalVar("Besieged_Wave_Alive", 0)
             mob:setLocalVar("DeathCheck", 1)
         end
+    end
 
-        -- Check if the mob is an "instance" Mega Boss and advance its kill counter
+    -- Check if the mob is an "instance" Mega Boss and advance its kill counter
+    if
+        mob:getID() == besiegedWaves[1][3][1] or -- Medusa
+        mob:getID() == besiegedWaves[2][3][1] or -- Gulool Ja Ja
+        mob:getID() == besiegedWaves[3][3][1] or -- Gurfurlur the Menacing
+        mob:getID() == besiegedWaves[4][3][1] or -- Illuyankas
+        mob:getID() == besiegedWaves[5][5][1]    -- General Rughadjeen
+    then
         if
-            mob:getID() == besiegedWaves[1][3][1] or -- Medusa
-            mob:getID() == besiegedWaves[2][3][1] or -- Gulool Ja Ja
-            mob:getID() == besiegedWaves[3][3][1] or -- Gurfurlur the Menacing
-            mob:getID() == besiegedWaves[4][3][1] or -- Illuyankas
-            mob:getID() == besiegedWaves[5][5][1]    -- General Rughadjeen
+            startNPC:getLocalVar("GM_Override") == 0 and
+            player ~= nil
         then
-            if
-                startNPC:getLocalVar("GM_Override") == 0 and
-                player ~= nil
-            then
-                -- Track kill counters
-                local mobName      = mob:getName()
-                local fixedMobName = string.gsub(mobName, "_", " ")
-                local shortName    = mobName:sub(1, 14)
-                -- printf("besieged.lua onMobDeathCaldera  SHORT NAME: [%s]", shortName)
-                local KillCounter = player:getCharVar("KillCounter_BSG_"..shortName)
+            -- Track kill counters
+            local mobName      = mob:getName()
+            local fixedMobName = string.gsub(mobName, "_", " ")
+            local shortName    = mobName:sub(1, 14)
+            local KillCounter  = player:getCharVar("KillCounter_BSG_"..shortName)
+            -- printf("besieged.lua onMobDeathCaldera  SHORT NAME: [%s]", shortName)
 
-                KillCounter = KillCounter + 1
+            KillCounter = KillCounter + 1
 
-                player:setCharVar("KillCounter_BSG_"..shortName, KillCounter)
-                player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
-            else
-                -- Reset GM Override
-                startNPC:setLocalVar("GM_Override", 0)
-            end
+            player:setCharVar("KillCounter_BSG_"..shortName, KillCounter)
+            player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+        else
+            -- Reset GM Override
+            startNPC:setLocalVar("GM_Override", 0)
         end
     end
 end

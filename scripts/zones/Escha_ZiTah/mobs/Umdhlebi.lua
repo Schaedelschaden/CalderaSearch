@@ -2,6 +2,8 @@
 -- Area: Escha - Zitah
 --   NM: Umdhlebi
 -----------------------------------
+local ID = require("scripts/zones/Escha_ZiTah/IDs")
+require("scripts/globals/keyitems")
 require("scripts/globals/status")
 -----------------------------------
 
@@ -65,6 +67,7 @@ function onMobDeath(mob, player, isKiller)
         player:setCharVar("Escha_Urmahlullu_KI", 1)
     elseif player:getCharVar("Escha_Urmahlullu_KI") == 1 then
         player:addKeyItem(tpz.keyItem.URMAHLULLUS_ARMOR)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.keyItem.URMAHLULLUS_ARMOR)
         player:setCharVar("Escha_Urmahlullu_KI", 0)
     end
 

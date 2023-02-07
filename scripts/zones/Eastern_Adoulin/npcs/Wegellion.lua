@@ -95,7 +95,7 @@ function onTrade(player, npc, trade)
 		elseif (augmentGearCounter == 19) then -- Polyhymnia
 			player:addItem(augGear, 1, 45, 9, 62, 17, 142, 7, 327, 4) -- +10 DMG, +50 ACC, +8 Store TP, +5 WSD%
 		elseif (augmentGearCounter == 20) then -- Coeus
-			player:addItem(augGear, 1, 45, 15, 64, 17, 133, 9, 140, 2) -- +16 DMG, +50 MACC, +10 MATK, +3 Fast Cast
+			player:addItem(augGear, 1, 45, 15, 64, 17, 133, 9, 140, 4) -- +16 DMG, +50 MACC, +10 MATK, +5 Fast Cast
 		elseif (augmentGearCounter == 21) then -- Dunna
 			player:addItem(augGear, 1, 1, 19, 35, 9, 140, 2) -- +20 MP, +10 MACC, +3 Fast Cast
 		elseif (augmentGearCounter == 22) then -- Aettir

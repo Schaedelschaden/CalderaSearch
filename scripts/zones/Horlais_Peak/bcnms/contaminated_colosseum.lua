@@ -1,6 +1,6 @@
 -----------------------------------
 -- Contaminated Colosseum
--- Horlais Peak KSNM, Atropos Orb
+-- Horlais Peak KSNM30, Atropos Orb
 -- !additem 1180
 -----------------------------------
 require("scripts/globals/battlefield")

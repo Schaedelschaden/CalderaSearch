@@ -1572,7 +1572,8 @@ namespace battleutils
     //todo: need to penalise attacker's RangedAttack depending on distance from mob. (% decrease)
     float GetRangedDamageRatio(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool isCritical)
     {
-        CItemWeapon* PWeapon = GetEntityWeapon(PAttacker, SLOT_RANGED);
+		CItemWeapon* PWeapon = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_RANGED]); // GetEntityWeapon(PAttacker, SLOT_RANGED);
+        CItemWeapon* PAmmo   = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_AMMO]); // GetEntityWeapon(PAttacker, SLOT_AMMO);
 
         //get ranged attack value
         uint16 rAttack = 1;
@@ -1581,21 +1582,15 @@ namespace battleutils
         {
             CCharEntity* PChar = (CCharEntity*)PAttacker;
 
-            if (PWeapon != nullptr && PWeapon->isType(ITEM_WEAPON))
+            if (PAmmo != nullptr && PAmmo->isType(ITEM_WEAPON) && PAmmo->getSkillType() == SKILL_THROWING)
             {
-                rAttack = PChar->RATT(PWeapon->getSkillType(), PWeapon->getILvlSkill());
+                // printf("battleutils.cpp GetRangedDamageRatio  1  SKILL TYPE: [%i]  ILVL SKILL: [%i]\n", PAmmo->getSkillType(), PAmmo->getILvlSkill());
+                rAttack = PChar->RATT(PAmmo->getSkillType(), PAmmo->getILvlSkill());
             }
-            else
+            else if (PWeapon != nullptr && PWeapon->isType(ITEM_WEAPON))
             {
-                PWeapon = (CItemWeapon*)PChar->getEquip(SLOT_AMMO);
-
-                if (PWeapon == nullptr || !PWeapon->isType(ITEM_WEAPON) || (PWeapon->getSkillType() != SKILL_THROWING)) {
-                    ShowDebug("battleutils::GetRangedPDIF Cannot find a valid ranged weapon to calculate PDIF for. \n");
-                }
-                else
-                {
-                    rAttack = PChar->RATT(PWeapon->getSkillType(), PWeapon->getILvlSkill());
-                }
+                // printf("battleutils.cpp GetRangedDamageRatio  2  SKILL TYPE: [%i]  ILVL SKILL: [%i]\n", PWeapon->getSkillType(), PWeapon->getILvlSkill());
+                rAttack = PChar->RATT(PWeapon->getSkillType(), PWeapon->getILvlSkill());
             }
         }
         else if (PAttacker->objtype == TYPE_PET && ((CPetEntity*)PAttacker)->getPetType() == PETTYPE_AUTOMATON)
@@ -1613,6 +1608,8 @@ namespace battleutils
         float cRatioMax = 0;
         float cRatioMin = 0;
         float ratioCap = 3.2375f; // Archery and Throwing
+
+        // printf("battleutils.cpp GetRangedDamageRatio  RATT: [%i]  DEF: [%i]\n", rAttack, PDefender->DEF());
 
         // Marksmanship
         if (PWeapon->getSkillType() == SKILL_MARKSMANSHIP)
@@ -2563,6 +2560,36 @@ namespace battleutils
 //          printf("battleutils.cpp TakePhysicalDamage KILLER EFFECT: [%i]  BONUS: [%1.3f]  DAMAGE: [%i]\n", KillerEffect, bonus, damage);
         }
 
+        if (physicalAttackType == PHYSICAL_ATTACK_TYPE::DAKEN)
+        {
+            float rangedDistance = distance(PAttacker->loc.p, PDefender->loc.p);
+
+            if (rangedDistance >= 3.5f)
+            {
+                float damagePenalty = (100.0f - rangedDistance) / 100.0f;
+
+                // printf("battleutils.cpp TakePhysicalDamage DAMAGE: [%i] = BASE: [%i] * DISTANCE PENALTY: [%1.4f]\n", (int32)(damage * damagePenalty), damage, damagePenalty);
+
+                damage = (int32)(damage * damagePenalty);
+            }
+            else
+            {
+                float trueShot = PAttacker->getMod(Mod::TRUE_SHOT);
+                float distCorr = 1.00f + float(trueShot / 100.00f);
+
+                // printf("battleutils.cpp TakePhysicalDamage DAMAGE: [%i] = BASE: [%i] * TRUE SHOT BONUS: [%1.4f]\n", (int32)(damage * distCorr), damage, distCorr);
+
+                damage = (int32)(damage * distCorr);
+            }
+
+            // Caldera global Daken damage bonus
+            float dakenBonus = luautils::GetSettingsVariable("SHURIKEN_DMG_BONUS");
+
+            // printf("battleutils.cpp TakePhysicalDamage DAMAGE: [%i] = BASE: [%i] * SHURIKEN DAMAGE BONUS: [%1.4f]\n", (int32)(damage * dakenBonus), damage, dakenBonus);
+
+            damage = (int32)(damage * dakenBonus);
+        }
+
         if (damage > 0)
         {
             damage = std::max(damage - PDefender->getMod(Mod::PHALANX), 0);
@@ -2959,7 +2986,7 @@ namespace battleutils
     *                                                                       *
     ************************************************************************/
 
-    uint8 GetHitRateEx(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 attackNumber, int8 offsetAccuracy) //subWeaponAttack is for calculating acc of dual wielded sub weapon
+    uint8 GetHitRateEx(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 attackNumber, int16 offsetAccuracy) //subWeaponAttack is for calculating acc of dual wielded sub weapon
     {
         int32 hitrate = 75;
 
@@ -3207,7 +3234,7 @@ namespace battleutils
     {
         return GetHitRateEx(PAttacker, PDefender, attackNumber, 0);
     }
-    uint8 GetHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 attackNumber, int8 offsetAccuracy)
+    uint8 GetHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 attackNumber, int16 offsetAccuracy)
     {
         return GetHitRateEx(PAttacker, PDefender, attackNumber, offsetAccuracy);
     }
@@ -3889,69 +3916,84 @@ namespace battleutils
         int32 rank = 0;
         int32 fstr = 0;
         float dif = (float)(PAttacker->STR() - PDefender->VIT());
-        int8 divisor = 4;
+		int8 divisor = 4;
 
-        if (SlotID == SLOT_RANGED)
+		if (SlotID == SLOT_RANGED || SlotID == SLOT_AMMO)
         {
-            divisor = 2;
-        }
+			divisor = 2;
+		}
 
         if (dif >= 12)
-        {
+		{
             fstr = (int32)((dif + 4) / divisor);
         }
         else if (dif >= 6)
-        {
+		{
             fstr = (int32)((dif + 6) / divisor);
         }
         else if (dif >= 1)
-        {
+		{
             fstr = (int32)((dif + 7) / divisor);
         }
         else if (dif >= -2)
-        {
+		{
             fstr = (int32)((dif + 8) / divisor);
         }
         else if (dif >= -7)
-        {
+		{
             fstr = (int32)((dif + 9) / divisor);
         }
         else if (dif >= -15)
-        {
+		{
             fstr = (int32)((dif + 10) / divisor);
         }
         else if (dif >= -21)
-        {
+		{
             fstr = (int32)((dif + 12) / divisor);
         }
         else
-        {
+		{
             fstr = (int32)((dif + 13) / divisor);
         }
 
-        // Ranged fSTR Lower & Upper caps
-        if (SlotID == SLOT_RANGED)
+		// Ranged fSTR Lower & Upper caps
+        if (SlotID == SLOT_RANGED || SlotID == SLOT_AMMO)
         {
             rank = PAttacker->GetRangedWeaponRank();
-            // Ranged Lower cap of fSTR
+
+            if (SlotID == SLOT_AMMO)
+            {
+                auto ammo = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_AMMO]);
+                
+                if (ammo)
+                {
+                    rank = (ammo->getDamage() + PAttacker->getMod(Mod::RANGED_DMG_RANK)) / 9;
+                }
+                else
+                {
+                    rank = 0;
+                }
+            }
+
+            // Ranged Lower cap of fSTR 
             if (fstr <= (-rank * 2))
-            {
+			{
                 return (-rank * 2);
-            }
-            // Ranged Upper cap of fSTR
+			}
+			// Ranged Upper cap of fSTR
             if ((fstr > (-rank * 2)) && (fstr <= (2 * (rank + 8))))
-            {
+			{
                 return fstr;
-            }
+			}
             else
-            {
+			{
                 return 2 * (rank + 8);
-            }
+			}
         }
-        // Melee fSTR Lower & Upper caps
+		// Melee fSTR Lower & Upper caps
         else
         {
-            //
+			// 
             fstr /= 2;
             if (SlotID == SLOT_MAIN)
             {
@@ -3961,22 +4003,22 @@ namespace battleutils
             {
                 rank = PAttacker->GetSubWeaponRank();
             }
-
+			
             // Lower cap of fSTR
             if (fstr <= (-rank))
-            {
+			{
                 return (-rank);
-            }
-
-            // Upper cap of fSTR
+			}
+			
+			// Upper cap of fSTR
             if ((fstr > (-rank)) && (fstr <= rank + 8))
-            {
+			{
                 return fstr;
-            }
+			}
             else
-            {
+			{
                 return rank + 8;
-            }
+			}
         }
     }
 
@@ -5219,7 +5261,6 @@ namespace battleutils
 
     uint16 jumpAbility(CBattleEntity* PAttacker, CBattleEntity* PVictim, uint8 tier)
     {
-
         // super jump - remove 99% of enmity
         if (tier == 3 && PVictim->objtype == TYPE_MOB)
         {
@@ -5235,32 +5276,35 @@ namespace battleutils
             return 0;
         }
 
-
         // multihit's just multiply jump damage
         auto sub = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_SUB]);
+
         uint8 numattacksLeftHand = 0;
 
         //sub weapon is equipped
         if (sub && sub->getDmgType() > 0 && sub->getDmgType() < 4)
+        {
             numattacksLeftHand = battleutils::CheckMultiHits(PAttacker, sub);
+        }
 
         auto PWeapon = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_MAIN]);
 
         //h2h equipped
         if (PWeapon && PWeapon->getSkillType() == SKILL_HAND_TO_HAND)
+        {
             numattacksLeftHand = battleutils::CheckMultiHits(PAttacker, PWeapon);
+        }
 
         // normal multi hit from left hand
         uint8 numattacksRightHand = battleutils::CheckMultiHits(PAttacker, PWeapon);
 
-
-        uint8 fstrslot = SLOT_MAIN;
-
-        uint8 hitrate = battleutils::GetHitRate(PAttacker, PVictim);
-        uint8 realHits = 0;         // to store the real number of hit for tp multipler
-        uint16 totalDamage = 0;
+        uint8  fstrslot       = SLOT_MAIN;
+        int16  accBonus       = PAttacker->getMod(Mod::ALL_JUMPS_ACC_BONUS);
+        uint8  hitrate        = battleutils::GetHitRate(PAttacker, PVictim, 0, accBonus);
+        uint8  realHits       = 0; // to store the real number of hit for tp multipler
+        uint16 totalDamage    = 0;
         uint16 damageForRound = 0;
-        bool hitTarget = false;
+        bool   hitTarget      = false;
 
         // Loop number of hits
         for (uint8 i = 0; i < (numattacksLeftHand + numattacksRightHand); ++i)
@@ -5272,14 +5316,13 @@ namespace battleutils
 
                 if (PWeapon && PWeapon->getSkillType() != SKILL_HAND_TO_HAND && i >= numattacksRightHand)
                 {
-                    PWeapon = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_SUB]);
+                    PWeapon  = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_SUB]);
                     fstrslot = SLOT_SUB;
                 }
             }
 
             if (tpzrand::GetRandomNumber(100) < hitrate)
             {
-
                 // attack hit, try to be absorbed by shadow
                 if (!battleutils::IsAbsorbByShadow(PVictim))
                 {
@@ -5288,15 +5331,19 @@ namespace battleutils
 
                     // get jump attack bonus from gear
                     if (PAttacker->objtype == TYPE_PC)
-                        AttMultiplerPercent = PAttacker->getMod(Mod::JUMP_ATT_BONUS) / 100.f;
+                    {
+                        AttMultiplerPercent = (PAttacker->getMod(Mod::JUMP_ATT_BONUS) / 100.f) + (PAttacker->getMod(Mod::ALL_JUMPS_ATT_BONUS) / 100.f);
+                    }
 
                     float DamageRatio = battleutils::GetDamageRatio(PAttacker, PVictim, false, AttMultiplerPercent);
+
                     damageForRound = (uint16)((PAttacker->GetMainWeaponDmg() + battleutils::GetFSTR(PAttacker, PVictim, SLOT_MAIN)) * DamageRatio);
 
                     // bonus applies to jump only, not high jump
                     if (tier == 1)
                     {
                         float jumpBonus = 1.f + PAttacker->VIT() / 256.f;
+
                         damageForRound = (uint16)(damageForRound * jumpBonus);
                     }
 

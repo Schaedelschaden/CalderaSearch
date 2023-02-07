@@ -21,9 +21,17 @@ function onTrigger(player)
 
 ---------------------------------------------------------------------------------------------------
 
-    local target = GetMobByID(17662479)
+-- Remove or set NPC's DISAPPEAR flag
+    local npc = GetNPCByID(17957443)
 
-    target:setHP(0)
+    -- npc:setStatus(tpz.status.DISAPPEAR)
+    npc:setStatus(tpz.status.NORMAL)
+
+---------------------------------------------------------------------------------------------------
+
+    -- local target = GetMobByID(17662479)
+
+    -- target:setHP(0)
 
 ---------------------------------------------------------------------------------------------------
 

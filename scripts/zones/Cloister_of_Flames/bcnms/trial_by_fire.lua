@@ -38,13 +38,5 @@ function onEventFinish(player, csid, option)
         player:addKeyItem(tpz.ki.WHISPER_OF_FLAMES)
         player:addTitle(tpz.title.HEIR_OF_THE_GREAT_FIRE)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.WHISPER_OF_FLAMES)
-		
-		if (player:hasPet() == true) then
-			player:despawnPet()
-			player:resetRecast(104) -- Call Beast
-			player:resetRecast(163) -- Call Wyvern
-			player:resetRecast(205) -- Activate
-			player:PrintToPlayer(string.format("WARNING: WAIT TO RESUMMON YOUR PET UNTIL YOU ARE OUTSIDE OF THE BATTLEFIELD ZONE."), tpz.msg.channel.SYSTEM_1)
-		end
     end
 end

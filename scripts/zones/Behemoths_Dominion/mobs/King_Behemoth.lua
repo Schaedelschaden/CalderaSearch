@@ -38,7 +38,7 @@ function onMobSpawn(mob)
 	-- mob:addMod(tpz.mod.MACC, 300)
 	mob:addMod(tpz.mod.REGEN, 300)
 	mob:addMod(tpz.mod.REFRESH, 50)
-	mob:addMod(tpz.mod.REGAIN, 25)
+	-- mob:addMod(tpz.mod.REGAIN, 25)
 	mob:addMod(tpz.mod.DOUBLE_ATTACK, 10)	
 	
 end

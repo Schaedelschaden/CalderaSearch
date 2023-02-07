@@ -1850,7 +1850,9 @@ tpz.mod =
 	AUGMENT_CONCENTRIC_PULSE        = 3066, -- Augments "Concentric Pulse"
 	GEOMANCY_POTENCY                = 3067, -- +Geomancy potency from Eminent Bell/Dunna/etc
 	DEFENDER_BLOCK_CHANCE			= 3068, -- Defender: Chance of Successful Block
-	
+    ALL_JUMPS_ATT_BONUS             = 3069, -- All Jumps: Attack +<value>%
+    ALL_JUMPS_ACC_BONUS             = 3070, -- All Jumps: Accuracy +<value>
+
 	-- Add +fTP to weaponskills based on Skillchain property (Elemental Gorgets, Elemental Obis, Fotia Neck/Waist)
 	SC_FTP_TRANSFIXION              = 3100, -- Lv1 Light
     SC_FTP_COMPRESSION              = 3101, -- Lv1 Dark

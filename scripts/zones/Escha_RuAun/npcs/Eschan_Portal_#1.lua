@@ -14,12 +14,21 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
---	local silt = player:getCurrency("eschan_silt")
-    player:startEvent(9100, 0, 319, 289, 8, 2, 100000, 50, 0) -- csid, ?, ?, ?, ?, ?, silt, silt_cost, ?
+    -- option (0) = Teleport list using silt only
+    -- option (1) = Teleport list using silt only
+    -- option (2) = Teleport list choose between Eschan droplets or using silt. Droplets = Next consecutive Portal, Silt = Choose Portal
+
+    local unlocks  = 432013119 -- TODO: Determine the retail hex values used and math this
+    local zoneID   = 289
+    local portalId = 8
+    local option   = 1
+	local silt     = player:getCurrency("escha_silt")
+    local siltCost = 50
+
+	player:startEvent(9100, 0, unlocks, zoneID, portalId, option, silt, siltCost, 0)
 end
 
 function onEventUpdate(player, csid, option)
-	printf("Escha - Ru'Aun Eschan_Portal_#1.cpp onEventUpdate CSID: [%i]  OPTION: [%i]\n", csid, option)
 	if (option == 0x00090001) then
 --		player:delItem(9148, 1)
 	end
@@ -31,5 +40,4 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-
 end

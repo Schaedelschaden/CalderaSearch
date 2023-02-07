@@ -13,29 +13,11 @@ local loot =
     [1120] =
     {
         {
-            {itemid =   748, droprate =  500}, -- gold_beastcoin
-            {itemid =   749, droprate =  500}, -- mythril_beastcoin
-        },
-        {
-            {itemid =     0, droprate =  750}, -- nothing
-            {itemid =  4174, droprate =  250}, -- vile_elixir
-        },
-        {
-            {itemid =     0, droprate =  600}, -- nothing
-            {itemid = 13237, droprate =  100}, -- survival_belt
-            {itemid = 13127, droprate =  100}, -- guarding_gorget
-            {itemid = 13405, droprate =  100}, -- enhancing_earring
-            {itemid = 12349, droprate =  100}, -- balance_buckler
-        },
-        {
-            {itemid =   776, droprate =  125}, -- white_rock
-            {itemid =   773, droprate =  125}, -- translucent_rock
-            {itemid =   774, droprate =  125}, -- purple_rock
-            {itemid =   769, droprate =  125}, -- red_rock
-            {itemid =   770, droprate =  125}, -- blue_rock
-            {itemid =   771, droprate =  125}, -- yellow_rock
-            {itemid =   772, droprate =  125}, -- green_rock
-            {itemid =   775, droprate =  125}, -- black_rock
+            {itemid = 25661, droprate =  200}, -- Megahnda
+            {itemid = 25747, droprate =  200}, -- 
+            {itemid = 25802, droprate =  200}, -- 
+            {itemid = 25860, droprate =  200}, --
+            {itemid = 25927, droprate =  200}, --
         },
         {
             {itemid =   790, droprate =   50}, -- garnet
@@ -52,14 +34,13 @@ local loot =
             {itemid =   788, droprate =  150}, -- peridot
         },
         {
-            {itemid =     0, droprate =  125}, -- nothing
-            {itemid =  4717, droprate =  125}, -- scroll_of_refresh
-            {itemid =  4896, droprate =  125}, -- fire_spirit_pact
-            {itemid =  4751, droprate =  125}, -- scroll_of_erase
-            {itemid =  4874, droprate =  125}, -- scroll_of_absorb-str
-            {itemid =  4714, droprate =  125}, -- scroll_of_phalanx
-            {itemid =  4858, droprate =  125}, -- scroll_of_ice_spikes
-            {itemid =  4947, droprate =  125}, -- scroll_of_utsusemi_ni
+            {itemid =     0, droprate =  300}, -- nothing
+            {itemid =  3684, droprate =   50}, -- Princess Board
+            {itemid =  3685, droprate =   25}, -- Empress Board
+            {itemid =  3690, droprate =  300}, -- Fight Board
+            {itemid =  3686, droprate =  125}, -- Duelist Board
+            {itemid =  3691, droprate =  100}, -- Guardian Board
+            {itemid =  3689, droprate =  100}, -- Wizardess Board
         },
     },
     -- ISNM: Happy Caster

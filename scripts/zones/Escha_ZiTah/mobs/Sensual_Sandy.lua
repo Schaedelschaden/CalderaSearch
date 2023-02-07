@@ -4,7 +4,9 @@
 -- ModID: 17957355
 -----------------------------------
  -- Requires are other scripts that this LUA will reference to satisfy values
+local ID = require("scripts/zones/Escha_ZiTah/IDs")
 mixins = {require("scripts/mixins/job_special")} -- Required for inherant job traits
+require("scripts/globals/keyitems")
 require("scripts/globals/status") -- required for LUA status adjustments
 -----------------------------------
 
@@ -61,6 +63,7 @@ function onMobDeath(mob, player, isKiller) -- When mob is killed
         player:setCharVar("Escha_Fleetstalker_KI", 1)
     elseif player:getCharVar("Escha_Fleetstalker_KI") == 1 then
         player:addKeyItem(tpz.keyItem.FLEETSTALKERS_CLAW)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.keyItem.FLEETSTALKERS_CLAW)
         player:setCharVar("Escha_Fleetstalker_KI", 0)
     end
 

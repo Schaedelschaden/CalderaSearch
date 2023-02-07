@@ -3,7 +3,8 @@
 --   NM: Kamohoalii
 -----------------------------------
  -- Requires are other scripts that this LUA will reference to satisfy values
--- mixins = {require("scripts/mixins/job_special")} -- Required for inherant job traits
+local ID = require("scripts/zones/Escha_ZiTah/IDs")
+require("scripts/globals/keyitems")
 require("scripts/globals/status") -- required for LUA status adjustments
 -----------------------------------
 
@@ -63,6 +64,7 @@ function onMobDeath(mob, player, isKiller) -- When mob is killed
         player:setCharVar("Escha_Urmahlullu_KI", 1)
     elseif player:getCharVar("Escha_Urmahlullu_KI") == 1 then
         player:addKeyItem(tpz.keyItem.URMAHLULLUS_ARMOR)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.keyItem.URMAHLULLUS_ARMOR)
         player:setCharVar("Escha_Urmahlullu_KI", 0)
     end
 

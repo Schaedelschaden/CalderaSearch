@@ -624,6 +624,21 @@ void CAttack::ProcessDamage()
 		m_damage = (uint32)(m_damage * 1.35f);
 	}
 
+    // Caldera Shuriken base damage adjustment (only applies during Daken)
+	if (m_attacker->objtype == TYPE_PC && slot == SLOT_AMMO)
+	{
+        auto throwingAmmo = dynamic_cast<CItemWeapon*>(m_attacker->m_Weapons[slot]);
+
+        if (throwingAmmo && throwingAmmo->getSubSkillType() == SUBSKILL_SHURIKEN)
+        {
+            float shurikenBonus = luautils::GetSettingsVariable("SHURIKEN_DMG_BONUS");
+
+            // printf("attack.cpp ProcessDamage  THROWING DMG: [%i] = BASE: [%i] * SHURIKEN DMG BONUS: [%1.4f]\n", (int32)(m_damage * shurikenBonus), m_damage, shurikenBonus);
+
+            m_damage = (uint32)(m_damage * shurikenBonus);
+        }
+	}
+
     // Soul eater.
     if (m_attacker->objtype == TYPE_PC)
     {
