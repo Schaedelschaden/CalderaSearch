@@ -595,6 +595,14 @@ local loot =
             {itemid = 837,  droprate = 200},   -- Malboro Fiber
         },
     },
+    -- KSNM Moa Constrictors
+    [113] =
+    {
+		{
+			{itemid = 12408, droprate =  500}, -- Absorbing Shield
+            {itemid = 15181, droprate =  500}, -- Pineal Hat
+        },
+    },
 }
 function onTrade(player, npc, trade)
 end

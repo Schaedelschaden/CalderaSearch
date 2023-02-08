@@ -89,10 +89,10 @@ SHURIKEN_DMG_BONUS  = 1.000 -- Multiplies damage dealt by Ninja shurikens (inclu
 -- TRUSTS
 ENABLE_TRUST_QUESTS = 1
 
-HARVESTING_BREAK_CHANCE = 33 -- % chance for the sickle to break during harvesting.  Set between 0 and 100.
-EXCAVATION_BREAK_CHANCE = 33 -- % chance for the pickaxe to break during excavation.  Set between 0 and 100.
-LOGGING_BREAK_CHANCE    = 33 -- % chance for the hatchet to break during logging.  Set between 0 and 100.
-MINING_BREAK_CHANCE     = 33 -- % chance for the pickaxe to break during mining.  Set between 0 and 100.
+HARVESTING_BREAK_CHANCE = 20 -- % chance for the sickle to break during harvesting.  Set between 0 and 100.
+EXCAVATION_BREAK_CHANCE = 20 -- % chance for the pickaxe to break during excavation.  Set between 0 and 100.
+LOGGING_BREAK_CHANCE    = 20 -- % chance for the hatchet to break during logging.  Set between 0 and 100.
+MINING_BREAK_CHANCE     = 20 -- % chance for the pickaxe to break during mining.  Set between 0 and 100.
 HARVESTING_RATE         = 75 -- % chance to recieve an item from haresting.  Set between 0 and 100.
 EXCAVATION_RATE         = 75 -- % chance to recieve an item from excavation.  Set between 0 and 100.
 LOGGING_RATE            = 75 -- % chance to recieve an item from logging.  Set between 0 and 100.

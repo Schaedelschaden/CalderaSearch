@@ -11,7 +11,7 @@ require("scripts/globals/zone")
 
 function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.MORBOLGER)
-    GetMobByID(ID.mob.MORBOLGER):setRespawnTime(math.random(900, 10800))
+    -- GetMobByID(ID.mob.MORBOLGER):setRespawnTime(math.random(900, 10800))
 
     tpz.treasure.initZone(zone)
 end

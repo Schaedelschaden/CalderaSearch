@@ -43,6 +43,8 @@ function onTrigger(player, npc)
 		1281, 8700,			-- Square of Cheviot Cloth
 		2537, 3306,			-- Square of Cilice
 		839, 93,			-- Piece of Crawler Cocoon
+        825, 275,           -- Square of Cotton Cloth
+        818, 95,            -- Spool of Cotton Thread
 		2835, 13050,		-- Lock of Dahu Hair
 		2539, 1917,			-- Tuft of Dhalmel Hair
 		1967, 2859,			-- Spool of Dull Gold Thread
@@ -74,10 +76,8 @@ function onTrigger(player, npc)
 		2295, 20,			-- Clump of Mohbwa Grass
 		833, 50,			-- Clump of Moko Grass
 		2704, 5078,			-- Square of Oil-Soaked Cloth
---		2476, 250000,		-- Spool of Platinum Silk Thread
 		9147, 360,			-- Porxie Wing
 		821, 7280,			-- Spool of Rainbow Thread
---		1132, 250000,		-- Square of Raxa
 		1828, 186,			-- Spool of Red Grass Thread
 		1845, 90,			-- Clump of Red Moko Grass
 		2827, 80,			-- Spool of Rugged Gold Thread

@@ -49,13 +49,13 @@ function onMobFight(mob, target) -- When mob is engaged
 	if (buddy1:isAlive() and buddy2:isAlive()) and os.time() > mob:getLocalVar("BuddyCheck") then
         -- printf("Lamia_No3.lua onMobFight  BOTH ALIVE")
 		mob:setMod(tpz.mod.EVA, 960)
-		mob:setMod(tpz.mod.MDEF, 300)
+		mob:setMod(tpz.mod.MDEF, 175)
 		mob:setMod(tpz.mod.REGEN, 1000)
         mob:setLocalVar("BuddyCheck", os.time() + 3)
 	elseif (buddy1:isAlive() or buddy2:isAlive()) and os.time() > mob:getLocalVar("BuddyCheck") then
         -- printf("Lamia_No3.lua onMobFight  EITHER ALIVE")
 		mob:setMod(tpz.mod.EVA, 860)
-		mob:setMod(tpz.mod.MDEF, 250)
+		mob:setMod(tpz.mod.MDEF, 150)
 		mob:setMod(tpz.mod.REGEN, 500)
         mob:setLocalVar("BuddyCheck", os.time() + 3)
 	elseif (buddy1:isDead() and buddy2:isDead()) and os.time() > mob:getLocalVar("BuddyCheck") then

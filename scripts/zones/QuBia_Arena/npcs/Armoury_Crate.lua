@@ -44,6 +44,16 @@ local loot =
             {itemid =     0, droprate =  1000}, -- nothing
         },
     },
+
+    -- KSNM Infernal Swarm
+    [515] =
+    {
+        {
+            {itemid = 13264, droprate =  500}, -- Jungle Sash
+            {itemid = 13261, droprate =  500}, -- Ocean Sash
+        },
+    },
+
     -- BCNM Demolition Squad
     [520] =
     {

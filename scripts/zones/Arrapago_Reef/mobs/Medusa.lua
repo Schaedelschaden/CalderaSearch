@@ -51,6 +51,10 @@ function onMobDisengage(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
+    for i = ID.mob.MEDUSA + 1, ID.mob.MEDUSA + 4 do
+        DespawnMob(i)
+    end
+
     player:showText(mob, ID.text.MEDUSA_DEATH)
     player:addTitle(tpz.title.GORGONSTONE_SUNDERER)
 end

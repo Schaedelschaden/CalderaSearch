@@ -11,36 +11,36 @@ require("scripts/globals/status")
 
 local drops =
 {
-	{3000, 928}, -- Bomb Ash
---	{3000, 768}, -- Flint Stone
+	{3000,  928}, -- Bomb Ash
+--	{3000,  768}, -- Flint Stone
 	{2000, 3918}, -- Midrium Ore
 	{1800, 1108}, -- Sulfur
-	{1500, 756}, -- Durium Ore
-	{1400, 643}, -- Iron Ore
-	{1250, 736}, -- Silver Ore
+	{1500,  756}, -- Durium Ore
+	{1400,  643}, -- Iron Ore
+	{1250,  736}, -- Silver Ore
 --	{1000, 4043}, -- Lavarion
-	{920, 3920}, -- Vanadium Ore
-	{875, 1703}, -- Kunwu Ore
-	{2000, 741}, -- Palladian Brass Ore
-	{1700, 734}, -- Thokcha Ore
+	{920,  3920}, -- Vanadium Ore
+	{875,  1703}, -- Kunwu Ore
+	{2000,  741}, -- Palladian Brass Ore
+	{1700,  734}, -- Thokcha Ore
 }
 
 local points =
 {
-	{139.8798,  20.0241,  88.9825}, -- Map 1 G-5
-	{145.3748,  20.9677,  55.0203}, -- Map 1 H-5
-	{190.3747,  19.9530,  -45.2183}, -- Map 1 H-7
-	{79.2062,  20.1500,  -11.2957}, -- Map 1 G-6
-	{80.6445,  30.5000,  -71.3527}, -- Map 1 G-7
-	{69.8838,  29.7920,  -374.9613}, -- Map 1 G-11
+	{139.8798,  20.0241,    88.9825}, -- Map 1 G-5
+	{145.3748,  20.9677,    55.0203}, -- Map 1 H-5
+	{190.3747,  19.9530,   -45.2183}, -- Map 1 H-7
+	{79.2062,   20.1500,   -11.2957}, -- Map 1 G-6
+	{80.6445,   30.5000,   -71.3527}, -- Map 1 G-7
+	{69.8838,   29.7920,  -374.9613}, -- Map 1 G-11
 	{168.3535,  30.9142,  -387.8913}, -- Map 1 H-11
 	{242.9664,  40.0965,  -189.6982}, -- Map 1 I-8
 --	{-42.9705,  -9.6283,  131.1130}, -- Map 1 J-9 -- Open space?
 	{312.6441,  28.9426,  -135.9306}, -- Map 1 J-8
-	{351.8693,  28.8050,  -51.3427}, -- Map 1 J-7
-	{376.8394,  30.7051,  -57.3132}, -- Map 1 J-7
-	{371.9161,  30.1519,  -20.9792}, -- Map 1 J-6
-	{436.4122,  30.1007,  -34.3558}, -- Map 1 K-6
+	{351.8693,  28.8050,   -51.3427}, -- Map 1 J-7
+	{376.8394,  30.7051,   -57.3132}, -- Map 1 J-7
+	{371.9161,  30.1519,   -20.9792}, -- Map 1 J-6
+	{436.4122,  30.1007,   -34.3558}, -- Map 1 K-6
 }
 
 local function doMove(npc, x, y, z)
@@ -59,14 +59,15 @@ end
 function onTrade(player, npc, trade)
 	local uses = npc:getLocalVar("uses")
 
-	if (npcUtil.tradeHasExactly(trade, 605)) then
+	if npcUtil.tradeHasExactly(trade, 605) then
 		local zoneId = 272
-		local breakChance = 33
+		local breakChance = 20
 		local broke = math.random(100)
 		local full = (player:getFreeSlotsCount() == 0) and 1 or 0
-		
+
 		-- sum weights
 		local sum = 0
+
 		for i = 1, #drops do
 			sum = sum + drops[i][1]
 		end
@@ -74,7 +75,9 @@ function onTrade(player, npc, trade)
 		-- pick weighted result
 		local item = 0
 		local pick = math.random(sum)
+
 		sum = 0
+
 		for i = 1, #drops do
 			sum = sum + drops[i][1]
 			if sum >= pick then
@@ -84,7 +87,7 @@ function onTrade(player, npc, trade)
 		end
 		
 		-- success! reward item and decrement number of remaining uses on the point
-        if (broke > breakChance and item ~= 0 and full == 0) then
+        if broke > breakChance and item ~= 0 and full == 0 then
             player:addItem(item)
 			player:messageSpecial(ID.text.ITEM_OBTAINED, item)
 
@@ -93,9 +96,9 @@ function onTrade(player, npc, trade)
             if uses == 0 then
                 movePoint(npc, zoneId, info)
             end
-		elseif (full ~= 0) then
+		elseif full ~= 0 then
 			player:messageSpecial(ID.text.INVENTORY_FULL)
-		elseif (broke < breakChance) then
+		elseif broke < breakChance then
 			player:messageSpecial(ID.text.PICKAXE_BROKE, 605)
 			player:delItem(605, 1, tpz.inv.INVENTORY)
         end

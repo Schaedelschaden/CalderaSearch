@@ -114,7 +114,15 @@ local loot =
             {itemid = 8720, droprate = 1000},   -- Maliyakaleya Orb
         },	
     },
-	}
+    -- KSNM The Scarlet King
+    [199] =
+    {
+		{
+			{itemid = 17997, droprate =  500}, -- Argent Dagger
+            {itemid = 18372, droprate =  500}, -- Balan's Sword
+        },		
+    },
+}
 
 function onTrade(player, npc, trade)
 end

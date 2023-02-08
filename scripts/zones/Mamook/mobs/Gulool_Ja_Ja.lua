@@ -55,6 +55,10 @@ function onMobDisengage(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
+    for i = ID.mob.GULOOL_JA_JA + 1, ID.mob.GULOOL_JA_JA + 4 do
+        DespawnMob(i)
+    end
+
     player:addTitle(tpz.title.SHINING_SCALE_RIFLER)
 end
 

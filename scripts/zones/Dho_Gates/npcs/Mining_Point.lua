@@ -61,7 +61,7 @@ function onTrade(player, npc, trade)
 
 	if (npcUtil.tradeHasExactly(trade, 605)) then
 		local zoneId = 272
-		local breakChance = 33
+		local breakChance = 20
 		local broke = math.random(100)
 		local full = (player:getFreeSlotsCount() == 0) and 1 or 0
 		

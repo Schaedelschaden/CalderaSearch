@@ -56,6 +56,10 @@ function onMobDisengage(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
+    for i = ID.mob.GURFURLUR_THE_MENACING + 1, ID.mob.GURFURLUR_THE_MENACING + 4 do
+        DespawnMob(i)
+    end
+
     player:addTitle(tpz.title.TROLL_SUBJUGATOR)
 end
 
