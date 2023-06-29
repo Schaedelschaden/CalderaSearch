@@ -2,15 +2,18 @@
 -- Area: Garlaige Citadel (200)
 --   NM: Serket
 -----------------------------------
+mixins = {require("scripts/mixins/rage")}
 require("scripts/globals/status")
 require("scripts/globals/titles")
 -----------------------------------
 
 function onMobInitialize(mob)
-    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+    -- mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
 end
 
 function onMobSpawn(mob)
+    mob:setLocalVar("[rage]timer", 1200) -- 20 minutes
+
     mob:addMod(tpz.mod.PARALYZERES, 30)
     mob:addMod(tpz.mod.STUNRES, 30)
     mob:addMod(tpz.mod.BINDRES, 30)
@@ -32,8 +35,13 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.MND, 110)
     mob:addMod(tpz.mod.CHR, 110)
     mob:addMod(tpz.mod.INT, 110)
+    mob:setMod(tpz.mod.HASTE_MAGIC, 4375)
     mob:addMod(tpz.mod.MAIN_DMG_RATING, 100)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 45)
+end
+
+function onMobEngaged(mob, target)
+    mob:setMod(tpz.mod.REGAIN, 0)
 end
 
 function onMobFight(mob, target)

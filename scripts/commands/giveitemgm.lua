@@ -10,7 +10,7 @@ cmdprops =
 }
 
 function onTrigger(player, target, itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val)
-	if (player:getName() == "Khalum" or player:getName() == "Naria" or player:getName() == "Tierkaintwo") then
+	if (player:getName() == "Khalum" or player:getName() == "Naria" or player:getName() == "Tierkaintwo" or player:getName() == "Pldtest" or player:getName() == "Dreamstate" or player:getName() == "Chewy") then
 		if (target == nil or itemId == nil) then
 			player:PrintToPlayer("You must enter a valid player name and item ID.")
 			return

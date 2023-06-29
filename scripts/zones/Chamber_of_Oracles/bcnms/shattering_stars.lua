@@ -18,6 +18,8 @@ function onBattlefieldRegister(player, battlefield)
 end
 
 function onBattlefieldEnter(player, battlefield)
+    player:addStatusEffect(tpz.effect.SJ_RESTRICTION, 1, 0, 3600)
+    player:dispelAllStatusEffect()
 end
 
 function onBattlefieldLeave(player, battlefield, leavecode)

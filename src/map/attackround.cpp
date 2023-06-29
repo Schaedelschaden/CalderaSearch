@@ -344,7 +344,7 @@ void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION
     tripleAttack = std::clamp<int16>(tripleAttack, 0, 100);
 	
 	// Preference matters! The following are additional hits to the default hit that don't stack up
-    // Mikage > Quad > Triple > Double > Mythic Aftermath > Occasionally Attacks > Dynamis [D] Follow-Up > Hasso + Zanshin
+    // Mikage > SU3 Weapon Follow-Up > Quad > Triple > Double > Mythic Aftermath > Occasionally Attacks > Dynamis [D] Follow-Up > Hasso + Zanshin
     // Daken is handled separately in CreateDakenAttack() and Zanshin in src/map/entities/battleentity.cpp
 
     // Checking Mikage Effect - Hits Vary With Num of Utsusemi Shadows for Main Weapon
@@ -448,6 +448,47 @@ void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION
             }
             charutils::UpdateItem(PChar, loc, slot, -ammoCount);
             PChar->pushPacket(new CInventoryFinishPacket());
+        }
+    }
+    // SU3/Raetic Weapon Follow-Up
+    // https://www.bg-wiki.com/ffxi/Category:Superior_Equipment#Superior_3_(Su3)
+    else if (m_attacker->getMod(Mod::CONSUME_MP_FOR_FOLLOWUP_MELEE) > 0)
+    {
+        JOBTYPE mJob   = m_attacker->GetMJob();
+        int16   maxMP  = m_attacker->health.maxmp + m_attacker->getMod(Mod::MP);
+        int16   reqMP  = (int16)(maxMP * 0.05f);
+        int16   currMP = m_attacker->health.mp;
+        int16   remMP  = -(int16)(maxMP * 0.05f);
+        int16   chance = (int16)(maxMP * 0.05f); // Jobs which natively have MP (2,000 Max MP = 100% chance)
+        int16   roll   = tpzrand::GetRandomNumber(100);
+
+        // Adjust the chance multiplier to account for jobs which do not natively have MP (800 MP = 100% chance)
+        switch (mJob)
+		{
+			case JOB_WAR:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_MNK:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_THF:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_BST:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_BRD:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_RNG:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_SAM:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_NIN:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_DRG:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_COR:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_PUP:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_DNC:   chance = (int16)(maxMP * 0.125f);   break;
+			default: break;
+		}
+
+        if (chance > 100)
+        {
+            chance = 100;
+        }
+
+        if (currMP >= reqMP && roll < chance)
+        {
+            AddAttackSwing(PHYSICAL_ATTACK_TYPE::FOLLOWUP, direction, 1);
+            m_attacker->addMP(remMP);
         }
     }
 

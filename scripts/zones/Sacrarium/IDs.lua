@@ -40,14 +40,14 @@ zones[tpz.zone.SACRARIUM] =
     },
     mob =
     {
-        SWIFT_BELT_NMS          =
-        {
-            {16892068, {[tpz.race.HUME_M]   = true, [tpz.race.HUME_F]   = true}}, -- Balor (hume)
-            {16892069, {[tpz.race.ELVAAN_M] = true, [tpz.race.ELVAAN_F] = true}}, -- Luaith (elvaan)
-            {16892070, {[tpz.race.TARU_M]   = true, [tpz.race.TARU_F]   = true}}, -- Lobais (tarutaru)
-            {16892073, {[tpz.race.MITHRA]   = true}},                             -- Caithleann (mithra)
-            {16892074, {[tpz.race.GALKA]    = true}},                             -- Indich (galka)
-        },
+        -- SWIFT_BELT_NMS          =
+        -- {
+            -- {16892068, {[tpz.race.HUME_M]   = true, [tpz.race.HUME_F]   = true}}, -- Balor (hume)
+            -- {16892069, {[tpz.race.ELVAAN_M] = true, [tpz.race.ELVAAN_F] = true}}, -- Luaith (elvaan)
+            -- {16892070, {[tpz.race.TARU_M]   = true, [tpz.race.TARU_F]   = true}}, -- Lobais (tarutaru)
+            -- {16892073, {[tpz.race.MITHRA]   = true}},                             -- Caithleann (mithra)
+            -- {16892074, {[tpz.race.GALKA]    = true}},                             -- Indich (galka)
+        -- },
         OLD_PROFESSOR_MARISELLE = 16891970,
     },
     npc =

@@ -4,7 +4,7 @@
 -- Description: Additional effect: "Stun."
 -- Type: Physical (Blunt)
 --
---
+-- Notes: Minax Bugard resets enmity using a listener in its mob LUA
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")

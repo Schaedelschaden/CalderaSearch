@@ -35,6 +35,8 @@ zones[tpz.zone.NAVUKGO_EXECUTION_CHAMBER] =
         IMMORTAL_FLAN4  = 17039377,
         IMMORTAL_FLAN5  = 17039378,
         IMMORTAL_FLAN6  = 17039379,
+        SHAMARHAAN      = 17039394,
+        VALKENG         = 17039399,
     },
     npc =
     {

@@ -9,6 +9,8 @@ function onEffectGain(target, effect)
 end
 
 function onEffectTick(target, effect)
+    target:delMod(tpz.mod.TP_MOVE_EVASION, 3)
+    effect:setPower(effect:getPower() - 3)
 end
 
 function onEffectLose(target, effect)

@@ -14,18 +14,18 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-	local modifier = 1
-	local power = 6
-	
-	if (player:getMainJob() == tpz.job.RUN) then
-		if (player:getMod(tpz.mod.SWORDPLAY) > 0) then
-			modifier = player:getMod(tpz.mod.SWORDPLAY)
-		end
-		
-		power = power * modifier
-	else
-		power = 3
-	end
-	
+    local modifier = 1
+    local power    = 6
+
+    if player:getMainJob() == tpz.job.RUN then
+        if player:getMod(tpz.mod.SWORDPLAY) > 0 then
+            modifier = player:getMod(tpz.mod.SWORDPLAY)
+        end
+
+        power = power * modifier
+    else
+        power = 3
+    end
+
     target:addStatusEffect(tpz.effect.SWORDPLAY, power, 3, 120)
 end

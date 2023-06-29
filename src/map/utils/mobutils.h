@@ -37,7 +37,13 @@ typedef struct
   std::vector<CModifier*> mobMods;
 } ModsList_t;
 
-enum class WeaknessType {BLUE = 0, YELLOW = 1, RED = 2, WHITE = 3};
+enum class WeaknessType
+{
+    BLUE   = 0,
+    YELLOW = 1,
+    RED    = 2,
+    WHITE  = 3,
+};
 
 typedef std::unordered_map<uint32,ModsList_t*> ModsMap_t;
 

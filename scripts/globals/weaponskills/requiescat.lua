@@ -23,8 +23,13 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
     params.atk100 = 0.8 params.atk200 = 0.9 params.atk300 = 1.0
 	params.multiHitfTP = true
-    params.formless = true
-
+    
+    if target:getZoneID() == 43 then
+        params.formless = false
+    else
+        params.formless = true
+    end 
+    
     if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
         params.mnd_wsc = 0.85
     end

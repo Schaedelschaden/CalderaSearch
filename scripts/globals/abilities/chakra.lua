@@ -44,6 +44,10 @@ function onUseAbility(player, target, ability)
         end
         player:addStatusEffect(tpz.effect.REGEN, 10, 3, merits, 0, 0, 1)
     end
+    
+    if player:getObjType() == tpz.objType.TRUST then
+        player:addStatusEffect(tpz.effect.REGEN, 10, 0, 120)
+    end
 
     return recover
 end

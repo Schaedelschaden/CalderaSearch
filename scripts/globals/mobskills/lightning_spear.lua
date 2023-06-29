@@ -13,14 +13,15 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local dmgmod = 1.1
-	
+    local hornCharge = mob:getLocalVar("MONOCEROS_CHARGE_HORN") * 0.5
+    local dmgmod     = 1.1 + hornCharge
+
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg() * 7, tpz.magic.ele.THUNDER, dmgmod, TP_NO_EFFECT, 1)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.LIGHTNING, MOBPARAM_WIPE_SHADOWS)
-	
-	MobStatusEffectMove(mob, target, tpz.effect.AMNESIA, 1, 0, math.random(45, 60))
-	
-	mob:setLocalVar("Charging", 0)
-	
+    local dmg  = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.LIGHTNING, MOBPARAM_WIPE_SHADOWS)
+
+    MobStatusEffectMove(mob, target, tpz.effect.AMNESIA, 1, 0, math.random(45, 60))
+
+    mob:setLocalVar("Charging", 0)
+
     return dmg
 end

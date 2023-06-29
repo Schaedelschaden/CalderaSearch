@@ -14,12 +14,13 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-	local typeEffect1 = tpz.effect.BURN
-	
-	MobStatusEffectMove(mob, target, typeEffect1, 50, 0, 60)	
-	
+	local typeEffect = tpz.effect.BURN
+
     local dmgmod = 2.6
-    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*2.6, tpz.magic.ele.FIRE, dmgmod, TP_NO_EFFECT)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.FIRE, MOBPARAM_IGNORE_SHADOWS)
+    local info   = MobMagicalMove(mob, target, skill, mob:getWeaponDmg() * 2.6, tpz.magic.ele.FIRE, dmgmod, TP_NO_EFFECT)
+    local dmg    = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.FIRE, MOBPARAM_IGNORE_SHADOWS)
+
+    MobStatusEffectMove(mob, target, typeEffect, 75, 0, 60)	
+
     return dmg
 end

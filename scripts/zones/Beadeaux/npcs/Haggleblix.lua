@@ -11,7 +11,8 @@ require("scripts/globals/dynamis")
 
 local TIMELESS_HOURGLASS = 4236
 local currency = {1455, 1456, 1457}
-local shop = {
+local shop =
+{
      7, 1313, -- Siren's Hair
      8, 1521, -- Slime Juice
      9, 1469, -- Wootz Ore
@@ -20,7 +21,9 @@ local shop = {
     25, 1461, -- Wootz Ingot
     33, 1460, -- Koh-I-Noor
 }
-local maps = {
+
+local maps =
+{
     [tpz.ki.MAP_OF_DYNAMIS_SANDORIA]   = 10000,
     [tpz.ki.MAP_OF_DYNAMIS_BASTOK]     = 10000,
     [tpz.ki.MAP_OF_DYNAMIS_WINDURST]   = 10000,
@@ -35,10 +38,10 @@ local maps = {
 -----------------------------------
 
 function onTrade(player, npc, trade)
-    local gil = trade:getGil()
+    local gil   = trade:getGil()
     local count = trade:getItemCount()
 
-    if (player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND)) then
+    if player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) then
 
         -- buy prismatic hourglass
         if (gil == PRISMATIC_HOURGLASS_COST and count == 1 and not player:hasKeyItem(tpz.ki.PRISMATIC_HOURGLASS)) then

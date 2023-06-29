@@ -23,6 +23,7 @@ zones[tpz.zone.THE_COLOSSEUM] =
     },
     mob =
     {
+        PIT_MONSTER = 17068033,
     },
     npc =
     {

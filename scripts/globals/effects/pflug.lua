@@ -6,16 +6,17 @@
 require("scripts/globals/status")
 -----------------------------------
 local resistPower = {"Pflug_Fire", "Pflug_Ice", "Pflug_Wind", "Pflug_Earth", "Pflug_Lightning", "Pflug_Water", "Pflug_Light", "Pflug_Dark"}
-local resistMod = {
-					{mod = {tpz.mod.PARALYZERES, tpz.mod.BINDRES}},
-					{mod = {tpz.mod.SILENCERES, tpz.mod.GRAVITYRES}},
-					{mod = {tpz.mod.PETRIFYRES, tpz.mod.SLOWRES}},
-					{mod = {tpz.mod.STUNRES}},
-					{mod = {tpz.mod.POISONRES, tpz.mod.VIRUSRES}},
-					{mod = {tpz.mod.AMNESIARES}},
-					{mod = {tpz.mod.SLEEPRES, tpz.mod.BLINDRES, tpz.mod.CURSERES}},
-					{mod = {tpz.mod.CHARMRES, tpz.mod.LULLABYRES, tpz.mod.DEATHRES}}
-				  }
+local resistMod =
+{
+    {mod = {tpz.mod.PARALYZERES, tpz.mod.BINDRES,                                       }}, -- (Fire rune)
+    {mod = {tpz.mod.SILENCERES,  tpz.mod.GRAVITYRES,                                    }}, -- (Ice rune)
+    {mod = {tpz.mod.PETRIFYRES,  tpz.mod.SLOWRES,                                       }}, -- (Wind rune)
+    {mod = {tpz.mod.STUNRES,                                                            }}, -- (Earth rune)
+    {mod = {tpz.mod.POISONRES,   tpz.mod.VIRUSRES,                                      }}, -- (Thunder rune)
+    {mod = {tpz.mod.AMNESIARES,                                                         }}, -- (Water rune)
+    {mod = {tpz.mod.SLEEPRES,    tpz.mod.BLINDRES,   tpz.mod.CURSERES, tpz.mod.DEATHRES,}}, -- Lux (Light Rune)
+    {mod = {tpz.mod.CHARMRES,    tpz.mod.LULLABYRES,                                    }}, -- Tenebrae (Dark Rune)
+}
 
 function onEffectGain(target, effect)
 	-- Check resistPower table for rune values

@@ -7,6 +7,9 @@
 -----------------------------------
 require("scripts/globals/keyitems")
 require("scripts/globals/magic")
+require("scripts/globals/spell_data")
+require("scripts/globals/utils")
+require("scripts/globals/weaponskillids")
 require("scripts/globals/zone")
 
 tpz = tpz or {}
@@ -16,53 +19,187 @@ tpz.abyssea = tpz.abyssea or {}
 -- local data
 -------------------------------------------------
 
--- weaponskills for red weakness
+tpz.abyssea.triggerType =
+{
+    RED    = 0,
+    YELLOW = 1,
+    BLUE   = 2,
+}
+
 local redWeakness =
 {
-    --light
-    37, 161, 149, 180,
-    --dark
-    22, 133, 98,
-    --fire
-    34,
-    --earth
-    178,
-    --wind
-    20, 148,
-    --ice
-    51,
-    --thunder
-    144
+    tpz.weaponskill.SERAPH_BLADE,
+    tpz.weaponskill.SERAPH_STRIKE,
+    tpz.weaponskill.TACHI_KOKI,
+    tpz.weaponskill.SUNBURST,
+    tpz.weaponskill.ENERGY_DRAIN,
+    tpz.weaponskill.BLADE_EI,
+    tpz.weaponskill.SHADOW_OF_DEATH,
+    tpz.weaponskill.RED_LOTUS_BLADE,
+    tpz.weaponskill.FLAMING_ARROW,
+    tpz.weaponskill.HOT_SHOT,
+    tpz.weaponskill.EARTH_CRUSHER,
+    tpz.weaponskill.BLADE_CHI,
+    tpz.weaponskill.CYCLONE,
+    tpz.weaponskill.TACHI_JINPU,
+    tpz.weaponskill.FREEZEBITE,
+    tpz.weaponskill.BLADE_TO,
+    tpz.weaponskill.RAIDEN_THRUST,
+    tpz.weaponskill.CLOUDSPLITTER,
+    tpz.weaponskill.BLADE_TEKI,
+    tpz.weaponskill.BLADE_YU,
 }
 
 local yellowWeakness =
 {
-    --fire
-    [tpz.magic.element.FIRE] = { 146, 147, 176, 204, 591, 321, 455 },
-    --ice
-    [tpz.magic.element.ICE] = { 151, 152, 181, 206, 531, 324, 456 },
-    --wind
-    [tpz.magic.element.WIND] = { 156, 157, 186, 208, 534, 327, 457 },
-    --earth
-    [tpz.magic.element.EARTH] = { 161, 162, 191, 210, 555, 330, 458 },
-    --ltng
-    [tpz.magic.element.THUNDER] = { 166, 167, 196, 212, 644, 333, 459 },
-    --water
-    [tpz.magic.element.WATER] = { 171, 172, 201, 515, 336, 454 },
-    --light
-    [tpz.magic.element.LIGHT] = { 29, 30, 38, 39, 21, 112, 565, 461 },
-    --dark
-    [tpz.magic.element.DARK] = { 247, 245, 231, 260, 557, 348, 460 }
+    [tpz.magic.element.FIRE] =
+    {
+        tpz.magic.spell.FIRE_III,
+        tpz.magic.spell.FIRE_IV,
+        tpz.magic.spell.FIRAGA_III,
+        tpz.magic.spell.FLARE,
+        tpz.magic.spell.HEAT_BREATH,
+        tpz.magic.spell.KATON_NI,
+        tpz.magic.spell.ICE_THRENODY,
+    },
+
+    [tpz.magic.element.ICE] =
+    {
+        tpz.magic.spell.BLIZZARD_III,
+        tpz.magic.spell.BLIZZARD_IV,
+        tpz.magic.spell.BLIZZAGA_III,
+        tpz.magic.spell.FREEZE,
+        tpz.magic.spell.ICE_BREAK,
+        tpz.magic.spell.HYOTON_NI,
+        tpz.magic.spell.WIND_THRENODY,
+    },
+
+    [tpz.magic.element.WIND] =
+    {
+        tpz.magic.spell.AERO_III,
+        tpz.magic.spell.AERO_IV,
+        tpz.magic.spell.AEROGA_III,
+        tpz.magic.spell.TORNADO,
+        tpz.magic.spell.MYSTERIOUS_LIGHT,
+        tpz.magic.spell.HUTON_NI,
+        tpz.magic.spell.EARTH_THRENODY,
+    },
+
+    [tpz.magic.element.EARTH] =
+    {
+        tpz.magic.spell.STONE_III,
+        tpz.magic.spell.STONE_IV,
+        tpz.magic.spell.STONEGA_III,
+        tpz.magic.spell.QUAKE,
+        tpz.magic.spell.MAGNETITE_CLOUD,
+        tpz.magic.spell.DOTON_NI,
+        tpz.magic.spell.LIGHTNING_THRENODY,
+    },
+
+    [tpz.magic.element.THUNDER] =
+    {
+        tpz.magic.spell.THUNDER_III,
+        tpz.magic.spell.THUNDER_IV,
+        tpz.magic.spell.THUNDAGA_III,
+        tpz.magic.spell.BURST,
+        tpz.magic.spell.MIND_BLAST,
+        tpz.magic.spell.RAITON_NI,
+        tpz.magic.spell.WATER_THRENODY,
+    },
+
+    [tpz.magic.element.WATER] =
+    {
+        tpz.magic.spell.WATER_III,
+        tpz.magic.spell.WATER_IV,
+        tpz.magic.spell.WATERGA_III,
+        tpz.magic.spell.FLOOD,
+        tpz.magic.spell.MAELSTROM,
+        tpz.magic.spell.SUITON_NI,
+        tpz.magic.spell.FIRE_THRENODY,
+    },
+
+    [tpz.magic.element.LIGHT] =
+    {
+        tpz.magic.spell.BANISH_II,
+        tpz.magic.spell.BANISH_III,
+        tpz.magic.spell.BANISHGA,
+        tpz.magic.spell.BANISHGA_II,
+        tpz.magic.spell.HOLY,
+        tpz.magic.spell.FLASH,
+        tpz.magic.spell.RADIANT_BREATH,
+        tpz.magic.spell.DARK_THRENODY,
+    },
+
+    [tpz.magic.element.DARK] =
+    {
+        tpz.magic.spell.ASPIR,
+        tpz.magic.spell.DRAIN,
+        tpz.magic.spell.BIO_II,
+        tpz.magic.spell.DISPEL,
+        tpz.magic.spell.EYES_ON_ME,
+        tpz.magic.spell.KURAYAMI_NI,
+        tpz.magic.spell.LIGHT_THRENODY,
+    },
 }
 
 local blueWeakness =
 {
-    --6-14
-    {196, 197, 198, 199, 212, 213, 214, 215, 18, 23, 24, 25, 118, 119, 120},
-    --14-22
-    {40, 41, 42, 135, 136, 71, 72, 103, 104, 87, 88, 151, 152, 55, 56},
-    --22-6
-    {165, 166, 167, 168, 169, 5, 6, 7, 8, 9, 176, 181, 182, 183, 184}
+    -- Piercing: 0600 - 1400
+    {
+        tpz.weaponskill.SIDEWINDER,
+        tpz.weaponskill.BLAST_ARROW,
+        tpz.weaponskill.ARCHING_ARROW,
+        tpz.weaponskill.EMPYREAL_ARROW,
+        tpz.weaponskill.SLUG_SHOT,
+        tpz.weaponskill.BLAST_SHOT,
+        tpz.weaponskill.HEAVY_SHOT,
+        tpz.weaponskill.DETONATOR,
+        tpz.weaponskill.SHADOWSTICH,
+        tpz.weaponskill.DANCING_EDGE,
+        tpz.weaponskill.SHARK_BITE,
+        tpz.weaponskill.EVISCERATION,
+        tpz.weaponskill.SKEWER,
+        tpz.weaponskill.WHEELING_THRUST,
+        tpz.weaponskill.IMPULSE_DRIVE,
+    },
+
+    -- Slashing: 1400 - 2200
+    {
+        tpz.weaponskill.VORPAL_BLADE,
+        tpz.weaponskill.SWIFT_BLADE,
+        tpz.weaponskill.SAVAGE_BLADE,
+        tpz.weaponskill.BLADE_TEN,
+        tpz.weaponskill.BLADE_KU,
+        tpz.weaponskill.MISTRAL_AXE,
+        tpz.weaponskill.DECIMATION,
+        tpz.weaponskill.CROSS_REAPER,
+        tpz.weaponskill.SPIRAL_HELL,
+        tpz.weaponskill.FULL_BREAK,
+        tpz.weaponskill.STEEL_CYCLONE,
+        tpz.weaponskill.TACHI_GEKKO,
+        tpz.weaponskill.TACHI_KASHA,
+        tpz.weaponskill.SPINNING_SLASH,
+        tpz.weaponskill.GROUND_STRIKE,
+    },
+
+    -- Blunt: 2200 - 0600
+    {
+        tpz.weaponskill.SKULLBREAKER,
+        tpz.weaponskill.TRUE_STRIKE,
+        tpz.weaponskill.JUDGMENT,
+        tpz.weaponskill.HEXA_STRIKE,
+        tpz.weaponskill.BLACK_HALO,
+        tpz.weaponskill.RAGING_FISTS,
+        tpz.weaponskill.SPINNING_ATTACK,
+        tpz.weaponskill.HOWLING_FIST,
+        tpz.weaponskill.DRAGON_KICK,
+        tpz.weaponskill.ASURAN_FISTS,
+        tpz.weaponskill.HEAVY_SWING,
+        tpz.weaponskill.SHELL_CRUSHER,
+        tpz.weaponskill.FULL_SWING,
+        tpz.weaponskill.SPIRIT_TAKER,
+        tpz.weaponskill.RETRIBUTION,
+    },
 }
 
 -- [ZoneID] = {Required Trades Event, Has Key Items Event, Missing Key Item Event}
@@ -267,21 +404,27 @@ tpz.abyssea.getDemiluneAbyssite = function(player)
 end
 
 tpz.abyssea.getCosmosAbyssite = function(player)
-	local cosmos = 0
-	
-	if (player:hasKeyItem(tpz.ki.ABYSSITE_OF_THE_COSMOS)) then
-		cosmos = 1
-	end
-	
-	return cosmos
+    local cosmos = 0
+
+    if player:hasKeyItem(tpz.ki.ABYSSITE_OF_THE_COSMOS) then
+        cosmos = 1
+    end
+
+    return cosmos
 end
 
 tpz.abyssea.getNewYellowWeakness = function(mob)
-    local day = VanadielDayOfTheWeek()
+    local day      = VanadielDayOfTheWeek()
     local weakness = math.random(day - 1, day + 1)
 
-    if weakness < 0 then weakness = 7 elseif weakness > 7 then weakness = 0 end
+    if weakness < 0 then
+        weakness = 7
+    elseif weakness > 7 then
+        weakness = 0
+    end
+
     local element = tpz.magic.dayElement[weakness]
+
     return yellowWeakness[element][math.random(#yellowWeakness[element])]
 end
 
@@ -290,7 +433,7 @@ tpz.abyssea.getNewRedWeakness = function(mob)
 end
 
 tpz.abyssea.getNewBlueWeakness = function(mob)
-    local time = VanadielHour()
+    local time  = VanadielHour()
     local table = 3
 
     if time >= 6 and time < 14 then
@@ -302,17 +445,67 @@ tpz.abyssea.getNewBlueWeakness = function(mob)
     return blueWeakness[table][math.random(#blueWeakness[table])]
 end
 
+tpz.abyssea.procMonster = function(mob, player, triggerType)
+    local ID = zones[player:getZoneID()]
+
+    if player and player:getAllegiance() == 1 then
+        local master = player:getMaster()
+
+        if master then
+            player = master
+        end
+
+        if triggerType == tpz.abyssea.triggerType.RED then
+            if mob:getLocalVar("[AbysseaRedProc]") == 0 then
+                mob:setLocalVar("[AbysseaRedProc]", 1)
+            else
+                mob:setLocalVar("[AbysseaRedProc]", 0)
+            end
+
+            mob:weaknessTrigger(2)
+            mob:addStatusEffect(tpz.effect.TERROR, 0, 0, 60)
+
+            player:messageName(ID.text.STAGGERED, player)
+            player:messageSpecial(ID.text.RED_STAGGER)
+        elseif triggerType == tpz.abyssea.triggerType.YELLOW then
+            if mob:getLocalVar("[AbysseaYellowProc]") == 0 then
+                mob:setLocalVar("[AbysseaYellowProc]", 1)
+            else
+                mob:setLocalVar("[AbysseaYellowProc]", 0)
+            end
+
+            mob:weaknessTrigger(1)
+            mob:addStatusEffect(tpz.effect.SILENCE, 1, 0, 60)
+
+            player:messageName(ID.text.STAGGERED, player)
+            player:messageSpecial(ID.text.YELLOW_STAGGER)
+        elseif triggerType == tpz.abyssea.triggerType.BLUE then
+            if mob:getLocalVar("[AbysseaBlueProc]") == 0 then
+                mob:setLocalVar("[AbysseaBlueProc]", 1)
+            else
+                mob:setLocalVar("[AbysseaBlueProc]", 0)
+            end
+
+            mob:weaknessTrigger(0)
+            mob:addStatusEffect(tpz.effect.AMNESIA, 1, 0, 60)
+
+            player:messageName(ID.text.STAGGERED, player)
+            player:messageSpecial(ID.text.BLUE_STAGGER)
+        end
+    end
+end
+
 -- Drop KI on death
 tpz.abyssea.kiOnMobDeath = function(mob, player)
-	if (mob:checkDistance(player) <= 40) then
-		local zoneId = player:getZoneID()
-		local keyItem = zones[zoneId].mob.ON_DEATH_KI[mob:getID()].reward
-		
-		if not (player:hasKeyItem(keyItem)) then
-			player:messageSpecial(zones[zoneId].text.KEYITEM_OBTAINED, keyItem)
-			player:addKeyItem(keyItem)
-		end
-	end
+    if (mob:checkDistance(player) <= 40) then
+        local zoneId = player:getZoneID()
+        local keyItem = zones[zoneId].mob.ON_DEATH_KI[mob:getID()].reward
+
+        if not (player:hasKeyItem(keyItem)) then
+            player:messageSpecial(zones[zoneId].text.KEYITEM_OBTAINED, keyItem)
+            player:addKeyItem(keyItem)
+        end
+    end
 end
 
 -- trade to QM to pop mob
@@ -320,21 +513,21 @@ tpz.abyssea.qmOnTrade = function(player, npc, trade)
     -- validate QM pop data
     local zoneId = player:getZoneID()
     local pop = zones[zoneId].npc.QM_POPS[npc:getID()] -- TODO: Once I (Wren) finish entity-QC on all Abyssea zones, I must adjust the format of QM_POPS table
-	
+
     if not pop then
         return false
     end
 
     -- validate trade-to-pop
     local reqTrade = pop[2]
-	
-	local count = 0
-	for i = 1, #reqTrade do
-		if (reqTrade[i] ~= 0) then
-			count = count + 1
-		end
-	end
-	
+
+    local count = 0
+    for i = 1, #reqTrade do
+        if (reqTrade[i] ~= 0) then
+            count = count + 1
+        end
+    end
+
     if count == 0 or trade:getItemCount() ~= count then
         return false
     end
@@ -342,7 +535,7 @@ tpz.abyssea.qmOnTrade = function(player, npc, trade)
     -- validate traded items
     for k, v in pairs(reqTrade) do
         if (reqTrade[k] ~= 0 and not trade:hasItemQty(v, 1)) then
-			return false
+            return false
         end
     end
 
@@ -359,22 +552,22 @@ tpz.abyssea.qmOnTrade = function(player, npc, trade)
     local dz = player:getZPos() + math.random(-1, 1)
     GetMobByID(nm):setSpawn(dx, dy, dz)
     SpawnMob(nm):updateClaim(player)
-	
-	-- Handle ??? disappearing on pop and reappearing after mob dies
-	local mob = GetMobByID(nm)
-	
-	npc:setStatus(tpz.status.DISAPPEAR)
-	mob:setLocalVar("qm", npc:getID())
-	mob:addListener("DESPAWN", "QM_"..nm, function(m)
-		m:removeListener("QM_"..nm)
-		
-		if mob:isAlive() then
-			return false
-		end
 
-		GetNPCByID(m:getLocalVar("qm")):updateNPCHideTime(30)
-	end)
-	
+    -- Handle ??? disappearing on pop and reappearing after mob dies
+    local mob = GetMobByID(nm)
+
+    npc:setStatus(tpz.status.DISAPPEAR)
+    mob:setLocalVar("qm", npc:getID())
+    mob:addListener("DESPAWN", "QM_"..nm, function(m)
+        m:removeListener("QM_"..nm)
+
+        if mob:isAlive() then
+            return false
+        end
+
+        GetNPCByID(m:getLocalVar("qm")):updateNPCHideTime(30)
+    end)
+
     return true
 end
 
@@ -383,7 +576,7 @@ tpz.abyssea.qmOnTrigger = function(player, npc)
     local zoneId = player:getZoneID()
     local events = popEvents[zoneId]
     local pop = zones[zoneId].npc.QM_POPS[npc:getID()] -- TODO: Once I (Wren) finish entity-QC on all Abyssea zones, I must adjust the format of QM_POPS table
-	
+
     if not pop then
         return false
     end
@@ -415,10 +608,10 @@ tpz.abyssea.qmOnTrigger = function(player, npc)
     -- validate kis
     local validKis = true
     for k, v in pairs(kis) do
-		if (kis[k] ~= 0 and not player:hasKeyItem(v)) then
-			validKis = false
-			break
-		end
+        if (kis[k] ~= 0 and not player:hasKeyItem(v)) then
+            validKis = false
+            break
+        end
     end
 
     -- infill kis
@@ -448,9 +641,9 @@ tpz.abyssea.qmOnEventFinish = function(player, csid, option)
     local events = popEvents[zoneId]
     local pop = zones[zoneId].npc.QM_POPS[player:getLocalVar("abysseaQM")] -- TODO: Once I (Wren) finish entity-QC on all Abyssea zones, I must adjust the format of QM_POPS table
     local qm = GetNPCByID(player:getLocalVar("abysseaQM"))
-	
-	player:setLocalVar("abysseaQM", 0)
-	
+
+    player:setLocalVar("abysseaQM", 0)
+
     if not pop then
         return false
     end
@@ -471,22 +664,22 @@ tpz.abyssea.qmOnEventFinish = function(player, csid, option)
         local dz = player:getZPos() + math.random(-1, 1)
         GetMobByID(nm):setSpawn(dx, dy, dz)
         SpawnMob(nm):updateClaim(player)
-		
-		-- Handle ??? disappearing on pop and reappearing after mob dies
-		local mob = GetMobByID(nm)
-		
-		qm:setStatus(tpz.status.DISAPPEAR)
-		mob:setLocalVar("qm", qm:getID())
-		mob:addListener("DESPAWN", "QM_"..nm, function(m)
-			m:removeListener("QM_"..nm)
-			
-			if mob:isAlive() then
-				return false
-			end
 
-			GetNPCByID(m:getLocalVar("qm")):updateNPCHideTime(30)
-		end)
-		
+        -- Handle ??? disappearing on pop and reappearing after mob dies
+        local mob = GetMobByID(nm)
+
+        qm:setStatus(tpz.status.DISAPPEAR)
+        mob:setLocalVar("qm", qm:getID())
+        mob:addListener("DESPAWN", "QM_"..nm, function(m)
+            m:removeListener("QM_"..nm)
+
+            if mob:isAlive() then
+                return false
+            end
+
+            GetNPCByID(m:getLocalVar("qm")):updateNPCHideTime(30)
+        end)
+
         return true
     end
 end

@@ -15,28 +15,28 @@
 -- Common functions
 require("scripts/globals/common")
 
--- Enable Expansion (1= yes 0= no)
-ENABLE_COP     = 1
-ENABLE_TOAU    = 1
-ENABLE_WOTG    = 1
-ENABLE_ACP     = 1
-ENABLE_AMK     = 1
-ENABLE_ASA     = 1
-ENABLE_ABYSSEA = 1
-ENABLE_SOA     = 1
-ENABLE_ROV     = 1
+-- Enable Expansion (1 = yes 0 = no)
+ENABLE_COP       = 1
+ENABLE_TOAU      = 1
+ENABLE_WOTG      = 1
+ENABLE_ACP       = 1
+ENABLE_AMK       = 1
+ENABLE_ASA       = 1
+ENABLE_ABYSSEA   = 1
+ENABLE_SOA       = 1
+ENABLE_ROV       = 1
 ENABLE_VOIDWATCH = 1 -- Not an expansion, but has its own storyline.
 
 -- FIELDS OF VALOR/Grounds of Valor settings
 ENABLE_FIELD_MANUALS  = 1 -- Enables Fields of Valor
 ENABLE_GROUNDS_TOMES  = 1 -- Enables Grounds of Valor
 ENABLE_SURVIVAL_GUIDE = 1 -- Enables Survival Guides
-REGIME_WAIT = 0 -- Make people wait till 00:00 game time as in retail. If it's 0, there is no wait time.
-FOV_REWARD_ALLIANCE = 1 -- Allow Fields of Valor rewards while being a member of an alliance. (default retail behavior: 0)
-GOV_REWARD_ALLIANCE = 1 -- Allow Grounds of Valor rewards while being a member of an alliance. (default retail behavior: 1)
+REGIME_WAIT           = 0 -- Make people wait till 00:00 game time as in retail. If it's 0, there is no wait time.
+FOV_REWARD_ALLIANCE   = 1 -- Allow Fields of Valor rewards while being a member of an alliance. (default retail behavior: 0)
+GOV_REWARD_ALLIANCE   = 1 -- Allow Grounds of Valor rewards while being a member of an alliance. (default retail behavior: 1)
 
 -- Records of Eminence
-ENABLE_ROE = 1
+ENABLE_ROE       = 1
 ENABLE_ROE_TIMED = 1 -- Enable 4-hour timed records
 
 -- TREASURE CASKETS
@@ -52,36 +52,39 @@ CASKET_DROP_RATE = 0.1
 RESTRICT_CONTENT = 0
 
 -- CHARACTER CONFIG
-INITIAL_LEVEL_CAP = 99 -- The initial level cap for new players.  There seems to be a hardcap of 255.
-MAX_LEVEL = 99 -- Level max of the server, lowers the attainable cap by disabling Limit Break quests.
+INITIAL_LEVEL_CAP              = 99 -- The initial level cap for new players.  There seems to be a hardcap of 255.
+MAX_LEVEL                      = 99 -- Level max of the server, lowers the attainable cap by disabling Limit Break quests.
 NORMAL_MOB_MAX_LEVEL_RANGE_MIN = 0 -- Lower Bound of Max Level Range for Normal Mobs (0 = Uncapped)
 NORMAL_MOB_MAX_LEVEL_RANGE_MAX = 0 -- Upper Bound of Max Level Range for Normal Mobs (0 = Uncapped)
-START_GIL =25000 -- Amount of gil given to newly created characters.
-START_INVENTORY = 80 -- Starting inventory and satchel size.  Ignores values < 30.  Do not set above 80!
-NEW_CHARACTER_CUTSCENE = 0 -- Set to 1 to enable opening cutscenes, 0 to disable.
-SUBJOB_QUEST_LEVEL = 0 -- Minimum level to accept either subjob quest.  Set to 0 to start the game with subjobs unlocked.
-ADVANCED_JOB_LEVEL = 0 -- Minimum level to accept advanced job quests.  Set to 0 to start the game with advanced jobs.
-ALL_MAPS = 1 -- Set to 1 to give starting characters all the maps.
-UNLOCK_OUTPOST_WARPS = 1 -- Set to 1 to give starting characters all outpost warps.  2 to add Tu'Lia and Tavnazia.
+START_GIL                      = 25000 -- Amount of gil given to newly created characters.
+START_INVENTORY                = 80 -- Starting inventory and satchel size.  Ignores values < 30.  Do not set above 80!
+NEW_CHARACTER_CUTSCENE         = 0 -- Set to 1 to enable opening cutscenes, 0 to disable.
+SUBJOB_QUEST_LEVEL             = 0 -- Minimum level to accept either subjob quest.  Set to 0 to start the game with subjobs unlocked.
+ADVANCED_JOB_LEVEL             = 0 -- Minimum level to accept advanced job quests.  Set to 0 to start the game with advanced jobs.
+ALL_MAPS                       = 1 -- Set to 1 to give starting characters all the maps.
+UNLOCK_OUTPOST_WARPS           = 1 -- Set to 1 to give starting characters all outpost warps.  2 to add Tu'Lia and Tavnazia.
+KEEP_JUGPET_THROUGH_ZONING     = 1 -- Enable/disable preserving jug pets through zoning
 
-SHOP_PRICE      = 1.000 -- Multiplies prices in NPC shops.
-GIL_RATE        = 2.500 -- Multiplies gil earned from quests.  Won't always display in game.
-BAYLD_RATE      = 1.000 -- Multiples bayld earned from quests.
-EXP_RATE        = 3.500 -- Multiplies exp earned from fov and quests.
-TABS_RATE       = 1.000 -- Multiplies tabs earned from fov.
-ROE_EXP_RATE    = 1.000 -- Multiplies exp earned from records of eminence.
-SPARKS_RATE     = 1.000 -- Multiplies sparks earned from records of eminence.
-CURE_POWER      = 1.000 -- Multiplies amount healed from Healing Magic, including the relevant Blue Magic.
-ELEMENTAL_POWER = 1.250 -- Multiplies damage dealt by Elemental and non-drain Dark Magic.
-DIVINE_POWER    = 7.500 -- Multiplies damage dealt by Divine Magic.
-NINJUTSU_POWER  = 1.750 -- Multiplies damage dealt by Ninjutsu Magic.
-BLUE_POWER      = 2.250 -- Multiplies damage dealt by Blue Magic.
-DARK_POWER      = 1.000 -- Multiplies amount drained by Dark Magic.
-ITEM_POWER      = 1.000 -- Multiplies the effect of items such as Potions and Ethers.
+SHOP_PRICE          = 1.000 -- Multiplies prices in NPC shops.
+GIL_RATE            = 2.500 -- Multiplies gil earned from quests.  Won't always display in game.
+BAYLD_RATE          = 1.000 -- Multiples bayld earned from quests.
+EXP_RATE            = 3.500 -- Multiplies exp earned from fov and quests.
+TABS_RATE           = 1.000 -- Multiplies tabs earned from fov.
+ROE_EXP_RATE        = 1.000 -- Multiplies exp earned from records of eminence.
+SPARKS_RATE         = 1.000 -- Multiplies sparks earned from records of eminence.
+CURE_POWER          = 1.000 -- Multiplies amount healed from Healing Magic, including the relevant Blue Magic.
+ELEMENTAL_POWER     = 1.250 -- Multiplies damage dealt by Elemental and non-drain Dark Magic.
+DIVINE_POWER        = 7.500 -- Multiplies damage dealt by Divine Magic.
+NINJUTSU_POWER      = 1.750 -- Multiplies damage dealt by Ninjutsu Magic.
+BLUE_POWER          = 2.000 -- Multiplies damage dealt by Blue Magic.
+DARK_POWER          = 1.000 -- Multiplies amount drained by Dark Magic.
+ITEM_POWER          = 1.000 -- Multiplies the effect of items such as Potions and Ethers.
 WEAPON_SKILL_POWER  = 1.000 -- Multiplies damage dealt by Weapon Skills.
 WEAPON_SKILL_POINTS = 1.000 -- Multiplies points earned during weapon unlocking.
 MOB_SKILL_POWER     = 1.000 -- TO DO: Multiplies damage dealt by all monster skills (physical and magical)
+
 USE_ADOULIN_WEAPON_SKILL_CHANGES = true -- true/false. Change to toggle new Adoulin weapon skill damage calculations
+BLUE_SPELL_SET_COOLDOWN          = 1    -- Enables (1)/disables (0) 60s cooldown on casting Blue Magic spells after setting or removing a spell
 
 -- Caldera Custom settings
 SHURIKEN_DMG_BONUS  = 1.000 -- Multiplies damage dealt by Ninja shurikens (including Daken attacks)

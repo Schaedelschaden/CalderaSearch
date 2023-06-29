@@ -2,6 +2,10 @@
 -- Area: Abyssea-Misareaux
 --   NM: Amhuluk
 -----------------------------------
+mixins = {require("scripts/mixins/abyssea_weakness")}
+require("scripts/globals/abyssea")
+require("scripts/globals/mobs")
+-----------------------------------
 
 function onMobSpawn(mob)
     mob:addMod(tpz.mod.SLEEPRES, 100)

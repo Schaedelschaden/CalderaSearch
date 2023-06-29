@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Escha - Zitah
---   NM: Urmahlulu
+--   NM: Urmahlullu
 -----------------------------------
 require("scripts/globals/status")
 require("scripts/globals/spell_data")
@@ -30,7 +30,7 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.ACC, 100)
 	mob:addMod(tpz.mod.EVA, 100)
 	mob:addMod(tpz.mod.DEF, 300)
-	mob:setMod(tpz.mod.MEVA, 150)
+	mob:setMod(tpz.mod.MEVA, 1195)
 	mob:addMod(tpz.mod.DMGPHYS, -25)
     mob:addMod(tpz.mod.DMGMAGIC, 25)
 	-- mob:setMod(tpz.mod.MOBMOD_TP_USE_CHANCE, 5000) -- 50% every 400 ms

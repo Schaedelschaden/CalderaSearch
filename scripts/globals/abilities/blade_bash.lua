@@ -10,36 +10,48 @@ require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------
 
-function onAbilityCheck(player,target,ability)
-    if (not player:isWeaponTwoHanded()) then
+function onAbilityCheck(player, target, ability)
+    if not player:isWeaponTwoHanded() then
         return tpz.msg.basic.NEEDS_2H_WEAPON,0
     else
         return 0,0
     end
 end
 
-function onUseAbility(player,target,ability)
+function onUseAbility(player, target, ability)
+    local spell  = getSpell(252)
+    local params = {}
+			params.diff      = 0
+			params.skillType = player:getWeaponSkillType(tpz.slot.MAIN)
+			params.bonus     = 0
+    local resist = applyResistance(player, target, spell, params)
+
     -- Stun rate
-    if (math.random(1,100) < 99) then
+    if
+        math.random(1, 100) < 99 and
+        resist > 0.25
+    then
         target:addStatusEffect(tpz.effect.STUN,1,0,4)
     end
 
     -- Yes, even Blade Bash deals damage dependant of Dark Knight level
     local darkKnightLvl = 0
     local damage = 0
-    if (player:getMainJob() == tpz.job.DRK) then
+
+    if player:getMainJob() == tpz.job.DRK then
         damage = math.floor(((player:getMainLvl() + 11) / 4) + player:getMod(tpz.mod.WEAPON_BASH))
-    elseif (player:getSubJob() == tpz.job.DRK) then
+    elseif player:getSubJob() == tpz.job.DRK then
         damage = math.floor(((player:getSubLvl() + 11) / 4) + player:getMod(tpz.mod.WEAPON_BASH))
     end
 
     -- Calculating and applying Blade Bash damage
     damage = utils.stoneskin(target, damage)
+
     target:takeDamage(damage, player, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
     target:updateEnmityFromDamage(player,damage)
 
     -- Applying Plague based on merit level.
-    if (math.random(1,100) < 65) then
+    if math.random(1,100) < 65 then
         target:addStatusEffect(tpz.effect.PLAGUE,5,0,15 + player:getMerit(tpz.merit.BLADE_BASH))
     end
 

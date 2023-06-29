@@ -2,6 +2,10 @@
 -- Area: Abyssea-Misareaux
 --   NM: Flame Skimmer
 -----------------------------------
+mixins = {require("scripts/mixins/abyssea_weakness")}
+require("scripts/globals/abyssea")
+require("scripts/globals/mobs")
+-----------------------------------
 
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.MOBMOD_MULTI_HIT, 3)

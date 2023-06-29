@@ -2,9 +2,15 @@
 -- Area: Abyssea-Misareaux
 --   NM: Funereal Apkallu
 -----------------------------------
+mixins = {require("scripts/mixins/abyssea_weakness")}
+require("scripts/globals/abyssea")
+require("scripts/globals/mobs")
+-----------------------------------
 
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+    mob:addMod(tpz.mod.HASTE_ABILITY, 2500)
+    mob:addMod(tpz.mod.HASTE_GEAR, 1000)
     mob:addMod(tpz.mod.PARALYZERES, -15)
     mob:addMod(tpz.mod.SLOWRES, -15)
     mob:addMod(tpz.mod.BLINDRES, -15)

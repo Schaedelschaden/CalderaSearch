@@ -258,10 +258,10 @@ local highTierKIs = {
     [ 17] = {trade = {1413}, reward = tpz.ki.WAKING_THE_BEAST_PHANTOM_GEM }, -- Cattleya      -> Waking the Beast Phantom Gem
     [ 18] = {trade = {2370}, reward = tpz.ki.SECRET_IMPERIAL_ORDER        }, -- Flower Seeds  -> Secret Imperial Order
     [ 19] = {trade = { 574}, reward = tpz.ki.CONFIDENTIAL_IMPERIAL_ORDER  }, -- Fruit Seeds   -> Confidential Imperial Order
+    [ 20] = {trade = { 572}, reward = tpz.ki.ZEPHYR_FAN                   }, -- Herb Seeds    -> Zephyr Fan
+    [ 20] = {trade = { 575}, reward = tpz.ki.TABLET_OF_HEXES_RANCOR       }, -- Grain Seeds   -> Tablet of Hexes Rancor    
     -- CURRENTLY UNUSED TRADE ITEMS/AVAILABLE FOR USE
     -- Vegetable Seeds
-    -- Grain Seeds
-    -- Herb Seeds
     -- Lycopodium Flower
     -- Tahrongi Cactus
 }

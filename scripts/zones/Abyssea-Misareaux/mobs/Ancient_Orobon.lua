@@ -2,6 +2,10 @@
 -- Area: Abyssea - Misareaux
 --  Mob: Ancient Orobon
 -----------------------------------
+mixins = {require("scripts/mixins/abyssea_weakness")}
+require("scripts/globals/abyssea")
+require("scripts/globals/mobs")
+-----------------------------------
 
 function onMobSpawn(mob)
     -- mob:addListener("CRITICAL_TAKE", "OROBON_CRITICAL_TAKE", function(mob)

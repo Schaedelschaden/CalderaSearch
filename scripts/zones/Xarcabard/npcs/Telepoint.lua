@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Xarcabard
---  NPC: Telepoint
+-- NPC: Telepoint
+-- ID: 17236309
 -- !pos 150.258 -21.047 -37.256 112
 -----------------------------------
 local ID = require("scripts/zones/Xarcabard/IDs")

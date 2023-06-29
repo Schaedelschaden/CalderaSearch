@@ -15,7 +15,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local potency = math.random(4500, 5000)
+    local potency = math.random(5000, 10000)
 
     if
         mob:getID() == 16961945 -- Iratham
@@ -32,10 +32,7 @@ function onMobWeaponSkill(target, mob, skill)
     elseif
         mob:getID() == 17670551 or -- Rani
         mob:getID() == 17670555 or -- Rani
-        mob:getID() == 17670559    -- Rani
-    then
-        mob:addStatusEffect(tpz.effect.STONESKIN, potency / 2, 0, 180)
-    elseif
+        mob:getID() == 17670559 or -- Rani
         mob:getID() == 17818051 or -- Raja
         mob:getID() == 17818055 or -- Raja
         mob:getID() == 17818059    -- Raja

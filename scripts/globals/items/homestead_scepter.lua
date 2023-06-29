@@ -6,31 +6,72 @@
 require("scripts/globals/status")
 -----------------------------------------
 
-function onItemCheck(target, itemCheck, caster)
-    local zoneID = caster:getZoneID()
+local zones =
+{
+    tpz.zone.RUAUN_GARDENS,
+    tpz.zone.THE_SHRINE_OF_RUAVITAU,
+    tpz.zone.VELUGANNON_PALACE,
+    tpz.zone.ALTAIEU,
+    tpz.zone.THE_GARDEN_OF_RUHMET,
+    tpz.zone.GRAND_PALACE_OF_HUXZOI,
+}
+
+local statusEffects =
+{
+    tpz.effect.BATTLEFIELD,
+    tpz.effect.BESIEGED,
+}
+
+function onItemCheck(target, param, caster)
+    local latentActive = false
+    local zoneID       = target:getZoneID()
+    -- local pet          = target:getPet()
+
+    for i = 1, #zones do
+        if zoneID == zones[i] then
+            latentActive = true
+        end
+    end
+
+    for i = 1, #statusEffects do
+        if target:hasStatusEffect(statusEffects[i]) then
+            latentActive = true
+        end
+    end
 
     if
-        zoneID == 130 or -- Ru'Aun Gardens
-        zoneID == 178 or -- The Shrine of Ru'Avitau
-        zoneID == 177 or -- Ve'Lugannon Palace
-        zoneID == 33  or -- Al'Taieu
-        zoneID == 35  or -- The Garden of Ru'Hmet
-        zoneID == 34  or -- Grand Palace of Hu'Xzoi
-        caster:hasStatusEffect(tpz.effect.BESIEGED) or
-        caster:hasStatusEffect(tpz.effect.BATTLEFIELD)
+        latentActive == true and
+        param == 1 -- Equip
     then
-        if itemCheck == 1 and caster:getPet() then --Equip
-            local pet = caster:getPet()
+        target:addListener("TICK", "HOMESTEAD_SCEPTER_LATENT", function(playerArg)
+            local playerPet = playerArg:getPet()
 
-            pet:addMod(tpz.mod.MACC, 50)
-            pet:addMod(tpz.mod.REGAIN, 100)
+            if
+                playerPet and
+                playerPet:getLocalVar("HOMESTEAD_LATENT_APPLIED") == 0
+            then
+                playerPet:addMod(tpz.mod.MACC, 50)
+                playerPet:addMod(tpz.mod.REGAIN, 100)
+                playerPet:setLocalVar("HOMESTEAD_LATENT_APPLIED", 1)
+            end
+        end)
+    end
+
+    if
+        latentActive == true and
+        param == 2 -- Unequip
+    then
+        local pet = target:getPet()
+
+        if
+            pet and
+            pet:getLocalVar("HOMESTEAD_LATENT_APPLIED") == 1
+        then
+            pet:delMod(tpz.mod.MACC, 50)
+            pet:delMod(tpz.mod.REGAIN, 100)
+            pet:setLocalVar("HOMESTEAD_LATENT_APPLIED", 0)
         end
 
-        if itemCheck == 2 and caster:getPet() then -- Unequip
-            local pet = caster:getPet()
-
-            pet:addMod(tpz.mod.MACC, 50)
-            pet:addMod(tpz.mod.REGAIN, 100)
-        end
+        target:removeListener("HOMESTEAD_SCEPTER_LATENT")
     end
 end

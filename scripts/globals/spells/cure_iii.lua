@@ -64,7 +64,7 @@ function onSpellCast(caster,target,spell)
         else
             basecure = getBaseCure(power,divisor,constant,basepower)
         end
-        final = getCureFinal(caster,spell,basecure,minCure,false)
+        final = getCureFinal(caster, target, spell, basecure, minCure, false)
         if (caster:hasStatusEffect(tpz.effect.AFFLATUS_SOLACE) and target:hasStatusEffect(tpz.effect.STONESKIN) == false) then
             local solaceStoneskin = math.floor(final * (0.25 + (caster:getMod(tpz.mod.ENH_AFFLATUS_SOLACE) / 100)))
 
@@ -72,7 +72,6 @@ function onSpellCast(caster,target,spell)
 
             target:addStatusEffect(tpz.effect.STONESKIN,solaceStoneskin, 0, 25, 0, 0, 1)
         end
-        final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD)/100))
 
         --Applying server mods....
         final = final * CURE_POWER
@@ -132,6 +131,12 @@ function onSpellCast(caster,target,spell)
     local mpBonusPercent = (final*caster:getMod(tpz.mod.CURE2MP_PERCENT))/100
     if (mpBonusPercent > 0) then
         caster:addMP(mpBonusPercent)
+    end
+
+    if spell:getTotalTargets() > 1 and caster:getID() ~= target:getID() then
+        spell:setMsg(tpz.msg.basic.SELF_HEAL_SECONDARY)
+    else
+        spell:setMsg(tpz.msg.basic.MAGIC_RECOVERS_HP)
     end
 
     return final

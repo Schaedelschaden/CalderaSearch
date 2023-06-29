@@ -22,20 +22,22 @@ function onMagicCastingCheck(caster,target,spell)
 end
 
 function onSpellCast(caster,target,spell)
-	local tp = caster:getTP() + caster:getMerit(tpz.merit.ENCHAINMENT)
+	local tp = caster:getTP()
 	local duration = 180
 	local chance = math.random(1,100)
+    local damage = 0
 	local params = {}
     -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+    -- D Value (Final Base Damage) ＝ math.floor(D + fSTR + WSC) * fTP
 		params.tpmod = TPMOD_CRITICAL
-		params.tpmodvalue = 7
+		params.tpmodvalue = 7 -- Set to 1/3rd of max value for fTP0 (1x), fTP150 (2x), and fTP300 (3x) bonuses
         params.damageType = tpz.damageType.PIERCING
 		params.spellFamily = tpz.ecosystem.PLANTOID
         params.numhits = 1
-        params.multiplier = 1.75
-        params.tp150 = 1.75
-        params.tp300 = 1.75
-        params.azuretp = 1.75
+        params.multiplier = 1.75 -- fTP @    0-1500 TP
+        params.tp150 = 1.75 -- fTP @ 1500-2999 TP
+        params.tp300 = 1.75 -- fTP @      3000 TP
+        params.azuretp = 1.75 -- fTP @      3500 TP
         params.duppercap = 15
         params.str_wsc = 0.0
         params.dex_wsc = 0.0
@@ -64,7 +66,7 @@ function onSpellCast(caster,target,spell)
 		duration = duration * 1.5
 	end
 
-    if (damage > 0 and chance > 10) then
+    if damage > 0 and chance > 10 then
         target:delStatusEffect(tpz.effect.POISON)
         target:addStatusEffect(tpz.effect.POISON, 3, 0, getBlueEffectDuration(caster, resist, tpz.effect.POISON))
     end

@@ -2,7 +2,12 @@
 -- Area: Abyssea-Attohwa
 --   NM: Es'euvhi
 -----------------------------------
-mixins = {require("scripts/mixins/families/euvhi")}
+mixins =
+{
+    require("scripts/mixins/families/euvhi"),
+    require("scripts/mixins/abyssea_weakness")
+}
+require("scripts/globals/abyssea")
 require("scripts/globals/mobs")
 -----------------------------------
 

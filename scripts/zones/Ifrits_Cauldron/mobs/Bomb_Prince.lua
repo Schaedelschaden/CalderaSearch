@@ -13,7 +13,8 @@ function onMobInitialize(mob)
 end
 
 function onMobFight(mob, target)
-    if mob:getBattleTime() > 10 then
+    mob:setMobLevel(math.random(85, 95))
+    if mob:getBattleTime() > 1 then
         mob:useMobAbility(511)
     end
 end

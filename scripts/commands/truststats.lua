@@ -54,7 +54,7 @@ function onTrigger(player)
 				end
 			end
 		
-			local trustACC = math.floor(((trust:getStat(tpz.mod.DEX) * 0.75) / 2) + trust:getMod(tpz.mod.ACC) + weaponACC)
+			local trustACC = trust:getACC() -- math.floor(((trust:getStat(tpz.mod.DEX) * 0.75) / 2) + trust:getMod(tpz.mod.ACC) + weaponACC)
 			local trustFoodACCP = trust:getMod(tpz.mod.FOOD_ACCP)
 			local trustRACC = trust:getMod(tpz.mod.RACC)
 			local trustFoodRACCP = trust:getMod(tpz.mod.FOOD_RACCP)

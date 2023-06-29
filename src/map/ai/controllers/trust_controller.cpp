@@ -108,7 +108,13 @@ void CTrustController::DoCombatTick(time_point tick)
         POwner->PAI->Internal_ChangeTarget(POwner->PMaster->GetBattleTargetID());
         m_LastTopEnmity = nullptr;
     }
-	
+
+    // Update last magic cast time tracker while trust is in casting state
+    if (POwner->PAI->IsCurrentState<CMagicState>())
+    {
+        m_LastMagicTime = m_Tick;
+    }
+
 	// If busy, don't run around!
     if (POwner->PAI->IsCurrentState<CMagicState>() || POwner->PAI->IsCurrentState<CRangeState>())
     {
@@ -423,8 +429,10 @@ bool CTrustController::Cast(uint16 targid, SpellID spellid)
         return false;
     }
 
-    // Caldera Custom Trust spell recast (mod in milliseconds)
-    if (m_Tick <= m_LastMagicTime + std::chrono::milliseconds(static_cast<CBattleEntity*>(POwner)->getMod(Mod::TRUST_GENERIC_SPELL_RECAST)))
+    // Caldera Custom Trust spell recast (mod in seconds)
+    uint32 spellCool = (uint32)(static_cast<CMobEntity*>(POwner)->getMobMod(MOBMOD_MAGIC_COOL) * 1000);
+
+    if (m_Tick <= m_LastMagicTime + std::chrono::milliseconds(spellCool))
     {
         return false;
     }
@@ -492,8 +500,6 @@ bool CTrustController::Cast(uint16 targid, SpellID spellid)
     {
         return false;
     }
-
-    m_LastMagicTime = m_Tick;
 
     return CMobController::Cast(targid, spellid);
 }

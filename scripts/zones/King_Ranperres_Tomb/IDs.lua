@@ -49,11 +49,13 @@ zones[tpz.zone.KING_RANPERRES_TOMB] =
         CORRUPTED_YORGOS      = 17555770,
         CORRUPTED_SOFFEIL     = 17555771,
         CORRUPTED_ULBRIG      = 17555772,
+        HAHAVA                = 17555773,
     },
     npc =
     {
         CASKET_BASE    = 17555907,
         TREASURE_CHEST = 17555966,
+        PLANAR_RIFT    = 17556020,
     },
 }
 

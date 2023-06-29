@@ -10,11 +10,11 @@ require("scripts/globals/npc_util")
 
 function onTrade(player, npc, trade)
     -- Sleepshroom, Woozyshroom, Danceshroom
-    if npcUtil.tradeHas(trade, {4373, 4374, 4375}) and npcUtil.popFromQM(player, npc, ID.mob.MYCOPHILE) then
-        player:confirmTrade()
-    end
+    -- if npcUtil.tradeHas(trade, {4373, 4374, 4375}) and npcUtil.popFromQM(player, npc, ID.mob.MYCOPHILE) then
+        -- player:confirmTrade()
+    -- end
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.MYCOPHILE_MUSHROOM)
+    -- player:messageSpecial(ID.text.MYCOPHILE_MUSHROOM)
 end

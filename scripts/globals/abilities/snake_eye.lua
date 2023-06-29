@@ -14,7 +14,10 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-    player:addStatusEffect(tpz.effect.SNAKE_EYE, ((player:getMerit(tpz.merit.SNAKE_EYE) * 2) - 10), 0, 60)
+    local power    = player:getMerit(tpz.merit.SNAKE_EYE) - 10
+    local duration = 60
+
+    player:addStatusEffect(tpz.effect.SNAKE_EYE, power, 0, duration)
 
     return tpz.effect.SNAKE_EYE
 end

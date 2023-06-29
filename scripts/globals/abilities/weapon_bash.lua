@@ -19,8 +19,18 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player,target,ability)
+    local spell  = getSpell(252)
+    local params = {}
+			params.diff      = 0
+			params.skillType = player:getWeaponSkillType(tpz.slot.MAIN)
+			params.bonus     = 0
+    local resist = applyResistance(player, target, spell, params)
+
     -- Applying Weapon Bash stun. Rate is said to be near 100%, so let's say 99%.
-    if (math.random()*100 < 99) then
+    if
+        math.random(1, 100) < 99 and
+        resist > 0.25
+    then
         target:addStatusEffect(tpz.effect.STUN, 1, 0, 4)
     end
 
@@ -34,8 +44,15 @@ function onUseAbility(player,target,ability)
 
     -- Calculating and applying Weapon Bash damage
     local damage = math.floor(((darkKnightLvl + 11) / 4) + player:getMod(tpz.mod.WEAPON_BASH))
-    target:takeDamage(damage, player, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
-    target:updateEnmityFromDamage(player, damage)
+    if target:getZoneID() == 43 then
+        damage = target:getMaxHP() * 0.15
+        target:takeDamage(damage, player, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
+        ability:setMsg(tpz.msg.basic.JA_DAMAGE)
+        return damage
+    else
+        target:takeDamage(damage, player, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
+        target:updateEnmityFromDamage(player, damage)
 
-    return damage
+        return damage
+    end
 end

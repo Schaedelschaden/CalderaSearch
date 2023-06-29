@@ -2,6 +2,10 @@
 -- Area: Abyssea - Attohwa
 --  Mob: Aggressor Antlion
 -----------------------------------
+mixins = {require("scripts/mixins/abyssea_weakness")}
+require("scripts/globals/abyssea")
+require("scripts/globals/mobs")
+-----------------------------------
 
 function onMobSpawn(mob)
 	mob:setMod(tpz.mod.STUNRES, 100)

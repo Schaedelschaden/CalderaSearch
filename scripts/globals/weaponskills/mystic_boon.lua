@@ -32,11 +32,13 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         params.mnd_wsc = 0.7
     end
 
-    -- Apply aftermath
-    tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.MYTHIC)
-
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
-	
+
+    -- Apply aftermath
+    if damage > 0 and player:isPC() then
+        tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.MYTHIC)
+    end
+
     player:addMP(damage)
 
     return tpHits, extraHits, criticalHit, damage

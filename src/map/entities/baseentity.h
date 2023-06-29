@@ -169,6 +169,12 @@ enum ENTITYFLAGS
     FLAG_UNTARGETABLE  = 0x800,
 };
 
+enum class SPAWN_ANIMATION
+{
+    NORMAL  = 0,
+    SPECIAL = 1,
+};
+
 // TODO: возможо стоит сделать эту структуру частью класса, взамен нынешних id и targid, но уже без метода clean
 
 struct EntityID_t
@@ -214,11 +220,12 @@ public:
 
     virtual void    Spawn();
     virtual void    FadeOut();
-    virtual const int8* GetName();      // имя сущности
-    uint16          getZone();          // текущая зона
-    float           GetXPos();          // позиция по координате X
-    float           GetYPos();          // позиция по координате Y
-    float           GetZPos();          // позиция по координате Z
+    virtual const int8* GetName();       // Internal name of entity
+    virtual const int8* GetPacketName(); // Name of entity sent to the client
+    uint16          getZone();           // Current zone
+    float           GetXPos();           // Position of co-ordinate X
+    float           GetYPos();           // Position of co-ordinate Y
+    float           GetZPos();           // Position of co-ordinate Z
     uint8           GetRotPos();
     void            HideName(bool hide); // hide / show name
     bool            IsNameHidden();      // checks if name is hidden
@@ -247,6 +254,7 @@ public:
     STATUSTYPE      status;             // статус сущности (разные сущности - разные статусы)
     uint16          m_TargID;           // targid объекта, на который смотрит сущность
     string_t        name;               // имя сущности
+    string_t        packetName;         // Used to override name when being sent to the client
     look_t          look;               // внешний вид всех сущностей
     look_t          mainlook;           // only used if mob use changeSkin() or player /lockstyle
     location_t      loc;                // местоположение сущности
@@ -258,6 +266,10 @@ public:
     uint8           allegiance;         // what types of targets the entity can fight
     uint8           updatemask;         // what to update next server tick to players nearby
 	uint16          m_pathPoint;        // tracker for pathing
+
+    bool isRenamed; // tracks if the entity's name has been overidden. Defaults to false.
+
+    SPAWN_ANIMATION spawnAnimation;
 
     uint16      GetPathPoint();
     void        SetPathPoint(uint16 pathPoint);

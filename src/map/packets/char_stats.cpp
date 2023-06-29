@@ -90,11 +90,16 @@ CCharStatsPacket::CCharStatsPacket(CCharEntity * PChar)
 	{
 		ref<uint8>(0x52) = PChar->GetMLevel() == 99 ? 2: 0;
 	}
+    // Unlocks Superior Level 3 after defeating all T3 Escha - Zi'tah NM's once
+	if (charutils::GetCharVar(PChar, "KillCounter_Fleetstalker") >= 1 && charutils::GetCharVar(PChar, "KillCounter_Shockmaw") >= 1 && charutils::GetCharVar(PChar, "KillCounter_Urmahlullu") >= 1)
+	{
+		ref<uint8>(0x52) = PChar->GetMLevel() == 99 ? 3: 0;
+	}
 	if (PChar->m_GMlevel > 0)
 	{
 		ref<uint8>(0x52) = PChar->GetMLevel() == 99 ? 5: 0;
 	}
-	
+
 	//0x54 = maximum item level
     //0x55 = itemlevel over 99 (Displays total item level + 99 in equipment window)
 	

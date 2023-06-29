@@ -27,6 +27,10 @@ function onUseAbility(player,target,ability)
     target:updateEnmityFromDamage(player,dmg)
     target:updateClaim(player)
     player:delStatusEffect(tpz.effect.BOOST)
+    
+    if player:getObjType() == tpz.objType.TRUST then
+        dmg = dmg * player:getMainLvl() / 7
+    end
 
     return dmg
 end

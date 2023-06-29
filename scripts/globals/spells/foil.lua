@@ -12,9 +12,9 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-	local power = 40
-	
-	if (target:hasStatusEffect(tpz.effect.EMBOLDEN)) then
+	local power = 150
+
+	if target:hasStatusEffect(tpz.effect.EMBOLDEN) then
 		power = power * 1.5
 		target:delStatusEffect(tpz.effect.EMBOLDEN)
 	end

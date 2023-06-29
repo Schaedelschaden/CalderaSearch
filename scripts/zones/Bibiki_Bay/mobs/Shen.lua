@@ -4,7 +4,7 @@
 -----------------------------------
 
 function onMobFight(mob, target)
-    if (mob:getBattleTime() % 45 == 0) then
+    if (mob:getBattleTime() % 90 == 0) then
         local mobId = mob:getID()
         for i = 1, 2 do
             if (not GetMobByID(mobId+i):isSpawned()) then

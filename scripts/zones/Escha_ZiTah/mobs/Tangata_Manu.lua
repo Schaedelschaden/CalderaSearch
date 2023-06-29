@@ -8,7 +8,7 @@ require("scripts/globals/status") -- required for LUA status adjustments
 -----------------------------------
 
 function onMobSpawn(mob) -- When mob spawns (either forced or time)
-	mob:setMobMod(MOBMOD_MAGIC_COOL, 25)
+	mob:setMobMod(tpz.mobMod.MAGIC_COOL, 25)
 
 	mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 360)
     mob:setMod(tpz.mod.STUNRES, 35) -- Resistance to Stun
@@ -26,7 +26,7 @@ function onMobSpawn(mob) -- When mob spawns (either forced or time)
 	mob:setMod(tpz.mod.DOUBLE_ATTACK, 30) -- Double Attack in %
 	mob:setMod(tpz.mod.FASTCAST, 50) -- Fast Cast in %
 	mob:setMod(tpz.mod.DMG, -15)
-	mob:setMod(tpz.mod.MOBMOD_TP_USE_CHANCE, 1000)
+	mob:setMod(tpz.mod.TP_USE_CHANCE, 50) -- value / 100 (0.5% use chance every 400 ms)
 --	mob:setMod(tpz.mod.REGAIN, 200)
 end
 

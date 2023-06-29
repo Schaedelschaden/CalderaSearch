@@ -9,13 +9,13 @@ require("scripts/globals/npc_util")
 -----------------------------------
 
 function onTrade(player, npc, trade)
-    if npcUtil.tradeHas(trade, {1186, {1187, 3}}) and npcUtil.popFromQM(player, npc, ID.mob.BOMB_QUEEN) then
-        player:confirmTrade()
-    end
+    -- if npcUtil.tradeHas(trade, {1186, {1187, 3}}) and npcUtil.popFromQM(player, npc, ID.mob.BOMB_QUEEN) then
+        -- player:confirmTrade()
+    -- end
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
+    SpawnMob(17617158):updateEnmity(player) -- Queen
 end
 
 function onEventUpdate(player, csid, option)

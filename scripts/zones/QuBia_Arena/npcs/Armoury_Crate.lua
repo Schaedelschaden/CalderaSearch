@@ -48,9 +48,76 @@ local loot =
     -- KSNM Infernal Swarm
     [515] =
     {
+        { -- Accessories, 1 is guaranteed.
+            {itemid = 28367, droprate =  40}, -- Adoulin's Refuge +
+            {itemid = 28376, droprate =  60}, -- Adoulin's Refuge
+            {itemid = 26218, droprate = 100}, -- Beither Ring
+            {itemid = 28537, droprate = 125}, -- Lenette Ring +1
+            {itemid = 28440, droprate = 175}, -- Windbuffet Belt +1
+            {itemid = 11005, droprate = 200}, -- Fierbras's Mantle
+            {itemid = 28572, droprate = 300}, -- Jwalamukhi Ring
+        },
+        
+        { -- Tier 1-3 mats, 1 guaranteed
+            {itemid =  4076, droprate =  25}, -- Fulfillment Crystal
+            {itemid =  9006, droprate =  60}, -- Defiant Scarf
+            {itemid =  9007, droprate =  60}, -- Defiant Sweat
+            {itemid =  9258, droprate =  90}, -- Azure Cermet
+            {itemid =  9250, droprate = 105}, -- Ruthenium Ingot
+            {itemid =  9246, droprate = 105}, -- Cypress Lumber
+            {itemid =  9254, droprate = 105}, -- Faulpie Leather
+            {itemid =  9249, droprate = 150}, -- Ruthenium Ore
+            {itemid =  9245, droprate = 150}, -- Cypress Log
+            {itemid =  9253, droprate = 150}, -- S. Faulpie Leather
+        },
+        
+        { -- Tier 1-3 mats, 50/50 to get something
+            {itemid =     0, droprate = 500}, -- Nothing
+            {itemid =  4076, droprate =  12}, -- Fulfillment Crystal
+            {itemid =  9006, droprate =  30}, -- Defiant Scarf
+            {itemid =  9007, droprate =  30}, -- Defiant Sweat
+            {itemid =  9258, droprate =  45}, -- Azure Cermet
+            {itemid =  9250, droprate =  52}, -- Ruthenium Ingot
+            {itemid =  9246, droprate =  53}, -- Cypress Lumber
+            {itemid =  9254, droprate =  53}, -- Faulpie Leather
+            {itemid =  9249, droprate =  75}, -- Ruthenium Ore
+            {itemid =  9245, droprate =  75}, -- Cypress Log
+            {itemid =  9253, droprate =  75}, -- S. Faulpie Leather
+        },
+        
+        { -- Tier 4 mats, 1 is guaranteed.
+            {itemid =  3980, droprate = 100}, -- Bztavian Stinger
+            {itemid =  3981, droprate = 100}, -- Bztavian Wing
+            {itemid =  3979, droprate = 100}, -- Rockfin Tooth
+            {itemid =  3977, droprate = 100}, -- Gabbrath Horn
+            {itemid =  4014, droprate = 100}, -- Yggdreant Bole
+            {itemid =  4015, droprate = 100}, -- Yggdreant Root
+            {itemid =  4012, droprate = 100}, -- Waktza Rostrum
+            {itemid =  4013, droprate = 100}, -- Waktza Crest
+            {itemid =  8752, droprate = 100}, -- Cehuetzi Claw
+            {itemid =  8754, droprate = 100}, -- Cehuetzi Pelt
+        },
+        
+        { -- Tier 4 mats, 50% to get, 50% nothing.
+            {itemid =     0, droprate = 500}, -- Nothing
+            {itemid =  4012, droprate = 100}, -- Waktza Rostrum
+            {itemid =  4013, droprate = 100}, -- Waktza Crest
+            {itemid =  8752, droprate = 100}, -- Cehuetzi Claw
+            {itemid =  8754, droprate = 100}, -- Cehuetzi Pelt
+            {itemid =  3979, droprate = 100}, -- Rockfin Tooth
+        },
         {
-            {itemid = 13264, droprate =  500}, -- Jungle Sash
-            {itemid = 13261, droprate =  500}, -- Ocean Sash
+            {itemid =  9783, droprate = 330}, -- Abdjhalis Gem
+            {itemid =  9784, droprate = 330}, -- Abdjhalis Anima
+            {itemid =  9782, droprate = 330}, -- Abdjhalis Nugget
+            {itemid =     0, droprate =  10}, -- Nothing
+        },
+        
+        {
+            {itemid =  9783, droprate = 70}, -- Abdjhalis Gem
+            {itemid =  9784, droprate = 70}, -- Abdjhalis Anima
+            {itemid =  9782, droprate = 70}, -- Abdjhalis Nugget
+            {itemid =     0, droprate = 790}, -- Nothing
         },
     },
 

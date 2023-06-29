@@ -67,10 +67,12 @@ local path =
 function onSpawn(npc)
     npc:initNpcPathing(path[1][1], path[1][2], path[1][3])
     onPath(npc)
+    npc:setModelId(1249)
 end
 
 function onPath(npc)
     local reported = false
+    npc:setModelId(1249)
     
     if npc:atPoint(path[50][1], path[50][2], path[50][3]) then
         if npc:getLocalVar("[REPORT_DONE]") == 0 then
@@ -89,6 +91,7 @@ end
 function onTrigger(player, npc)
     npc:showText(npc, ID.text.PALCOMONDAU_DIALOG)
     npc:clearTargID()
+    npc:setModelId(1249)
 end
 
 function onEventUpdate(player, csid, option)

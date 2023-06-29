@@ -549,9 +549,14 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
     PAI->EventHandler.triggerListener("TAKE_DAMAGE", this, amount, attacker, (uint16)attackType, (uint16)damageType);
 
     //RoE Damage Taken Trigger
-    if (this->objtype == TYPE_PC)
+    if (this->objtype == TYPE_PC) //&&
+        // PLastAttacker->GetLocalVar("ROE_BYPASS") != nullptr &&
+        // PLastAttacker->GetLocalVar("ROE_BYPASS") < 1) // Disables Records of Eminence when the ROE_BYPASS local variable is present
         roeutils::event(ROE_EVENT::ROE_DMGTAKEN, static_cast<CCharEntity*>(this), RoeDatagram("dmg", amount));
-    else if (PLastAttacker && PLastAttacker->objtype == TYPE_PC)
+    else if (PLastAttacker &&
+             PLastAttacker->objtype == TYPE_PC) //&&
+             // this->GetLocalVar("ROE_BYPASS") != nullptr &&
+             // this->GetLocalVar("ROE_BYPASS") < 1) // Disables Records of Eminence when the ROE_BYPASS local variable is present
         roeutils::event(ROE_EVENT::ROE_DMGDEALT, static_cast<CCharEntity*>(attacker), RoeDatagram("dmg", amount));
 
     return addHP(-amount);
@@ -1548,8 +1553,11 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
 	
     uint8 aoeType = battleutils::GetSpellAoEType(this, PSpell);
 
-    if (aoeType == SPELLAOE_RADIAL) {
+    if (aoeType == SPELLAOE_RADIAL)
+    {
         float distance = spell::GetSpellRadius(PSpell, this);
+
+        flags = PSpell->getFlag();
 
         PAI->TargetFind->findWithinArea(PActionTarget, AOERADIUS_TARGET, distance, flags);
 

@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area: King Ranperre's Tomb
 --   NM: Vrtra
--- MobID: 17555890
+-- MobID: 17555763
 -- POS: 217 8 -308
 -----------------------------------
 mixins = {require("scripts/mixins/rage")}
@@ -13,7 +13,7 @@ require("scripts/globals/titles")
 local offsets = {1, 3, 5, 2, 4, 6}
 
 function onMobSpawn(mob)
-	mob:setLocalVar("[rage]timer", 1200) -- 20 minutes	
+	mob:setLocalVar("[rage]timer", 1200) -- 20 minutes
 	mob:addMod(tpz.mod.PARALYZERES, 30) -- Resistance to Silence
     mob:addMod(tpz.mod.STUNRES, 100) -- Resistance to Stun
     mob:addMod(tpz.mod.BINDRES, 100) -- Resistance to Bind
@@ -36,7 +36,7 @@ function onMobSpawn(mob)
 end
 
 function onMobEngaged(mob, target)
-    mob:resetLocalVars()
+    -- mob:resetLocalVars()
 end
 
 function onMobFight(mob, target)

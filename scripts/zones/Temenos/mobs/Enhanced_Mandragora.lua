@@ -78,6 +78,7 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.MND, 110)
     mob:addMod(tpz.mod.CHR, 110)
     mob:addMod(tpz.mod.INT, 110)
+    mob:addMod(tpz.mod.MAIN_DMG_RATING, -60)
 end
 
 function onMobRoam(mob)

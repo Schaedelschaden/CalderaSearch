@@ -756,6 +756,7 @@ enum EFFECT
     EFFECT_ELEMENTALRES_DOWN        = 802, // Elemental resistance down
     EFFECT_FULL_SPEED_AHEAD         = 803, // Used to track Full Speed Ahead quest minigame
     // EFFECT_PLACEHOLDER           = 804  // Description
+    EFFECT_TOMAHAWK                 = 805,
 	
 //  ? = 771, // (Icon) Lasting Emanation
 //  ? = 772, // (Icon) Ecliptic Attrition
@@ -802,7 +803,7 @@ enum EFFECT
     // EFFECT_PLACEHOLDER           = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
 };
 
-#define MAX_EFFECTID    804  // 768 real + 32 custom
+#define MAX_EFFECTID    806  // 768 real + 32 custom
 
 /************************************************************************
 *                                                                       *

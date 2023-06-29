@@ -33,12 +33,14 @@ public:
     uint32      m_flags;
     uint8       name_prefix;
     uint8       widescan;
+    bool        m_triggerable = false;
     uint32      getEntityFlags();                        // Returns the current value in m_flags
     void        setEntityFlags(uint32 EntityFlags);      // Change the current value in m_flags
     void        HideHP(bool hide);
     bool        IsHPHidden();
     void        Untargetable(bool untargetable);
     bool        IsUntargetable();
+    bool        IsTriggerable();
     virtual bool isWideScannable() override;
     virtual void PostTick() override;
     virtual void Tick(time_point) override {}

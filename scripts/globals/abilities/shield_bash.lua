@@ -22,7 +22,14 @@ function onUseAbility(player, target, ability)
     local shieldSize = player:getShieldSize()
     local damage = 0
     local chance = math.random(80, 95)
-	local stun = math.random(1, 100)
+    local stun   = math.random(1, 100)
+    local spell  = getSpell(252)
+    local params = {}
+			params.diff      = 0
+			params.skillType = player:getWeaponSkillType(tpz.slot.MAIN)
+			params.bonus     = 0
+    local resist = applyResistance(player, target, spell, params)
+
     damage = player:getMod(tpz.mod.SHIELD_BASH)
 
     if shieldSize == 1 then
@@ -33,12 +40,12 @@ function onUseAbility(player, target, ability)
         damage = 260 + damage
     elseif shieldSize == 4 then
         damage = 360 + damage
-	elseif shieldSize == 5 then
+    elseif shieldSize == 5 then
         damage = 100 + damage
-	elseif shieldSize == 6 then
+    elseif shieldSize == 6 then
         damage = 100 + damage
-	elseif (player:getObjType() == tpz.objType.TRUST) then
-		damage = 152
+    elseif (player:getObjType() == tpz.objType.TRUST) then
+        damage = 152
     end
 
     -- Main job factors
@@ -48,9 +55,12 @@ function onUseAbility(player, target, ability)
     else
         damage = math.floor(damage * 3)
     end
-	
+
     -- Stun proc
-    if stun < chance then
+    if
+        stun < chance and
+        resist > 0.25
+    then
         target:addStatusEffect(tpz.effect.STUN, 1, 0, 4)
     end
 
@@ -68,22 +78,29 @@ function onUseAbility(player, target, ability)
     local pdif = math.random(ratio * 0.8 * 1000, ratio * 1.2 * 1000)
 
     -- printf("damge %d, ratio: %f, pdif: %d\n", damage, ratio, pdif)
-	
-	if player:getMod(tpz.mod.SHIELD_BASH_DISPEL) > 0 then
-		ability:setMsg(tpz.msg.basic.MAGIC_ERASE)
-		target:dispelStatusEffect()
-		if (effect == tpz.effect.NONE) then -- No effect to Dispel
+
+    if player:getMod(tpz.mod.SHIELD_BASH_DISPEL) > 0 then
+        ability:setMsg(tpz.msg.basic.MAGIC_ERASE)
+        target:dispelStatusEffect()
+        if (effect == tpz.effect.NONE) then -- No effect to Dispel
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
         end
-	end
+    end
 
-    damage = damage * (pdif / 1000)
-    damage = utils.stoneskin(target, damage)
-    target:takeDamage(damage, player, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
-    target:updateEnmityFromDamage(player,damage)
-    ability:setMsg(tpz.msg.basic.JA_DAMAGE)
-	
-	abilityReduceAllianceEnmity(player, target)
+    if target:getZoneID() == 43 then
+        damage = target:getMaxHP() * 0.15
+        target:takeDamage(damage, player, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
+        ability:setMsg(tpz.msg.basic.JA_DAMAGE)
+        return damage
+    else
 
-    return damage
+        damage = damage * (pdif / 1000)
+        damage = utils.stoneskin(target, damage)
+        target:takeDamage(damage, player, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
+        target:updateEnmityFromDamage(player,damage)
+        ability:setMsg(tpz.msg.basic.JA_DAMAGE)
+
+        abilityReduceAllianceEnmity(player, target)
+        return damage
+    end
 end

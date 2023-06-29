@@ -26,8 +26,8 @@ function onMobSpawn(mob)
         [tpz.magic.spell.KLARA] = tpz.trust.message_offset.TEAMWORK_3,
     })
 
-    mob:addSimpleGambit(ai.t.MASTER, ai.c.HPP_LT, 50,
-                        ai.r.JA, ai.s.SPECIFIC, tpz.ja.PROVOKE)
+    mob:addSimpleGambit(ai.t.MASTER, ai.c.HPP_LT, 50, ai.r.JA, ai.s.SPECIFIC, tpz.ja.PROVOKE)
+                   
 end
 
 function onMobDespawn(mob)

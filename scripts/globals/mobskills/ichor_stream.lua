@@ -18,8 +18,17 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.POISON
+    local power      = 5
 
-    skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 5, 0, 120))
+    if mob:isNM() then
+        power = mob:getHPP()
+
+        if power < 30 then
+            power = 30
+        end
+    end
+
+    skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, power, 0, 120))
 
     return typeEffect
 end

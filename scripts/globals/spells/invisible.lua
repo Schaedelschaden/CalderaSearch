@@ -10,7 +10,11 @@ require("scripts/globals/status")
 -----------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
-    return 0
+    if caster:getZoneID() == 43 then
+        return 1
+    else
+        return 0
+    end
 end
 
 function onSpellCast(caster, target, spell)

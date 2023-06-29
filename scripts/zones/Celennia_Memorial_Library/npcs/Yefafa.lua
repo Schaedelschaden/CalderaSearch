@@ -17,6 +17,8 @@ function onTrigger(player, npc)
 										 tpz.effectFlag.DETECTABLE, tpz.effectFlag.NO_REST, tpz.effectFlag.PREVENT_ACTION, tpz.effectFlag.WALTZABLE,
 										 tpz.effectFlag.SONG, tpz.effectFlag.ROLL, tpz.effectFlag.CONFRONTATION, tpz.effectFlag.LOGOUT,
 										 tpz.effectFlag.BLOODPACT, tpz.effectFlag.ON_JOBCHANGE, tpz.effectFlag.OFFLINE_TICK, tpz.effectFlag.AURA))
+    --player:setHP(player:getMaxHP())
+    --player:setMP(player:getMaxMP())
     player:sendMenu(1)
 end
 

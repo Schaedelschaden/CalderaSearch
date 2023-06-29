@@ -46,10 +46,14 @@ function onMobSpawn(mob)
         },
     })
 
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 15)
+
     local power = mob:getMainLvl() / 10
+
     mob:addMod(tpz.mod.MATT, power)
     mob:addMod(tpz.mod.MACC, power)
     mob:addMod(tpz.mod.HASTE_MAGIC, 1000)
+
     mob:SetAutoAttackEnabled(false)
 end
 

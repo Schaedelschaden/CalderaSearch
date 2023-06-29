@@ -98,7 +98,7 @@ enum MERIT_CATEGORY
     MCATEGORY_RUN_2      = 0x0D80, // 53
 
     MCATEGORY_START      = 0x0040,
-    MCATEGORY_COUNT      = 0x0D80,
+    MCATEGORY_COUNT      = 0x0DC0,
 };
 
 /************************************************************************

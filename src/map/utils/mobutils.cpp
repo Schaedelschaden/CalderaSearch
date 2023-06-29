@@ -455,9 +455,12 @@ void CalculateStats(CMobEntity * PMob)
 
     PMob->UpdateHealth();
 
-    PMob->health.tp = 0;
-    PMob->health.hp = PMob->GetMaxHP();
-    PMob->health.mp = PMob->GetMaxMP();
+    if (PMob->GetLocalVar("BLOCK_HPMP_CHANGE_ON_LEVEL") < 1)
+    {
+        PMob->health.tp = 0;
+        PMob->health.hp = PMob->GetMaxHP();
+        PMob->health.mp = PMob->GetMaxMP();
+    }
 
     ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetWeaponDamage(PMob));
 
@@ -794,10 +797,18 @@ void SetupJob(CMobEntity* PMob)
             PMob->defaultMobMod(MOBMOD_BUFF_CHANCE, 20);
             PMob->defaultMobMod(MOBMOD_MAGIC_DELAY, 7);
             break;
+        case JOB_SCH:
+            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 25);
+            break;
 		case JOB_RUN:
 			PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 35);
         default:
             break;
+    }
+
+    if (PMob->objtype == TYPE_TRUST)
+    {
+        PMob->setMobMod(MOBMOD_MAGIC_COOL, 3);
     }
 
     // This switch is mainjob only and contains mainly non magic related stuff
@@ -1473,29 +1484,32 @@ CMobEntity* InstantiateAlly(uint32 groupid, uint16 zoneID, CInstance* instance)
 void WeaknessTrigger(CBaseEntity* PTarget, WeaknessType level)
 {
     uint16 animationID = 0;
+
     switch (level)
     {
-    case WeaknessType::RED:
-        animationID = 1806;
-        break;
-    case WeaknessType::YELLOW:
-        animationID = 1807;
-        break;
-    case WeaknessType::BLUE:
-        animationID = 1808;
-        break;
-    case WeaknessType::WHITE:
-        animationID = 1946;
-        break;
+        case WeaknessType::RED:
+            animationID = 1806;
+            break;
+        case WeaknessType::YELLOW:
+            animationID = 1807;
+            break;
+        case WeaknessType::BLUE:
+            animationID = 1808;
+            break;
+        case WeaknessType::WHITE:
+            animationID = 1946;
+            break;
     }
+
     action_t action;
-    action.actiontype = ACTION_MOBABILITY_FINISH;
-    action.id = PTarget->id;
-    actionList_t& list = action.getNewActionList();
-    list.ActionTargetID = PTarget->id;
+    action.actiontype      = ACTION_MOBABILITY_FINISH;
+    action.id              = PTarget->id;
+    actionList_t& list     = action.getNewActionList();
+    list.ActionTargetID    = PTarget->id;
     actionTarget_t& target = list.getNewActionTarget();
-    target.animation = animationID;
-    target.param = 2582;
+    target.animation       = animationID;
+    target.param           = 2582;
+
     PTarget->loc.zone->PushPacket(PTarget, CHAR_INRANGE, new CActionPacket(action));
 }
 

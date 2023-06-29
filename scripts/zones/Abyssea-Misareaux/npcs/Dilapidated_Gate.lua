@@ -14,6 +14,10 @@ function onTrigger(player, npc)
         player:startEvent(255, 216, 41, 45, 3342387, 511, 0, 1, 1265870)
     elseif npc:getID() == 17662739 then
         player:startEvent(256, 216, 41, 45, 3342387, 511, 0, 1, 1265870)
+    elseif npc:getID() == 17662740 then
+        player:startEvent(257, 216, 41, 45, 3342387, 511, 0, 1, 1265870)
+    elseif npc:getID() == 17662741 then
+        player:startEvent(258, 216, 41, 45, 3342387, 511, 0, 1, 1265870)
     end
 end
 

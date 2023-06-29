@@ -42,7 +42,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     end
 
     -- Apply aftermath
-    if damage > 0 then
+    if damage > 0 and player:isPC() then
         tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.RELIC)
     end
 

@@ -1643,7 +1643,8 @@ void CStatusEffectContainer::TickAuras(time_point tick)
                 }
                 //-------------------------------------------------------------------------------
 
-                float auraRadius = (6.5f * (PEntity->m_ModelSize + 1)) * sizeBonus;
+                float baseRadius = 6.5f + (PEntity->getMod(Mod::AURA_RADIUS_BONUS) / 10.0f);
+                float auraRadius = (baseRadius * (PEntity->m_ModelSize + 1)) * sizeBonus;
 
                 // percentage bonus, 100 is base, 125 = 25% increase, 150 = 50% increase ect.
                 uint16 potency = (PStatusEffect->GetSubPower() * potencyBonus) / 100;
@@ -1916,10 +1917,11 @@ void CStatusEffectContainer::TickRegen(time_point tick)
             PChar = (CCharEntity*)m_POwner;
         }
 
-        int16 regen = m_POwner->getMod(Mod::REGEN);
-        int16 poison = m_POwner->getMod(Mod::REGEN_DOWN);
+        int16 regen   = m_POwner->getMod(Mod::REGEN);
+        int16 poison  = m_POwner->getMod(Mod::REGEN_DOWN);
         int16 refresh = m_POwner->getMod(Mod::REFRESH) - m_POwner->getMod(Mod::REFRESH_DOWN);
-        int16 regain = m_POwner->getMod(Mod::REGAIN) - m_POwner->getMod(Mod::REGAIN_DOWN);
+        int16 regain  = m_POwner->getMod(Mod::REGAIN) - m_POwner->getMod(Mod::REGAIN_DOWN);
+
 		if (!m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_CURSE_II))
 		{
 			m_POwner->addHP(regen);
@@ -1929,7 +1931,15 @@ void CStatusEffectContainer::TickRegen(time_point tick)
         {
             int16 damage = battleutils::HandleStoneskin(m_POwner, poison);
 
-            if ((damage > 0) && (m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_NIGHTMARE)))
+            // Nightmare prevents DoT from waking the target
+            // Sleep I with a power of 2 prevents DoT from waking the target
+            // Sleep II with a power of 2 prevents DoT from waking the target
+            if (damage > 0 &&
+                (m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_NIGHTMARE) ||
+                 (m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_SLEEP) &&
+                  m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP)->GetPower() == 2) ||
+                 (m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_SLEEP_II) &&
+                  m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP_II)->GetPower() == 2)))
             {
 //				printf("status_effect_container.cpp TickRegen Nightmare DoT Tick\n");
                 DelStatusEffectSilent(EFFECT_HEALING);

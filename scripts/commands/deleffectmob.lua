@@ -28,8 +28,12 @@ function onTrigger(player, arg1)
         return
     end
 
-    -- delete status effect
-    targ:delStatusEffect(id)
-    
-	player:PrintToPlayer(string.format("Removed effect %i from %s.", id, fixedMobName))
+    if targ:hasStatusEffect(id) then
+        -- delete status effect
+        targ:delStatusEffect(id)
+        
+        player:PrintToPlayer(string.format("Removed effect %i from %s.", id, fixedMobName))
+    else
+        player:PrintToPlayer(string.format("%s does not have status %i.", fixedMobName, id))
+    end
 end

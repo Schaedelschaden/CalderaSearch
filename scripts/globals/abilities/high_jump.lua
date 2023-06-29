@@ -27,30 +27,30 @@ function onUseAbility(player,target,ability,action)
 	local params = {}
 		params.numHits = 1
 		
-		if (math.random(100) < player:getMod(tpz.mod.ALL_JUMPS_DOUBLE_ATTACK)) then
+		if math.random(100) < player:getMod(tpz.mod.ALL_JUMPS_DOUBLE_ATTACK) then
 			params.numHits = 2
 		end
-		
+
 		params.bonusJumpfSTR = player:getStat(tpz.mod.VIT) / 256
-		params.ftp100 = 1.10 params.ftp200 = 1.10 params.ftp300 = 1.10
-		params.str_wsc = 0.0 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
-		params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
-		params.canCrit = true
-		params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-		params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
-		params.bonusTP = player:getMod(tpz.mod.JUMP_TP_BONUS)
-		params.targetTPMult = 0
-		params.hitsHigh = true
+		params.ftp100        = 1.10 params.ftp200 = 1.10 params.ftp300 = 1.10
+		params.str_wsc       = 0.0 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
+		params.crit100       = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
+		params.canCrit       = true
+		params.acc100        = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
+		params.atk100        = 1 params.atk200 = 1 params.atk300 = 1
+		params.bonusTP       = player:getMod(tpz.mod.JUMP_TP_BONUS)
+		params.targetTPMult  = 0
+		params.hitsHigh      = true
 		
-	if (player:getMod(tpz.mod.FORCE_JUMP_CRIT) > 0) then
+	if player:getMod(tpz.mod.FORCE_JUMP_CRIT) > 0 then
 		params.crit100 = 1.0 params.crit200 = 1.0 params.crit300 = 1.0
 	end
 
-	if ((pet ~= nil) and (player:getPetID() == tpz.pet.id.WYVERN)) then
+	if pet ~= nil and player:getPetID() == tpz.pet.id.WYVERN then
 		params.alljumpsdmg = pet:getHP() * (alljumpsbonus / 100)
 	end
 
-    if (target:isMob()) then
+    if target:isMob() then
         local enmityShed = 50
 		
         if player:getMainJob() ~= tpz.job.DRG then
@@ -63,11 +63,7 @@ function onUseAbility(player,target,ability,action)
     local taChar = player:getTrickAttackChar(target)
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, 0, params, 0, action, true, taChar)
 
-    if (tpHits + extraHits > 0) then
-        -- Under Spirit Surge, High Jump reduces TP of target
-        if (player:hasStatusEffect(tpz.effect.SPIRIT_SURGE) == true) then
-            target:delTP(damage * 0.2)
-        end
+    if tpHits + extraHits > 0 then
         if (criticalHit) then
             action:speceffect(target:getID(), 38)
         end

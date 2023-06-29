@@ -13,11 +13,19 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local numhits = 1
-    local accmod = 1
-    local dmgmod = 2.4
-	
+    local accmod  = 1
+    local dmgmod  = 2.4
+    local shadows = 1
+
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 2, 3)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
-	
+
+    if mob:getLocalVar("MOBSKILL_INCREASED_POTENCY") > 0 then
+        shadows = MOBPARAM_IGNORE_SHADOWS
+    else
+        shadows = info.hitslanded
+    end
+
+    local dmg  = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, shadows)
+
     return dmg
 end

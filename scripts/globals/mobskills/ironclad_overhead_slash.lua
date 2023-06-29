@@ -30,8 +30,8 @@ function onMobWeaponSkill(target, mob, skill)
         end
     end
 
-    local info    = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 2, 3)
-    local dmg     = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
+    local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 2, 3)
+    local dmg  = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
 
 	if
         dmg > 0 and
@@ -48,6 +48,7 @@ function onMobWeaponSkill(target, mob, skill)
         return info.hitslanded
     else
         skill:setMsg(tpz.msg.basic.HIT_DMG)
+        mob:addTP(200)
     end
 
     return dmg

@@ -1103,9 +1103,12 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 				{
 					auto PItem = itemutils::GetItem(item.ItemID);
 
-                    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
-                                fmt::format("ITEM NAME: [{}]  RANDOM: [{}]  ITEM DROP RATE: [{}]", PItem->getName(), itemRoll, (uint16)(item.DropRate * map_config.drop_rate_multiplier + bonus)), "TH Audit System"));
-					// printf("mobentity.cpp DropItems  ITEM NAME: [%s]  RANDOM: [%i]  ITEM DROP RATE: [%i]\n", PItem->getName(), itemRoll, (uint16)(item.DropRate * map_config.drop_rate_multiplier + bonus));
+                    if (PItem)
+                    {
+                        PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                    fmt::format("ITEM NAME: [{}]  RANDOM: [{}]  ITEM DROP RATE: [{}]", PItem->getName(), itemRoll, (uint16)(item.DropRate * map_config.drop_rate_multiplier + bonus)), "TH Audit System"));
+                        // printf("mobentity.cpp DropItems  ITEM NAME: [%s]  RANDOM: [%i]  ITEM DROP RATE: [%i]\n", PItem->getName(), itemRoll, (uint16)(item.DropRate * map_config.drop_rate_multiplier + bonus));
+                    }
 				}
 
                 if (item.DropRate > 0 && itemRoll < item.DropRate * map_config.drop_rate_multiplier + bonus)

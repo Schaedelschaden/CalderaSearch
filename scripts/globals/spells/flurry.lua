@@ -12,7 +12,7 @@ end
 
 function onSpellCast(caster, target, spell)
 	local power = 15
-    local duration = calculateDuration(180, caster, target, spell)
+    local duration = calculateDuration(300, caster, target, spell)
     duration = calculateDurationForLvl(duration, 48, target:getMainLvl())
 
 	if (target:hasStatusEffect(tpz.effect.HASTE)) then

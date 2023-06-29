@@ -31,12 +31,14 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     if USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.ftp100 = 3.0625 params.ftp200 = 5.8359 params.ftp300 = 7.5625
         params.dex_wsc = 0.3 params.chr_wsc = 0.6
-    end
-
-    -- Apply aftermath
-    tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.MYTHIC)
+    end    
 
     local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
+
+    -- Apply aftermath
+    if damage > 0 and player:isPC() then
+        tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.MYTHIC)
+    end
 
     return tpHits, extraHits, criticalHit, damage
 end

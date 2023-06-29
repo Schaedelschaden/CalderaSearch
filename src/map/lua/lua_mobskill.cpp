@@ -157,6 +157,34 @@ inline int32 CLuaMobSkill::getMobHPP(lua_State* L)
     return 1;
 }
 
+// Retrieves the mobskill's animation time (mob_anim_time)
+inline int32 CLuaMobSkill::getAnimationTime(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaMobSkill == nullptr);
+
+    lua_pushinteger(L, m_PLuaMobSkill->getAnimationTime());
+    return 1;
+}
+
+// Retrieves the mobskill's preparation time (mob_prepare_time)
+inline int32 CLuaMobSkill::getActivationTime(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaMobSkill == nullptr);
+
+    lua_pushinteger(L, m_PLuaMobSkill->getActivationTime());
+    return 1;
+}
+
+inline int32 CLuaMobSkill::setKnockback(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaMobSkill == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
+
+    m_PLuaMobSkill->setKnockback((uint8)lua_tointeger(L, -1));
+
+    return 0;
+}
+
 /************************************************************************
 *                                                                       *
 *  declare lua function                                                 *
@@ -177,5 +205,8 @@ Lunar<CLuaMobSkill>::Register_t CLuaMobSkill::methods[] =
     LUNAR_DECLARE_METHOD(CLuaMobSkill,getTotalTargets),
     LUNAR_DECLARE_METHOD(CLuaMobSkill,getTP),
     LUNAR_DECLARE_METHOD(CLuaMobSkill,getMobHPP),
+    LUNAR_DECLARE_METHOD(CLuaMobSkill,getAnimationTime),
+    LUNAR_DECLARE_METHOD(CLuaMobSkill,getActivationTime),
+    LUNAR_DECLARE_METHOD(CLuaMobSkill,setKnockback),
     {nullptr,nullptr}
 };

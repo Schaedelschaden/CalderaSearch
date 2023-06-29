@@ -31,6 +31,7 @@ local pathKupon =
     9176, -- (2) Path B Mog Kupon AW-GFII
     9175, -- (3) Path C Mog Kupon AW-GFIII
     9187, -- (4) Path D Mog Kupon AW-GeIV
+    2802, -- (5) Path E Mog Koupn AW-Abs
 }
 
 local rewardItem =
@@ -258,9 +259,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsYgnas[aug1][2])
-                aug2Value = math.random(1, augsYgnas[aug2][2])
-                aug3Value = math.random(1, augsYgnas[aug3][2])
+                aug1Value = math.random(0, augsYgnas[aug1][2])
+                aug2Value = math.random(0, augsYgnas[aug2][2])
+                aug3Value = math.random(0, augsYgnas[aug3][2])
                 aug1      = augsYgnas[aug1][1]
                 aug2      = augsYgnas[aug2][1]
                 aug3      = augsYgnas[aug3][1]
@@ -281,9 +282,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsYgnas[aug1][2])
-                aug2Value = math.random(1, augsYgnas[aug2][2])
-                aug3Value = math.random(1, augsYgnas[aug3][2])
+                aug1Value = math.random(0, augsYgnas[aug1][2])
+                aug2Value = math.random(0, augsYgnas[aug2][2])
+                aug3Value = math.random(0, augsYgnas[aug3][2])
                 aug1      = augsYgnas[aug1][1]
                 aug2      = augsYgnas[aug2][1]
                 aug3      = augsYgnas[aug3][1]
@@ -304,9 +305,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsYgnas[aug1][2])
-                aug2Value = math.random(1, augsYgnas[aug2][2])
-                aug3Value = math.random(1, augsYgnas[aug3][2])
+                aug1Value = math.random(0, augsYgnas[aug1][2])
+                aug2Value = math.random(0, augsYgnas[aug2][2])
+                aug3Value = math.random(0, augsYgnas[aug3][2])
                 aug1      = augsYgnas[aug1][1]
                 aug2      = augsYgnas[aug2][1]
                 aug3      = augsYgnas[aug3][1]
@@ -327,9 +328,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsYgnas[aug1][2])
-                aug2Value = math.random(1, augsYgnas[aug2][2])
-                aug3Value = math.random(1, augsYgnas[aug3][2])
+                aug1Value = math.random(0, augsYgnas[aug1][2])
+                aug2Value = math.random(0, augsYgnas[aug2][2])
+                aug3Value = math.random(0, augsYgnas[aug3][2])
                 aug1      = augsYgnas[aug1][1]
                 aug2      = augsYgnas[aug2][1]
                 aug3      = augsYgnas[aug3][1]
@@ -351,9 +352,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsDarrcuiln[aug1][2])
-                aug2Value = math.random(1, augsDarrcuiln[aug2][2])
-                aug3Value = math.random(1, augsDarrcuiln[aug3][2])
+                aug1Value = math.random(0, augsDarrcuiln[aug1][2])
+                aug2Value = math.random(0, augsDarrcuiln[aug2][2])
+                aug3Value = math.random(0, augsDarrcuiln[aug3][2])
                 aug1      = augsDarrcuiln[aug1][1]
                 aug2      = augsDarrcuiln[aug2][1]
                 aug3      = augsDarrcuiln[aug3][1]
@@ -374,9 +375,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsDarrcuiln[aug1][2])
-                aug2Value = math.random(1, augsDarrcuiln[aug2][2])
-                aug3Value = math.random(1, augsDarrcuiln[aug3][2])
+                aug1Value = math.random(0, augsDarrcuiln[aug1][2])
+                aug2Value = math.random(0, augsDarrcuiln[aug2][2])
+                aug3Value = math.random(0, augsDarrcuiln[aug3][2])
                 aug1      = augsDarrcuiln[aug1][1]
                 aug2      = augsDarrcuiln[aug2][1]
                 aug3      = augsDarrcuiln[aug3][1]
@@ -397,9 +398,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsDarrcuiln[aug1][2])
-                aug2Value = math.random(1, augsDarrcuiln[aug2][2])
-                aug3Value = math.random(1, augsDarrcuiln[aug3][2])
+                aug1Value = math.random(0, augsDarrcuiln[aug1][2])
+                aug2Value = math.random(0, augsDarrcuiln[aug2][2])
+                aug3Value = math.random(0, augsDarrcuiln[aug3][2])
                 aug1      = augsDarrcuiln[aug1][1]
                 aug2      = augsDarrcuiln[aug2][1]
                 aug3      = augsDarrcuiln[aug3][1]
@@ -420,9 +421,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsDarrcuiln[aug1][2])
-                aug2Value = math.random(1, augsDarrcuiln[aug2][2])
-                aug3Value = math.random(1, augsDarrcuiln[aug3][2])
+                aug1Value = math.random(0, augsDarrcuiln[aug1][2])
+                aug2Value = math.random(0, augsDarrcuiln[aug2][2])
+                aug3Value = math.random(0, augsDarrcuiln[aug3][2])
                 aug1      = augsDarrcuiln[aug1][1]
                 aug2      = augsDarrcuiln[aug2][1]
                 aug3      = augsDarrcuiln[aug3][1]
@@ -444,9 +445,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsIngrid[aug1][2])
-                aug2Value = math.random(1, augsIngrid[aug2][2])
-                aug3Value = math.random(1, augsIngrid[aug3][2])
+                aug1Value = math.random(0, augsIngrid[aug1][2])
+                aug2Value = math.random(0, augsIngrid[aug2][2])
+                aug3Value = math.random(0, augsIngrid[aug3][2])
                 aug1      = augsIngrid[aug1][1]
                 aug2      = augsIngrid[aug2][1]
                 aug3      = augsIngrid[aug3][1]
@@ -467,9 +468,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsIngrid[aug1][2])
-                aug2Value = math.random(1, augsIngrid[aug2][2])
-                aug3Value = math.random(1, augsIngrid[aug3][2])
+                aug1Value = math.random(0, augsIngrid[aug1][2])
+                aug2Value = math.random(0, augsIngrid[aug2][2])
+                aug3Value = math.random(0, augsIngrid[aug3][2])
                 aug1      = augsIngrid[aug1][1]
                 aug2      = augsIngrid[aug2][1]
                 aug3      = augsIngrid[aug3][1]
@@ -490,9 +491,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsIngrid[aug1][2])
-                aug2Value = math.random(1, augsIngrid[aug2][2])
-                aug3Value = math.random(1, augsIngrid[aug3][2])
+                aug1Value = math.random(0, augsIngrid[aug1][2])
+                aug2Value = math.random(0, augsIngrid[aug2][2])
+                aug3Value = math.random(0, augsIngrid[aug3][2])
                 aug1      = augsIngrid[aug1][1]
                 aug2      = augsIngrid[aug2][1]
                 aug3      = augsIngrid[aug3][1]
@@ -513,9 +514,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsIngrid[aug1][2])
-                aug2Value = math.random(1, augsIngrid[aug2][2])
-                aug3Value = math.random(1, augsIngrid[aug3][2])
+                aug1Value = math.random(0, augsIngrid[aug1][2])
+                aug2Value = math.random(0, augsIngrid[aug2][2])
+                aug3Value = math.random(0, augsIngrid[aug3][2])
                 aug1      = augsIngrid[aug1][1]
                 aug2      = augsIngrid[aug2][1]
                 aug3      = augsIngrid[aug3][1]
@@ -537,9 +538,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsTeodor[aug1][2])
-                aug2Value = math.random(1, augsTeodor[aug2][2])
-                aug3Value = math.random(1, augsTeodor[aug3][2])
+                aug1Value = math.random(0, augsTeodor[aug1][2])
+                aug2Value = math.random(0, augsTeodor[aug2][2])
+                aug3Value = math.random(0, augsTeodor[aug3][2])
                 aug1      = augsTeodor[aug1][1]
                 aug2      = augsTeodor[aug2][1]
                 aug3      = augsTeodor[aug3][1]
@@ -560,9 +561,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsTeodor[aug1][2])
-                aug2Value = math.random(1, augsTeodor[aug2][2])
-                aug3Value = math.random(1, augsTeodor[aug3][2])
+                aug1Value = math.random(0, augsTeodor[aug1][2])
+                aug2Value = math.random(0, augsTeodor[aug2][2])
+                aug3Value = math.random(0, augsTeodor[aug3][2])
                 aug1      = augsTeodor[aug1][1]
                 aug2      = augsTeodor[aug2][1]
                 aug3      = augsTeodor[aug3][1]
@@ -583,9 +584,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsTeodor[aug1][2])
-                aug2Value = math.random(1, augsTeodor[aug2][2])
-                aug3Value = math.random(1, augsTeodor[aug3][2])
+                aug1Value = math.random(0, augsTeodor[aug1][2])
+                aug2Value = math.random(0, augsTeodor[aug2][2])
+                aug3Value = math.random(0, augsTeodor[aug3][2])
                 aug1      = augsTeodor[aug1][1]
                 aug2      = augsTeodor[aug2][1]
                 aug3      = augsTeodor[aug3][1]
@@ -606,9 +607,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsTeodor[aug1][2])
-                aug2Value = math.random(1, augsTeodor[aug2][2])
-                aug3Value = math.random(1, augsTeodor[aug3][2])
+                aug1Value = math.random(0, augsTeodor[aug1][2])
+                aug2Value = math.random(0, augsTeodor[aug2][2])
+                aug3Value = math.random(0, augsTeodor[aug3][2])
                 aug1      = augsTeodor[aug1][1]
                 aug2      = augsTeodor[aug2][1]
                 aug3      = augsTeodor[aug3][1]
@@ -630,9 +631,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsMorimar[aug1][2])
-                aug2Value = math.random(1, augsMorimar[aug2][2])
-                aug3Value = math.random(1, augsMorimar[aug3][2])
+                aug1Value = math.random(0, augsMorimar[aug1][2])
+                aug2Value = math.random(0, augsMorimar[aug2][2])
+                aug3Value = math.random(0, augsMorimar[aug3][2])
                 aug1      = augsMorimar[aug1][1]
                 aug2      = augsMorimar[aug2][1]
                 aug3      = augsMorimar[aug3][1]
@@ -653,9 +654,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsMorimar[aug1][2])
-                aug2Value = math.random(1, augsMorimar[aug2][2])
-                aug3Value = math.random(1, augsMorimar[aug3][2])
+                aug1Value = math.random(0, augsMorimar[aug1][2])
+                aug2Value = math.random(0, augsMorimar[aug2][2])
+                aug3Value = math.random(0, augsMorimar[aug3][2])
                 aug1      = augsMorimar[aug1][1]
                 aug2      = augsMorimar[aug2][1]
                 aug3      = augsMorimar[aug3][1]
@@ -676,9 +677,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsMorimar[aug1][2])
-                aug2Value = math.random(1, augsMorimar[aug2][2])
-                aug3Value = math.random(1, augsMorimar[aug3][2])
+                aug1Value = math.random(0, augsMorimar[aug1][2])
+                aug2Value = math.random(0, augsMorimar[aug2][2])
+                aug3Value = math.random(0, augsMorimar[aug3][2])
                 aug1      = augsMorimar[aug1][1]
                 aug2      = augsMorimar[aug2][1]
                 aug3      = augsMorimar[aug3][1]
@@ -699,9 +700,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsMorimar[aug1][2])
-                aug2Value = math.random(1, augsMorimar[aug2][2])
-                aug3Value = math.random(1, augsMorimar[aug3][2])
+                aug1Value = math.random(0, augsMorimar[aug1][2])
+                aug2Value = math.random(0, augsMorimar[aug2][2])
+                aug3Value = math.random(0, augsMorimar[aug3][2])
                 aug1      = augsMorimar[aug1][1]
                 aug2      = augsMorimar[aug2][1]
                 aug3      = augsMorimar[aug3][1]
@@ -723,9 +724,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsRosulatia[aug1][2])
-                aug2Value = math.random(1, augsRosulatia[aug2][2])
-                aug3Value = math.random(1, augsRosulatia[aug3][2])
+                aug1Value = math.random(0, augsRosulatia[aug1][2])
+                aug2Value = math.random(0, augsRosulatia[aug2][2])
+                aug3Value = math.random(0, augsRosulatia[aug3][2])
                 aug1      = augsRosulatia[aug1][1]
                 aug2      = augsRosulatia[aug2][1]
                 aug3      = augsRosulatia[aug3][1]
@@ -746,9 +747,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsRosulatia[aug1][2])
-                aug2Value = math.random(1, augsRosulatia[aug2][2])
-                aug3Value = math.random(1, augsRosulatia[aug3][2])
+                aug1Value = math.random(0, augsRosulatia[aug1][2])
+                aug2Value = math.random(0, augsRosulatia[aug2][2])
+                aug3Value = math.random(0, augsRosulatia[aug3][2])
                 aug1      = augsRosulatia[aug1][1]
                 aug2      = augsRosulatia[aug2][1]
                 aug3      = augsRosulatia[aug3][1]
@@ -769,9 +770,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsRosulatia[aug1][2])
-                aug2Value = math.random(1, augsRosulatia[aug2][2])
-                aug3Value = math.random(1, augsRosulatia[aug3][2])
+                aug1Value = math.random(0, augsRosulatia[aug1][2])
+                aug2Value = math.random(0, augsRosulatia[aug2][2])
+                aug3Value = math.random(0, augsRosulatia[aug3][2])
                 aug1      = augsRosulatia[aug1][1]
                 aug2      = augsRosulatia[aug2][1]
                 aug3      = augsRosulatia[aug3][1]
@@ -792,9 +793,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsRosulatia[aug1][2])
-                aug2Value = math.random(1, augsRosulatia[aug2][2])
-                aug3Value = math.random(1, augsRosulatia[aug3][2])
+                aug1Value = math.random(0, augsRosulatia[aug1][2])
+                aug2Value = math.random(0, augsRosulatia[aug2][2])
+                aug3Value = math.random(0, augsRosulatia[aug3][2])
                 aug1      = augsRosulatia[aug1][1]
                 aug2      = augsRosulatia[aug2][1]
                 aug3      = augsRosulatia[aug3][1]
@@ -816,9 +817,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsArciela[aug1][2])
-                aug2Value = math.random(1, augsArciela[aug2][2])
-                aug3Value = math.random(1, augsArciela[aug3][2])
+                aug1Value = math.random(0, augsArciela[aug1][2])
+                aug2Value = math.random(0, augsArciela[aug2][2])
+                aug3Value = math.random(0, augsArciela[aug3][2])
                 aug1      = augsArciela[aug1][1]
                 aug2      = augsArciela[aug2][1]
                 aug3      = augsArciela[aug3][1]
@@ -839,9 +840,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsArciela[aug1][2])
-                aug2Value = math.random(1, augsArciela[aug2][2])
-                aug3Value = math.random(1, augsArciela[aug3][2])
+                aug1Value = math.random(0, augsArciela[aug1][2])
+                aug2Value = math.random(0, augsArciela[aug2][2])
+                aug3Value = math.random(0, augsArciela[aug3][2])
                 aug1      = augsArciela[aug1][1]
                 aug2      = augsArciela[aug2][1]
                 aug3      = augsArciela[aug3][1]
@@ -862,9 +863,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsArciela[aug1][2])
-                aug2Value = math.random(1, augsArciela[aug2][2])
-                aug3Value = math.random(1, augsArciela[aug3][2])
+                aug1Value = math.random(0, augsArciela[aug1][2])
+                aug2Value = math.random(0, augsArciela[aug2][2])
+                aug3Value = math.random(0, augsArciela[aug3][2])
                 aug1      = augsArciela[aug1][1]
                 aug2      = augsArciela[aug2][1]
                 aug3      = augsArciela[aug3][1]
@@ -885,9 +886,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsArciela[aug1][2])
-                aug2Value = math.random(1, augsArciela[aug2][2])
-                aug3Value = math.random(1, augsArciela[aug3][2])
+                aug1Value = math.random(0, augsArciela[aug1][2])
+                aug2Value = math.random(0, augsArciela[aug2][2])
+                aug3Value = math.random(0, augsArciela[aug3][2])
                 aug1      = augsArciela[aug1][1]
                 aug2      = augsArciela[aug2][1]
                 aug3      = augsArciela[aug3][1]
@@ -909,9 +910,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsSajjaka[aug1][2])
-                aug2Value = math.random(1, augsSajjaka[aug2][2])
-                aug3Value = math.random(1, augsSajjaka[aug3][2])
+                aug1Value = math.random(0, augsSajjaka[aug1][2])
+                aug2Value = math.random(0, augsSajjaka[aug2][2])
+                aug3Value = math.random(0, augsSajjaka[aug3][2])
                 aug1      = augsSajjaka[aug1][1]
                 aug2      = augsSajjaka[aug2][1]
                 aug3      = augsSajjaka[aug3][1]
@@ -932,9 +933,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsSajjaka[aug1][2])
-                aug2Value = math.random(1, augsSajjaka[aug2][2])
-                aug3Value = math.random(1, augsSajjaka[aug3][2])
+                aug1Value = math.random(0, augsSajjaka[aug1][2])
+                aug2Value = math.random(0, augsSajjaka[aug2][2])
+                aug3Value = math.random(0, augsSajjaka[aug3][2])
                 aug1      = augsSajjaka[aug1][1]
                 aug2      = augsSajjaka[aug2][1]
                 aug3      = augsSajjaka[aug3][1]
@@ -955,9 +956,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsSajjaka[aug1][2])
-                aug2Value = math.random(1, augsSajjaka[aug2][2])
-                aug3Value = math.random(1, augsSajjaka[aug3][2])
+                aug1Value = math.random(0, augsSajjaka[aug1][2])
+                aug2Value = math.random(0, augsSajjaka[aug2][2])
+                aug3Value = math.random(0, augsSajjaka[aug3][2])
                 aug1      = augsSajjaka[aug1][1]
                 aug2      = augsSajjaka[aug2][1]
                 aug3      = augsSajjaka[aug3][1]
@@ -978,9 +979,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsSajjaka[aug1][2])
-                aug2Value = math.random(1, augsSajjaka[aug2][2])
-                aug3Value = math.random(1, augsSajjaka[aug3][2])
+                aug1Value = math.random(0, augsSajjaka[aug1][2])
+                aug2Value = math.random(0, augsSajjaka[aug2][2])
+                aug3Value = math.random(0, augsSajjaka[aug3][2])
                 aug1      = augsSajjaka[aug1][1]
                 aug2      = augsSajjaka[aug2][1]
                 aug3      = augsSajjaka[aug3][1]
@@ -1002,9 +1003,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsAugust[aug1][2])
-                aug2Value = math.random(1, augsAugust[aug2][2])
-                aug3Value = math.random(1, augsAugust[aug3][2])
+                aug1Value = math.random(0, augsAugust[aug1][2])
+                aug2Value = math.random(0, augsAugust[aug2][2])
+                aug3Value = math.random(0, augsAugust[aug3][2])
                 aug1      = augsAugust[aug1][1]
                 aug2      = augsAugust[aug2][1]
                 aug3      = augsAugust[aug3][1]
@@ -1025,9 +1026,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsAugust[aug1][2])
-                aug2Value = math.random(1, augsAugust[aug2][2])
-                aug3Value = math.random(1, augsAugust[aug3][2])
+                aug1Value = math.random(0, augsAugust[aug1][2])
+                aug2Value = math.random(0, augsAugust[aug2][2])
+                aug3Value = math.random(0, augsAugust[aug3][2])
                 aug1      = augsAugust[aug1][1]
                 aug2      = augsAugust[aug2][1]
                 aug3      = augsAugust[aug3][1]
@@ -1048,9 +1049,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsAugust[aug1][2])
-                aug2Value = math.random(1, augsAugust[aug2][2])
-                aug3Value = math.random(1, augsAugust[aug3][2])
+                aug1Value = math.random(0, augsAugust[aug1][2])
+                aug2Value = math.random(0, augsAugust[aug2][2])
+                aug3Value = math.random(0, augsAugust[aug3][2])
                 aug1      = augsAugust[aug1][1]
                 aug2      = augsAugust[aug2][1]
                 aug3      = augsAugust[aug3][1]
@@ -1071,9 +1072,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsAugust[aug1][2])
-                aug2Value = math.random(1, augsAugust[aug2][2])
-                aug3Value = math.random(1, augsAugust[aug3][2])
+                aug1Value = math.random(0, augsAugust[aug1][2])
+                aug2Value = math.random(0, augsAugust[aug2][2])
+                aug3Value = math.random(0, augsAugust[aug3][2])
                 aug1      = augsAugust[aug1][1]
                 aug2      = augsAugust[aug2][1]
                 aug3      = augsAugust[aug3][1]
@@ -1094,9 +1095,9 @@ function onTrade(player, npc, trade)
                     aug3 = math.random(17, 20)
                 end
 
-                aug1Value = math.random(1, augsAugust[aug1][2])
-                aug2Value = math.random(1, augsAugust[aug2][2])
-                aug3Value = math.random(1, augsAugust[aug3][2])
+                aug1Value = math.random(0, augsAugust[aug1][2])
+                aug2Value = math.random(0, augsAugust[aug2][2])
+                aug3Value = math.random(0, augsAugust[aug3][2])
                 aug1      = augsAugust[aug1][1]
                 aug2      = augsAugust[aug2][1]
                 aug3      = augsAugust[aug3][1]
@@ -1117,8 +1118,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsYgnas[aug1][2])
-                aug2Value = math.random(1, augsYgnas[aug2][2])
+                aug1Value = math.random(0, augsYgnas[aug1][2])
+                aug2Value = math.random(0, augsYgnas[aug2][2])
                 aug1      = augsYgnas[aug1][1]
                 aug2      = augsYgnas[aug2][1]
             elseif
@@ -1133,8 +1134,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsYgnas[aug1][2])
-                aug2Value = math.random(1, augsYgnas[aug2][2])
+                aug1Value = math.random(0, augsYgnas[aug1][2])
+                aug2Value = math.random(0, augsYgnas[aug2][2])
                 aug1      = augsYgnas[aug1][1]
                 aug2      = augsYgnas[aug2][1]
             elseif
@@ -1149,8 +1150,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsYgnas[aug1][2])
-                aug2Value = math.random(1, augsYgnas[aug2][2])
+                aug1Value = math.random(0, augsYgnas[aug1][2])
+                aug2Value = math.random(0, augsYgnas[aug2][2])
                 aug1      = augsYgnas[aug1][1]
                 aug2      = augsYgnas[aug2][1]
             elseif
@@ -1165,8 +1166,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsYgnas[aug1][2])
-                aug2Value = math.random(1, augsYgnas[aug2][2])
+                aug1Value = math.random(0, augsYgnas[aug1][2])
+                aug2Value = math.random(0, augsYgnas[aug2][2])
                 aug1      = augsYgnas[aug1][1]
                 aug2      = augsYgnas[aug2][1]
             -- End Yngas
@@ -1182,8 +1183,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsDarrcuiln[aug1][2])
-                aug2Value = math.random(1, augsDarrcuiln[aug2][2])
+                aug1Value = math.random(0, augsDarrcuiln[aug1][2])
+                aug2Value = math.random(0, augsDarrcuiln[aug2][2])
                 aug1      = augsDarrcuiln[aug1][1]
                 aug2      = augsDarrcuiln[aug2][1]
             elseif
@@ -1198,8 +1199,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsDarrcuiln[aug1][2])
-                aug2Value = math.random(1, augsDarrcuiln[aug2][2])
+                aug1Value = math.random(0, augsDarrcuiln[aug1][2])
+                aug2Value = math.random(0, augsDarrcuiln[aug2][2])
                 aug1      = augsDarrcuiln[aug1][1]
                 aug2      = augsDarrcuiln[aug2][1]
             elseif
@@ -1214,8 +1215,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsDarrcuiln[aug1][2])
-                aug2Value = math.random(1, augsDarrcuiln[aug2][2])
+                aug1Value = math.random(0, augsDarrcuiln[aug1][2])
+                aug2Value = math.random(0, augsDarrcuiln[aug2][2])
                 aug1      = augsDarrcuiln[aug1][1]
                 aug2      = augsDarrcuiln[aug2][1]
             elseif
@@ -1230,8 +1231,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsDarrcuiln[aug1][2])
-                aug2Value = math.random(1, augsDarrcuiln[aug2][2])
+                aug1Value = math.random(0, augsDarrcuiln[aug1][2])
+                aug2Value = math.random(0, augsDarrcuiln[aug2][2])
                 aug1      = augsDarrcuiln[aug1][1]
                 aug2      = augsDarrcuiln[aug2][1]
             -- End Darrcuiln
@@ -1247,8 +1248,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsIngrid[aug1][2])
-                aug2Value = math.random(1, augsIngrid[aug2][2])
+                aug1Value = math.random(0, augsIngrid[aug1][2])
+                aug2Value = math.random(0, augsIngrid[aug2][2])
                 aug1      = augsIngrid[aug1][1]
                 aug2      = augsIngrid[aug2][1]
             elseif
@@ -1263,8 +1264,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsIngrid[aug1][2])
-                aug2Value = math.random(1, augsIngrid[aug2][2])
+                aug1Value = math.random(0, augsIngrid[aug1][2])
+                aug2Value = math.random(0, augsIngrid[aug2][2])
                 aug1      = augsIngrid[aug1][1]
                 aug2      = augsIngrid[aug2][1]
             elseif
@@ -1279,8 +1280,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsIngrid[aug1][2])
-                aug2Value = math.random(1, augsIngrid[aug2][2])
+                aug1Value = math.random(0, augsIngrid[aug1][2])
+                aug2Value = math.random(0, augsIngrid[aug2][2])
                 aug1      = augsIngrid[aug1][1]
                 aug2      = augsIngrid[aug2][1]
             elseif
@@ -1295,8 +1296,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsIngrid[aug1][2])
-                aug2Value = math.random(1, augsIngrid[aug2][2])
+                aug1Value = math.random(0, augsIngrid[aug1][2])
+                aug2Value = math.random(0, augsIngrid[aug2][2])
                 aug1      = augsIngrid[aug1][1]
                 aug2      = augsIngrid[aug2][1]
             -- End Ingrid
@@ -1312,8 +1313,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsTeodor[aug1][2])
-                aug2Value = math.random(1, augsTeodor[aug2][2])
+                aug1Value = math.random(0, augsTeodor[aug1][2])
+                aug2Value = math.random(0, augsTeodor[aug2][2])
                 aug1      = augsTeodor[aug1][1]
                 aug2      = augsTeodor[aug2][1]
             elseif
@@ -1328,8 +1329,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsTeodor[aug1][2])
-                aug2Value = math.random(1, augsTeodor[aug2][2])
+                aug1Value = math.random(0, augsTeodor[aug1][2])
+                aug2Value = math.random(0, augsTeodor[aug2][2])
                 aug1      = augsTeodor[aug1][1]
                 aug2      = augsTeodor[aug2][1]
             elseif
@@ -1344,8 +1345,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsTeodor[aug1][2])
-                aug2Value = math.random(1, augsTeodor[aug2][2])
+                aug1Value = math.random(0, augsTeodor[aug1][2])
+                aug2Value = math.random(0, augsTeodor[aug2][2])
                 aug1      = augsTeodor[aug1][1]
                 aug2      = augsTeodor[aug2][1]
             elseif
@@ -1360,8 +1361,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsTeodor[aug1][2])
-                aug2Value = math.random(1, augsTeodor[aug2][2])
+                aug1Value = math.random(0, augsTeodor[aug1][2])
+                aug2Value = math.random(0, augsTeodor[aug2][2])
                 aug1      = augsTeodor[aug1][1]
                 aug2      = augsTeodor[aug2][1]
             -- End Teodor
@@ -1377,8 +1378,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsMorimar[aug1][2])
-                aug2Value = math.random(1, augsMorimar[aug2][2])
+                aug1Value = math.random(0, augsMorimar[aug1][2])
+                aug2Value = math.random(0, augsMorimar[aug2][2])
                 aug1      = augsMorimar[aug1][1]
                 aug2      = augsMorimar[aug2][1]
             elseif
@@ -1393,8 +1394,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsMorimar[aug1][2])
-                aug2Value = math.random(1, augsMorimar[aug2][2])
+                aug1Value = math.random(0, augsMorimar[aug1][2])
+                aug2Value = math.random(0, augsMorimar[aug2][2])
                 aug1      = augsMorimar[aug1][1]
                 aug2      = augsMorimar[aug2][1]
             elseif
@@ -1409,8 +1410,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsMorimar[aug1][2])
-                aug2Value = math.random(1, augsMorimar[aug2][2])
+                aug1Value = math.random(0, augsMorimar[aug1][2])
+                aug2Value = math.random(0, augsMorimar[aug2][2])
                 aug1      = augsMorimar[aug1][1]
                 aug2      = augsMorimar[aug2][1]
             elseif
@@ -1425,8 +1426,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsMorimar[aug1][2])
-                aug2Value = math.random(1, augsMorimar[aug2][2])
+                aug1Value = math.random(0, augsMorimar[aug1][2])
+                aug2Value = math.random(0, augsMorimar[aug2][2])
                 aug1      = augsMorimar[aug1][1]
                 aug2      = augsMorimar[aug2][1]
             -- End Morimar
@@ -1442,8 +1443,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsRosulatia[aug1][2])
-                aug2Value = math.random(1, augsRosulatia[aug2][2])
+                aug1Value = math.random(0, augsRosulatia[aug1][2])
+                aug2Value = math.random(0, augsRosulatia[aug2][2])
                 aug1      = augsRosulatia[aug1][1]
                 aug2      = augsRosulatia[aug2][1]
             elseif
@@ -1458,8 +1459,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsRosulatia[aug1][2])
-                aug2Value = math.random(1, augsRosulatia[aug2][2])
+                aug1Value = math.random(0, augsRosulatia[aug1][2])
+                aug2Value = math.random(0, augsRosulatia[aug2][2])
                 aug1      = augsRosulatia[aug1][1]
                 aug2      = augsRosulatia[aug2][1]
             elseif
@@ -1474,8 +1475,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsRosulatia[aug1][2])
-                aug2Value = math.random(1, augsRosulatia[aug2][2])
+                aug1Value = math.random(0, augsRosulatia[aug1][2])
+                aug2Value = math.random(0, augsRosulatia[aug2][2])
                 aug1      = augsRosulatia[aug1][1]
                 aug2      = augsRosulatia[aug2][1]
             elseif
@@ -1490,8 +1491,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsRosulatia[aug1][2])
-                aug2Value = math.random(1, augsRosulatia[aug2][2])
+                aug1Value = math.random(0, augsRosulatia[aug1][2])
+                aug2Value = math.random(0, augsRosulatia[aug2][2])
                 aug1      = augsRosulatia[aug1][1]
                 aug2      = augsRosulatia[aug2][1]
             -- End Rosulatia
@@ -1507,8 +1508,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsArciela[aug1][2])
-                aug2Value = math.random(1, augsArciela[aug2][2])
+                aug1Value = math.random(0, augsArciela[aug1][2])
+                aug2Value = math.random(0, augsArciela[aug2][2])
                 aug1      = augsArciela[aug1][1]
                 aug2      = augsArciela[aug2][1]
             elseif
@@ -1523,8 +1524,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsArciela[aug1][2])
-                aug2Value = math.random(1, augsArciela[aug2][2])
+                aug1Value = math.random(0, augsArciela[aug1][2])
+                aug2Value = math.random(0, augsArciela[aug2][2])
                 aug1      = augsArciela[aug1][1]
                 aug2      = augsArciela[aug2][1]
             elseif
@@ -1539,8 +1540,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsArciela[aug1][2])
-                aug2Value = math.random(1, augsArciela[aug2][2])
+                aug1Value = math.random(0, augsArciela[aug1][2])
+                aug2Value = math.random(0, augsArciela[aug2][2])
                 aug1      = augsArciela[aug1][1]
                 aug2      = augsArciela[aug2][1]
             elseif
@@ -1555,8 +1556,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsArciela[aug1][2])
-                aug2Value = math.random(1, augsArciela[aug2][2])
+                aug1Value = math.random(0, augsArciela[aug1][2])
+                aug2Value = math.random(0, augsArciela[aug2][2])
                 aug1      = augsArciela[aug1][1]
                 aug2      = augsArciela[aug2][1]
             -- End Arciela
@@ -1572,8 +1573,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsSajjaka[aug1][2])
-                aug2Value = math.random(1, augsSajjaka[aug2][2])
+                aug1Value = math.random(0, augsSajjaka[aug1][2])
+                aug2Value = math.random(0, augsSajjaka[aug2][2])
                 aug1      = augsSajjaka[aug1][1]
                 aug2      = augsSajjaka[aug2][1]
             elseif
@@ -1588,8 +1589,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsSajjaka[aug1][2])
-                aug2Value = math.random(1, augsSajjaka[aug2][2])
+                aug1Value = math.random(0, augsSajjaka[aug1][2])
+                aug2Value = math.random(0, augsSajjaka[aug2][2])
                 aug1      = augsSajjaka[aug1][1]
                 aug2      = augsSajjaka[aug2][1]
             elseif
@@ -1604,8 +1605,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsSajjaka[aug1][2])
-                aug2Value = math.random(1, augsSajjaka[aug2][2])
+                aug1Value = math.random(0, augsSajjaka[aug1][2])
+                aug2Value = math.random(0, augsSajjaka[aug2][2])
                 aug1      = augsSajjaka[aug1][1]
                 aug2      = augsSajjaka[aug2][1]
             elseif
@@ -1620,8 +1621,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsSajjaka[aug1][2])
-                aug2Value = math.random(1, augsSajjaka[aug2][2])
+                aug1Value = math.random(0, augsSajjaka[aug1][2])
+                aug2Value = math.random(0, augsSajjaka[aug2][2])
                 aug1      = augsSajjaka[aug1][1]
                 aug2      = augsSajjaka[aug2][1]
             -- End Sajjaka
@@ -1637,8 +1638,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(1, 4)
                 end
 
-                aug1Value = math.random(1, augsAugust[aug1][2])
-                aug2Value = math.random(1, augsAugust[aug2][2])
+                aug1Value = math.random(0, augsAugust[aug1][2])
+                aug2Value = math.random(0, augsAugust[aug2][2])
                 aug1      = augsAugust[aug1][1]
                 aug2      = augsAugust[aug2][1]
             elseif
@@ -1653,8 +1654,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(5, 8)
                 end
 
-                aug1Value = math.random(1, augsAugust[aug1][2])
-                aug2Value = math.random(1, augsAugust[aug2][2])
+                aug1Value = math.random(0, augsAugust[aug1][2])
+                aug2Value = math.random(0, augsAugust[aug2][2])
                 aug1      = augsAugust[aug1][1]
                 aug2      = augsAugust[aug2][1]
             elseif
@@ -1669,8 +1670,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(9, 12)
                 end
 
-                aug1Value = math.random(1, augsAugust[aug1][2])
-                aug2Value = math.random(1, augsAugust[aug2][2])
+                aug1Value = math.random(0, augsAugust[aug1][2])
+                aug2Value = math.random(0, augsAugust[aug2][2])
                 aug1      = augsAugust[aug1][1]
                 aug2      = augsAugust[aug2][1]
             elseif
@@ -1685,8 +1686,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(13, 16)
                 end
 
-                aug1Value = math.random(1, augsAugust[aug1][2])
-                aug2Value = math.random(1, augsAugust[aug2][2])
+                aug1Value = math.random(0, augsAugust[aug1][2])
+                aug2Value = math.random(0, augsAugust[aug2][2])
                 aug1      = augsAugust[aug1][1]
                 aug2      = augsAugust[aug2][1]
             elseif
@@ -1701,8 +1702,8 @@ function onTrade(player, npc, trade)
                     aug2 = math.random(17, 20)
                 end
 
-                aug1Value = math.random(1, augsAugust[aug1][2])
-                aug2Value = math.random(1, augsAugust[aug2][2])
+                aug1Value = math.random(0, augsAugust[aug1][2])
+                aug2Value = math.random(0, augsAugust[aug2][2])
                 aug1      = augsAugust[aug1][1]
                 aug2      = augsAugust[aug2][1]
             -- End August
@@ -1720,10 +1721,10 @@ function onTrade(player, npc, trade)
                 aug3 = 3
                 aug4 = 4
 
-                aug1Value = math.random(1, augsYgnas[aug1][2])
-                aug2Value = math.random(1, augsYgnas[aug2][2])
-                aug3Value = math.random(1, augsYgnas[aug3][2])
-                aug4Value = math.random(1, augsYgnas[aug4][2])
+                aug1Value = math.random(0, augsYgnas[aug1][2])
+                aug2Value = math.random(0, augsYgnas[aug2][2])
+                aug3Value = math.random(0, augsYgnas[aug3][2])
+                aug4Value = math.random(0, augsYgnas[aug4][2])
                 aug1      = augsYgnas[aug1][1]
                 aug2      = augsYgnas[aug2][1]
                 aug3      = augsYgnas[aug3][1]
@@ -1738,10 +1739,10 @@ function onTrade(player, npc, trade)
                 aug3 = 7
                 aug4 = 8
 
-                aug1Value = math.random(1, augsYgnas[aug1][2])
-                aug2Value = math.random(1, augsYgnas[aug2][2])
-                aug3Value = math.random(1, augsYgnas[aug3][2])
-                aug4Value = math.random(1, augsYgnas[aug4][2])
+                aug1Value = math.random(0, augsYgnas[aug1][2])
+                aug2Value = math.random(0, augsYgnas[aug2][2])
+                aug3Value = math.random(0, augsYgnas[aug3][2])
+                aug4Value = math.random(0, augsYgnas[aug4][2])
                 aug1      = augsYgnas[aug1][1]
                 aug2      = augsYgnas[aug2][1]
                 aug3      = augsYgnas[aug3][1]
@@ -1756,10 +1757,10 @@ function onTrade(player, npc, trade)
                 aug3 = 11
                 aug4 = 12
 
-                aug1Value = math.random(1, augsYgnas[aug1][2])
-                aug2Value = math.random(1, augsYgnas[aug2][2])
-                aug3Value = math.random(1, augsYgnas[aug3][2])
-                aug4Value = math.random(1, augsYgnas[aug4][2])
+                aug1Value = math.random(0, augsYgnas[aug1][2])
+                aug2Value = math.random(0, augsYgnas[aug2][2])
+                aug3Value = math.random(0, augsYgnas[aug3][2])
+                aug4Value = math.random(0, augsYgnas[aug4][2])
                 aug1      = augsYgnas[aug1][1]
                 aug2      = augsYgnas[aug2][1]
                 aug3      = augsYgnas[aug3][1]
@@ -1774,10 +1775,10 @@ function onTrade(player, npc, trade)
                 aug3 = 15
                 aug4 = 16
 
-                aug1Value = math.random(1, augsYgnas[aug1][2])
-                aug2Value = math.random(1, augsYgnas[aug2][2])
-                aug3Value = math.random(1, augsYgnas[aug3][2])
-                aug4Value = math.random(1, augsYgnas[aug4][2])
+                aug1Value = math.random(0, augsYgnas[aug1][2])
+                aug2Value = math.random(0, augsYgnas[aug2][2])
+                aug3Value = math.random(0, augsYgnas[aug3][2])
+                aug4Value = math.random(0, augsYgnas[aug4][2])
                 aug1      = augsYgnas[aug1][1]
                 aug2      = augsYgnas[aug2][1]
                 aug3      = augsYgnas[aug3][1]
@@ -1793,10 +1794,10 @@ function onTrade(player, npc, trade)
                 aug3 = 3
                 aug4 = 4
 
-                aug1Value = math.random(1, augsDarrcuiln[aug1][2])
-                aug2Value = math.random(1, augsDarrcuiln[aug2][2])
-                aug3Value = math.random(1, augsDarrcuiln[aug3][2])
-                aug4Value = math.random(1, augsDarrcuiln[aug4][2])
+                aug1Value = math.random(0, augsDarrcuiln[aug1][2])
+                aug2Value = math.random(0, augsDarrcuiln[aug2][2])
+                aug3Value = math.random(0, augsDarrcuiln[aug3][2])
+                aug4Value = math.random(0, augsDarrcuiln[aug4][2])
                 aug1      = augsDarrcuiln[aug1][1]
                 aug2      = augsDarrcuiln[aug2][1]
                 aug3      = augsDarrcuiln[aug3][1]
@@ -1811,10 +1812,10 @@ function onTrade(player, npc, trade)
                 aug3 = 7
                 aug4 = 8
 
-                aug1Value = math.random(1, augsDarrcuiln[aug1][2])
-                aug2Value = math.random(1, augsDarrcuiln[aug2][2])
-                aug3Value = math.random(1, augsDarrcuiln[aug3][2])
-                aug4Value = math.random(1, augsDarrcuiln[aug4][2])
+                aug1Value = math.random(0, augsDarrcuiln[aug1][2])
+                aug2Value = math.random(0, augsDarrcuiln[aug2][2])
+                aug3Value = math.random(0, augsDarrcuiln[aug3][2])
+                aug4Value = math.random(0, augsDarrcuiln[aug4][2])
                 aug1      = augsDarrcuiln[aug1][1]
                 aug2      = augsDarrcuiln[aug2][1]
                 aug3      = augsDarrcuiln[aug3][1]
@@ -1829,10 +1830,10 @@ function onTrade(player, npc, trade)
                 aug3 = 11
                 aug4 = 12
 
-                aug1Value = math.random(1, augsDarrcuiln[aug1][2])
-                aug2Value = math.random(1, augsDarrcuiln[aug2][2])
-                aug3Value = math.random(1, augsDarrcuiln[aug3][2])
-                aug4Value = math.random(1, augsDarrcuiln[aug4][2])
+                aug1Value = math.random(0, augsDarrcuiln[aug1][2])
+                aug2Value = math.random(0, augsDarrcuiln[aug2][2])
+                aug3Value = math.random(0, augsDarrcuiln[aug3][2])
+                aug4Value = math.random(0, augsDarrcuiln[aug4][2])
                 aug1      = augsDarrcuiln[aug1][1]
                 aug2      = augsDarrcuiln[aug2][1]
                 aug3      = augsDarrcuiln[aug3][1]
@@ -1847,10 +1848,10 @@ function onTrade(player, npc, trade)
                 aug3 = 15
                 aug4 = 16
 
-                aug1Value = math.random(1, augsDarrcuiln[aug1][2])
-                aug2Value = math.random(1, augsDarrcuiln[aug2][2])
-                aug3Value = math.random(1, augsDarrcuiln[aug3][2])
-                aug4Value = math.random(1, augsDarrcuiln[aug4][2])
+                aug1Value = math.random(0, augsDarrcuiln[aug1][2])
+                aug2Value = math.random(0, augsDarrcuiln[aug2][2])
+                aug3Value = math.random(0, augsDarrcuiln[aug3][2])
+                aug4Value = math.random(0, augsDarrcuiln[aug4][2])
                 aug1      = augsDarrcuiln[aug1][1]
                 aug2      = augsDarrcuiln[aug2][1]
                 aug3      = augsDarrcuiln[aug3][1]
@@ -1866,10 +1867,10 @@ function onTrade(player, npc, trade)
                 aug3 = 3
                 aug4 = 4
 
-                aug1Value = math.random(1, augsIngrid[aug1][2])
-                aug2Value = math.random(1, augsIngrid[aug2][2])
-                aug3Value = math.random(1, augsIngrid[aug3][2])
-                aug4Value = math.random(1, augsIngrid[aug4][2])
+                aug1Value = math.random(0, augsIngrid[aug1][2])
+                aug2Value = math.random(0, augsIngrid[aug2][2])
+                aug3Value = math.random(0, augsIngrid[aug3][2])
+                aug4Value = math.random(0, augsIngrid[aug4][2])
                 aug1      = augsIngrid[aug1][1]
                 aug2      = augsIngrid[aug2][1]
                 aug3      = augsIngrid[aug3][1]
@@ -1884,10 +1885,10 @@ function onTrade(player, npc, trade)
                 aug3 = 7
                 aug4 = 8
 
-                aug1Value = math.random(1, augsIngrid[aug1][2])
-                aug2Value = math.random(1, augsIngrid[aug2][2])
-                aug3Value = math.random(1, augsIngrid[aug3][2])
-                aug4Value = math.random(1, augsIngrid[aug4][2])
+                aug1Value = math.random(0, augsIngrid[aug1][2])
+                aug2Value = math.random(0, augsIngrid[aug2][2])
+                aug3Value = math.random(0, augsIngrid[aug3][2])
+                aug4Value = math.random(0, augsIngrid[aug4][2])
                 aug1      = augsIngrid[aug1][1]
                 aug2      = augsIngrid[aug2][1]
                 aug3      = augsIngrid[aug3][1]
@@ -1902,10 +1903,10 @@ function onTrade(player, npc, trade)
                 aug3 = 11
                 aug4 = 12
 
-                aug1Value = math.random(1, augsIngrid[aug1][2])
-                aug2Value = math.random(1, augsIngrid[aug2][2])
-                aug3Value = math.random(1, augsIngrid[aug3][2])
-                aug4Value = math.random(1, augsIngrid[aug4][2])
+                aug1Value = math.random(0, augsIngrid[aug1][2])
+                aug2Value = math.random(0, augsIngrid[aug2][2])
+                aug3Value = math.random(0, augsIngrid[aug3][2])
+                aug4Value = math.random(0, augsIngrid[aug4][2])
                 aug1      = augsIngrid[aug1][1]
                 aug2      = augsIngrid[aug2][1]
                 aug3      = augsIngrid[aug3][1]
@@ -1920,10 +1921,10 @@ function onTrade(player, npc, trade)
                 aug3 = 15
                 aug4 = 16
 
-                aug1Value = math.random(1, augsIngrid[aug1][2])
-                aug2Value = math.random(1, augsIngrid[aug2][2])
-                aug3Value = math.random(1, augsIngrid[aug3][2])
-                aug4Value = math.random(1, augsIngrid[aug4][2])
+                aug1Value = math.random(0, augsIngrid[aug1][2])
+                aug2Value = math.random(0, augsIngrid[aug2][2])
+                aug3Value = math.random(0, augsIngrid[aug3][2])
+                aug4Value = math.random(0, augsIngrid[aug4][2])
                 aug1      = augsIngrid[aug1][1]
                 aug2      = augsIngrid[aug2][1]
                 aug3      = augsIngrid[aug3][1]
@@ -1939,10 +1940,10 @@ function onTrade(player, npc, trade)
                 aug3 = 3
                 aug4 = 4
 
-                aug1Value = math.random(1, augsTeodor[aug1][2])
-                aug2Value = math.random(1, augsTeodor[aug2][2])
-                aug3Value = math.random(1, augsTeodor[aug3][2])
-                aug4Value = math.random(1, augsTeodor[aug4][2])
+                aug1Value = math.random(0, augsTeodor[aug1][2])
+                aug2Value = math.random(0, augsTeodor[aug2][2])
+                aug3Value = math.random(0, augsTeodor[aug3][2])
+                aug4Value = math.random(0, augsTeodor[aug4][2])
                 aug1      = augsTeodor[aug1][1]
                 aug2      = augsTeodor[aug2][1]
                 aug3      = augsTeodor[aug3][1]
@@ -1957,10 +1958,10 @@ function onTrade(player, npc, trade)
                 aug3 = 7
                 aug4 = 8
 
-                aug1Value = math.random(1, augsTeodor[aug1][2])
-                aug2Value = math.random(1, augsTeodor[aug2][2])
-                aug3Value = math.random(1, augsTeodor[aug3][2])
-                aug4Value = math.random(1, augsTeodor[aug4][2])
+                aug1Value = math.random(0, augsTeodor[aug1][2])
+                aug2Value = math.random(0, augsTeodor[aug2][2])
+                aug3Value = math.random(0, augsTeodor[aug3][2])
+                aug4Value = math.random(0, augsTeodor[aug4][2])
                 aug1      = augsTeodor[aug1][1]
                 aug2      = augsTeodor[aug2][1]
                 aug3      = augsTeodor[aug3][1]
@@ -1975,10 +1976,10 @@ function onTrade(player, npc, trade)
                 aug3 = 11
                 aug4 = 12
 
-                aug1Value = math.random(1, augsTeodor[aug1][2])
-                aug2Value = math.random(1, augsTeodor[aug2][2])
-                aug3Value = math.random(1, augsTeodor[aug3][2])
-                aug4Value = math.random(1, augsTeodor[aug4][2])
+                aug1Value = math.random(0, augsTeodor[aug1][2])
+                aug2Value = math.random(0, augsTeodor[aug2][2])
+                aug3Value = math.random(0, augsTeodor[aug3][2])
+                aug4Value = math.random(0, augsTeodor[aug4][2])
                 aug1      = augsTeodor[aug1][1]
                 aug2      = augsTeodor[aug2][1]
                 aug3      = augsTeodor[aug3][1]
@@ -1993,10 +1994,10 @@ function onTrade(player, npc, trade)
                 aug3 = 15
                 aug4 = 16
 
-                aug1Value = math.random(1, augsTeodor[aug1][2])
-                aug2Value = math.random(1, augsTeodor[aug2][2])
-                aug3Value = math.random(1, augsTeodor[aug3][2])
-                aug4Value = math.random(1, augsTeodor[aug4][2])
+                aug1Value = math.random(0, augsTeodor[aug1][2])
+                aug2Value = math.random(0, augsTeodor[aug2][2])
+                aug3Value = math.random(0, augsTeodor[aug3][2])
+                aug4Value = math.random(0, augsTeodor[aug4][2])
                 aug1      = augsTeodor[aug1][1]
                 aug2      = augsTeodor[aug2][1]
                 aug3      = augsTeodor[aug3][1]
@@ -2012,10 +2013,10 @@ function onTrade(player, npc, trade)
                 aug3 = 3
                 aug4 = 4
 
-                aug1Value = math.random(1, augsMorimar[aug1][2])
-                aug2Value = math.random(1, augsMorimar[aug2][2])
-                aug3Value = math.random(1, augsMorimar[aug3][2])
-                aug4Value = math.random(1, augsMorimar[aug4][2])
+                aug1Value = math.random(0, augsMorimar[aug1][2])
+                aug2Value = math.random(0, augsMorimar[aug2][2])
+                aug3Value = math.random(0, augsMorimar[aug3][2])
+                aug4Value = math.random(0, augsMorimar[aug4][2])
                 aug1      = augsMorimar[aug1][1]
                 aug2      = augsMorimar[aug2][1]
                 aug3      = augsMorimar[aug3][1]
@@ -2030,10 +2031,10 @@ function onTrade(player, npc, trade)
                 aug3 = 7
                 aug4 = 8
 
-                aug1Value = math.random(1, augsMorimar[aug1][2])
-                aug2Value = math.random(1, augsMorimar[aug2][2])
-                aug3Value = math.random(1, augsMorimar[aug3][2])
-                aug4Value = math.random(1, augsMorimar[aug4][2])
+                aug1Value = math.random(0, augsMorimar[aug1][2])
+                aug2Value = math.random(0, augsMorimar[aug2][2])
+                aug3Value = math.random(0, augsMorimar[aug3][2])
+                aug4Value = math.random(0, augsMorimar[aug4][2])
                 aug1      = augsMorimar[aug1][1]
                 aug2      = augsMorimar[aug2][1]
                 aug3      = augsMorimar[aug3][1]
@@ -2048,10 +2049,10 @@ function onTrade(player, npc, trade)
                 aug3 = 11
                 aug4 = 12
 
-                aug1Value = math.random(1, augsMorimar[aug1][2])
-                aug2Value = math.random(1, augsMorimar[aug2][2])
-                aug3Value = math.random(1, augsMorimar[aug3][2])
-                aug4Value = math.random(1, augsMorimar[aug4][2])
+                aug1Value = math.random(0, augsMorimar[aug1][2])
+                aug2Value = math.random(0, augsMorimar[aug2][2])
+                aug3Value = math.random(0, augsMorimar[aug3][2])
+                aug4Value = math.random(0, augsMorimar[aug4][2])
                 aug1      = augsMorimar[aug1][1]
                 aug2      = augsMorimar[aug2][1]
                 aug3      = augsMorimar[aug3][1]
@@ -2066,10 +2067,10 @@ function onTrade(player, npc, trade)
                 aug3 = 15
                 aug4 = 16
 
-                aug1Value = math.random(1, augsMorimar[aug1][2])
-                aug2Value = math.random(1, augsMorimar[aug2][2])
-                aug3Value = math.random(1, augsMorimar[aug3][2])
-                aug4Value = math.random(1, augsMorimar[aug4][2])
+                aug1Value = math.random(0, augsMorimar[aug1][2])
+                aug2Value = math.random(0, augsMorimar[aug2][2])
+                aug3Value = math.random(0, augsMorimar[aug3][2])
+                aug4Value = math.random(0, augsMorimar[aug4][2])
                 aug1      = augsMorimar[aug1][1]
                 aug2      = augsMorimar[aug2][1]
                 aug3      = augsMorimar[aug3][1]
@@ -2085,10 +2086,10 @@ function onTrade(player, npc, trade)
                 aug3 = 3
                 aug4 = 4
 
-                aug1Value = math.random(1, augsRosulatia[aug1][2])
-                aug2Value = math.random(1, augsRosulatia[aug2][2])
-                aug3Value = math.random(1, augsRosulatia[aug3][2])
-                aug4Value = math.random(1, augsRosulatia[aug4][2])
+                aug1Value = math.random(0, augsRosulatia[aug1][2])
+                aug2Value = math.random(0, augsRosulatia[aug2][2])
+                aug3Value = math.random(0, augsRosulatia[aug3][2])
+                aug4Value = math.random(0, augsRosulatia[aug4][2])
                 aug1      = augsRosulatia[aug1][1]
                 aug2      = augsRosulatia[aug2][1]
                 aug3      = augsRosulatia[aug3][1]
@@ -2103,10 +2104,10 @@ function onTrade(player, npc, trade)
                 aug3 = 7
                 aug4 = 8
 
-                aug1Value = math.random(1, augsRosulatia[aug1][2])
-                aug2Value = math.random(1, augsRosulatia[aug2][2])
-                aug3Value = math.random(1, augsRosulatia[aug3][2])
-                aug4Value = math.random(1, augsRosulatia[aug4][2])
+                aug1Value = math.random(0, augsRosulatia[aug1][2])
+                aug2Value = math.random(0, augsRosulatia[aug2][2])
+                aug3Value = math.random(0, augsRosulatia[aug3][2])
+                aug4Value = math.random(0, augsRosulatia[aug4][2])
                 aug1      = augsRosulatia[aug1][1]
                 aug2      = augsRosulatia[aug2][1]
                 aug3      = augsRosulatia[aug3][1]
@@ -2121,10 +2122,10 @@ function onTrade(player, npc, trade)
                 aug3 = 11
                 aug4 = 12
 
-                aug1Value = math.random(1, augsRosulatia[aug1][2])
-                aug2Value = math.random(1, augsRosulatia[aug2][2])
-                aug3Value = math.random(1, augsRosulatia[aug3][2])
-                aug4Value = math.random(1, augsRosulatia[aug4][2])
+                aug1Value = math.random(0, augsRosulatia[aug1][2])
+                aug2Value = math.random(0, augsRosulatia[aug2][2])
+                aug3Value = math.random(0, augsRosulatia[aug3][2])
+                aug4Value = math.random(0, augsRosulatia[aug4][2])
                 aug1      = augsRosulatia[aug1][1]
                 aug2      = augsRosulatia[aug2][1]
                 aug3      = augsRosulatia[aug3][1]
@@ -2139,10 +2140,10 @@ function onTrade(player, npc, trade)
                 aug3 = 15
                 aug4 = 16
 
-                aug1Value = math.random(1, augsRosulatia[aug1][2])
-                aug2Value = math.random(1, augsRosulatia[aug2][2])
-                aug3Value = math.random(1, augsRosulatia[aug3][2])
-                aug4Value = math.random(1, augsRosulatia[aug4][2])
+                aug1Value = math.random(0, augsRosulatia[aug1][2])
+                aug2Value = math.random(0, augsRosulatia[aug2][2])
+                aug3Value = math.random(0, augsRosulatia[aug3][2])
+                aug4Value = math.random(0, augsRosulatia[aug4][2])
                 aug1      = augsRosulatia[aug1][1]
                 aug2      = augsRosulatia[aug2][1]
                 aug3      = augsRosulatia[aug3][1]
@@ -2158,10 +2159,10 @@ function onTrade(player, npc, trade)
                 aug3 = 3
                 aug4 = 4
 
-                aug1Value = math.random(1, augsArciela[aug1][2])
-                aug2Value = math.random(1, augsArciela[aug2][2])
-                aug3Value = math.random(1, augsArciela[aug3][2])
-                aug4Value = math.random(1, augsArciela[aug4][2])
+                aug1Value = math.random(0, augsArciela[aug1][2])
+                aug2Value = math.random(0, augsArciela[aug2][2])
+                aug3Value = math.random(0, augsArciela[aug3][2])
+                aug4Value = math.random(0, augsArciela[aug4][2])
                 aug1      = augsArciela[aug1][1]
                 aug2      = augsArciela[aug2][1]
                 aug3      = augsArciela[aug3][1]
@@ -2176,10 +2177,10 @@ function onTrade(player, npc, trade)
                 aug3 = 7
                 aug4 = 8
 
-                aug1Value = math.random(1, augsArciela[aug1][2])
-                aug2Value = math.random(1, augsArciela[aug2][2])
-                aug3Value = math.random(1, augsArciela[aug3][2])
-                aug4Value = math.random(1, augsArciela[aug4][2])
+                aug1Value = math.random(0, augsArciela[aug1][2])
+                aug2Value = math.random(0, augsArciela[aug2][2])
+                aug3Value = math.random(0, augsArciela[aug3][2])
+                aug4Value = math.random(0, augsArciela[aug4][2])
                 aug1      = augsArciela[aug1][1]
                 aug2      = augsArciela[aug2][1]
                 aug3      = augsArciela[aug3][1]
@@ -2194,10 +2195,10 @@ function onTrade(player, npc, trade)
                 aug3 = 11
                 aug4 = 12
 
-                aug1Value = math.random(1, augsArciela[aug1][2])
-                aug2Value = math.random(1, augsArciela[aug2][2])
-                aug3Value = math.random(1, augsArciela[aug3][2])
-                aug4Value = math.random(1, augsArciela[aug4][2])
+                aug1Value = math.random(0, augsArciela[aug1][2])
+                aug2Value = math.random(0, augsArciela[aug2][2])
+                aug3Value = math.random(0, augsArciela[aug3][2])
+                aug4Value = math.random(0, augsArciela[aug4][2])
                 aug1      = augsArciela[aug1][1]
                 aug2      = augsArciela[aug2][1]
                 aug3      = augsArciela[aug3][1]
@@ -2212,10 +2213,10 @@ function onTrade(player, npc, trade)
                 aug3 = 15
                 aug4 = 16
 
-                aug1Value = math.random(1, augsArciela[aug1][2])
-                aug2Value = math.random(1, augsArciela[aug2][2])
-                aug3Value = math.random(1, augsArciela[aug3][2])
-                aug4Value = math.random(1, augsArciela[aug4][2])
+                aug1Value = math.random(0, augsArciela[aug1][2])
+                aug2Value = math.random(0, augsArciela[aug2][2])
+                aug3Value = math.random(0, augsArciela[aug3][2])
+                aug4Value = math.random(0, augsArciela[aug4][2])
                 aug1      = augsArciela[aug1][1]
                 aug2      = augsArciela[aug2][1]
                 aug3      = augsArciela[aug3][1]
@@ -2231,10 +2232,10 @@ function onTrade(player, npc, trade)
                 aug3 = 3
                 aug4 = 4
 
-                aug1Value = math.random(1, augsSajjaka[aug1][2])
-                aug2Value = math.random(1, augsSajjaka[aug2][2])
-                aug3Value = math.random(1, augsSajjaka[aug3][2])
-                aug4Value = math.random(1, augsSajjaka[aug4][2])
+                aug1Value = math.random(0, augsSajjaka[aug1][2])
+                aug2Value = math.random(0, augsSajjaka[aug2][2])
+                aug3Value = math.random(0, augsSajjaka[aug3][2])
+                aug4Value = math.random(0, augsSajjaka[aug4][2])
                 aug1      = augsSajjaka[aug1][1]
                 aug2      = augsSajjaka[aug2][1]
                 aug3      = augsSajjaka[aug3][1]
@@ -2249,10 +2250,10 @@ function onTrade(player, npc, trade)
                 aug3 = 7
                 aug4 = 8
 
-                aug1Value = math.random(1, augsSajjaka[aug1][2])
-                aug2Value = math.random(1, augsSajjaka[aug2][2])
-                aug3Value = math.random(1, augsSajjaka[aug3][2])
-                aug4Value = math.random(1, augsSajjaka[aug4][2])
+                aug1Value = math.random(0, augsSajjaka[aug1][2])
+                aug2Value = math.random(0, augsSajjaka[aug2][2])
+                aug3Value = math.random(0, augsSajjaka[aug3][2])
+                aug4Value = math.random(0, augsSajjaka[aug4][2])
                 aug1      = augsSajjaka[aug1][1]
                 aug2      = augsSajjaka[aug2][1]
                 aug3      = augsSajjaka[aug3][1]
@@ -2267,10 +2268,10 @@ function onTrade(player, npc, trade)
                 aug3 = 11
                 aug4 = 12
 
-                aug1Value = math.random(1, augsSajjaka[aug1][2])
-                aug2Value = math.random(1, augsSajjaka[aug2][2])
-                aug3Value = math.random(1, augsSajjaka[aug3][2])
-                aug4Value = math.random(1, augsSajjaka[aug4][2])
+                aug1Value = math.random(0, augsSajjaka[aug1][2])
+                aug2Value = math.random(0, augsSajjaka[aug2][2])
+                aug3Value = math.random(0, augsSajjaka[aug3][2])
+                aug4Value = math.random(0, augsSajjaka[aug4][2])
                 aug1      = augsSajjaka[aug1][1]
                 aug2      = augsSajjaka[aug2][1]
                 aug3      = augsSajjaka[aug3][1]
@@ -2285,10 +2286,10 @@ function onTrade(player, npc, trade)
                 aug3 = 15
                 aug4 = 16
 
-                aug1Value = math.random(1, augsSajjaka[aug1][2])
-                aug2Value = math.random(1, augsSajjaka[aug2][2])
-                aug3Value = math.random(1, augsSajjaka[aug3][2])
-                aug4Value = math.random(1, augsSajjaka[aug4][2])
+                aug1Value = math.random(0, augsSajjaka[aug1][2])
+                aug2Value = math.random(0, augsSajjaka[aug2][2])
+                aug3Value = math.random(0, augsSajjaka[aug3][2])
+                aug4Value = math.random(0, augsSajjaka[aug4][2])
                 aug1      = augsSajjaka[aug1][1]
                 aug2      = augsSajjaka[aug2][1]
                 aug3      = augsSajjaka[aug3][1]
@@ -2304,10 +2305,10 @@ function onTrade(player, npc, trade)
                 aug3 = 3
                 aug4 = 4
 
-                aug1Value = math.random(1, augsAugust[aug1][2])
-                aug2Value = math.random(1, augsAugust[aug2][2])
-                aug3Value = math.random(1, augsAugust[aug3][2])
-                aug4Value = math.random(1, augsAugust[aug4][2])
+                aug1Value = math.random(0, augsAugust[aug1][2])
+                aug2Value = math.random(0, augsAugust[aug2][2])
+                aug3Value = math.random(0, augsAugust[aug3][2])
+                aug4Value = math.random(0, augsAugust[aug4][2])
                 aug1      = augsAugust[aug1][1]
                 aug2      = augsAugust[aug2][1]
                 aug3      = augsAugust[aug3][1]
@@ -2322,10 +2323,10 @@ function onTrade(player, npc, trade)
                 aug3 = 7
                 aug4 = 8
 
-                aug1Value = math.random(1, augsAugust[aug1][2])
-                aug2Value = math.random(1, augsAugust[aug2][2])
-                aug3Value = math.random(1, augsAugust[aug3][2])
-                aug4Value = math.random(1, augsAugust[aug4][2])
+                aug1Value = math.random(0, augsAugust[aug1][2])
+                aug2Value = math.random(0, augsAugust[aug2][2])
+                aug3Value = math.random(0, augsAugust[aug3][2])
+                aug4Value = math.random(0, augsAugust[aug4][2])
                 aug1      = augsAugust[aug1][1]
                 aug2      = augsAugust[aug2][1]
                 aug3      = augsAugust[aug3][1]
@@ -2340,10 +2341,10 @@ function onTrade(player, npc, trade)
                 aug3 = 11
                 aug4 = 12
 
-                aug1Value = math.random(1, augsAugust[aug1][2])
-                aug2Value = math.random(1, augsAugust[aug2][2])
-                aug3Value = math.random(1, augsAugust[aug3][2])
-                aug4Value = math.random(1, augsAugust[aug4][2])
+                aug1Value = math.random(0, augsAugust[aug1][2])
+                aug2Value = math.random(0, augsAugust[aug2][2])
+                aug3Value = math.random(0, augsAugust[aug3][2])
+                aug4Value = math.random(0, augsAugust[aug4][2])
                 aug1      = augsAugust[aug1][1]
                 aug2      = augsAugust[aug2][1]
                 aug3      = augsAugust[aug3][1]
@@ -2358,10 +2359,10 @@ function onTrade(player, npc, trade)
                 aug3 = 15
                 aug4 = 16
 
-                aug1Value = math.random(1, augsAugust[aug1][2])
-                aug2Value = math.random(1, augsAugust[aug2][2])
-                aug3Value = math.random(1, augsAugust[aug3][2])
-                aug4Value = math.random(1, augsAugust[aug4][2])
+                aug1Value = math.random(0, augsAugust[aug1][2])
+                aug2Value = math.random(0, augsAugust[aug2][2])
+                aug3Value = math.random(0, augsAugust[aug3][2])
+                aug4Value = math.random(0, augsAugust[aug4][2])
                 aug1      = augsAugust[aug1][1]
                 aug2      = augsAugust[aug2][1]
                 aug3      = augsAugust[aug3][1]
@@ -2376,10 +2377,10 @@ function onTrade(player, npc, trade)
                 aug3 = 19
                 aug4 = 20
 
-                aug1Value = math.random(1, augsAugust[aug1][2])
-                aug2Value = math.random(1, augsAugust[aug2][2])
-                aug3Value = math.random(1, augsAugust[aug3][2])
-                aug4Value = math.random(1, augsAugust[aug4][2])
+                aug1Value = math.random(0, augsAugust[aug1][2])
+                aug2Value = math.random(0, augsAugust[aug2][2])
+                aug3Value = math.random(0, augsAugust[aug3][2])
+                aug4Value = math.random(0, augsAugust[aug4][2])
                 aug1      = augsAugust[aug1][1]
                 aug2      = augsAugust[aug2][1]
                 aug3      = augsAugust[aug3][1]

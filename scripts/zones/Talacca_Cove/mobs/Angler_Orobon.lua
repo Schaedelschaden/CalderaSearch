@@ -6,6 +6,12 @@ local ID = require("scripts/zones/Talacca_Cove/IDs")
 require("scripts/globals/status")
 
 function onMobSpawn(mob)
+    mob:addListener("EFFECT_LOSE", "SKILLCHAIN", function(mob, effect) -- Lose Lamps
+        if (effect:getType() == tpz.effect.SKILLCHAIN and effect:getTier() > 0) then
+            mob:setLocalVar("LampCut", os.time())
+        end
+    end)
+
     mob:addMod(tpz.mod.PARALYZERES, 30)
     mob:addMod(tpz.mod.STUNRES, 30)
     mob:addMod(tpz.mod.BINDRES, 30)
@@ -24,18 +30,23 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.CHR, 100)
     mob:addMod(tpz.mod.DEF, 1000)
     mob:addMod(tpz.mod.EVA, 150)
+    mob:setLocalVar("LampCut", 0)
 end
 
 function onMobFight(mob, target)
-    local battletime = mob:getBattleTime()
-    local lampgrow   = mob:getLocalVar("lampgrow")
-    local broken     = mob:AnimationSub()
 
-    if lampgrow < battletime and broken == 1 then
-        mob:AnimationSub(broken - 1)
-        mob:setLocalVar("lampgrow", battletime + 120)
+    if (mob:getLocalVar("LampCut") == 0) then
+        mob:AnimationSub(0)
+    else
+        mob:AnimationSub(1)
+    end
+
+
+    if ((mob:getLocalVar("LampCut") ~= 0) and os.time() - mob:getLocalVar("LampCut") > 120) then -- 2 minute Regain Lamps
+        mob:setLocalVar("LampCut", 0)
     end
 end
 
 function onMobDeath(mob, player, isKiller)
+    mob:removeListener("SKILLCHAIN")
 end

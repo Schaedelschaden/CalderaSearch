@@ -8,7 +8,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:startEvent(249)
+    player:setPos(-20.5679, 0, 0.0553, 0, 71)
 end
 
 function onEventUpdate(player, csid, option)

@@ -2,6 +2,10 @@
 -- Area: Abyssea - Attohwa
 --  Mob: Itzpapalotl
 -----------------------------------
+mixins = {require("scripts/mixins/abyssea_weakness")}
+require("scripts/globals/abyssea")
+require("scripts/globals/mobs")
+-----------------------------------
 
 function onMobSpawn(mob)
 	mob:setLocalVar("MOBSKILL_INCREASED_POTENCY", 1) -- 04/26/22 - Needs to be set up
@@ -42,14 +46,16 @@ function onMobFight(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
-	local playerName = player:getName()
-	local mobName = mob:getName()
-	local KillCounter = player:getCharVar("KillCounter_"..mobName)
-	
+	local playerName   = player:getName()
+	local mobName      = mob:getName()
+	local fixedMobName = string.gsub(mobName, "_", " ")
+	local shortName    = mobName:sub(1, 18)
+	local KillCounter  = player:getCharVar("KillCounter_"..shortName)
+
 	KillCounter = KillCounter + 1
-	
-	player:setCharVar("KillCounter_"..mobName, KillCounter)
-	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", mobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+
+	player:setCharVar("KillCounter_"..shortName, KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
 
 	mob:removeListener("ITZPAPALOTL_MOBSKILL_START")
 	mob:removeListener("ITZPAPALOTL_MOBSKILL_END")

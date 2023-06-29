@@ -241,10 +241,14 @@ public:
     int32 getRace(lua_State*);               // Gets Race of Entity
     int32 getGender(lua_State*);             // Returns the player character's gender
     int32 getName(lua_State *L);             // Gets Entity Name
-    int32 hideName(lua_State* L);
+    int32 getPacketName(lua_State *L);       // Pulls the entity name to override for the packets sent to the client
+    int32 renameEntity(lua_State *L);        // Renames the entity to the provided string and forces packets to use the new name
     int32 checkNameFlags(lua_State* L);      // this is check and not get because it tests for a flag, it doesn't return all flags
     int32 getModelId(lua_State* L);
     int32 setModelId(lua_State* L);
+    int32 setFace(lua_State*);               // Set the player's face model to the provided ID
+    int32 setRace(lua_State*);               // Set the player's racial model to the provided value
+    int32 setSize(lua_State*);               // Set the player's model size to the provided value
     int32 costume(lua_State*);               // get or set user costume
     int32 costume2(lua_State*);              // set monstrosity costume
     int32 getAnimation(lua_State*);          // Get Entity Animation
@@ -700,7 +704,9 @@ public:
     int32 setAggressive(lua_State* L);
     int32 setTrueDetection(lua_State* L);
     int32 setUnkillable(lua_State* L);
+    int32 hideName(lua_State* L);
     int32 untargetable(lua_State* L);
+    int32 setCallForHelp(lua_State* L);
 
     int32 setDelay(lua_State*);               // sets a mobs weapon delay
     int32 setDamage(lua_State*);              // sets a mobs weapon damage

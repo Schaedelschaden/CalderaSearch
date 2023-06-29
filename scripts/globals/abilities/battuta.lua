@@ -14,8 +14,9 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-	local merits = player:getMerit(tpz.merit.MERIT_BATTUTA)
-	local power = 40 + merits
-	
-    target:addStatusEffect(tpz.effect.BATTUTA, power, 0, 90)
+	local merits   = player:getMerit(tpz.merit.BATTUTA) - 4
+	local power    = 40
+    local subPower = merits
+
+    target:addStatusEffect(tpz.effect.BATTUTA, power, 0, 90, 0, subPower)
 end

@@ -22,6 +22,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(caster, target, ability, action)
+    
     if (caster:getID() == target:getID()) then
         local du_effect = caster:getStatusEffect(tpz.effect.DOUBLE_UP_CHANCE)
         local prev_roll = caster:getStatusEffect(du_effect:getSubPower())
@@ -30,10 +31,10 @@ function onUseAbility(caster, target, ability, action)
 		
         caster:setLocalVar("corsairActiveRoll", du_effect:getSubType())
 		
-        local snake_eye = caster:getStatusEffect(tpz.effect.SNAKE_EYE)
+        local snakeEye = caster:getStatusEffect(tpz.effect.SNAKE_EYE)
 		
-        if (snake_eye) then
-            if (prev_roll:getPower() >= 10 and math.random(100) < snake_eye:getPower()) then
+        if (snakeEye) then
+            if (prev_roll:getPower() >= 10 and math.random(100) < snakeEye:getPower()) then
                 roll = 11
             else
                 roll = roll + 1

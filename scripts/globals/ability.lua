@@ -710,6 +710,14 @@ function corsairSetup(caster, ability, action, effect, job)
 		roll = 1
 		caster:delStatusEffect(tpz.effect.SNAKE_EYE)
 	end
+    
+    if caster:getObjType() == tpz.objType.TRUST then
+        roll = math.random(2, 11)
+        if roll > 5 then 
+            roll = 11
+        end
+    end
+
 	
     caster:delStatusEffectSilent(tpz.effect.DOUBLE_UP_CHANCE)
     caster:addStatusEffectEx(tpz.effect.DOUBLE_UP_CHANCE, tpz.effect.DOUBLE_UP_CHANCE, roll, 0, 45, ability:getID(), effect, job, true)
@@ -904,7 +912,14 @@ function takeAbilityDamage(defender, attacker, params, primary, finaldmg, attack
 end
 
 function abilityReduceAllianceEnmity(player, target)
-	if (player:getObjType() == tpz.objType.PC or player:getObjType() == tpz.objType.TRUST) then
+    if target:getObjType() == tpz.objType.PC then
+        return
+    end
+
+	if
+        player:getObjType() == tpz.objType.PC or
+        player:getObjType() == tpz.objType.TRUST
+    then
 		local enmityBonus = utils.clamp(player:getMod(tpz.mod.ENMITY) + player:getMerit(tpz.merit.ENMITY_INCREASE) + player:getMerit(tpz.merit.ENMITY_DECREASE), 0, 200)
 		local enmityList = target:getEnmityList()
 		local enmityListName = {}

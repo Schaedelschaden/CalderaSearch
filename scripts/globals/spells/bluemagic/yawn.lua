@@ -32,13 +32,13 @@ function onSpellCast(caster,target,spell)
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = 90 * resist
 	
-	if (duration < 70) then
+	if duration < 70 then
 		duration = 70
 	end
 
-    if (resist > 0.5) then -- Do it!
-        if ((target:isFacing(caster))) then
-            if (target:addStatusEffect(tpz.effect.SLEEP_II, 2, 0, duration)) then
+    if resist > 0.5 then -- Do it!
+        if target:isFacing(caster) then
+            if target:addStatusEffect(tpz.effect.SLEEP_II, 1, 0, duration) then
                 spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
             else
                 spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)

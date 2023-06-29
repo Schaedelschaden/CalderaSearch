@@ -14,26 +14,21 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-	local typeEffect = tpz.effect.STONESKIN
-    local power = 200
-	local master = mob:getMaster()
-	
-	if (master ~= nil) then
-		master:addStatusEffect(typeEffect, power, 0, 300)
-	end
-	
-	-- Nahn receives a 2500 damage stoneskin
-	if (mob:getID() == 17317897) then
-		power = 2500
-	end
-	
+    local typeEffect = tpz.effect.STONESKIN
+    local power      = 200
+    local master     = mob:getMaster()
+
+    -- BST Jug Pet Metallic Body is also given to the BST
+    if master ~= nil then
+        master:addStatusEffect(typeEffect, power, 0, 300)
+    end
+
+    -- Nahn receives a 2500 damage stoneskin
+    if mob:getID() == 17317897 then
+        power = 2500
+    end
+
     skill:setMsg(MobBuffMove(mob, typeEffect, power, 0, 300))
-	
-	-- Nahn's stoneskin cannot be dispelled
-	-- if (mob:getID() == 17317897) then
-		-- local effect = mob:getStatusEffect(tpz.effect.STONESKIN)
-		-- effect:unsetFlag(tpz.effectFlag.DISPELABLE)
-	-- end
-	
+
     return typeEffect
 end

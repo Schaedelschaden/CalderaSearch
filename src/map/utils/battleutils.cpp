@@ -1541,6 +1541,13 @@ namespace battleutils
             acc -= PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_YONIN)->GetPower();
         }
 
+        // SU3/Raetic Weapon Ranged Accuracy bonus
+        // https://www.bg-wiki.com/ffxi/Category:Superior_Equipment#Superior_3_(Su3)
+        if (PAttacker->getMod(Mod::CONSUME_MP_RATT_RACC_BONUS) > 0)
+        {
+            acc += PAttacker->getMod(Mod::CONSUME_MP_RATT_RACC_BONUS);
+        }
+
         // Add any specific accuracy bonus, e.g. Daken RAcc +100
         acc += accBonus;
 
@@ -1569,11 +1576,12 @@ namespace battleutils
         return GetRangedHitRate(PAttacker, PDefender, isBarrage, 0);
     }
 
-    //todo: need to penalise attacker's RangedAttack depending on distance from mob. (% decrease)
     float GetRangedDamageRatio(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool isCritical)
     {
-		CItemWeapon* PWeapon = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_RANGED]); // GetEntityWeapon(PAttacker, SLOT_RANGED);
+        CItemWeapon* PRanged = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_RANGED]); // GetEntityWeapon(PAttacker, SLOT_RANGED);
         CItemWeapon* PAmmo   = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_AMMO]); // GetEntityWeapon(PAttacker, SLOT_AMMO);
+
+        auto skillType = PRanged ? PRanged->getSkillType() : PAmmo->getSkillType();
 
         //get ranged attack value
         uint16 rAttack = 1;
@@ -1582,15 +1590,15 @@ namespace battleutils
         {
             CCharEntity* PChar = (CCharEntity*)PAttacker;
 
-            if (PAmmo != nullptr && PAmmo->isType(ITEM_WEAPON) && PAmmo->getSkillType() == SKILL_THROWING)
+            if (PAmmo != nullptr && PAmmo->isType(ITEM_WEAPON) && skillType == SKILL_THROWING)
             {
                 // printf("battleutils.cpp GetRangedDamageRatio  1  SKILL TYPE: [%i]  ILVL SKILL: [%i]\n", PAmmo->getSkillType(), PAmmo->getILvlSkill());
                 rAttack = PChar->RATT(PAmmo->getSkillType(), PAmmo->getILvlSkill());
             }
-            else if (PWeapon != nullptr && PWeapon->isType(ITEM_WEAPON))
+            else if (PRanged != nullptr && PRanged->isType(ITEM_WEAPON))
             {
-                // printf("battleutils.cpp GetRangedDamageRatio  2  SKILL TYPE: [%i]  ILVL SKILL: [%i]\n", PWeapon->getSkillType(), PWeapon->getILvlSkill());
-                rAttack = PChar->RATT(PWeapon->getSkillType(), PWeapon->getILvlSkill());
+                // printf("battleutils.cpp GetRangedDamageRatio  2  SKILL TYPE: [%i]  ILVL SKILL: [%i]\n", PRanged->getSkillType(), PRanged->getILvlSkill());
+                rAttack = PChar->RATT(PRanged->getSkillType(), PRanged->getILvlSkill());
             }
         }
         else if (PAttacker->objtype == TYPE_PET && ((CPetEntity*)PAttacker)->getPetType() == PETTYPE_AUTOMATON)
@@ -1603,6 +1611,15 @@ namespace battleutils
             rAttack = battleutils::GetMaxSkill(SKILL_ARCHERY, JOB_RNG, PAttacker->GetMLevel());
         }
 
+        // SU3/Raetic Weapon Ranged Attack bonus
+        // https://www.bg-wiki.com/ffxi/Category:Superior_Equipment#Superior_3_(Su3)
+        if (PAttacker->getMod(Mod::CONSUME_MP_RATT_RACC_BONUS) > 0)
+        {
+            rAttack += PAttacker->getMod(Mod::CONSUME_MP_RATT_RACC_BONUS);
+
+            PAttacker->setModifier(Mod::CONSUME_MP_RATT_RACC_BONUS, 0);
+        }
+
         //get ratio (not capped for RAs)
         float ratio = (float)rAttack / (float)PDefender->DEF();
         float cRatioMax = 0;
@@ -1612,7 +1629,7 @@ namespace battleutils
         // printf("battleutils.cpp GetRangedDamageRatio  RATT: [%i]  DEF: [%i]\n", rAttack, PDefender->DEF());
 
         // Marksmanship
-        if (PWeapon->getSkillType() == SKILL_MARKSMANSHIP)
+        if (skillType == SKILL_MARKSMANSHIP)
         {
             ratioCap = 3.475f;
         }
@@ -1729,7 +1746,7 @@ namespace battleutils
         float pdif = tpzrand::GetRandomNumber(minPdif, maxPdif);
 
         // Archery and Throwing
-        if (PWeapon->getSkillType() != SKILL_MARKSMANSHIP && pdif > 3.25)
+        if (skillType != SKILL_MARKSMANSHIP && pdif > 3.25)
         {
             if (isCritical)
             {
@@ -1744,7 +1761,7 @@ namespace battleutils
                 printf("battleutils.cpp GetRangedDamageRatio 9a ARCHERY/THROWING CAP TRIGGERED\n");
             } */
         }
-        else if (PWeapon->getSkillType() == SKILL_MARKSMANSHIP && pdif > 3.50)
+        else if (skillType == SKILL_MARKSMANSHIP && pdif > 3.50)
         {
             if (isCritical)
             {
@@ -1780,7 +1797,7 @@ namespace battleutils
 
         // Adjust for Damage Limit+ Job Trait and Physical Damage Limit +% Gear
         float dmgLimitTrait = (float)((PAttacker->getMod(Mod::DAMAGE_LIMIT_TRAIT)) / 10.0f);
-        float dmgLimitGear = (float)((100.0f + PAttacker->getMod(Mod::DAMAGE_LIMIT_GEAR)) / 100.0f);
+        float dmgLimitGear  = (float)((100.0f + PAttacker->getMod(Mod::DAMAGE_LIMIT_GEAR)) / 100.0f);
 
 /*      if (PAttacker->objtype == TYPE_PC)
         {
@@ -1794,54 +1811,34 @@ namespace battleutils
             printf("battleutils.cpp GetRangedDamageRatio 12 AFTER DMG LIMIT pDIF: [%1.4f]\n", pdif);
         } */
 
-        // Distance Correction/Penalty
-/*      if (PAttacker->objtype == TYPE_PC)
-        {
-            float rangedDistance = distance(PAttacker->loc.p, PDefender->loc.p);
-            float distanceCorrection = 0;
-
-            if (rangedDistance <= 3.5f && PWeapon->getSkillType() == SKILL_THROWING)
-            {
-                distanceCorrection = 1.0f - ((3.5f - rangedDistance) / 10.0f);
-                pdif = pdif * distanceCorrection;
-            }
-            else if (rangedDistance <= 8.5f && PWeapon->getSkillType() == SKILL_MARKSMANSHIP)
-            {
-                distanceCorrection = 1.0f - ((8.5f - rangedDistance) / 15.0f);
-                pdif = pdif * distanceCorrection;
-            }
-            else if (rangedDistance <= 10.5f && PWeapon->getSkillType() == SKILL_ARCHERY)
-            {
-                distanceCorrection = 1.0f - ((10.5f - rangedDistance) / 20.0f);
-                pdif = pdif * distanceCorrection;
-            }
-
-//          printf("battleutils.cpp GetRangedDamageRatio 13 DISTANCE CORRECTION - RANGED DISTANCE: [%1.1f]  DISTANCE CORRECTION: [%1.2f] pDIF: [%1.4f]\n\n", rangedDistance, distanceCorrection, pdif);
-        } */
-
         return pdif;
     }
 
-    int16 CalculateBaseTP(int delay){
+    int16 CalculateBaseTP(int delay)
+    {
         int16 x = 1;
-        if (delay <= 180) {
-            x = (int16)(61 + ((delay - 180) * 63.f) / 360);
+
+        if (delay <= 180)
+        {
+            x = (int16)(50 + ((delay - 180) * 15.f) / 180);
         }
-        else if (delay <= 540) {
-            x = (int16)(61 + ((delay - 180) * 88.f) / 360);
+        else if (delay > 180 && delay <= 450)
+        {
+            x = (int16)(50 + ((delay - 180) * 65.f) / 270);
         }
-        else if (delay <= 630) {
-            x = (int16)(149 + ((delay - 540) * 20.f) / 360);
+        else if (delay > 450 && delay <= 480)
+        {
+            x = (int16)(115 + ((delay - 450) * 15.f) / 30);
         }
-        else if (delay <= 720) {
-            x = (int16)(154 + ((delay - 630) * 28.f) / 360);
+        else if (delay > 480 && delay <= 530)
+        {
+            x = (int16)(130 + ((delay - 480) * 15.f) / 30);
         }
-        else if (delay <= 900) {
-            x = (int16)(161 + ((delay - 720) * 24.f) / 360);
+        else if (delay > 530)
+        {
+            x = (int16)(145 + ((delay - 530) * 35.f) / 470);
         }
-        else {
-            x = (int16)(173 + ((delay - 900) * 28.f) / 360);
-        }
+
         return x;
     }
 
@@ -2207,31 +2204,35 @@ namespace battleutils
 
     int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHYSICAL_ATTACK_TYPE physicalAttackType, int32 damage, bool isBlocked, uint8 slot, uint16 tpMultiplier, CBattleEntity* taChar, bool giveTPtoVictim, bool giveTPtoAttacker, bool isCounter, bool isCovered, CBattleEntity* POriginalTarget)
     {
-        auto weapon = GetEntityWeapon(PAttacker, (SLOTTYPE)slot);
-        giveTPtoAttacker = giveTPtoAttacker && !PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_MEIKYO_SHISUI);
-        giveTPtoVictim = giveTPtoVictim && physicalAttackType != PHYSICAL_ATTACK_TYPE::DAKEN;
-        bool isRanged = (slot == SLOT_AMMO || slot == SLOT_RANGED);
-        int32 baseDamage = damage;
+        auto weapon           = GetEntityWeapon(PAttacker, (SLOTTYPE)slot);
+        giveTPtoAttacker      = giveTPtoAttacker && !PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_MEIKYO_SHISUI);
+        giveTPtoVictim        = giveTPtoVictim && physicalAttackType != PHYSICAL_ATTACK_TYPE::DAKEN;
+        bool isRanged         = (slot == SLOT_AMMO || slot == SLOT_RANGED);
+        int32 baseDamage      = damage;
         ATTACKTYPE attackType = ATTACK_PHYSICAL;
         DAMAGETYPE damageType = DAMAGE_NONE;
 
-        // Check for Formless Strikes status and apply 70% damage type ignore
+        /* // Check for Formless Strikes status and apply 70% damage type ignore
         if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_FORMLESS_STRIKES) && !isCounter)
         {
-            attackType = ATTACK_SPECIAL;
+            attackType        = ATTACK_SPECIAL;
             uint8 formlessMod = 70;
 
             if (PAttacker->objtype == TYPE_PC)
+            {
                 formlessMod += ((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_FORMLESS_STRIKES, (CCharEntity*)PAttacker);
+            }
 
             damage = damage * formlessMod / 100;
 
             // TODO: chance to 'resist'
 
             damage = MagicDmgTaken(PDefender, damage, ELEMENT_NONE);
-        }
 
-        // Check for Tomahawk status and apply 25% damage type ignore similar to Formless Strikes
+            return damage;
+        } */
+
+        /* // Check for Tomahawk status and apply 25% damage type ignore similar to Formless Strikes
         if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_AVOIDANCE_DOWN))
         {
             attackType = ATTACK_SPECIAL;
@@ -2240,9 +2241,9 @@ namespace battleutils
             damage = damage * TomahawkMod / 100;
 
             damage = MagicDmgTaken(PDefender, damage, ELEMENT_NONE);
-        }
+        } */
 
-        // Check for Scarlet Delirium and apply damage handling
+        // Check for Scarlet Delirium on the defender and calculate damage bonus in %
         if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_SCARLET_DELIRIUM) && !PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_SCARLET_DELIRIUM_1))
         {
             // Damage to Max HP Ratio
@@ -2254,7 +2255,8 @@ namespace battleutils
         }
 
         // Check for Mana Wall status, reduce damage by 50% and reduce MP by the damage. If there is not enough MP then the damage rolls over into HP
-        if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_MANA_WALL))
+        if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_MANA_WALL) &&
+            PAttacker->getMod(Mod::IGNORE_MANA_WALL) == 0)
         {
             CStatusEffect* manawallEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_MANA_WALL);
             uint16 ManaWallMod = manawallEffect->GetPower();
@@ -2305,7 +2307,25 @@ namespace battleutils
                 damage = damage + PDefender->getMod(Mod::PERFECT_COUNTER_ATT);
             }
 
-            if (isRanged)
+            // Check for Formless Strikes status and apply 70% damage type ignore
+            if (!isRanged && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_FORMLESS_STRIKES) && !isCounter)
+            {
+                attackType        = ATTACK_SPECIAL;
+                uint8 formlessMod = 70;
+
+                if (PAttacker->objtype == TYPE_PC)
+                {
+                    formlessMod += ((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_FORMLESS_STRIKES, (CCharEntity*)PAttacker);
+                }
+
+                damage = damage * formlessMod / 100;
+
+                // TODO: chance to 'resist'
+
+                damage = MagicDmgTaken(PDefender, damage, ELEMENT_NONE);
+            }
+            // Not Formless Strikes, it is ranged?
+            else if (isRanged)
             {
                 attackType = ATTACK_RANGED;
 
@@ -2341,6 +2361,7 @@ namespace battleutils
 //                  printf("battleutils.cpp TakePhysicalDamage RANGED DMG TAKEN TRIGGERED  DAMAGE AFTER: [%i]\n", damage);
                 }
             }
+            // Not Formless Strikes or Ranged, normal physical attack
             else
             {
                 int32 rotation = abs(PDefender->loc.p.rotation - PAttacker->loc.p.rotation);
@@ -2610,6 +2631,8 @@ namespace battleutils
         if (damage > 0)
         {
             CBattleEntity* dsChar = battleutils::getAvailableTrickAttackChar(PAttacker, PDefender);
+
+            // Remove status effects triggered by damage (Sleep)
             PDefender->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DAMAGE);
 
             // Check for bind breaking
@@ -2705,13 +2728,56 @@ namespace battleutils
 
             if (giveTPtoAttacker)
             {
+                int16 raeticTP = 0;
+                float sTPMod   = 1.0f + (0.01f * (PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker)));
+
                 if (PAttacker->objtype == TYPE_PC && physicalAttackType == PHYSICAL_ATTACK_TYPE::ZANSHIN)
                 {
                     baseTp += ((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_IKISHOTEN, (CCharEntity*)PAttacker);
                 }
 
-                int16 attackerTP = ((int16)(tpMultiplier * (baseTp * (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker)))))));
-                attackerTP = attackerTP + (int16)(attackerTP * (float)(PDefender->getMod(Mod::ENEMY_TP_ACCUM) / 100.0f));
+                // SU3/Raetic Weapon Follow-Up
+                // https://www.bg-wiki.com/ffxi/Category:Superior_Equipment#Superior_3_(Su3)
+                if (physicalAttackType == PHYSICAL_ATTACK_TYPE::FOLLOWUP && PAttacker->getMod(Mod::CONSUME_MP_STP_SINGLE_ATK) > 0)
+                {
+                    JOBTYPE mJob      = PAttacker->GetMJob();
+                    int16   maxMP     = PAttacker->health.maxmp + PAttacker->getMod(Mod::MP);
+                    float   raeticSTP = (maxMP * 0.025f) / 100.f; // Jobs which natively have MP require 2,000 Max MP to receive +50 STP
+
+                    // Jobs which do not natively have MP require 800 Max MP to receive +50 STP
+                    switch (mJob)
+                    {
+                        case JOB_WAR:   raeticSTP = (maxMP * 0.0625f) / 100.f;   break;
+                        case JOB_MNK:   raeticSTP = (maxMP * 0.0625f) / 100.f;   break;
+                        case JOB_THF:   raeticSTP = (maxMP * 0.0625f) / 100.f;   break;
+                        case JOB_BST:   raeticSTP = (maxMP * 0.0625f) / 100.f;   break;
+                        case JOB_BRD:   raeticSTP = (maxMP * 0.0625f) / 100.f;   break;
+                        case JOB_RNG:   raeticSTP = (maxMP * 0.0625f) / 100.f;   break;
+                        case JOB_SAM:   raeticSTP = (maxMP * 0.0625f) / 100.f;   break;
+                        case JOB_NIN:   raeticSTP = (maxMP * 0.0625f) / 100.f;   break;
+                        case JOB_DRG:   raeticSTP = (maxMP * 0.0625f) / 100.f;   break;
+                        case JOB_COR:   raeticSTP = (maxMP * 0.0625f) / 100.f;   break;
+                        case JOB_PUP:   raeticSTP = (maxMP * 0.0625f) / 100.f;   break;
+                        case JOB_DNC:   raeticSTP = (maxMP * 0.0625f) / 100.f;   break;
+                        default: break;
+                    }
+
+                    if (raeticSTP > 0.5f)
+                    {
+                        raeticSTP = 0.5f;
+                    }
+
+                    // Removes one hit from the tpMultiplier value for the Single Attack STP bonus
+                    if (isRanged)
+                    {
+                        tpMultiplier -= 1;
+                    }
+
+                    raeticTP = (int16)(baseTp * (sTPMod + raeticSTP));
+                }
+
+				int16 attackerTP = (int16)(raeticTP + (tpMultiplier * (baseTp * sTPMod)));
+				attackerTP = attackerTP + (int16)(attackerTP * (float)(PDefender->getMod(Mod::ENEMY_TP_ACCUM) / 100.0f));
 
                 PAttacker->addTP(attackerTP);
             }
@@ -2759,7 +2825,10 @@ namespace battleutils
                     PDefender->addTP((int16)(tpMultiplier * ((baseTp / 3) * sBlowMult * (1.0f + 0.01f * (float)((PDefender->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker))))))); //yup store tp counts on hits taken too!
                 }
                 else
+                {
+                    // printf("battleutils.cpp TakePhysicalDamage  TP: [%i] = TP MULT: [%i] * ((BASE TP: [%i] + 30) * SUBTLE BLOW: [%1.2f] * (1 + 0.01 * STORE TP: [%i]))\n", (uint16)(tpMultiplier * ((baseTp + 30) * sBlowMult * (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP)))), tpMultiplier, baseTp, sBlowMult, PDefender->getMod(Mod::STORETP));
                     PDefender->addTP((uint16)(tpMultiplier * ((baseTp + 30) * sBlowMult * (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))))); //subtle blow also reduces the "+30" on mob tp gain
+                }
             }
         }
         else if (PDefender->objtype == TYPE_MOB)
@@ -2962,6 +3031,7 @@ namespace battleutils
                 PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_PETRIFICATION);
             }
 
+            // Check for Scarlet Delirium on the defender and calculate damage bonus in %
             if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_SCARLET_DELIRIUM) && !PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_SCARLET_DELIRIUM_1))
             {
                 // Damage to Max HP Ratio
@@ -3478,6 +3548,17 @@ namespace battleutils
 
         int32 ATT = PAttacker->ATT();
 
+        if (PAttacker->objtype == TYPE_PC && PAttacker->getMod(Mod::TRUSTS_INCREASE_ATK) > 0)
+        {
+            static_cast<CCharEntity*>(PAttacker)->ForPartyWithTrusts([&](CBattleEntity* PMember)
+            {
+                if (PMember->objtype == TYPE_TRUST)
+                {
+                    ATT += PAttacker->getMod(Mod::TRUSTS_INCREASE_ATK);
+                }
+            });
+        }
+
         // used to apply a % of attack bonus
         float attPercentBonus = 0;
         if (bonusAttPercent >= 1)
@@ -3916,47 +3997,47 @@ namespace battleutils
         int32 rank = 0;
         int32 fstr = 0;
         float dif = (float)(PAttacker->STR() - PDefender->VIT());
-		int8 divisor = 4;
+        int8 divisor = 4;
 
-		if (SlotID == SLOT_RANGED || SlotID == SLOT_AMMO)
+        if (SlotID == SLOT_RANGED || SlotID == SLOT_AMMO)
         {
-			divisor = 2;
-		}
+            divisor = 2;
+        }
 
         if (dif >= 12)
-		{
+        {
             fstr = (int32)((dif + 4) / divisor);
         }
         else if (dif >= 6)
-		{
+        {
             fstr = (int32)((dif + 6) / divisor);
         }
         else if (dif >= 1)
-		{
+        {
             fstr = (int32)((dif + 7) / divisor);
         }
         else if (dif >= -2)
-		{
+        {
             fstr = (int32)((dif + 8) / divisor);
         }
         else if (dif >= -7)
-		{
+        {
             fstr = (int32)((dif + 9) / divisor);
         }
         else if (dif >= -15)
-		{
+        {
             fstr = (int32)((dif + 10) / divisor);
         }
         else if (dif >= -21)
-		{
+        {
             fstr = (int32)((dif + 12) / divisor);
         }
         else
-		{
+        {
             fstr = (int32)((dif + 13) / divisor);
         }
 
-		// Ranged fSTR Lower & Upper caps
+        // Ranged fSTR Lower & Upper caps
         if (SlotID == SLOT_RANGED || SlotID == SLOT_AMMO)
         {
             rank = PAttacker->GetRangedWeaponRank();
@@ -3964,7 +4045,7 @@ namespace battleutils
             if (SlotID == SLOT_AMMO)
             {
                 auto ammo = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_AMMO]);
-                
+
                 if (ammo)
                 {
                     rank = (ammo->getDamage() + PAttacker->getMod(Mod::RANGED_DMG_RANK)) / 9;
@@ -3975,25 +4056,25 @@ namespace battleutils
                 }
             }
 
-            // Ranged Lower cap of fSTR 
+            // Ranged Lower cap of fSTR
             if (fstr <= (-rank * 2))
-			{
+            {
                 return (-rank * 2);
-			}
-			// Ranged Upper cap of fSTR
+            }
+            // Ranged Upper cap of fSTR
             if ((fstr > (-rank * 2)) && (fstr <= (2 * (rank + 8))))
-			{
+            {
                 return fstr;
-			}
+            }
             else
-			{
+            {
                 return 2 * (rank + 8);
-			}
+            }
         }
-		// Melee fSTR Lower & Upper caps
+        // Melee fSTR Lower & Upper caps
         else
         {
-			// 
+            //
             fstr /= 2;
             if (SlotID == SLOT_MAIN)
             {
@@ -4003,22 +4084,22 @@ namespace battleutils
             {
                 rank = PAttacker->GetSubWeaponRank();
             }
-			
+
             // Lower cap of fSTR
             if (fstr <= (-rank))
-			{
+            {
                 return (-rank);
-			}
-			
-			// Upper cap of fSTR
+            }
+
+            // Upper cap of fSTR
             if ((fstr > (-rank)) && (fstr <= rank + 8))
-			{
+            {
                 return fstr;
-			}
+            }
             else
-			{
+            {
                 return rank + 8;
-			}
+            }
         }
     }
 
@@ -4701,6 +4782,8 @@ namespace battleutils
         damage = std::clamp(damage, -99999, 99999);
 
         PDefender->takeDamage(damage, PAttacker, ATTACK_SPECIAL, appliedEle == ELEMENT_NONE ? DAMAGE_NONE : (DAMAGETYPE)(DAMAGE_ELEMENTAL + appliedEle));
+
+        PDefender->PAI->EventHandler.triggerListener("SKILLCHAIN_TAKE", PDefender, PAttacker, PEffect->GetPower(), chainLevel, chainCount, resistance, damage);
 
         battleutils::ClaimMob(PDefender, PAttacker);
         PDefender->updatemask |= UPDATE_STATUS;
@@ -5437,7 +5520,7 @@ namespace battleutils
         if (PMob && PCharmer->objtype == TYPE_PC)
         {
             //Bind uncharmable mobs and pets for 1 to 5 seconds
-            if (((CMobEntity*)PVictim)->getMobMod(MOBMOD_CHARMABLE) == 0  ||  PVictim->PMaster != nullptr)
+            if (((CMobEntity*)PVictim)->getMobMod(MOBMOD_CHARMABLE) == 0 || PVictim->PMaster != nullptr)
             {
                 PVictim->StatusEffectContainer->AddStatusEffect(
                     new CStatusEffect(EFFECT_BIND, EFFECT_BIND, 1, 0, tpzrand::GetRandomNumber(1, 5)));
@@ -5620,10 +5703,9 @@ namespace battleutils
         if (PTargetAsMob)
         {
             // Cannot charm pets, or other non-charmable mobs
-            if (!PTargetAsMob->getMobMod(MOBMOD_CHARMABLE) || PTargetAsMob->PMaster)
+            if (PTargetAsMob->getMobMod(MOBMOD_CHARMABLE) == 0 || PTargetAsMob->PMaster)
                 return 0.f;
         }
-
 
         uint8 charmerLvl = PCharmer->GetMLevel();
         uint8 itemLvl = PCharmer->m_Weapons[SLOT_MAIN]->getILvl();
@@ -5919,149 +6001,315 @@ namespace battleutils
     {
         Mod absorb[8]    = { Mod::FIRE_ABSORB, Mod::ICE_ABSORB, Mod::WIND_ABSORB, Mod::EARTH_ABSORB, Mod::LTNG_ABSORB, Mod::WATER_ABSORB, Mod::LIGHT_ABSORB, Mod::DARK_ABSORB };
         Mod nullarray[8] = { Mod::FIRE_NULL, Mod::ICE_NULL, Mod::WIND_NULL, Mod::EARTH_NULL, Mod::LTNG_NULL, Mod::WATER_NULL, Mod::LIGHT_NULL, Mod::DARK_NULL };
-        Mod sdt[8]       = { Mod::SDT_FIRE, Mod::SDT_ICE, Mod::SDT_WIND, Mod::SDT_EARTH, Mod::SDT_LIGHTNING, Mod::SDT_WATER, Mod::SDT_LIGHT, Mod::SDT_DARK };
+		Mod sdt[8]       = { Mod::SDT_FIRE, Mod::SDT_ICE, Mod::SDT_WIND, Mod::SDT_EARTH, Mod::SDT_LIGHTNING, Mod::SDT_WATER, Mod::SDT_LIGHT, Mod::SDT_DARK };
+        Mod rayke[8]     = { Mod::RAYKE_FIRE, Mod::RAYKE_ICE, Mod::RAYKE_WIND, Mod::RAYKE_EARTH, Mod::RAYKE_LIGHTNING, Mod::RAYKE_WATER, Mod::RAYKE_LIGHT, Mod::RAYKE_DARK };
 
-        int32 damageTaken         = PDefender->getMod(Mod::DMG);
-        float damageTakenCap      = 0.5f;
-        int32 enmityDmgMitigation = PDefender->getMod(Mod::ENMITY_MITIGATES_DMG_DT);
-        int32 magicSDT            = PDefender->getMod(Mod::SDT_MAGIC);
+        float nukeWallReduction    = 1.f;
+        float resist               = 1.f;
+        float uDamageTaken         = PDefender->getMod(Mod::UDMGMAGIC) / 100.f;
+        float damageTaken          = PDefender->getMod(Mod::DMG) / 100.f;
+        float damageTakenMagic     = PDefender->getMod(Mod::DMGMAGIC) / 100.f;
+        float damageTakenMagicII   = PDefender->getMod(Mod::DMGMAGIC_II) / 100.f;
+        float damageTakenCap       = 0.5f;
+		float enmityDmgMitigation  = PDefender->getMod(Mod::ENMITY_MITIGATES_DMG_DT) / 100.f;
+        float barrierTuskReduction = 1.f;
+		float magicSDT             = PDefender->getMod(Mod::SDT_MAGIC) / 100.f;
+        float elementSDT           = PDefender->getMod(sdt[element - 1]) / 100.f;
+        int32 oneForAll            = PDefender->getMod(Mod::ONE_FOR_ALL_EFFECT);
+        int16 absorbedMP           = 0;
+        int16 absorbedTP           = 0;
 
         if (PDefender->objtype == TYPE_PET)
         {
             damageTakenCap = 0.125f;
         }
 
-        if (PDefender->getMod(Mod::COVER_DT) > 0 && PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_COVER))
-        {
-            damageTaken += PDefender->getMod(Mod::COVER_DT);
-        }
+		if (PDefender->getMod(Mod::COVER_DT) > 0 && PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_COVER))
+		{
+			damageTaken += PDefender->getMod(Mod::COVER_DT);
+		}
 
-        // Apply the "Nuke Wall"
-        if (PDefender->objtype == TYPE_MOB && damage > 0 && PDefender->GetLocalVar("Enspell_Active") == 0)
-        {
-            CMobEntity* PMob = (CMobEntity*)PDefender;
+		// Apply the "Nuke Wall"
+		if (PDefender->objtype == TYPE_MOB && damage > 0 && PDefender->GetLocalVar("Enspell_Active") == 0)
+		{
+			CMobEntity* PMob = (CMobEntity*)PDefender;
 
             if (PMob->m_Type & MOBTYPE_NOTORIOUS)
             {
-                // Default value of 30%
-                float nukeWallReduction = 0.7f;
-
-                if (PMob->m_nukeWallTimer[element - 1] > server_clock::now())
+                // Nuke Wall hasn't triggered yet
+                if (server_clock::now() > PMob->m_nukeWallTimer[element - 1])
                 {
-                    nukeWallReduction = 0.4f;
+                    PMob->m_nukeWallTimer[element - 1] = server_clock::now() + 5s;
+                    PMob->m_nukeWallActive = false;
+                }
+                // Nuke Wall has triggered once
+                else if (PMob->m_nukeWallTimer[element - 1] > server_clock::now() && PMob->m_nukeWallActive == false)
+                {
+                    // First tier penalty of -20%
+                    nukeWallReduction = 0.8f;
+                    PMob->m_nukeWallTimer[element - 1] = server_clock::now() + 5s;
+                    PMob->m_nukeWallActive = true;
+                }
+                // Nuke Wall has triggered more than once
+                else if (PMob->m_nukeWallTimer[element - 1] > server_clock::now() && PMob->m_nukeWallActive == true)
+                {
+                    // Second tier penalty of -50%
+                    nukeWallReduction = 0.5f;
+                    PMob->m_nukeWallTimer[element - 1] = server_clock::now() + 5s;
                 }
 
-                if (PMob->StatusEffectContainer->HasStatusEffect(EFFECT_RAYKE))
+                // Rayke with at least 1 rune matching the spell element forces the penalty to 20% regardless of number of spells cast
+                if (PMob->StatusEffectContainer->HasStatusEffect(EFFECT_RAYKE) && nukeWallReduction < 0.8f &&
+                    PDefender->getMod(rayke[element - 1]) > 0)
                 {
-                    nukeWallReduction = 0.7f;
+                    nukeWallReduction = 0.8f;
                 }
 
-                if (PMob->m_nukeWallTimer[element - 1] >= server_clock::now())
+                if (PDefender->objtype == TYPE_MOB && PDefender->GetLocalVar("AuditMagicTarget") > 0)
                 {
-                    damage = (int32)(damage * nukeWallReduction); // 30-60% reduction
+                    CCharEntity* PChar = zoneutils::GetChar(PDefender->GetLocalVar("AuditMagicTarget"));
+
+                    if (PChar)
+                    {
+                        PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                            fmt::format("        DMG: [{}] = DMG: [{}] * NUKE WALL REDUCTION: [{}]", damage * nukeWallReduction, damage, nukeWallReduction), "Magic Audit System"));
+                    }
                 }
 
-                PMob->m_nukeWallTimer[element - 1] = server_clock::now() + 5s;
+                damage = (int32)(damage * nukeWallReduction); // 20-50% reduction
+            }
+		}
+
+		// Remove Enspell bypass
+		PDefender->SetLocalVar("Enspell_Active", 0);
+
+        // Calculate Uncapped Magic Damage Taken -% and "cap" it at 0% damage taken
+        resist += uDamageTaken;
+        resist = std::max(resist, 0.f);
+
+        if (PDefender->objtype == TYPE_MOB && PDefender->GetLocalVar("AuditMagicTarget") > 0)
+        {
+            CCharEntity* PChar = zoneutils::GetChar(PDefender->GetLocalVar("AuditMagicTarget"));
+
+            if (PChar)
+            {
+                PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                    fmt::format("        DMG: [{}] = DMG: [{}] * UNCAPPED MAGIC DAMAGE TAKEN: [{}]", damage * resist, damage, resist), "Magic Audit System"));
             }
         }
 
-        // Remove Enspell bypass
-        PDefender->SetLocalVar("Enspell_Active", 0);
-
-//      printf("battleutils.cpp MagicDmgTaken ELEMENT: [%i]  ABSORB: [%i]\n", element, PDefender->getMod(absorb[element - 1]));
-//      printf("battleutils.cpp MagicDmgTaken ELEMENT: [%i]  SDT: [%i]  DAMAGE: [%i]\n", element, PDefender->getMod(sdt[element - 1]), damage);
-
-        float barrierTuskReduction = 0;
-        float resist = 1.f + PDefender->getMod(Mod::UDMGMAGIC) / 100.f;
-
-        // Calculate Uncapped Magic Damage Taken -% and "cap" it at 0% damage taken
-        resist = std::max(resist, 0.f);
         damage = (int32)(damage * resist);
 
         // Calculate Damage Taken/Magic Damage Taken/Enmity mitigates Damage Taken
-        resist = 1.f + PDefender->getMod(Mod::DMGMAGIC) / 100.f + damageTaken / 100.f + enmityDmgMitigation / 100.f;
+        resist = 1.f + damageTakenMagic + damageTaken + enmityDmgMitigation;
         // Cap at -50% for players/mobs, -87.5% for pets
         resist = std::max(resist, damageTakenCap);
 
+        if (PDefender->objtype == TYPE_MOB && PDefender->GetLocalVar("AuditMagicTarget") > 0)
+        {
+            CCharEntity* PChar = zoneutils::GetChar(PDefender->GetLocalVar("AuditMagicTarget"));
+
+            if (PChar)
+            {
+                PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                    fmt::format("    DAMAGE TAKEN: [{}] (CAP: -50%) = DAMAGE TAKEN: [{}] + MAGIC DAMAGE TAKEN: [{}] + ENMITY MITIGATES DT: [{}]", resist, damageTaken, damageTakenMagic, enmityDmgMitigation), "Magic Audit System"));
+            }
+        }
+
         // Add Magic Damage Taken II (exceeds -50% mob/player cap)
-        resist += PDefender->getMod(Mod::DMGMAGIC_II) / 100.f;
+        resist += damageTakenMagicII;
         // Total cap with MDT-% II included is 87.5%
         resist = std::max(resist, 0.125f);
+
+        if (PDefender->objtype == TYPE_MOB && PDefender->GetLocalVar("AuditMagicTarget") > 0)
+        {
+            CCharEntity* PChar = zoneutils::GetChar(PDefender->GetLocalVar("AuditMagicTarget"));
+
+            if (PChar)
+            {
+                PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                    fmt::format("    DAMAGE TAKEN: [{}] (CAP: -87.5%) = DAMAGE TAKEN: [{}] + MAGIC DAMAGE TAKEN II: [{}]", resist, resist - damageTakenMagicII, damageTakenMagicII), "Magic Audit System"));
+                PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                    fmt::format("        DMG: [{}] = DMG: [{}] * DAMAGE TAKEN: [{}]", damage * resist, damage, resist), "Magic Audit System"));
+            }
+        }
 
         // Apply damage reduction
         damage = (int32)(damage * resist);
 
-        // Barrier Tusk bypasses the -50% DT cap and provides -15% DT when under -50% DT or -7.5% DT at cap
-        auto PEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_PHALANX);
-        if (PEffect && PEffect->GetSubPower() == 1)
-        {
+		// Barrier Tusk bypasses the -50% DT cap and provides -15% DT when under -50% DT or -7.5% DT at cap
+		auto PEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_PHALANX);
+		if (PEffect && PEffect->GetSubPower() == 1)
+		{
             // Cap resist at 0.5f-1.0f
             resist               = resist < 0.5f ? 0.5f : resist;
             resist               = resist > 1.0f ? 1.0f : resist;
-            barrierTuskReduction = 0.15f * resist;
+			barrierTuskReduction = 0.15f * resist;
 
-            damage -= (int32)(damage * barrierTuskReduction);
-        }
-
-        // Handle Specific Damage Taken (SDT)
-        damage += (int32)(damage * (magicSDT / 100.f));
-
-        damage -= PDefender->getMod(Mod::ONE_FOR_ALL_EFFECT);
-
-        if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_STEAM_JACKET) > 1)
-        {
-            damage = HandleSteamJacket(PDefender, damage, 5);
-        }
-
-        if (PDefender->getMod(sdt[element - 1]) != 0)
-        {
-            damage += (int32)((float)damage * ((float)PDefender->getMod(sdt[element - 1]) / 100.f));
-
-//          printf("battleutils.cpp MagicDmgTaken DAMAGE: [%i]\n\n", damage);
-
-            if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_MAGIC_DEF_DOWN) &&
-                PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_MAGIC_DEF_DOWN)->GetSubPower() > 0)
+            if (PDefender->objtype == TYPE_MOB && PDefender->GetLocalVar("AuditMagicTarget") > 0)
             {
-                PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_MAGIC_DEF_DOWN);
+                CCharEntity* PChar = zoneutils::GetChar(PDefender->GetLocalVar("AuditMagicTarget"));
+
+                if (PChar)
+                {
+                    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                        fmt::format("    BARRIER TUSK: [{}] = DAMAGE TAKEN: [{}] (Cap: -50%) * BARRIER TUSK REDUCTION: [0.15]", barrierTuskReduction, resist), "Magic Audit System"));
+                    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                    fmt::format("        DMG: [{}] = DMG: [{}] * BARRIER TUSK: [{}]", damage - (damage * barrierTuskReduction), damage, barrierTuskReduction), "Magic Audit System"));
+                }
+            }
+
+			damage -= (int32)(damage * barrierTuskReduction);
+		}
+
+        if (PDefender->objtype == TYPE_MOB && PDefender->GetLocalVar("AuditMagicTarget") > 0)
+        {
+            CCharEntity* PChar = zoneutils::GetChar(PDefender->GetLocalVar("AuditMagicTarget"));
+
+            if (PChar)
+            {
+                PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                    fmt::format("        DMG: [{}] = DMG: [{}] * MAGIC SDT: [{}]", damage + (damage * magicSDT), damage, magicSDT), "Magic Audit System"));
             }
         }
 
-        if (PDefender->objtype == TYPE_MOB && PDefender->GetLocalVar("AuditMagicDamage") == 1)
+		// Handle Magic Specific Damage Taken (SDT)
+		damage += (int32)(damage * magicSDT);
+
+        // Handle Elemental Specific Damage Taken (SDT)
+		if (elementSDT != 0)
+		{
+            if (PDefender->objtype == TYPE_MOB && PDefender->GetLocalVar("AuditMagicTarget") > 0)
+            {
+                CCharEntity* PChar = zoneutils::GetChar(PDefender->GetLocalVar("AuditMagicTarget"));
+
+                if (PChar)
+                {
+                    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                        fmt::format("        DMG: [{}] = DMG: [{}] * ELEMENTAL SDT: [{}]", damage + (damage * elementSDT), damage, elementSDT), "Magic Audit System"));
+                }
+            }
+
+            damage += (int32)(damage * elementSDT);
+
+            // Check for Quick Draw elemental damage bonus
+			if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_MAGIC_DEF_DOWN) &&
+				PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_MAGIC_DEF_DOWN)->GetSubPower() > 0)
+			{
+				PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_MAGIC_DEF_DOWN);
+			}
+		}
+
+        if (PDefender->objtype == TYPE_MOB && PDefender->GetLocalVar("AuditMagicTarget") > 0)
         {
-            printf("battleutils.cpp MagicDmgTaken  ELEMENT: [%i]  ELEMENT - 1: [%i]", element, element - 1);
+            CCharEntity* PChar = zoneutils::GetChar(PDefender->GetLocalVar("AuditMagicTarget"));
+
+            if (PChar)
+            {
+                PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                    fmt::format("        DMG: [{}] = DMG: [{}] - ONE FOR ALL: [{}]", damage - oneForAll, damage, oneForAll), "Magic Audit System"));
+            }
         }
+
+        damage -= oneForAll;
+
+        if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_STEAM_JACKET) > 1)
+		{
+            damage = HandleSteamJacket(PDefender, damage, 5);
+		}
 
         if (tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::ABSORB_DMG_CHANCE) ||
             (tpzrand::GetRandomNumber(100) < PDefender->getMod(absorb[element - 1]) ||
              tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::MAGIC_ABSORB)))
-        {
-            if (PDefender->objtype == TYPE_MOB)
+		{
+			if (PDefender->objtype == TYPE_MOB)
+			{
+				PDefender->SetLocalVar("Magic_Absorb_Counter", PDefender->GetLocalVar("Magic_Absorb_Counter") + damage);
+			}
+
+            if (PDefender->objtype == TYPE_MOB && PDefender->GetLocalVar("AuditMagicTarget") > 0)
             {
-                PDefender->SetLocalVar("Magic_Absorb_Counter", PDefender->GetLocalVar("Magic_Absorb_Counter") + damage);
+                CCharEntity* PChar = zoneutils::GetChar(PDefender->GetLocalVar("AuditMagicTarget"));
+
+                if (PChar)
+                {
+                    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                        fmt::format("    ABSORB MAGIC TRIGGERED - DAMAGE INVERTED"), "Magic Audit System"));
+                }
             }
-//          printf("battleutils.cpp MagicDmgTaken ELEMENTAL ABSORB DAMAGE: [%i]\n\n", damage);
+
             damage = -damage;
-        }
+		}
         else if ((element && tpzrand::GetRandomNumber(100) < PDefender->getMod(nullarray[element - 1])) ||
-            tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::MAGIC_NULL))
+                 tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::MAGIC_NULL))
+		{
+            if (PDefender->objtype == TYPE_MOB && PDefender->GetLocalVar("AuditMagicTarget") > 0)
+            {
+                CCharEntity* PChar = zoneutils::GetChar(PDefender->GetLocalVar("AuditMagicTarget"));
+
+                if (PChar)
+                {
+                    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                        fmt::format("    NULL MAGIC TRIGGERED - DAMAGE REDUCED TO 0"), "Magic Audit System"));
+                }
+            }
+
+            damage = 0;
+		}
+        else if (tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::ANULLS_DAMAGE_TAKEN))
         {
+            if (PDefender->objtype == TYPE_MOB && PDefender->GetLocalVar("AuditMagicTarget") > 0)
+            {
+                CCharEntity* PChar = zoneutils::GetChar(PDefender->GetLocalVar("AuditMagicTarget"));
+
+                if (PChar)
+                {
+                    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                        fmt::format("    ANULLS DAMAGE TAKEN TRIGGERED - DAMAGE REDUCED TO 0"), "Magic Audit System"));
+                }
+            }
+
             damage = 0;
         }
         else
         {
+            // Handle MP & TP absorbs
             damage = HandleSevereDamage(PDefender, damage, false);
-            int16 absorbedMP = (int16)(damage * PDefender->getMod(Mod::ABSORB_DMG_TO_MP) / 100);
-            if (absorbedMP > 0)
-            {
-                PDefender->addMP(absorbedMP);
-            }
 
-            //Calculate Convert Damage to TP
-            if (PDefender->getMod(Mod::CONVERT_DMG_TO_TP) > 0)
+            absorbedMP = (int16)(damage * PDefender->getMod(Mod::ABSORB_DMG_TO_MP) / 100);
+
+            if (absorbedMP > 0)
+			{
+                PDefender->addMP(absorbedMP);
+			}
+
+			// Calculate Convert Damage to TP
+			if (PDefender->getMod(Mod::CONVERT_DMG_TO_TP) > 0)
+			{
+				absorbedTP = static_cast<int16>(damage * (float)(PDefender->getMod(Mod::CONVERT_DMG_TO_TP) / 1000.0));
+				PDefender->addTP(absorbedTP);
+			}
+
+            if (PDefender->objtype == TYPE_MOB && PDefender->GetLocalVar("AuditMagicTarget") > 0)
             {
-                int16 absorbedTP = static_cast<int16>(damage * (float)(PDefender->getMod(Mod::CONVERT_DMG_TO_TP) / 1000.0));
-//              printf("battleutils.cpp MagicDmgTaken CONVERT DMG TO TP: [%i]\n", absorbedTP);
-                PDefender->addTP(absorbedTP);
+                CCharEntity* PChar = zoneutils::GetChar(PDefender->GetLocalVar("AuditMagicTarget"));
+
+                if (PChar)
+                {
+                    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                        fmt::format("    MP CONVERTED FROM DMG: [{}]  TP CONVERTED FROM DMG: [{}]", absorbedMP, absorbedTP), "Magic Audit System"));
+                }
+            }
+        }
+
+        if (PDefender->objtype == TYPE_MOB && PDefender->GetLocalVar("AuditMagicTarget") > 0)
+        {
+            CCharEntity* PChar = zoneutils::GetChar(PDefender->GetLocalVar("AuditMagicTarget"));
+
+            if (PChar)
+            {
+                PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
+                                    fmt::format("    DAMAGE AFTER REDUCTIONS: [{}]", damage), "Magic Audit System"));
             }
         }
 
@@ -6137,7 +6385,13 @@ namespace battleutils
             damage = -damage;
         }
         else if (tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::NULL_PHYSICAL_DAMAGE))
+        {
             damage = 0;
+        }
+        else if (tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::ANULLS_DAMAGE_TAKEN))
+        {
+            damage = 0;
+        }
         else
         {
             damage = HandleSevereDamage(PDefender, damage, true);
@@ -6224,7 +6478,13 @@ namespace battleutils
             damage = -damage;
         }
         else if (tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::NULL_PHYSICAL_DAMAGE))
+        {
             damage = 0;
+        }
+        else if (tpzrand::GetRandomNumber(100) < PDefender->getMod(Mod::ANULLS_DAMAGE_TAKEN))
+        {
+            damage = 0;
+        }
         else
         {
             damage = HandleSevereDamage(PDefender, damage, true);
@@ -6568,24 +6828,24 @@ namespace battleutils
 
     uint8 GetSpellAoEType(CBattleEntity* PCaster, CSpell* PSpell)
     {
-        if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_MAJESTY))
+        // Majesty turns the Cure and Protect spell families into AoE when active
+        if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_MAJESTY) &&
+            (PSpell->getSpellFamily() == SPELLFAMILY_CURE || PSpell->getSpellFamily() == SPELLFAMILY_PROTECT))
         {
-            if (PSpell->getSpellFamily() == SPELLFAMILY_CURE || PSpell->getSpellFamily() == SPELLFAMILY_PROTECT)
-            {
-                return SPELLAOE_RADIAL;
-            }
-            else
-            {
-                return SPELLAOE_NONE;
-            }
+            PSpell->setFlag(FINDFLAGS_ALLIANCE);
+
+            return SPELLAOE_RADIAL;
         }
+
         if (PSpell->getAOE() == SPELLAOE_RADIAL_ACCE) // Divine Veil goes here because -na spells have AoE w/ Accession
         {
-            if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_ACCESSION) || (PCaster->objtype == TYPE_PC &&
-                charutils::hasTrait((CCharEntity*)PCaster, TRAIT_DIVINE_VEIL) && PSpell->isNa() &&
-                (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_DIVINE_SEAL) || PCaster->getMod(Mod::AOE_NA) == 1)) ||
+            if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_ACCESSION) ||
+                (PCaster->objtype == TYPE_PC && charutils::hasTrait((CCharEntity*)PCaster, TRAIT_DIVINE_VEIL) && PSpell->isNa() &&
+                 (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_DIVINE_SEAL) || PCaster->getMod(Mod::AOE_NA) == 1)) ||
                 (PCaster->objtype == TYPE_PC && tpzrand::GetRandomNumber(100) < PCaster->getMod(Mod::ENH_DIVINE_VEIL) && PSpell->isNa()))
             {
+                PSpell->setFlag(FINDFLAGS_ALLIANCE);
+
                 return SPELLAOE_RADIAL;
             }
             else
@@ -6593,13 +6853,19 @@ namespace battleutils
                 return SPELLAOE_NONE;
             }
         }
+
         if (PSpell->getAOE() == SPELLAOE_RADIAL_MANI)
         {
             if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_MANIFESTATION))
+            {
                 return SPELLAOE_RADIAL;
+            }
             else
+            {
                 return SPELLAOE_NONE;
+            }
         }
+
         if (PSpell->getAOE() == SPELLAOE_PIANISSIMO)
         {
             if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_PIANISSIMO))
@@ -6608,14 +6874,20 @@ namespace battleutils
                 return SPELLAOE_NONE;
             }
             else
+            {
                 return SPELLAOE_RADIAL;
+            }
         }
         if (PSpell->getAOE() == SPELLAOE_DIFFUSION)
         {
             if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_DIFFUSION))
+            {
                 return SPELLAOE_RADIAL;
+            }
             else
+            {
                 return SPELLAOE_NONE;
+            }
         }
 
         return PSpell->getAOE();
@@ -7155,6 +7427,12 @@ namespace battleutils
 
     uint32 CalculateSpellCastTime(CBattleEntity* PEntity, CMagicState* PMagicState)
     {
+        if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+        {
+            static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                fmt::format("--- BEGIN SPELL CAST TIME AUDIT ---"), "Cast Time Audit System"));
+        }
+
         CSpell* PSpell = PMagicState->GetSpell();
         if (PSpell == nullptr)
         {
@@ -7163,8 +7441,25 @@ namespace battleutils
 
         // Check Quick Magic procs
         int16 quickMagicRate = PEntity->getMod(Mod::QUICK_MAGIC);
-        if (tpzrand::GetRandomNumber(100) < quickMagicRate)
+        int16 quickRandom    = tpzrand::GetRandomNumber(100);
+
+        // If quickMagicRate > 10 then quickMagicRate = 10 else quickMagicRate = quickMagicRate
+        quickMagicRate = (quickMagicRate > 10) ? 10 : quickMagicRate;
+
+        if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
         {
+            static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                fmt::format("QUICK MAGIC: [{}]  RANDOM: [{}]", quickMagicRate, quickRandom), "Cast Time Audit System"));
+        }
+
+        if (quickRandom < quickMagicRate)
+        {
+            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+            {
+                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                    fmt::format("QUICK MAGIC TRIGGERED - NO CAST TIME"), "Cast Time Audit System"));
+            }
+            
             PMagicState->SetInstantCast(true);
             return 0;
         }
@@ -7173,8 +7468,20 @@ namespace battleutils
         uint32 base = PSpell->getCastTime();
         uint32 cast = base;
 
+        if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+        {
+            static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                fmt::format("BASE CAST TIME: [{}]", cast), "Cast Time Audit System"));
+        }
+
         if (PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_HASSO, EFFECT_SEIGAN}))
         {
+            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+            {
+                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                    fmt::format("HASSO/SEIGANN CAST TIME: [{}] = CAST: [{}] * 2", (uint32)(cast * 2.0f), cast), "Cast Time Audit System"));
+            }
+
             cast = (uint32)(cast * 2.0f);
         }
 
@@ -7183,8 +7490,15 @@ namespace battleutils
             (PSpell->getSpellFamily() >= SPELLFAMILY_FIRA && PSpell->getSpellFamily() <= SPELLFAMILY_WATERA))
         {
             uint16 zealBonus = PEntity->getMod(Mod::PRIMEVAL_ZEAL);
+
             if (zealBonus > 0)
             {
+                if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+                {
+                    static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                        fmt::format("COLLIMATED FERVOR CAST TIME: [{}] = CAST: [{}] / PRIMEVAL ZEAL: [{}]", (uint32)(cast / zealBonus), cast, zealBonus), "Cast Time Audit System"));
+                }
+
                 cast = (uint32)(cast / zealBonus);
             }
         }
@@ -7196,6 +7510,14 @@ namespace battleutils
             PSpell->getSpellFamily() == 68 || PSpell->getSpellFamily() == 69 || PSpell->getSpellFamily() == 70 ||
             PSpell->getSpellFamily() == 74 || PSpell->getSpellFamily() == 89)
             {
+                if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+                {
+                    static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                        fmt::format("DARK MAGIC CAST TIME: [{}] = CAST: [{}] * (1 + (BLACK MAGIC CAST: [{}] + DARK MAGIC CAST: [{}]) / 100)",
+                        (uint32)(cast * (1.0f + (PEntity->getMod(Mod::BLACK_MAGIC_CAST) + PEntity->getMod(Mod::DARK_MAGIC_CAST)) / 100.0f)),
+                        cast, PEntity->getMod(Mod::BLACK_MAGIC_CAST), PEntity->getMod(Mod::DARK_MAGIC_CAST)), "Cast Time Audit System"));
+                }
+
                 cast = (uint32)(cast * (1.0f + (PEntity->getMod(Mod::BLACK_MAGIC_CAST) + PEntity->getMod(Mod::DARK_MAGIC_CAST)) / 100.0f));
             }
             if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_ALACRITY))
@@ -7206,6 +7528,14 @@ namespace battleutils
                 {
                     bonus = PEntity->getMod(Mod::ALACRITY_CELERITY_EFFECT);
                 }
+
+                if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+                {
+                    static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                        fmt::format("BLACK MAGIC ALACRITY CAST TIME: [{}] = CAST: [{}] - (BASE: [{}] * ((100 - (50 + ALACRITY BONUS: [{}])) / 100))",
+                        cast - (uint32)(base * ((100 - (50 + bonus)) / 100.0f)), cast, base, bonus), "Cast Time Audit System"));
+                }
+
                 cast -= (uint32)(base * ((100 - (50 + bonus)) / 100.0f));
                 applyArts = false;
             }
@@ -7213,11 +7543,27 @@ namespace battleutils
             {
                 if (PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_DARK_ARTS, EFFECT_ADDENDUM_BLACK}))
                 {
+                    if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+                    {
+                        static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                            fmt::format("BLACK MAGIC DARK ARTS CAST TIME: [{}] = CAST: [{}] * (1 + (BLACK MAGIC CAST: [{}] + GRIMOIRE SPELLCASTING: [{}] / 100))",
+                            (uint32)(cast * (1.0f + (PEntity->getMod(Mod::BLACK_MAGIC_CAST) + PEntity->getMod(Mod::GRIMOIRE_SPELLCASTING)) / 100.0f)),
+                            cast, PEntity->getMod(Mod::BLACK_MAGIC_CAST), PEntity->getMod(Mod::GRIMOIRE_SPELLCASTING)), "Cast Time Audit System"));
+                    }
+
                     // Add any "Grimoire: Reduces spellcasting time" bonuses
                     cast = (uint32)(cast * (1.0f + (PEntity->getMod(Mod::BLACK_MAGIC_CAST) + PEntity->getMod(Mod::GRIMOIRE_SPELLCASTING)) / 100.0f));
                 }
                 else
                 {
+                    if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+                    {
+                        static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                            fmt::format("BLACK MAGIC CAST TIME: [{}] = CAST: [{}] * (1 + (BLACK MAGIC CAST: [{}] / 100))",
+                            (uint32)(cast * (1.0f + (PEntity->getMod(Mod::BLACK_MAGIC_CAST)) / 100.0f)),
+                            cast, PEntity->getMod(Mod::BLACK_MAGIC_CAST)), "Cast Time Audit System"));
+                    }
+
                     cast = (uint32)(cast * (1.0f + PEntity->getMod(Mod::BLACK_MAGIC_CAST) / 100.0f));
                 }
             }
@@ -7235,6 +7581,14 @@ namespace battleutils
                 {
                     bonus = PEntity->getMod(Mod::ALACRITY_CELERITY_EFFECT);
                 }
+
+                if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+                {
+                    static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                        fmt::format("WHITE MAGIC CELERITY CAST TIME: [{}] = CAST: [{}] - (BASE: [{}] * ((100 - (50 + CELERITY BONUS: [{}])) / 100))",
+                        cast - (uint32)(base * ((100 - (50 + bonus)) / 100.0f)), cast, base, bonus), "Cast Time Audit System"));
+                }
+
                 cast -= (uint32)(base * ((100 - (50 + bonus)) / 100.0f));
                 applyArts = false;
             }
@@ -7242,16 +7596,40 @@ namespace battleutils
             {
                 if (PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_LIGHT_ARTS, EFFECT_ADDENDUM_WHITE}))
                 {
+                    if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+                    {
+                        static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                            fmt::format("WHITE MAGIC LIGHT ARTS CAST TIME: [{}] = CAST: [{}] * (1 + (WHITE MAGIC CAST: [{}] + GRIMOIRE SPELLCASTING: [{}] / 100))",
+                            (uint32)(cast * (1.0f + (PEntity->getMod(Mod::WHITE_MAGIC_CAST) + PEntity->getMod(Mod::GRIMOIRE_SPELLCASTING)) / 100.0f)),
+                            cast, PEntity->getMod(Mod::WHITE_MAGIC_CAST), PEntity->getMod(Mod::GRIMOIRE_SPELLCASTING)), "Cast Time Audit System"));
+                    }
+
                     // Add any "Grimoire: Reduces spellcasting time" bonuses
                     cast = (uint32)(cast * (1.0f + (PEntity->getMod(Mod::WHITE_MAGIC_CAST) + PEntity->getMod(Mod::GRIMOIRE_SPELLCASTING)) / 100.0f));
                 }
                 else
                 {
+                    if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+                    {
+                        static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                            fmt::format("WHITE MAGIC CAST TIME: [{}] = CAST: [{}] * (1 + (WHITE MAGIC CAST: [{}] / 100))",
+                            (uint32)(cast * (1.0f + (PEntity->getMod(Mod::WHITE_MAGIC_CAST)) / 100.0f)),
+                            cast, PEntity->getMod(Mod::WHITE_MAGIC_CAST)), "Cast Time Audit System"));
+                    }
+
                     cast = (uint32)(cast * (1.0f + PEntity->getMod(Mod::WHITE_MAGIC_CAST) / 100.0f));
                 }
             }
             else if (spellID == 54 && PEntity->getMod(Mod::STONESKIN_CAST) > 0)
             {
+                if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+                {
+                    static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                        fmt::format("STONESKIN CAST TIME: [{}] = CAST: [{}] * (1 + (STONESKIN CAST: [{}] / 100))",
+                        (uint32)(cast * (1.0f + (PEntity->getMod(Mod::STONESKIN_CAST)) / 100.0f)),
+                        cast, PEntity->getMod(Mod::STONESKIN_CAST)), "Cast Time Audit System"));
+                }
+
                 cast = (uint32)(cast * (1.0f + PEntity->getMod(Mod::STONESKIN_CAST) / 100.0f));
             }
         }
@@ -7262,6 +7640,13 @@ namespace battleutils
             {
                 if (PSpell->getAOE() == SPELLAOE_PIANISSIMO)
                 {
+                    if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+                    {
+                        static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                            fmt::format("SONG PIANISSIMO CAST TIME: [{}] = BASE: [{}] / 2",
+                            base / 2, base), "Cast Time Audit System"));
+                    }
+
                     cast = base / 2;
                 }
             }
@@ -7270,64 +7655,196 @@ namespace battleutils
                 if (PEntity->objtype == TYPE_PC &&
                     tpzrand::GetRandomNumber(100) < ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_NIGHTINGALE, (CCharEntity*)PEntity) - 25)
                 {
+                    if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+                    {
+                        static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                            fmt::format("SONG NIGHTINGALE INSTANT CAST - NIGHTINGALE PROC CHANCE: [{}]",
+                            ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_NIGHTINGALE, (CCharEntity*)PEntity) - 25), "Cast Time Audit System"));
+                    }
+
                     return 0;
                 }
+
+                if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+                {
+                    static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                        fmt::format("SONG NIGHTINGALE CAST TIME: [{}] = CAST: [{}] * 0.5",
+                        (uint32)(cast * 0.5f), cast), "Cast Time Audit System"));
+                }
+
                 cast = (uint32)(cast * 0.5f);
             }
             if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_TROUBADOUR))
             {
+                if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+                {
+                    static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                        fmt::format("SONG TROUBADOUR CAST TIME: [{}] = CAST: [{}] * 1.5",
+                        (uint32)(cast * 1.5f), cast), "Cast Time Audit System"));
+                }
+
                 cast = (uint32)(cast * 1.5f);
             }
+
             uint16 songcasting = PEntity->getMod(Mod::SONG_SPELLCASTING_TIME);
+
+            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+            {
+                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                    fmt::format("SONG CAST TIME: [{}] = CAST: [{}] * (1 - (SONG SPELLCASTING TIME: [{}] / 100))",
+                    (uint32)(cast * (1.0f - ((songcasting > 50 ? 50 : songcasting) / 100.0f))), cast, songcasting), "Cast Time Audit System"));
+            }
+
             cast = (uint32)(cast * (1.0f - ((songcasting > 50 ? 50 : songcasting) / 100.0f)));
         }
 
         else if (PSpell->getSpellFamily() == SPELLFAMILY_UTSUSEMI) // PSpell->getSpellGroup() == SPELLGROUP_NINJUTSU &&
         {
+            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+            {
+                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                    fmt::format("UTSUSEMI CAST TIME: [{}] = CAST: [{}] * (1 + (UTSUSEMI CASTING TIME: [{}] / 100))",
+                    (uint32)(cast * (1.0f + (PEntity->getMod(Mod::UTSUSEMI_CAST) / 100.0f))), cast, PEntity->getMod(Mod::UTSUSEMI_CAST)), "Cast Time Audit System"));
+            }
+
             cast = (uint32)(cast * (1.0f + (PEntity->getMod(Mod::UTSUSEMI_CAST) / 100.0f)));
         }
 
         int16 fastCast = std::clamp<int16>(PEntity->getMod(Mod::FASTCAST), -100, 80);
 
+        if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+        {
+            static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                fmt::format("    FAST CAST: [{}]",
+                fastCast), "Cast Time Audit System"));
+        }
+
         if (PSpell->getSkillType() == SKILLTYPE::SKILL_ELEMENTAL_MAGIC) // Elemental Celerity reductions
         {
+            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+            {
+                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                    fmt::format("    FAST CAST: [{}] = FAST CAST: [{}] + ELEMENTAL CELERITY: [{}]",
+                    fastCast + PEntity->getMod(Mod::ELEMENTAL_CELERITY), fastCast, PEntity->getMod(Mod::ELEMENTAL_CELERITY)), "Cast Time Audit System"));
+            }
+
             fastCast += PEntity->getMod(Mod::ELEMENTAL_CELERITY);
         }
 
         else if (PSpell->getSkillType() == SKILLTYPE::SKILL_ENFEEBLING_MAGIC) // Enfeebling reductions
         {
+            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+            {
+                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                    fmt::format("    FAST CAST: [{}] = FAST CAST: [{}] * (1 + (ENFEEBLING MAGIC CAST: [{}] / 100))",
+                    (uint32)(fastCast * (1.0f + PEntity->getMod(Mod::ENFEEBLING_MAGIC_CAST) / 100.0f)), fastCast, PEntity->getMod(Mod::ENFEEBLING_MAGIC_CAST)), "Cast Time Audit System"));
+            }
+
             fastCast += (uint32)(fastCast * (1.0f + PEntity->getMod(Mod::ENFEEBLING_MAGIC_CAST) / 100.0f));
         }
 
         else if (PSpell->isCure()) // Cure cast time reductions
         {
+            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+            {
+                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                    fmt::format("    FAST CAST: [{}] = FAST CAST: [{}] + CURE CAST TIME: [{}]",
+                    fastCast + PEntity->getMod(Mod::CURE_CAST_TIME), fastCast, PEntity->getMod(Mod::CURE_CAST_TIME)), "Cast Time Audit System"));
+            }
+
             fastCast += PEntity->getMod(Mod::CURE_CAST_TIME);
+
             if (PEntity->objtype == TYPE_PC)
             {
+                if (PEntity->GetLocalVar("AuditCastTime") == 1)
+                {
+                    static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                        fmt::format("    FAST CAST: [{}] = FAST CAST: [{}] + CURE CAST TIME MERITS: [{}]",
+                        fastCast + ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_CURE_CAST_TIME, (CCharEntity*)PEntity), fastCast, ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_CURE_CAST_TIME, (CCharEntity*)PEntity)), "Cast Time Audit System"));
+                }
+
                 fastCast += ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_CURE_CAST_TIME, (CCharEntity*)PEntity);
             }
         }
 
         else if (PSpell->getSkillType() == SKILLTYPE::SKILL_ENHANCING_MAGIC) // Enhancing Magic Cast Time
         {
+            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+            {
+                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                    fmt::format("    FAST CAST: [{}] = FAST CAST: [{}] + ENHANCING MAGIC CAST TIME: [{}]",
+                    fastCast + PEntity->getMod(Mod::ENH_MAGIC_CAST_TIME), fastCast, PEntity->getMod(Mod::ENH_MAGIC_CAST_TIME)), "Cast Time Audit System"));
+            }
+
             fastCast += PEntity->getMod(Mod::ENH_MAGIC_CAST_TIME);
         }
 
         else if (PSpell->getSkillType() == SKILLTYPE::SKILL_BLUE_MAGIC) // Blue Magic Cast Time
         {
+            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+            {
+                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                    fmt::format("    FAST CAST: [{}] = FAST CAST: [{}] + BLUE MAGIC CAST TIME: [{}]",
+                    fastCast + PEntity->getMod(Mod::BLUE_MAGIC_CAST_TIME), fastCast, PEntity->getMod(Mod::BLUE_MAGIC_CAST_TIME)), "Cast Time Audit System"));
+            }
+
             fastCast += PEntity->getMod(Mod::BLUE_MAGIC_CAST_TIME);
+        }
+
+        // Apply Fast Cast bonus from Inspiration merits if Valiance or Vallation is active
+        if (PEntity->objtype == TYPE_PC &&
+            charutils::hasTrait(static_cast<CCharEntity*>(PEntity), TRAIT_INSPIRATION) &&
+            (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_VALIANCE) ||
+             PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_VALLATION)))
+        {
+            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+            {
+                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                    fmt::format("    FAST CAST: [{}] = FAST CAST: [{}] + INSPIRATION: [{}]",
+                    fastCast + PEntity->getMod(Mod::INSPIRATION_FASTCAST) - 10, fastCast, PEntity->getMod(Mod::INSPIRATION_FASTCAST) - 10), "Cast Time Audit System"));
+            }
+
+            fastCast += PEntity->getMod(Mod::INSPIRATION_FASTCAST) - 10;
         }
 
         fastCast = std::clamp<int16>(fastCast, -100, 80);
         int16 uncappedFastCast = std::clamp<int16>(PEntity->getMod(Mod::UFASTCAST), -100, 100);
 
+        if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+        {
+            static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                fmt::format("CAPPED FAST CAST: [{}]  UNCAPPED FAST CAST: [{}]",
+                fastCast, uncappedFastCast), "Cast Time Audit System"));
+        }
+
         // Add in fast cast from Divine Benison
         if (PSpell->isNa())
         {
+            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+            {
+                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                    fmt::format("DIVINE BENISON FAST CAST: [{}] = UNCAPPED FAST CAST: [{}] + DIVINE BENISON: [{}]",
+                    std::clamp<int16>(uncappedFastCast + PEntity->getMod(Mod::DIVINE_BENISON), -100, 100), uncappedFastCast, PEntity->getMod(Mod::DIVINE_BENISON)), "Cast Time Audit System"));
+            }
+
             uncappedFastCast = std::clamp<int16>(uncappedFastCast + PEntity->getMod(Mod::DIVINE_BENISON), -100, 100);
         }
 
+        if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+        {
+            static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                fmt::format("TOTAL FAST CAST: [{}] = FAST CAST: [{}] + UNCAPPED FAST CAST: [{}]",
+                std::clamp<float>((float)(fastCast + uncappedFastCast), -100.f, 100.f), fastCast, uncappedFastCast), "Cast Time Audit System"));
+        }
+
         float sumFastCast = std::clamp<float>((float)(fastCast + uncappedFastCast), -100.f, 100.f);
+
+        if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
+        {
+            static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
+                fmt::format("FINAL CAST TIME: [{}] = CAST: [{}] * ((100 - TOTAL FAST CAST: [{}]) / 100)",
+                (uint32)(cast * ((100.0f - sumFastCast) / 100.0f)), cast, sumFastCast), "Cast Time Audit System"));
+        }
 
         return (uint32)(cast * ((100.0f - sumFastCast) / 100.0f));
     }
@@ -7354,6 +7871,15 @@ namespace battleutils
         }
 
         int16 cost = base;
+
+        if (PSpell->getSkillType() == SKILLTYPE::SKILL_HEALING_MAGIC && PEntity->getMod(Mod::CURE_MP_CONSUMED) > 0)
+        {
+            cost = (int16)(cost * (1.0f + (PEntity->getMod(Mod::CURE_MP_CONSUMED) / 100.0f)));
+        }
+        else if (PSpell->getSkillType() == SKILLTYPE::SKILL_ELEMENTAL_MAGIC && PEntity->getMod(Mod::ELEMENTAL_MAGIC_MP_CONSUMED) > 0)
+        {
+            cost = (int16)(cost * (1.0f + (PEntity->getMod(Mod::ELEMENTAL_MAGIC_MP_CONSUMED) / 100.0f)));
+        }
 
         if (PSpell->getSpellGroup() == SPELLGROUP_BLACK)
         {
@@ -7415,16 +7941,18 @@ namespace battleutils
             return 0;
         }
 
-        bool applyArts = true;
-        uint32 base = PSpell->getRecastTime();
-        int32 recast = base;
-        int32 recastCap = (int32)(base * 0.2f); // Maximum reduction is 80% of original recast
-
+        // Spontaneity bypasses all Fast Cast/Recast time considerations and forces a 1 second recast time
         if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_SPONTANEITY))
         {
-            recast = 1000;
-            return recast / 1000;
+            return 1;
         }
+
+        bool applyArts  = true;
+        uint32 base     = PSpell->getRecastTime();
+        int32 recast    = base;
+        int32 recastCap = (int32)(base * 0.2f); // Maximum reduction is 80% of original recast
+
+        // Recast = (Initial Recast) × (1 - (Haste÷1024) + (Slow÷1024)) × Floor(Fast Cast% ÷ 2) × (Job Ability Modifier 1) × (Job Ability Modifier 2) × ... 
 
         // Apply Fast Cast
         recast = (int32)(recast * ((100.0f - std::clamp((float)PEntity->getMod(Mod::FASTCAST) / 2.0f, 0.0f, 40.0f)) / 100.0f));
@@ -7433,45 +7961,16 @@ namespace battleutils
         int16 haste = (int32)(std::clamp((float)PEntity->getMod(Mod::HASTE_MAGIC), -10000.0f, 4375.0f) + std::clamp((float)PEntity->getMod(Mod::HASTE_GEAR), -10000.0f, 2500.0f));
         recast -= (int32)(recast * haste / 10000.f);
 
-        if (PSpell->getSpellGroup() == SPELLGROUP_SONG)
+        // Apply Fast Cast bonus from Inspiration merits if Valiance or Vallation is active
+        if (PEntity->objtype == TYPE_PC &&
+            charutils::hasTrait(static_cast<CCharEntity*>(PEntity), TRAIT_INSPIRATION) &&
+            (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_VALIANCE) ||
+             PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_VALLATION)))
         {
-            if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_NIGHTINGALE))
-            {
-                recast = (int32)(recast * 0.5f);
-            }
-            // The following modifiers are not multiplicative - as such they must be applied last.
-            // ShowDebug("Recast before reduction: %u\n", recast);
-            if (PEntity->objtype == TYPE_PC)
-            {
-                if (PSpell->getID() == SpellID::Magic_Finale) // apply Finale recast merits
-                {
-                    recast -= ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_FINALE_RECAST, (CCharEntity*)PEntity) * 1000;
-                }
-                if (PSpell->getID() == SpellID::Foe_Lullaby || PSpell->getID() == SpellID::Foe_Lullaby_II || PSpell->getID() == SpellID::Horde_Lullaby || PSpell->getID() == SpellID::Horde_Lullaby_II) // apply Lullaby recast merits
-                {
-                    recast -= ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_LULLABY_RECAST, (CCharEntity*)PEntity) * 1000;
-                }
-            }
-            recast -= PEntity->getMod(Mod::SONG_RECAST_DELAY) * 1000;
-            // ShowDebug("Recast after merit reduction: %u\n", recast);
+            recast -= (int32)(recast * ((100.0f - (PEntity->getMod(Mod::INSPIRATION_FASTCAST) - 10)) / 100.0f));
         }
 
-        if ((PEntity->getMod(Mod::SPIRIT_RECAST) > 0) && (PSpell->getID() >= SpellID::Fire_Spirit && PSpell->getID() <= SpellID::Dark_Spirit))
-        {
-            recast = (int32)(recast * 0.5f);
-        }
-
-        if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_COMPOSURE))
-        {
-            recast = (int32)(recast * 1.25f);
-        }
-
-        if (PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_HASSO, EFFECT_SEIGAN}))
-        {
-            recast = (int32)(recast * 1.5f);
-        }
-
-        recast = std::max<int32>(recast, (int32)(base * 0.2f));
+        // recast = std::max<int32>(recast, (int32)(base * 0.2f));
 
         // Light/Dark arts recast bonus/penalties applies after the 80% cap
         if (PSpell->getSpellGroup() == SPELLGROUP_BLACK)
@@ -7564,6 +8063,44 @@ namespace battleutils
         else if (PSpell->getSpellGroup() == SPELLGROUP_BLUE)
         {
             recast = (int32)(recast * (1.0f + PEntity->getMod(Mod::BLUE_MAGIC_RECAST) / 100.0f));
+        }
+
+                if (PSpell->getSpellGroup() == SPELLGROUP_SONG)
+        {
+            if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_NIGHTINGALE))
+            {
+                recast = (int32)(recast * 0.5f);
+            }
+            // The following modifiers are not multiplicative - as such they must be applied last.
+            // ShowDebug("Recast before reduction: %u\n", recast);
+            if (PEntity->objtype == TYPE_PC)
+            {
+                if (PSpell->getID() == SpellID::Magic_Finale) // apply Finale recast merits
+                {
+                    recast -= ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_FINALE_RECAST, (CCharEntity*)PEntity) * 1000;
+                }
+                if (PSpell->getID() == SpellID::Foe_Lullaby || PSpell->getID() == SpellID::Foe_Lullaby_II || PSpell->getID() == SpellID::Horde_Lullaby || PSpell->getID() == SpellID::Horde_Lullaby_II) // apply Lullaby recast merits
+                {
+                    recast -= ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_LULLABY_RECAST, (CCharEntity*)PEntity) * 1000;
+                }
+            }
+            recast -= PEntity->getMod(Mod::SONG_RECAST_DELAY) * 1000;
+            // ShowDebug("Recast after merit reduction: %u\n", recast);
+        }
+
+        if ((PEntity->getMod(Mod::SPIRIT_RECAST) > 0) && (PSpell->getID() >= SpellID::Fire_Spirit && PSpell->getID() <= SpellID::Dark_Spirit))
+        {
+            recast = (int32)(recast * 0.5f);
+        }
+
+        if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_COMPOSURE))
+        {
+            recast = (int32)(recast * 1.25f);
+        }
+
+        if (PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_HASSO, EFFECT_SEIGAN}))
+        {
+            recast = (int32)(recast * 1.5f);
         }
 
         // Caps recast reduction at 80% of the spell's original value

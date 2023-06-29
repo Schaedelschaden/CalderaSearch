@@ -598,9 +598,76 @@ local loot =
     -- KSNM Moa Constrictors
     [113] =
     {
-		{
-			{itemid = 12408, droprate =  500}, -- Absorbing Shield
-            {itemid = 15181, droprate =  500}, -- Pineal Hat
+		{ -- Accessories, 1 is guaranteed.
+            {itemid = 28369, droprate =  40}, -- Arciela's Grace +1
+            {itemid = 28378, droprate =  60}, -- Arciela's Grace
+            {itemid = 28365, droprate = 100}, -- Nefarious Collar +1
+            {itemid = 10958, droprate = 125}, -- Nefarious Collar 
+            {itemid = 10398, droprate = 175}, -- Weike Torque
+            {itemid = 10784, droprate = 200}, -- Dhanurveda Ring
+            {itemid = 28573, droprate = 300}, -- Wuji Ring
+        },
+        
+        { -- Tier 1-3 mats, 1 guaranteed
+            {itemid =  4074, droprate =  25}, -- Thought Crystal
+            {itemid =  9003, droprate =  60}, -- Plovid Flesh
+            {itemid =  9002, droprate =  60}, -- Plovid Effluvium
+            {itemid =  9258, droprate =  90}, -- Azure Cermet
+            {itemid =  9248, droprate = 105}, -- Niobium Ingot
+            {itemid =  9256, droprate = 105}, -- Cyan Orb
+            {itemid =  9250, droprate = 105}, -- Khoma Cloth
+            {itemid =  9247, droprate = 150}, -- Niobium Ore
+            {itemid =  9255, droprate = 150}, -- Cyan Coral
+            {itemid =  9251, droprate = 150}, -- Khoma Thread
+        },
+        
+        { -- Tier 1-3 mats, 50/50 to get something
+            {itemid =     0, droprate = 500}, -- Nothing
+            {itemid =  4074, droprate =  12}, -- Thought Crystal
+            {itemid =  9003, droprate =  30}, -- Plovid Flesh
+            {itemid =  9002, droprate =  30}, -- Plovid Effluvium
+            {itemid =  9258, droprate =  45}, -- Azure Cermet
+            {itemid =  9248, droprate =  52}, -- Niobium Ingot
+            {itemid =  9256, droprate =  53}, -- Cyan Orb
+            {itemid =  9252, droprate =  53}, -- Khoma Cloth
+            {itemid =  9247, droprate =  75}, -- Niobium Ore
+            {itemid =  9255, droprate =  75}, -- Cyan Coral
+            {itemid =  9251, droprate =  75}, -- Khoma Thread
+        },
+        
+        { -- Tier 4 mats, 1 is guaranteed.
+            {itemid =  3980, droprate = 100}, -- Bztavian Stinger
+            {itemid =  3981, droprate = 100}, -- Bztavian Wing
+            {itemid =  3979, droprate = 100}, -- Rockfin Tooth
+            {itemid =  3977, droprate = 100}, -- Gabbrath Horn
+            {itemid =  4014, droprate = 100}, -- Yggdreant Bole
+            {itemid =  4015, droprate = 100}, -- Yggdreant Root
+            {itemid =  4012, droprate = 100}, -- Waktza Rostrum
+            {itemid =  4013, droprate = 100}, -- Waktza Crest
+            {itemid =  8752, droprate = 100}, -- Cehuetzi Claw
+            {itemid =  8754, droprate = 100}, -- Cehuetzi Pelt
+        },
+        
+        { -- Tier 4 mats, 50% to get, 50% nothing.
+            {itemid =     0, droprate = 500}, -- Nothing
+            {itemid =  4012, droprate = 100}, -- Waktza Rostrum
+            {itemid =  4013, droprate = 100}, -- Waktza Crest
+            {itemid =  8752, droprate = 100}, -- Cehuetzi Claw
+            {itemid =  8754, droprate = 100}, -- Cehuetzi Pelt
+            {itemid =  3977, droprate = 100}, -- Gabbrath Horn
+        },
+        {
+            {itemid =  9783, droprate = 330}, -- Abdjhalis Gem
+            {itemid =  9784, droprate = 330}, -- Abdjhalis Anima
+            {itemid =  9782, droprate = 330}, -- Abdjhalis Nugget
+            {itemid =     0, droprate =  10}, -- Nothing
+        },
+        
+        {
+            {itemid =  9783, droprate = 70}, -- Abdjhalis Gem
+            {itemid =  9784, droprate = 70}, -- Abdjhalis Anima
+            {itemid =  9782, droprate = 70}, -- Abdjhalis Nugget
+            {itemid =     0, droprate = 790}, -- Nothing
         },
     },
 }

@@ -2,7 +2,12 @@
 -- Area: Abyssea-Misareaux
 --   NM: Heqet
 -----------------------------------
-mixins = {require("scripts/mixins/families/poroggo")}
+mixins =
+{
+    require("scripts/mixins/families/poroggo"),
+    require("scripts/mixins/abyssea_weakness")
+}
+require("scripts/globals/abyssea")
 require("scripts/globals/mobs")
 -----------------------------------
 

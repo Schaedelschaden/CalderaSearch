@@ -628,7 +628,7 @@ local loot =
         },
         {
             {itemid =  0,     droprate = 100}, -- Nothing
-			{itemid =  28534, droprate = 300}, -- Lifestorm Earring
+			{itemid =  28524, droprate = 300}, -- Lifestorm Earring
 			{itemid =  28525, droprate = 300}, -- Psystorm Earring
 			{itemid =  28403, droprate = 300}, -- Inquisitor Bead Necklace
         },
@@ -702,63 +702,80 @@ local loot =
             {itemid =     0, droprate =  1000}, -- nothing
         },
     },
-    -- KSNM Contaminated Colosseum -- Off
+    -- KSNM Contaminated Colosseum 
     [17] =
     {
-        {
-            {itemid = 837, droprate = 1000}, -- Spool Of Malboro Fiber
+        { -- Accessories, 1 is guaranteed.
+            {itemid = 27555, droprate =  40}, -- Warden's Ring
+            {itemid = 26215, droprate =  60}, -- Menelaus's Ring
+            {itemid = 28530, droprate = 100}, -- Dumakulem's Ring
+            {itemid = 26221, droprate = 125}, -- Sroda Ring
+            {itemid = 28456, droprate = 175}, -- Kasiri Belt
+            {itemid = 10945, droprate = 200}, -- Waylayer's Scarf
+            {itemid = 26217, droprate = 300}, -- Ligeia Ring
         },
-        {
-            {itemid = 17827, droprate = 217}, -- Michishiba-no-tsuyu
-            {itemid = 17451, droprate = 174}, -- Morgenstern
-            {itemid = 17793, droprate = 333}, -- Senjuinrikio
-            {itemid = 17589, droprate = 174}, -- Thyrsusstab
+        
+        { -- Tier 1-3 mats, 1 guaranteed
+            {itemid =  9062, droprate =  25}, -- Dark Matter
+            {itemid =  9064, droprate =  60}, -- Tartarian Chain
+            {itemid =  9061, droprate =  60}, -- Hades' Claw
+            {itemid =  9258, droprate =  90}, -- Azure Cermet
+            {itemid =  9252, droprate = 105}, -- Khoma Cloth
+            {itemid =  9248, droprate = 105}, -- Niobium Ingot
+            {itemid =  9256, droprate = 105}, -- Cyan Orb
+            {itemid =  9251, droprate = 150}, -- Khoma Thread
+            {itemid =  9247, droprate = 150}, -- Niobium Ore
+            {itemid =  9255, droprate = 150}, -- Cyan Coral
         },
-        {
-            {itemid = 13402, droprate = 101}, -- Cassie Earring
-            {itemid = 19027, droprate = 43}, -- Claymore Grip
-            {itemid = 920, droprate = 275},  -- Malboro Vine
-            {itemid = 1013, droprate = 275}, -- Morbolger Vine
-            {itemid = 19025, droprate = 203}, -- Pole Grip
-            {itemid = 19026, droprate = 116}, -- Spear Strap
+        
+        { -- Tier 1-3 mats, 50/50 to get something
+            {itemid =     0, droprate = 500}, -- Nothing
+            {itemid =  9062, droprate =  12}, -- Dark Matter
+            {itemid =  9064, droprate =  30}, -- Tartarian Chain
+            {itemid =  9061, droprate =  30}, -- Hades' Claw
+            {itemid =  9258, droprate =  45}, -- Azure Cermet
+            {itemid =  9252, droprate =  52}, -- Khoma Cloth
+            {itemid =  9248, droprate =  53}, -- Niobium Ingot
+            {itemid =  9256, droprate =  53}, -- Cyan Orb
+            {itemid =  9251, droprate =  75}, -- Khoma Thread
+            {itemid =  9247, droprate =  75}, -- Niobium Ore
+            {itemid =  9255, droprate =  75}, -- Cyan Coral
         },
-        {
-            {itemid = 655, droprate = 159},  -- Adaman Ingot
-            {itemid = 747, droprate = 290},  -- Orichalcum Ingot
-            {itemid = 13182, droprate = 406}, -- Oscar Scarf
+        
+        { -- Tier 4 mats, 1 is guaranteed.
+            {itemid =  3980, droprate = 100}, -- Bztavian Stinger
+            {itemid =  3981, droprate = 100}, -- Bztavian Wing
+            {itemid =  3979, droprate = 100}, -- Rockfin Tooth
+            {itemid =  3977, droprate = 100}, -- Gabbrath Horn
+            {itemid =  4014, droprate = 100}, -- Yggdreant Bole
+            {itemid =  4015, droprate = 100}, -- Yggdreant Root
+            {itemid =  4012, droprate = 100}, -- Waktza Rostrum
+            {itemid =  4013, droprate = 100}, -- Waktza Crest
+            {itemid =  8752, droprate = 100}, -- Cehuetzi Claw
+            {itemid =  8754, droprate = 100}, -- Cehuetzi Pelt
         },
-        {
-            {itemid = 15325, droprate = 159}, -- Evokers Boots
-            {itemid = 14872, droprate = 217}, -- Ostreger Mitts
-            {itemid = 15181, droprate = 145}, -- Pineal Hat
-            {itemid = 15387, droprate = 159}, -- Trackers Kecks
+        
+        { -- Tier 4 mats, 50% to get, 50% nothing.
+            {itemid =     0, droprate = 500}, -- Nothing
+            {itemid =  3980, droprate = 100}, -- Bztavian Stinger
+            {itemid =  3981, droprate = 100}, -- Bztavian Wing
+            {itemid =  4014, droprate = 100}, -- Yggdreant Bole
+            {itemid =  4015, droprate = 100}, -- Yggdreant Root
+            {itemid =  3977, droprate = 100}, -- Gabbrath Horn
         },
+        
         {
-            {itemid = 887, droprate = 101},  -- Coral Fragment
-            {itemid = 645, droprate = 29},   -- Chunk Of Darksteel Ore
-            {itemid = 902, droprate = 29},   -- Demon Horn
-            {itemid = 702, droprate = 29},   -- Ebony Log
-            {itemid = 737, droprate = 101},  -- Chunk Of Gold Ore
-            {itemid = 823, droprate = 29},   -- Spool Of Gold Thread
-            {itemid = 1465, droprate = 29},  -- Slab Of Granite
-            {itemid = 700, droprate = 43},   -- Mahogany Log
-            {itemid = 644, droprate = 29},   -- Chunk Of Mythril Ore
-            {itemid = 703, droprate = 58},   -- Petrified Log
-            {itemid = 738, droprate = 14},   -- Chunk Of Platinum Ore
-            {itemid = 830, droprate = 58},   -- Square Of Rainbow Cloth
-            {itemid = 895, droprate = 14},   -- Ram Horn
-            {itemid = 4174, droprate = 58},  -- Vile Elixir
-            {itemid = 4175, droprate = 29},  -- Vile Elixir +1
-            {itemid = 866, droprate = 72},   -- Handful Of Wyvern Scales
+            {itemid =  9783, droprate = 330}, -- Abdjhalis Gem
+            {itemid =  9784, droprate = 330}, -- Abdjhalis Anima
+            {itemid =  9782, droprate = 330}, -- Abdjhalis Nugget
+            {itemid =     0, droprate =  10}, -- Nothing
         },
+        
         {
-            {itemid = 1110, droprate = 87},  -- Vial Of Black Beetle Blood
-            {itemid = 658, droprate = 14},   -- Damascus Ingot
-            {itemid = 836, droprate = 29},   -- Square Of Damascene Cloth
-            {itemid = 837, droprate = 43},   -- Spool Of Malboro Fiber
-            {itemid = 942, droprate = 174},  -- Philosophers Stone
-            {itemid = 844, droprate = 246},  -- Phoenix Feather
-            {itemid = 1132, droprate = 159}, -- Square Of Raxa
+            {itemid =  9783, droprate = 70}, -- Abdjhalis Gem
+            {itemid =  9784, droprate = 70}, -- Abdjhalis Anima
+            {itemid =  9782, droprate = 70}, -- Abdjhalis Nugget
+            {itemid =     0, droprate = 790}, -- Nothing
         },
     },
 }

@@ -6,7 +6,7 @@
 -- Monster Type: Demons
 -- Spell Type: Physical (Impact)
 -- Blue Magic Points: 0 (Unbridled Learning/Wisdom)
--- Stat Bonus: 
+-- Stat Bonus:
 -- Level: 99
 -- Casting Time: 1 second
 -- Recast Time: 30 seconds
@@ -23,54 +23,51 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-	local chance = math.random(1,100)
-	local duration = 60
-	local randomize = math.random(1,30)
-	local params = {}
+    local randomize
+    local chance    = 75
+    local duration  = 120
+    local damage    = 0
+    local params    = {}
     -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
-	-- D Value (Final Base Damage) ＝ math.floor(D + fSTR + WSC) * Multiplier
-        params.attribute = tpz.mod.INT
-		params.skillType = tpz.skill.BLUE_MAGIC
-		params.damageType = tpz.damageType.IMPACT
-		params.spellFamily = tpz.ecosystem.DEMON
-        params.numhits = 1
-        params.multiplier = 50.00 -- 5.00
-        params.tp150 = 8.00
-        params.tp300 = 8.00
-        params.azuretp = 10.00
-        params.duppercap = 136
-        params.str_wsc = 0.0
-        params.dex_wsc = 0.0
-        params.vit_wsc = 0.0
-        params.agi_wsc = 0.0
-        params.int_wsc = 0.6 -- 0.3
-        params.mnd_wsc = 0.0
-        params.chr_wsc = 1.2 -- 0.6
-		
+    -- D Value (Final Base Damage) ＝ math.floor(D + fSTR + WSC) * fTP
+        params.damageType  = tpz.damageType.IMPACT
+        params.spellFamily = tpz.ecosystem.DEMON
+        params.numhits     = 1
+        params.multiplier  = 5.00 -- fTP @    0-1500 TP
+        params.tp150       = 5.33 -- fTP @ 1500-2999 TP
+        params.tp300       = 5.75 -- fTP @      3000 TP
+        params.azuretp     = 6.25 -- fTP @      3500 TP
+        params.duppercap   = 136
+        params.str_wsc     = 0.0
+        params.dex_wsc     = 0.0
+        params.vit_wsc     = 0.0
+        params.agi_wsc     = 0.0
+        params.int_wsc     = 0.6 -- 0.3
+        params.mnd_wsc     = 0.0
+        params.chr_wsc     = 1.2 -- 0.6
+
     damage = BluePhysicalSpell(caster, target, spell, params)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
-	
-	if (chance < 75) then
-		randomize = math.random(1,30)
-		duration = duration - randomize
-		target:addStatusEffect(tpz.effect.ATTACK_DOWN, 25, 0, duration)
-	end
-	
-	chance = math.random(1,100)
-	
-	if (chance < 75) then
-		randomize = math.random(1,30)
-		duration = duration - randomize
-		target:addStatusEffect(tpz.effect.ACCURACY_DOWN, 25, 0, duration)
-	end
-	
-	if (chance < 75) then
-		randomize = math.random(1,30)
-		duration = duration - randomize
-		target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 25, 0, duration)
-	end
-	
-	caster:delStatusEffect(tpz.effect.UNBRIDLED_LEARNING)
+
+    if math.random(0, 100) < chance then
+        randomize = math.random(0, 50)
+        duration = duration * (1 - randomize)
+        target:addStatusEffect(tpz.effect.ATTACK_DOWN, 25, 0, duration)
+    end
+
+    if math.random(0, 100) < chance then
+        randomize = math.random(0, 50)
+        duration = duration * (1 - randomize)
+        target:addStatusEffect(tpz.effect.ACCURACY_DOWN, 50, 0, duration)
+    end
+
+    if math.random(0, 100) < chance then
+        randomize = math.random(0, 50)
+        duration = duration * (1 - randomize)
+        target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 25, 0, duration)
+    end
+
+    caster:delStatusEffect(tpz.effect.UNBRIDLED_LEARNING)
 
     return damage
 end

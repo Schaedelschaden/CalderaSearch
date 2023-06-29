@@ -27,7 +27,7 @@ function onSpellCast(caster,target,spell)
     -- printf("flash.lua onSpellCast  CASTER: [%s]  RESIST: [%1.4f]", caster:getName(), resist)
 
     if (resist > 0.0625) then
-        if (target:addStatusEffect(tpz.effect.FLASH, 200, 3, duration)) then
+        if (target:addStatusEffect(tpz.effect.FLASH, 200, 0, duration)) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)

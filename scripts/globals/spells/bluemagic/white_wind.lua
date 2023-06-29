@@ -26,7 +26,7 @@ function onSpellCast(caster, target, spell)
     local power = math.floor(target:getMaxHP() / 7) * 2
     local diff = (target:getMaxHP() - target:getHP())
 
-	local final = getCureFinal(caster, spell, power, power, true)
+	local final = getCureFinal(caster, target, spell, power, power, true)
 
     if (target:getAllegiance() == caster:getAllegiance() and (target:getObjType() == tpz.objType.PC or target:getObjType() == tpz.objType.MOB)) then
         --Applying server mods....

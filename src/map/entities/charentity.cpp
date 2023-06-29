@@ -336,6 +336,15 @@ void CCharEntity::setPetZoningInfo()
         switch (((CPetEntity*)PPet)->getPetType())
         {
         case PETTYPE_JUG_PET:
+            if (luautils::GetSettingsVariable("KEEP_JUGPET_THROUGH_ZONING") == 1)
+            {
+                petZoningInfo.petHP = PPet->health.hp;
+                petZoningInfo.petTP = PPet->health.tp;
+                petZoningInfo.petMP = PPet->health.mp;
+                petZoningInfo.petType = ((CPetEntity*)PPet)->getPetType();
+                break;
+            }
+            [[fallthrough]];
         case PETTYPE_AUTOMATON:
         case PETTYPE_WYVERN:
             petZoningInfo.petHP = PPet->health.hp;
@@ -774,8 +783,9 @@ bool CCharEntity::OnAttack(CAttackState& state, action_t& action)
             for (auto&& PPotentialTarget : this->SpawnMOBList)
             {
                 if (PPotentialTarget.second->animation == ANIMATION_ATTACK &&
-                    facing(this->loc.p, PPotentialTarget.second->loc.p, 64) &&
-                    distance(this->loc.p, PPotentialTarget.second->loc.p) <= 10)
+                    infront(this->loc.p, PPotentialTarget.second->loc.p, 64) &&
+                    // facing(this->loc.p, PPotentialTarget.second->loc.p, 64) &&
+                    distance(this->loc.p, PPotentialTarget.second->loc.p) <= 15)
                 {
                     std::unique_ptr<CBasicPacket> errMsg;
                     if (IsValidTarget(PPotentialTarget.second->targid, TARGET_ENEMY, errMsg))
@@ -1010,7 +1020,9 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
 
             if (primary)
             {
-                if (PWeaponSkill->getID() >= 192 && PWeaponSkill->getID() <= 218)
+                if (PWeaponSkill->getID() >= 193 && PWeaponSkill->getID() <= 203 || // All Archery WS's excluding Hybrid WS (Flaming Arrow)
+                    PWeaponSkill->getID() >= 209 && PWeaponSkill->getID() <= 216 || // All Marksmanship WS excluding Hybrid & Magical WS (Hot Shot,
+                    PWeaponSkill->getID() == 219 || PWeaponSkill->getID() == 221)   // Wildfire, Trueflight, and Leaden Salute)
                 {
                     uint16 recycleChance = getMod(Mod::RECYCLE) + PMeritPoints->GetMeritValue(MERIT_RECYCLE, this);
 
@@ -1098,6 +1110,29 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
 			}
         }
         battleutils::ClaimMob(PBattleTarget, this);
+
+        auto controller {static_cast<CPlayerController*>(PAI->GetController())};
+
+        if (PBattleTarget->isDead())
+        {
+            if (this->m_hasAutoTarget && PBattleTarget->objtype == TYPE_MOB) // Auto-Target
+            {
+                for (auto&& PPotentialTarget : this->SpawnMOBList)
+                {
+                    if (PPotentialTarget.second->animation == ANIMATION_ATTACK &&
+                        infront(this->loc.p, PPotentialTarget.second->loc.p, 64) &&
+                        // facing(this->loc.p, PPotentialTarget.second->loc.p, 64) &&
+                        distance(this->loc.p, PPotentialTarget.second->loc.p) <= 15)
+                    {
+                        std::unique_ptr<CBasicPacket> errMsg;
+                        if (IsValidTarget(PPotentialTarget.second->targid, TARGET_ENEMY, errMsg))
+                        {
+                            controller->ChangeTarget(PPotentialTarget.second->targid);
+                        }
+                    }
+                }
+            }
+        }
     }
     else
     {
@@ -1434,6 +1469,29 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 				// Trigger Treasure Hunter from single target ability
 				battleutils::ApplyTreasureHunter(this, PTarget, &actionTarget, false);
 			}
+
+            auto controller {static_cast<CPlayerController*>(PAI->GetController())};
+
+            if (PTarget->isDead())
+            {
+                if (this->m_hasAutoTarget && PTarget->objtype == TYPE_MOB) // Auto-Target
+                {
+                    for (auto&& PPotentialTarget : this->SpawnMOBList)
+                    {
+                        if (PPotentialTarget.second->animation == ANIMATION_ATTACK &&
+                            infront(this->loc.p, PPotentialTarget.second->loc.p, 64) &&
+                            // facing(this->loc.p, PPotentialTarget.second->loc.p, 64) &&
+                            distance(this->loc.p, PPotentialTarget.second->loc.p) <= 15)
+                        {
+                            std::unique_ptr<CBasicPacket> errMsg;
+                            if (IsValidTarget(PPotentialTarget.second->targid, TARGET_ENEMY, errMsg))
+                            {
+                                controller->ChangeTarget(PPotentialTarget.second->targid);
+                            }
+                        }
+                    }
+                }
+            }
         }
         PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
 
@@ -1502,10 +1560,90 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 	bool isCritical = false;
     bool isSange = false;
     bool isBarrage = StatusEffectContainer->HasStatusEffect(EFFECT_BARRAGE, 0);
+	bool followUpShot = false;
 	bool isFirstShot = false;
 	bool distanceSweetSpot = false;
 	float damagePenalty = 0.0f;
 	int16 rangedDelay = 0;
+
+    // SU3/Raetic Weapon Follow-Up
+    // https://www.bg-wiki.com/ffxi/Category:Superior_Equipment#Superior_3_(Su3)
+    if (this->getMod(Mod::CONSUME_MP_FOR_FOLLOWUP_RANGED) > 0)
+    {
+        JOBTYPE mJob   = this->GetMJob();
+        int16   maxMP  = this->health.maxmp + this->getMod(Mod::MP);
+        int16   reqMP  = (int16)(maxMP * 0.05f);
+        int16   currMP = this->health.mp;
+        int16   remMP  = -(int16)(maxMP * 0.05f);
+        int16   chance = (int16)(maxMP * 0.05f); // Jobs which natively have MP (2,000 Max MP = 100% chance)
+        int16   roll   = tpzrand::GetRandomNumber(100);
+
+        // Adjust the chance multiplier to account for jobs which do not natively have MP (800 MP = 100% chance)
+        switch (mJob)
+		{
+			case JOB_WAR:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_MNK:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_THF:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_BST:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_BRD:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_RNG:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_SAM:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_NIN:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_DRG:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_COR:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_PUP:   chance = (int16)(maxMP * 0.125f);   break;
+            case JOB_DNC:   chance = (int16)(maxMP * 0.125f);   break;
+			default: break;
+		}
+
+        if (chance > 100)
+        {
+            chance = 100;
+        }
+
+        if (currMP >= reqMP && roll < chance)
+        {
+            hitCount += 1;
+            followUpShot = true;
+            this->addMP(remMP);
+        }
+    }
+
+    // SU3/Raetic Weapon Ranged Attack/Accuracy bonus
+    // https://www.bg-wiki.com/ffxi/Category:Superior_Equipment#Superior_3_(Su3)
+    if (this->getMod(Mod::CONSUME_MP_DURING_RANGED_ATK) > 0)
+    {
+        JOBTYPE mJob   = this->GetMJob();
+        int16   maxMP  = this->health.maxmp + this->getMod(Mod::MP);
+        int16   reqMP  = (int16)(maxMP * 0.02f);
+        int16   currMP = this->health.mp;
+        int16   remMP  = -(int16)(maxMP * 0.02f);
+        int16   bonus  = (int16)(maxMP * 0.025f); // Jobs which natively have MP require 2,000 Max MP to receive +50 RATT
+
+        // Jobs which do not natively have MP require 800 Max MP to receive +50 RATT
+        switch (mJob)
+        {
+            case JOB_WAR:   bonus = (int16)(maxMP * 0.0625f);   break;
+            case JOB_MNK:   bonus = (int16)(maxMP * 0.0625f);   break;
+            case JOB_THF:   bonus = (int16)(maxMP * 0.0625f);   break;
+            case JOB_BST:   bonus = (int16)(maxMP * 0.0625f);   break;
+            case JOB_BRD:   bonus = (int16)(maxMP * 0.0625f);   break;
+            case JOB_RNG:   bonus = (int16)(maxMP * 0.0625f);   break;
+            case JOB_SAM:   bonus = (int16)(maxMP * 0.0625f);   break;
+            case JOB_NIN:   bonus = (int16)(maxMP * 0.0625f);   break;
+            case JOB_DRG:   bonus = (int16)(maxMP * 0.0625f);   break;
+            case JOB_COR:   bonus = (int16)(maxMP * 0.0625f);   break;
+            case JOB_PUP:   bonus = (int16)(maxMP * 0.0625f);   break;
+            case JOB_DNC:   bonus = (int16)(maxMP * 0.0625f);   break;
+            default: break;
+        }
+
+        if (currMP >= reqMP)
+        {
+            this->addMP(remMP);
+            this->setModifier(Mod::CONSUME_MP_RATT_RACC_BONUS, bonus);
+        }
+    }
 
     // if barrage is detected, getBarrageShotCount also checks for ammo count
     if (!ammoThrowing && !rangedThrowing && isBarrage)
@@ -1814,7 +1952,14 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 			actionTarget.messageID = 576;
 		}
 
-        actionTarget.param = battleutils::TakePhysicalDamage(this, PTarget, PHYSICAL_ATTACK_TYPE::RANGED, totalDamage, false, slot, realHits, nullptr, true, true);
+        PHYSICAL_ATTACK_TYPE physAtkType = PHYSICAL_ATTACK_TYPE::RANGED;
+
+        if (followUpShot == true)
+        {
+            physAtkType = PHYSICAL_ATTACK_TYPE::FOLLOWUP;
+        }
+
+        actionTarget.param = battleutils::TakePhysicalDamage(this, PTarget, physAtkType, totalDamage, false, slot, realHits, nullptr, true, true);
 
         // lower damage based on shadows taken
         if (shadowsTaken)

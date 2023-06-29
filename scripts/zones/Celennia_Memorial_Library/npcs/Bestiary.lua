@@ -56,30 +56,59 @@ local rewards =
     {
         furniture =
         {
-            
+            3650, -- Prinseggstarta
+            455,  -- Egg Buffet
+            454,  -- Egg Lantern
+            451,  -- Egg Stool
+            452,  -- Egg Table
+            453,  -- Egg Locker
+            199,  -- Hatchling Egg
+            197,  -- Clockwork Egg
+            196,  -- Melodious Egg
+            179,  -- Jeweled Egg
+            119,  -- Flower Egg
+            118,  -- Lamp Egg
+            117,  -- Wind Egg
         },
         food =
         {
-            
+            5294, -- Hume Rice Cake
+            5295, -- Elvaan Rice Cake
+            5297, -- Mithra Rice Cake
+            5296, -- Taru Rice Cake
+            5894, -- Prime Marine Stewpot
+            5545, -- Prime Crab Stewpot
         },
         gear =
         {
-            
+            26965, -- To Moka
+            27291, -- Swimming Toggs
+            27293, -- Cossie Bottom
+            26967, -- Cossie Top
         },
     },
     summer =
     {
         furniture =
         {
-            
+            3643, -- carillon-vermeil
+            3644, -- aeolsglocke
+            3645, -- leafbell
         },
         food =
         {
-            
+            6575, -- cheesestk-sand -- DPS
+            6579, -- behemoth-sand -- DPS
+            6580, -- rustic-fish -- MACC
+            6581, -- cornbread -- MAB
         },
         gear =
         {
-            
+            15177, -- horror-head-ii
+            17588, -- treat-staff-ii
+            26708, -- flan-masque-1
+            10447, -- pyracmon-cap
+            11301, -- eerie-cloak-1
         },
     },
     autumn =
@@ -115,7 +144,11 @@ function onTrigger(player, target)
         elseif month >= 6 and month <= 8 then
             rewardFurniture = rewards.summer.furniture[math.random(#rewards.summer.furniture)]
             rewardFood      = rewards.summer.food[math.random(#rewards.summer.food)]
-            rewardGear      = rewards.summer.gear[math.random(#rewards.summer.gear)]
+            if (player:getGender() == 1) then -- Male
+                rewardGear  = rewards.summer.gear[math.random(1, 2)]
+            else 
+                rewardGear  = rewards.summer.gear[math.random(3, 4)]
+            end
         elseif month >= 9 and month <= 11 then
             rewardFurniture = rewards.autumn.furniture[math.random(#rewards.autumn.furniture)]
             rewardFood      = rewards.autumn.food[math.random(#rewards.autumn.food)]

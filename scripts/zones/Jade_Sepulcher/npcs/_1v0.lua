@@ -12,12 +12,15 @@ require("scripts/globals/bcnm")
 function onTrade(player, npc, trade)
 end
 
-function onTrigger(player, npc)
+function onTrigger(player, npc)  
     if player:getCurrentMission(TOAU) == tpz.mission.id.toau.PUPPET_IN_PERIL and player:getCharVar("AhtUrganStatus") == 0 then
         player:startEvent(4)
+    -- Besieged effect found
+    elseif not EventTriggerBCNM(player, npc) then
+        player:PrintToPlayer(string.format("Battlefield is currently occupied with another player, please check back shortly."),tpz.msg.channel.NS_SAY)
     elseif EventTriggerBCNM(player, npc) then
         return
-    end
+    end   
 end
 
 function onEventUpdate(player, csid, option, extras)

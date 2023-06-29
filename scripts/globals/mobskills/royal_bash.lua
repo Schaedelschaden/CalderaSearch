@@ -26,9 +26,20 @@ function onMobWeaponSkill(target, mob, skill)
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 2, 3)
     local dmg  = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded)
 
-    local typeEffect = tpz.effect.STUN
+    local status = MobStatusEffectMove(mob, target, tpz.effect.STUN, 1, 0, 7)
 
-    MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 1, 0, 4)
+    if
+        status and
+        target:isMob()
+    then
+        local addImmunity = 30
+
+        if not target:isNM() then
+            addImmunity = 10
+        end
+
+        target:addMod(tpz.mod.IMMUNITY_STUN, addImmunity)
+    end
 
     return dmg
 end

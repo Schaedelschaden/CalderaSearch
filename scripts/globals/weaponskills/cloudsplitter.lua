@@ -28,7 +28,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.includemab = true
 	params.specialWSDMG = player:getMod(tpz.mod.CLOUDSPLITTER_DMG)
 	
-	if (player:getEquipID(tpz.slot.MAIN) == 20808) then
+	if player:getEquipID(tpz.slot.MAIN) == 20808 then
 		params.bonusmab = 300
 	end
 
@@ -36,10 +36,12 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         params.ftp200 = 6.6992 params.ftp300 = 8.5
     end
 
-    -- Apply aftermath
-    tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.EMPYREAN)
-
     local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
+
+    -- Apply aftermath
+    if damage > 0 and player:isPC() then
+        tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.EMPYREAN)
+    end
 
     return tpHits, extraHits, criticalHit, damage
 end

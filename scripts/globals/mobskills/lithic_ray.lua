@@ -1,8 +1,8 @@
 ---------------------------------------------
 -- Lithic Ray
 --
--- Description: Inflicts Doom upon an enemy.
--- Type: Magical (Dark)
+-- Description: Inflicts Dia and Petrification in a conal area gaze attack.
+-- Type: Gaze
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")
@@ -14,9 +14,14 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local typeEffect = tpz.effect.DOOM
+    local typeEffect1 = tpz.effect.PETRIFICATION
+    local typeEffect2 = tpz.effect.DIA
 
-    skill:setMsg(MobGazeMove(mob, target, typeEffect, 10, 3, 30))
+    skill:setMsg(MobGazeMove(mob, target, typeEffect1, 1, 0, 30))
+
+    if skill:getMsg() ~= tpz.msg.basic.SKILL_MISS then
+        target:addStatusEffect(typeEffect2, 50, 0, 30, 0, 20, 3)
+    end
 
     return typeEffect
 end

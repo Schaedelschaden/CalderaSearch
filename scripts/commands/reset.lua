@@ -38,8 +38,8 @@ function onTrigger(player, target)
         player:PrintToPlayer( string.format( "Reset %s's recast timers.", targ:getName() ) )
     end
 
-    -- Clear debilitating effects from player
-    player:eraseAllStatusEffect()
+    -- Clear debilitating effects from target
+    targ:eraseAllStatusEffect()
 
     -- Table of non-erasable effects
     local effects =
@@ -62,6 +62,6 @@ function onTrigger(player, target)
     }
 
     for _, v in pairs(effects) do
-        player:delStatusEffect(v)
+        targ:delStatusEffect(v)
     end
 end

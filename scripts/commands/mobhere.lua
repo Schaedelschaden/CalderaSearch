@@ -6,7 +6,7 @@
 
 cmdprops =
 {
-    permission = 1,
+    permission = 0,
     parameters = "is"
 }
 
@@ -16,32 +16,34 @@ function error(player, msg)
 end
 
 function onTrigger(player, mobId, noDepop)
-    -- validate mobId
-    local targ
-    if (mobId == nil) then
-        targ = player:getCursorTarget()
-        if (targ == nil or not targ:isMob()) then
-            error(player, "You must either provide a mobID or target a mob.")
-            return
+    if player:getGMLevel() > 0 or player:getName() == "Shinokage" then
+        -- validate mobId
+        local targ
+        if (mobId == nil) then
+            targ = player:getCursorTarget()
+            if (targ == nil or not targ:isMob()) then
+                error(player, "You must either provide a mobID or target a mob.")
+                return
+            end
+        else
+            targ = GetMobByID(mobId)
+            if (targ == nil) then
+                error(player, "Invalid mobID.")
+                return
+            end
         end
-    else
-        targ = GetMobByID(mobId)
-        if (targ == nil) then
-            error(player, "Invalid mobID.")
-            return
-        end
-    end
-    mobId = targ:getID()
+        mobId = targ:getID()
 
-    -- attempt to bring mob here
-    SpawnMob( mobId )
-    if (player:getZoneID() == targ:getZoneID()) then
-        targ:setPos( player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID() )
-    else
-        if (noDepop == nil or noDepop == 0) then
-            DespawnMob( mobId )
-            player:PrintToPlayer("Despawned the mob because of an error.")
+        -- attempt to bring mob here
+        SpawnMob( mobId )
+        if (player:getZoneID() == targ:getZoneID()) then
+            targ:setPos( player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID() )
+        else
+            if (noDepop == nil or noDepop == 0) then
+                DespawnMob( mobId )
+                player:PrintToPlayer("Despawned the mob because of an error.")
+            end
+            player:PrintToPlayer("Mob could not be moved to current pos - you are probably in the wrong zone.")
         end
-        player:PrintToPlayer("Mob could not be moved to current pos - you are probably in the wrong zone.")
     end
 end

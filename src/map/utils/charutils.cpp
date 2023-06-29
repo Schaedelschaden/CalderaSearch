@@ -3891,8 +3891,16 @@ namespace charutils
 
         if (!expFromRaise)
         {
-            exp = (uint32)(exp * map_config.exp_rate);
+            uint32 amount = (uint32)(exp * map_config.exp_rate);
+
+            if (charutils::GetCharVar(PChar, "ClassicMode") > 0)
+            {
+                amount = exp;
+            }
+
+            exp = amount;
         }
+
         uint16 currentExp = PChar->jobs.exp[PChar->GetMJob()];
         bool onLimitMode = false;
 

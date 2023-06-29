@@ -5024,6 +5024,54 @@ inline int32 CLuaBaseEntity::getName(lua_State *L)
 }
 
 /************************************************************************
+ *  Function: getPacketName()
+ *  Purpose : Returns the string packet name of the character
+ *  Example : mob:getPacketName()
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::getPacketName(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    // lua_pushstring(L, (const char*)m_PBaseEntity->packetName);
+
+    return 1;
+}
+
+/************************************************************************
+ *  Function: renameEntity()
+ *  Purpose : Overrides the visible name of the entity.
+ *  Example : mob:renameEntity("NewName")
+ *  Note    : This will set the packet name of the entity to a name of
+ *          : your choosing.
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::renameEntity(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        ShowWarning("Renaming player character entities isn't supported.");
+        return 0;
+    }
+
+    auto oldName              = m_PBaseEntity->packetName.empty() ? "<empty>" : m_PBaseEntity->packetName;
+    const char* newName       = lua_tostring(L, 1);
+    m_PBaseEntity->packetName = newName;
+    m_PBaseEntity->updatemask |= UPDATE_NAME | UPDATE_HP;
+    m_PBaseEntity->isRenamed = true;
+
+    // bool silent = arg2.get_type() == sol::type::boolean ? arg2.as<bool>() : false;
+    // if (!silent)
+    // {
+    ShowInfo("Renaming %s: %s -> %s", m_PBaseEntity->name, oldName, newName);
+    // }
+    return 1;
+}
+
+/************************************************************************
 *  Function: hideName()
 *  Purpose : Hides the name of the entity
 *  Example : mob:hideName()
@@ -5130,6 +5178,87 @@ inline int32 CLuaBaseEntity::setModelId(lua_State* L)
         m_PBaseEntity->SetModelId((uint16)lua_tointeger(L, 1));
     }
     m_PBaseEntity->updatemask |= UPDATE_LOOK;
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: setFace()
+*  Purpose : Updates the player's face model to the provided ID
+*  Example : player:setFace(27)
+*  Notes   : "Normal" faces are 0-26, Fomor faces are 27 & 29, Mannequin head is 30
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setFace(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+    int8 value = (int8)lua_tointeger(L, 1);
+
+    const char* fmtQuery = "UPDATE char_look SET face = %i WHERE charid = %i;";
+
+    Sql_Query(SqlHandle, fmtQuery, value, m_PBaseEntity->id);
+
+    PChar->pushPacket(new CCharAppearancePacket(PChar));
+    PChar->updatemask |= UPDATE_LOOK;
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: setRace()
+*  Purpose : Updates the player's racial model to the provided ID
+*  Example : player:setRace(4)
+*  Notes   : See status.lua tpz.race for racial ID's
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setRace(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+    int8 value = (int8)lua_tointeger(L, 1);
+
+    const char* fmtQuery = "UPDATE char_look SET race = %i WHERE charid = %i;";
+
+    Sql_Query(SqlHandle, fmtQuery, value, m_PBaseEntity->id);
+
+    PChar->pushPacket(new CCharAppearancePacket(PChar));
+    PChar->updatemask |= UPDATE_LOOK;
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: setSize()
+*  Purpose : Updates the player's character size to the provided ID
+*  Example : player:setSize(2)
+*  Notes   : Sizes go from 0-2
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setSize(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+    int8 value = (int8)lua_tointeger(L, 1);
+
+    const char* fmtQuery = "UPDATE char_look SET size = %i WHERE charid = %i;";
+
+    Sql_Query(SqlHandle, fmtQuery, value, m_PBaseEntity->id);
+
+    PChar->pushPacket(new CCharAppearancePacket(PChar));
+    PChar->updatemask |= UPDATE_LOOK;
 
     return 0;
 }
@@ -15060,6 +15189,27 @@ inline int32 CLuaBaseEntity::untargetable(lua_State* L)
 }
 
 /************************************************************************
+*  Function: setCallForHelp()
+*  Purpose : Forcibly activates/deactivates a mob's Call for Help flag
+*  Example : mob:setCallForHelp(true) or mob:setCallForHelp(false)
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setCallForHelp(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isboolean(L, 1));
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+
+    if (m_PBaseEntity->objtype == TYPE_MOB)
+    {
+        ((CMobEntity*)m_PBaseEntity)->CallForHelp(lua_toboolean(L, 1));
+    }
+
+    return 0;
+}
+
+/************************************************************************
 *  Function: setDelay()
 *  Purpose : Override default delay settings for a Mob
 *  Example : mob:setDelay(2400)
@@ -16199,10 +16349,15 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRace),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getGender),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getName),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPacketName),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,renameEntity),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hideName),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkNameFlags),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getModelId),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setModelId),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setFace),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setRace),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setSize),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,costume),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,costume2),
 
@@ -16664,6 +16819,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setTrueDetection),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setUnkillable),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,untargetable),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setCallForHelp),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setDelay),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setDamage),

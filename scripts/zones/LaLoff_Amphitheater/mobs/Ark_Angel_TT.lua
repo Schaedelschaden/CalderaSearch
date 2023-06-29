@@ -6,6 +6,8 @@ mixins = {require("scripts/mixins/job_special")}
 require("scripts/globals/status")
 -----------------------------------
 
+-- Put in a spell cooldown
+
 local divineMightID = {17514526, 17514534, 17514542}
 local aaID = {{17514521, 17514522, 17514525, 17514527},
 			  {17514529, 17514530, 17514533, 17514535},
@@ -20,6 +22,7 @@ function onMobSpawn(mob)
 
 	mob:setMobMod(tpz.mobMod.SKILL_LIST, 0)
     mob:setMobMod(tpz.mobMod.MOBMOD_TELEPORT_CD, 3000)
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 10)
     tpz.mix.jobSpecial.config(mob, {
         between = 30,
         specials =
@@ -44,7 +47,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.PETRIFYRES, 50) -- Resistance to Pertrify
     mob:setMod(tpz.mod.POISONRES, 30) -- Resistance to Poison
 	-- mob:setMod(tpz.mod.ATT, 1500) -- Attack Stat (Compare to DEF)
-	mob:setMod(tpz.mod.MATT, 200) -- Magic Attack (Compare to MDEF)
+	mob:setMod(tpz.mod.MATT, 180) -- Magic Attack (Compare to MDEF)
     -- mob:setMod(tpz.mod.ACC, 800) -- Accuracy (compare to EVA)
 	mob:setMod(tpz.mod.MACC, 650) -- Magic ACC (Compare to MEVA)
 	-- mob:setMod(tpz.mod.EVA, 800) -- Evasion (Compare to ACC)
@@ -52,7 +55,7 @@ function onMobSpawn(mob)
 	-- mob:setMod(tpz.mod.MEVA, 100) -- Magic Evasion (Compare to MACC)
 	mob:setMod(tpz.mod.MDEF, 150) -- Magic Defense (Compare to MATT)
 	mob:setMod(tpz.mod.QUICK_MAGIC, 35) -- Instant Cast in %
-	mob:setMod(tpz.mod.FASTCAST, 65) -- Speeds spellcasting
+	mob:setMod(tpz.mod.FASTCAST, 15) -- Speeds spellcasting
 	mob:addMod(tpz.mod.REFRESH, 100)
 	mob:setMod(tpz.mod.REGEN, 250)
 --	mob:setMod(tpz.mod.REGAIN, 100)

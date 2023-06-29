@@ -27,6 +27,7 @@ function onMobWeaponSkill(target, mob, skill)
         skill:setMsg(tpz.msg.basic.SHADOW_ABSORB)
     else
         skill:setMsg(tpz.msg.basic.HIT_DMG)
+        mob:addTP(200)
     end
 
     target:addStatusEffect(tpz.effect.POISON, 50, 3, 120)

@@ -80,7 +80,7 @@ local items = {
 }
 
 function onTrade(player, npc, trade)
-    unionRepresentativeTrade(player, npc, trade, 732, 1)
+		unionRepresentativeTrade(player, npc, trade, 732, 1)    
 end
 
 function onTrigger(player, npc)

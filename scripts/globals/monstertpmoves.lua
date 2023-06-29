@@ -10,13 +10,13 @@ require("scripts/globals/msg")
 
 -- mob types
 -- used in mob:isMobType()
-MOBTYPE_NORMAL            = 0x00
-MOBTYPE_0X01             = 0x01
-MOBTYPE_NOTORIOUS        = 0x02
-MOBTYPE_FISHED            = 0x04
-MOBTYPE_CALLED            = 0x08
-MOBTYPE_BATTLEFIELD        = 0x10
-MOBTYPE_EVENT            = 0x20
+MOBTYPE_NORMAL      = 0x00
+MOBTYPE_0X01        = 0x01
+MOBTYPE_NOTORIOUS   = 0x02
+MOBTYPE_FISHED      = 0x04
+MOBTYPE_CALLED      = 0x08
+MOBTYPE_BATTLEFIELD = 0x10
+MOBTYPE_EVENT       = 0x20
 
 MOBDRAIN_HP = 0
 MOBDRAIN_MP = 1
@@ -24,23 +24,24 @@ MOBDRAIN_TP = 2
 
 --shadowbehav (number of shadows to take off)
 MOBPARAM_IGNORE_SHADOWS = 0
-MOBPARAM_1_SHADOW = 1
-MOBPARAM_2_SHADOW = 2
-MOBPARAM_3_SHADOW = 3
-MOBPARAM_4_SHADOW = 4
-MOBPARAM_WIPE_SHADOWS = 999
+MOBPARAM_1_SHADOW       = 1
+MOBPARAM_2_SHADOW       = 2
+MOBPARAM_3_SHADOW       = 3
+MOBPARAM_4_SHADOW       = 4
+MOBPARAM_WIPE_SHADOWS   = 999
 
-TP_ACC_VARIES = 0
-TP_ATK_VARIES = 1
-TP_DMG_VARIES = 2
-TP_CRIT_VARIES = 3
-TP_NO_EFFECT = 0
-TP_MACC_BONUS = 1
-TP_MAB_BONUS = 2
-TP_DMG_BONUS = 3
-TP_RANGED = 4
 
-BOMB_TOSS_HPP = 1
+TP_ACC_VARIES  = 0
+TP_ATK_VARIES  = 1
+TP_DMG_VARIES  = 2
+TP_DMG_BONUS   = 3
+TP_CRIT_VARIES = 4
+TP_RANGED      = 5
+TP_NO_EFFECT   = 6
+TP_MACC_BONUS  = 7
+TP_MAB_BONUS   = 8
+
+BOMB_TOSS_HPP  = 9
 
 function MobRangedMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeffect)
     -- this will eventually contian ranged attack code
@@ -52,77 +53,82 @@ end
 -- accmod is a linear multiplier for accuracy (1 default)
 -- dmgmod is a linear multiplier for damage (1 default)
 -- tpeffect is an enum which can be one of:
--- 0 TP_ACC_VARIES
--- 1 TP_ATK_VARIES
--- 2 TP_DMG_VARIES
--- 3 TP_CRIT_VARIES
+-- 1 TP_ACC_VARIES
+-- 2 TP_ATK_VARIES
+-- 3 TP_DMG_VARIES
+-- 4 TP_CRIT_VARIES
 -- mtp100/200/300 are the three values for 100% TP, 200% TP, 300% TP just like weaponskills.lua
--- if TP_ACC_VARIES -> three values are acc %s (1.0 is 100% acc, 0.8 is 80% acc, 1.2 is 120% acc)
--- if TP_ATK_VARIES -> three values are attack multiplier (1.5x 0.5x etc)
--- if TP_DMG_VARIES -> three values are
+-- if TP_ACC_VARIES  -> three values are acc %s (1.0 is 100% acc, 0.8 is 80% acc, 1.2 is 120% acc)
+-- if TP_ATK_VARIES  -> three values are attack multiplier (1.5x 0.5x etc)
+-- if TP_DMG_VARIES  -> three values are
+-- if TP_CRIT_VARIES -> three values are +% Critical Hit Rate (e.g. 10 = +10%, 35 = +35%, 50 = +50%, etc.)
 
 function MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeffect, mtp000, mtp150, mtp300, offcratiomod)
+    if tpeffect == 6 then
+        mtp000 = 1
+        mtp150 = 1
+        mtp300 = 1
+    end
+
+    -- if
+        -- skill:getID() ~= 272 and -- Ranged Attack
+        -- (tpeffect == nil or
+         -- mtp000 == nil or
+         -- mtp150 == nil or
+         -- mtp300 == nil)
+    -- then
+        -- printf("monstertpmoves.lua MobPhysicalMove  !!! SOMETHING IS NIL !!!")
+        -- printf("monstertpmoves.lua MobPhysicalMove  SKILL ID: [%i]  TP EFFECT: [%s]  MTP000: [%s]  MTP150: [%s]  MTP300: [%s]", skill:getID(), tpeffect, mtp000, mtp150, mtp300)
+    -- end
+
     local returninfo = {}
+    local params     = {}
+        params.tp        = skill:getTP()
+        params.tpEffect  = tpeffect
+        params.mtp000    = mtp000
+        params.mtp150    = mtp150
+        params.mtp300    = mtp300
+        params.cRatioMod = offcratiomod
+
+    local mobLvl  = mob:getMainLvl()
+    local targLvl = target:getMainLvl()
+
+    if target:getObjType() == tpz.objType.PC then
+        targLvl = targLvl + target:getItemLevel()
+    end
+
+    local diffLvl = mobLvl - targLvl
+
+    if diffLvl < 0 then
+        diffLvl = 0
+    end
 
     --get dstr (bias to monsters, so no fSTR)
     local dstr = mob:getStat(tpz.mod.STR) - target:getStat(tpz.mod.VIT)
-    if (dstr < -10) then
+
+    if dstr < -10 then
         dstr = -10
     end
 
-    if (dstr > 10) then
+    if dstr > 10 then
         dstr = 10
     end
 
-    local lvluser = mob:getMainLvl()
-    local lvltarget = target:getMainLvl()
-	
-	-- TODO: This needs to be activated when rebalancing mob stats
-	-- if (target:getObjType() == tpz.objType.PC) then
-		-- lvltarget = lvltarget + target:getItemLevel()
-	-- end
-	
-    local acc = mob:getACC()
-    local eva = target:getEVA()
-    if (target:hasStatusEffect(tpz.effect.YONIN) and mob:isFacing(target, 23)) then -- Yonin evasion boost if mob is facing target
-        eva = eva + target:getStatusEffect(tpz.effect.YONIN):getPower()
-    end
-	
-	-- Foil "special attack" evasion bonus
-	if (target:hasStatusEffect(tpz.effect.FOIL)) then
-		eva = eva * (1 + (target:getMod(tpz.mod.TP_MOVE_EVASION) / 100))
-	end
-
     --apply WSC
     local base = mob:getWeaponDmg() + dstr --todo: change to include WSC
-    if (base < 1) then
+
+    if base < 1 then
         base = 1
     end
 
-    --work out and cap ratio
-    if (offcratiomod == nil) then -- default to attack. Pretty much every physical mobskill will use this, Cannonball being the exception.
-        offcratiomod = mob:getStat(tpz.mod.ATT)
-        -- print ("Nothing passed, defaulting to attack")
-    end
-    local ratio = offcratiomod/target:getStat(tpz.mod.DEF)
+    -- work out the base damage for a single hit
+    local hitdamage = base + diffLvl
 
-    local lvldiff = lvluser - lvltarget
-    if lvldiff < 0 then
-        lvldiff = 0
+    if mob:getLocalVar("AUDIT_MOBSKILL") > 0 then
+        printf("monstertpmoves.lua MobPhysicalMove HIT DMG: [%i] = BASE: [%i] + LVL DIFF: [%i]", hitdamage, base, diffLvl)
     end
 
-    ratio = ratio + lvldiff * 0.05
-    ratio = utils.clamp(ratio, 0, 4)
-
-    --work out hit rate for mobs (bias towards them)
-    local hitrate = (acc*accmod) - eva + (lvldiff*2) + 75
-
-    -- printf("acc: %f, eva: %f, hitrate: %f", acc, eva, hitrate)
-    hitrate = utils.clamp(hitrate, 20, 95)
-
-    --work out the base damage for a single hit
-    local hitdamage = base + lvldiff
-    if (hitdamage < 1) then
+    if hitdamage < 1 then
         hitdamage = 1
     end
 
@@ -130,113 +136,199 @@ function MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeff
         printf("monstertpmoves.lua MobPhysicalMove  MOB SKILL: [%i] DMGMOD IS NIL!", skill:getID())
     end
 
+    if mob:getLocalVar("AUDIT_MOBSKILL") > 0 then
+        printf("monstertpmoves.lua MobPhysicalMove HIT DMG: [%i] = BASE: [%i] * DMG MOD: [%1.2f]", hitdamage * dmgmod, hitdamage, dmgmod)
+    end
+
     hitdamage = hitdamage * dmgmod
 
-    if (tpeffect == TP_DMG_VARIES) then
---		printf("monstertpmoves.lua MobPhysicalMove  TP: [%i]  ENH SIC/READY: [%i]  MOB TP MOD: [%i]", skill:getTP(), mob:getMod(tpz.mod.ENH_SIC_READY), MobTPMod(skill:getTP() + mob:getMod(tpz.mod.ENH_SIC_READY)))
+    if tpeffect == TP_DMG_VARIES then
+        if mob:getLocalVar("AUDIT_MOBSKILL") > 0 then
+            printf("monstertpmoves.lua MobPhysicalMove  TP_DMG_VARIES  TP: [%i]  ENH SIC/READY: [%i]  MOB TP MOD: [%i]", skill:getTP(), mob:getMod(tpz.mod.ENH_SIC_READY), MobTPMod(skill:getTP() + mob:getMod(tpz.mod.ENH_SIC_READY)))
+        end
+
         hitdamage = hitdamage * MobTPMod(skill:getTP() + mob:getMod(tpz.mod.ENH_SIC_READY))
     end
 
-    --work out min and max cRatio
-    local maxRatio = 1
-    local minRatio = 0
+    -- Calculate Attack/Defense ratio
+    local cRatio, cCritRatio = cMeleeRatioMob(mob, target, params)
 
-    if (ratio < 0.5) then
-        maxRatio = ratio + 0.5
-    elseif ((0.5 <= ratio) and (ratio <= 0.7)) then
-        maxRatio = 1
-    elseif ((0.7 < ratio) and (ratio <= 1.2)) then
-        maxRatio = ratio + 0.3
-    elseif ((1.2 < ratio) and (ratio <= 1.5)) then
-        maxRatio = (ratio * 0.25) + ratio
-    elseif ((1.5 < ratio) and (ratio <= 2.625)) then
-        maxRatio = ratio + 0.375
-    elseif ((2.625 < ratio) and (ratio <= 3.25)) then
-        maxRatio = 3
-    else
-        maxRatio = ratio
+    local minRatio = cRatio[1]
+    local maxRatio = cRatio[2]
+
+    local critHitRate = 0
+    local sneakBonus  = 0
+
+    -- Calculate Critical Hit Rate only if "Chance of critical varies with TP"
+    if tpeffect == TP_CRIT_VARIES then
+        local baseCrit  = 5
+        local diffBonus = 0
+        local dDEX      = mob:getStat(tpz.mod.DEX) - target:getStat(tpz.mod.AGI)
+        local ftpBonus  = fTPMob(skill:getTP(), mtp000, mtp150, mtp300)
+
+        -- Calculate Critical Hit Rate bonus from DEX vs AGI difference
+        if dDEX <= 6 then
+            diffBonus = 0
+        elseif dDEX <= 13 then
+            diffBonus = 1
+        elseif dDEX <= 19 then
+            diffBonus = 2
+        elseif dDEX <= 29 then
+            diffBonus = 3
+        elseif dDEX <= 39 then
+            diffBonus = 4
+        elseif dDEX >= 40 then
+            diffBonus = dDEX - 35
+        end
+
+        -- https://www.bg-wiki.com/ffxi/Critical_Hit_Rate
+        -- Cap Critical Hit Rate bonus from dDEX
+        diffBonus = utils.clamp(diffBonus, 0, 15)
+
+        -- Calculate final Critical Hit Rate and cap
+        -- TODO: Add Enemy Critical Hit Rate reduction mod
+        critHitRate = utils.clamp((baseCrit + diffBonus + ftpBonus), 0, 100)
+
+        if mob:getLocalVar("AUDIT_MOBSKILL") > 0 then
+            printf("monstertpmoves.lua MobPhysicalMove CRIT HIT RATE: [%i] = BASE: [%i] + dDEX BONUS: [%i] + FTP BONUS: [%i]", critHitRate, baseCrit, diffBonus, ftpBonus)
+        end
+    elseif
+        mob:hasStatusEffect(tpz.effect.SNEAK_ATTACK) and
+        mob:isBehind(target)
+    then
+        critHitRate = 100
+        sneakBonus  = mob:getStat(tpz.mod.DEX) * (1 + mob:getMod(tpz.mod.SNEAK_ATK_DEX) / 100)
+
+        if mob:getLocalVar("AUDIT_MOBSKILL") > 0 then
+            printf("monstertpmoves.lua MobPhysicalMove CRIT HIT RATE: [%i]  SNEAK ATTACK BONUS: [%i] = DEX: [%i] * SNEAK ATTACK DEX BONUS: [%1.2f]", critHitRate, sneakBonus, mob:getStat(tpz.mod.DEX), 1 + (mob:getMod(tpz.mod.SNEAK_ATK_DEX) / 100))
+        end
+
+        mob:delStatusEffect(tpz.effect.SNEAK_ATTACK)
     end
 
-    if (ratio < 0.38) then
-        minRatio =  0
-    elseif ((0.38 <= ratio) and (ratio <= 1.25)) then
-        minRatio = ratio * (1176 / 1024) - (448 / 1024)
-    elseif ((1.25 < ratio) and (ratio <= 1.51)) then
-        minRatio = 1
-    elseif ((1.51 < ratio) and (ratio <= 2.44)) then
-        minRatio = ratio * (1176 / 1024) - (775 / 1024)
-    else
-        minRatio = ratio - 0.375
+    -- Check if the first hit is a critical
+    if math.random(1, 100) <= critHitRate then
+        -- Use Critical Hit pDIF value
+        minRatio = cCritRatio[1]
+        maxRatio = cCritRatio[2]
     end
 
-    --apply ftp (assumes 1~3 scalar linear mod)
-    if (tpeffect==TP_DMG_BONUS) then
-        hitdamage = hitdamage * fTP(skill:getTP(), mtp000, mtp150, mtp300)
+    -- apply ftp (assumes 1~3 scalar linear mod)
+    if tpeffect == TP_DMG_BONUS then
+        if mob:getLocalVar("AUDIT_MOBSKILL") > 0 then
+            printf("monstertpmoves.lua MobPhysicalMove TP_DMG_BONUS")
+            printf("monstertpmoves.lua MobPhysicalMove     HIT DAMAGE: [%i] = BASE: [%i] * fTP: [%1.2f]", hitdamage * fTPMob(skill:getTP(), mtp000, mtp150, mtp300), hitdamage, fTPMob(skill:getTP(), mtp000, mtp150, mtp300))
+        end
+    
+        hitdamage = hitdamage * fTPMob(skill:getTP(), mtp000, mtp150, mtp300)
     end
-
-    --Applying pDIF
-    local pdif = 0
 
     -- start the hits
-    local hitchance = math.random()
-    local finaldmg = 0
-    local hitsdone = 1
-    local hitslanded = 0
+    local hitChance  = math.random(1, 100)
+    local finalDmg   = 0
+    local hitsDone   = 1
+    local hitsLanded = 0
+    local acc        = mob:getACC()
+    local eva        = target:getEVA()
 
-    local chance = math.random()
+    if
+        target:hasStatusEffect(tpz.effect.YONIN) and
+        mob:isFacing(target, 23)
+    then -- Yonin evasion boost if mob is facing target
+        eva = eva + target:getStatusEffect(tpz.effect.YONIN):getPower()
+    end
+
+    -- Foil "special attack" evasion bonus
+    if target:hasStatusEffect(tpz.effect.FOIL) then
+        eva = eva + target:getMod(tpz.mod.TP_MOVE_EVASION)
+    end
+
+    -- work out hit rate for mobs (bias towards them)
+    local hitrate = (acc * accmod) - eva + (diffLvl * 2) + 75
+
+    -- printf("acc: %f, eva: %f, hitrate: %f", acc, eva, hitrate)
+    hitrate = utils.clamp(hitrate, 20, 95)
+
+    if mob:getLocalVar("AUDIT_MOBSKILL") > 0 then
+        printf("monstertpmoves.lua MobPhysicalMove BASE HIT RATE: [%i] = (ACC: [%i] * ACC MOD: [%1.2f]) - EVA: [%i] + (LVL DIFF: [%i] * 2) + 75", hitrate, acc, accmod, eva, diffLvl)
+    end
 
     -- first hit has a higher chance to land
     local firstHitChance = hitrate * 1.5
 
-    if (tpeffect==TP_RANGED) then
+    if tpeffect == TP_RANGED then
         firstHitChance = hitrate * 1.2
     end
 
     firstHitChance = utils.clamp(firstHitChance, 35, 95)
 
-    if ((chance*100) <= firstHitChance) then
-        pdif = math.random((minRatio*1000), (maxRatio*1000)) --generate random PDIF
-        pdif = pdif/1000 --multiplier set.
-        finaldmg = finaldmg + hitdamage * pdif
-        hitslanded = hitslanded + 1
+    if mob:getLocalVar("AUDIT_MOBSKILL") > 0 then
+        printf("monstertpmoves.lua MobPhysicalMove FIRST HIT CHANCE: [%i]", firstHitChance)
     end
-    while (hitsdone < numberofhits) do
-        chance = math.random()
-        if ((chance*100)<=hitrate) then --it hit
-            pdif = math.random((minRatio*1000), (maxRatio*1000)) --generate random PDIF
-            pdif = pdif/1000 --multiplier set.
-            finaldmg = finaldmg + hitdamage * pdif
-            hitslanded = hitslanded + 1
+
+    -- Select pDIF
+    local pDif
+
+    if hitChance <= firstHitChance then
+        -- Generate pDIF for the first hit
+        pDif = generatePdif(minRatio, maxRatio)
+
+        if mob:getLocalVar("AUDIT_MOBSKILL") > 0 then
+            printf("monstertpmoves.lua MobPhysicalMove HIT #1 - pDIF = [%1.2f]", pDif)
         end
-        hitsdone = hitsdone + 1
+
+        if mob:getLocalVar("AUDIT_MOBSKILL") > 0 then
+            printf("monstertpmoves.lua MobPhysicalMove FIRST HIT DMG: [%i] = (BASE DMG: [%i] + HIT DMG: [%i] + SNEAK BONUS: [%i]) * pDIF: [%1.2f]", (finalDmg + hitdamage + sneakBonus) * pDif, finalDmg, hitdamage, sneakBonus, pDif)
+        end
+
+        finalDmg   = (finalDmg + hitdamage + sneakBonus) * pDif
+        hitsLanded = hitsLanded + 1
+    else
+        if mob:getLocalVar("AUDIT_MOBSKILL") > 0 then
+            printf("monstertpmoves.lua MobPhysicalMove MISS!")
+        end
     end
 
-    if
-        mob:hasStatusEffect(tpz.effect.SNEAK_ATTACK) and
-        mob:isBehind(target)
-    then
-        finaldmg = finaldmg + (mob:getStat(tpz.mod.DEX) * (1 + mob:getMod(tpz.mod.SNEAK_ATK_DEX) / 100) * pdif)
+    while hitsDone < numberofhits do
+        hitChance = math.random(1, 100)
 
-        mob:delStatusEffect(tpz.effect.SNEAK_ATTACK)
+        -- Generate a new pDIF for every hit
+        pDif = generatePdif(minRatio, maxRatio)
+
+        if mob:getLocalVar("AUDIT_MOBSKILL") > 0 then
+            printf("monstertpmoves.lua MobPhysicalMove HIT #%i - [pDIF = [%1.2f]", hitsDone + 1, pDif)
+        end
+
+        if hitChance <= hitrate then -- Hit!
+            finalDmg   = finalDmg + hitdamage * pDif
+            hitsLanded = hitsLanded + 1
+        end
+
+        hitsDone = hitsDone + 1
     end
 
-    -- printf("final: %f, hits: %f, acc: %f", finaldmg, hitslanded, hitrate)
-    -- printf("ratio: %f, min: %f, max: %f, pdif, %f hitdmg: %f", ratio, minRatio, maxRatio, pdif, hitdamage)
+    -- printf("final: %f, hits: %f, acc: %f", finalDmg, hitsLanded, hitrate)
+    -- printf("ratio: %f, min: %f, max: %f, pdif, %f hitdmg: %f", ratio, minRatio, maxRatio, pDif, hitdamage)
 
     -- if an attack landed it must do at least 1 damage
-    if (hitslanded >= 1 and finaldmg < 1) then
-        finaldmg = 1
+    if hitsLanded >= 1 and finalDmg < 1 then
+        finalDmg = 1
     end
 
     -- all hits missed
-    if (hitslanded == 0 or finaldmg == 0) then
-        finaldmg = 0
-        hitslanded = 0
+    if hitsLanded == 0 or finalDmg == 0 then
+        finalDmg   = 0
+        hitsLanded = 0
+
         skill:setMsg(tpz.msg.basic.SKILL_MISS)
     end
 
-    returninfo.dmg = finaldmg
-    returninfo.hitslanded = hitslanded
+    returninfo.dmg        = finalDmg
+    returninfo.hitslanded = hitsLanded
+
+    if mob:getLocalVar("AUDIT_MOBSKILL") > 0 then
+        printf("monstertpmoves.lua MobPhysicalMove FINAL DAMAGE: [%i]\n", finalDmg)
+    end
 
     return returninfo
 end
@@ -267,11 +359,11 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
     --get all the stuff we need
     local resist = 1
     local mdefBarBonus = 0
---	printf("monstertpmoves.lua MobMagicalMove  TP: [%i]  ENH SIC/READY: [%i]  TP CALC: [%i]", skill:getTP(), mob:getMod(tpz.mod.ENH_SIC_READY), (((skill:getTP() + mob:getMod(tpz.mod.ENH_SIC_READY))/ 10) + 1))
-	local tp = (((skill:getTP() + mob:getMod(tpz.mod.ENH_SIC_READY))/ 10) + 1) -- Plus 1 prevents the TP DMG BONUS from zeroing out the entire damage calculation
-	local dmgMulti = dmgmod or 1
-	local randomness = math.random(-10, 10) -- Adds a +/-10% random swing to the damage
-	
+--  printf("monstertpmoves.lua MobMagicalMove  TP: [%i]  ENH SIC/READY: [%i]  TP CALC: [%i]", skill:getTP(), mob:getMod(tpz.mod.ENH_SIC_READY), (((skill:getTP() + mob:getMod(tpz.mod.ENH_SIC_READY))/ 10) + 1))
+    local tp = (((skill:getTP() + mob:getMod(tpz.mod.ENH_SIC_READY))/ 10) + 1) -- Plus 1 prevents the TP DMG BONUS from zeroing out the entire damage calculation
+    local dmgMulti = dmgmod or 1
+    local randomness = math.random(-10, 10) -- Adds a +/-10% random swing to the damage
+
     if
         element >= tpz.magic.element.FIRE and
         element <= tpz.magic.element.WATER and
@@ -279,10 +371,10 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
     then -- bar- spell magic defense bonus
         mdefBarBonus = target:getStatusEffect(tpz.magic.barSpell[element]):getSubPower()
     end
-	
+
     -- plus 100 forces it to be a number
-	local cMAB = 1 + (mob:getMod(tpz.mod.MATT) / 100)
-	local tMDB = 1 + ((target:getMod(tpz.mod.MDEF) + mdefBarBonus) / 100)
+    local cMAB = 1 + (mob:getMod(tpz.mod.MATT) / 100)
+    local tMDB = 1 + ((target:getMod(tpz.mod.MDEF) + mdefBarBonus) / 100)
     mab = cMAB / tMDB
 
     if (mab > 1.8) then
@@ -303,21 +395,21 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
 
     -- Get resistance
     local avatarAccBonus = 0
-	
+
     if (mob:isPet() and mob:getMaster() ~= nil) then
         local master = mob:getMaster()
         if (master:getPetID() >= 0 and master:getPetID() <= 20) then -- check to ensure pet is avatar
             avatarAccBonus = utils.clamp(master:getSkillLevel(tpz.skill.SUMMONING_MAGIC) - master:getMaxSkillLevel(mob:getMainLvl(), tpz.job.SMN, tpz.skill.SUMMONING_MAGIC), 0, 200)
         end
     end
-	
+
     resist = applyPlayerResistance(mob, nil, target, mob:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), avatarAccBonus, element)
 
     local magicDefense = getElementalDamageReduction(target, element)
 
     finaldmg = finaldmg * resist * magicDefense
-	
-	finaldmg = finaldmg * (1 + (randomness / 100)) -- Throw in a +/-10% swing for randomness
+
+    finaldmg = finaldmg * (1 + (randomness / 100)) -- Throw in a +/-10% swing for randomness
 
     returninfo.dmg = finaldmg
 
@@ -350,11 +442,11 @@ function applyPlayerResistance(mob, effect, target, diff, bonus, element)
     end
 
     if (effect ~= nil) then
-        percentBonus = percentBonus - getEffectResistance(target, effect)
+        percentBonus = percentBonus - getEffectResistance(mob, target, effect)
 
-		-- if (target:getName() == "Khalum") then
-			-- printf("monstertpmoves.lua applyPlayerResistance EFFECT: [%i]  RESISTANCE: [%i]  PERCENT BONUS: [%i]", effect, getEffectResistance(target, effect), percentBonus)
-		-- end
+        -- if (target:getName() == "Khalum") then
+            -- printf("monstertpmoves.lua applyPlayerResistance EFFECT: [%i]  RESISTANCE: [%i]  PERCENT BONUS: [%i]", effect, getEffectResistance(target, effect), percentBonus)
+        -- end
     end
 
     local p = getMagicHitRate(mob, target, 0, element, percentBonus, magicaccbonus)
@@ -499,17 +591,17 @@ function MobBreathMove(mob, target, percent, base, element, cap)
 end
 
 function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, shadowbehav)
-	local element = {tpz.magic.ele.FIRE, tpz.magic.ele.ICE, tpz.magic.ele.WIND, tpz.magic.ele.EARTH, tpz.magic.ele.THUNDER, tpz.magic.ele.WATER, tpz.magic.ele.LIGHT, tpz.magic.ele.DARK}
-	local damageElement = 0
-	local enmityDmgMitigation = 0
-	
-	if (damageType ~= nil and damageType >= 5) then
-		for i = 1, 8 do
-			if (damageType - 5 == element[i]) then
-				damageElement = element[i]
-			end
-		end
-	end
+    local element = {tpz.magic.ele.FIRE, tpz.magic.ele.ICE, tpz.magic.ele.WIND, tpz.magic.ele.EARTH, tpz.magic.ele.THUNDER, tpz.magic.ele.WATER, tpz.magic.ele.LIGHT, tpz.magic.ele.DARK}
+    local damageElement = 0
+    local enmityDmgMitigation = 0
+
+    if (damageType ~= nil and damageType >= 5) then
+        for i = 1, 8 do
+            if (damageType - 5 == element[i]) then
+                damageElement = element[i]
+            end
+        end
+    end
 
     -- physical attack missed, skip rest
     if (skill:hasMissMsg()) then
@@ -573,19 +665,19 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
         target:setLocalVar("analyzer_hits", analyzerHits)
     end
 
-	-- Handles -% Damage Taken from the "Mitigates damage taken based on enmity" item stat
-	if (mob:getObjType() == tpz.objType.MOB and target:getObjType() == tpz.objType.PC and target:getMod(tpz.mod.ENMITY_MITIGATES_DMG) > 0) then
-		local currentEnmity = mob:getCE(target) + mob:getVE(target)
-		enmityDmgMitigation = currentEnmity / 5000
-		
-		if (enmityDmgMitigation < 2) then
-			enmityDmgMitigation = 2
-		elseif (enmityDmgMitigation > 10) then
-			enmityDmgMitigation = 10
-		end
-		
-		target:addMod(tpz.mod.ENMITY_MITIGATES_DMG_DT, -enmityDmgMitigation)
-	end
+    -- Handles -% Damage Taken from the "Mitigates damage taken based on enmity" item stat
+    if (mob:getObjType() == tpz.objType.MOB and target:getObjType() == tpz.objType.PC and target:getMod(tpz.mod.ENMITY_MITIGATES_DMG) > 0) then
+        local currentEnmity = mob:getCE(target) + mob:getVE(target)
+        enmityDmgMitigation = currentEnmity / 5000
+
+        if (enmityDmgMitigation < 2) then
+            enmityDmgMitigation = 2
+        elseif (enmityDmgMitigation > 10) then
+            enmityDmgMitigation = 10
+        end
+
+        target:addMod(tpz.mod.ENMITY_MITIGATES_DMG_DT, -enmityDmgMitigation)
+    end
 
     -- Caldera custom application of All WSD
     dmg = dmg * (1 + (mob:getMod(tpz.mod.ALL_WSDMG_ALL_HITS) / 100))
@@ -607,42 +699,45 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
         dmg = target:rangedDmgTaken(dmg)
 
     end
-	
-	-- Reverse the -% Damage Taken from the "Mitigates damage taken based on enmity" item stat
-	if (enmityDmgMitigation > 0) then
-		target:delMod(tpz.mod.ENMITY_MITIGATES_DMG_DT, -enmityDmgMitigation)
-	end
 
-	-- Caldera custom damage modification for Jug Pets
-	if (mob:isPet() and mob:getMaster():isPC()) then
-		local PetRandom = math.random(1, 2) + (math.random(100)/100)
-		dmg = dmg * PetRandom
---		printf("monstertpmoves.cpp MobFinalAdjustments PetRandom: [%i]  DMG: [%i]", PetRandom, dmg)
-	end
+    -- Reverse the -% Damage Taken from the "Mitigates damage taken based on enmity" item stat
+    if (enmityDmgMitigation > 0) then
+        target:delMod(tpz.mod.ENMITY_MITIGATES_DMG_DT, -enmityDmgMitigation)
+    end
 
-	-- Global monster skill damage multiplier from settings.lua
-	-- dmg = dmg * MOB_SKILL_POWER
+    -- Caldera custom damage modification for Jug Pets
+    if (mob:isPet() and mob:getMaster():isPC()) then
+        local boost     = mob:getMainLvl() * 25
+        local PetRandom = math.random(1, 2) + (math.random(100)/100)
+        dmg = (dmg * PetRandom) + boost
+        printf("monstertpmoves.cpp MobFinalAdjustments PetRandom: [%1.2f]  DMG: [%i]", PetRandom, dmg)
+    end
+
+    -- Global monster skill damage multiplier from settings.lua
+    -- dmg = dmg * MOB_SKILL_POWER
 
     -- Handle Phalanx
     dmg = dmg - target:getMod(tpz.mod.PHALANX)
 
-	-- Handle Stoneskin
+    -- Handle Stoneskin
     dmg = utils.stoneskin(target, dmg)
-	
-	-- Handle Magic Barrier
-	if (attackType == tpz.attackType.MAGICAL) then
-		dmg = utils.magicshield(target, dmg)
-	end
 
-	if (dmg < 0) then
-		-- Turn damage positive for correct health restoral and message display
-		target:addHP(-dmg)
+    -- Handle Magic Barrier
+    if attackType == tpz.attackType.MAGICAL then
+        -- printf("monstertpmoves.lua MobFinalAdjustments  MOB:[%s]   TARGET: [%s]  DAMAGE: [%i]", mob:getName(), target:getName(), dmg)
+        dmg = utils.magicshield(target, dmg)
+        -- printf("monstertpmoves.lua MobFinalAdjustments  AFTER MAGIC BARRIER DAMAGE: [%i]", dmg)
+    end
+
+    if dmg < 0 then
+        -- Turn damage positive for correct health restoral and message display
+        target:addHP(-dmg)
         skill:setMsg(tpz.msg.basic.SKILL_RECOVERS_HP)
-		
-		return -dmg
+
+        return -dmg
     else
-		target:takeDamage(dmg, mob, attackType, damageType)
-		target:handleAfflatusMiseryDamage(dmg)
+        target:takeDamage(dmg, mob, attackType, damageType)
+        target:handleAfflatusMiseryDamage(dmg)
         target:updateEnmityFromDamage(mob, dmg)
     end
 
@@ -860,23 +955,151 @@ end
 
 function MobTPMod(tp)
     -- increase damage based on tp
-    if (tp >= 3000) then
+    if tp >= 3000 then
         return 2
-    elseif (tp >= 2000) then
+    elseif tp >= 1500 then
         return 1.5
     end
+
     return 1
 end
 
-function fTP(tp, ftp1, ftp2, ftp3)
-    if (tp < 1000) then
+function fTPMob(tp, ftp1, ftp2, ftp3)
+    if tp < 1000 then
         tp = 1000
     end
-    if (tp >= 1000 and tp < 1500) then
-        return ftp1 + ( ((ftp2-ftp1)/500) * (tp-1000))
-    elseif (tp >= 1500 and tp <= 3000) then
+
+    if tp >= 1000 and tp < 1500 then
+        return ftp1 + (((ftp2 - ftp1) / 500) * (tp - 1000))
+    elseif tp >= 1500 and tp <= 3000 then
         -- generate a straight line between ftp2 and ftp3 and find point @ tp
         return ftp2 + ( ((ftp3-ftp2)/1500) * (tp-1500))
     end
+
     return 1 -- no ftp mod
+end
+
+function cMeleeRatioMob(mob, target, params)
+    -- params.tp        = skill:getTP()
+    -- params.tpEffect  = tpeffect
+    -- params.mtp000    = mtp000
+    -- params.mtp150    = mtp150
+    -- params.mtp300    = mtp300
+    -- params.cRatioMod = offcratiomod
+
+    local lvlMob  = mob:getMainLvl()
+    local lvlTarg = target:getMainLvl()
+
+    if target:getObjType() == tpz.objType.PC then
+        lvlTarg = lvlTarg + target:getItemLevel()
+    end
+
+    local ratioMod = mob:getStat(tpz.mod.ATT)
+
+    -- Calculate ratio
+    if params.cRatioMod ~= nil then -- Cannonball uses DEF as its modifier instead of ATT
+        ratioMod = params.cRatioMod
+    end
+
+    local ratio   = ratioMod / target:getStat(tpz.mod.DEF)
+    local lvlDiff = (lvlMob - lvlTarg) * 0.05
+
+    if lvlDiff < 0 then
+        lvlDiff = 0
+    elseif lvlDiff > 0.55 then
+        lvlDiff = 0.55 -- Capped at an 11 level difference
+    end
+
+    -- Cap ratio based on weapon type
+    local weaponType = mob:getWeaponSkillType(tpz.slot.MAIN)
+    local ratioCap
+
+    if
+        -- One-handed weapons
+        weaponType == tpz.skill.DAGGER or
+        weaponType == tpz.skill.SWORD or
+        weaponType == tpz.skill.AXE or
+        weaponType == tpz.skill.KATANA or
+        weaponType == tpz.skill.CLUB
+    then
+        ratioCap = 3.25
+    elseif
+        -- Hand-to-Hand and Great Katana
+        weaponType == tpz.skill.HAND_TO_HAND or
+        weaponType == tpz.skill.GREAT_KATANA
+    then
+        ratioCap = 3.50
+    elseif
+        -- Two-handed weapons
+        weaponType == tpz.skill.GREAT_SWORD or
+        weaponType == tpz.skill.GREAT_AXE or
+        weaponType == tpz.skill.POLEARM or
+        weaponType == tpz.skill.STAFF
+    then
+        ratioCap = 3.75
+    elseif
+        -- Scythe
+        weaponType == tpz.skill.SCYTHE
+    then
+        ratioCap = 4.00
+    end
+
+    if mob:getLocalVar("AUDIT_MOBSKILL") > 0 then
+        printf("monstertpmoves.lua cMeleeRatioMob BASE RATIO: [%1.2f] = ATT: [%i] / DEF: [%i]", ratio, ratioMod, target:getStat(tpz.mod.DEF))
+        printf("monstertpmoves.lua cMeleeRatioMob ADJUSTED RATIO: [%1.2f] = RATIO: [%i] + LVL DIFF BONUS: [%1.2f]", ratio + lvlDiff, ratio, lvlDiff)
+    end
+
+    ratio = ratio + (lvlDiff * 0.05)
+    ratio = utils.clamp(ratio, 0, ratioCap)
+
+    -- Calculate min and max cRatio
+    local maxRatio = 1
+    local minRatio = 0
+
+    -- Calculate the Upper Limit
+    if ratio < 0.5 then
+        maxRatio = ratio + 0.5
+    elseif ratio < 0.7 then
+        maxRatio = 1
+    elseif ratio < 1.2 then
+        maxRatio = ratio + 0.3
+    elseif ratio < 1.5 then
+        maxRatio = (ratio * 0.25) + ratio
+    else
+        maxRatio = ratio + 0.375
+    end
+
+    -- Calculate the Lesser Limit
+    if ratio < 0.38 then
+        minRatio =  0
+    elseif ratio < 1.25 then
+        minRatio = ratio * (1176 / 1024) - (448 / 1024)
+    elseif ratio < 1.51 then
+        minRatio = 1
+    elseif ratio <= 2.44 then
+        minRatio = ratio * (1176 / 1024) - (775 / 1024)
+    else
+        minRatio = ratio - 0.375
+    end
+
+    local pDif = {}
+        pDif[1] = minRatio
+        pDif[2] = maxRatio
+
+    local pDifCrit = {}
+        pDifCrit[1] = minRatio + 1
+        pDifCrit[2] = maxRatio + 1
+
+    if mob:getLocalVar("AUDIT_MOBSKILL") > 0 then
+        printf("monstertpmoves.lua cMeleeRatioMob       MIN RATIO: [%1.2f]       MAX RATIO: [%1.2f]", pDif[1], pDif[2])
+        printf("monstertpmoves.lua cMeleeRatioMob  CRIT MIN RATIO: [%1.2f]  CRIT MAX RATIO: [%1.2f]", pDifCrit[1], pDifCrit[2])
+    end
+
+    return pDif, pDifCrit
+end
+
+function generatePdif(cRatioMin, cRatioMax)
+    local pdif = math.random(cRatioMin * 1000, cRatioMax * 1000) / 1000
+
+    return pdif
 end

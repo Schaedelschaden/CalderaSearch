@@ -14,19 +14,25 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    -- if ENABLE_ABYSSEA == 1 and player:getMainLvl() >= 30 then
-        -- if
+    if
+        ENABLE_ABYSSEA == 1 and
+        player:getMainLvl() >= 90 and
+        player:getCharVar("KillCounter_Briareus") >= 1 and
+        player:getCharVar("KillCounter_Kukulkan") >= 1 and
+        player:getCharVar("KillCounter_Glavoid") >= 1
+    then
+        if
             -- tpz.abyssea.getTravStonesTotal(player) >= 1 and
-            -- player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.DAWN_OF_DEATH) == QUEST_ACCEPTED and
-            -- player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.THE_BEAST_OF_BASTORE) == QUEST_AVAILABLE
-        -- then
-            -- player:startEvent(48)
-        -- else
-            -- player:startEvent(47, 0, 1) -- No param = no entry.
-        -- end
-    -- else
+            player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.DAWN_OF_DEATH) == QUEST_ACCEPTED and
+            player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.THE_BEAST_OF_BASTORE) == QUEST_AVAILABLE
+        then
+            player:startEvent(48)
+        else
+            player:startEvent(47, 0, 1) -- No param = no entry.
+        end
+    else
         player:messageSpecial(ID.text.NOTHING_HAPPENS)
---    end
+   end
 end
 
 function onEventUpdate(player, csid, option)

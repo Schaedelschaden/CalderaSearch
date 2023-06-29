@@ -1653,7 +1653,6 @@ namespace luautils
         PChar->m_event.reset();
         PChar->m_event.Target = PNpc;
         PChar->m_event.Script.insert(0, (const char*)File);
-        PChar->StatusEffectContainer->DelStatusEffect(EFFECT_BOOST);
 
         lua_pushnil(LuaHandle);
         lua_setglobal(LuaHandle, "onTrigger");

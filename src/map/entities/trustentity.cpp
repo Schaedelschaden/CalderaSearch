@@ -34,6 +34,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../mob_spell_container.h"
 #include "../mob_spell_list.h"
 #include "../packets/char_health.h"
+#include "../packets/entity_set_name.h"
 #include "../packets/entity_update.h"
 #include "../packets/trust_sync.h"
 #include "../recast_container.h"
@@ -113,6 +114,11 @@ void CTrustEntity::OnAbility(CAbilityState& state, action_t& action)
         if (battleutils::IsParalyzed(this))
         {
             loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
+            return;
+        }
+
+        if (this->StatusEffectContainer->HasStatusEffect(EFFECT_AMNESIA))
+        {
             return;
         }
 

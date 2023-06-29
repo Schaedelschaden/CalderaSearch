@@ -5,7 +5,7 @@
 mixins = {require("scripts/mixins/fomor_hate")}
 
 function onMobSpawn(mob)
-    mob:setLocalVar("fomorHateAdj", -4)
+    mob:setMobMod(tpz.mobMod.ALWAYS_AGGRO, 1)
 end
 
 function onMobDeath(mob, player, isKiller)

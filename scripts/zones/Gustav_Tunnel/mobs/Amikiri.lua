@@ -2,9 +2,13 @@
 -- Area: Gustav Tunnel
 --   NM: Amikiri
 -----------------------------------
+mixins = {require("scripts/mixins/rage")}
 require("scripts/globals/hunts")
+-----------------------------------
 
 function onMobSpawn(mob)
+    mob:setLocalVar("[rage]timer", 1200) -- 20 minutes
+
     mob:addMod(tpz.mod.PARALYZERES, 30)
     mob:addMod(tpz.mod.STUNRES, 30)
     mob:addMod(tpz.mod.BINDRES, 30)
@@ -26,6 +30,7 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.MND, 110)
     mob:addMod(tpz.mod.CHR, 110)
     mob:addMod(tpz.mod.INT, 110)
+    mob:setMod(tpz.mod.HASTE_MAGIC, 4375)
     mob:addMod(tpz.mod.MAIN_DMG_RATING, 100)
 end
 

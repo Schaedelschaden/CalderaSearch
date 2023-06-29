@@ -107,7 +107,7 @@ bool CLatentEffect::Activate()
     if (!IsActivated())
     {
         //additional effect/dmg latents add mod to weapon, not player
-        if (GetModValue() == Mod::ADDITIONAL_EFFECT || GetModValue() == Mod::DMG)
+        if (GetModValue() == Mod::ADDITIONAL_EFFECT || GetModValue() == Mod::MAIN_DMG_RATING)
         {
             CCharEntity* PChar = (CCharEntity*)m_POwner;
             CItemWeapon* weapon = (CItemWeapon*)PChar->getEquip((SLOTTYPE)GetSlot());
@@ -131,7 +131,7 @@ bool CLatentEffect::Deactivate()
     if (IsActivated())
     {
         //remove the modifier from weapon, not player
-        if (GetModValue() == Mod::ADDITIONAL_EFFECT || GetModValue() == Mod::DMG)
+        if (GetModValue() == Mod::ADDITIONAL_EFFECT || GetModValue() == Mod::MAIN_DMG_RATING)
         {
             CCharEntity* PChar = (CCharEntity*)m_POwner;
 			CItemWeapon* weapon = (CItemWeapon*)PChar->getEquip((SLOTTYPE)GetSlot());

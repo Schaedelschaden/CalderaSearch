@@ -36,14 +36,17 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         params.atk100 = 1.25 params.atk200 = 1.25 params.atk300 = 1.25
     end
 
-    -- Apply Aftermath
-    tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.MYTHIC)
-
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
-	
+
+    -- Apply Aftermath
+    if damage > 0 and player:isPC() then
+        tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.MYTHIC)
+    end
+
     if damage > 0 then
 		local power = fTP(tp, 40, 70, 100)
 		local duration = fTP(tp, 60, 120, 180) * applyResistanceAddEffect(player, target, tpz.magic.ele.EARTH, 0)
+
 		target:addStatusEffect(tpz.effect.ACCURACY_DOWN, power, 0, duration)
     end
 

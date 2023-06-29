@@ -23,6 +23,10 @@ function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.MOBMOD_CAN_SHIELD_BLOCK, 1)
     mob:setMod(tpz.mod.SHIELDBLOCKRATE, 45)
     mob:setMod(tpz.mod.DRAGON_KILLER, 20)
+	-- 3K HP ADJUSTMENT --
+    mob:addStatusEffect(tpz.effect.MAX_HP_BOOST, 4, 0, 0)
+    mob:setHP(mob:getMaxHP())
+    
 
     mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_HAS_TOP_ENMITY, 0, ai.r.JA, ai.s.SPECIFIC, tpz.ja.PROVOKE)
 	mob:addSimpleGambit(ai.t.SELF, ai.c.HPP_LT, 33, ai.r.JA, ai.s.SPECIFIC, tpz.ja.SENTINEL)

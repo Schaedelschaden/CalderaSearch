@@ -11,6 +11,10 @@ function onEffectGain(target, effect)
     target:updateHealth()
     target:addHP(effect:getPower())
 
+    -- Increases Attack % and Defense % by 25%
+    target:addMod(tpz.mod.ATTP, 25)
+    target:addMod(tpz.mod.DEFP, 25)
+
     -- The dragoon gets a Strength boost relative to his level
     target:addMod(tpz.mod.STR, effect:getSubPower())
 
@@ -27,6 +31,10 @@ end
 function onEffectLose(target, effect)
     -- The dragoon's MAX HP returns to normal (when the MAXHP boost in onEffectGain() gets implemented)
     target:delMod(tpz.mod.HP, effect:getPower())
+
+    -- Reduces Attack % and Defense % by 25%
+    target:delMod(tpz.mod.ATTP, 25)
+    target:delMod(tpz.mod.DEFP, 25)
 
     -- The dragoon loses the Strength boost
     target:delMod(tpz.mod.STR, effect:getSubPower())

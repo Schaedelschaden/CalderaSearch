@@ -11,9 +11,9 @@ require("scripts/globals/status") -- required for LUA status adjustments
 -----------------------------------
 
 function onMobSpawn(mob) -- When mob spawns (either forced or time)
-	mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
-	mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 360)
-	mob:setMod(tpz.mod.PARALYZERES, 30) -- Resistance to Paralyze
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 360)
+    mob:setMod(tpz.mod.PARALYZERES, 30) -- Resistance to Paralyze
     mob:setMod(tpz.mod.STUNRES, 50) -- Resistance to Stun
     mob:setMod(tpz.mod.BINDRES, 30) -- Resistance to Bind
     mob:setMod(tpz.mod.SLOWRES, 30) -- Resistance to Slow
@@ -22,18 +22,18 @@ function onMobSpawn(mob) -- When mob spawns (either forced or time)
     mob:setMod(tpz.mod.LULLABYRES, 30) -- Resistance to Lullaby
     mob:setMod(tpz.mod.PETRIFYRES, 30) -- Resistance to Pertrify
     -- mob:setMod(tpz.mod.POISONRES, 30) -- Resistance to Poison
-	mob:addMod(tpz.mod.ATT, 500) -- Attack Stat (Compare to DEF)
-	-- mob:setMod(tpz.mod.MATT, 200) -- Magic Attack (Compare to MDEF)
+    mob:addMod(tpz.mod.ATT, 500) -- Attack Stat (Compare to DEF)
+    -- mob:setMod(tpz.mod.MATT, 200) -- Magic Attack (Compare to MDEF)
     mob:setMod(tpz.mod.ACC, 800) -- Accuracy (compare to EVA)
-	mob:setMod(tpz.mod.MACC, 740) -- Magic ACC (Compare to MEVA)
-	-- mob:setMod(tpz.mod.EVA, 800) -- Evasion (Compare to ACC)
-	mob:addMod(tpz.mod.DEF, 750) -- Defense (Compart to ATT)
-	-- mob:setMod(tpz.mod.MEVA, 800) -- Magic Evasion (Compare to MACC)
-	-- mob:setMod(tpz.mod.MDEF, 400) -- Magic Defense (Compare to MATT)
-	mob:setMod(tpz.mod.DOUBLE_ATTACK, 15) -- Double Attack in %
-	mob:setMod(tpz.mod.DMG, -15)
-	mob:setMod(tpz.mod.MOBMOD_TP_USE_CHANCE, 1000)
-	mob:setMod(tpz.mod.REGAIN, 60)
+    mob:setMod(tpz.mod.MACC, 740) -- Magic ACC (Compare to MEVA)
+    -- mob:setMod(tpz.mod.EVA, 800) -- Evasion (Compare to ACC)
+    mob:addMod(tpz.mod.DEF, 750) -- Defense (Compart to ATT)
+    -- mob:setMod(tpz.mod.MEVA, 800) -- Magic Evasion (Compare to MACC)
+    -- mob:setMod(tpz.mod.MDEF, 400) -- Magic Defense (Compare to MATT)
+    mob:setMod(tpz.mod.DOUBLE_ATTACK, 15) -- Double Attack in %
+    mob:setMod(tpz.mod.DMG, -15)
+    mob:setMod(tpz.mod.MOBMOD_TP_USE_CHANCE, 1000)
+    mob:setMod(tpz.mod.REGAIN, 60)
 end
 
 function onMobFight(mob, target) -- When mob is engaged
@@ -47,20 +47,21 @@ function onAdditionalEffect(mob, target, damage)
 end
 
 function onMobDeath(mob, player, isKiller) -- When mob is killed
-    if player:getCharVar("Escha_Fleetstalker_KI") == 0 or player:getCharVar("Escha_Fleetstalker_KI") == nil then
-        player:setCharVar("Escha_Fleetstalker_KI", 1)
-    elseif player:getCharVar("Escha_Fleetstalker_KI") == 1 then
+    if player:getCharVar("Escha_Sandy_KI") == 0 or player:getCharVar("Escha_Sandy_KI") == nil then
+        player:setCharVar("Escha_Ionos_KI", 1)
+    elseif player:getCharVar("Escha_Sandy_KI") == 1 then
         player:addKeyItem(tpz.keyItem.FLEETSTALKERS_CLAW)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.keyItem.FLEETSTALKERS_CLAW)
-        player:setCharVar("Escha_Fleetstalker_KI", 0)
+        player:setCharVar("Escha_Sandy_KI", 0)
+        player:setCharVar("Escha_Ionos_KI", 0)
     end
 
     local playerName  = player:getName()
-	local mobName     = mob:getName()
-	local KillCounter = player:getCharVar("KillCounter_"..mobName)
+    local mobName     = mob:getName()
+    local KillCounter = player:getCharVar("KillCounter_"..mobName)
 
-	KillCounter = KillCounter + 1
+    KillCounter = KillCounter + 1
 
-	player:setCharVar("KillCounter_"..mobName, KillCounter)
-	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", mobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+    player:setCharVar("KillCounter_"..mobName, KillCounter)
+    player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", mobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
 end

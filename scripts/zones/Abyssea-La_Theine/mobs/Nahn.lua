@@ -35,20 +35,20 @@ function onMobSpawn(mob)
 		local counter = mob:getLocalVar("BUBBLE_SHOWER_COUNTER")
 		local maxUses = 1
 		
-		if (hpp >= 56 and hpp <= 80) then
+		if hpp >= 56 and hpp <= 80 then
 			maxUses = 2
-		elseif (hpp >= 31 and hpp <= 55) then
+		elseif hpp >= 31 and hpp <= 55 then
 			maxUses = 3
-		elseif (hpp >= 1 and hpp <= 30) then
+		elseif hpp >= 1 and hpp <= 30 then
 			maxUses = 4
 		end
 		
-		if (skillID == 442) then
+		if skillID == 442 then
 			counter = counter + 1
 			mob:setLocalVar("BUBBLE_SHOWER_COUNTER", counter)
 			mob:setLocalVar("BUBBLE_SHOWER_RESET", os.time())
 			
-			if (counter < maxUses) then
+			if counter < maxUses then
 				mob:useMobAbility(442)
 			end
 		end
@@ -59,20 +59,20 @@ function onMobSpawn(mob)
 		local counter = mob:getLocalVar("WATER_MAGIC_COUNTER")
 		local maxUses = 1
 		
-		if (hpp >= 56 and hpp <= 80) then
+		if hpp >= 56 and hpp <= 80 then
 			maxUses = 2
-		elseif (hpp >= 31 and hpp <= 55) then
+		elseif hpp >= 31 and hpp <= 55 then
 			maxUses = 3
-		elseif (hpp >= 1 and hpp <= 30) then
+		elseif hpp >= 1 and hpp <= 30 then
 			maxUses = 4
 		end
 		
-		if (spell:getID() == 200 or spell:getID() == 214) then
+		if spell:getID() == 200 or spell:getID() == 214 then
 			counter = counter + 1
 			mob:setLocalVar("WATER_MAGIC_COUNTER", counter)
 			mob:setLocalVar("WATER_MAGIC_RESET", os.time())
 			
-			if (counter < maxUses) then
+			if counter < maxUses then
 				mob:castSpell(spell)
 			end
 		end
@@ -80,11 +80,11 @@ function onMobSpawn(mob)
 end
 
 function onMobFight(mob)
-	if (os.time() - mob:getLocalVar("BUBBLE_SHOWER_RESET") >= 10) then
+	if os.time() - mob:getLocalVar("BUBBLE_SHOWER_RESET") >= 10 then
 		mob:setLocalVar("BUBBLE_SHOWER_COUNTER", 0)
 	end
 	
-	if (os.time() - mob:getLocalVar("WATER_MAGIC_RESET") >= 15) then
+	if os.time() - mob:getLocalVar("WATER_MAGIC_RESET") >= 15 then
 		mob:setLocalVar("WATER_MAGIC_COUNTER", 0)
 	end
 end

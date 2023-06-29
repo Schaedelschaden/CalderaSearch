@@ -19,17 +19,17 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    if (mob:getPool() == 4006) then -- Trion@Qubia_Arena only
+    if mob:getPool() == 4006 then -- Trion@Qubia_Arena only
         target:showText(mob, zones[tpz.zone.QUBIA_ARENA].text.FLAT_LAND)
     end
 
     local numhits = 1
-    local accmod = 1
-    local dmgmod = 1.25
-    local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_CRIT_VARIES, 1.1, 1.2, 1.3)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
+    local accmod  = 1
+    local dmgmod  = 1.25
+    local info    = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_CRIT_VARIES, 10, 20, 30)
+    local dmg     = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
 
-    if (math.random(1, 100) < skill:getTP()/3) then
+    if math.random(1, 100) < (skill:getTP() / 3) then
         MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.STUN, 1, 0, 4)
     end
 

@@ -39,6 +39,7 @@ function onMobSpawn(mob)
     mob:addSimpleGambit(ai.t.PARTY, ai.c.STATUS, tpz.effect.PETRIFICATION, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.STONA)
     mob:addSimpleGambit(ai.t.PARTY, ai.c.STATUS, tpz.effect.DISEASE, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.VIRUNA)
     mob:addSimpleGambit(ai.t.PARTY, ai.c.STATUS, tpz.effect.CURSE_I, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.CURSNA)
+    mob:addSimpleGambit(ai.t.PARTY, ai.c.STATUS, tpz.effect.DOOM, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.CURSNA)
 
     mob:addSimpleGambit(ai.t.PARTY, ai.c.HPP_LT, 50, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.CURE)
 
@@ -47,6 +48,14 @@ function onMobSpawn(mob)
     mob:addSimpleGambit(ai.t.SELF, ai.c.HAS_TOP_ENMITY, ai.r.JA, ai.s.SPECIFIC, tpz.ja.SUPER_JUMP)
 
     mob:setTrustTPSkillSettings(ai.tp.CLOSER, ai.s.HIGHEST)
+end
+
+function onMobFight(mob)
+    local target = mob:getTarget()
+    local family = target:getSystem()
+    if family == tpz.eco.DRAGON then
+        mob:useJobAbility(tpz.ja.ANCIENT_CIRCLE, mob)
+    end  
 end
 
 function onMobDespawn(mob)

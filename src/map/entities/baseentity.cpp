@@ -44,6 +44,8 @@ CBaseEntity::CBaseEntity()
     namevis = 0;
     allegiance = 0;
     updatemask = 0;
+    isRenamed = false;
+    spawnAnimation = SPAWN_ANIMATION::NORMAL;
     PAI = nullptr;
     PBattlefield = nullptr;
     PInstance = nullptr;
@@ -73,6 +75,11 @@ void CBaseEntity::FadeOut()
 const int8* CBaseEntity::GetName()
 {
 	return (const int8*)name.c_str();
+}
+
+const int8* CBaseEntity::GetPacketName()
+{
+    return (const int8*)packetName.c_str();
 }
 
 uint16 CBaseEntity::getZone()

@@ -32,7 +32,7 @@ function onTrigger(player, target)
     end
 
     -- add all mount key items
-    for i = tpz.ki.CHOCOBO_COMPANION, tpz.ki.CHOCOBO_COMPANION + 26 do
+    for i = tpz.ki.CHOCOBO_COMPANION, tpz.ki.CHOCOBO_COMPANION + 35 do
         targ:addKeyItem(i)
     end
 

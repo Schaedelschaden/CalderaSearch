@@ -22,17 +22,20 @@ function onAdditionalEffect(player, target, damage)
 		if (chooseEffect >= 1 and chooseEffect <= 45 and target:getHP() > 6) then
 			subEffect = tpz.subEffect.HP_DRAIN
 			addEffect = tpz.msg.basic.ADD_EFFECT_HP_DRAIN
-			drain = player:addHP(math.random(5, 10))
+			drain = math.random(5, 10)
+            player:addHP(drain)
 			target:setHP(target:getHP() - drain)
 		elseif (chooseEffect >= 46 and chooseEffect <= 90 and target:getMP() > 5) then
 			subEffect = tpz.subEffect.MP_DRAIN
 			addEffect = tpz.msg.basic.ADD_EFFECT_MP_DRAIN
-			drain = player:addMP(math.random(3, 8))
+			drain = math.random(5, 10)
+            player:addMP(drain)
 			target:setMP(target:getMP() - drain)
-		elseif (chooseEffect >= 91 and chooseEffect <= 100 and target:getTP() > 10) then
+		elseif (chooseEffect >= 91 and chooseEffect <= 100 and target:getTP() > 50) then
 			subEffect = tpz.subEffect.TP_DRAIN
 			addEffect = tpz.msg.basic.ADD_EFFECT_TP_DRAIN
-			drain = player:addTP(math.random(1, 50))
+			drain = math.random(50, 100)
+            player:addTP(drain)
 			target:setTP(target:getTP() - drain)
 		end
 		

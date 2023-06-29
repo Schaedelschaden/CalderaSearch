@@ -35,10 +35,8 @@ function onSpellCast(caster,target,spell)
     end
 	
 	local basecure = getBaseCureOld(power,divisor,constant)
-    local final = getCureFinal(caster,spell,basecure,minCure,true)
+    local final = getCureFinal(caster, target, spell, basecure, minCure, true)
     local diff = (target:getMaxHP() - target:getHP())
-
-    final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD)/100))
 
     if (target:getAllegiance() == caster:getAllegiance() and (target:getObjType() == tpz.objType.PC or target:getObjType() == tpz.objType.MOB)) then
         --Applying server mods....

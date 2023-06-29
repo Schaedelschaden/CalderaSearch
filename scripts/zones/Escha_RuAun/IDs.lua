@@ -21,6 +21,21 @@ zones[tpz.zone.ESCHA_RUAUN] =
     },
     mob =
     {
+        WARDER_OF_COURAGE_1  = 17961616, -- Three spawns possible
+        WARDER_OF_COURAGE_2  = 17961617,
+        WARDER_OF_COURAGE_3  = 17961618,
+        WARDERS_WYNAV        = 17961619, -- Up to 18 Wynavs can be active at any given time. Warder of Courage uses the first 9 (base ID and + 1 to + 8)
+        WARDER_OF_TEMPERANCE = 17961330,
+        WARDER_OF_FORTITUDE  = 17961331,
+        WARDER_OF_FAITH      = 17961334,
+        WARDER_OF_JUSTICE    = 17961335,
+        WARDER_OF_HOPE       = 17961342,
+        WARDER_OF_PRUDENCE_1 = 17961343, -- Spawns both versions of the NM simultaneously
+        WARDER_OF_PRUDENCE_2 = 17961344, -- Spawns both versions of the NM simultaneously
+        WARDER_OF_LOVE       = 17961345,
+        WARDER_OF_DIGNITY    = 17961373,
+        WARDER_OF_LOYALTY    = 17961374,
+        WARDER_OF_MERCY      = 17961375,
     },
     npc =
     {

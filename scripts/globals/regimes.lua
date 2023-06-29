@@ -983,7 +983,7 @@ end
 local prowessData =
 {
     { effect = tpz.effect.PROWESS_CASKET_RATE,   basePower = 4,   addPower = 4,   maxStack = 5  },
-    { effect = tpz.effect.PROWESS_SKILL_RATE,    basePower = 4,   addPower = 4,   maxStack = 11 },
+    -- { effect = tpz.effect.PROWESS_SKILL_RATE,    basePower = 4,   addPower = 4,   maxStack = 11 }, -- Disabled on Caldera because all skills are capped
     { effect = tpz.effect.PROWESS_CRYSTAL_YIELD, basePower = 4,   addPower = 4,   maxStack = 5  },
     { effect = tpz.effect.PROWESS_TH,            basePower = 1,   addPower = 1,   maxStack = 3  },
     { effect = tpz.effect.PROWESS_ATTACK_SPEED,  basePower = 400, addPower = 400, maxStack = 4  },

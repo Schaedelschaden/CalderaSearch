@@ -12,7 +12,9 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAbilityCheck(player,target,ability)
-    if not player:getPet() then
+    if player:getObjType() == tpz.objType.MOB then
+        return 0, 0
+    elseif not player:getPet() then
         return tpz.msg.basic.REQUIRES_A_PET, 0
     elseif not player:getPetID() or not (player:getPetID() >= 69 and player:getPetID() <= 72) then
         return tpz.msg.basic.NO_EFFECT_ON_PET, 0
@@ -22,7 +24,11 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player,target,ability)
-    player:addStatusEffect(tpz.effect.OVERDRIVE, 0, 0, 180)
+    if player:getObjType() == tpz.objType.MOB then
+        return tpz.msg.basic.USES
+    else    
+        player:addStatusEffect(tpz.effect.OVERDRIVE, 0, 0, 180)
 	
-    return tpz.effect.OVERDRIVE
+        return tpz.effect.OVERDRIVE
+    end
 end

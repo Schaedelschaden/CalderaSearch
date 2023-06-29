@@ -52,12 +52,19 @@ function onUseAbility(player,target,ability)
 
     local pdif = math.random(ratio * 0.8 * 1000, ratio * 1.2 * 1000)
 	
-	damage = damage * (pdif / 1000)
-    damage = utils.stoneskin(target, damage)
-    target:takeDamage(damage, player, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
-    target:updateEnmityFromDamage(player,damage)
-    ability:setMsg(tpz.msg.basic.JA_DAMAGE)
-	target:addStatusEffect(tpz.effect.INTERVENE,1,0,30)
-	
-	return damage
+    if target:getZoneID() == 43 then
+        damage = target:getMaxHP() * 0.30
+        target:takeDamage(damage, player, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
+        ability:setMsg(tpz.msg.basic.JA_DAMAGE)
+        return damage
+    else
+        damage = damage * (pdif / 1000)
+        damage = utils.stoneskin(target, damage)
+        target:takeDamage(damage, player, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
+        target:updateEnmityFromDamage(player,damage)
+        ability:setMsg(tpz.msg.basic.JA_DAMAGE)
+        target:addStatusEffect(tpz.effect.INTERVENE,1,0,30)
+        
+        return damage
+    end
 end

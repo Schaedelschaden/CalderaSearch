@@ -19,5 +19,5 @@ function onTrigger(player, mobId)
 	player:PrintToPlayer(string.format("!warp           !home            !dem                   !holla             !mea"),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("!altep          !yhoat            !vahzl                 !gilfarm"),tpz.msg.channel.SYSTEM_3)
 	player:PrintToPlayer(string.format("!library         !beach           !circuit"),tpz.msg.channel.SYSTEM_3)
-	player:PrintToPlayer(string.format("!lockstyle      !costume"),tpz.msg.channel.SYSTEM_3)
+	player:PrintToPlayer(string.format("!lockstyle      !costume          !tkhelpdesk"),tpz.msg.channel.SYSTEM_3)
 end

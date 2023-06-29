@@ -18,7 +18,10 @@ end
 
 function onMobSpawn(mob)
     tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
+    mob:addStatusEffect(tpz.effect.MAX_HP_BOOST, 2000, 0, 0)
+    mob:setHP(mob:getMaxHP())
 
+    
     local mlvl = mob:getMainLvl()
     local tick_amount
     if mlvl == 99 then

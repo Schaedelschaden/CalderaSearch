@@ -1,9 +1,7 @@
 -----------------------------------
 -- Area: Wajaom Woodlands
---  ZNM: Tinnin
+--  ZNM: Dark Bart (Tinnin)
 -- !pos 276 0 -694
--- Spawned with Monkey Wine: @additem 2573
--- Wiki: http://ffxiclopedia.wikia.com/wiki/Tinnin
 -----------------------------------
 mixins =
 {
@@ -14,130 +12,138 @@ require("scripts/globals/magic")
 require("scripts/globals/status")
 -----------------------------------
 
-function onMobInitialize(mob)
-    mob:setMobMod(tpz.mobMod.GIL_MIN, 12000)
-    mob:setMobMod(tpz.mobMod.GIL_MAX, 30000)
-    mob:setMobMod(tpz.mobMod.MUG_GIL, 8000)
-    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
-    mob:setMod(tpz.mod.UDMGBREATH, -100) -- immune to breath damage
-    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
-end
+
 
 function onMobSpawn(mob)
-    mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
-    mob:setHP(mob:getMaxHP()/2)
-    mob:setUnkillable(true)
-    mob:setMod(tpz.mod.REGEN, 50)
-
-    -- Regen Head every 1.5-4 minutes 90-240
-    mob:setLocalVar("headTimer", os.time() + math.random(60, 190))
-
-    -- Number of crits to lose a head
-    mob:setLocalVar("CritToTheFace", math.random(10, 30))
-    mob:setLocalVar("crits", 0)
+--    -- mob:addMod(tpz.mod.PARALYZERES, 50) -- Resistance to Paralyze
+    -- mob:addMod(tpz.mod.STUNRES, 60) -- Resistance to Stun
+    -- mob:addMod(tpz.mod.BINDRES, 100) -- Resistance to Bind
+    -- mob:addMod(tpz.mod.SLOWRES, 50) -- Resistance to Slow
+    -- mob:addMod(tpz.mod.SILENCERES, 60) -- Resistance to Silence
+    -- mob:addMod(tpz.mod.SLEEPRES, 60) -- Resistance to Sleep
+    -- mob:addMod(tpz.mod.LULLABYRES, 60) -- Resistance to Lullaby
+    -- mob:addMod(tpz.mod.PETRIFYRES, 60) -- Resistance to Pertrify
+    -- mob:addMod(tpz.mod.POISONRES, 60) -- Resistance to Poison	
+	-- -- mob:addMod(tpz.mod.STR, 130)	
+	-- -- mob:addMod(tpz.mod.DEX, 130)	
+	-- -- mob:addMod(tpz.mod.VIT, 130)	
+	-- -- mob:addMod(tpz.mod.CHR, 130)	
+	-- -- mob:addMod(tpz.mod.MND, 130)	
+	-- -- mob:addMod(tpz.mod.INT, 130)	
+	-- -- mob:addMod(tpz.mod.MATT, 300)	
+	-- -- mob:addMod(tpz.mod.MDEF, 100)
+	-- -- mob:addMod(tpz.mod.DEF, 600)
+	-- -- mob:addMod(tpz.mod.ATT, 900)
+	-- -- mob:addMod(tpz.mod.MEVA, 250)
+	-- -- mob:addMod(tpz.mod.MACC, 100)
+	mob:addMod(tpz.mod.REGEN, 200)
+    mob:addMod(tpz.mod.FASTCAST, 100)
+    mob:setMobMod(tpz.mobMod.DUAL_WIELD, 1)
+    mob:setMobMod(tpz.mobMod.SKILL_LIST, 0)
+    mob:setSpellList(0)
 end
 
-function onMobRoam(mob)
-    -- Regen head
-    local headTimer = mob:getLocalVar("headTimer")
-    if (mob:AnimationSub() == 2 and os.time() > headTimer) then
-        mob:AnimationSub(1)
-        mob:setLocalVar("headTimer", os.time() + math.random(60, 190))
+function onMobEngaged(mob, target)
 
-        -- First time it regens second head, 25%. Reduced afterwards.
-        if (mob:getLocalVar("secondHead") == 0) then
-            mob:addHP(mob:getMaxHP() * .25)
-            mob:setLocalVar("secondHead", 1)
-        else
-            mob:addHP(mob:getMaxHP() * .05)
-        end
-
-    elseif (mob:AnimationSub() == 1 and os.time() > headTimer) then
-        mob:AnimationSub(0)
-        mob:setLocalVar("headTimer", os.time() + math.random(60, 190))
-
-        -- First time it regens third head, 25%. Reduced afterwards.
-        if (mob:getLocalVar("thirdHead") == 0) then
-            mob:addHP(mob:getMaxHP() * .25)
-            mob:setMod(tpz.mod.REGEN, 10)
-            mob:setLocalVar("thirdHead", 1)
-            mob:setUnkillable(false) -- It can be killed now that has all his heads
-        else
-            mob:addHP(mob:getMaxHP() * .05)
-        end
-    end
 end
 
 function onMobFight(mob, target)
-    local headTimer = mob:getLocalVar("headTimer")
-    if (mob:AnimationSub() == 2 and os.time() > headTimer) then
-        mob:AnimationSub(1)
-        mob:setLocalVar("headTimer", os.time() + math.random(60, 190))
+    mob:setMobMod(tpz.mobMod.SKILL_LIST, 0)
+    mob:setSpellList(0)
+    mob:setMod(tpz.mod.ALL_WSDMG_ALL_HITS, -50)
 
-        -- First time it regens second head, 25%. Reduced afterwards.
-        if (mob:getLocalVar("secondHead") == 0) then
-            mob:addHP(mob:getMaxHP() * .25)
-            mob:setLocalVar("secondHead", 1)
-        else
-            mob:addHP(mob:getMaxHP() * .05)
-        end
-        if (bit.band(mob:getBehaviour(), tpz.behavior.NO_TURN) > 0) then -- disable no turning for the forced mobskills upon head growth
-            mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
-        end
-        -- These need to be listed in reverse order as forced moves are added to the top of the queue.
-        mob:useMobAbility(1830) -- Polar Blast
-        mob:useMobAbility(1832) -- Barofield
+    mob:renameEntity("Dark Bart")
+    
+    if os.time() > mob:getLocalVar("COMBAT_DELAY") then
+        local isBusy = false
+        local act    = mob:getCurrentAction()
 
-    elseif (mob:AnimationSub() == 1 and os.time() > headTimer) then
-        mob:AnimationSub(0)
-        mob:setLocalVar("headTimer", os.time() + math.random(60, 190))
+        if
+            act == tpz.act.WEAPONSKILL_START or
+            act == tpz.act.WEAPONSKILL_FINISH or
+            act == tpz.act.MOBABILITY_START or
+            act == tpz.act.MOBABILITY_USING or
+            act == tpz.act.MOBABILITY_FINISH or
+            act == tpz.act.MAGIC_START or
+            act == tpz.act.MAGIC_CASTING or
+            act == tpz.act.MAGIC_FINISH
+        then
+            isBusy = true
+        end
 
-        -- First time it regens third head, 25%. Reduced afterwards.
-        if (mob:getLocalVar("thirdHead") == 0) then
-            mob:setMod(tpz.mod.REGEN, 10)
-            mob:addHP(mob:getMaxHP() * .25)
-            mob:setLocalVar("thirdHead", 1)
-            mob:setUnkillable(false) -- It can be killed now that has all his heads
-        else
-            mob:addHP(mob:getMaxHP() * .05)
+        if isBusy == false and mob:actionQueueEmpty() == true then
+            if os.time() > mob:getLocalVar("Buffs") then
+                if not mob:hasStatusEffect(tpz.effect.MULTI_STRIKES) then
+                    mob:castSpell(493, mob)
+                end
+                
+                if not mob:hasStatusEffect(tpz.effect.HASTE) then
+                    mob:castSpell(511, mob)
+                end
+                
+                if not mob:hasStatusEffect(tpz.effect.ENDARK) then
+                    mob:castSpell(311, mob)
+                end
+                
+                if not mob:hasStatusEffect(tpz.effect.MIGHTY_GUARD) then
+                    mob:castSpell(750, mob)
+                end
+                
+                if not mob:hasStatusEffect(tpz.effect.DEFENSE_BOOST) then
+                    mob:castSpell(547, mob)
+                end
+                
+                if not mob:hasStatusEffect(tpz.effect.BLINK) then
+                    mob:castSpell(53, mob)
+                end
+                
+                if not mob:hasStatusEffect(tpz.effect.STONESKIN) then
+                    mob:castSpell(54, mob)
+                end
+                
+                if not mob:hasStatusEffect(tpz.effect.PROTECT) then
+                    mob:castSpell(47, mob)
+                end
+                
+                if not mob:hasStatusEffect(tpz.effect.SHELL) then
+                    mob:castSpell(52, mob)
+                end
+                
+                if not mob:hasStatusEffect(tpz.effect.REPRISAL) then
+                    mob:castSpell(97, mob)
+                end
+                
+                if not mob:hasStatusEffect(tpz.effect.MARCH) then
+                    mob:castSpell(420, mob)
+                end
+                mob:setLocalVar("buffs", os.time() + 60)
+            end            
         end
-        if (bit.band(mob:getBehaviour(), tpz.behavior.NO_TURN) > 0) then -- disable no turning for the forced mobskills upon head growth
-            mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
+        if mob:getTP() == 3000 then
+            local onionKnight = mob:getLocalVar("OnionKnight")
+            mob:useWeaponskill(math.random(1, 240), target)
+            mob:setLocalVar("OnionKnight", mob:getLocalVar("OnionKnight") + 1)
         end
-        -- Reverse order, same deal.
-        mob:useMobAbility(1828) -- Pyric Blast
-        mob:useMobAbility(1830) -- Polar Blast
-        mob:useMobAbility(1832) -- Barofield
+        
+        if mob:getLocalVar("OnionKnight") >= 241 then
+            mob:setLocalVar("OnionKnight", 0)
+        end
+        
+        if os.time() > mob:getLocalVar("bloodrake") then
+            mob:castSpell(743, target)
+            mob:setLocalVar("bloodrake", os.time() + 60)
+        end
+            
+        mob:setLocalVar("COMBAT_DELAY", os.time() + 3)
     end
 end
 
-function onCriticalHit(mob)
-    local critNum = mob:getLocalVar("crits")
-
-    if ((critNum+1) > mob:getLocalVar("CritToTheFace")) then  -- Lose a head
-        if (mob:AnimationSub() == 0) then
-            mob:AnimationSub(1)
-            mob:setLocalVar("headTimer", os.time() + math.random(60, 190))
-        elseif (mob:AnimationSub() == 1) then
-            mob:AnimationSub(2)
-            mob:setLocalVar("headTimer", os.time() + math.random(60, 190))
-        else
-            -- Meh
-        end
-
-        -- Number of crits to lose a head, re-randoming
-        mob:setLocalVar("CritToTheFace", math.random(10, 30))
-
-        critNum = 0 -- reset the crits on the NM
-    else
-        critNum = critNum + 1
-    end
-    mob:setLocalVar("crits", critNum)
-end
-
-function onMobDrawIn(mob, target)
-    mob:addTP(3000) -- Uses a mobskill upon drawing in a player. Not necessarily on the person drawn in.
+function onMobDisengage(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
+    mob:setRespawnTime(20)
+end
+
+function onMobDespawn(mob)
 end

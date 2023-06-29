@@ -29,6 +29,11 @@ function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.MOBMOD_CAN_SHIELD_BLOCK, 1)
     mob:setMod(tpz.mod.SHIELDBLOCKRATE, 45)
     mob:addMod(tpz.mod.DEF, defBonus)
+    
+	-- 3K HP ADJUSTMENT --
+    mob:addStatusEffect(tpz.effect.MAX_HP_BOOST, 6, 0, 0)
+    mob:setHP(mob:getMaxHP())
+    
 
     mob:addSimpleGambit(ai.t.TARGET, ai.c.READYING_WS, 0, ai.r.JA, ai.s.SPECIFIC, tpz.ja.SHIELD_BASH)
     mob:addSimpleGambit(ai.t.TARGET, ai.c.READYING_MS, 0, ai.r.JA, ai.s.SPECIFIC, tpz.ja.SHIELD_BASH)

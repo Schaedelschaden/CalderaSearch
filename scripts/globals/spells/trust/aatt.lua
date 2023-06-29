@@ -20,7 +20,7 @@ function onSpellCast(caster, target, spell)
 end
 
 function onMobSpawn(mob)
-	tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
+    tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
 
     mob:addListener("COMBAT_TICK", "AATT_CTICK", function(mobArg, target, wsid, tp, action) -- synergy
         local synergy = 0
@@ -54,7 +54,7 @@ function onMobSpawn(mob)
             mobArg:setMod(tpz.mod.MEVA, base + 180)
             master:getLocalVar("ttLock", 3)
         elseif synergy == 4 and evLock == 0 then
-            mobArg:setMod(tpz.mod.MEVA, base + 240) 
+            mobArg:setMod(tpz.mod.MEVA, base + 240)
             master:getLocalVar("ttLock", 4)
         elseif synergy == 3 and evLock == 4 then
             mobArg:setMod(tpz.mod.MEVA, base - 60)
@@ -64,13 +64,13 @@ function onMobSpawn(mob)
             master:getLocalVar("ttLock", 2)
         elseif synergy == 1 and evLock == 2 then
             mobArg:setMod(tpz.mod.MEVA, base - 60)
-            master:getLocalVar("ttLock", 1)        
+            master:getLocalVar("ttLock", 1)
         end
-               
+
         if mobArg:getMP() < (mobArg:getMaxMP() * 0.5) and mobArg:hasStatusEffect(tpz.effect.NETHER_VOID) == false then
             mobArg:useJobAbility(256, mobArg)
         end
-        
+
         if mobArg:hasStatusEffect(tpz.effect.NETHER_VOID) then
             if (mobArg:getMainLvl() >= 62) then
                 local target = mobArg:getTarget()
@@ -81,7 +81,6 @@ function onMobSpawn(mob)
             end
         end
 
-        
         if os.time() > mobArg:getLocalVar("magicCooldown") then
             local mLvl   = mobArg:getMainLvl()
             if mLvl >= 92 then
@@ -207,17 +206,15 @@ function onMobSpawn(mob)
         end
     end)
 
-
-	--Modifiers (All build Magic Damage Taken)
-
+    --Modifiers (All build Magic Damage Taken)
     mob:addStatusEffect(tpz.effect.MAX_HP_BOOST, 20, 0, 0) --If this doesnt work, try HPP (HP %)
     mob:addStatusEffect(tpz.effect.MAX_MP_BOOST, 50, 0, 0) --If this doesnt work, try HPP (HP %)
-	mob:setHP(mob:getMaxHP())
+    mob:setHP(mob:getMaxHP())
     mob:setMP(mob:getMaxMP())
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 10)
     mob:setMod(tpz.mod.FASTCAST, 50)
-    
-    
-	--Spells
+
+    --Spells
     -- mob:addSimpleGambit(ai.t.SELF, ai.c.HAS_TOP_ENMITY, 0, ai.r.JA, ai.s.SPECIFIC, tpz.ja.ELEMENTAL_SEAL)
     -- mob:addSimpleGambit(ai.t.SELF, ai.c.HAS_TOP_ENMITY, 0, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.SLEEPGA)
     --mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.POISON, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.POISON)
@@ -227,17 +224,13 @@ function onMobSpawn(mob)
     mob:addSimpleGambit(ai.t.TARGET, ai.c.READYING_JA, 0, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.STUN)
     mob:addSimpleGambit(ai.t.TARGET, ai.c.CASTING_MA, 0, ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.STUN)
     -- mob:addSimpleGambit(ai.t.SELF, ai.c.STATUS, tpz.effect.NETHER_VOID, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.ASPIR)
-    
 
-        
-	--Abilities
+    --Abilities
     mob:addSimpleGambit(ai.t.SELF, ai.c.TP_GTE, 900, ai.r.JA, ai.s.SPECIFIC, tpz.ja.LAST_RESORT)
     mob:addSimpleGambit(ai.t.SELF, ai.c.STATUS, tpz.effect.LAST_RESORT, ai.r.JA, ai.s.SPECIFIC, tpz.ja.SOULEATER)
-    
+
     mob:addSimpleGambit(ai.t.TARGET, ai.c.MB_AVAILABLE, 0, ai.r.MA, ai.s.MB_ELEMENT, tpz.magic.spellFamily.NONE)
     -- mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_SC_AVAILABLE, 0, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.NONE)
-
-
 end
 
 function onMobDespawn(mob)

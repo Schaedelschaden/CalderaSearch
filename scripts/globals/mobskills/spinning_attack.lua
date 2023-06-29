@@ -22,5 +22,11 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 2.6
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, MOBPARAM_3_SHADOW)
+    
+    if mob:getID() == 17039394 then
+        local modifier = skill:getTotalTargets()
+        dmg = math.random((target:getMainLvl() * 2), (target:getMaxHP() + modifier))
+    end
+    
     return dmg
 end

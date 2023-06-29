@@ -8,7 +8,7 @@ require("scripts/globals/keyitems")
 -----------------------------------
 
 function onBattlefieldInitialise(battlefield)
-    battlefield:setLocalVar("loot", 1)
+
 end
 
 function onBattlefieldTick(battlefield, tick)

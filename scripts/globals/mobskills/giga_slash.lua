@@ -11,7 +11,7 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:AnimationSub() == 1) then
+    if mob:AnimationSub() == 1 then
         return 1
     else
         return 0
@@ -20,9 +20,10 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local numhits = 1
-    local accmod = 1
-    local dmgmod = 1.95
-    local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_CRIT_VARIES, 1, 2, 3)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
+    local accmod  = 1
+    local dmgmod  = 1.95
+    local info    = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_CRIT_VARIES, 25, 50, 75)
+    local dmg     = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
+
     return dmg
 end

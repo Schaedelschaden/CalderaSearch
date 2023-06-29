@@ -69,7 +69,9 @@ enum class Mod
     MACC                      = 30, // Magic Accuracy
     MEVA                      = 31, // Magic Evasion
 
-    // Magic Accuracy and Elemental Attacks
+    // Elemental "Magic Attack Bonus" e.g. Pixie Hairpin +1, Archon Ring, Zamzummim staff, Weatherspoon Ring, etc.
+    // Value of these mods is added to the Elemental Affinity: Magice Damage mods
+    // Mod value 15 = +15% base damage, Mod value 28 = +28% base damage, etc.
     FIREATT                   = 32, // Fire Damage
     ICEATT                    = 33, // Ice Damage
     WINDATT                   = 34, // Wind Damage
@@ -78,6 +80,7 @@ enum class Mod
     WATERATT                  = 37, // Water Damage
     LIGHTATT                  = 38, // Light Damage
     DARKATT                   = 39, // Dark Damage
+
     FIREACC                   = 40, // Fire Accuracy
     ICEACC                    = 41, // Ice Accuracy
     WINDACC                   = 42, // Wind Accuracy
@@ -232,7 +235,7 @@ enum class Mod
     MARTIAL_ARTS              = 173, // The integer amount of delay to reduce from H2H weapons' base delay. (TRAIT)
     SKILLCHAINBONUS           = 174, // Damage bonus applied to skill chain damage.  Modifier from effects/traits
     SKILLCHAINDMG             = 175, // Damage bonus applied to skill chain damage.  Modifier from gear (multiplicative after effect/traits)
-	MAX_SWINGS                = 978, // Max swings for "Occasionally attacks X times"
+    MAX_SWINGS                = 978, // Max swings for "Occasionally attacks X times"
     ADDITIONAL_SWING_CHANCE   = 979, // Chance that allows for an additional swing despite of multiple hits, mostly for Amood weapons
 
     MAGIC_DAMAGE             = 311, // Magic damage added directly to the spell's base damage
@@ -298,7 +301,7 @@ enum class Mod
 
     // Warrior
     DOUBLE_ATTACK             = 288, // Percent chance to proc
-	DOUBLE_ATTACK_DMG         = 1038, // Increases "Double Attack" damage/"Double Attack" damage + (in percents, e.g. +20 = +20% damage)
+    DOUBLE_ATTACK_DMG         = 1038, // Increases "Double Attack" damage/"Double Attack" damage + (in percents, e.g. +20 = +20% damage)
     WARCRY_DURATION           = 483, // Warcy duration bonus from gear
     BERSERK_EFFECT            = 948, // Conqueror Berserk Effect
     BERSERK_DURATION          = 954, // Berserk Duration
@@ -345,7 +348,7 @@ enum class Mod
     DESPOIL                   = 896, // Increases THF Despoil chance
     PERFECT_DODGE             = 883, // Increases Perfect Dodge duration in seconds
     TRIPLE_ATTACK             = 302, // Percent chance
-	TRIPLE_ATTACK_DMG         = 1039, // Increases "Triple Attack" damage/"Triple Attack" damage + (in percents, e.g. +20 = +20% damage)
+    TRIPLE_ATTACK_DMG         = 1039, // Increases "Triple Attack" damage/"Triple Attack" damage + (in percents, e.g. +20 = +20% damage)
     TREASURE_HUNTER           = 303, // Percent chance
     SNEAK_ATK_DEX             = 874, // % DEX boost to Sneak Attack (if gear mod, needs to be equipped on hit)
     TRICK_ATK_AGI             = 520, // % AGI boost to Trick Attack (if gear mod, needs to be equipped on hit)
@@ -481,7 +484,7 @@ enum class Mod
     // Corsair
     EXP_BONUS                 = 382, //
     ROLL_RANGE                = 528, // Additional range for COR roll abilities.
-	JOB_BONUS_CHANCE          = 542, // "Phantom Roll" effects + Gear (chance to apply job bonus to Phantom Roll without having the job in the party.)
+    JOB_BONUS_CHANCE          = 542, // "Phantom Roll" effects + Gear (chance to apply job bonus to Phantom Roll without having the job in the party.)
 
     DMG_REFLECT               = 316, // Tracks totals
     ROLL_ROGUES               = 317, // Tracks totals
@@ -576,7 +579,7 @@ enum class Mod
     CARDINAL_CHANT            = 959,
     INDI_DURATION             = 960,
     GEOMANCY                  = 961, // Geomancy Skill
-	HANDBELL                  = 962, // Handbell Skill
+    HANDBELL                  = 962, // Handbell Skill
     WIDENED_COMPASS           = 963,
     MENDING_HALATION          = 968,
     RADIAL_ARCANA             = 969,
@@ -735,7 +738,7 @@ enum class Mod
     ENHANCES_CURSNA_RCVD      = 67,  // Potency of "Cursna" effects received
     ENHANCES_CURSNA           = 310, // Used by gear with the "Enhances Cursna" or "Cursna+" attribute
     ENHANCES_HOLYWATER        = 495, // Used by gear with the "Enhances Holy Water" or "Holy Water+" attribute
-	ENHANCES_PROT_SHELL_RCVD  = 977, // Enhances Protect and Shell Effects Received (Binary MOD)
+    ENHANCES_PROT_SHELL_RCVD  = 977, // Enhances Protect and Shell Effects Received (Binary MOD)
 
     RETALIATION               = 414, // Increases damage of Retaliation hits
 
@@ -824,13 +827,13 @@ enum class Mod
     // Per https://www.bg-wiki.com/bg/Weapon_Skill_Damage we need all 3..
     ALL_WSDMG_FIRST_HIT       = 841, // Generic (all Weaponskills) damage, first hit only.
     WS_NO_DEPLETE             = 949, // % chance a Weaponskill depletes no TP.
-	WS_STR_BONUS              = 980, // % bonus to str_wsc.
+    WS_STR_BONUS              = 980, // % bonus to str_wsc.
     WS_DEX_BONUS              = 957, // % bonus to dex_wsc.
-	WS_VIT_BONUS              = 981, // % bonus to vit_wsc.
-	WS_AGI_BONUS              = 982, // % bonus to agi_wsc.
-	WS_INT_BONUS              = 983, // % bonus to int_wsc.
-	WS_MND_BONUS              = 984, // % bonus to mnd_wsc.
-	WS_CHR_BONUS              = 985, // % bonus to chr_wsc.
+    WS_VIT_BONUS              = 981, // % bonus to vit_wsc.
+    WS_AGI_BONUS              = 982, // % bonus to agi_wsc.
+    WS_INT_BONUS              = 983, // % bonus to int_wsc.
+    WS_MND_BONUS              = 984, // % bonus to mnd_wsc.
+    WS_CHR_BONUS              = 985, // % bonus to chr_wsc.
 
     EXPERIENCE_RETAINED       = 914, // Experience points retained upon death (this is a percentage)
     CAPACITY_BONUS            = 915, // Capacity point bonus granted
@@ -840,8 +843,8 @@ enum class Mod
 
     SUBTLE_BLOW_II            = 973, // Subtle Blow II Effect (Cap 50%) Total Effect (SB + SB_II cap 75%)
     GARDENING_WILT_BONUS      = 975, // Increases the number of Vanadays a plant can survive before it wilts
-	
-	PENGUIN_RING_EFFECT       = 1003, // +2 on fishing arrow delay / fish movement for mini - game
+
+    PENGUIN_RING_EFFECT       = 1003, // +2 on fishing arrow delay / fish movement for mini - game
     ALBATROSS_RING_EFFECT     = 1004, // adds 30 seconds to mini - game time
     PELICAN_RING_EFFECT       = 1005, // adds extra skillup roll for fishing
 
@@ -850,206 +853,230 @@ enum class Mod
     // SPARE = 977, // stuff
     // SPARE = 978, // stuff
     // SPARE = 979, // stuff
-	
-	// Caldera custom Mod IDs
-	FOOD_EVAP                       = 1901, // Evasion +% from food
-	FOOD_EVAP_CAP                   = 1902, // Evasion +% cap from food
-	FOOD_MEVAP                      = 1903, // Magic Evasion +% from food
-	FOOD_MEVAP_CAP                  = 1904, // Magic Evasion +% cap from food
-	TRAIT_MAG_BURST_BONUS           = 1905, // Magic Burst Bonus Job Traits have to be a separate mod for calculation purposes
-	ENSPELL_STAT_BONUS              = 1906, // Adds +ACC/ATK/MACC while under the effect of an en- spell
-	MEVA_II							= 1907, // Adds Magic Evasion II
-	
-	FRONTAL_DMG_REDUCTION           = 2000, // Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the front
-	REAR_DMG_REDUCTION              = 2001, // Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the rear
-	SIDE_DMG_REDUCTION              = 2002, // Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the side
-	IMMUNITY_SLEEP                  = 2003, // Tracks how much sleep resistance is accumulated from multiple castings of sleep on the target before Immunobreak triggers
-	IMMUNITY_POISON                 = 2004, // Tracks how much poison resistance is accumulated from multiple castings of poison on the target before Immunobreak triggers
-	IMMUNITY_PARALYZE               = 2005, // Tracks how much paralyze resistance is accumulated from multiple castings of paralyze on the target before Immunobreak triggers
-	IMMUNITY_BLIND                  = 2006, // Tracks how much blind resistance is accumulated from multiple castings of blind on the target before Immunobreak triggers
-	IMMUNITY_SILENCE                = 2007, // Tracks how much silence resistance is accumulated from multiple castings of silence on the target before Immunobreak triggers
-	IMMUNITY_VIRUS                  = 2008, // Tracks how much virus resistance is accumulated from multiple castings of virus on the target before Immunobreak triggers
-	IMMUNITY_PETRIFY                = 2009, // Tracks how much petrify resistance is accumulated from multiple castings of petrify on the target before Immunobreak triggers
-	IMMUNITY_BIND                   = 2010, // Tracks how much bind resistance is accumulated from multiple castings of bind on the target before Immunobreak triggers
-	IMMUNITY_CURSE                  = 2011, // Tracks how much curse resistance is accumulated from multiple castings of curse on the target before Immunobreak triggers
-	IMMUNITY_GRAVITY                = 2012, // Tracks how much gravity resistance is accumulated from multiple castings of gravity on the target before Immunobreak triggers
-	IMMUNITY_SLOW                   = 2013, // Tracks how much slow resistance is accumulated from multiple castings of slow on the target before Immunobreak triggers
-	IMMUNITY_STUN                   = 2014, // Tracks how much stun resistance is accumulated from multiple castings of stun on the target before Immunobreak triggers
-	IMMUNITY_CHARM                  = 2015, // Tracks how much charm resistance is accumulated from multiple castings of charm on the target before Immunobreak triggers
-	IMMUNITY_AMNESIA                = 2016, // Tracks how much amnesia resistance is accumulated from multiple castings of amnesia on the target before Immunobreak triggers
-	IMMUNITY_LULLABY                = 2017, // Tracks how much lullaby resistance is accumulated from multiple castings of lullaby on the target before Immunobreak triggers
-	IMMUNITY_DEATH                  = 2018, // Tracks how much death resistance is accumulated from multiple castings of death on the target before Immunobreak triggers
-	IMMUNITY_TERROR                 = 2019, // Tracks how much terror resistance is accumulated from multiple castings of terror on the target before Immunobreak triggers
-	MAGIC_SHIELD                    = 2020, // Tracks remaining magical damage before wearing off
-	
-	ENEMY_TP_ACCUM                  = 2800, // Reduces enemy TP accumulation by % when player takes physical damage
-	WALTZ_POTENCY_RCVD              = 2801, // Increases the potency of Waltz's received
-	CONVERT_DMG_TO_TP               = 2803, // Converts damage taken to TP
-	TANDEM_STRIKE                   = 2804, // Grants a bonus to your and your pet's accuracy and magic accuracy when you and your pet are attacking the same target.
-	TANDEM_BLOW                     = 2805, // Reduces amount of TP gained by enemies when striking them if you and your pet are attacking the same target.
-	THIRD_EYE_COUNTER_DMG           = 2806, // Increases the damage dealt during a Third Eye counter
-	CARBUNCLE_ILVL                  = 2807, // Increases Carbuncle's level when summoned
-	CAIT_SITH_ILVL                  = 2808, // Increases Cait Sith's level when summoned
-	HALVE_CARBUNCLE_PERP            = 2809, // Halves Carbuncle's Perpetuation cost
-	REDUCE_KNOCKBACK                = 2810, // Reduces the strength of knockback effects
-	PARRY_RECOVER_HP                = 2811, // Player recovers HP when parrying attacks
-	ZANSHIN_DOUBLE_ATTACK           = 2812, // Allows Zanshin to occasionally Double Attack
-	AUTOMATON_ELE_CAPACITY          = 2813, // Increases Automaton Attachment Elemental Capacity
-	REFRESH_DURATION_RCVD           = 2814, // Increases the duration of Refresh effects received
-	STONESKIN_CAST                  = 2815, // Reduces the cast time of "Stoneskin"
-	GEO_NO_SPELL_MP_DEPLETION       = 2816, // % to not deplete MP on Geomancy spellcast
-	ABSORB_EFFECT_DURATION          = 2818, // Increases "Absorb" spell durations
-	ALL_JUMPS_DOUBLE_ATTACK         = 2819, // Adds % chance to Double Attack to Jump, High Jump, Spirit Jump, and Soul Jump
-	LIFE_CYCLE_HP                   = 2820, // Adds % to HP restored by Life Cycle
-	ENH_CARDINAL_CHANT              = 2821, // Adds % bonus to Cardinal Chant effect
-	COVER_DT                        = 2822, // Adds -% Damage Taken while using Cover (Mod value is %DT; -12 = -12% DT, 12 = +12% DT)
-	ENMITY_MITIGATES_DMG            = 2823, // Adds -% Damage Taken based on current Enmity (CE + VE)
-	ENMITY_MITIGATES_DMG_DT         = 2824, // Handles the amount of -% Damage Taken provided by ENMITY_MITIGATES_DMG
-	CONVERT_ELEM_DMG_MP             = 2825, // Converts % of elemental magic damage dealt to MP
-	MAGIC_BURST_ACC                 = 2826, // Adds value to magic burst ACC bonus
-	ENSPELL_DURATION_BONUS          = 2827, // Increases the duration of Enspells
-	ENLIGHT_DMG                     = 2828, // Increases the damage of Enlight
-	TERRORRES                       = 2829, // Increases resistance to Terror
-	COUNTER_ATT_VARIES              = 2830, // Attack during "Counter" varies in proportion to Attack of target (Jolt Counters) (Value of 1 means this effect is active)
-	
-	REGEN_BASE                      = 2934, // Adds # to the base regen effect (similar to WHM Regen merits)
-	PHANTOM_ROLL_RECAST             = 2935, // Reduces the recast time of Phantom Roll
-	REVERSE_FLOURISH_BONUS          = 2936, // Adds to the base TP returned by Reverse Flourish
-	SMN_SPELLINTERRUPT              = 2937, // Summoning magic interruption rate down %
-	ELEMENTAL_MAGIC_RECAST          = 2938, // Reduces the recast of elemental magic spells
-	AUGMENT_VIVACIOUS_PULSE         = 2939, // Augments "Vivacious Pulse" (Grants Vivacious Pulse the ability to remove status ailments associated with a -na spell)
-	ENH_KLIMAFORM                   = 2940, // Enhances "Klimaform" effect (Increases damage of spells under matching weather while Klimaform is active)
-	ENH_PARSIMONY                   = 2941, // Enhances "Parsimony" effect (Further reduces MP cost by % of associated Black Magic spell)
-	ENH_PENURY                      = 2942, // Enhances "Penury" effect (Further reduces MP cost by % of associated White Magic spell)
-	GRIMOIRE_MACC                   = 2943, // Increases magic accuracy when casting magic associated with active grimoire
-	ENH_IMMANENCE                   = 2944, // Enhances "Immanence" effect (Increases skillchain damage)
-	ENH_PERPETUANCE                 = 2945, // Enhances "Perpetuance" effect (Increases spell duration by %)
-	ENH_ADDENDUM_BLACK              = 2946, // Enhances "Addendum: Black" effect (Reduces enmity generated while under the effect of Addendum: Black)
-	ENH_ADDENDUM_WHITE              = 2947, // Enhances "Addendum: White" effect (Reduces enmity generated while under the effect of Addendum: White)
-	ENH_FEATHER_STEP                = 2948, // Enhances "Feather Step" effect (Adds additional crit evasion down to Feather Step)
-	ENH_STRIKING_FLOURISH           = 2949, // Enhances "Striking Flourish" effect (Adds a crit hit chance bonus to Striking Flourish) 
-	ENH_CLIMACTIC_FLOURISH          = 2950, // Enhances "Climactic Flourish" effect (Increases the number of crits by 1 and adds % damage)
-	QUICK_DRAW_ENH_DMG              = 2951, // Increases the next elemental damage taken matching the Quick Draw card used
-	ENH_EFFLUX                      = 2952, // Enhances "Efflux" effect (Increases TP Bonus from Efflux)
-	BLUE_MAGIC_CAST_TIME            = 2953, // Reduces the casting time of blue magic spells
-	BLUE_MAGIC_RECAST               = 2954, // Reduces the recast of blue magic spells
-	AUGMENT_BLUE_MAGIC              = 2955, // Occ. augments blue magic spells (% chance to triple WSC component of blue magic spells)
-	AUGMENT_BLOOD_BOON              = 2956, // Augments "Blood Boon" (Sometimes causes Blood Pacts to deal increased damage when Blood Boon activates)
-	SPIRIT_JUMP_TP_BONUS            = 2957, // "Spirit Jump" TP Bonus (Increases the amount of TP gained by Spirit Jump)
-	SOUL_JUMP_ATT_BONUS             = 2958, // Enhances "Soul Jump" effect (Adds additional attack as a %)
-	SPIRIT_JUMP_ATT_BONUS           = 2959, // Enhances "Spirit Jump" effect (Adds additional attack as a %)
-	SPIRIT_LINK_POTENCY             = 2960, // Increases the amount healed by Spirit Link (%) and allows multiple debuffs to be removed
-	SPIRIT_LINK_HP_COST             = 2961, // Reduces the player's HP consumed by Spirit Link (% based)
-	FOOD_AFFECTS_WYVERN             = 2962, // Gives your wyvern your food effects
-	AUGMENT_YONIN                   = 2963, // Adds % Counter chance to Yonin when attacked from the front
-	ENH_FUTAE                       = 2964, // Enhances "Futae" effect (Increases the damage bonus % from Futae)
-	ENH_MIGAWARI                    = 2965, // Enhances "Migawari" effect ()
-	AUGMENT_INNIN                   = 2966, // Adds % Double Attack to Innin when attacking from behind
-	HASSO_PLUS                      = 2967, // Hasso + gear mod (Increases STR bonus (not from retail/BGWiki))
-	ENH_SEKKANOKI                   = 2969, // Enhances "Sekkanoki" effect (Weaponskill stacked with Sekkanoki has the fTP of 1000TP + % of remaining TP)
-	ENH_SEIGAN                      = 2970, // Enhances "Seigan" effect (Adds chance to Counter when using Seigan without Third Eye)
-	ENH_UNLIMITED_SHOT              = 2971, // Enhances "Unlimited Shot" effect (Ignores the ranged distance correction requirement)
-	ENH_DOUBLE_SHOT                 = 2972, // Enhances "Double Shot" effect (Reduces enmity when Double Shot activates)
-	AUGMENT_SONGS                   = 2973, // Augments songs (Adds attributes or MP to songs depending on song element)
-	ENH_SIC_READY                   = 2974, // Enhances "Sic" and "Ready" effects (Adds TP Bonus to Sic and Ready abilities)
-	ENH_MONSTER_CORRELATION         = 2975, // Pet: Enhances monster correlation effects (Adds +100 ATT and +20 ACC when monster correlation triggered)
-	AUGMENT_KILLER_EFFECTS          = 2976, // Augments "Killer" effects (Adds Killer effect (strength / 2)% as damage and -PDT)
-	ENH_SPUR                        = 2977, // Enhances "Spur" effect (Adds additional Store TP to Spur)
-	STOUT_SERVANT                   = 2978, // Enhances "Stout Servant" effect
-	OCC_VARIES_ATT_PET_HP           = 2979, // "Attack occasionally varies with pet's HP" set bonus
-	ENH_DESPOIL                     = 2980, // Enhances "Despoil" effect (Increases power of debuff effect)
-	ENFEEBLING_MAGIC_CAST           = 2981, // Reduces enfeebling magic cast time -%
-	ENH_MANA_WALL                   = 2982, // Enhances "Mana Wall" effect (Further reduces the damage taken while under the effect of Mana Wall)
-	CUMULATIVE_THUNDER_DMG          = 2983, // Tracks the cumulative elemental damage for thunder magic spells
-	CUMULATIVE_ICE_DMG              = 2984, // Tracks the cumulative elemental damage for ice magic spells
-	CUMULATIVE_FIRE_DMG             = 2985, // Tracks the cumulative elemental damage for fire magic spells
-	CUMULATIVE_WIND_DMG             = 2986, // Tracks the cumulative elemental damage for wind magic spells
-	CUMULATIVE_WATER_DMG            = 2987, // Tracks the cumulative elemental damage for water magic spells
-	CUMULATIVE_EARTH_DMG            = 2988, // Tracks the cumulative elemental damage for earth magic spells
-	ENH_AFFLATUS_SOLACE             = 2989, // Enhances "Afflatus Solace" effect (Increases the amount of Stoneskin and adds additional MDB to barspells)
-	ENH_DIVINE_VEIL                 = 2990, // Enhances "Divine Veil" effect (Percent chance to make -na spells AoE without Divine Seal)
-	AUGMENT_IMPETUS                 = 2991, // Augments "Impetus" (Adds +ACC and +Crit Hit DMG to Impetus)
-	ENH_RESTRAINT                   = 2992, // Enhances "Restraint" effect
-	ENH_BLOOD_RAGE                  = 2993, // Enhances "Blood Rage" effect (Increases Blood Rage duration)
-	ENH_NETHER_VOID                 = 2994, // Enhances "Nether Void" effect
-	ENH_ABSORB_TP                   = 2995, // Enhances "Absorb-TP" effect (Increases amount absorbed)
-	ENH_DREAD_SPIKES                = 2996, // Enhances "Dread Spikes" effect as a percentage (Divided by 1000 to allow for floating decimal values)
-	OCC_VARIES_ATT_HP               = 2997, // "Attack occasionally varies with HP" set bonus
-	AUGMENT_COMPOSURE               = 2998, // Percent duration increase from Augments "Composure" set bonus
-	AUGMENT_CONSERVE_MP             = 2999, // Percent chance to activate Augments "Conserve MP" set bonus
-	
+
+    // Caldera custom Mod IDs
+    IGNORE_MANA_WALL                = 1800, // Attacks ignore Mana Wall effect when this value is greater than 0
+    AURA_RADIUS_BONUS               = 1801, // Increases the base radius distance (6.5y) by <value> / 10 (i.e. mod value 55 = +5.5y radius)
+    RAYKE_FIRE                      = 1802, // Tracks Fire elemental reduction from Rayke
+    RAYKE_ICE                       = 1803, // Tracks Ice elemental reduction from Rayke
+    RAYKE_WIND                      = 1804, // Tracks Wind elemental reduction from Rayke
+    RAYKE_EARTH                     = 1805, // Tracks Earth elemental reduction from Rayke
+    RAYKE_LIGHTNING                 = 1806, // Tracks Lightning elemental reduction from Rayke
+    RAYKE_WATER                     = 1807, // Tracks Water elemental reduction from Rayke
+    RAYKE_LIGHT                     = 1808, // Tracks Light elemental reduction from Rayke
+    RAYKE_DARK                      = 1809, // Tracks Dark elemental reduction from Rayke
+    ANULLS_DAMAGE_TAKEN             = 1810, // Physical and magical damage anullment +<value>%
+
+    FOOD_EVAP                       = 1901, // Evasion +% from food
+    FOOD_EVAP_CAP                   = 1902, // Evasion +% cap from food
+    FOOD_MEVAP                      = 1903, // Magic Evasion +% from food
+    FOOD_MEVAP_CAP                  = 1904, // Magic Evasion +% cap from food
+    TRAIT_MAG_BURST_BONUS           = 1905, // Magic Burst Bonus Job Traits have to be a separate mod for calculation purposes
+    ENSPELL_STAT_BONUS              = 1906, // Adds +ACC/ATK/MACC while under the effect of an en- spell
+    MEVA_II                         = 1907, // Adds Magic Evasion II
+    ENDARK_DMG_BONUS                = 1908, // Adds a <value> bonus to base Endark damage
+
+    FRONTAL_DMG_REDUCTION           = 2000, // Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the front
+    REAR_DMG_REDUCTION              = 2001, // Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the rear
+    SIDE_DMG_REDUCTION              = 2002, // Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the side
+    IMMUNITY_SLEEP                  = 2003, // Tracks how much sleep resistance is accumulated from multiple castings of sleep on the target before Immunobreak triggers
+    IMMUNITY_POISON                 = 2004, // Tracks how much poison resistance is accumulated from multiple castings of poison on the target before Immunobreak triggers
+    IMMUNITY_PARALYZE               = 2005, // Tracks how much paralyze resistance is accumulated from multiple castings of paralyze on the target before Immunobreak triggers
+    IMMUNITY_BLIND                  = 2006, // Tracks how much blind resistance is accumulated from multiple castings of blind on the target before Immunobreak triggers
+    IMMUNITY_SILENCE                = 2007, // Tracks how much silence resistance is accumulated from multiple castings of silence on the target before Immunobreak triggers
+    IMMUNITY_VIRUS                  = 2008, // Tracks how much virus resistance is accumulated from multiple castings of virus on the target before Immunobreak triggers
+    IMMUNITY_PETRIFY                = 2009, // Tracks how much petrify resistance is accumulated from multiple castings of petrify on the target before Immunobreak triggers
+    IMMUNITY_BIND                   = 2010, // Tracks how much bind resistance is accumulated from multiple castings of bind on the target before Immunobreak triggers
+    IMMUNITY_CURSE                  = 2011, // Tracks how much curse resistance is accumulated from multiple castings of curse on the target before Immunobreak triggers
+    IMMUNITY_GRAVITY                = 2012, // Tracks how much gravity resistance is accumulated from multiple castings of gravity on the target before Immunobreak triggers
+    IMMUNITY_SLOW                   = 2013, // Tracks how much slow resistance is accumulated from multiple castings of slow on the target before Immunobreak triggers
+    IMMUNITY_STUN                   = 2014, // Tracks how much stun resistance is accumulated from multiple castings of stun on the target before Immunobreak triggers
+    IMMUNITY_CHARM                  = 2015, // Tracks how much charm resistance is accumulated from multiple castings of charm on the target before Immunobreak triggers
+    IMMUNITY_AMNESIA                = 2016, // Tracks how much amnesia resistance is accumulated from multiple castings of amnesia on the target before Immunobreak triggers
+    IMMUNITY_LULLABY                = 2017, // Tracks how much lullaby resistance is accumulated from multiple castings of lullaby on the target before Immunobreak triggers
+    IMMUNITY_DEATH                  = 2018, // Tracks how much death resistance is accumulated from multiple castings of death on the target before Immunobreak triggers
+    IMMUNITY_TERROR                 = 2019, // Tracks how much terror resistance is accumulated from multiple castings of terror on the target before Immunobreak triggers
+    MAGIC_SHIELD                    = 2020, // Tracks remaining magical damage before wearing off
+
+    ENEMY_TP_ACCUM                  = 2800, // Reduces enemy TP accumulation by % when player takes physical damage
+    WALTZ_POTENCY_RCVD              = 2801, // Increases the potency of Waltz's received
+    CONVERT_DMG_TO_TP               = 2803, // Converts damage taken to TP
+    TANDEM_STRIKE                   = 2804, // Grants a bonus to your and your pet's accuracy and magic accuracy when you and your pet are attacking the same target.
+    TANDEM_BLOW                     = 2805, // Reduces amount of TP gained by enemies when striking them if you and your pet are attacking the same target.
+    THIRD_EYE_COUNTER_DMG           = 2806, // Increases the damage dealt during a Third Eye counter
+    CARBUNCLE_ILVL                  = 2807, // Increases Carbuncle's level when summoned
+    CAIT_SITH_ILVL                  = 2808, // Increases Cait Sith's level when summoned
+    HALVE_CARBUNCLE_PERP            = 2809, // Halves Carbuncle's Perpetuation cost
+    REDUCE_KNOCKBACK                = 2810, // Reduces the strength of knockback effects
+    PARRY_RECOVER_HP                = 2811, // Player recovers HP when parrying attacks
+    ZANSHIN_DOUBLE_ATTACK           = 2812, // Allows Zanshin to occasionally Double Attack
+    AUTOMATON_ELE_CAPACITY          = 2813, // Increases Automaton Attachment Elemental Capacity
+    REFRESH_DURATION_RCVD           = 2814, // Increases the duration of Refresh effects received
+    STONESKIN_CAST                  = 2815, // Reduces the cast time of "Stoneskin"
+    GEO_NO_SPELL_MP_DEPLETION       = 2816, // % to not deplete MP on Geomancy spellcast
+    ABSORB_EFFECT_DURATION          = 2818, // Increases "Absorb" spell durations
+    ALL_JUMPS_DOUBLE_ATTACK         = 2819, // Adds % chance to Double Attack to Jump, High Jump, Spirit Jump, and Soul Jump
+    LIFE_CYCLE_HP                   = 2820, // Adds % to HP restored by Life Cycle
+    ENH_CARDINAL_CHANT              = 2821, // Adds % bonus to Cardinal Chant effect
+    COVER_DT                        = 2822, // Adds -% Damage Taken while using Cover (Mod value is %DT; -12 = -12% DT, 12 = +12% DT)
+    ENMITY_MITIGATES_DMG            = 2823, // Adds -% Damage Taken based on current Enmity (CE + VE)
+    ENMITY_MITIGATES_DMG_DT         = 2824, // Handles the amount of -% Damage Taken provided by ENMITY_MITIGATES_DMG
+    CONVERT_ELEM_DMG_MP             = 2825, // Converts % of elemental magic damage dealt to MP
+    MAGIC_BURST_ACC                 = 2826, // Adds value to magic burst ACC bonus
+    ENSPELL_DURATION_BONUS          = 2827, // Increases the duration of Enspells
+    ENLIGHT_DMG                     = 2828, // Increases the damage of Enlight
+    TERRORRES                       = 2829, // Increases resistance to Terror
+    COUNTER_ATT_VARIES              = 2830, // Attack during "Counter" varies in proportion to Attack of target (Jolt Counters) (Value of 1 means this effect is active)
+    INSPIRATION_FASTCAST            = 2831, // Adds "Fast Cast" when under the effects of Vallation or Valiance (Exceeds the normal 40% "Fast Cast" cap)
+    TRUSTS_INCREASE_ATK             = 2832, // Attack increases with number of alter egos in party (Mod value is per trust in party, e.g. 10 = +10 ATK per trust)
+    CONSUME_MP_FOR_FOLLOWUP_MELEE   = 2833, // SU3 Melee Weapon "Consumes 5% of MP during a regular attack: Offers a chance of follow-up attack +1 based on amount of MP consumed"
+    CONSUME_MP_FOR_FOLLOWUP_RANGED  = 2834, // SU3 Ranged Weapon "Consumes 5% of MP during a ranged attack: Offers a chance of follow-up attack +1 based on amount of MP consumed"
+    CONSUME_MP_DURING_RANGED_ATK    = 2835, // SU3 Ammunition "Consumes 2% of MP during a ranged attack: Ranged Attack+ Ranged Accuracy+"
+    CONSUME_MP_RATT_RACC_BONUS      = 2836, // Tracks the Ranged Attack/Accuracy bonuses generated by a CONSUME_MP_DURING_RANGED_ATK proc (DO NOT ASSIGN THIS MOD TO ITEMS)
+    CONSUME_MP_STP_SINGLE_ATK       = 2837, // SU3 HQ Weapon "Consumes 5% of MP during a regular attack: "Store TP"+ for a single attack"
+    CURE_POTENCY_BASE               = 2838, // "Cure" +<value> (Increases base potency of cures, e.g. Cure II hard cap is 145, "Cure" +50 = hard cap of 195)
+    CURE_MP_CONSUMED                = 2839, // "Cure" MP Consumed (Increases the base MP cost of healing magic by +<value>%, e.g. +30%)
+    ELEMENTAL_MAGIC_MP_CONSUMED     = 2840, // Elemental Magic MP Consumed (Increases the base MP cost of elemental magic by +<value>%, e.g. +30%)
+    CONSUME_MP_ELEM_BONUS           = 2841, // Elemental Magic MP Consumed: "Magic Atk. Bonus"+ (value = 1) OR Elemental Magic MP Consumed: Magic Damage+ & "Magic Atk. Bonus"+ (value = 2)
+
+    REGEN_BASE                      = 2934, // Adds # to the base regen effect (similar to WHM Regen merits)
+    PHANTOM_ROLL_RECAST             = 2935, // Reduces the recast time of Phantom Roll
+    REVERSE_FLOURISH_BONUS          = 2936, // Adds to the base TP returned by Reverse Flourish
+    SMN_SPELLINTERRUPT              = 2937, // Summoning magic interruption rate down %
+    ELEMENTAL_MAGIC_RECAST          = 2938, // Reduces the recast of elemental magic spells
+    AUGMENT_VIVACIOUS_PULSE         = 2939, // Augments "Vivacious Pulse" (Grants Vivacious Pulse the ability to remove status ailments associated with a -na spell)
+    ENH_KLIMAFORM                   = 2940, // Enhances "Klimaform" effect (Increases damage of spells under matching weather while Klimaform is active)
+    ENH_PARSIMONY                   = 2941, // Enhances "Parsimony" effect (Further reduces MP cost by % of associated Black Magic spell)
+    ENH_PENURY                      = 2942, // Enhances "Penury" effect (Further reduces MP cost by % of associated White Magic spell)
+    GRIMOIRE_MACC                   = 2943, // Increases magic accuracy when casting magic associated with active grimoire
+    ENH_IMMANENCE                   = 2944, // Enhances "Immanence" effect (Increases skillchain damage)
+    ENH_PERPETUANCE                 = 2945, // Enhances "Perpetuance" effect (Increases spell duration by %)
+    ENH_ADDENDUM_BLACK              = 2946, // Enhances "Addendum: Black" effect (Reduces enmity generated while under the effect of Addendum: Black)
+    ENH_ADDENDUM_WHITE              = 2947, // Enhances "Addendum: White" effect (Reduces enmity generated while under the effect of Addendum: White)
+    ENH_FEATHER_STEP                = 2948, // Enhances "Feather Step" effect (Adds additional crit evasion down to Feather Step)
+    ENH_STRIKING_FLOURISH           = 2949, // Enhances "Striking Flourish" effect (Adds a crit hit chance bonus to Striking Flourish)
+    ENH_CLIMACTIC_FLOURISH          = 2950, // Enhances "Climactic Flourish" effect (Increases the number of crits by 1 and adds % damage)
+    QUICK_DRAW_ENH_DMG              = 2951, // Increases the next elemental damage taken matching the Quick Draw card used
+    ENH_EFFLUX                      = 2952, // Enhances "Efflux" effect (Increases TP Bonus from Efflux)
+    BLUE_MAGIC_CAST_TIME            = 2953, // Reduces the casting time of blue magic spells
+    BLUE_MAGIC_RECAST               = 2954, // Reduces the recast of blue magic spells
+    AUGMENT_BLUE_MAGIC              = 2955, // Occ. augments blue magic spells (% chance to triple WSC component of blue magic spells)
+    AUGMENT_BLOOD_BOON              = 2956, // Augments "Blood Boon" (Sometimes causes Blood Pacts to deal increased damage when Blood Boon activates)
+    SPIRIT_JUMP_TP_BONUS            = 2957, // "Spirit Jump" TP Bonus (Increases the amount of TP gained by Spirit Jump)
+    SOUL_JUMP_ATT_BONUS             = 2958, // Enhances "Soul Jump" effect (Adds additional attack as a %)
+    SPIRIT_JUMP_ATT_BONUS           = 2959, // Enhances "Spirit Jump" effect (Adds additional attack as a %)
+    SPIRIT_LINK_POTENCY             = 2960, // Increases the amount healed by Spirit Link (%) and allows multiple debuffs to be removed
+    SPIRIT_LINK_HP_COST             = 2961, // Reduces the player's HP consumed by Spirit Link (% based)
+    FOOD_AFFECTS_WYVERN             = 2962, // Gives your wyvern your food effects
+    AUGMENT_YONIN                   = 2963, // Adds % Counter chance to Yonin when attacked from the front
+    ENH_FUTAE                       = 2964, // Enhances "Futae" effect (Increases the damage bonus % from Futae)
+    ENH_MIGAWARI                    = 2965, // Enhances "Migawari" effect ()
+    AUGMENT_INNIN                   = 2966, // Adds % Double Attack to Innin when attacking from behind
+    HASSO_PLUS                      = 2967, // Hasso + gear mod (Increases STR bonus (not from retail/BGWiki))
+    ENH_SEKKANOKI                   = 2969, // Enhances "Sekkanoki" effect (Weaponskill stacked with Sekkanoki has the fTP of 1000TP + % of remaining TP)
+    ENH_SEIGAN                      = 2970, // Enhances "Seigan" effect (Adds chance to Counter when using Seigan without Third Eye)
+    ENH_UNLIMITED_SHOT              = 2971, // Enhances "Unlimited Shot" effect (Ignores the ranged distance correction requirement)
+    ENH_DOUBLE_SHOT                 = 2972, // Enhances "Double Shot" effect (Reduces enmity when Double Shot activates)
+    AUGMENT_SONGS                   = 2973, // Augments songs (Adds attributes or MP to songs depending on song element)
+    ENH_SIC_READY                   = 2974, // Enhances "Sic" and "Ready" effects (Adds TP Bonus to Sic and Ready abilities)
+    ENH_MONSTER_CORRELATION         = 2975, // Pet: Enhances monster correlation effects (Adds +100 ATT and +20 ACC when monster correlation triggered)
+    AUGMENT_KILLER_EFFECTS          = 2976, // Augments "Killer" effects (Adds Killer effect (strength / 2)% as damage and -PDT)
+    ENH_SPUR                        = 2977, // Enhances "Spur" effect (Adds additional Store TP to Spur)
+    STOUT_SERVANT                   = 2978, // Enhances "Stout Servant" effect
+    OCC_VARIES_ATT_PET_HP           = 2979, // "Attack occasionally varies with pet's HP" set bonus
+    ENH_DESPOIL                     = 2980, // Enhances "Despoil" effect (Increases power of debuff effect)
+    ENFEEBLING_MAGIC_CAST           = 2981, // Reduces enfeebling magic cast time -%
+    ENH_MANA_WALL                   = 2982, // Enhances "Mana Wall" effect (Further reduces the damage taken while under the effect of Mana Wall)
+    CUMULATIVE_THUNDER_DMG          = 2983, // Tracks the cumulative elemental damage for thunder magic spells
+    CUMULATIVE_ICE_DMG              = 2984, // Tracks the cumulative elemental damage for ice magic spells
+    CUMULATIVE_FIRE_DMG             = 2985, // Tracks the cumulative elemental damage for fire magic spells
+    CUMULATIVE_WIND_DMG             = 2986, // Tracks the cumulative elemental damage for wind magic spells
+    CUMULATIVE_WATER_DMG            = 2987, // Tracks the cumulative elemental damage for water magic spells
+    CUMULATIVE_EARTH_DMG            = 2988, // Tracks the cumulative elemental damage for earth magic spells
+    ENH_AFFLATUS_SOLACE             = 2989, // Enhances "Afflatus Solace" effect (Increases the amount of Stoneskin and adds additional MDB to barspells)
+    ENH_DIVINE_VEIL                 = 2990, // Enhances "Divine Veil" effect (Percent chance to make -na spells AoE without Divine Seal)
+    AUGMENT_IMPETUS                 = 2991, // Augments "Impetus" (Adds +ACC and +Crit Hit DMG to Impetus)
+    ENH_RESTRAINT                   = 2992, // Enhances "Restraint" effect
+    ENH_BLOOD_RAGE                  = 2993, // Enhances "Blood Rage" effect (Increases Blood Rage duration)
+    ENH_NETHER_VOID                 = 2994, // Enhances "Nether Void" effect
+    ENH_ABSORB_TP                   = 2995, // Enhances "Absorb-TP" effect (Increases amount absorbed)
+    ENH_DREAD_SPIKES                = 2996, // Enhances "Dread Spikes" effect as a percentage (Divided by 1000 to allow for floating decimal values)
+    OCC_VARIES_ATT_HP               = 2997, // "Attack occasionally varies with HP" set bonus
+    AUGMENT_COMPOSURE               = 2998, // Percent duration increase from Augments "Composure" set bonus
+    AUGMENT_CONSERVE_MP             = 2999, // Percent chance to activate Augments "Conserve MP" set bonus
+
     COUNTER_DMG                     = 3001, // Increases Counter Damage
     COUNTER_CRIT_HIT_RATE           = 3002, // Increases Counter Critical Hit Rate
     MAG_BURST_BONUS_II              = 3003, // Magic Burst Bonus II
     POT_BANISH_UNDEAD               = 3004, // Potency of "Banish" on Undead
     ELEM_DOT_EFFECT                 = 3005, // Potency of Black Magic Elemental DOT
     GAIN_MAGIC_EFFECT               = 3006, // Potency of White Magic Gain Spells
-	PET_BREATH                      = 3007, // Increases effects of Pet Breath moves
-	CALL_BEAST_RECAST               = 3008, // "Call Beast" Ability Delay
+    PET_BREATH                      = 3007, // Increases effects of Pet Breath moves
+    CALL_BEAST_RECAST               = 3008, // "Call Beast" Ability Delay
     SHIELD_BASH_DISPEL              = 3009, // Shield Bash: Adds Dispel
-	DIVINE_ENMITY_BONUS             = 3010, // Divine Magic Special Enmity Bonus
-	LAST_RESORT_DEF                 = 3012, // Last Resort Defense Penalty -%
+    DIVINE_ENMITY_BONUS             = 3010, // Divine Magic Special Enmity Bonus
+    LAST_RESORT_DEF                 = 3012, // Last Resort Defense Penalty -%
     NETHER_VOID_BONUS               = 3013, // Nether Void Absorb Bonus
     DAMAGE_LIMIT_TRAIT              = 3014, // Damage Limit+ Job Trait (Flat pDIF Bonus, value of 1 to 6)
-	DAMAGE_LIMIT_GEAR               = 3015, // Physical Damage Limit +% from gear (pDIF multiplier)
-	ALL_KILLER_EFFECTS              = 3016, // All Killer Effects + (caps at 100%)
-	AUGMENT_REWARD                  = 3017, // Augments "Reward", II, and III
-	WYVERN_ILVL                     = 3018, // Wyvern: Lv. gear
-	BEAST_AFFINITY                  = 3019, // Increases Jug Pet level by 1 (maxed at 15)
-	REWARD_RECAST					= 3020, // Reduces Reward's recast by x seconds
-	DOUBLE_SHOT_AMMO                = 3021, // Tracks Double Shot Ammo Requirement
-	DOUBLE_SHOT_DAMAGE              = 3022, // Double Shot Damage + Gear
-	BOUNTY_SHOT_RATE                = 3023, // Bounty Shot +Treasure Hunter (base of 2 when active)
-	SENGIKORI_BONUS                 = 3024, // % Bonus to Skillchains and Magic Burst II
-	YAEGASUMI_WS_BONUS              = 3025, // Tracks bonus to WS damage from Yaegasumi SP attack cancellations
-	UTSUSEMI_CAST                   = 3026, // Utsusemi Spellcasting Time -%
-	ALL_JUMPS_WYVERN_HP             = 3027, // All Jumps: Adds % of wyvern's max HP as additional damage
-	ENHANCES_AVATARS_FAVOR          = 3028, // Enhances the effects of Avatar's Favor by 1 tier
-	MANA_CEDE_STRENGTH				= 3029, // Enhances "Mana Cede" effect
-	AVATAR_ILVL						= 3030, // Avatar: Lv. gear
-	SPIRIT_RECAST                   = 3031, // Shortens magic recast time for Elemental Spirits gear
-	AVATARS_FAVOR_BP_DELAY          = 3032, // Blood Pact Delay Reduction from Avatar's Favor
-	BREATH_DMG_DEALT				= 3033, // Increases Breath Damage Dealt +%
-	CHAIN_AFFINITY_EFFECT			= 3034, // Enhances "Chain Affinity" effect
-	BURST_AFFINITY_EFFECT			= 3035, // Enhances "Burst Affinity" effect
-	RANDOM_DEAL_EFFECT              = 3036, // Enhances "Random Deal" effect (+% chance to restore two Job Abilities)
-	TRIPLE_SHOT_RATE                = 3037, // Activation Rate for Triple Shot
-	TRIPLE_SHOT_AMMO                = 3038, // Tracks Triple Shot Ammo Requirement
-	TRPL_OCC_QUAD_SHOT              = 3039, // Triple Shot: Occasionally becomes Quad Shot
-	QUICK_DRAW_TP                   = 3040, // "Quick Draw" TP Bonus
-	QUAD_SHOT_RATE                  = 3041, // Activation Rate for Quad Shot
-	REM_OCC_DO_QUAD_DMG_RANGED      = 3042, // Proc rate for REM Aftermaths that apply "Occasionally do quadruple damage" (Mainly provided for "Quad Shot")
-	TRIPLE_SHOT_DAMAGE              = 3043, // Triple Shot Damage + Gear
-	PHANTOM_ROLL_EFFECT             = 3044, // + Phantom Roll Effect from Crooked Cards
-	DBL_OCC_TRPL_SHOT               = 3045, // Double Shot: Occasionally becomes Triple Shot
-	TRUE_SHOT                       = 3046, // "True Shot" + Gear
-	AUTOMATON_ILVL                  = 3047, // Automaton: Lv. Gear
-	BARRAGE_TURBINE_SHOTS           = 3048, // Barrage Turbine additional shot counter
-	TACTICAL_SWITCH_BONUS           = 3049, // "Tactical Switch" + Gear (Adds % TP Bonus when using Tactical Switch)
-	STEP_TP_CONSUMED                = 3050, // "Step" TP Consumed - Gear
-	CRIT_HIT_EVASION                = 3051, // Adjusts the % chance that a critical hit will land (Feather Step)
-	TP_MOVE_EVASION                 = 3052, // Chance to evade special/TP moves (Foil)
-	PARRY_RATE_BONUS                = 3053, // Inquartata and Parrying Rate +% Gear
-	LIEMENT_DURATION                = 3054, // "Liement" Duration + Gear
-	SWORDPLAY                       = 3055, // Number of ticks to increase starting value of Swordplay by
-	ENH_MAGIC_CAST_TIME             = 3056, // Enhancing Magic Casting Time
-	VALLATION_DURATION              = 3057, // Increases the duration of Vallation
-	LUNGE_BONUS                     = 3058, // n multiplier from gear and job points for Swipe and Lunge
-	PFLUG_BONUS                     = 3059, // Improves Pflug base value
-	PHALANX_RCVD                    = 3060, // Enhances Phalanx Effect Received
-	GAMBIT_DURATION                 = 3061, // Increases the duration of Gambit
-	BATTUTA_EFFECT                  = 3062, // Increases the Counter damage of Battuta
-	ONE_FOR_ALL_EFFECT              = 3063, // Tracks the total amount of magic reduction from One For All
-	LUOPAN_POTENCY                  = 3064, // Luopan potency from Ecliptic Attrition/Blaze of Glory
-	ENH_FULL_CIRCLE                 = 3065, // Full Circle + Gear (Enhances the base MP return multiplier)
-	AUGMENT_CONCENTRIC_PULSE        = 3066, // Augments "Concentric Pulse"
-	GEOMANCY_POTENCY                = 3067, // +Geomancy potency from Eminent Bell/Dunna/etc
-	DEFENDER_BLOCK_CHANCE			= 3068, // Defender: Chance of Successful Block
+    DAMAGE_LIMIT_GEAR               = 3015, // Physical Damage Limit +% from gear (pDIF multiplier)
+    ALL_KILLER_EFFECTS              = 3016, // All Killer Effects + (caps at 100%)
+    AUGMENT_REWARD                  = 3017, // Augments "Reward", II, and III
+    WYVERN_ILVL                     = 3018, // Wyvern: Lv. gear
+    BEAST_AFFINITY                  = 3019, // Increases Jug Pet level by 1 (maxed at 15)
+    REWARD_RECAST                   = 3020, // Reduces Reward's recast by x seconds
+    DOUBLE_SHOT_AMMO                = 3021, // Tracks Double Shot Ammo Requirement
+    DOUBLE_SHOT_DAMAGE              = 3022, // Double Shot Damage + Gear
+    BOUNTY_SHOT_RATE                = 3023, // Bounty Shot +Treasure Hunter (base of 2 when active)
+    SENGIKORI_BONUS                 = 3024, // % Bonus to Skillchains and Magic Burst II
+    YAEGASUMI_WS_BONUS              = 3025, // Tracks bonus to WS damage from Yaegasumi SP attack cancellations
+    UTSUSEMI_CAST                   = 3026, // Utsusemi Spellcasting Time -%
+    ALL_JUMPS_WYVERN_HP             = 3027, // All Jumps: Adds % of wyvern's max HP as additional damage
+    ENHANCES_AVATARS_FAVOR          = 3028, // Enhances the effects of Avatar's Favor by 1 tier
+    MANA_CEDE_STRENGTH              = 3029, // Enhances "Mana Cede" effect
+    AVATAR_ILVL                     = 3030, // Avatar: Lv. gear
+    SPIRIT_RECAST                   = 3031, // Shortens magic recast time for Elemental Spirits gear
+    AVATARS_FAVOR_BP_DELAY          = 3032, // Blood Pact Delay Reduction from Avatar's Favor
+    BREATH_DMG_DEALT                = 3033, // Increases Breath Damage Dealt +%
+    CHAIN_AFFINITY_EFFECT           = 3034, // Enhances "Chain Affinity" effect
+    BURST_AFFINITY_EFFECT           = 3035, // Enhances "Burst Affinity" effect
+    RANDOM_DEAL_EFFECT              = 3036, // Enhances "Random Deal" effect (+% chance to restore two Job Abilities)
+    TRIPLE_SHOT_RATE                = 3037, // Activation Rate for Triple Shot
+    TRIPLE_SHOT_AMMO                = 3038, // Tracks Triple Shot Ammo Requirement
+    TRPL_OCC_QUAD_SHOT              = 3039, // Triple Shot: Occasionally becomes Quad Shot
+    QUICK_DRAW_TP                   = 3040, // "Quick Draw" TP Bonus
+    QUAD_SHOT_RATE                  = 3041, // Activation Rate for Quad Shot
+    REM_OCC_DO_QUAD_DMG_RANGED      = 3042, // Proc rate for REM Aftermaths that apply "Occasionally do quadruple damage" (Mainly provided for "Quad Shot")
+    TRIPLE_SHOT_DAMAGE              = 3043, // Triple Shot Damage + Gear
+    PHANTOM_ROLL_EFFECT             = 3044, // + Phantom Roll Effect from Crooked Cards
+    DBL_OCC_TRPL_SHOT               = 3045, // Double Shot: Occasionally becomes Triple Shot
+    TRUE_SHOT                       = 3046, // "True Shot" + Gear
+    AUTOMATON_ILVL                  = 3047, // Automaton: Lv. Gear
+    BARRAGE_TURBINE_SHOTS           = 3048, // Barrage Turbine additional shot counter
+    TACTICAL_SWITCH_BONUS           = 3049, // "Tactical Switch" + Gear (Adds % TP Bonus when using Tactical Switch)
+    STEP_TP_CONSUMED                = 3050, // "Step" TP Consumed - Gear
+    CRIT_HIT_EVASION                = 3051, // Adjusts the % chance that a critical hit will land (Feather Step)
+    TP_MOVE_EVASION                 = 3052, // Chance to evade special/TP moves (Foil)
+    PARRY_RATE_BONUS                = 3053, // Inquartata and Parrying Rate +% Gear
+    LIEMENT_DURATION                = 3054, // "Liement" Duration + Gear
+    SWORDPLAY                       = 3055, // Number of ticks to increase starting value of Swordplay by
+    ENH_MAGIC_CAST_TIME             = 3056, // Enhancing Magic Casting Time
+    VALLATION_DURATION              = 3057, // Increases the duration of Vallation
+    LUNGE_BONUS                     = 3058, // n multiplier from gear and job points for Swipe and Lunge
+    PFLUG_BONUS                     = 3059, // Improves Pflug base value
+    PHALANX_RCVD                    = 3060, // Enhances Phalanx Effect Received
+    GAMBIT_DURATION                 = 3061, // Increases the duration of Gambit
+    BATTUTA_EFFECT                  = 3062, // Increases the Counter damage of Battuta
+    ONE_FOR_ALL_EFFECT              = 3063, // Tracks the total amount of magic reduction from One For All
+    LUOPAN_POTENCY                  = 3064, // Luopan potency from Ecliptic Attrition/Blaze of Glory
+    ENH_FULL_CIRCLE                 = 3065, // Full Circle + Gear (Enhances the base MP return multiplier)
+    AUGMENT_CONCENTRIC_PULSE        = 3066, // Augments "Concentric Pulse"
+    GEOMANCY_POTENCY                = 3067, // +Geomancy potency from Eminent Bell/Dunna/etc
+    DEFENDER_BLOCK_CHANCE           = 3068, // Defender: Chance of Successful Block
     ALL_JUMPS_ATT_BONUS             = 3069, // All Jumps: Attack +<value>%
     ALL_JUMPS_ACC_BONUS             = 3070, // All Jumps: Accuracy +<value>
-	
-	// Add +fTP to weaponskills based on Skillchain property (Elemental Gorgets, Elemental Obis, Fotia Neck/Waist)
-	SC_FTP_TRANSFIXION              = 3100, // Lv1 Light
+
+    // Add +fTP to weaponskills based on Skillchain property (Elemental Gorgets, Elemental Obis, Fotia Neck/Waist)
+    SC_FTP_TRANSFIXION              = 3100, // Lv1 Light
     SC_FTP_COMPRESSION              = 3101, // Lv1 Dark
     SC_FTP_LIQUEFACTION             = 3102, // Lv1 Fire
     SC_FTP_SCISSION                 = 3103, // Lv1 Earth
@@ -1065,10 +1092,10 @@ enum class Mod
     SC_FTP_DARKNESS                 = 3113, // Lv3 Dark, Earth, Water, Ice
     SC_FTP_LIGHT_II                 = 3114, // Lv4 Light
     SC_FTP_DARKNESS_II              = 3115, // Lv4 Darkness
-	SC_FTP_ALL                      = 3116, // All skillchains
-	
-	// Add +fTP to weaponskills based on Day element (Athos's Gloves, Mekira-oto, Gavialis Helm)
-	WS_DAY_FTP_TRANSFIXION          = 3117, // Lv1 Light
+    SC_FTP_ALL                      = 3116, // All skillchains
+
+    // Add +fTP to weaponskills based on Day element (Athos's Gloves, Mekira-oto, Gavialis Helm)
+    WS_DAY_FTP_TRANSFIXION          = 3117, // Lv1 Light
     WS_DAY_FTP_COMPRESSION          = 3118, // Lv1 Dark
     WS_DAY_FTP_LIQUEFACTION         = 3119, // Lv1 Fire
     WS_DAY_FTP_SCISSION             = 3120, // Lv1 Earth
@@ -1084,8 +1111,8 @@ enum class Mod
     WS_DAY_FTP_DARKNESS             = 3130, // Lv3 Dark, Earth, Water, Ice
     WS_DAY_FTP_LIGHT_II             = 3131, // Lv4 Light
     WS_DAY_FTP_DARKNESS_II          = 3132, // Lv4 Darkness
-	WS_DAY_FTP_ALL                  = 3133, // All skillchains
-	
+    WS_DAY_FTP_ALL                  = 3133, // All skillchains
+
     SDT_FIRE                        = 3200, // Fire Specific Damage Taken
     SDT_ICE                         = 3201, // Ice Specific Damage Taken
     SDT_WIND                        = 3202, // Wind Specific Damage Taken
@@ -1094,39 +1121,39 @@ enum class Mod
     SDT_WATER                       = 3205, // Water Specific Damage Taken
     SDT_LIGHT                       = 3206, // Light Specific Damage Taken
     SDT_DARK                        = 3207, // Dark Specific Damage Taken
-	SDT_PHYS						= 3208, // Physical Specific Damage Taken
-	SDT_RANGED						= 3209, // Ranged Specific Damage Taken
-	SDT_MAGIC						= 3210, // Magic Specific Damage Taken
-	SDT_BREATH						= 3211, // Breath Specific Damage Taken
-	
-	ENH_ERASE                       = 3208, // Increases the number of effects removed by Erase (Cleric's Torque/+1/+2)
-	ENH_DISPEL                      = 3209, // Increases the number of effects removed by Dispel (Duelist's Torque/+1/+2)
-	ENH_ENFEEBLE                    = 3210, // Increases Enfeebling magic potency + (Duelist's Torque/+1/+2)
-	UTSU_ATK_SHADOWS                = 3211, // Adds Attack for each Utsusemi Shadow Image present
-	
-	// ASURAN_FISTS_DMG                = 3300, // Asuran Fists Damage (H2H)
-	// EVISCERATION_DMG                = 3301, // Evisceration Damage (Dagger)
-	// SAVAGE_BLADE_DMG                = 3302, // Savage Blade Damage (Sword)
-	// GROUND_STRIKE_DMG               = 3303, // Ground Strike Damage (GSword)
-	// DECIMATION_DMG                  = 3304, // Decimation Damage (Axe)
-	// STEEL_CYCLONE_DMG               = 3305, // Steel Cyclone Damage (GAxe)
-	// SPIRAL_HELL_DMG                 = 3306, // Spiral Hell Damage (Scythe)
-	// IMPULSE_DRIVE_DMG               = 3307, // Impulse Drive Damage (Polearm)
-	// BLADE_KU_DMG                    = 3308, // Blade: Ku Damage (Katana)
-	// TACHI_KASHA_DMG                 = 3309, // Tachi: Kasha Damage (GKatana)
-	// BLACK_HALO_DMG                  = 3310, // Black Halo Damage (Club)
-	// RETRIBUTION_DMG                 = 3311, // Retribution Damage (Staff)
-	// EMPYREAL_ARROW_DMG              = 3312, // Empyreal Arrow Damage (Archery)
-	// DETONATOR_DMG                   = 3313, // Detonator Damage (Marksmanship)
-	// SPINNING_SLASH_DMG              = 3314, // Spinning Slash Damage (Great Sword)
-	// RED_LOTUS_BLADE_DMG             = 3315, // Red Lotus Blade Damage (Sword)
-	// HERCULEAN_SLASH_DMG             = 3316, // Herculean Slash Damage (Great Sword)
-	// GUST_SLASH_DMG                  = 3317, // Gust Slash Damage (Dagger)
-	// CLOUDSPLITTER_DMG			   = 3318, // Cloudsplitter Damage (Axe)
-	// SERAPH_STRIKE_DMG               = 3319, // Seraph Strike Damage (Club)
-	// BLAST_SHOT_DMG                  = 3320, // Blast Shot Damage (Marksmanship)
-	// RAIDEN_THRUST_DMG               = 3321, // Raiden Thrust Damage (Polearm)
-	// TACHI_KAGERO_DMG                = 3322, // Tachi: Kagero Damage (Great Katana)
+    SDT_PHYS                        = 3208, // Physical Specific Damage Taken
+    SDT_RANGED                      = 3209, // Ranged Specific Damage Taken
+    SDT_MAGIC                       = 3210, // Magic Specific Damage Taken
+    SDT_BREATH                      = 3211, // Breath Specific Damage Taken
+
+    ENH_ERASE                       = 3208, // Increases the number of effects removed by Erase (Cleric's Torque/+1/+2)
+    ENH_DISPEL                      = 3209, // Increases the number of effects removed by Dispel (Duelist's Torque/+1/+2)
+    ENH_ENFEEBLE                    = 3210, // Increases Enfeebling magic potency + (Duelist's Torque/+1/+2)
+    UTSU_ATK_SHADOWS                = 3211, // Adds Attack for each Utsusemi Shadow Image present
+
+    // ASURAN_FISTS_DMG                = 3300, // Asuran Fists Damage (H2H)
+    // EVISCERATION_DMG                = 3301, // Evisceration Damage (Dagger)
+    // SAVAGE_BLADE_DMG                = 3302, // Savage Blade Damage (Sword)
+    // GROUND_STRIKE_DMG               = 3303, // Ground Strike Damage (GSword)
+    // DECIMATION_DMG                  = 3304, // Decimation Damage (Axe)
+    // STEEL_CYCLONE_DMG               = 3305, // Steel Cyclone Damage (GAxe)
+    // SPIRAL_HELL_DMG                 = 3306, // Spiral Hell Damage (Scythe)
+    // IMPULSE_DRIVE_DMG               = 3307, // Impulse Drive Damage (Polearm)
+    // BLADE_KU_DMG                    = 3308, // Blade: Ku Damage (Katana)
+    // TACHI_KASHA_DMG                 = 3309, // Tachi: Kasha Damage (GKatana)
+    // BLACK_HALO_DMG                  = 3310, // Black Halo Damage (Club)
+    // RETRIBUTION_DMG                 = 3311, // Retribution Damage (Staff)
+    // EMPYREAL_ARROW_DMG              = 3312, // Empyreal Arrow Damage (Archery)
+    // DETONATOR_DMG                   = 3313, // Detonator Damage (Marksmanship)
+    // SPINNING_SLASH_DMG              = 3314, // Spinning Slash Damage (Great Sword)
+    // RED_LOTUS_BLADE_DMG             = 3315, // Red Lotus Blade Damage (Sword)
+    // HERCULEAN_SLASH_DMG             = 3316, // Herculean Slash Damage (Great Sword)
+    // GUST_SLASH_DMG                  = 3317, // Gust Slash Damage (Dagger)
+    // CLOUDSPLITTER_DMG               = 3318, // Cloudsplitter Damage (Axe)
+    // SERAPH_STRIKE_DMG               = 3319, // Seraph Strike Damage (Club)
+    // BLAST_SHOT_DMG                  = 3320, // Blast Shot Damage (Marksmanship)
+    // RAIDEN_THRUST_DMG               = 3321, // Raiden Thrust Damage (Polearm)
+    // TACHI_KAGERO_DMG                = 3322, // Tachi: Kagero Damage (Great Katana)
 
     TRUST_GENERIC_SPELL_RECAST      = 4000, // Generic spell recast modifier for trusts
     TRUST_CURE_SPELL_RECAST         = 4001, // Healing spell recast modifier for trusts
@@ -1177,7 +1204,7 @@ enum class PetModType
     Valoredge = 5,
     Sharpshot = 6,
     Stormwaker = 7,
-	Luopan = 8
+    Luopan = 8
 };
 
 class CPetModifier : public CModifier

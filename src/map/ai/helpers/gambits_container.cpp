@@ -639,7 +639,7 @@ bool CGambitsContainer::TryTrustSkill()
         }
     }
 
-    if (chosen_skill)
+    if (chosen_skill && !POwner->StatusEffectContainer->HasStatusEffect(EFFECT_AMNESIA))
     {
         auto controller = static_cast<CTrustController*>(POwner->PAI->GetController());
         if (chosen_skill->skill_type == G_REACTION::WS)

@@ -16,9 +16,29 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    local cruor = player:getCurrency("cruor")
+    local cruor    = player:getCurrency("cruor")
     local demilune = tpz.abyssea.getDemiluneAbyssite(player)
-    local cosmos = tpz.abyssea.getCosmosAbyssite(player)
+    local cosmos   = tpz.abyssea.getCosmosAbyssite(player)
+
+    if
+        player:getCharVar("KillCounter_Briareus") >= 1 and
+        player:getCharVar("KillCounter_Kukulkan") >= 1 and
+        player:getCharVar("KillCounter_Glavoid") >= 1
+    then
+        player:addKeyItem(tpz.ki.SCARLET_ABYSSITE_OF_FURTHERANCE)
+        player:addKeyItem(tpz.ki.AZURE_ABYSSITE_OF_MERIT)
+        player:addKeyItem(tpz.ki.VIRIDIAN_ABYSSITE_OF_MERIT)
+    end
+
+    if
+        player:getCharVar("KillCounter_Itzpapalotl") >= 1 and
+        player:getCharVar("KillCounter_Cirein-croin") >= 1 and
+        player:getCharVar("KillCounter_Sedna") >= 1
+    then
+        player:addKeyItem(tpz.ki.SCARLET_ABYSSITE_OF_FURTHERANCE)
+        player:addKeyItem(tpz.ki.AZURE_ABYSSITE_OF_MERIT)
+        player:addKeyItem(tpz.ki.VIRIDIAN_ABYSSITE_OF_MERIT)
+    end
 
     -- Player must have Visitant status
 --  if (player:hasStatusEffect(tpz.effect.VISITANT)) then

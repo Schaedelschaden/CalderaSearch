@@ -35,11 +35,14 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
 	
 	-- Apply aftermath
-    tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.MYTHIC)
+    if damage > 0 and player:isPC() then
+        tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.MYTHIC)
+    end
 
-    if (damage > 0) then
+    if damage > 0 then
 		local power = fTP(tp, 30, 60, 90)
         local duration = fTP(tp, 60, 120, 180)
+
         target:addStatusEffect(tpz.effect.MAGIC_DEF_DOWN, power, 0, duration)
     end
 

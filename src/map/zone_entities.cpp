@@ -40,9 +40,10 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 #include "packets/char.h"
 #include "packets/char_sync.h"
-#include "packets/trust_sync.h"
+#include "packets/entity_set_name.h"
 #include "packets/entity_update.h"
 #include "packets/entity_visual.h"
+#include "packets/trust_sync.h"
 #include "packets/wide_scan.h"
 
 #include "lua/luautils.h"

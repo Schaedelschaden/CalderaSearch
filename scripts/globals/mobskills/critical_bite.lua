@@ -23,10 +23,10 @@ function onMobWeaponSkill(target, mob, skill)
     local damage = 0
 
     -- If have more hp then 30%, then reduce to 5%
-    if (currentHP / maxHP) > 0.3 then
+    if currentHP / maxHP > 0.3 then
         damage = currentHP * .95
     -- Death Resistance prevents dying but reduces target to 1 HP
-    elseif (currentHP / maxHP) <= 0.2 and math.random(1, 100) > target:getMod(tpz.mod.DEATHRES) then
+    elseif currentHP / maxHP <= 0.2 and math.random(1, 100) > target:getMod(tpz.mod.DEATHRES) then
         damage = currentHP - 1
     else
         -- Else you die

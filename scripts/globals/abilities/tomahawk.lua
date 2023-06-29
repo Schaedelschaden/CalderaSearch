@@ -12,6 +12,7 @@ function onAbilityCheck(player,target,ability)
 	if player:getEquipID(tpz.slot.AMMO) ~= 18258 then
 		return 216, 0
 	end
+
 	if player:getEquipID(tpz.slot.AMMO) == 18258 then
 		player:delItem(18258, 1)
 		return 0, 0
@@ -19,7 +20,8 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player, target, ability)
-	local merits = player:getMerit(tpz.merit.TOMAHAWK) + 15
-	
-	target:addStatusEffect(tpz.effect.AVOIDANCE_DOWN, 1, 0, merits)
+	local merits   = player:getMerit(tpz.merit.TOMAHAWK) - 15
+    local duration = 30 + merits
+
+    target:addStatusEffectEx(tpz.effect.TOMAHAWK, 0, 25, 3, duration, 0, 0, 0)
 end

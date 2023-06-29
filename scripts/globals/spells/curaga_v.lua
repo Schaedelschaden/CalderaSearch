@@ -26,9 +26,7 @@ function onSpellCast(caster, target, spell)
 	local final
 
 	if isValidHealTarget(caster, target) then -- e.g. is a PC and not a monster (?)
-		final = getCureFinal(caster, spell, getBaseCureOld(power, divisor, constant), minCure, false)
-
-		final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD)/100))
+		final = getCureFinal(caster, target, spell, getBaseCureOld(power, divisor, constant), minCure, false)
 
 		--Applying server mods....
 		final = final * CURE_POWER

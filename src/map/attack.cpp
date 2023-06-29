@@ -651,6 +651,15 @@ void CAttack::ProcessDamage()
         m_damage = battleutils::doConsumeManaEffect((CCharEntity*)m_attacker, m_damage);
     }
 
+    // Apply Scarlet Delirium damage bonus
+    // EFFECT_SCARLET_DELIRIUM_1 is only active after damage has been dealt to the DRK and EFFECT_SCARLET_DELIRIUM has been removed
+    if (m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_SCARLET_DELIRIUM_1))
+    {
+        float effectPower = 1.0f + (m_attacker->StatusEffectContainer->GetStatusEffect(EFFECT_SCARLET_DELIRIUM_1)->GetPower() / 100.0f);
+
+        m_damage = (uint32)(m_damage * effectPower);
+    }
+
     // Set attack type to Samba if the attack type is normal.  Don't overwrite other types.  Used for Samba double damage.
     if (m_attackType == PHYSICAL_ATTACK_TYPE::NORMAL && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_DRAIN_SAMBA))
     {

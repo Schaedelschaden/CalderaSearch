@@ -16,6 +16,8 @@ function onBattlefieldRegister(player, battlefield)
 end
 
 function onBattlefieldEnter(player, battlefield)
+    player:delKeyItem(tpz.ki.MACABRE_SIMULACRUM)
+    player:setCharVar("SinisterReign", 0)
 end
 
 function onBattlefieldLeave(player, battlefield, leavecode)

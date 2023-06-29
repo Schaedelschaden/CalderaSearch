@@ -15,5 +15,6 @@ function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.STR_DOWN
 
     skill:setMsg(MobGazeMove(mob, target, typeEffect, 33, 3, 120))
+
     return typeEffect
 end

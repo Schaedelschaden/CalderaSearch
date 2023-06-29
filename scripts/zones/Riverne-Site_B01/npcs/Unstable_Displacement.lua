@@ -10,7 +10,8 @@ require("scripts/globals/bcnm")
 
 function onTrade(player, npc, trade)
     local offset = npc:getID() - ID.npc.DISPLACEMENT_OFFSET
-    if (offset == 5 and TradeBCNM(player, npc, trade)) then -- The Wyrmking Descends
+
+    if offset == 5 and TradeBCNM(player, npc, trade) then -- The Wyrmking Descends
         return
     end
 end

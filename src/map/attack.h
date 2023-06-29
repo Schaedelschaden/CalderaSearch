@@ -31,16 +31,17 @@
 
 enum class PHYSICAL_ATTACK_TYPE
 {
-    NORMAL = 0,
-    DOUBLE = 1,
-    TRIPLE = 2,
-    ZANSHIN = 3,
-    KICK = 4,
-    RANGED = 5,
+    NORMAL     = 0,
+    DOUBLE     = 1,
+    TRIPLE     = 2,
+    ZANSHIN    = 3,
+    KICK       = 4,
+    RANGED     = 5,
     RAPID_SHOT = 6,
-    SAMBA = 7,
-    QUAD = 8,
-    DAKEN = 9
+    SAMBA      = 7,
+    QUAD       = 8,
+    DAKEN      = 9,
+    FOLLOWUP   = 10,
 };
 
 enum PHYSICAL_ATTACK_DIRECTION

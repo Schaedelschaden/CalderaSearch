@@ -2,6 +2,10 @@
 -- Area: Abyssea-Misareaux
 --   NM: Gukumatz
 -----------------------------------
+mixins = {require("scripts/mixins/abyssea_weakness")}
+require("scripts/globals/abyssea")
+require("scripts/globals/mobs")
+-----------------------------------
 
 function onMobSpawn(mob)
     mob:addMod(tpz.mod.PARALYZERES, -15)
@@ -22,12 +26,12 @@ function onMobSpawn(mob)
         end
 
         if skillID == 2156 then -- Grim Glower
-            mob:addMod(tpz.mod.REGEN, 35)
+            mobArg:addMod(tpz.mod.REGEN, 35)
 
             -- Remove the glowing eyes and terminate the Petrification gaze
-            mobArg:timer(60000, function(mob)
-                mob:delMod(tpz.mod.REGEN, 35)
-                mob:AnimationSub(0)
+            mobArg:timer(60000, function(mobArg2)
+                mobArg2:delMod(tpz.mod.REGEN, 35)
+                mobArg2:AnimationSub(0)
             end)
         end
     end)
@@ -60,7 +64,9 @@ function onMobFight(mob, target)
 end
 
 function onMobDespawn(mob)
+    mob:removeListener("MOBSKILL_USED")
 end
 
 function onMobDeath(mob, player, isKiller)
+    mob:removeListener("MOBSKILL_USED")
 end

@@ -22,16 +22,19 @@ function onMagicCastingCheck(caster,target,spell)
 end
 
 function onSpellCast(caster,target,spell)
-	local tp = caster:getTP() + caster:getMerit(tpz.merit.ENCHAINMENT)
+	local tp = caster:getTP()
 	local duration = 60
+    local damage = 0
 	local params = {}
+    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+    -- D Value (Final Base Damage) ＝ math.floor(D + fSTR + WSC) * fTP
         params.damageType = tpz.damageType.PIERCING
 		params.spellFamily = tpz.ecosystem.PLANTOID
         params.numhits = 1
-        params.multiplier = 2.25
-        params.tp150 = 2.25
-        params.tp300 = 2.25
-        params.azuretp = 2.25
+        params.multiplier = 2.25 -- fTP @    0-1500 TP
+        params.tp150 = 2.25 -- fTP @ 1500-2999 TP
+        params.tp300 = 2.25 -- fTP @      3000 TP
+        params.azuretp = 2.25 -- fTP @      3500 TP
         params.duppercap = 21
         params.str_wsc = 0.4 -- 0.2
         params.dex_wsc = 0.0
@@ -66,13 +69,13 @@ function onSpellCast(caster,target,spell)
 		params.attribute = tpz.mod.INT
 		params.skillType = tpz.skill.BLUE_MAGIC
 		params.bonus = 1.0
-		params.effect = tpz.effect.SLEEP
+		params.effect = tpz.effect.SLEEP_II
 	
 	local resist = applyResistance(caster, target, spell, params)
 	
 	duration = duration * resist
 	
-	if (duration < 10) then
+	if duration < 10 then
 		duration = 10
 	end
 	

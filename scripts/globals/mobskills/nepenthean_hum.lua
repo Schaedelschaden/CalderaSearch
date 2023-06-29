@@ -10,11 +10,14 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if VanadielHour() >= 6 and VanadielHour() <= 18 then
+    -- Only used during daytime
+    local currentTime = VanadielHour()
+
+    if currentTime >= 6 and currentTime <= 18 then
         return 0
-    else
-        return 1
     end
+
+    return 1
 end
 
 function onMobWeaponSkill(target, mob, skill)

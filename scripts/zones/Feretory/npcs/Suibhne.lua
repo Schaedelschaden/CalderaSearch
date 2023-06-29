@@ -31,8 +31,8 @@ function onTrade(player, npc, trade)
 			itemToAug = itemID
 			itemFound = true
 --			printf("Suibhne Trade Item to Augment ID: [%i]\n", itemToAug)
-			if (trade:getItem(i):getReqLvl() < 91 or ilvl > 113) then
-				player:PrintToPlayer(string.format("Suibhne : The item to be augmented must be between level 90 and item level 113."),tpz.msg.channel.NS_SAY)
+			if (trade:getItem(i):getReqLvl() < 91 or ilvl > 118) then
+				player:PrintToPlayer(string.format("Suibhne : The item to be augmented must be between level 90 and item level 118."),tpz.msg.channel.NS_SAY)
 				return
 			end
 			

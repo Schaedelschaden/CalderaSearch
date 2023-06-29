@@ -44,6 +44,11 @@ function onMobSpawn(mob)
 	mob:addMod(tpz.mod.REFRESH, 2)
 	mob:addMod(tpz.mod.DMG, -8)
 	mob:addMod(tpz.mod.DEF, defBonus)
+    
+	-- 3K HP ADJUSTMENT --
+    mob:addStatusEffect(tpz.effect.MAX_HP_BOOST, 5, 0, 0)
+    mob:setHP(mob:getMaxHP())
+    
 
 	mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.MAJESTY, ai.r.JA, ai.s.SPECIFIC, tpz.ja.MAJESTY)
 	-- mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.FEALTY, ai.r.JA, ai.s.SPECIFIC, tpz.ja.FEALTY)

@@ -9,66 +9,80 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    local CRUOR = player:getCurrency("cruor")
-    -- if (player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.THE_TRUTH_BECKONS) == QUEST_ACCEPTED) then
-        -- player:startEvent(339, 1, CRUOR, 7, 7, 7) -- Temp activated all locations till param handling sorted out.
-    -- elseif (player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.THE_TRUTH_BECKONS) == QUEST_COMPLETED) then
-        player:startEvent(433, 2, CRUOR, 7, 7, 7) -- Temp activated all locations till param handling sorted out.
-    -- else
-        -- player:startEvent(339, 0)
+    local cruor  = player:getCurrency("cruor")
+    local t2Open = 0
+    local t3Open = 0
+
+    if
+        player:getCharVar("KillCounter_Briareus") >= 1 and
+        player:getCharVar("KillCounter_Kukulkan") >= 1 and
+        player:getCharVar("KillCounter_Glavoid") >= 1
+    then
+        t2Open = 7
+    end
+
+    -- if
+        -- player:getCharVar("KillCounter_Itzpapalotl") >= 1 and
+        -- player:getCharVar("KillCounter_Cirein-croin") >= 1 and
+        -- player:getCharVar("KillCounter_Sedna") >= 1
+    -- then
+        -- t3Open = 7
     -- end
+
+    player:startEvent(433, 2, cruor, 7, t2Open, t3Open)
 end
 
 function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    local CRUOR = player:getCurrency("cruor")
-    if (csid == 433) then
-        if (option == 260) then
-            if (CRUOR >= 200) then
+    local cruor = player:getCurrency("cruor")
+
+    if csid == 433 then
+        if option == 260 then
+            if cruor >= 200 then
                 player:delCurrency("cruor", 200)
-                player:setPos(-562, 0.001, 640, 26, 102) -- La Theine Plateau
+                player:setPos(-480, 0, 794, 62, 132) -- Abyssea - La Theine Plateau
             end
-        elseif (option == 264) then
-            if (CRUOR >= 200) then
+        elseif option == 264 then
+            if cruor >= 200 then
                 player:delCurrency("cruor", 200)
-                player:setPos(91, -68, -582, 237, 108) -- Konshtat Highlands
+                player:setPos(153, -72, -840, 140, 15) -- Abyssea - Konschtat Highlands
             end
-        elseif (option == 268) then
-            if (CRUOR >= 200) then
+        elseif option == 268 then
+            if cruor >= 200 then
                 player:delCurrency("cruor", 200)
-                player:setPos(-28, 46, -680, 76, 117) -- Tahrongi Canyon
+                player:setPos(-24, 44, -678, 240, 45) -- Abyssea - Tahrongi Canyon
             end
-        elseif (option == 272) then
-            if (CRUOR >= 200) then
+        elseif option == 272 then
+            if cruor >= 200 then
                 player:delCurrency("cruor", 200)
-                player:setPos(241, 0.001, 11, 42, 104) -- Jugner Forest
+                player:setPos(-351, -46.750, 699.5, 10, 217) -- Abyssea - Vunkerl
             end
-        elseif (option == 276) then
-            if (CRUOR >= 200) then
+        elseif option == 276 then
+            if cruor >= 200 then
                 player:delCurrency("cruor", 200)
-                player:setPos(362, 0.001, -119, 4, 103) -- Valkrum
+                player:setPos(670, -15, 318, 119, 216) -- Abyssea - Misareaux
             end
-        elseif (option == 280) then
-            if (CRUOR >= 200) then
+        elseif option == 280 then
+            if cruor >= 200 then
                 player:delCurrency("cruor", 200)
-                player:setPos(-338, -23, 47, 167, 118) -- Buburimu Peninsula
+                player:setPos(-140, 20, -181, 131, 215) -- Abyssea - Attohwa
             end
-        elseif (option == 288) then
-            if (CRUOR >= 200) then
+        elseif option == 288 then
+            if cruor >= 200 then
                 player:delCurrency("cruor", 200)
-                player:setPos(269, -7, -75, 192, 112) -- Xarcabard
+                player:setPos(-240, -40, -520, 251, 253) -- Abyssea - Uleguerand
             end
-        elseif (option == 284) then
-            if (CRUOR >= 200) then
+        elseif option == 284 then
+            if cruor >= 200 then
                 player:delCurrency("cruor", 200)
-                player:setPos(337, 0.001, -675, 52, 107)  -- South Gustaberg
+                player:setPos(432, 0, 321, 125, 218)  -- Abyssea - Altepa
             end
-        elseif (option == 292) then
-            if (CRUOR >= 200) then
+        elseif option == 292 then
+            if cruor >= 200 then
                 player:delCurrency("cruor", 200)
-                player:setPos(-71, 0.001, 601, 126, 106) -- North Gustaberg
+                player:setPos(-555, 31, -760, 0, 254) -- Abyssea - Grauberg
             end
         end
     end

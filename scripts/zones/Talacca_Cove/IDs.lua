@@ -17,7 +17,7 @@ zones[tpz.zone.TALACCA_COVE] =
         CARRIED_OVER_POINTS          = 7001, -- You have carried over <number> login point[/s].
         LOGIN_CAMPAIGN_UNDERWAY      = 7002, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                 = 7003, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
-        FISHING_MESSAGE_OFFSET       = 7057, -- You can't fish here.
+        FISHING_MESSAGE_OFFSET       = 7060, -- You can't fish here.
         YOU_CAN_NOW_BECOME_A_CORSAIR = 7790, -- You can now become a corsair!
     },
     mob =

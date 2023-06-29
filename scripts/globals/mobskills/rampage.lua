@@ -18,10 +18,10 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local numhits = 5
-    local accmod = 1
-    local dmgmod = .5
-    local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_CRIT_VARIES, 1, 1.5, 2)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
+    local accmod  = 1
+    local dmgmod  = 1
+    local info    = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_CRIT_VARIES, 10, 20, 40)
+    local dmg     = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
 
     -- Witnessed 1100 to a DD.  Going with it :D
     return dmg

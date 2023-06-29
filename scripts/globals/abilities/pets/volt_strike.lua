@@ -13,19 +13,19 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
-    local numhits = 3
-    local accmod = 1
-    local dmgmod = 3
-    local dmgmodsubsequent = 2
-    local totaldamage = 0	
-    local damage = AvatarPhysicalMove(pet,target,skill,numhits,accmod,dmgmod,dmgmodsubsequent,TP_CRIT_VARIES,0.5,0.75,1)
-    totaldamage = AvatarFinalAdjustments(damage.dmg,pet,skill,target,tpz.attackType.PHYSICAL,tpz.damageType.BLUNT,numhits)
+    local numhits     = 3
+    local accmod      = 1
+    local dmgmod      = 3
+    local dmgmodsub   = 2
+    local damage      = AvatarPhysicalMove(pet, target, skill, numhits, accmod, dmgmod, dmgmodsub, TP_CRIT_VARIES, 35, 60, 75)
+    local totaldamage = AvatarFinalAdjustments(damage.dmg, pet, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, numhits)
 	
 	local resist = math.random()
 --    printf("volt_strike.lua onPetAbility RESIST: [%f]", resist)
 	
 	target:addStatusEffect(tpz.effect.STUN, 1, 0, 15 * resist)
     target:takeDamage(totaldamage, pet, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
-    target:updateEnmityFromDamage(pet,totaldamage)
+    target:updateEnmityFromDamage(pet, totaldamage)
+
     return totaldamage
 end

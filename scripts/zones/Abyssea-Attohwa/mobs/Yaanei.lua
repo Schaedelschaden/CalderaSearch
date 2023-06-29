@@ -2,6 +2,10 @@
 -- Area: Abyssea-Attohwa
 --   NM: Yaanei
 -----------------------------------
+mixins = {require("scripts/mixins/abyssea_weakness")}
+require("scripts/globals/abyssea")
+require("scripts/globals/mobs")
+-----------------------------------
 
 function onMobInitialize(mob)
 end

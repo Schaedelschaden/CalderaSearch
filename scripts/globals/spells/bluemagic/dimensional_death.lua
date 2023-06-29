@@ -22,25 +22,28 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+    local damage = 0
     local params = {}
     -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
-		params.tpmod = TPMOD_DAMAGE
-		params.tpmodvalue = 30
-        params.damageType = tpz.damageType.HTH
-		params.spellFamily = tpz.ecosystem.UNDEAD
-        params.numhits = 1
-        params.multiplier = 2.25
-        params.tp150 = 2.25
-        params.tp300 = 2.25
-        params.azuretp = 2.25
-        params.duppercap = 71
-        params.str_wsc = 1.0 -- 0.5
-        params.dex_wsc = 0.0
-        params.vit_wsc = 0.0
-        params.agi_wsc = 0.0
-        params.int_wsc = 0.0
-        params.mnd_wsc = 0.0
-        params.chr_wsc = 0.0
+    -- D Value (Final Base Damage) ＝ math.floor(D + fSTR + WSC) * fTP
+        params.tpmod       = TPMOD_DAMAGE
+        params.tpmodvalue  = 15 -- Set to 1/3rd of max value for fTP0 (1x), fTP150 (2x), and fTP300 (3x) bonuses
+        params.damageType  = tpz.damageType.HTH
+        params.spellFamily = tpz.ecosystem.UNDEAD
+        params.numhits     = 1
+        params.multiplier  = 2.25 -- fTP @    0-1500 TP
+        params.tp150       = 2.25 -- fTP @ 1500-2999 TP
+        params.tp300       = 2.25 -- fTP @      3000 TP
+        params.azuretp     = 2.25 -- fTP @      3500 TP
+        params.duppercap   = 71
+        params.str_wsc     = 1.0 -- 0.5
+        params.dex_wsc     = 0.0
+        params.vit_wsc     = 0.0
+        params.agi_wsc     = 0.0
+        params.int_wsc     = 0.0
+        params.mnd_wsc     = 0.0
+        params.chr_wsc     = 0.0
+
     damage = BluePhysicalSpell(caster, target, spell, params)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 

@@ -1782,7 +1782,7 @@ namespace fishingutils
         // Minimum 4% chance
         maxChance = std::max(4, distMod + lowerLevelBonus - skillLevelPenalty);
 		// Multiply the max chance by the server's craft skill up rate multiplier
-		maxChance = std::max((int)std::floor(maxChance * map_config.craft_chance_multiplier), 100);
+		maxChance = std::max((int)std::floor(maxChance * 10), 100); // map_config.craft_chance_multiplier = 7
 
         // Moon phase skillup modifiers
         uint8 phase         = CVanaTime::getInstance()->getMoonPhase();

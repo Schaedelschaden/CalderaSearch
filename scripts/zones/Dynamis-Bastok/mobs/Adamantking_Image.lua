@@ -11,6 +11,7 @@ local imageID = {17539142, 17539148, 17539149, 17539253, 17539306}
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.LINK_RADIUS, 10)
     mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 10)
+    mob:setMobMod(tpz.mobMod.SOUND_RANGE, 10)
     mob:setLocalVar("SPAWNED_MOBS", 0)
 end
 

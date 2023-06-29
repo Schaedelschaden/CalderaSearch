@@ -22,7 +22,7 @@ end
 function onUseAbility(player,target,ability)
 
     -- Reduce 99% of total accumulated enmity
-    if (target:isMob()) then
+    if target:isMob() then
         target:lowerEnmity(player, 99)
     end
 

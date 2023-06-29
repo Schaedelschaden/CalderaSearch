@@ -12,7 +12,7 @@ require("scripts/globals/zone")
 
 function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.JORMUNGAND)
-    GetMobByID(ID.mob.JORMUNGAND):setRespawnTime(math.random(86400, 259200))
+    -- GetMobByID(ID.mob.JORMUNGAND):setRespawnTime(math.random(86400, 259200))
 
     -- ffxiclopedia's pages for Black Coney and White Coney say 7 and 5 Earth seconds respectively, in game it is very fast
     -- https://ffxiclopedia.fandom.com/wiki/Black_Coney

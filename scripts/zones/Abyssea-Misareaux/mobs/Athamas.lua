@@ -2,6 +2,8 @@
 -- Area: Abyssea-Misareaux
 --   NM: Athamas
 -----------------------------------
+mixins = {require("scripts/mixins/abyssea_weakness")}
+require("scripts/globals/abyssea")
 require("scripts/globals/mobs")
 -----------------------------------
 

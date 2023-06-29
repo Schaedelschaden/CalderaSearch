@@ -608,6 +608,10 @@ tpz.mob.phOnDespawn = function(ph, phList, chance, cooldown, immediate)
         cooldown = NM_LOTTERY_COOLDOWN >= 0 and (cooldown * NM_LOTTERY_COOLDOWN) or cooldown
     end
 
+    if phList == nil then
+        printf("mobs.lua phOnDespawn  PLACEHOLDER ID: [%i]  NAME: [%s]", ph:getID(), ph:getName())
+    end
+
     local phId = ph:getID()
     local nmId = phList[phId]
 
@@ -1023,11 +1027,11 @@ tpz.mob.onAddEffect = function(mob, target, damage, effect, params)
                 end
 
                 if resist > 0.5 and not target:hasStatusEffect(ae.eff) then
-                    local power = params.power or ae.power or 0
-                    local tick = ae.tick or 0
+                    local power    = params.power or ae.power or 0
+                    local tick     = ae.tick or 0
                     local duration = params.duration or ae.duration
 
-                    if dLevel < 0 and ae.eff ~= tpz.effect.TERROR and ae.eff ~= tpz.effect.STUN then
+                    if dLevel < 0 and ae.eff ~= tpz.effect.TERROR and ae.eff ~= tpz.effect.STUN and ae.eff ~= tpz.effect.PETRIFICATION then
                         duration = duration - dLevel
                     end
 

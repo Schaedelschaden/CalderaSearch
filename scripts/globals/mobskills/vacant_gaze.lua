@@ -15,16 +15,16 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local effect = 0
+    local effect  = 0
 	local counter = 0
-	
-    if (target:isFacing(mob)) then
+
+    if target:isFacing(mob) then
 		for i = 1, 3 do
-			if (target:dispelStatusEffect()) then
+			if target:dispelStatusEffect() then
 				counter = counter + 1
 			end
 
-			if (effect == tpz.effect.NONE) then
+			if effect == tpz.effect.NONE then
 				skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT) -- no effect
 			else
 				skill:setMsg(tpz.msg.basic.DISAPPEAR_NUM)

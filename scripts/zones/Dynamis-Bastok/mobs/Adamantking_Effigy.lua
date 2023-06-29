@@ -20,6 +20,7 @@ local effigyID = {
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.LINK_RADIUS, 10)
     mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 10)
+    mob:setMobMod(tpz.mobMod.SOUND_RANGE, 10)
     -- dynamis.refillStatueOnSpawn(mob)
     mob:setLocalVar("SPAWNED_MOBS", 0)
 

@@ -14,6 +14,8 @@ function onBattlefieldTick(battlefield, tick)
 end
 
 function onBattlefieldRegister(player, battlefield)
+    player:delKeyItem(tpz.ki.MACABRE_SIMULACRUM)
+    player:setCharVar("SinisterReign", 0)
 end
 
 function onBattlefieldEnter(player, battlefield)

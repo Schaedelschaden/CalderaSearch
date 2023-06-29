@@ -62,6 +62,13 @@ function onTrigger(player, hp, target)
 			return
 		end
 
+        if targ:getName() == "Khalum" then
+            player:setUnkillable(false)
+            player:setHP(hp)
+            player:PrintToPlayer(string.format("Your tricks don't work against me Dewey."))
+            return
+        end
+
 		-- set hp
 		if targ:isAlive() then
 			targ:setHP(hp)

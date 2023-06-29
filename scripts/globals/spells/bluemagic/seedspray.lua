@@ -26,16 +26,17 @@ function onSpellCast(caster, target, spell)
 	local threshold = 35 -- 35% chance to inflict additional effect at 0 TP
     local chance = math.random()
 	local duration = 90
-	
+	local damage = 0
 	local params = {}
     -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+    -- D Value (Final Base Damage) ＝ math.floor(D + fSTR + WSC) * fTP
         params.damageType = tpz.damageType.SLASHING
 		params.spellFamily = tpz.ecosystem.PLANTOID
         params.numhits = 3
-        params.multiplier = 0.875
-        params.tp150 = 0.875
-        params.tp300 = 0.875
-        params.azuretp = 0.875
+        params.multiplier = 0.875 -- fTP @    0-1500 TP
+        params.tp150 = 0.875 -- fTP @ 1500-2999 TP
+        params.tp300 = 0.875 -- fTP @      3000 TP
+        params.azuretp = 0.875 -- fTP @      3500 TP
         params.duppercap = 71
         params.str_wsc = 0.0
         params.dex_wsc = 0.6 -- 0.3
@@ -68,7 +69,7 @@ function onSpellCast(caster, target, spell)
 		duration = 240
 	end
 	
-	if (damage > 0 and chance < threshold) then
+	if damage > 0 and chance < threshold then
         target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 8, 0, duration)
     end
 

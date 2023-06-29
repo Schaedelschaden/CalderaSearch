@@ -13,7 +13,7 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:AnimationSub() ~=0) then
+    if mob:AnimationSub() ~= 0 then
         return 1
     else
         return 0
@@ -22,7 +22,7 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.TERROR
-    local duration = 30
+    local duration   = 30
 
     skill:setMsg(MobGazeMove(mob, target, typeEffect, 1, 0, duration))
 

@@ -839,7 +839,7 @@ tpz.effect =
     PROWESS_ATT_RATT         = 784, -- *flat 4% for now
     PROWESS_MACC_MATK        = 785, -- *flat 4% for now
     PROWESS_CURE_POTENCY     = 786, -- *flat 4% for now
-    PROWESS_WS_DMG           = 787, -- (Unimplemented) 2% per tier.
+    PROWESS_WS_DMG           = 787, -- +2% per tier
     PROWESS_KILLER           = 788, -- *flat +4 for now
     -- End GoV Prowess fakery
     FIELD_SUPPORT_FOOD       = 789, -- Used by Fov/GoV food buff.
@@ -858,7 +858,8 @@ tpz.effect =
     ELEMENTALRES_DOWN        = 802, -- Elemental resistance down
     FULL_SPEED_AHEAD         = 803, -- Helper for quest: Full Speed Ahead!
     -- PLACEHOLDER           = 804, -- Description
-    -- 804-1022
+    TOMAHAWK                 = 805,
+    -- 806-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }
 
@@ -968,6 +969,10 @@ tpz.mod =
     MDEF                            = 29,
     MACC                            = 30,
     MEVA                            = 31,
+
+    -- Elemental "Magic Attack Bonus" e.g. Pixie Hairpin +1, Archon Ring, Zamzummim staff, Weatherspoon Ring, etc.
+    -- Value of these mods is added to the Elemental Affinity: Magice Damage mods
+    -- Mod value 15 = +15% base damage, Mod value 28 = +28% base damage, etc.
     FIREATT                         = 32,
     ICEATT                          = 33,
     WINDATT                         = 34,
@@ -976,6 +981,7 @@ tpz.mod =
     WATERATT                        = 37,
     LIGHTATT                        = 38,
     DARKATT                         = 39,
+
     FIREACC                         = 40,
     ICEACC                          = 41,
     WINDACC                         = 42,
@@ -984,6 +990,7 @@ tpz.mod =
     WATERACC                        = 45,
     LIGHTACC                        = 46,
     DARKACC                         = 47,
+
     WSACC                           = 48,
     SLASHRES                        = 49,
     PIERCERES                       = 50,
@@ -1262,8 +1269,11 @@ tpz.mod =
     ENHANCES_MUTED_SOUL             = 1080, -- Enhances "Muted Soul" effect (Adds 3% Zanshin rate per MUTED_SOUL merit level)
     ENHANCES_DESPERATE_BLOWS        = 1081, -- Enhances "Desperate Blows" effect (Adds +3 Subtle Blow per DESPERATE_BLOWS merit level)
     WEAPON_BASH_CHAINBOUND          = 1082, -- Augments "Weapon Bash" (Adds a Chainbound effect to Weapon Bash)
-    
 
+
+    -- Elemental Affinity: Magic Damage e.g. Magian Trial staves
+    -- Value of these mods is multiplied by 0.05 (Adds +5% base magical damage per "tier"/"level")
+    -- Mod value 1 = +5% base damage, Mod value 2 = +10% base damage, etc.
     FIRE_AFFINITY_DMG               = 347,
     ICE_AFFINITY_DMG                = 348,
     WIND_AFFINITY_DMG               = 349,
@@ -1273,6 +1283,9 @@ tpz.mod =
     LIGHT_AFFINITY_DMG              = 353,
     DARK_AFFINITY_DMG               = 354,
 
+    -- Elemental Affinity: Magic Accuracy e.g. Magian Trial staves
+    -- Value of these mods is multiplied by 10 (Adds +10 base Magic Accuracy per "tier"/"level")
+    -- Mod value 1 = +10 Magic Accuracy, Mod Value 5 = +50 Magic Accuracy, etc.
     FIRE_AFFINITY_ACC               = 544,
     ICE_AFFINITY_ACC                = 545,
     WIND_AFFINITY_ACC               = 546,
@@ -1282,6 +1295,9 @@ tpz.mod =
     LIGHT_AFFINITY_ACC              = 550,
     DARK_AFFINITY_ACC               = 551,
 
+    -- Elemental Affinity: Avatar Perp. Cost e.g. Magian Trial staves
+    -- Value of these mods is added to the PERPETUATION_REDUCTION mod
+    -- Mod value -3 = -3 Perpetuation Cost for summons matching the element
     FIRE_AFFINITY_PERP              = 553,
     ICE_AFFINITY_PERP               = 554,
     WIND_AFFINITY_PERP              = 555,
@@ -1656,6 +1672,18 @@ tpz.mod =
     -- 570 - 825 used by WS DMG mods these are not spares.
 
 	-- Caldera custom Mod IDs
+    IGNORE_MANA_WALL                = 1800, -- Attacks ignore Mana Wall effect when this value is greater than 0
+    AURA_RADIUS_BONUS               = 1801, -- Increases the base radius distance (6.5y) by <value> / 10 (i.e. mod value 55 = +5.5y radius)
+    RAYKE_FIRE                      = 1802, -- Tracks Fire elemental reduction from Rayke
+    RAYKE_ICE                       = 1803, -- Tracks Ice elemental reduction from Rayke
+    RAYKE_WIND                      = 1804, -- Tracks Wind elemental reduction from Rayke
+    RAYKE_EARTH                     = 1805, -- Tracks Earth elemental reduction from Rayke
+    RAYKE_LIGHTNING                 = 1806, -- Tracks Lightning elemental reduction from Rayke
+    RAYKE_WATER                     = 1807, -- Tracks Water elemental reduction from Rayke
+    RAYKE_LIGHT                     = 1808, -- Tracks Light elemental reduction from Rayke
+    RAYKE_DARK                      = 1809, -- Tracks Dark elemental reduction from Rayke
+    ANULLS_DAMAGE_TAKEN             = 1810, -- Physical and magical damage anullment +<value>%
+
 	FOOD_EVAP                       = 1901, -- Evasion +% from food
 	FOOD_EVAP_CAP                   = 1902, -- Evasion +% cap from food
 	FOOD_MEVAP                      = 1903, -- Magic Evasion +% from food
@@ -1663,6 +1691,7 @@ tpz.mod =
 	TRAIT_MAG_BURST_BONUS           = 1905, -- Magic Burst Bonus Job Traits have to be a separate mod for calculation purposes
 	ENSPELL_STAT_BONUS              = 1906, -- Adds +ACC/ATK/MACC while under the effect of an en- spell
 	MEVA_II							= 1907, -- Adds Magic Evasion II
+    ENDARK_DMG_BONUS                = 1908, -- Adds a <value> bonus to base Endark damage
 	
 	FRONTAL_DMG_REDUCTION           = 2000, -- Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the front
 	REAR_DMG_REDUCTION              = 2001, -- Monster ignores DMG/DMGPHYS/DMGRANGE calculation and applies a direct reduction when taking damage from the rear
@@ -1715,7 +1744,18 @@ tpz.mod =
 	ENLIGHT_DMG                     = 2828, -- Increases the damage of Enlight
 	TERRORRES                       = 2829, -- Increases resistance to Terror
 	COUNTER_ATT_VARIES              = 2830, -- Attack during "Counter" varies in proportion to Attack of target (Jolt Counters) (Value of 1 means this effect is active)
-	
+	INSPIRATION_FASTCAST            = 2831, -- Adds "Fast Cast" when under the effects of Vallation or Valiance (Exceeds the normal 40% "Fast Cast" cap)
+    TRUSTS_INCREASE_ATK             = 2832, -- Attack increases with number of alter egos in party (Mod value is per trust in party, e.g. 10 = +10 ATK per trust)
+    CONSUME_MP_FOR_FOLLOWUP_MELEE   = 2833, -- SU3 Melee Weapon "Consumes 5% of MP during a regular attack: Offers a chance of follow-up attack +1 based on amount of MP consumed"
+    CONSUME_MP_FOR_FOLLOWUP_RANGED  = 2834, -- SU3 Ranged Weapon "Consumes 5% of MP during a ranged attack: Offers a chance of follow-up attack +1 based on amount of MP consumed"
+    CONSUME_MP_DURING_RANGED_ATK    = 2835, -- SU3 Ammunition "Consumes 2% of MP during a ranged attack: Ranged Attack+ Ranged Accuracy+"
+    CONSUME_MP_RATT_RACC_BONUS      = 2836, -- Tracks the Ranged Attack/Accuracy bonuses generated by a CONSUME_MP_DURING_RANGED_ATK proc (DO NOT ASSIGN THIS MOD TO ITEMS)
+    CONSUME_MP_STP_SINGLE_ATK       = 2837, -- SU3 HQ Weapon "Consumes 5% of MP during a regular attack: "Store TP"+ for a single attack"
+    CURE_POTENCY_BASE               = 2838, -- "Cure" +<value> (Increases base potency of cures, e.g. Cure II hard cap is 145, "Cure" +50 = hard cap of 195)
+    CURE_MP_CONSUMED                = 2839, -- "Cure" MP Consumed (Increases the base MP cost of healing magic by +<value>%, e.g. +30%)
+    ELEMENTAL_MAGIC_MP_CONSUMED     = 2840, -- Elemental Magic MP Consumed (Increases the base MP cost of elemental magic by +<value>%, e.g. +30%)
+    CONSUME_MP_ELEM_BONUS           = 2841, -- Elemental Magic MP Consumed: "Magic Atk. Bonus"+ (value = 1) OR Elemental Magic MP Consumed: Magic Damage+ & "Magic Atk. Bonus"+ (value = 2)
+
 	REGEN_BASE                      = 2934, -- Adds # to the base regen effect (similar to WHM Regen merits)
 	PHANTOM_ROLL_RECAST             = 2935, -- Reduces the recast time of Phantom Roll
 	REVERSE_FLOURISH_BONUS          = 2936, -- Adds to the base TP returned by Reverse Flourish

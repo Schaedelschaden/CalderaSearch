@@ -40,6 +40,9 @@ function onTrigger(player)
         ["Tierkaintwo"] = function()
             pos = {posX = -105.042, posY = -9.280, posZ = -82.323, rot = 65, zone = 284}
         end,
+        ["Meredie"] = function()
+            pos = {posX = -91.9350, posY = -2.1499, posZ = -92.3240, rot = 117, zone = 284}
+        end,
     }
 
     player:setPos(pos.posX, pos.posY, pos.posZ, pos.rot, pos.zone)

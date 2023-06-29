@@ -17,12 +17,13 @@ require("scripts/globals/status")
 require("scripts/globals/magic")
 -----------------------------------------
 
-function onMagicCastingCheck(caster,target,spell)
+function onMagicCastingCheck(caster, target, spell)
     return 0
 end
 
-function onSpellCast(caster,target,spell)
+function onSpellCast(caster, target, spell)
     local dINT = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
+    local damage = 0
     local params = {}
 		params.diff = nil
 		params.attribute = tpz.mod.INT
@@ -34,13 +35,14 @@ function onSpellCast(caster,target,spell)
     local params = {}
     -- Todo: determine if these param values are retail
         params.tpmod = TPMOD_DAMAGE
+        params.tpmodvalue = 16.67 -- Set to 1/3rd of max value for fTP0 (1x), fTP150 (2x), and fTP300 (3x) bonuses
         params.damageType = tpz.damageType.SLASHING
         params.scattr = SC_DETONATION
         params.numhits = 1
-        params.multiplier = 1.875
-        params.tp150 = 1.25
-        params.tp300 = 1.50
-        params.azuretp = 1.4375
+        params.multiplier = 1.50 -- fTP @    0-1500 TP
+        params.tp150 = 2.50 -- fTP @ 1500-2999 TP
+        params.tp300 = 3.00 -- fTP @      3000 TP
+        params.azuretp = 3.50 -- fTP @      3500 TP
         params.duppercap = 100
         params.str_wsc = 0.0
         params.dex_wsc = 0.0
@@ -49,10 +51,10 @@ function onSpellCast(caster,target,spell)
         params.int_wsc = 0.0
         params.mnd_wsc = 0.0
         params.chr_wsc = 0.0
-    local damage = BluePhysicalSpell(caster, target, spell, params)
+    damage = BluePhysicalSpell(caster, target, spell, params)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 	
-    if (resist > 0.25) then -- This line may need adjusting for retail accuracy.
+    if resist > 0.25 then -- This line may need adjusting for retail accuracy.
         target:addStatusEffect(tpz.effect.STUN, 1, 0, 5 * resist) -- Wiki says duration of "up to" 20 second..
     end
 

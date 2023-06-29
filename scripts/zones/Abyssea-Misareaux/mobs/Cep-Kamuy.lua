@@ -2,7 +2,12 @@
 -- Area: Abyssea-Misareaux
 --   NM: Cep-Kamuy
 -----------------------------------
-mixins = {require("scripts/mixins/families/orobon")}
+mixins =
+{
+    require("scripts/mixins/families/orobon"),
+    require("scripts/mixins/abyssea_weakness")
+}
+require("scripts/globals/abyssea")
 require("scripts/globals/mobs")
 -----------------------------------
 

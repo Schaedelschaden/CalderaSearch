@@ -10,6 +10,9 @@ function onMobSkillCheck(target,mob,skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    target:addEnmity(mob, 1, 1800)
-    skill:setMsg(tpz.msg.basic.NONE)
+    local ce = target:getCE(mob)
+    local ve = target:getVE(mob)
+	target:setCE(mob, ce + 900)
+	target:setVE(mob, ve + 2700)
+    skill:setMsg(tpz.msg.basic.USES)
 end

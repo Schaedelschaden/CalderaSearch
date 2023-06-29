@@ -32,4 +32,5 @@ end
 
 function onMobDeath(mob, player, isKiller)
     tpz.hunts.checkHunt(mob, player, 216)
+    mob:setRespawnTime(14400)
 end

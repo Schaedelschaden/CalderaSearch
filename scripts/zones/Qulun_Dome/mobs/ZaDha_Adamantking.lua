@@ -30,7 +30,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.BINDRES, 35)
     mob:setMod(tpz.mod.SLOWRES, 35)
 	mob:setMod(tpz.mod.ATT, 1200)
-	mob:setMod(tpz.mod.MATT, 600)
+	mob:setMod(tpz.mod.MATT, 200)
     mob:setMod(tpz.mod.ACC, 600)
 	mob:setMod(tpz.mod.MACC, 700)
     mob:setMod(tpz.mod.EVA, 750)
@@ -62,7 +62,6 @@ function onAdditionalEffect(mob, target, damage)
 end
 
 function onMobFight(mob, target)
-	mob:setMod(tpz.mod.MATT, 600)
 	-- for i = 1, 11 do
 		-- local link = GetMobByID(assistMobs[i])
 		

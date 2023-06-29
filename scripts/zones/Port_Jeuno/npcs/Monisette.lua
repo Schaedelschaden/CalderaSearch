@@ -899,16 +899,20 @@ local empSeals =
 
 -- Bakka's Wing, Balaur Skull, Lieje Lantern, Chasmic Stinger, Keesha's Pamama, Marvin's Pelage,
 -- Mikey's Nugget, Chukwa's Egg, Cuelebre's Horn, Mictlantecuhtli's Habit, Manananggal's Necklet
+-- Etched Memory x3
 local empTradeMaterial =
 {
     2938, 2943, 2944, 2936, 2941, 2935,
     2942, 2933, 2939, 2940, 2934,
+    9009
 }
 
 -- Briareus Helm, Glavoid Shell, Kukulkan Fang, Carabosse Gem, 2-Leaf Chloris Bud
+-- Itzpapalotl's Scale, Ulhuadshi's Fang, Sobek's Skin, Cirein-Croin's Lantern, Bukhis's Wing, Sedna's Tusk
 local empBossItem =
 {
     2929, 2927, 2932, 2930, 2928,
+    2962, 2963, 2964, 2965, 2966, 2967
 }
 
 -- Boii Mask, Boii Lorica, Boii Mufflers, Boii Cuisses, Boii Calligae
@@ -919,12 +923,138 @@ local empReward =
     26741, 26899, 27053, 27238, 27412,
 }
 
+-- -- Stone of Vision, Ardor, Wieldance, Balance, Voyage
+-- -- Coin of Vision, Ardor, Wieldance, Balance, Voyage
+-- -- Jewel of Vision, Ardor, Wieldance, Balance, Voyage
+-- -- Card of Vision, Ardor, Wieldance, Balance, Voyage
+-- local empSJCC =
+-- {
+    -- 3210, 3214, 3218, 3222, 3226,
+    -- 3211, 3215, 3219, 3223, 3227,
+    -- 3212, 3216, 3220, 3224, 3228,
+    -- 3213, 3217, 3221, 3225, 3229,
+-- }
+
+local empHQ1Recipe =
+{
+    {	empTrade[	6	]			,	3226	,	3217	,	3210	,	3226	,	{empTradeMaterial[12], 3},	2967	,	2965	}, -- boii_
+    {	empTrade[	7	]			,	3214	,	3216	,	3215	,	3215	,	{empTradeMaterial[12], 3},	2962	,	2966	}, -- boii_
+    {	empTrade[	8	]			,	3224	,	3214	,	3212	,	3222	,	{empTradeMaterial[12], 3},	2967	,	2962	}, -- boii_
+    {	empTrade[	9	]			,	3216	,	3216	,	3229	,	3228	,	{empTradeMaterial[12], 3},	2963	,	2964	}, -- boii_
+    {	empTrade[	10	]			,	3219	,	3224	,	3228	,	3228	,	{empTradeMaterial[12], 3},	2962	,	2965	}, -- boii_
+    {	empTrade[	6	]	+	2	,	3216	,	3228	,	3211	,	3212	,	{empTradeMaterial[12], 3},	2967	,	2965	}, -- bhikku_
+    {	empTrade[	7	]	+	2	,	3226	,	3223	,	3219	,	3215	,	{empTradeMaterial[12], 3},	2967	,	2965	}, -- bhikku_
+    {	empTrade[	8	]	+	2	,	3215	,	3217	,	3225	,	3216	,	{empTradeMaterial[12], 3},	2965	,	2966	}, -- bhikku_
+    {	empTrade[	9	]	+	2	,	3212	,	3220	,	3217	,	3219	,	{empTradeMaterial[12], 3},	2967	,	2965	}, -- bhikku_
+    {	empTrade[	10	]	+	2	,	3219	,	3227	,	3220	,	3215	,	{empTradeMaterial[12], 3},	2965	,	2965	}, -- bhikku_
+    {	empTrade[	6	]	+	4	,	3229	,	3223	,	3221	,	3227	,	{empTradeMaterial[12], 3},	2963	,	2964	}, -- ebers_
+    {	empTrade[	7	]	+	4	,	3210	,	3214	,	3218	,	3214	,	{empTradeMaterial[12], 3},	2965	,	2962	}, -- ebers_
+    {	empTrade[	8	]	+	4	,	3226	,	3216	,	3226	,	3212	,	{empTradeMaterial[12], 3},	2964	,	2966	}, -- ebers_
+    {	empTrade[	9	]	+	4	,	3211	,	3226	,	3210	,	3219	,	{empTradeMaterial[12], 3},	2962	,	2964	}, -- ebers_
+    {	empTrade[	10	]	+	4	,	3224	,	3210	,	3214	,	3217	,	{empTradeMaterial[12], 3},	2967	,	2962	}, -- ebers_
+    {	empTrade[	6	]	+	6	,	3219	,	3226	,	3224	,	3222	,	{empTradeMaterial[12], 3},	2964	,	2962	}, -- wicce_
+    {	empTrade[	7	]	+	6	,	3215	,	3211	,	3228	,	3224	,	{empTradeMaterial[12], 3},	2962	,	2965	}, -- wicce_
+    {	empTrade[	8	]	+	6	,	3219	,	3215	,	3212	,	3226	,	{empTradeMaterial[12], 3},	2963	,	2965	}, -- wicce_
+    {	empTrade[	9	]	+	6	,	3226	,	3211	,	3228	,	3227	,	{empTradeMaterial[12], 3},	2967	,	2964	}, -- wicce_
+    {	empTrade[	10	]	+	6	,	3220	,	3215	,	3228	,	3218	,	{empTradeMaterial[12], 3},	2967	,	2965	}, -- wicce_
+    {	empTrade[	6	]	+	8	,	3212	,	3220	,	3221	,	3214	,	{empTradeMaterial[12], 3},	2967	,	2965	}, -- lethargy_
+    {	empTrade[	7	]	+	8	,	3212	,	3222	,	3229	,	3221	,	{empTradeMaterial[12], 3},	2966	,	2962	}, -- lethargy_
+    {	empTrade[	8	]	+	8	,	3211	,	3228	,	3217	,	3211	,	{empTradeMaterial[12], 3},	2963	,	2963	}, -- lethargy_
+    {	empTrade[	9	]	+	8	,	3223	,	3222	,	3212	,	3228	,	{empTradeMaterial[12], 3},	2966	,	2963	}, -- lethargy_
+    {	empTrade[	10	]	+	8	,	3227	,	3216	,	3228	,	3222	,	{empTradeMaterial[12], 3},	2966	,	2963	}, -- lethargy_
+    {	empTrade[	6	]	+	10	,	3217	,	3225	,	3210	,	3223	,	{empTradeMaterial[12], 3},	2964	,	2967	}, -- skulkers_
+    {	empTrade[	7	]	+	10	,	3224	,	3221	,	3212	,	3221	,	{empTradeMaterial[12], 3},	2966	,	2967	}, -- skulkers_
+    {	empTrade[	8	]	+	10	,	3210	,	3227	,	3223	,	3220	,	{empTradeMaterial[12], 3},	2962	,	2963	}, -- skulkers_
+    {	empTrade[	9	]	+	10	,	3221	,	3220	,	3223	,	3225	,	{empTradeMaterial[12], 3},	2966	,	2962	}, -- skulkers_
+    {	empTrade[	10	]	+	10	,	3225	,	3211	,	3229	,	3219	,	{empTradeMaterial[12], 3},	2967	,	2964	}, -- skulkers_
+    {	empTrade[	6	]	+	12	,	3223	,	3228	,	3224	,	3229	,	{empTradeMaterial[12], 3},	2963	,	2962	}, -- chevaliers_
+    {	empTrade[	7	]	+	12	,	3215	,	3229	,	3218	,	3217	,	{empTradeMaterial[12], 3},	2963	,	2967	}, -- chevaliers_
+    {	empTrade[	8	]	+	12	,	3212	,	3212	,	3225	,	3229	,	{empTradeMaterial[12], 3},	2966	,	2962	}, -- chevaliers_
+    {	empTrade[	9	]	+	12	,	3215	,	3214	,	3211	,	3211	,	{empTradeMaterial[12], 3},	2962	,	2963	}, -- chevaliers_
+    {	empTrade[	10	]	+	12	,	3218	,	3222	,	3214	,	3225	,	{empTradeMaterial[12], 3},	2964	,	2966	}, -- chevaliers_
+    {	empTrade[	6	]	+	14	,	3214	,	3222	,	3218	,	3210	,	{empTradeMaterial[12], 3},	2962	,	2966	}, -- heathens_
+    {	empTrade[	7	]	+	14	,	3227	,	3222	,	3218	,	3217	,	{empTradeMaterial[12], 3},	2964	,	2964	}, -- heathens_
+    {	empTrade[	8	]	+	14	,	3221	,	3224	,	3219	,	3225	,	{empTradeMaterial[12], 3},	2962	,	2967	}, -- heathens_
+    {	empTrade[	9	]	+	14	,	3211	,	3216	,	3229	,	3214	,	{empTradeMaterial[12], 3},	2967	,	2967	}, -- heathens_
+    {	empTrade[	10	]	+	14	,	3217	,	3211	,	3224	,	3223	,	{empTradeMaterial[12], 3},	2963	,	2962	}, -- heathens_
+    {	empTrade[	6	]	+	16	,	3222	,	3222	,	3219	,	3222	,	{empTradeMaterial[12], 3},	2963	,	2965	}, -- nukumi_
+    {	empTrade[	7	]	+	16	,	3212	,	3217	,	3210	,	3215	,	{empTradeMaterial[12], 3},	2964	,	2964	}, -- nukumi_
+    {	empTrade[	8	]	+	16	,	3211	,	3211	,	3227	,	3212	,	{empTradeMaterial[12], 3},	2967	,	2963	}, -- nukumi_
+    {	empTrade[	9	]	+	16	,	3216	,	3210	,	3229	,	3210	,	{empTradeMaterial[12], 3},	2966	,	2965	}, -- nukumi_
+    {	empTrade[	10	]	+	16	,	3225	,	3224	,	3214	,	3215	,	{empTradeMaterial[12], 3},	2966	,	2967	}, -- nukumi_
+    {	empTrade[	6	]	+	18	,	3210	,	3215	,	3222	,	3218	,	{empTradeMaterial[12], 3},	2962	,	2966	}, -- fili_
+    {	empTrade[	7	]	+	18	,	3218	,	3213	,	3228	,	3220	,	{empTradeMaterial[12], 3},	2965	,	2965	}, -- fili_
+    {	empTrade[	8	]	+	18	,	3218	,	3223	,	3224	,	3215	,	{empTradeMaterial[12], 3},	2967	,	2967	}, -- fili_
+    {	empTrade[	9	]	+	18	,	3224	,	3220	,	3229	,	3215	,	{empTradeMaterial[12], 3},	2966	,	2965	}, -- fili_
+    {	empTrade[	10	]	+	18	,	3225	,	3215	,	3226	,	3219	,	{empTradeMaterial[12], 3},	2962	,	2964	}, -- fili_
+    {	empTrade[	6	]	+	20	,	3225	,	3225	,	3224	,	3218	,	{empTradeMaterial[12], 3},	2966	,	2966	}, -- amini_
+    {	empTrade[	7	]	+	20	,	3226	,	3214	,	3213	,	3216	,	{empTradeMaterial[12], 3},	2967	,	2966	}, -- amini_
+    {	empTrade[	8	]	+	20	,	3221	,	3216	,	3218	,	3220	,	{empTradeMaterial[12], 3},	2964	,	2966	}, -- amini_
+    {	empTrade[	9	]	+	20	,	3225	,	3214	,	3211	,	3215	,	{empTradeMaterial[12], 3},	2965	,	2966	}, -- amini_
+    {	empTrade[	10	]	+	20	,	3225	,	3225	,	3214	,	3214	,	{empTradeMaterial[12], 3},	2964	,	2965	}, -- amini_
+    {	empTrade[	6	]	+	22	,	3221	,	3212	,	3228	,	3216	,	{empTradeMaterial[12], 3},	2967	,	2964	}, -- kasuga_
+    {	empTrade[	7	]	+	22	,	3212	,	3221	,	3219	,	3213	,	{empTradeMaterial[12], 3},	2963	,	2967	}, -- kasuga_
+    {	empTrade[	8	]	+	22	,	3213	,	3226	,	3229	,	3222	,	{empTradeMaterial[12], 3},	2962	,	2964	}, -- kasuga_
+    {	empTrade[	9	]	+	22	,	3215	,	3225	,	3229	,	3214	,	{empTradeMaterial[12], 3},	2966	,	2965	}, -- kasuga_
+    {	empTrade[	10	]	+	22	,	3223	,	3221	,	3223	,	3220	,	{empTradeMaterial[12], 3},	2963	,	2966	}, -- kasuga_
+    {	empTrade[	6	]	+	24	,	3226	,	3226	,	3222	,	3227	,	{empTradeMaterial[12], 3},	2964	,	2962	}, -- hattori_
+    {	empTrade[	7	]	+	24	,	3223	,	3226	,	3215	,	3211	,	{empTradeMaterial[12], 3},	2966	,	2967	}, -- hattori_
+    {	empTrade[	8	]	+	24	,	3229	,	3226	,	3219	,	3218	,	{empTradeMaterial[12], 3},	2967	,	2965	}, -- hattori_
+    {	empTrade[	9	]	+	24	,	3211	,	3217	,	3210	,	3214	,	{empTradeMaterial[12], 3},	2963	,	2963	}, -- hattori_
+    {	empTrade[	10	]	+	24	,	3216	,	3229	,	3226	,	3227	,	{empTradeMaterial[12], 3},	2962	,	2963	}, -- hattori_
+    {	empTrade[	6	]	+	26	,	3228	,	3212	,	3216	,	3221	,	{empTradeMaterial[12], 3},	2965	,	2964	}, -- peltasts_
+    {	empTrade[	7	]	+	26	,	3212	,	3220	,	3227	,	3221	,	{empTradeMaterial[12], 3},	2963	,	2962	}, -- peltasts_
+    {	empTrade[	8	]	+	26	,	3222	,	3229	,	3218	,	3214	,	{empTradeMaterial[12], 3},	2966	,	2966	}, -- peltasts_
+    {	empTrade[	9	]	+	26	,	3211	,	3214	,	3213	,	3213	,	{empTradeMaterial[12], 3},	2964	,	2967	}, -- peltasts_
+    {	empTrade[	10	]	+	26	,	3224	,	3217	,	3223	,	3224	,	{empTradeMaterial[12], 3},	2962	,	2967	}, -- peltasts_
+    {	empTrade[	6	]	+	28	,	3224	,	3229	,	3218	,	3227	,	{empTradeMaterial[12], 3},	2966	,	2962	}, -- beckoners_
+    {	empTrade[	7	]	+	28	,	3218	,	3224	,	3215	,	3212	,	{empTradeMaterial[12], 3},	2964	,	2966	}, -- beckoners_
+    {	empTrade[	8	]	+	28	,	3221	,	3225	,	3217	,	3216	,	{empTradeMaterial[12], 3},	2964	,	2965	}, -- beckoners_
+    {	empTrade[	9	]	+	28	,	3216	,	3223	,	3211	,	3226	,	{empTradeMaterial[12], 3},	2966	,	2963	}, -- beckoners_
+    {	empTrade[	10	]	+	28	,	3220	,	3225	,	3224	,	3219	,	{empTradeMaterial[12], 3},	2967	,	2966	}, -- beckoners_
+    {	empTrade[	6	]	+	30	,	3211	,	3229	,	3213	,	3224	,	{empTradeMaterial[12], 3},	2966	,	2964	}, -- hashishin_
+    {	empTrade[	7	]	+	30	,	3220	,	3228	,	3223	,	3224	,	{empTradeMaterial[12], 3},	2963	,	2962	}, -- hashishin_
+    {	empTrade[	8	]	+	30	,	3221	,	3229	,	3224	,	3212	,	{empTradeMaterial[12], 3},	2967	,	2966	}, -- hashishin_
+    {	empTrade[	9	]	+	30	,	3214	,	3212	,	3229	,	3226	,	{empTradeMaterial[12], 3},	2965	,	2966	}, -- hashishin_
+    {	empTrade[	10	]	+	30	,	3217	,	3210	,	3224	,	3217	,	{empTradeMaterial[12], 3},	2963	,	2963	}, -- hashishin_
+    {	empTrade[	6	]	+	32	,	3211	,	3224	,	3212	,	3214	,	{empTradeMaterial[12], 3},	2964	,	2962	}, -- chasseurs_
+    {	empTrade[	7	]	+	32	,	3224	,	3229	,	3217	,	3218	,	{empTradeMaterial[12], 3},	2963	,	2965	}, -- chasseurs_
+    {	empTrade[	8	]	+	32	,	3221	,	3215	,	3212	,	3222	,	{empTradeMaterial[12], 3},	2965	,	2964	}, -- chasseurs_
+    {	empTrade[	9	]	+	32	,	3215	,	3229	,	3212	,	3218	,	{empTradeMaterial[12], 3},	2967	,	2964	}, -- chasseurs_
+    {	empTrade[	10	]	+	32	,	3227	,	3219	,	3224	,	3223	,	{empTradeMaterial[12], 3},	2966	,	2967	}, -- chasseurs_
+    {	empTrade[	6	]	+	34	,	3219	,	3229	,	3218	,	3227	,	{empTradeMaterial[12], 3},	2963	,	2967	}, -- karagoz_
+    {	empTrade[	7	]	+	34	,	3221	,	3215	,	3228	,	3210	,	{empTradeMaterial[12], 3},	2963	,	2966	}, -- karagoz_
+    {	empTrade[	8	]	+	34	,	3215	,	3217	,	3222	,	3213	,	{empTradeMaterial[12], 3},	2963	,	2965	}, -- karagoz_
+    {	empTrade[	9	]	+	34	,	3215	,	3227	,	3226	,	3220	,	{empTradeMaterial[12], 3},	2967	,	2967	}, -- karagoz_
+    {	empTrade[	10	]	+	34	,	3225	,	3211	,	3211	,	3213	,	{empTradeMaterial[12], 3},	2965	,	2962	}, -- karagoz_
+    {	empTrade[	6	]	+	36	,	3219	,	3211	,	3227	,	3220	,	{empTradeMaterial[12], 3},	2965	,	2963	}, -- maculele_
+    {	empTrade[	7	]	+	36	,	3228	,	3221	,	3216	,	3222	,	{empTradeMaterial[12], 3},	2964	,	2963	}, -- maculele_
+    {	empTrade[	8	]	+	36	,	3216	,	3224	,	3219	,	3218	,	{empTradeMaterial[12], 3},	2962	,	2967	}, -- maculele_
+    {	empTrade[	9	]	+	36	,	3225	,	3211	,	3216	,	3224	,	{empTradeMaterial[12], 3},	2964	,	2962	}, -- maculele_
+    {	empTrade[	10	]	+	36	,	3213	,	3221	,	3222	,	3223	,	{empTradeMaterial[12], 3},	2967	,	2964	}, -- maculele_
+    {	empTrade[	6	]	+	38	,	3229	,	3223	,	3222	,	3220	,	{empTradeMaterial[12], 3},	2966	,	2963	}, -- arbatel_
+    {	empTrade[	7	]	+	38	,	3227	,	3221	,	3225	,	3220	,	{empTradeMaterial[12], 3},	2965	,	2967	}, -- arbatel_
+    {	empTrade[	8	]	+	38	,	3220	,	3219	,	3217	,	3226	,	{empTradeMaterial[12], 3},	2962	,	2965	}, -- arbatel_
+    {	empTrade[	9	]	+	38	,	3220	,	3213	,	3216	,	3219	,	{empTradeMaterial[12], 3},	2963	,	2966	}, -- arbatel_
+    {	empTrade[	10	]	+	38	,	3215	,	3227	,	3211	,	3228	,	{empTradeMaterial[12], 3},	2962	,	2964	}, -- arbatel_
+    {	empTrade[	6	]	+	40	,	3222	,	3218	,	3211	,	3215	,	{empTradeMaterial[12], 3},	2962	,	2964	}, -- azimuth_
+    {	empTrade[	7	]	+	40	,	3227	,	3222	,	3218	,	3217	,	{empTradeMaterial[12], 3},	2965	,	2967	}, -- azimuth_
+    {	empTrade[	8	]	+	40	,	3212	,	3222	,	3216	,	3210	,	{empTradeMaterial[12], 3},	2965	,	2964	}, -- azimuth_
+    {	empTrade[	9	]	+	40	,	3216	,	3212	,	3218	,	3227	,	{empTradeMaterial[12], 3},	2963	,	2965	}, -- azimuth_
+    {	empTrade[	10	]	+	40	,	3213	,	3218	,	3214	,	3228	,	{empTradeMaterial[12], 3},	2962	,	2966	}, -- azimuth_
+    {	empTrade[	6	]	+	42	,	3218	,	3228	,	3214	,	3217	,	{empTradeMaterial[12], 3},	2962	,	2967	}, -- erilaz_
+    {	empTrade[	7	]	+	42	,	3213	,	3216	,	3223	,	3226	,	{empTradeMaterial[12], 3},	2967	,	2966	}, -- erilaz_
+    {	empTrade[	8	]	+	42	,	3212	,	3214	,	3218	,	3222	,	{empTradeMaterial[12], 3},	2966	,	2962	}, -- erilaz_
+    {	empTrade[	9	]	+	42	,	3219	,	3217	,	3217	,	3225	,	{empTradeMaterial[12], 3},	2963	,	2967	}, -- erilaz_
+    {	empTrade[	10	]	+	42	,	3228	,	3214	,	3224	,	3222	,	{empTradeMaterial[12], 3},	2963	,	2966	}, -- erilaz_
+}
+
 -----------------------------------
 -- Empyrean armor upgrade data
 -----------------------------------
 local reforgedEmpyreanArmor =
 {
-    -- -- Reforged Empyrean Armor (109)
+    -- Reforged Empyrean Armor (109)
     [ 901] = {trade = {empTrade[1],      {empSeals[1],      8}, empTradeMaterial[ 6], empBossItem[1]}, reward = empReward[1]     }, -- boii_mask
     [ 902] = {trade = {empTrade[2],      {empSeals[2],      8}, empTradeMaterial[ 6], empBossItem[2]}, reward = empReward[2]     }, -- boii_lorica
     [ 903] = {trade = {empTrade[3],      {empSeals[3],      8}, empTradeMaterial[ 6], empBossItem[3]}, reward = empReward[3]     }, -- boii_mufflers
@@ -1035,8 +1165,119 @@ local reforgedEmpyreanArmor =
     [1008] = {trade = {{4047, 3},        {empSeals[13],     8}, empTradeMaterial[ 8], empBossItem[3]}, reward = empReward[3] + 42}, -- erilaz_gauntlets
     [1009] = {trade = {{3923, 3},        {empSeals[14],     8}, empTradeMaterial[ 8], empBossItem[4]}, reward = empReward[4] + 42}, -- erilaz_leg_guards
     [1010] = {trade = {{4029, 3},        {empSeals[15],     8}, empTradeMaterial[ 8], empBossItem[5]}, reward = empReward[5] + 42}, -- erilaz_greaves
-    -- Reforged Empyrean Armor +2 (119) (Slots 1011-1120 reserved)
-    -- Reforged Empyrean Armor +3 (119) (Slots 1121-1230 reserved)
+    -- Reforged Empyrean Armor +1 (119)
+    [	1011	]	=	{trade =	empHQ1Recipe[	1	]	,	reward = empReward[	6	]		}, -- boii_
+    [	1012	]	=	{trade =	empHQ1Recipe[	2	]	,	reward = empReward[	7	]		}, -- boii_
+    [	1013	]	=	{trade =	empHQ1Recipe[	3	]	,	reward = empReward[	8	]		}, -- boii_
+    [	1014	]	=	{trade =	empHQ1Recipe[	4	]	,	reward = empReward[	9	]		}, -- boii_
+    [	1015	]	=	{trade =	empHQ1Recipe[	5	]	,	reward = empReward[	10	]		}, -- boii_
+    [	1016	]	=	{trade =	empHQ1Recipe[	6	]	,	reward = empReward[	6	] +	2	}, -- bhikku_
+    [	1017	]	=	{trade =	empHQ1Recipe[	7	]	,	reward = empReward[	7	] +	2	}, -- bhikku_
+    [	1018	]	=	{trade =	empHQ1Recipe[	8	]	,	reward = empReward[	8	] +	2	}, -- bhikku_
+    [	1019	]	=	{trade =	empHQ1Recipe[	9	]	,	reward = empReward[	9	] +	2	}, -- bhikku_
+    [	1020	]	=	{trade =	empHQ1Recipe[	10	]	,	reward = empReward[	10	] +	2	}, -- bhikku_
+    [	1021	]	=	{trade =	empHQ1Recipe[	11	]	,	reward = empReward[	6	] +	4	}, -- ebers_
+    [	1022	]	=	{trade =	empHQ1Recipe[	12	]	,	reward = empReward[	7	] +	4	}, -- ebers_
+    [	1023	]	=	{trade =	empHQ1Recipe[	13	]	,	reward = empReward[	8	] +	4	}, -- ebers_
+    [	1024	]	=	{trade =	empHQ1Recipe[	14	]	,	reward = empReward[	9	] +	4	}, -- ebers_
+    [	1025	]	=	{trade =	empHQ1Recipe[	15	]	,	reward = empReward[	10	] +	4	}, -- ebers_
+    [	1026	]	=	{trade =	empHQ1Recipe[	16	]	,	reward = empReward[	6	] +	6	}, -- wicce_
+    [	1027	]	=	{trade =	empHQ1Recipe[	17	]	,	reward = empReward[	7	] +	6	}, -- wicce_
+    [	1028	]	=	{trade =	empHQ1Recipe[	18	]	,	reward = empReward[	8	] +	6	}, -- wicce_
+    [	1029	]	=	{trade =	empHQ1Recipe[	19	]	,	reward = empReward[	9	] +	6	}, -- wicce_
+    [	1030	]	=	{trade =	empHQ1Recipe[	20	]	,	reward = empReward[	10	] +	6	}, -- wicce_
+    [	1031	]	=	{trade =	empHQ1Recipe[	21	]	,	reward = empReward[	6	] +	8	}, -- lethargy_
+    [	1032	]	=	{trade =	empHQ1Recipe[	22	]	,	reward = empReward[	7	] +	8	}, -- lethargy_
+    [	1033	]	=	{trade =	empHQ1Recipe[	23	]	,	reward = empReward[	8	] +	8	}, -- lethargy_
+    [	1034	]	=	{trade =	empHQ1Recipe[	24	]	,	reward = empReward[	9	] +	8	}, -- lethargy_
+    [	1035	]	=	{trade =	empHQ1Recipe[	25	]	,	reward = empReward[	10	] +	8	}, -- lethargy_
+    [	1036	]	=	{trade =	empHQ1Recipe[	26	]	,	reward = empReward[	6	] +	10	}, -- skulkers_
+    [	1037	]	=	{trade =	empHQ1Recipe[	27	]	,	reward = empReward[	7	] +	10	}, -- skulkers_
+    [	1038	]	=	{trade =	empHQ1Recipe[	28	]	,	reward = empReward[	8	] +	10	}, -- skulkers_
+    [	1039	]	=	{trade =	empHQ1Recipe[	29	]	,	reward = empReward[	9	] +	10	}, -- skulkers_
+    [	1040	]	=	{trade =	empHQ1Recipe[	30	]	,	reward = empReward[	10	] +	10	}, -- skulkers_
+    [	1041	]	=	{trade =	empHQ1Recipe[	31	]	,	reward = empReward[	6	] +	12	}, -- chevaliers_
+    [	1042	]	=	{trade =	empHQ1Recipe[	32	]	,	reward = empReward[	7	] +	12	}, -- chevaliers_
+    [	1043	]	=	{trade =	empHQ1Recipe[	33	]	,	reward = empReward[	8	] +	12	}, -- chevaliers_
+    [	1044	]	=	{trade =	empHQ1Recipe[	34	]	,	reward = empReward[	9	] +	12	}, -- chevaliers_
+    [	1045	]	=	{trade =	empHQ1Recipe[	35	]	,	reward = empReward[	10	] +	12	}, -- chevaliers_
+    [	1046	]	=	{trade =	empHQ1Recipe[	36	]	,	reward = empReward[	6	] +	14	}, -- heathens_
+    [	1047	]	=	{trade =	empHQ1Recipe[	37	]	,	reward = empReward[	7	] +	14	}, -- heathens_
+    [	1048	]	=	{trade =	empHQ1Recipe[	38	]	,	reward = empReward[	8	] +	14	}, -- heathens_
+    [	1049	]	=	{trade =	empHQ1Recipe[	39	]	,	reward = empReward[	9	] +	14	}, -- heathens_
+    [	1050	]	=	{trade =	empHQ1Recipe[	40	]	,	reward = empReward[	10	] +	14	}, -- heathens_
+    [	1051	]	=	{trade =	empHQ1Recipe[	41	]	,	reward = empReward[	6	] +	16	}, -- nukumi_
+    [	1052	]	=	{trade =	empHQ1Recipe[	42	]	,	reward = empReward[	7	] +	16	}, -- nukumi_
+    [	1053	]	=	{trade =	empHQ1Recipe[	43	]	,	reward = empReward[	8	] +	16	}, -- nukumi_
+    [	1054	]	=	{trade =	empHQ1Recipe[	44	]	,	reward = empReward[	9	] +	16	}, -- nukumi_
+    [	1055	]	=	{trade =	empHQ1Recipe[	45	]	,	reward = empReward[	10	] +	16	}, -- nukumi_
+    [	1056	]	=	{trade =	empHQ1Recipe[	46	]	,	reward = empReward[	6	] +	18	}, -- fili_
+    [	1057	]	=	{trade =	empHQ1Recipe[	47	]	,	reward = empReward[	7	] +	18	}, -- fili_
+    [	1058	]	=	{trade =	empHQ1Recipe[	48	]	,	reward = empReward[	8	] +	18	}, -- fili_
+    [	1059	]	=	{trade =	empHQ1Recipe[	49	]	,	reward = empReward[	9	] +	18	}, -- fili_
+    [	1060	]	=	{trade =	empHQ1Recipe[	50	]	,	reward = empReward[	10	] +	18	}, -- fili_
+    [	1061	]	=	{trade =	empHQ1Recipe[	51	]	,	reward = empReward[	6	] +	20	}, -- amini_
+    [	1062	]	=	{trade =	empHQ1Recipe[	52	]	,	reward = empReward[	7	] +	20	}, -- amini_
+    [	1063	]	=	{trade =	empHQ1Recipe[	53	]	,	reward = empReward[	8	] +	20	}, -- amini_
+    [	1064	]	=	{trade =	empHQ1Recipe[	54	]	,	reward = empReward[	9	] +	20	}, -- amini_
+    [	1065	]	=	{trade =	empHQ1Recipe[	55	]	,	reward = empReward[	10	] +	20	}, -- amini_
+    [	1066	]	=	{trade =	empHQ1Recipe[	56	]	,	reward = empReward[	6	] +	22	}, -- kasuga_
+    [	1067	]	=	{trade =	empHQ1Recipe[	57	]	,	reward = empReward[	7	] +	22	}, -- kasuga_
+    [	1068	]	=	{trade =	empHQ1Recipe[	58	]	,	reward = empReward[	8	] +	22	}, -- kasuga_
+    [	1069	]	=	{trade =	empHQ1Recipe[	59	]	,	reward = empReward[	9	] +	22	}, -- kasuga_
+    [	1070	]	=	{trade =	empHQ1Recipe[	60	]	,	reward = empReward[	10	] +	22	}, -- kasuga_
+    [	1071	]	=	{trade =	empHQ1Recipe[	61	]	,	reward = empReward[	6	] +	24	}, -- hattori_
+    [	1072	]	=	{trade =	empHQ1Recipe[	62	]	,	reward = empReward[	7	] +	24	}, -- hattori_
+    [	1073	]	=	{trade =	empHQ1Recipe[	63	]	,	reward = empReward[	8	] +	24	}, -- hattori_
+    [	1074	]	=	{trade =	empHQ1Recipe[	64	]	,	reward = empReward[	9	] +	24	}, -- hattori_
+    [	1075	]	=	{trade =	empHQ1Recipe[	65	]	,	reward = empReward[	10	] +	24	}, -- hattori_
+    [	1076	]	=	{trade =	empHQ1Recipe[	66	]	,	reward = empReward[	6	] +	26	}, -- peltasts_
+    [	1077	]	=	{trade =	empHQ1Recipe[	67	]	,	reward = empReward[	7	] +	26	}, -- peltasts_
+    [	1078	]	=	{trade =	empHQ1Recipe[	68	]	,	reward = empReward[	8	] +	26	}, -- peltasts_
+    [	1079	]	=	{trade =	empHQ1Recipe[	69	]	,	reward = empReward[	9	] +	26	}, -- peltasts_
+    [	1080	]	=	{trade =	empHQ1Recipe[	70	]	,	reward = empReward[	10	] +	26	}, -- peltasts_
+    [	1081	]	=	{trade =	empHQ1Recipe[	71	]	,	reward = empReward[	6	] +	28	}, -- beckoners_
+    [	1082	]	=	{trade =	empHQ1Recipe[	72	]	,	reward = empReward[	7	] +	28	}, -- beckoners_
+    [	1083	]	=	{trade =	empHQ1Recipe[	73	]	,	reward = empReward[	8	] +	28	}, -- beckoners_
+    [	1084	]	=	{trade =	empHQ1Recipe[	74	]	,	reward = empReward[	9	] +	28	}, -- beckoners_
+    [	1085	]	=	{trade =	empHQ1Recipe[	75	]	,	reward = empReward[	10	] +	28	}, -- beckoners_
+    [	1086	]	=	{trade =	empHQ1Recipe[	76	]	,	reward = empReward[	6	] +	30	}, -- hashishin_
+    [	1087	]	=	{trade =	empHQ1Recipe[	77	]	,	reward = empReward[	7	] +	30	}, -- hashishin_
+    [	1088	]	=	{trade =	empHQ1Recipe[	78	]	,	reward = empReward[	8	] +	30	}, -- hashishin_
+    [	1089	]	=	{trade =	empHQ1Recipe[	79	]	,	reward = empReward[	9	] +	30	}, -- hashishin_
+    [	1090	]	=	{trade =	empHQ1Recipe[	80	]	,	reward = empReward[	10	] +	30	}, -- hashishin_
+    [	1091	]	=	{trade =	empHQ1Recipe[	81	]	,	reward = empReward[	6	] +	32	}, -- chasseurs_
+    [	1092	]	=	{trade =	empHQ1Recipe[	82	]	,	reward = empReward[	7	] +	32	}, -- chasseurs_
+    [	1093	]	=	{trade =	empHQ1Recipe[	83	]	,	reward = empReward[	8	] +	32	}, -- chasseurs_
+    [	1094	]	=	{trade =	empHQ1Recipe[	84	]	,	reward = empReward[	9	] +	32	}, -- chasseurs_
+    [	1095	]	=	{trade =	empHQ1Recipe[	85	]	,	reward = empReward[	10	] +	32	}, -- chasseurs_
+    [	1096	]	=	{trade =	empHQ1Recipe[	86	]	,	reward = empReward[	6	] +	34	}, -- karagoz_
+    [	1097	]	=	{trade =	empHQ1Recipe[	87	]	,	reward = empReward[	7	] +	34	}, -- karagoz_
+    [	1098	]	=	{trade =	empHQ1Recipe[	88	]	,	reward = empReward[	8	] +	34	}, -- karagoz_
+    [	1099	]	=	{trade =	empHQ1Recipe[	89	]	,	reward = empReward[	9	] +	34	}, -- karagoz_
+    [	1100	]	=	{trade =	empHQ1Recipe[	90	]	,	reward = empReward[	10	] +	34	}, -- karagoz_
+    [	1101	]	=	{trade =	empHQ1Recipe[	91	]	,	reward = empReward[	6	] +	36	}, -- maculele_
+    [	1102	]	=	{trade =	empHQ1Recipe[	92	]	,	reward = empReward[	7	] +	36	}, -- maculele_
+    [	1103	]	=	{trade =	empHQ1Recipe[	93	]	,	reward = empReward[	8	] +	36	}, -- maculele_
+    [	1104	]	=	{trade =	empHQ1Recipe[	94	]	,	reward = empReward[	9	] +	36	}, -- maculele_
+    [	1105	]	=	{trade =	empHQ1Recipe[	95	]	,	reward = empReward[	10	] +	36	}, -- maculele_
+    [	1106	]	=	{trade =	empHQ1Recipe[	96	]	,	reward = empReward[	6	] +	38	}, -- arbatel_
+    [	1107	]	=	{trade =	empHQ1Recipe[	97	]	,	reward = empReward[	7	] +	38	}, -- arbatel_
+    [	1108	]	=	{trade =	empHQ1Recipe[	98	]	,	reward = empReward[	8	] +	38	}, -- arbatel_
+    [	1109	]	=	{trade =	empHQ1Recipe[	99	]	,	reward = empReward[	9	] +	38	}, -- arbatel_
+    [	1110	]	=	{trade =	empHQ1Recipe[	100	]	,	reward = empReward[	10	] +	38	}, -- arbatel_
+    [	1111	]	=	{trade =	empHQ1Recipe[	101	]	,	reward = empReward[	6	] +	40	}, -- azimuth_
+    [	1112	]	=	{trade =	empHQ1Recipe[	102	]	,	reward = empReward[	7	] +	40	}, -- azimuth_
+    [	1113	]	=	{trade =	empHQ1Recipe[	103	]	,	reward = empReward[	8	] +	40	}, -- azimuth_
+    [	1114	]	=	{trade =	empHQ1Recipe[	104	]	,	reward = empReward[	9	] +	40	}, -- azimuth_
+    [	1115	]	=	{trade =	empHQ1Recipe[	105	]	,	reward = empReward[	10	] +	40	}, -- azimuth_
+    [	1116	]	=	{trade =	empHQ1Recipe[	106	]	,	reward = empReward[	6	] +	42	}, -- erilaz_
+    [	1117	]	=	{trade =	empHQ1Recipe[	107	]	,	reward = empReward[	7	] +	42	}, -- erilaz_
+    [	1118	]	=	{trade =	empHQ1Recipe[	108	]	,	reward = empReward[	8	] +	42	}, -- erilaz_
+    [	1119	]	=	{trade =	empHQ1Recipe[	109	]	,	reward = empReward[	9	] +	42	}, -- erilaz_
+    [	1120	]	=	{trade =	empHQ1Recipe[	110	]	,	reward = empReward[	10	] +	42	}, -- erilaz_
+    -- Reforged Empyrean Armor +2 (119) (Slots 1121-1230 reserved)
+    -- Reforged Empyrean Armor +3 (119) (Slots 1231-1340 reserved)
 }
 
 function onTrade(player, npc, trade)
@@ -1102,19 +1343,19 @@ function onTrade(player, npc, trade)
             checkSuzaku = player:getCharVar("[Aug]SuibhnePathSuzaku_"..augItem)
         end
 
-        if checkGenbu == 1 then
-            augments = skyAugmentsCarryOver[1]
-            player:setCharVar("[Aug]SuibhnePathGenbu_"..augItem, 0)
-        elseif checkByakko == 1 then
-            augments = skyAugmentsCarryOver[2]
-            player:setCharVar("[Aug]SuibhnePathByakko_"..augItem, 0)
-        elseif checkSuzaku == 1 then
-            augments = skyAugmentsCarryOver[3]
-            player:setCharVar("[Aug]SuibhnePathSuzaku_"..augItem, 0)
-        elseif checkSeiryu == 1 then
-            augments = skyAugmentsCarryOver[4]
-            player:setCharVar("[Aug]SuibhnePathSeiryu_"..augItem, 0)
-        end
+        -- if checkGenbu == 1 then
+            -- augments = skyAugmentsCarryOver[1]
+            -- player:setCharVar("[Aug]SuibhnePathGenbu_"..augItem, 0)
+        -- elseif checkByakko == 1 then
+            -- augments = skyAugmentsCarryOver[2]
+            -- player:setCharVar("[Aug]SuibhnePathByakko_"..augItem, 0)
+        -- elseif checkSuzaku == 1 then
+            -- augments = skyAugmentsCarryOver[3]
+            -- player:setCharVar("[Aug]SuibhnePathSuzaku_"..augItem, 0)
+        -- elseif checkSeiryu == 1 then
+            -- augments = skyAugmentsCarryOver[4]
+            -- player:setCharVar("[Aug]SuibhnePathSeiryu_"..augItem, 0)
+        -- end
 
         if tradedCombo <= 460 then
             reward = reforgedArtifactArmor[tradedCombo].reward
@@ -1136,8 +1377,6 @@ end
 
 function onTrigger(player, npc)
     player:PrintToPlayer(string.format("Monisette : Oh, hello! I handle the trades for Reforged Artifact, Relic, and Empyrean armor."),tpz.msg.channel.NS_SAY)
-    player:PrintToPlayer(string.format("Monisette : NOTE: If you have augmented any of the NQ or HQ+1 Reforged armor using Suibhne I will carry over the augments to the upgraded set!"),tpz.msg.channel.NS_SAY)
-    player:PrintToPlayer(string.format("Monisette : NOTE: Upgrading from HQ+1 to HQ+2 will wipe all augments."),tpz.msg.channel.NS_SAY)
 end
 
 function onEventUpdate(player, csid, option)

@@ -77,12 +77,6 @@ function onTrade(player, npc, trade)
 ----------------------------------------------------------------------------------------------------------------------------
 -------- Trading Cracked KSNM Orbs or checking where you can bring the Orb -------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------
-    elseif (trade:hasItemQty(1180, 1) and NumberItem == 1) then
-        if (player:hasWornItem(1180)) then
-            player:startEvent(22) -- Atropos Orb is Cracked
-        else
-            player:startEvent(9) -- Atropos Orb is ok, List where you can take the orb.
-        end
     elseif (trade:hasItemQty(1175, 1) and NumberItem == 1) then
         if (player:hasWornItem(1175)) then
 			if (merits >= 10) then
@@ -114,6 +108,22 @@ function onTrade(player, npc, trade)
 			end
         else
             player:startEvent(9) -- Lachesis Orb is ok, List where you can take the orb.
+        end
+    elseif (trade:hasItemQty(1180, 1) and NumberItem == 1) then
+        if (player:hasWornItem(1180)) then
+			if (merits >= 25) then
+				player:PrintToPlayer(string.format("Shami : (Geeze, you're a bigger sucker than I thought!)."),tpz.msg.channel.NS_SAY)
+				player:PrintToPlayer(string.format("Shami : I'll replace this cracked orb for you for 25 merits."),tpz.msg.channel.NS_SAY)
+				player:tradeComplete(trade)
+				player:setMerits(player:getMeritCount() - 25)
+				player:addItem(1180)
+				player:messageSpecial(ID.text.ITEM_OBTAINED, 1180)
+			else
+				player:startEvent(22) -- Atropos Orb is Cracked
+				player:PrintToPlayer(string.format("Shami : If you have at least 25 merits next time I'll replace the orb for you!"),tpz.msg.channel.NS_SAY)
+			end
+        else
+            player:startEvent(9) -- Atropos Orb is ok, List where you can take the orb.
         end
     elseif (trade:hasItemQty(1553, 1) and NumberItem == 1) then
         if (player:hasWornItem(1553)) then
@@ -386,17 +396,17 @@ function onEventFinish(player, csid, option)
             else
                 player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1178)
             end
-            -- elseif (option == 8 and KindredsSeal >= 30) then  -- Player asked for Atropos Orb
-            -- if (player:getFreeSlotsCount() >= 1 and player:hasItem(1180) == false) then
-                -- player:delSeals(30, 1)
-                -- player:addItem(1180)
-                -- player:messageSpecial(ID.text.ITEM_OBTAINED, 1180)
-                -- player:setCharVar("AtroposOrbIsCracked", 0)
-            -- elseif (player:hasItem(1180)) then
-                -- player:addItem(1180)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
-            -- else
-                -- player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1180)
-            -- end
+            elseif (option == 8 and KindredsSeal >= 30) then  -- Player asked for Atropos Orb
+            if (player:getFreeSlotsCount() >= 1 and player:hasItem(1180) == false) then
+                player:delSeals(30, 1)
+                player:addItem(1180)
+                player:messageSpecial(ID.text.ITEM_OBTAINED, 1180)
+                player:setCharVar("AtroposOrbIsCracked", 0)
+            elseif (player:hasItem(1180)) then
+                player:addItem(1180)  -- does not add the item but forces it to send the "you cannot carry anymore of these" message.
+            else
+                player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1180)
+            end
         elseif (option == 9 and KindredsCrest >= 50) then   -- Player asked for Themis Orb
             if (player:getFreeSlotsCount() >= 1 and player:hasItem(1553) == false) then
                 player:delSeals(50, 1)

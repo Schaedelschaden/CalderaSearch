@@ -21,6 +21,10 @@ function onMobWeaponSkill(target, mob, skill)
     local power = mob:getMainLvl()/4*.6 + 4
 
     MobStatusEffectMove(mob, target, typeEffect, power, 3, 60)
+    
+    if (mob:getID() == 17465408) then
+		mob:resetEnmity(target)
+	end
 
     local dmgmod = 1
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*4, tpz.magic.ele.WIND, dmgmod, TP_NO_EFFECT)

@@ -3,6 +3,7 @@
 --  Mob: Snoll Tzar
 -----------------------------------
 function onMobSpawn(mob)
+    mob:setDropID(3729)
     -- Phase 0 sets start conditions at base anim sub and magic base
     mob:AnimationSub(0)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
@@ -68,6 +69,7 @@ function onAdditionalEffect(mob, target, damage)
 end
 
 function onMobDespawn(mob)
+
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -80,6 +82,7 @@ function onMobDeath(mob, player, isKiller)
 
 	player:setCharVar("KillCounter_"..fixedMobName, KillCounter + 1)
 	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+    player:addGil(math.random(150000, 500000))
 end
 
 function tzarLevelUp(mob, target, animation, strBonus, attBonus, regenBonus, regainBonus)

@@ -23,7 +23,7 @@ local optionToItem = {
         -- [10] = { cost = 30000, id =  4072 }, -- Copy of Rem's Tale, chapter 9
         -- [11] = { cost = 30000, id =  4073 }, -- Copy of Rem's Tale, chapter 10
        -- [12] = { cost =  5000, id = 28546 }, -- Capacity Ring
-       -- [13] = { cost = 10000, id =  9009 }, -- Etched Memory
+       [13] = { cost = 10000, id =  9009 }, -- Etched Memory
     },
     [2] = { -- Skill-increasing tomes
         [ 0] = { cost = 200, id = 6147 }, -- Mikehe's memo

@@ -13,5 +13,5 @@ function onMobFight(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-	
+    player:addSpell(944, true, true)	
 end

@@ -12,8 +12,8 @@ local ID = require("scripts/zones/Norg/IDs")
 
 local itemTrades =
 {
-	[  1] = {trade = {{9084, 5}}, reward = 9085}, -- Eschalixer to Eschalixer +1
-    [  2] = {trade = {{9085, 4}}, reward = 9086}, -- Eschalixer +1 to Eschalixer +2
+	[  1] = {trade = {{9084, 3}}, reward = 9085}, -- Eschalixer to Eschalixer +1
+    [  2] = {trade = {{9085, 6}}, reward = 9086}, -- Eschalixer +1 to Eschalixer +2
     [  3] = {trade = {9085}, reward = 9084}, -- Eschalixer +1 to Eschalixer         Set qty to 5
     [  4] = {trade = {9086}, reward = 9085}, -- Eschalixer +2 to Eschalixer +1      Set qty to 4
 }

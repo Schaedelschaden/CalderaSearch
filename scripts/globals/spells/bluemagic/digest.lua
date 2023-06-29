@@ -34,7 +34,7 @@ function onSpellCast(caster, target, spell)
 		params.diff = caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
 		params.attribute = tpz.mod.MND
 		params.damageType = tpz.damageType.DARK
-		params.spellFamily = tpz.ecosystem.BIRD
+		params.spellFamily = tpz.ecosystem.AMORPH
 		params.skillType = tpz.skill.BLUE_MAGIC
 		
     local resist = applyResistance(caster, target, spell, params)

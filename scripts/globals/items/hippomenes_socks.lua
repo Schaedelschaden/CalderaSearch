@@ -6,7 +6,7 @@
 require("scripts/globals/status")
 -----------------------------------------
 
-function onItemCheck(target, itemCheck)
+function onItemCheck(target, item, itemCheck, caster)
     if itemCheck == 1 then -- Equip
         target:addListener("TAKE_DAMAGE", "LATENT_FLEE_ON_DAMAGE", function(targetArg, amount, attacker, attackType, damageType)
             local chance   = 5 -- Chance to activate when hit by physical damage

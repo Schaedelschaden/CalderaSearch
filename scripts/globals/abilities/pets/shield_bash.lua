@@ -14,16 +14,26 @@ end
 function onPetAbility(target, automaton, skill, master, action)
     local chance = 90
     local damage = (automaton:getSkillLevel(tpz.skill.AUTOMATON_MELEE)/2) + automaton:getMod(tpz.mod.SHIELD_BASH)
+    local spell  = getSpell(252)
+    local params = {}
+			params.diff      = 0
+			params.skillType = tpz.skill.AUTOMATON_MELEE
+			params.bonus     = 0
+    local resist = applyResistance(player, target, spell, params)
 
     damage = math.floor(damage)
 
     chance = chance + (automaton:getMainLvl() - target:getMainLvl()) * 5
 
-    if math.random() * 100 < chance then
+    if
+        math.random(1, 100) < chance and
+        resist > 0.25
+    then
         target:addStatusEffect(tpz.effect.STUN, 1, 0, 4)
     end
 
     local slowPower = automaton:getMod(tpz.mod.AUTO_SHIELD_BASH_SLOW)
+
     if slowPower > 0 then
         local duration = 20
         if slowPower == 12 then

@@ -11,7 +11,7 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:AnimationSub() ~= 3) then
+    if mob:AnimationSub() ~= 3 then
         return 1
     end
 
@@ -19,11 +19,11 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local numhits = 2
-    local accmod = 1
-    local dmgmod = 1
-    local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, 0, 1, 2, 3)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.FIRE, info.hitslanded)
+    local numhits    = 2
+    local accmod     = 1
+    local dmgmod     = 1
+    local info       = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, 0, 1, 2, 3)
+    local dmg        = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.FIRE, info.hitslanded)
     local typeEffect = tpz.effect.PLAGUE
 
     MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 1, 0, 60)

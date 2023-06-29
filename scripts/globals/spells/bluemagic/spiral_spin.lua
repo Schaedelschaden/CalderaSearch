@@ -23,19 +23,21 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local tp = caster:getTP() + caster:getMerit(tpz.merit.ENCHAINMENT)
+    local tp = caster:getTP()
 	local threshold = 20 -- 20% chance to apply at 0 TP
 	local duration = 45 -- 45s duration at 0 TP
 	local chance = math.random(1, 100)
+    local damage = 0
 	local params = {}
     -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+    -- D Value (Final Base Damage) ＝ math.floor(D + fSTR + WSC) * fTP
         params.damageType = tpz.damageType.SLASHING
 		params.spellFamily = tpz.ecosystem.VERMIN
         params.numhits = 1
-        params.multiplier = 2.00
-        params.tp150 = 2.00
-        params.tp300 = 2.00
-        params.azuretp = 2.00
+        params.multiplier = 2.00 -- fTP @    0-1500 TP
+        params.tp150 = 2.00 -- fTP @ 1500-2999 TP
+        params.tp300 = 2.00 -- fTP @      3000 TP
+        params.azuretp = 2.00 -- fTP @      3500 TP
         params.duppercap = 15
         params.str_wsc = 0.0
         params.dex_wsc = 0.0
@@ -66,7 +68,7 @@ function onSpellCast(caster, target, spell)
 		duration = 120
 	end
 
-    if (damage > 0 and chance < threshold) then
+    if damage > 0 and chance < threshold then
         target:addStatusEffect(tpz.effect.ACCURACY_DOWN, 4, 0, duration)
     end
 

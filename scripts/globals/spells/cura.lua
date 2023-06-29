@@ -108,8 +108,7 @@ function onSpellCast(caster, target, spell)
 			caster:setMod(tpz.mod.AFFLATUS_MISERY, 0)
 		end
 
-		final = getCureFinal(caster, spell, basecure, minCure, false)
-		final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD)/100))
+		final = getCureFinal(caster, target, spell, basecure, minCure, false)
 
 		--Applying server mods....
 		final = final * CURE_POWER

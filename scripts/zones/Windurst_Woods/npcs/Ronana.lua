@@ -48,6 +48,7 @@ function onTrigger(player, npc)
 		1622, 2157,			-- Bugard Tusk
 		2769, 2700,			-- Buggane Horn
 		2004, 330,			-- Ponze of Carapace Powder
+        3940, 1835,         -- Carrier Crab Carapace
 		2168, 8721,			-- Cerberus Claw
 		898, 30,			-- Chicken Bone
 		1463, 8109,			-- Chronos Tooth

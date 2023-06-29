@@ -18,8 +18,8 @@ function onMobWeaponSkill(target, mob, skill)
     local typeEffect1 = tpz.effect.PLAGUE
 	local typeEffect2 = tpz.effect.BIND
 
-    skill:setMsg(MobGazeMove(mob, target, typeEffect1, 5, 0, 30))
-	MobGazeMove(mob, target, typeEffect2, 1, 0, 30)
-	
+    skill:setMsg(MobGazeMove(mob, target, typeEffect1, 15, 0, 60))
+	MobGazeMove(mob, target, typeEffect2, 1, 0, 60)
+
     return typeEffect1
 end

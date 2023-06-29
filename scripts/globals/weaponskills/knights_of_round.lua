@@ -33,10 +33,12 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         params.ftp100 = 5 params.ftp200 = 5 params.ftp300 = 5
     end
 
-    -- Apply aftermath
-    tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.RELIC)
-
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    -- Apply aftermath
+    if damage > 0 and player:isPC() then
+        tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.RELIC)
+    end
 
     return tpHits, extraHits, criticalHit, damage
 end

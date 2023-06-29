@@ -14,7 +14,7 @@ require("scripts/globals/weaponskills")
 ---------------------------------------
 
 function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
-    if player:getObjType() ~= tpz.objType.TRUST then
+    if player:isPC() then
         -- Apply aftermath
         tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.EMPYREAN)
     end

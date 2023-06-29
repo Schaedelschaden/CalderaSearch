@@ -80,6 +80,8 @@ set(SOURCES
     entity_animation.h
     entity_enable_list.cpp
     entity_enable_list.h
+    entity_set_name.cpp
+    entity_set_name.h
     entity_update.cpp
     entity_update.h
     entity_visual.cpp

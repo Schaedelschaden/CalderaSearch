@@ -8,7 +8,7 @@ mixins = {require("scripts/mixins/job_special")}
 function onMobSpawn(mob)
 	tpz.mix.jobSpecial.config(mob, {specials = {{id = tpz.jsa.CHAINSPELL, hpp = math.random(50, 80), cooldown = 180}}})
 
-	mob:setMobMod(tpz.mobMod.MOBMOD_MAGIC_COOL, 45)
+	mob:setMobMod(tpz.mobMod.MAGIC_COOL, 45)
 	mob:setMod(tpz.mod.MOVE, 100)
 	mob:setMod(tpz.mod.GRAVITYRES, 100)
 	mob:setMod(tpz.mod.BINDRES, 100)

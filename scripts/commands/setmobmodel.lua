@@ -19,10 +19,10 @@ function onTrigger(player, modelID)
     local targ
     if (target == nil) then
         targ = player:getCursorTarget()
-        if (targ == nil or not targ:isMob()) then
-            error(player, "You must either supply a mob ID or target a mob.")
-            return
-        end
+        -- if (targ == nil or not target:getObjType() == tpz.objType.TRUST or not targ:isMob()) then
+            -- error(player, "You must either supply a mob ID or target a mob.")
+            -- return
+        -- end
     else
         targ = GetMobByID(target)
         if (targ == nil) then

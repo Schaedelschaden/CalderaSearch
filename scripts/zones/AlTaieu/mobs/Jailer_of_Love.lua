@@ -76,6 +76,10 @@ function onMobFight(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
+    if math.random(100) <= 60 then -- 60% chance to spawn Absolute Virtue
+        SpawnMob(ID.mob.ABSOLUTE_VIRTUE)
+    end
+
 	local KillCounter = player:getCharVar("KillCounter_JailOfLove")
 	local playerName = player:getName()
 	local mobName = mob:getName()
@@ -88,7 +92,4 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    if math.random(100) <= 60 then -- 60% chance to spawn Absolute Virtue
-        SpawnMob(ID.mob.ABSOLUTE_VIRTUE)
-    end
 end

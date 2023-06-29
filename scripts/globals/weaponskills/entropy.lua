@@ -40,6 +40,10 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     else
         player:addMP(damage * 0.01)
     end
+    
+    if player:getObjType() == tpz.objType.TRUST then
+        player:addMP(damage / 10)
+    end
 
     return tpHits, extraHits, criticalHit, damage
 end

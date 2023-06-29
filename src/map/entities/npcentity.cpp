@@ -91,6 +91,11 @@ bool CNpcEntity::IsUntargetable()
     return (m_flags & 0x800) == 0x800;
 }
 
+bool CNpcEntity::IsTriggerable()
+{
+    return m_triggerable;
+}
+
 bool CNpcEntity::isWideScannable()
 {
     return widescan == 1 && status == STATUS_NORMAL && CBaseEntity::isWideScannable();

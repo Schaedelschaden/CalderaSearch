@@ -30,9 +30,19 @@ function onMobFight(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
-    tpz.hunts.checkHunt(mob, player, 492)
+    local playerName  = player:getName()
+	local mobName     = mob:getName()
+	local KillCounter = player:getCharVar("KillCounter_"..mobName)
+
+	KillCounter = KillCounter + 1
+
+	player:setCharVar("KillCounter_"..mobName, KillCounter)
+	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", mobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+    player:PrintToPlayer(string.format("Go speak to the Bestiary bookshelf in the library for a seasonal prize!"), tpz.msg.channel.NS_LINKSHELL3)
+
+    player:setCharVar("Seasonal_Reward", 1)
 end
 
 function onMobDespawn(mob)
-    mob:setRespawnTime(math.random(5400, 7200)) -- 90 to 120 minutes
+    
 end

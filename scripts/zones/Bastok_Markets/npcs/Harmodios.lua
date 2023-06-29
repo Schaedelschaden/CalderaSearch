@@ -21,17 +21,27 @@ function onTrigger(player, npc)
         local stock =
         {
             17347,   990, 1,    -- Piccolo
-            17344,   219, 2,    -- Cornette
-            17353,    43, 2,    -- Maple Harp
-            5041,  69120, 2,    -- Scroll of Vital Etude
-            5042,  66240, 2,    -- Scroll of Swift Etude
-            5043,  63360, 2,    -- Scroll of Sage Etude
-            5044,  56700, 2,    -- Scroll of Logical Etude
-            5039,  79560, 2,    -- Scroll of Herculean Etude
-            5040,  76500, 2,    -- Scroll of Uncanny Etude
+            17344,   219, 3,    -- Cornette
+            -- 17353,    43, 2,    -- Maple Harp
+            -- 5041,  69120, 2,    -- Scroll of Vital Etude
+            -- 5042,  66240, 2,    -- Scroll of Swift Etude
+            -- 5043,  63360, 2,    -- Scroll of Sage Etude
+            -- 5044,  56700, 2,    -- Scroll of Logical Etude
+            -- 5039,  79560, 2,    -- Scroll of Herculean Etude
+            -- 5040,  76500, 2,    -- Scroll of Uncanny Etude
             17351,  4644, 3,    -- Gemshorn
             17345,    43, 3,    -- Flute
-            5045,  54000, 3,    -- Scroll of Bewitching Etude
+            -- 5045,  54000, 3,    -- Scroll of Bewitching Etude
+            17839, 50000, 3, -- Military Harp
+            17840, 50000, 3, -- Angel Lyre
+            18834, 50000, 3, -- Vihuela
+            17358, 50000, 3, -- Oneiros Harp
+            17852, 50000, 3, -- Requiem Flute
+            17838, 50000, 3, -- Harlequin's Horn
+            17853, 50000, 3, -- Iron Ram's Horn
+            17856, 50000, 3, -- Syrinx
+            17855, 50000, 3, -- Ney
+            22283, 500000, 3, -- Marvelous Cheer
         }
 
         player:showText(npc, ID.text.HARMODIOS_SHOP_DIALOG)

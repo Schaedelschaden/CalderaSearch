@@ -38,9 +38,7 @@ function onSpellCast(caster, target, spell)
     end
 	
 	local basecure = getBaseCureOld(power, divisor, constant)
-    local final = getCureFinal(caster, spell, basecure, minCure, true)
-
-    final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD)/100))
+    local final = getCureFinal(caster, target, spell, basecure, minCure, true)
 
     --Applying server mods....
     final = final * CURE_POWER

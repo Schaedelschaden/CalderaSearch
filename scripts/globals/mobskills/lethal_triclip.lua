@@ -19,16 +19,19 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
+    if mob:getID() == 17666487 then -- Khalkotaur
+        skill:setKnockback(5)
+    end
 
     local numhits = 3
-    local accmod = 1
-    local dmgmod = 2
-    local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
+    local accmod  = 1
+    local dmgmod  = 2
+    local info    = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
+    local dmg     = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
 
     local typeEffect = tpz.effect.MAX_HP_DOWN
 
-    MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 25, 0, 120)
+    MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 50, 0, 120)
 
     return dmg
 end

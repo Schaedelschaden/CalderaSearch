@@ -38,11 +38,6 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.atk100 = 1.0 params.atk200 = 1.0 params.atk300 = 1.0
     params.enmityMult = 1.5
 
-    -- Apply aftermath
-    if player:getObjType() == tpz.objType.PC then
-        tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.MYTHIC)
-    end
-
     local attack =
     {
         ['type'] = tpz.attackType.BREATH,
@@ -121,6 +116,11 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         calcParams.extraHitsLanded = 1
 
         damage = takeWeaponskillDamage(target, player, params, primary, attack, calcParams, action)
+    end
+
+    -- Apply aftermath
+    if damage > 0 and player:isPC() then
+        tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.MYTHIC)
     end
 
     return calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.criticalHit, damage

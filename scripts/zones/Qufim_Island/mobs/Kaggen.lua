@@ -46,15 +46,29 @@ function onMobFight(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-	local playerName = player:getName()
-	local mobName = mob:getName()
-	local fixedMobName = string.gsub(mobName, "_", " ")
-	local KillCounter = player:getCharVar("KillCounter_"..mobName)
-	
-	KillCounter = KillCounter + 1
-	
-	player:setCharVar("KillCounter_"..mobName, KillCounter)
-	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+    local agathosKills    = player:getCharVar("KillCounter_Agathos")
+    local cherufeKills    = player:getCharVar("KillCounter_Cherufe")
+    local gojiKills       = player:getCharVar("KillCounter_Goji")
+    local gugalannaKills  = player:getCharVar("KillCounter_Gugalanna")
+    local taweretKills    = player:getCharVar("KillCounter_Taweret")
+    local yatagarasuKills = player:getCharVar("KillCounter_Yatagarasu")
+
+    if agathosKills > 0 and cherufeKills > 0 and gojiKills > 0 and gugalannaKills > 0 and taweretKills > 0 and yatagarasuKills > 0 then
+        local playerName   = player:getName()
+        local mobName      = mob:getName()
+        local fixedMobName = string.gsub(mobName, "_", " ")
+        local KillCounter  = player:getCharVar("KillCounter_"..mobName)
+        
+        KillCounter = KillCounter + 1
+        
+        player:setCharVar("KillCounter_"..mobName, KillCounter)
+        player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", fixedMobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+    elseif agathosKills == 0 or cherufeKills == 0 or gojiKills == 0 or gugalannaKills == 0 or taweretKills == 0 or yatagarasuKills == 0 then
+        player:PrintToPlayer(string.format("You are missing previous progression kills and will not receive credit for this kill."), tpz.msg.channel.NS_LINKSHELL3)
+        player:PrintToPlayer(string.format("Required kills:"), tpz.msg.channel.NS_LINKSHELL3)
+        player:PrintToPlayer(string.format("Agathos: [%i]  Cherufe: [%i]  Goji: [%i]", agathosKills, cherufeKills, gojiKills), tpz.msg.channel.NS_LINKSHELL3)
+        player:PrintToPlayer(string.format("Gugalanna: [%i]  Taweret: [%i]  Yatagarasu: [%i]", gugalannaKills, taweretKills, yatagarasuKills), tpz.msg.channel.NS_LINKSHELL3)
+    end
 end
 
 function onMobDespawn(mob)

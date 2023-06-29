@@ -2096,7 +2096,7 @@ function onTrigger(player,npc)
 					13619,	30000,		-- (Back) Tern Cape
 					11681,	30000,		-- (Earring) Breeze Earring
 					14636,	30000,		-- (Ring) Breeze Ring
-					-- 139,	250000,		-- (Item) Star Globe (Used to trigger augment application trades)
+					15810,	100000,		-- (Ring) Luzaf's Ring
 				}
 		elseif (level == 99) then
 			stock_COR =
@@ -2127,7 +2127,7 @@ function onTrigger(player,npc)
 					11006,	50000,		-- (Back) Thall Mantle
 					11046,	50000,		-- (Earring) Ouesk Pearl
 					28513,	50000,		-- (Earring) Phawaylla Earring
-					-- 27572,	50000,		-- (Ring) Garuda Ring
+					15810,	100000,		-- (Ring) Luzaf's Ring
 					-- 321,	350000,		-- (Item) Mythril Bell (Used to trigger augment application trades)
 				}
 		end

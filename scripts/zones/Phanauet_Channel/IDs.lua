@@ -18,7 +18,7 @@ zones[tpz.zone.PHANAUET_CHANNEL] =
         LOGIN_CAMPAIGN_UNDERWAY = 7002, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER            = 7003, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CONQUEST_BASE           = 7057, -- Tallying conquest results...
-        FISHING_MESSAGE_OFFSET  = 7226, -- You can't fish here.
+        FISHING_MESSAGE_OFFSET  = 7229, -- You can't fish here.
         RICHE_DAVOI_WATERFALL   = 7414, -- <item>...Davoi...waterfall...
     },
     mob =

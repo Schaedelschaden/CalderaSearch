@@ -93,7 +93,7 @@ function onTrigger(player, npc)
 		1772, 1557,		-- Chunk of Super Cermet
 		1410, 1098,		-- Sweet William
 		1621, 3711,		-- Taurus Wing
-		4074, 40425,	-- Thought Crystal
+		-- 4074, 40425,	-- Thought Crystal
 		915, 1800,		-- Jar of Toad Oil
 		953, 114,		-- Treant Bulb
 		2131, 75,		-- Triturator

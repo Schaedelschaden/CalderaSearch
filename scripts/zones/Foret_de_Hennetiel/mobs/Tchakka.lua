@@ -28,15 +28,13 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.POISONRES, 30) -- Resistance to Poison	
 	mob:addMod(tpz.mod.GRAVITYRES, 100) -- Resistance to Gravity
 	mob:addMod(tpz.mod.ATT, 400)	
-	mob:addMod(tpz.mod.DEF, 700)
+	mob:addMod(tpz.mod.DEF, 400)
 	mob:addMod(tpz.mod.EVA, 80)
 	mob:addMod(tpz.mod.MACC, 100)
 	mob:addMod(tpz.mod.MATT, 80)
-	mob:addMod(tpz.mod.REGEN, 500)
 	mob:addMod(tpz.mod.REFRESH, 200)
-	-- mob:addMod(tpz.mod.REGAIN, 100)
+	mob:addMod(tpz.mod.ALL_WSDMG_ALL_HITS, -20)
 	mob:addMod(tpz.mod.WATER_ABSORB, 100)
-	mob:addMod(tpz.mod.DOUBLE_ATTACK, 30)
 end
 
 function onMobFight(mob)

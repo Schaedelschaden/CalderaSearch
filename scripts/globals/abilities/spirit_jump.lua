@@ -71,8 +71,10 @@ function onUseAbility(player, target, ability, action)
         action:messageID(target:getID(), tpz.msg.basic.JA_MISS_2)
         action:speceffect(target:getID(), 0)
     end
-	
-	target:lowerEnmity(player, 30)
+
+    if target:isMob() then
+        target:lowerEnmity(player, 30)
+    end
 	
 	return damage
 end

@@ -69,7 +69,9 @@ function onUseAbility(player, target, ability, action)
         action:speceffect(target:getID(), 0)
     end
 	
-	target:lowerEnmity(player, 65)
+    if target:isMob() then
+        target:lowerEnmity(player, 65)
+    end
 
 	return damage
 end

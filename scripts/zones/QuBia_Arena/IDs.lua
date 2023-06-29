@@ -48,6 +48,8 @@ zones[tpz.zone.QUBIA_ARENA] =
             17621303,
             17621304,
         },
+        MUMOR = 17621562,
+        ULLEGORE = 17621560,
     },
     npc =
     {

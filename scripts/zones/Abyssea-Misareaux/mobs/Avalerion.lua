@@ -2,7 +2,12 @@
 -- Area: Abyssea-Misareaux
 --   NM: Avalerion
 -----------------------------------
-mixins = {require("scripts/mixins/families/colibri_mimic")}
+mixins =
+{
+    require("scripts/mixins/families/colibri_mimic"),
+    require("scripts/mixins/abyssea_weakness")
+}
+require("scripts/globals/abyssea")
 require("scripts/globals/mobs")
 -----------------------------------
 

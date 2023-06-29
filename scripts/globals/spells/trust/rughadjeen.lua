@@ -56,6 +56,12 @@ function onMobSpawn(mob)
             mobArg:setMod(tpz.mod.DMG, dtbase - 5)
             master:setLocalVar("rugLock", 0)
         end
+        
+        local target = mobArg:getTarget()
+        local family = target:getSystem()
+        if family == tpz.eco.UNDEAD then
+            mobArg:useJobAbility(tpz.ja.HOLY_CIRCLE, mobArg)
+        end  
     end)
 
     --Modifiers

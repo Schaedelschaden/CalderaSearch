@@ -2,7 +2,12 @@
 -- Area: Abyssea - Attohwa
 --  Mob: Ironclad Cleaver
 -----------------------------------
-mixins = {require("scripts/mixins/families/iron_giant")}
+mixins =
+{
+    require("scripts/mixins/families/iron_giant"),
+    require("scripts/mixins/abyssea_weakness")
+}
+require("scripts/globals/abyssea")
 require("scripts/globals/mobs")
 -----------------------------------
 

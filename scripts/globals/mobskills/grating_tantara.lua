@@ -14,7 +14,11 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:AnimationSub() == 1 and mob:getFamily() == 165) then -- Imps without horn
+    if
+        mob:AnimationSub() == 1 and
+        mob:getFamily() == 165
+    then
+        -- Imps without horn
         return 1
     else
         return 0
@@ -23,14 +27,14 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.AMNESIA
-    local power = 1
-    local duration = 60
-	
-	local numhits = 1
-    local accmod = 1
-    local dmgmod = 1.5
-    local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 2, 3)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, MOBPARAM_IGNORE_SHADOWS)
+    local power      = 1
+    local duration   = 60
+
+    local numhits = 1
+    local accmod  = 1
+    local dmgmod  = 1.5
+    local info    = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 2, 3)
+    local dmg     = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, MOBPARAM_IGNORE_SHADOWS)
 
     MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, power, 0, duration)
 

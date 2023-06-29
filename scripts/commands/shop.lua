@@ -139,6 +139,7 @@ function onTrigger(player,page)
 			9176,   500000, -- Kupon AW-GFII
 			9175,   500000, -- Kupon AW-GFIII
 			9187,   500000, -- Kupon AW-GeIV
+            2802,   500000, -- Kupon AW-Abs
 			9188,    50000, -- Kupon W-EMI
 			8730,    50000, -- Kupon W-EWS
             28800,   25000, -- Maze Rune 001

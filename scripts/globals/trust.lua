@@ -29,7 +29,8 @@ tpz.trust.message_offset =
 
 local maxMessagePage = 121
 
-local rovKIBattlefieldIDs = set{
+local rovKIBattlefieldIDs =
+{
     5,    -- Shattering Stars (WAR LB5)
     6,    -- Shattering Stars (BLM LB5)
     7,    -- Shattering Stars (RNG LB5)
@@ -39,7 +40,7 @@ local rovKIBattlefieldIDs = set{
     101,  -- Shattering Stars (MNK LB5)
     102,  -- Shattering Stars (WHM LB5)
     103,  -- Shattering Stars (SMN LB5)
-    163,  -- Survival of the Wisest (SCH LB5)
+    --163,  -- Survival of the Wisest (SCH LB5)
     194,  -- Shattering Stars (SAM LB5)
     195,  -- Shattering Stars (NIN LB5)
     196,  -- Shattering Stars (DRG LB5)
@@ -47,9 +48,9 @@ local rovKIBattlefieldIDs = set{
     518,  -- Shattering Stars (DRK LB5)
     519,  -- Shattering Stars (BRD LB5)
     530,  -- A Furious Finale (DNC LB5)
-    1091, -- Breaking the Bonds of Fate (COR LB5)
-    1123, -- Achieving True Power (PUP LB5)
-    1154, -- The Beast Within (BLU LB5)
+    --1091, -- Breaking the Bonds of Fate (COR LB5)
+    --1123, -- Achieving True Power (PUP LB5)
+    --1154, -- The Beast Within (BLU LB5)
 -- TODO: GEO LB5
 -- TODO: RUN LB5
 }
@@ -182,6 +183,15 @@ local poolIDToMessagePageOffset =
     -- [] = 119, -- Cornelia
 }
 
+local restrictParty =
+{
+    -- Rogue 4 (3-man parties only)
+     17, -- Contaminated Colosseum
+    113, -- Moa Constrictors
+    199, -- The Scarlet King
+    515, -- Infernal Swarm
+}
+
 tpz.trust.onTradeCipher = function(player, trade, csid, rovCs, arkAngelCs)
     local hasPermit = player:hasKeyItem(tpz.ki.WINDURST_TRUST_PERMIT) or
                       player:hasKeyItem(tpz.ki.BASTOK_TRUST_PERMIT) or
@@ -241,12 +251,13 @@ tpz.trust.canCast = function(caster, spell, not_allowed_trust_ids)
     end
 
     -- Trusts only allowed in certain zones (Remove this for trusts everywhere)
-    if not caster:canUseMisc(tpz.zoneMisc.TRUST) then
-        return tpz.msg.basic.TRUST_NO_CALL_AE
-    end
+    -- if not caster:canUseMisc(tpz.zoneMisc.TRUST) then
+        -- return tpz.msg.basic.TRUST_NO_CALL_AE
+    -- end
 
     -- You can only summon trusts if you are the party leader or solo
     local leader = caster:getPartyLeader()
+
     if leader and caster:getID() ~= leader:getID() then
         caster:messageSystem(tpz.msg.system.TRUST_SOLO_OR_LEADER)
         return -1
@@ -255,45 +266,53 @@ tpz.trust.canCast = function(caster, spell, not_allowed_trust_ids)
     -- Block summoning trusts if seeking a party
     if caster:isSeekingParty() then
         caster:messageSystem(tpz.msg.system.TRUST_NO_SEEKING_PARTY)
+
         return -1
     end
 
     -- Block summoning trusts if someone recently joined party (20s)
     local last_party_member_added_time = caster:getPartyLastMemberJoinedTime()
+
     if os.time() - last_party_member_added_time < 20 then
         caster:messageSystem(tpz.msg.system.TRUST_DELAY_NEW_PARTY_MEMBER)
+
         return -1
     end
 
     -- Trusts cannot be summoned if you have hate
-    if caster:hasEnmity() then
-        caster:messageSystem(tpz.msg.system.TRUST_NO_ENMITY)
-        return -1
-    end
-	
-	local party = caster:getParty()
-	
-	for i, member in pairs(party) do
-		if (member:hasEnmity()) then
+    -- if caster:hasEnmity() then
+        -- caster:messageSystem(tpz.msg.system.TRUST_NO_ENMITY)
+
+        -- return -1
+    -- end
+
+    -- Check party for trusts
+    local num_pt     = 0
+    local num_trusts = 0
+    local maxParty   = 6
+    local party      = caster:getPartyWithTrusts()
+
+    -- Trusts cannot be summoned if anyone in the party has hate
+    for i, member in pairs(party) do
+		if member:hasEnmity() then
 			caster:messageSystem(tpz.msg.system.TRUST_NO_ENMITY)
+
 			return -1
 		end
 	end
 
-    -- Check party for trusts
-    local num_pt = 0
-    local num_trusts = 0
-    local party = caster:getPartyWithTrusts()
     for _, member in ipairs(party) do
         if member:getObjType() == tpz.objType.TRUST then
             -- Check for same trust
             if member:getTrustID() == spell:getID() then
                 caster:messageSystem(tpz.msg.system.TRUST_ALREADY_CALLED)
+
                 return -1
             -- Check not allowed trust combinations (Shantotto I vs Shantotto II)
             elseif type(not_allowed_trust_ids) == "number" then
                 if member:getTrustID() == not_allowed_trust_ids then
                     caster:messageSystem(tpz.msg.system.TRUST_ALREADY_CALLED)
+
                     return -1
                 end
             elseif type(not_allowed_trust_ids) == "table" then
@@ -301,27 +320,45 @@ tpz.trust.canCast = function(caster, spell, not_allowed_trust_ids)
                     if type(v) == "number" then
                         if member:getTrustID() == v then
                             caster:messageSystem(tpz.msg.system.TRUST_ALREADY_CALLED)
+
                             return -1
                         end
                     end
                 end
             end
+
             num_trusts = num_trusts + 1
         end
+
         num_pt = num_pt + 1
     end
 
+    local bfStatus = caster:getStatusEffect(tpz.effect.BATTLEFIELD)
+    local bfID     = 0
+
+    -- Caldera customization
+    -- Rogue 4 BCNM's only allow 3 party members to participate (including trusts)
+    if bfStatus then
+        bfID = bfStatus:getPower()
+
+        for i = 1, #restrictParty do
+            if bfID == restrictParty[i] then
+                maxParty = 3
+            end
+        end
+    end
+
     -- Max party size
-    if num_pt >= 6 then
+    if num_pt >= maxParty then
         caster:messageSystem(tpz.msg.system.TRUST_MAXIMUM_NUMBER)
         return -1
     end
 
     -- Some battlefields allow trusts after you get this ROV Key Item
-    local casterBattlefieldID = caster:getBattlefieldID()
-    if rovKIBattlefieldIDs[casterBattlefieldID] and not caster:hasKeyItem(tpz.ki.RHAPSODY_IN_UMBER) then
-        return tpz.msg.basic.TRUST_NO_CAST_TRUST
-    end
+    -- local casterBattlefieldID = caster:getBattlefieldID()
+    -- if rovKIBattlefieldIDs[casterBattlefieldID] and not caster:hasKeyItem(tpz.ki.RHAPSODY_IN_UMBER) then
+        -- return tpz.msg.basic.TRUST_NO_CAST_TRUST
+    -- end
 
     local skySeaKC = caster:getCharVar("KillCounter_Ullikummi") >= 1 and
                      caster:getCharVar("KillCounter_Despot") >= 1 and

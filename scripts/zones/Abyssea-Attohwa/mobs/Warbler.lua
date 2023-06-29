@@ -2,6 +2,10 @@
 -- Area: Abyssea-Attohwa
 --   NM: Warbler
 -----------------------------------
+mixins = {require("scripts/mixins/abyssea_weakness")}
+require("scripts/globals/abyssea")
+require("scripts/globals/mobs")
+-----------------------------------
 
 local AURA_DISTANCE = 4.5
 
@@ -47,7 +51,8 @@ end
 
 function onAdditionalEffect(mob, target, damage)
 	local params = {}
-		params.chance = 100
+		params.chance   = 70
+        params.duration = math.random(7, 10)
 
     mob:resetEnmity(target)
 

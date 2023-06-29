@@ -18,13 +18,13 @@ zones[tpz.zone.RIVERNE_SITE_A01] =
         CARRIED_OVER_POINTS     = 7001, -- You have carried over <number> login point[/s].
         LOGIN_CAMPAIGN_UNDERWAY = 7002, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER            = 7003, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
-        CONQUEST_BASE           = 7057, -- Tallying conquest results...
-        A_GLOWING_MIST          = 7252, -- A glowing mist of ever-changing proportions floats before you...
-        SD_VERY_SMALL           = 7595, -- The spatial displacement is very small. If you only had some item that could make it bigger...
-        SD_HAS_GROWN            = 7596, -- The spatial displacement has grown.
-        SPACE_SEEMS_DISTORTED   = 7597, -- The space around you seems oddly distorted and disrupted.
-        MONUMENT                = 7604, -- Something has been engraved on this stone, but the message is too difficult to make out.
-        HOMEPOINT_SET           = 7732, -- Home point set!
+        CONQUEST_BASE           = 7060, -- Tallying conquest results...
+        A_GLOWING_MIST          = 7255, -- A glowing mist of ever-changing proportions floats before you...
+        SD_VERY_SMALL           = 7598, -- The spatial displacement is very small. If you only had some item that could make it bigger...
+        SD_HAS_GROWN            = 7599, -- The spatial displacement has grown.
+        SPACE_SEEMS_DISTORTED   = 7600, -- The space around you seems oddly distorted and disrupted.
+        MONUMENT                = 7607, -- Something has been engraved on this stone, but the message is too difficult to make out.
+        HOMEPOINT_SET           = 7735, -- Home point set!
     },
     mob =
     {

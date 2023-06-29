@@ -19,5 +19,10 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 2.25
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT, 1, 2, 3)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded)
+    
+    if mob:getObjType() == tpz.objType.TRUST then
+        dmg = dmg * mob:getMainLvl() / 4
+    end
+    
     return dmg
 end
