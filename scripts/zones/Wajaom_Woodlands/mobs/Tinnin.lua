@@ -93,13 +93,13 @@ function onMobFight(mob, target)
                     mob:castSpell(547, mob)
                 end
                 
-                if not mob:hasStatusEffect(tpz.effect.BLINK) then
-                    mob:castSpell(53, mob)
+                if not mob:hasStatusEffect(tpz.effect.GEO_POISON) then
+                    mob:castSpell(769, mob)
                 end
                 
-                if not mob:hasStatusEffect(tpz.effect.STONESKIN) then
-                    mob:castSpell(54, mob)
-                end
+                -- if not mob:hasStatusEffect(tpz.effect.STONESKIN) then
+                    -- mob:castSpell(54, mob)
+                -- end
                 
                 if not mob:hasStatusEffect(tpz.effect.PROTECT) then
                     mob:castSpell(47, mob)
@@ -119,7 +119,7 @@ function onMobFight(mob, target)
                 mob:setLocalVar("buffs", os.time() + 60)
             end            
         end
-        if mob:getTP() == 3000 then
+        if mob:getTP() >= 500 then
             local onionKnight = mob:getLocalVar("OnionKnight")
             mob:useWeaponskill(math.random(1, 240), target)
             mob:setLocalVar("OnionKnight", mob:getLocalVar("OnionKnight") + 1)
