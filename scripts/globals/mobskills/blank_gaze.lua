@@ -17,7 +17,10 @@ function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.PARALYSIS
 
     skill:setMsg(MobGazeMove(mob, target, typeEffect, 35, 0, 60))
-	mob:resetEnmity(target)
+	
+    if mob:getObjType() == tpz.objType.MOB then
+        mob:resetEnmity(target)
+    end
 
     return typeEffect
 end

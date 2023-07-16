@@ -1,39 +1,23 @@
 -----------------------------------
 --
---      tpz.effect.CAROL
---  TODO: MOD_CRITICAL_DAMAGE_REDUCTION
+-- tpz.effect.SCHERZO
+--
+-----------------------------------
+require("scripts/globals/status")
+require("scripts/globals/magic")
 -----------------------------------
 
 function onEffectGain(target, effect)
-	local power = effect:getPower()
-	setBonus = 0
-	
-	if (power >= 2000 and power < 3000) then
-		power = power - 2000
-		setBonus = 1
-	elseif (power >= 3000 and power < 4000) then
-		power = power - 3000
-		setBonus = 2
-	elseif (power >= 4000 and power < 5000) then
-		power = power - 4000
-		setBonus = 3
-	elseif (power >= 5000) then
-		power = power - 5000
-		setBonus = 5
-	end
-	
-	if (setBonus > 0) then
-		target:addMod(tpz.mod.VIT, setBonus)
-	end
-	
-	effect:setPower(power)
+	local power, empSetBonus, bonusMod = songsCheckEmpEffect(target, effect)
+
+    target:addMod(bonusMod, empSetBonus)
 end
 
 function onEffectTick(target, effect)
 end
 
 function onEffectLose(target, effect)
-	if (setBonus > 0) then
-		target:delMod(tpz.mod.VIT, setBonus)
-	end
+	local power, empSetBonus, bonusMod = songsCheckEmpEffect(target, effect)
+
+    target:delMod(bonusMod, empSetBonus)
 end

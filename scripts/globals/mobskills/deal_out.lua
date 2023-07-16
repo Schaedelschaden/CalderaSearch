@@ -27,6 +27,10 @@ function onMobWeaponSkill(target, mob, skill)
     if (mob:isMobType(MOBTYPE_NOTORIOUS)) then
         mob:resetEnmity(target)
     end
+    
+    if mob:getObjType() == tpz.objType.TRUST then
+        dmg = dmg * mob:getMainLvl() / 10
+    end
 
     return dmg
 end

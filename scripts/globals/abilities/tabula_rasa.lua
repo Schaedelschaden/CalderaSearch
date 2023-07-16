@@ -16,21 +16,21 @@ end
 function onUseAbility(player, target, ability)
 
     local regenbonus = 0
-	
-	-- Caps at 36 at level 99
+
+    -- Caps at 36 at level 99
     if (player:getMainJob() == tpz.job.SCH and player:getMainLvl() >= 20) then
         regenbonus = math.floor((player:getMainLvl() - 1) / 4)
     end
 
     local helixbonus = 0
-	
+
     if (player:getMainJob() == tpz.job.SCH and player:getMainLvl() >= 20) then
         helixbonus = math.floor((player:getMainLvl() / 5) - 3)
     end
-	
-    player:resetRecast(tpz.recast.ABILITY, 228)
-    player:resetRecast(tpz.recast.ABILITY, 231)
-    player:resetRecast(tpz.recast.ABILITY, 232)
+
+    player:resetRecast(228)
+    player:resetRecast(231)
+    player:resetRecast(232)
     player:addStatusEffect(tpz.effect.TABULA_RASA, math.floor(helixbonus * 1.5), 0, 180, 0, math.floor(regenbonus * 1.5))
 
     return tpz.effect.TABULA_RASA

@@ -683,3 +683,89 @@ tpz.abyssea.qmOnEventFinish = function(player, csid, option)
         return true
     end
 end
+
+tpz.abyssea.updateBaseStats = function(mob, tierAby, tierMob)
+    local dmgRating = 0
+    local modDEF    = 0
+    local modATT    = 0
+    local modMATT   = 0
+    local modACC    = 0
+    local modMACC   = 0
+    local modEVA    = 0
+    local modMEVA   = 0
+    local modSTR    = 0
+    local modDEX    = 0
+    local modAGI    = 0
+    local modVIT    = 0
+    local modMND    = 0
+    local modCHR    = 0
+    local modINT    = 0
+    
+    if tierAby == 2 and tierMob == 0 then -- Abyssea T2 - Normal Mobs
+        
+    elseif tierAby == 2 and tierMob == 1 then -- Abyssea T2 - T1 NM's
+        dmgRating = math.random(150, 200)
+        modDEF    = math.random(350, 500)
+        modATT    = math.random(250, 350)
+        modMATT   = 200
+        modACC    = 0
+        modMACC   = 0
+        modEVA    = math.random(150, 200)
+        modMEVA   = 200
+        modSTR    = 115
+        modDEX    = 115
+        modAGI    = 115
+        modVIT    = 115
+        modMND    = 115
+        modCHR    = 115
+        modINT    = 115
+    elseif tierAby == 2 and tierMob == 2 then -- Abyssea T2 - T2 NM's
+        dmgRating = math.random(175, 225)
+        modDEF    = math.random(450, 550)
+        modATT    = math.random(300, 400)
+        modMATT   = 210
+        modACC    = 0
+        modMACC   = 0
+        modEVA    = math.random(175, 225)
+        modMEVA   = 220
+        modSTR    = 140
+        modDEX    = 140
+        modAGI    = 140
+        modVIT    = 140
+        modMND    = 140
+        modCHR    = 140
+        modINT    = 140
+    elseif tierAby == 2 and tierMob == 3 then -- Abyssea T2 - T3 NM's
+        dmgRating = math.random(200, 250)
+        modDEF    = math.random(500, 600)
+        modATT    = math.random(400, 500)
+        modMATT   = 220
+        modACC    = 0
+        modMACC   = 0
+        modEVA    = math.random(200, 250)
+        modMEVA   = 240
+        modSTR    = 165
+        modDEX    = 165
+        modAGI    = 165
+        modVIT    = 165
+        modMND    = 165
+        modCHR    = 165
+        modINT    = 165
+    end
+
+    mob:addMod(tpz.mod.MAIN_DMG_RATING, dmgRating)
+    mob:addMod(tpz.mod.DEF, modDEF)
+    mob:addMod(tpz.mod.ATT, modATT)
+    mob:addMod(tpz.mod.MATT, modMATT)
+    mob:addMod(tpz.mod.ACC, modACC)
+    mob:addMod(tpz.mod.MACC, modMACC)
+	mob:addMod(tpz.mod.EVA, modEVA)
+	mob:addMod(tpz.mod.MEVA, modMEVA)
+	mob:addMod(tpz.mod.STR, modSTR)
+    mob:addMod(tpz.mod.DEX, modDEX)
+    mob:addMod(tpz.mod.AGI, modAGI)
+    mob:addMod(tpz.mod.VIT, modVIT)
+    mob:addMod(tpz.mod.MND, modMND)
+    mob:addMod(tpz.mod.CHR, modCHR)
+    mob:addMod(tpz.mod.INT, modINT)
+end

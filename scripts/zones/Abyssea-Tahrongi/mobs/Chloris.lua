@@ -38,4 +38,5 @@ function onMobDeath(mob, player, isKiller)
 	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", mobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
 
 	tpz.abyssea.kiOnMobDeath(mob, player)
+    player:addSpell(958, true, true) -- Babban
 end

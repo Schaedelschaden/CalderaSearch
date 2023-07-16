@@ -9,7 +9,7 @@ require("scripts/globals/titles")
 function onMobFight(mob, target)
     mob:addListener("SKILLCHAIN_TAKE", "SKILLCHAIN_TAKEN", function(defender, attacker, element, chainLevel, chainCount) -- , resistance, damage)
         if element == 14 or element == 16 then
-            mob:setLocalVar("skillchain", mob:getLocalVar("skillchain") + 1)
+            defender:setLocalVar("skillchain", defender:getLocalVar("skillchain") + 1)
         end
     end)
 

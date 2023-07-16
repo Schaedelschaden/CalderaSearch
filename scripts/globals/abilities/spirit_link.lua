@@ -160,8 +160,12 @@ function onUseAbility(player,target,ability)
 		end
 		
 		local diff = math.floor((prev_exp + currentExp) / 200) - math.floor(prev_exp / 200)
-		
-		if diff > 0 then
+
+		if prev_exp >= 0 and prev_exp < 1000 and diff > 0 then
+            -- if player:getName() == "Khalum" then
+                -- player:PrintToPlayer(string.format("DIFF: [%i] = ((PREV EXP: [%i] + CURRENT EXP: [%i]) / 200) - (PREV EXP: [%i] / 200)", diff, prev_exp, currentExp, prev_exp),tpz.msg.channel.SYSTEM_3)
+            -- end
+
 			-- wyvern leveled up (diff is the number of level ups)
 			pet:addMod(tpz.mod.ACC, 6 * diff)
 			pet:addMod(tpz.mod.HPP, 6 * diff)
@@ -172,10 +176,10 @@ function onUseAbility(player,target,ability)
 			player:addMod(tpz.mod.DEFP, 4 * diff)
 			player:addMod(tpz.mod.HASTE_ABILITY, 200 * diff)
 			player:addMod(tpz.mod.ALL_WSDMG_ALL_HITS, 2 * diff)
+
+            pet:setLocalVar("wyvern_exp", prev_exp + exp)
+            pet:setLocalVar("level_Ups", pet:getLocalVar("level_Ups") + diff)
 		end
-		
-		pet:setLocalVar("wyvern_exp", prev_exp + exp)
-		pet:setLocalVar("level_Ups", pet:getLocalVar("level_Ups") + diff)
     end
 
     pet:addHP(healPet) --add the hp to pet

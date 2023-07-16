@@ -15,7 +15,11 @@ require("scripts/globals/quests")
 -----------------------------------
 
 function onTrade(player, npc, trade)
-    -- if (trade:hasItemQty(555, 1) == true and trade:getItemCount() == 1) then
+    if (trade:hasItemQty(4157, 1) == true and trade:getItemCount() == 1) then
+        player:tradeComplete()
+        player:setCharVar("MonberauxLvl", 4)
+        player:PrintToPlayer(string.format("Monberaux: I have reverted your service to violence free support. You will have to kill Keremet again to get it back."),tpz.msg.channel.NS_SAY)
+    end        
         -- local a = player:getCharVar("saveTheClockTowerNPCz1") -- NPC Part1
         -- if (a == 0 or (a ~= 4 and a ~= 5 and a ~= 6 and a ~= 12 and a ~= 20 and a ~= 7 and a ~= 28 and a ~= 13 and a ~= 22 and
            -- a ~= 14 and a ~= 21 and a ~= 15 and a ~= 23 and a ~= 29 and a ~= 30 and a ~= 31)) then

@@ -6,76 +6,65 @@
 -- Wiki: http://ffxiclopedia.wikia.com/wiki/Sarameya
 -- TODO: PostAIRewrite: Code the Howl effect and gradual resists.
 -----------------------------------
-mixins = {require("scripts/mixins/rage")}
 require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
 -----------------------------------
 
-function onMobInitialize(mob)
-    mob:setMobMod(tpz.mobMod.GA_CHANCE, 50)
-    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
-end
-
 function onMobSpawn(mob)
-    mob:addMod(tpz.mod.MEVA, 95)
-    mob:addMod(tpz.mod.MDEF, 30)
-    mob:addMod(tpz.mod.SILENCERES, 20)
-    mob:addMod(tpz.mod.GRAVITYRES, 20)
-    mob:addMod(tpz.mod.LULLABYRES, 30)
-    mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
-end
-
-function onMobRoam(mob)
+    mob:renameEntity("Dark Nar")
+    mob:addMod(tpz.mod.PARALYZERES, 50) -- Resistance to Paralyze
+    mob:addMod(tpz.mod.STUNRES, 60) -- Resistance to Stun
+    mob:addMod(tpz.mod.BINDRES, 100) -- Resistance to Bind
+    mob:addMod(tpz.mod.SLOWRES, 50) -- Resistance to Slow
+    mob:addMod(tpz.mod.SILENCERES, 60) -- Resistance to Silence
+    mob:addMod(tpz.mod.SLEEPRES, 60) -- Resistance to Sleep
+    mob:addMod(tpz.mod.LULLABYRES, 60) -- Resistance to Lullaby
+    mob:addMod(tpz.mod.PETRIFYRES, 60) -- Resistance to Pertrify
+    mob:addMod(tpz.mod.POISONRES, 60) -- Resistance to Poison	
+	mob:addMod(tpz.mod.STR, 130)	
+	mob:addMod(tpz.mod.DEX, 130)	
+	mob:addMod(tpz.mod.VIT, 130)	
+	mob:addMod(tpz.mod.CHR, 130)	
+	mob:addMod(tpz.mod.MND, 130)	
+	mob:addMod(tpz.mod.INT, 130)	
+	mob:addMod(tpz.mod.MATT, 300)	
+	mob:addMod(tpz.mod.MDEF, 100)
+	mob:addMod(tpz.mod.DEF, 600)
+	mob:addMod(tpz.mod.ATT, 900)
+	mob:addMod(tpz.mod.MEVA, 250)
+	mob:addMod(tpz.mod.MACC, 100)
+	mob:addMod(tpz.mod.REGEN, 200)
+    mob:addMod(tpz.mod.FASTCAST, 100)
+    mob:setMobMod(tpz.mobMod.DUAL_WIELD, 1)
+    mob:setMobMod(tpz.mobMod.SKILL_LIST, 0)
+    mob:setUnkillable(true)
 end
 
 function onMobFight(mob, target)
-    local hpp = mob:getHPP()
-    local useChainspell = false
-
-    if hpp < 90 and mob:getLocalVar("chainspell89") == 0 then
-        mob:setLocalVar("chainspell89", 1)
-        useChainspell = true
-    elseif hpp < 70 and mob:getLocalVar("chainspell69") == 0 then
-        mob:setLocalVar("chainspell69", 1)
-        useChainspell = true
-    elseif hpp < 50 and mob:getLocalVar("chainspell49") == 0 then
-        mob:setLocalVar("chainspell49", 1)
-        useChainspell = true
-    elseif hpp < 30 and mob:getLocalVar("chainspell29") == 0 then
-        mob:setLocalVar("chainspell29", 1)
-        useChainspell = true
-    elseif hpp < 10 and mob:getLocalVar("chainspell9") == 0 then
-        mob:setLocalVar("chainspell9", 1)
-        useChainspell = true
-    end
-
-    if useChainspell then
-        mob:useMobAbility(692) -- Chainspell
-        mob:setMobMod(tpz.mobMod.GA_CHANCE, 100)
-    end
-
-    -- Spams TP moves and -ga spells
-    if mob:hasStatusEffect(tpz.effect.CHAINSPELL) then
-        mob:setTP(2000)
-    else
-        if mob:getMobMod(tpz.mobMod.GA_CHANCE) == 100 then
-            mob:setMobMod(tpz.mobMod.GA_CHANCE, 50)
+    mob:setUnkillable(true)
+    mob:renameEntity("Dark Nar")
+    if mob:getHP() == 1 then
+        target:setCharVar("DARKNAR", 1)       
+        local target = mob:getTarget()
+        local party  = target:getAlliance()
+        for _, v in ipairs(party) do
+            v:addStatusEffect(tpz.effect.TERROR, 1, 0, 30)
+            v:disengage()
+            mob:resetEnmity(v)
+            if v:getObjType() == tpz.objType.PC then
+                mob:setHP(1500000)                
+                mob:disengage()
+                mob:timer(5000, function(mobArg)
+                    v:PrintToPlayer(string.format("Dark Nar: I don't have time for this, get your crap and leave."), tpz.msg.channel.NS_SAY)
+                    v:PrintToPlayer(string.format("You have obtained Nar's Essence."), tpz.msg.channel.SYSTEM_3)
+                end)
+                mob:timer(30000, function(mobArg)
+                    v:warp()
+                end)
+            end
         end
     end
-
-    -- Regens 1% of his HP a tick with Blaze Spikes on
-    if mob:hasStatusEffect(tpz.effect.BLAZE_SPIKES) then
-        mob:setMod(tpz.mod.REGEN, math.floor(mob:getMaxHP()/100))
-    else
-        if mob:getMod(tpz.mod.REGEN) > 0 then
-            mob:setMod(tpz.mod.REGEN, 0)
-        end
-    end
-end
-
-function onAdditionalEffect(mob, target, damage)
-    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.POISON, {chance = 40, power = 50})
 end
 
 function onMobDeath(mob, player, isKiller)

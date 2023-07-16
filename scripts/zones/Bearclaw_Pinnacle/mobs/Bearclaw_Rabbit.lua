@@ -25,11 +25,11 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.MACC, 100)
     mob:addMod(tpz.mod.REGEN, 100)
     mob:setMobLevel(119)
+    mob:setDropID(0)
     mob:setMod(tpz.mod.UDMGRANGE, -100)
     mob:setMod(tpz.mod.UDMGMAGIC, -100)
     mob:setMod(tpz.mod.UDMGPHYS, -100)
     mob:setMod(tpz.mod.UDMGBREATH, -100)
-    
 end
 
 function onMobFight(mob, target)
@@ -44,13 +44,13 @@ function onMobFight(mob, target)
                 droplistCounter = droplistCounter + 1
             end
         end
-        
-        if (droplistCounter >= 5) then
+
+        if droplistCounter >= 5 then
             mob:setMod(tpz.mod.UDMGRANGE, 0)
             mob:setMod(tpz.mod.UDMGMAGIC, 0)
             mob:setMod(tpz.mod.UDMGPHYS, 0)
             mob:setMod(tpz.mod.UDMGBREATH, 0)
-            mob:setDropID(3730) -- Head seals 
+            mob:setDropID(3730) -- Head seals
             mob:setLocalVar("DROPLIST_SET", 1)
         end
     end

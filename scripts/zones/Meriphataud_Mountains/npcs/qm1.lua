@@ -15,7 +15,15 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.NOTHING_FOUND)
+    -- player:messageSpecial(ID.text.NOTHING_FOUND)
+    player:addSpell(957, true, true) -- Margret        
+    player:PrintToPlayer(string.format("Drogagora: DON'T TOUCH MY BUTT!"),tpz.msg.channel.NS_SAY)
+    player:PrintToPlayer(string.format("You may now use Flaviria as a Trust."),tpz.msg.channel.SYSTEM_3)
+    player:injectActionPacket(6, 93) -- Mijin Gakure
+	player:injectActionPacket(4, 219) -- Comet
+    player:injectActionPacket(4, 241) -- Meteor
+    player:injectActionPacket(4, 280) -- Meteor II
+    player:setHP(0)
 end
 
 function onEventUpdate(player, csid, option)

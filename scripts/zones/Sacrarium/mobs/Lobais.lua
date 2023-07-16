@@ -3,8 +3,10 @@
 --  Mob: Lobais
 -----------------------------------
 mixins = {require("scripts/mixins/job_special")}
-
+require("scripts/mixins/rage")
+-----------------------------------
 function onMobSpawn(mob)
+    mob:setLocalVar("[rage]timer", 1800) -- 30 minutes
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
 	mob:addMod(tpz.mod.PARALYZERES, 30) -- Resistance to Silence
     mob:addMod(tpz.mod.STUNRES, 30) -- Resistance to Stun
@@ -49,7 +51,7 @@ function onMobDisengage(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-    player:addSpell(1016, true, true) -- Ingrid II 
+    player:addSpell(975, true, true) -- Maximilian
     mob:setRespawnTime(14400)
 end
 

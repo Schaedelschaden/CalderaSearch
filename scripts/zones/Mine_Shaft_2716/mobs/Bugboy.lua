@@ -2,7 +2,7 @@
 --  Mob: Bugboy
 -----------------------------------
 function onMobSpawn(mob)
-    mob:setDropID(3734)
+    -- mob:setDropID(3734)
 
     mob:addMod(tpz.mod.DOUBLE_ATTACK, 25)
 	mob:addMod(tpz.mod.TRIPLE_ATTACK, 10)

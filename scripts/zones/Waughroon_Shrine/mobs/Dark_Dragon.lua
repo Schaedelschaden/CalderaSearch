@@ -199,6 +199,7 @@ function onMobDeath(mob, player, isKiller)
             GetMobByID(17367043):SetAutoAttackEnabled(true)
         end)
     elseif mob:getID() == 17367043 then
+        player:addSpell(1016, true, true)
         GetMobByID(17367041):setDropID(3773)
         mob:timer(300000, function(mobArg)
             GetMobByID(17367041):setLocalVar("ROTATION", 0)        

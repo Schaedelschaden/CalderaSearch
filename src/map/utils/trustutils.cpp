@@ -611,7 +611,7 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
 		PTrust->addModifier(Mod::EVA, (uint16)(mobutils::GetEvasion(PTrust)));
 		PTrust->addModifier(Mod::ATT, (uint16)(mobutils::GetBase(PTrust, PTrust->attRank)));
 		PTrust->addModifier(Mod::ACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank)));
-		PTrust->addModifier(Mod::MACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank)));
+		// PTrust->addModifier(Mod::MACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank)));
 		PTrust->addModifier(Mod::MATT, (uint16)(mobutils::GetBase(PTrust, PTrust->attRank / 3)));
 		PTrust->addModifier(Mod::RATT, (uint16)(mobutils::GetBase(PTrust, PTrust->attRank)));
 		PTrust->addModifier(Mod::RACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank)));
@@ -633,7 +633,7 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
 		PTrust->addModifier(Mod::EVA, (uint16)(mobutils::GetEvasion(PTrust) * map_config.alter_ego_stat_multiplier));
 		PTrust->addModifier(Mod::ATT, (uint16)(mobutils::GetBase(PTrust, PTrust->attRank) * map_config.alter_ego_stat_multiplier));
 		PTrust->addModifier(Mod::ACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank) * map_config.alter_ego_stat_multiplier));
-		PTrust->addModifier(Mod::MACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank)* map_config.alter_ego_stat_multiplier));
+		// PTrust->addModifier(Mod::MACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank)* map_config.alter_ego_stat_multiplier));
 		PTrust->addModifier(Mod::MATT, (uint16)(mobutils::GetBase(PTrust, PTrust->attRank / 3)* map_config.alter_ego_stat_multiplier));
 		PTrust->addModifier(Mod::RATT, (uint16)(mobutils::GetBase(PTrust, PTrust->attRank) * map_config.alter_ego_stat_multiplier));
 		PTrust->addModifier(Mod::RACC, (uint16)(mobutils::GetBase(PTrust, PTrust->accRank) * map_config.alter_ego_stat_multiplier));

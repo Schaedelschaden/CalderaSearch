@@ -238,7 +238,8 @@ local relicArmorPlusOne =
 -- High Tier AA & Kam'lanaut fights
 -- [combinationId] = {trade = {flower}, reward = keyItem},
 -----------------------------------
-local highTierKIs = {
+local highTierKIs =
+{
     [  1] = {trade = { 636}, reward = tpz.ki.STELLAR_FULCRUM_PHANTOM_GEM  }, -- Chamomile     -> Stellar Fulcrum Phantom Gem
     [  2] = {trade = { 941}, reward = tpz.ki.PHANTOM_GEM_OF_ENVY          }, -- Red Rose      -> Phantom Gem of Envy
     [  3] = {trade = { 949}, reward = tpz.ki.PHANTOM_GEM_OF_APATHY        }, -- Rain Lily     -> Phantom Gem of Apathy
@@ -259,7 +260,7 @@ local highTierKIs = {
     [ 18] = {trade = {2370}, reward = tpz.ki.SECRET_IMPERIAL_ORDER        }, -- Flower Seeds  -> Secret Imperial Order
     [ 19] = {trade = { 574}, reward = tpz.ki.CONFIDENTIAL_IMPERIAL_ORDER  }, -- Fruit Seeds   -> Confidential Imperial Order
     [ 20] = {trade = { 572}, reward = tpz.ki.ZEPHYR_FAN                   }, -- Herb Seeds    -> Zephyr Fan
-    [ 20] = {trade = { 575}, reward = tpz.ki.TABLET_OF_HEXES_RANCOR       }, -- Grain Seeds   -> Tablet of Hexes Rancor    
+    [ 21] = {trade = { 575}, reward = tpz.ki.TABLET_OF_HEXES_RANCOR       }, -- Grain Seeds   -> Tablet of Hexes Rancor    
     -- CURRENTLY UNUSED TRADE ITEMS/AVAILABLE FOR USE
     -- Vegetable Seeds
     -- Lycopodium Flower
@@ -308,7 +309,8 @@ function onTrade(player, npc, trade)
     local count = trade:getItemCount()
     local afUpgrade = player:getCharVar("AFupgrade")
 
-    local lastHighTierKITrade = {
+    local lastHighTierKITrade =
+    {
         "Gem_StellarFulcrum_TIME",
         "Gem_Envy_TIME",
         "Gem_Apathy_TIME",
@@ -327,6 +329,9 @@ function onTrade(player, npc, trade)
         "Gem_MoonlitPath_TIME",
         "Gem_WakingTheBeast_TIME",
         "Order_SecretImperial_TIME",
+        "Order_ConfImperial_TIME",
+        "Zephyr_Fan_TIME",
+        "Hexes_Rancor_TIME",
     }
 
     local tradedCombo = 0
@@ -343,8 +348,11 @@ function onTrade(player, npc, trade)
 
     -- Found a match
     -- if tradedCombo > 0 and player:getCharVar(lastHighTierKITrade[tradedCombo]) <= os.time() and
-    if tradedCombo > 0 and player:getCharVar(lastHighTierKITrade[tradedCombo]) < getMidnight()
-    and not player:hasKeyItem(highTierKIs[tradedCombo].reward) then
+    if
+        tradedCombo > 0 and
+        player:getCharVar(lastHighTierKITrade[tradedCombo]) < getMidnight() and
+        not player:hasKeyItem(highTierKIs[tradedCombo].reward)
+    then
         local ID = zones[player:getZoneID()]
         local reward = highTierKIs[tradedCombo].reward
 
@@ -352,7 +360,7 @@ function onTrade(player, npc, trade)
         player:addKeyItem(reward)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, reward)
         player:setCharVar(lastHighTierKITrade[tradedCombo], getMidnight())-- os.time() + 86400)
-    elseif (player:hasKeyItem(highTierKIs[tradedCombo].reward)) then
+    elseif player:hasKeyItem(highTierKIs[tradedCombo].reward) then
         player:messageSpecial(ID.text.CANNOT_OBTAIN_MORE)
     else
         local timeRemainingHours   = math.floor(((player:getCharVar(lastHighTierKITrade[tradedCombo]) - os.time()) / 60) / 60) -- ((player:getCharVar(lastHighTierKITrade[tradedCombo]) - os.time()) / 60)

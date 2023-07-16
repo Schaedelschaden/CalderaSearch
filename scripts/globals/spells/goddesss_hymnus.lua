@@ -10,11 +10,14 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-	local power = 1
-	
-	if (caster:getMod(tpz.mod.AUGMENT_SONGS) > 0) then
-		power = power + (1000 * caster:getMod(tpz.mod.AUGMENT_SONGS))
-	end
+    local power = 1
+    local bonus = math.floor(caster:getMod(tpz.mod.ALL_SONGS_EFFECT) / 2)
+
+    power = power + bonus
+
+    if caster:getMod(tpz.mod.AUGMENT_SONGS) > 0 then
+        power = power + (1000 * caster:getMod(tpz.mod.AUGMENT_SONGS))
+    end
 
     local duration = 120
 

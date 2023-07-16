@@ -8,9 +8,15 @@ require("scripts/globals/mobs")
 -----------------------------------
 
 function onMobSpawn(mob)
+    local tierAby = 2
+    local tierMob = 3
+
+    -- Load default T2 stat increases
+    tpz.abyssea.updateBaseStats(mob, tierAby, tierMob)
+
 	mob:setLocalVar("MOBSKILL_INCREASED_POTENCY", 1) -- 04/26/22 - Needs to be set up
 	mob:setMod(tpz.mod.WATERRES, -500)
-	mob:addMod(tpz.mod.DEF, 500)
+	mob:addMod(tpz.mod.DEF, 200)
 	mob:setMod(tpz.mod.REGEN, 75)
 	
 	mob:addListener("WEAPONSKILL_STATE_ENTER", "ITZPAPALOTL_MOBSKILL_START", function(mob, skill)

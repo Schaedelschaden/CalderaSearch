@@ -28,6 +28,16 @@ function onTrade(player, npc, trade)
     elseif player:getCharVar("fireAndBrimstone") == 5 and npcUtil.tradeHas(trade, 1113) then -- old earring
         player:startEvent(537, 0, 13360)
     end
+    
+    if (trade:hasItemQty(21309, 792) == true and trade:getItemCount() == 792) then --chapuli arrows
+        player:tradeComplete()
+        player:addSpell(988, true, true) -- Makki
+        player:addSpell(962, true, true) -- Margret        
+        player:PrintToPlayer(string.format("Parih Vashai: Thank you, I will send two of my best Rangers when you call."),tpz.msg.channel.NS_SAY)
+        player:PrintToPlayer(string.format("You may now use Makki-Chebukki and Margret as Trusts."),tpz.msg.channel.SYSTEM_3)
+    end        
+    
+    
 end
 
 function onTrigger(player, npc)

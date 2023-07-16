@@ -10,7 +10,7 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
-    mob:setDropID(3733)
+    -- mob:setDropID(3733)
     mob:setMod(tpz.mod.UDMGRANGE, -5)
     mob:setMod(tpz.mod.UDMGMAGIC, -5)
     mob:setMod(tpz.mod.UDMGPHYS, -5)

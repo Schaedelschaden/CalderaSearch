@@ -53,8 +53,16 @@ function onTrigger(player, id)
 
     if effectTarget:hasStatusEffect(statusId) then
         local statusEffect = effectTarget:getStatusEffect(statusId)
+        -- local id           = statusEffect:getType()
+        local power        = statusEffect:getPower()
+        local tick         = statusEffect:getTick()
+        local duration     = statusEffect:getDuration()
+        local timeRem      = statusEffect:getTimeRemaining()
+        local subType      = statusEffect:getSubType()
+        local subPower     = statusEffect:getSubPower()
 
-        player:PrintToPlayer(string.format("%s's effect %i (%s) Effect Power: [%i]  Total Duration: [%i]", effectTarget:getName(), statusId, statusName, statusEffect:getPower(), statusEffect:getDuration()))
+        player:PrintToPlayer(string.format("%s's effect %i (%s)", effectTarget:getName(), statusId, statusName))
+        player:PrintToPlayer(string.format("    Power: [%i]  Tick: [%i]  Total Duration: [%i]  Time Remaining: [%i]  Sub Type: [%i]  Sub Power: [%i]", power, tick, duration, timeRem, subType, subPower))
     else
         player:PrintToPlayer(string.format("Target does not have the %s effect.", statusName))
     end

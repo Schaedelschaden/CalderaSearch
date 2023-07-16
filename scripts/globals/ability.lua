@@ -920,7 +920,7 @@ function abilityReduceAllianceEnmity(player, target)
         player:getObjType() == tpz.objType.PC or
         player:getObjType() == tpz.objType.TRUST
     then
-		local enmityBonus = utils.clamp(player:getMod(tpz.mod.ENMITY) + player:getMerit(tpz.merit.ENMITY_INCREASE) + player:getMerit(tpz.merit.ENMITY_DECREASE), 0, 200)
+		local enmityBonus = utils.clamp(player:getMod(tpz.mod.ENMITY) + player:getMerit(tpz.merit.ENMITY_INCREASE) - player:getMerit(tpz.merit.ENMITY_DECREASE), -50, 200)
 		local enmityList = target:getEnmityList()
 		local enmityListName = {}
 		local targ

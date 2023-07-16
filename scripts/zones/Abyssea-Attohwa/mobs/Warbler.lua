@@ -13,6 +13,12 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
+    local tierAby = 2
+    local tierMob = 1
+
+    -- Load default T2 stat increases
+    tpz.abyssea.updateBaseStats(mob, tierAby, tierMob)
+
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:addMod(tpz.mod.BINDRES, 100)
     mob:addMod(tpz.mod.GRAVITYRES, 100)

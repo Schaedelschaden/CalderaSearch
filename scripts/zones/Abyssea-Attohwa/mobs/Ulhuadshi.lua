@@ -11,6 +11,12 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
+    local tierAby = 2
+    local tierMob = 3
+
+    -- Load default T2 stat increases
+    tpz.abyssea.updateBaseStats(mob, tierAby, tierMob)
+
     mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
     mob:addMod(tpz.mod.SLOWRES, 85)
     mob:addMod(tpz.mod.GRAVITYRES, 85)

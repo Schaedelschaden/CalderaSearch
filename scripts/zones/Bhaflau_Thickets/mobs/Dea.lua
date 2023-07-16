@@ -31,10 +31,14 @@ function onMobSpawn(mob, target)
 	mob:addMod(tpz.mod.REGEN, 200)
     mob:addMod(tpz.mod.FASTCAST, 50)
     mob:setMobMod(tpz.mobMod.DUAL_WIELD, 1)
+    mob:setUnkillable(true)
 end
 
 function onMobFight(mob, target)
-    mob:renameEntity("Dark Pheliont")
+    if mob:getHP() == 1 then
+        target:setCharVar("DARKPHEL", 1)
+        target:warp()
+    end
 end
 
 function onMobDeath(mob, player, isKiller)

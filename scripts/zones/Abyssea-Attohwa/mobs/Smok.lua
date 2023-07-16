@@ -8,6 +8,12 @@ require("scripts/globals/mobs")
 -----------------------------------
 
 function onMobSpawn(mob)
+    local tierAby = 2
+    local tierMob = 1
+
+    -- Load default T2 stat increases
+    tpz.abyssea.updateBaseStats(mob, tierAby, tierMob)
+
 	mob:setLocalVar("MOBSKILL_INCREASED_POTENCY", 1) -- 05/26/22 - Needs to be set up
 	mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 	mob:setMobMod(tpz.mobMod.AUTO_SPIKES, 1)
@@ -18,7 +24,6 @@ function onMobSpawn(mob)
 end
 
 function onMobFight(mob, target)
-	
 end
 
 function onSpikesDamage(mob, target, damage)
@@ -47,5 +52,4 @@ function onSpellPrecast(mob, spell)
 end
 
 function onMobDeath(mob, player, isKiller)
-	
 end

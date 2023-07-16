@@ -22,6 +22,10 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded)
 
     local typeEffect = tpz.effect.STUN
+    
+    if mob:getObjType() == tpz.objType.TRUST then
+        dmg = dmg * (mob:getMainLvl() / 4)
+    end
 
     MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 1, 0, 4)
 

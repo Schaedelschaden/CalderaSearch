@@ -22,5 +22,5 @@ function onUseAbility(player, target, ability)
 -- --	printf("Hastega II PLAYER onUseAbility\n")
 	-- pet:useMobAbility(bloodpact, target)
     pet:useJobAbility(602, pet)
-    pritnf("hastega_ii.lua onUseAbility  USER: [%s]", player:getName())
+    printf("hastega_ii.lua onUseAbility  USER: [%s]", player:getName())
 end

@@ -1518,28 +1518,30 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 
 void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 {
-    auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+    auto PTarget   = static_cast<CBattleEntity*>(state.GetTarget());
 	auto PAttacker = static_cast<CBattleEntity*>(state.GetTarget());
 
-    int32 damage = 0;
+    int32 damage      = 0;
+    int32 baseDamage  = 0;
     int32 totalDamage = 0;
 
-    action.id = id;
+    action.id         = id;
     action.actiontype = ACTION_RANGED_FINISH;
 
-    actionList_t& actionList = action.getNewActionList();
+    actionList_t& actionList  = action.getNewActionList();
     actionList.ActionTargetID = PTarget->id;
 
     actionTarget_t& actionTarget = actionList.getNewActionTarget();
-    actionTarget.reaction = REACTION_HIT;		//0x10
-    actionTarget.speceffect = SPECEFFECT_HIT;		//0x60 (SPECEFFECT_HIT + SPECEFFECT_RECOIL)
-    actionTarget.messageID = 352;
+    actionTarget.reaction        = REACTION_HIT;   //0x10
+    actionTarget.speceffect      = SPECEFFECT_HIT; //0x60 (SPECEFFECT_HIT + SPECEFFECT_RECOIL)
+    actionTarget.messageID       = 352;
 
     CItemWeapon* PItem = (CItemWeapon*)this->getEquip(SLOT_RANGED);
     CItemWeapon* PAmmo = (CItemWeapon*)this->getEquip(SLOT_AMMO);
 
-    bool ammoThrowing = PAmmo ? PAmmo->isThrowing() : false;
+    bool ammoThrowing   = PAmmo ? PAmmo->isThrowing() : false;
     bool rangedThrowing = PItem ? PItem->isThrowing() : false;
+
     uint8 slot = SLOT_RANGED;
 
     if (ammoThrowing)
@@ -1547,24 +1549,27 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         slot = SLOT_AMMO;
         PItem = nullptr;
     }
+
     if (rangedThrowing)
     {
         PAmmo = nullptr;
     }
 
-    uint8 shadowsTaken = 0;
-    uint8 hitCount = 1;			// 1 hit by default
-    uint8 realHits = 0;			// to store the real number of hit for tp multipler
-    auto ammoConsumed = 0;
-    bool hitOccured = false;	// track if player hit mob at all
-	bool isCritical = false;
-    bool isSange = false;
-    bool isBarrage = StatusEffectContainer->HasStatusEffect(EFFECT_BARRAGE, 0);
-	bool followUpShot = false;
-	bool isFirstShot = false;
-	bool distanceSweetSpot = false;
-	float damagePenalty = 0.0f;
-	int16 rangedDelay = 0;
+    uint8 shadowsTaken      = 0;
+    uint8 hitCount          = 1; // 1 hit by default
+    uint8 realHits          = 0; // to store the real number of hit for tp multipler
+    uint8 countBarrage      = 0;
+    uint8 countMultiShot    = 0;
+    auto  ammoConsumed      = 0;
+    bool  hitOccured        = false;	// track if player hit mob at all
+	bool  isCritical        = false;
+    bool  isSange           = false;
+    bool  isBarrage         = StatusEffectContainer->HasStatusEffect(EFFECT_BARRAGE, 0);
+    bool  followUpShot      = false;
+	bool  distanceSweetSpot = false;
+    float multiShotBonus    = 1.0f;
+	float damagePenalty     = 0.0f;
+	int16 rangedDelay       = 0;
 
     // SU3/Raetic Weapon Follow-Up
     // https://www.bg-wiki.com/ffxi/Category:Superior_Equipment#Superior_3_(Su3)
@@ -1648,12 +1653,46 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     // if barrage is detected, getBarrageShotCount also checks for ammo count
     if (!ammoThrowing && !rangedThrowing && isBarrage)
     {
-        hitCount += battleutils::getBarrageShotCount(this);
+        countBarrage = battleutils::getBarrageShotCount(this);
+        hitCount += countBarrage;
     }
     else if (ammoThrowing && this->StatusEffectContainer->HasStatusEffect(EFFECT_SANGE))
     {
         isSange = true;
         hitCount += getMod(Mod::UTSUSEMI);
+    }
+
+    // https://www.bg-wiki.com/ffxi/Triple_Shot
+    // UNCONFIRMED - Triple Shots should stack with Barrage
+    // Add 2-3 additional shots based on Overkill, Triple Shot and Triple Shot Occ. becomes Quad Shot mods
+    if (!ammoThrowing && !rangedThrowing && tpzrand::GetRandomNumber(100) < this->getMod(Mod::TRIPLE_SHOT_RATE))
+    {
+        hitCount += 2;
+        countMultiShot += 2;
+
+        multiShotBonus = 1.0f + (this->getMod(Mod::TRIPLE_SHOT_DAMAGE) / 100.0f);
+
+        if (tpzrand::GetRandomNumber(100) < this->getMod(Mod::TRPL_OCC_QUAD_SHOT))
+        {
+            hitCount += 1;
+            countMultiShot += 1;
+        }
+    }
+    // https://www.bg-wiki.com/ffxi/Double_Shot
+    // Double Shots can stack with Barrage despite Unlimited Shot (shared recast) not stacking with Barrage
+    // Add 1-2 additional shots based on Overkill, Double Shot and Double Shot Occ. becomes Triple Shot mods
+    else if (!ammoThrowing && !rangedThrowing && tpzrand::GetRandomNumber(100) < this->getMod(Mod::DOUBLE_SHOT_RATE))
+    {
+        hitCount += 1;
+        countMultiShot += 1;
+
+        multiShotBonus = 1.0f + (this->getMod(Mod::DOUBLE_SHOT_DAMAGE) / 100.0f);
+
+        if (tpzrand::GetRandomNumber(100) < this->getMod(Mod::DBL_OCC_TRPL_SHOT))
+        {
+            hitCount += 1;
+            countMultiShot += 1;
+        }
     }
 
 	// Ranged attack distance correction variables
@@ -1670,6 +1709,8 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     // loop for barrage hits, if a miss occurs, the loop will end
     for (uint8 i = 1; i <= hitCount; ++i)
     {
+        bool isFirstShot = false;
+
         if (PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_PERFECT_DODGE, 0))
         {
             actionTarget.messageID = 32;
@@ -1711,9 +1752,13 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
                     actionTarget.messageID = 77;
                 }
 
-                damage = (int32)((this->GetRangedWeaponDmg() + battleutils::GetFSTR(this, PTarget, slot)) * pdif);
+                if (i > 1 + countMultiShot)
+                {
+                    multiShotBonus = 1.0f;
+                }
 
-                // printf("charentity.cpp OnRangedAttack  DAMAGE: [%i] = RANGED WEAPON DAMAGE: [%i] + fSTR: [%i] * pDIF: [%1.4f]\n", damage, this->GetRangedWeaponDmg(), battleutils::GetFSTR(this, PTarget, slot), pdif);
+                baseDamage = (int32)((this->GetRangedWeaponDmg() + battleutils::GetFSTR(this, PTarget, slot)) * multiShotBonus);
+                damage     = (int32)(baseDamage * pdif);
 
 				// Ranged attack distance correction ideal distances
 				// https://www.bg-wiki.com/ffxi/Distance_Correction
@@ -1738,12 +1783,10 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
                     {
                         float shurikenBonus = luautils::GetSettingsVariable("SHURIKEN_DMG_BONUS");
 
-                        // printf("charentity.cpp OnRangedAttack  THROWING DMG: [%i] = BASE: [%i] * SHURIKEN DMG BONUS: [%1.4f]\n", (int32)(damage * shurikenBonus), damage, shurikenBonus);
-
                         damage = (uint32)(damage * shurikenBonus);
                     }
 				}
-				
+
 				if (PItem != nullptr && PItem->getSkillType() == SKILL_MARKSMANSHIP)
 				{
 					rangedDelay = ((PItem->getDelay() * 60) / 1000);
@@ -1855,12 +1898,15 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
                     charutils::TrySkillUP(this, (SKILLTYPE)PAmmo->getSkillType(), PTarget->GetMLevel());
                 }
             }
+
+            totalDamage += damage;
         }
         else //miss
         {
             actionTarget.reaction = REACTION_EVADE;
             actionTarget.speceffect = SPECEFFECT_NONE;
             actionTarget.messageID = 354;
+
             hitCount = i; // end barrage, shot missed
         }
 
@@ -1889,34 +1935,6 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         {
             StatusEffectContainer->DelStatusEffect(EFFECT_STEALTH_SHOT);
         }
-		
-		// Add Double Shot ammunition cost
-		if (this->getMod(Mod::DOUBLE_SHOT_AMMO) == 1)
-		{
-			++ammoConsumed;
-		}
-		
-		// Add Double Shot becomes Triple Shot ammunition cost
-		if (this->getMod(Mod::DOUBLE_SHOT_AMMO) == 2)
-		{
-			++ammoConsumed;
-			++ammoConsumed;
-		}
-		
-		// Add Triple Shot ammunition cost
-		if (this->getMod(Mod::TRIPLE_SHOT_AMMO) == 2)
-		{
-			++ammoConsumed;
-			++ammoConsumed;
-		}
-		
-		// Add Triple Shot becomes Quad Shot ammunition cost
-		if (this->getMod(Mod::TRIPLE_SHOT_AMMO) == 3)
-		{
-			++ammoConsumed;
-			++ammoConsumed;
-			++ammoConsumed;
-		}
 
         if (PAmmo != nullptr && tpzrand::GetRandomNumber(100) > recycleChance)
         {
@@ -1927,7 +1945,13 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
                 hitCount = i;
             }
         }
-        totalDamage += damage;
+
+        // Treasure Hunter only applies on the first shot
+		if (isFirstShot == true && damage > 0)
+		{
+			// Trigger Treasure Hunter from ranged attack
+			battleutils::ApplyTreasureHunter(this, PTarget, &actionTarget, true);
+		}
     }
 
     // if a hit did occur (even without barrage)
@@ -1980,13 +2004,6 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         if ((PAmmo != nullptr && battleutils::GetScaledItemModifier(this, PAmmo, Mod::ADDITIONAL_EFFECT) > 0) ||
             (PItem != nullptr && battleutils::GetScaledItemModifier(this, PItem, Mod::ADDITIONAL_EFFECT) > 0)) {}
         luautils::OnAdditionalEffect(this, PTarget, (PAmmo != nullptr ? PAmmo : PItem), &actionTarget, totalDamage);
-		
-		// Treasure Hunter only applies on the first shot
-		if (isFirstShot == true && actionTarget.param > 0)
-		{
-			// Trigger Treasure Hunter from ranged attack
-			battleutils::ApplyTreasureHunter(this, PTarget, &actionTarget, true);
-		}
     }
     else if (shadowsTaken > 0)
     {
@@ -2012,42 +2029,12 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 
         StatusEffectContainer->DelStatusEffect(EFFECT_SANGE);
     }
+
     battleutils::ClaimMob(PTarget, this);
     battleutils::RemoveAmmo(this, ammoConsumed);
-	
-	if (this->getMod(Mod::DOUBLE_SHOT_AMMO) == 1)
-	{
-		this->delModifier(Mod::DOUBLE_SHOT_AMMO, 1);
-	}
-	if (this->getMod(Mod::DOUBLE_SHOT_AMMO) == 2)
-	{
-		this->delModifier(Mod::DOUBLE_SHOT_AMMO, 2);
-	}
-	if (this->getMod(Mod::TRIPLE_SHOT_AMMO) == 2)
-	{
-		this->delModifier(Mod::TRIPLE_SHOT_AMMO, 2);
-	}
-	if (this->getMod(Mod::TRIPLE_SHOT_AMMO) == 3)
-	{
-		this->delModifier(Mod::TRIPLE_SHOT_AMMO, 3);
-	}
-	
+
     // only remove detectables
     StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
-
-    // Try to double shot
-    //#TODO: figure out the packet structure of double/triple shot
-    //if (this->StatusEffectContainer->HasStatusEffect(EFFECT_DOUBLE_SHOT, 0) && !this->secondDoubleShotTaken &&	!isBarrage && !isSange)
-    //{
-    //    uint16 doubleShotChance = getMod(Mod::DOUBLE_SHOT_RATE);
-    //    if (tpzrand::GetRandomNumber(100) < doubleShotChance)
-    //    {
-    //        this->secondDoubleShotTaken = true;
-    //        m_ActionType = ACTION_RANGED_FINISH;
-    //        this->m_rangedDelay = 0;
-    //        return;
-    //    }
-    //}
 }
 
 bool CCharEntity::IsMobOwner(CBattleEntity* PBattleTarget)

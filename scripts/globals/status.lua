@@ -1268,8 +1268,7 @@ tpz.mod =
     ENHANCES_NETHER_VOID            = 1078, -- Enhances "Nether Void" effect (Increases the potency of the next Absorb or Drain Dark Magic by <value>%, e.g. mod value 50 = +50%)
     ENHANCES_MUTED_SOUL             = 1080, -- Enhances "Muted Soul" effect (Adds 3% Zanshin rate per MUTED_SOUL merit level)
     ENHANCES_DESPERATE_BLOWS        = 1081, -- Enhances "Desperate Blows" effect (Adds +3 Subtle Blow per DESPERATE_BLOWS merit level)
-    WEAPON_BASH_CHAINBOUND          = 1082, -- Augments "Weapon Bash" (Adds a Chainbound effect to Weapon Bash)
-
+    WEAPON_BASH_CHAINBOUND          = 1082, -- Augments "Weapon Bash" (Grants Chainbound status effect similar to Konzen-ittai)
 
     -- Elemental Affinity: Magic Damage e.g. Magian Trial staves
     -- Value of these mods is multiplied by 0.05 (Adds +5% base magical damage per "tier"/"level")

@@ -16,7 +16,7 @@ function onMobSpawn(mob)
 	tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
     
     mob:addMod(tpz.mod.GILFINDER, 1)
-    mob:addMod(tpz.mod.TREASURE_HUNTER, 2)
+    mob:addMod(tpz.mod.TREASURE_HUNTER, 4)
     mob:addMod(tpz.mod.DOUBLE_ATTACK, 50)    
     mob:addMod(tpz.mod.TRIPLE_ATTACK, 25)    
     mob:addMod(tpz.mod.QUAD_ATTACK, 20)
@@ -29,7 +29,7 @@ function onMobSpawn(mob)
     mob:addStatusEffect(tpz.effect.MAX_MP_BOOST, 150, 0, 0) 
 	mob:setHP(9999)
 	mob:setMP(9999)
-    mob:addSimpleGambit(ai.t.SELF, ai.c.HAS_TOP_ENMITY, 0, ai.r.JA, ai.s.SPECIFIC, tpz.ja.HIDE)
+    mob:addSimpleGambit(ai.t.SELF, ai.c.HAS_TOP_ENMITY, 0, ai.r.JA, ai.s.SPECIFIC, tpz.ja.ENMITY_DOUSE)
     
     local power = mob:getMainLvl() * 2
     mob:addMod(tpz.mod.MATT, power)
@@ -47,24 +47,24 @@ function onMobFight(mob, target)
 
     
     -- Sneak Attack
-    if mob:isBehind(target) or mob:hasStatusEffect(tpz.effect.HIDE) then
+    if mob:isBehind(target) then
         mob:useJobAbility(44, mob)
-        mob:delStatusEffect(tpz.effect.HIDE)
     end    
-    
+       
     -- inspirit 
     if mob:getMP() < mob:getMaxMP() / 2 or mob:getHP() < mob:getMaxHP() / 2 then
         if mob:getTP() >= 1000 then
-            mob:useMobAbility(3230)
-            mob:delStatusEffect(tpz.effect.HIDE)
+            if os.time() > mob:getLocalVar("inspirit") then
+                mob:useMobAbility(3230)
+                mob:setLocalVar("inspirit", os.time() + 30)
+            end
         end
     end
     
     --Weaponskill
     if os.time() > mob:getLocalVar("combat_delay") then
-        if mob:getTP() >= 1100 or mob:hasStatusEffect(tpz.effect.HIDE) then
+        if mob:getTP() >= 1000 then
             mob:useMobAbility(math.random(3231, 3233))
-            mob:delStatusEffect(tpz.effect.HIDE)
         end 
         mob:setLocalVar("combat_delay", os.time() + 3)
     end

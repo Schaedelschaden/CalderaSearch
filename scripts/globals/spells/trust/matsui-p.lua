@@ -34,7 +34,7 @@ function onMobSpawn(mob)
     local power = mob:getMainLvl() * 2
 
     mob:setMod(tpz.mod.MATT, power * 1.5)
-    mob:addMod(tpz.mod.MACC, power)
+    -- mob:addMod(tpz.mod.MACC, power)
     mob:addMod(tpz.mod.MAGIC_DAMAGE, power * 1.5)
     mob:addMod(tpz.mod.MAG_BURST_BONUS, mob:getMainLvl() / 8)
     mob:addMod(tpz.mod.HASTE_MAGIC, 1000)    

@@ -223,8 +223,8 @@ function onMobSpawn(mob)
         local pet      = player:getPet()
         local prev_exp = pet:getLocalVar("wyvern_exp")
         local exp      = utils.clamp(exp, 0, 200)
-printf("wyvern.lua LISTENER PET_WYVERN_EXP  MASTER: [%s]  PREV EXP: [%i]  EXP: [%i]", player:getName(), prev_exp, exp)
-        if prev_exp < 1000 then
+-- printf("wyvern.lua LISTENER PET_WYVERN_EXP  MASTER: [%s]  PREV EXP: [%i]  EXP: [%i]", player:getName(), prev_exp, exp)
+        if prev_exp >= 0 and prev_exp < 1000 then
             -- cap exp at 1000 to prevent wyvern leveling up many times from large exp awards
             local currentExp = exp
 
@@ -233,6 +233,10 @@ printf("wyvern.lua LISTENER PET_WYVERN_EXP  MASTER: [%s]  PREV EXP: [%i]  EXP: [
             end
 
             local diff = math.floor((prev_exp + currentExp) / 200) - math.floor(prev_exp / 200)
+
+            -- if player:getName() == "Khalum" then
+                -- player:PrintToPlayer(string.format("DIFF: [%i] = ((PREV EXP: [%i] + CURRENT EXP: [%i]) / 200) - (PREV EXP: [%i] / 200)", diff, prev_exp, currentExp, prev_exp),tpz.msg.channel.SYSTEM_3)
+            -- end
 
             if diff ~= 0 then
                 -- wyvern leveled up (diff is the number of level ups)
@@ -243,10 +247,10 @@ printf("wyvern.lua LISTENER PET_WYVERN_EXP  MASTER: [%s]  PREV EXP: [%i]  EXP: [
 
                 player:messageBasic(tpz.msg.basic.STATUS_INCREASED, 0, 0, pet)
 
-                master:addMod(tpz.mod.ATTP, 4 * diff)
-                master:addMod(tpz.mod.DEFP, 4 * diff)
-                master:addMod(tpz.mod.HASTE_ABILITY, 200 * diff)
-                master:addMod(tpz.mod.ALL_WSDMG_ALL_HITS, 2 * diff)
+                player:addMod(tpz.mod.ATTP, 4 * diff)
+                player:addMod(tpz.mod.DEFP, 4 * diff)
+                player:addMod(tpz.mod.HASTE_ABILITY, 200 * diff)
+                player:addMod(tpz.mod.ALL_WSDMG_ALL_HITS, 2 * diff)
             end
 
             pet:setLocalVar("wyvern_exp", prev_exp + exp)
@@ -258,7 +262,11 @@ end
 function onMobDeath(mob, player)
     local master  = mob:getMaster()
     local numLvls = mob:getLocalVar("level_Ups")
-printf("wyvern.lua onMobDeath  MASTER: [%s]  NUM LVLS: [%i]", master:getName(), numLvls)
+
+    -- if master:getName() == "Khalum" then
+        -- master:PrintToPlayer(string.format("MASTER: [%s]  NUM LVLS: [%i]", master:getName(), numLvls),tpz.msg.channel.SYSTEM_3)
+    -- end
+
     if numLvls ~= 0 then
         master:delMod(tpz.mod.ATTP, 4 * numLvls)
         master:delMod(tpz.mod.DEFP, 4 * numLvls)

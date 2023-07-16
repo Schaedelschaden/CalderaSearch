@@ -23,6 +23,7 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.LULLABYRES, 35)
     mob:addMod(tpz.mod.SLEEPRES, 35)
     mob:addMod(tpz.mod.MACC, 100)
+    mob:setDropID(0)
 end
 
 function onMobFight(mob, target)

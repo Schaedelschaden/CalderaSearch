@@ -15,6 +15,7 @@ function onSpellCast(caster, target, spell)
     local iLvl = caster:getWeaponSkillLevel(tpz.slot.RANGED)
 
     local power = 43
+    local tier  = 2
 
     if (sLvl+iLvl > 600) then
         power = 163
@@ -40,7 +41,7 @@ function onSpellCast(caster, target, spell)
     power = (power / 1024) * 10000
 	
 	if (caster:getMod(tpz.mod.AUGMENT_SONGS) > 0) then
-		power = power + (10000 * caster:getMod(tpz.mod.AUGMENT_SONGS))
+		tier = tier + (1000 * caster:getMod(tpz.mod.AUGMENT_SONGS))
 	end
 
     local duration = 120
@@ -50,7 +51,7 @@ function onSpellCast(caster, target, spell)
         duration = duration * 2
     end
 
-    if not (target:addBardSong(caster, tpz.effect.MARCH, power, 0, duration, caster:getID(), 0, 2)) then
+    if not (target:addBardSong(caster, tpz.effect.MARCH, power, 0, duration, caster:getID(), 0, tier)) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     end
 

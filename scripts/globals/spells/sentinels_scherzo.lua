@@ -14,10 +14,11 @@ function onSpellCast(caster, target, spell)
     local sLvl = caster:getSkillLevel(tpz.skill.SINGING) -- Gets skill level of Singing
     local iLvl = caster:getWeaponSkillLevel(tpz.slot.RANGED)
 
-    local power = 75
-	local subPower = math.floor((sLvl+iLvl-350) / 10)
+    local power    = 75
+    local tier     = 1
+    local subPower = math.floor((sLvl + iLvl - 350) / 10)
 
-	local iBoost = caster:getMod(tpz.mod.SCHERZO_EFFECT) + caster:getMod(tpz.mod.ALL_SONGS_EFFECT)
+    local iBoost = caster:getMod(tpz.mod.SCHERZO_EFFECT) + caster:getMod(tpz.mod.ALL_SONGS_EFFECT)
     subPower = subPower + iBoost
 
     if (subPower >= 45) then
@@ -34,16 +35,16 @@ function onSpellCast(caster, target, spell)
         duration = duration * 1.5
     end
     caster:delStatusEffect(tpz.effect.MARCATO)
-	
-	if (caster:getMod(tpz.mod.AUGMENT_SONGS) > 0) then
-		power = power + (1000 * caster:getMod(tpz.mod.AUGMENT_SONGS))
-	end
+
+    if (caster:getMod(tpz.mod.AUGMENT_SONGS) > 0) then
+        tier = tier + (1000 * caster:getMod(tpz.mod.AUGMENT_SONGS))
+    end
 
     if (caster:hasStatusEffect(tpz.effect.TROUBADOUR)) then
         duration = duration * 2
     end
 
-    if not (target:addBardSong(caster, tpz.effect.SCHERZO, power, 0, duration, caster:getID(), subPower, 1)) then
+    if not (target:addBardSong(caster, tpz.effect.SCHERZO, power, 0, duration, caster:getID(), subPower, tier)) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     end
 

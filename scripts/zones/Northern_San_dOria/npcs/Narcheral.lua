@@ -26,6 +26,13 @@ function onTrade(player, npc, trade)
             player:startEvent(692) -- Finish quest "Pieuje's Decision"
         end
     end
+    
+    if trade:getGil() == 100000 then
+        player:tradeComplete()
+        player:addSpell(921, true, true) -- Ingrid 
+        player:PrintToPlayer(string.format("Narcheral: Did Bart put you up to this? Fine, take your trust"),tpz.msg.channel.NS_SAY)
+        player:PrintToPlayer(string.format("You may now use Ingrid as a Trust"),tpz.msg.channel.SYSTEM_3)
+    end
 end
 
 function onTrigger(player, npc)

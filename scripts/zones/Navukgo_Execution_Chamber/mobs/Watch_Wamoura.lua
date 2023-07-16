@@ -19,10 +19,10 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.POISONRES, 30) -- Resistance to Poison
 	mob:addMod(tpz.mod.ATT, 500) -- Attack Stat (Compare to DEF)
 	mob:addMod(tpz.mod.MATT, 100) -- Magic Attack (Compare to MDEF)
-	mob:addMod(tpz.mod.EVA, 150) -- Evasion (Compare to ACC)
+	mob:addMod(tpz.mod.EVA, 50) -- Evasion (Compare to ACC)
 	mob:addMod(tpz.mod.DEF, 700) -- Defense (Compart to ATT)
-	mob:addMod(tpz.mod.MEVA, 200) -- Magic Evasion (Compare to MACC)
-	mob:addMod(tpz.mod.MDEF, 100) -- Magic Defense (Compare to MATT)
+	mob:addMod(tpz.mod.MEVA, 70) -- Magic Evasion (Compare to MACC)
+	-- mob:addMod(tpz.mod.MDEF, 90) -- Magic Defense (Compare to MATT)
 	mob:addMod(tpz.mod.STR, 130)
     mob:addMod(tpz.mod.DEX, 130)
     mob:addMod(tpz.mod.AGI, 130)
@@ -56,7 +56,7 @@ function onMobFight(mob, target)
         end)
     end
 
-    if mob:AnimationSub() == 0 then -- Takes melee damage
+    if mob:AnimationSub() == 1 then -- Takes melee damage
         if hateCount >= 1 then
             mob:timer(5000, function(mobArg)
                 local mobTarget = mobArg:getTarget()
@@ -70,7 +70,7 @@ function onMobFight(mob, target)
         mob:delStatusEffect(tpz.effect.BLAZE_SPIKES)
         mob:setMod(tpz.mod.UDMGPHYS, 0)
         mob:setMod(tpz.mod.UDMGMAGIC, -100)
-    elseif mob:AnimationSub() == 1 then -- takes magic damage
+    elseif mob:AnimationSub() == 0 then -- takes magic damage
         mob:addStatusEffect(tpz.effect.BLAZE_SPIKES, 200, 3, 0)
         mob:setMod(tpz.mod.UDMGPHYS, -100)
         mob:setMod(tpz.mod.UDMGMAGIC, 0)

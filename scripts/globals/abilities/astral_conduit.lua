@@ -10,17 +10,17 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAbilityCheck(player,target,ability)
-	return 0,0
+    return 0,0
 end
 
 function onUseAbility(player,target,ability)
-	local maxMP = player:getMaxMP()
-	
-	-- Recover 100% of current MP
-	player:addStatusEffect(tpz.effect.ASTRAL_CONDUIT,1,0,30)
-	player:addMP(maxMP)
-	
-	-- All Blood Pact recast times are reset
-    player:resetRecast(tpz.recast.ABILITY, 173) -- Blood Pact: Rage
-    player:resetRecast(tpz.recast.ABILITY, 174) -- Blood Pact: Ward
+    local maxMP = player:getMaxMP()
+
+    -- Recover 100% of current MP
+    player:addStatusEffect(tpz.effect.ASTRAL_CONDUIT,1,0,30)
+    player:addMP(maxMP)
+
+    -- All Blood Pact recast times are reset
+    player:resetRecast(173) -- Blood Pact: Rage
+    player:resetRecast(174) -- Blood Pact: Ward
 end

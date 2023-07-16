@@ -121,9 +121,13 @@ bool CPlayerController::Ability(uint16 targid, uint16 abilityid)
 bool CPlayerController::RangedAttack(uint16 targid)
 {
     auto PChar = static_cast<CCharEntity*>(POwner);
-    if (PChar->PAI->CanChangeState())
+    if (PChar->PAI->CanChangeState() && !PChar->isMounted())
     {
         return PChar->PAI->Internal_RangedAttack(targid);
+    }
+    else if (PChar->isMounted())
+    {
+        PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 71)); // MSGBASIC_CANNOT_PERFORM
     }
     else
     {

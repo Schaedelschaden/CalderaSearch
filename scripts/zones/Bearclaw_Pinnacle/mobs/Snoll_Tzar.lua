@@ -3,7 +3,7 @@
 --  Mob: Snoll Tzar
 -----------------------------------
 function onMobSpawn(mob)
-    mob:setDropID(3729)
+    -- mob:setDropID(3729)
     -- Phase 0 sets start conditions at base anim sub and magic base
     mob:AnimationSub(0)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)

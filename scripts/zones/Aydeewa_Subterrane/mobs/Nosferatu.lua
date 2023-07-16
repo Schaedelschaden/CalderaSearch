@@ -29,14 +29,14 @@ function onMobSpawn(mob)
 	mob:addMod(tpz.mod.MACC, 100)
 	mob:addMod(tpz.mod.REGEN, 200)
     mob:addMod(tpz.mod.FASTCAST, 50)
-end
-
-function onMobEngaged(mob, target)
-
+    mob:setUnkillable(true)
 end
 
 function onMobFight(mob, target)
-    mob:renameEntity("Dark Ace")
+    if mob:getHP() == 1 then
+        target:setCharVar("DARKACE", 1)
+        target:warp()
+    end
 end
 
 function onMobDisengage(mob)

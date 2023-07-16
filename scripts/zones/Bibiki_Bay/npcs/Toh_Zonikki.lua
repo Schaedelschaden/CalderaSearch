@@ -15,49 +15,50 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
+    local multiplier = 1.5
     local stock =
     {
-	9249, 1500000,			-- Chunk of Ruthenium Ore
-	9247, 1500000,			-- Chunk of Niobium Ore
-	8721, 1500000,			-- Chunk of Hepatizon Ore
-	9251, 1500000,			-- Spool of Khoma Thread
-	1313, 2500000,			-- Locks of Siren's hair
-	8727, 2500000,			-- Sif's Lock
-	3449, 2500000,			-- Celaeno's Cloth
-	3544, 2500000,			-- Penelope's Cloth
-	3549, 500000,			-- Vial of Belladonna sap
-	3926, 4000000,			-- Urunday Log
-	9245, 4000000,			-- Cypress Log
-	3547, 5000000,			-- Sealord Skin
-	4080, 5000000,			-- Moonbow Urushi
-	4081, 5000000,			-- Moonbow Stone
-	4077, 5000000,			-- Piece of Moonbow Steel
-	4079, 5000000,			-- Square of Moonbow Leather
-	4078, 5000000,			-- Bolt of Moonbow Cloth
-	9252, 5000000,			-- Square of Khoma Cloth
-	8720, 5000000,			-- Maliyakaleya Orb
-	9250, 7500000,			-- Ruthenium Ingot
-	9248, 7500000,			-- Niobium Ingot
-	8722, 7500000,			-- Hepatizon Ingot
-	3927, 7500000,			-- Piece of Urunday Lumber
-	9246, 7500000,			-- Piece of Cypress Lumber
-	2359, 7500000,			-- Star Sapphire
-	1409, 7500000, 			-- Spool of Siren's Macrame
-	8728, 7500000,			-- Spool of Sif's Macrame
-	4014, 7500000,			-- Yggdreant Bole
-	766,  10000000,			-- Ormolu Ingot
-	8719, 10000000,			-- Piece of Maliyakaleya Coral
-	9062, 10000000,			-- Dark Matter
-	9003, 15000000,			-- Chunk of Plovid Flesh
-	3548, 15000000,			-- Square of Sealord Leather
-	9004, 15000000,			-- Macuil Plating
-	9006, 15000000,			-- Defiant Scarf
-	9061, 15000000,			-- Hades' Claw
-	9063, 15000000,			-- Tartarian Soul
+        9249,  1500000 * multiplier, -- Chunk of Ruthenium Ore
+        9247,  1500000 * multiplier, -- Chunk of Niobium Ore
+        8721,  1500000 * multiplier, -- Chunk of Hepatizon Ore
+        9251,  1500000 * multiplier, -- Spool of Khoma Thread
+        1313,  2500000 * multiplier, -- Locks of Siren's hair
+        8727,  2500000 * multiplier, -- Sif's Lock
+        3449,  2500000 * multiplier, -- Celaeno's Cloth
+        3544,  2500000 * multiplier, -- Penelope's Cloth
+        3549,   500000 * multiplier, -- Vial of Belladonna sap
+        3926,  4000000 * multiplier, -- Urunday Log
+        9245,  4000000 * multiplier, -- Cypress Log
+        3547,  5000000 * multiplier, -- Sealord Skin
+        4080,  5000000 * multiplier, -- Moonbow Urushi
+        4081,  5000000 * multiplier, -- Moonbow Stone
+        4077,  5000000 * multiplier, -- Piece of Moonbow Steel
+        4079,  5000000 * multiplier, -- Square of Moonbow Leather
+        4078,  5000000 * multiplier, -- Bolt of Moonbow Cloth
+        9252,  5000000 * multiplier, -- Square of Khoma Cloth
+        8720,  5000000 * multiplier, -- Maliyakaleya Orb
+        9250,  7500000 * multiplier, -- Ruthenium Ingot
+        9248,  7500000 * multiplier, -- Niobium Ingot
+        8722,  7500000 * multiplier, -- Hepatizon Ingot
+        3927,  7500000 * multiplier, -- Piece of Urunday Lumber
+        9246,  7500000 * multiplier, -- Piece of Cypress Lumber
+        2359,  7500000 * multiplier, -- Star Sapphire
+        1409,  7500000 * multiplier, -- Spool of Siren's Macrame
+        8728,  7500000 * multiplier, -- Spool of Sif's Macrame
+        4014,  7500000 * multiplier, -- Yggdreant Bole
+         766, 10000000 * multiplier, -- Ormolu Ingot
+        8719, 10000000 * multiplier, -- Piece of Maliyakaleya Coral
+        9062, 10000000 * multiplier, -- Dark Matter
+        9003, 15000000 * multiplier, -- Chunk of Plovid Flesh
+        3548, 15000000 * multiplier, -- Square of Sealord Leather
+        9004, 15000000 * multiplier, -- Macuil Plating
+        9006, 15000000 * multiplier, -- Defiant Scarf
+        9061, 15000000 * multiplier, -- Hades' Claw
+        9063, 15000000 * multiplier, -- Tartarian Soul
     }
+
     tpz.shop.general(player, stock)
     player:PrintToPlayer(string.format("Toh Zonikki: These materials fetch a divine price."),tpz.msg.channel.NS_SAY)
-    
 end
 
 function onEventUpdate(player, csid, option)

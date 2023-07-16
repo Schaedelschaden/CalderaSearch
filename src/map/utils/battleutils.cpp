@@ -1820,23 +1820,27 @@ namespace battleutils
 
         if (delay <= 180)
         {
-            x = (int16)(50 + ((delay - 180) * 15.f) / 180);
+            x = (int16)(61 + ((delay - 180) * 63.f) / 360);
         }
-        else if (delay > 180 && delay <= 450)
+        else if (delay <= 540)
         {
-            x = (int16)(50 + ((delay - 180) * 65.f) / 270);
+            x = (int16)(61 + ((delay - 180) * 88.f) / 360);
         }
-        else if (delay > 450 && delay <= 480)
+        else if (delay <= 630)
         {
-            x = (int16)(115 + ((delay - 450) * 15.f) / 30);
+            x = (int16)(149 + ((delay - 540) * 20.f) / 360);
         }
-        else if (delay > 480 && delay <= 530)
+        else if (delay <= 720)
         {
-            x = (int16)(130 + ((delay - 480) * 15.f) / 30);
+            x = (int16)(154 + ((delay - 630) * 28.f) / 360);
         }
-        else if (delay > 530)
+        else if (delay <= 900)
         {
-            x = (int16)(145 + ((delay - 530) * 35.f) / 470);
+            x = (int16)(161 + ((delay - 720) * 24.f) / 360);
+        }
+        else
+        {
+            x = (int16)(173 + ((delay - 900) * 28.f) / 360);
         }
 
         return x;
@@ -3901,21 +3905,22 @@ namespace battleutils
 
     void ApplyTreasureHunter(CBattleEntity* PAttacker, CBattleEntity* PDefender, actionTarget_t* Action, bool triggerEffect)
     {
-        CMobEntity* PMob = (CMobEntity*)PDefender;
-        bool triggerProc = false;
-        int16 maxBase = 4;
-        int16 maxTH = 8;
-        int16 THLvl = 0;
+        CMobEntity* PMob   = (CMobEntity*)PDefender;
+        bool triggerProc   = false;
+        int16 maxBase      = 4;
+        int16 maxTH        = 8;
+        int16 THLvl        = 0;
         int16 currentMobTH = PMob->m_THLvl;
-        int16 proc = tpzrand::GetRandomNumber(100);
+        int16 proc         = tpzrand::GetRandomNumber(100);
 
         if (PAttacker->objtype == TYPE_PC)
         {
             CCharEntity* PChar = (CCharEntity*)PAttacker;
 
-            uint8 mJob = PChar->GetMJob();
             THLvl = PChar->getMod(Mod::TREASURE_HUNTER);
-            int16 meritFeint = PChar->PMeritPoints->GetMeritValue(MERIT_FEINT, PChar) / 5;
+
+            uint8 mJob       = PChar->GetMJob();
+            int16 meritFeint = PChar->PMeritPoints->GetMeritValue(MERIT_FEINT, PChar) - 25; // Ignore the first level's "bonus"
             int16 procChance = std::clamp((THLvl + (THLvl - currentMobTH)) / 2, 1, 9);
 
             // https://www.bg-wiki.com/ffxi/Treasure_Hunter
@@ -3923,13 +3928,14 @@ namespace battleutils
             if (mJob == JOB_THF)
             {
                 maxBase = 8;
-                maxTH = 14;
+                maxTH   = 14;
             }
 
             // Sneak Attack and Trick Attack increase the chance of a proc
             if (PChar->GetLocalVar("SneakAttack_Active") == 1 || PChar->GetLocalVar("TrickAttack_Active") == 1)
             {
                 procChance *= 10;
+
                 PChar->SetLocalVar("SneakAttack_Active", 0);
                 PChar->SetLocalVar("TrickAttack_Active", 0);
             }
@@ -3937,7 +3943,7 @@ namespace battleutils
             // Feint merits increase the chance of a proc on the player's next attack after activating Feint
             if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_FEINT))
             {
-                procChance = (int16)(procChance + (meritFeint * 2));
+                procChance += (int16)(procChance * (meritFeint / 100.f));
             }
 
             // If the mob hasn't been tagged with TH or the mob has been tagged with TH less
@@ -3951,7 +3957,7 @@ namespace battleutils
             else if (THLvl > 0 && currentMobTH > 0 && currentMobTH < maxTH && currentMobTH < THLvl && proc <= procChance)
             {
                 PMob->m_THLvl = currentMobTH + 1;
-                triggerProc = true;
+                triggerProc   = true;
             }
         }
         else if (PAttacker->objtype == TYPE_PET)
@@ -3963,7 +3969,7 @@ namespace battleutils
             if (currentMobTH < THLvl)
             {
                 PMob->m_THLvl = THLvl;
-                triggerProc = true;
+                triggerProc   = true;
             }
         }
         else if (PAttacker->objtype == TYPE_TRUST)
@@ -3975,7 +3981,7 @@ namespace battleutils
             if (currentMobTH < THLvl)
             {
                 PMob->m_THLvl = THLvl;
-                triggerProc = true;
+                triggerProc   = true;
             }
         }
 
@@ -3984,7 +3990,7 @@ namespace battleutils
         {
             Action->additionalEffect = SUBEFFECT_LIGHT_DAMAGE;
             Action->addEffectMessage = 603;
-            Action->addEffectParam = PMob->m_THLvl;
+            Action->addEffectParam   = PMob->m_THLvl;
         }
     }
 
@@ -4321,7 +4327,16 @@ namespace battleutils
     bool IsIntimidated(CBattleEntity* PAttacker, CBattleEntity* PDefender)
     {
         // cannot intimidate yourself!
-        if (PAttacker == PDefender) return false;
+        if (PAttacker == PDefender)
+        {
+            return false;
+        }
+
+        // Play nice, don't intimidate the friendlies
+        if (((CBaseEntity*)PAttacker)->allegiance == ((CBaseEntity*)PDefender)->allegiance)
+        {
+            return false;
+        }
 
         int16 KillerEffect = 0;
 
@@ -8117,18 +8132,9 @@ namespace battleutils
     // Calculate TP generated by spell for Occult Acumen trait
     int16 CalculateSpellTP(CBattleEntity* PEntity, CSpell* PSpell)
     {
-        // Players onry
-        if (PEntity->objtype == TYPE_PC)
+        if (PSpell->getSkillType() == SKILLTYPE::SKILL_ELEMENTAL_MAGIC || PSpell->getSkillType() == SKILLTYPE::SKILL_DARK_MAGIC)
         {
-            if (PSpell->getSkillType() == SKILLTYPE::SKILL_ELEMENTAL_MAGIC || PSpell->getSkillType() == SKILLTYPE::SKILL_DARK_MAGIC)
-            {
-                CCharEntity* PChar = static_cast<CCharEntity*>(PEntity);
-                if (charutils::hasTrait(PChar, TRAIT_OCCULT_ACUMEN))
-                {
-                    return static_cast<int16>(PSpell->getMPCost() * PChar->getMod(Mod::OCCULT_ACUMEN) / 100.f * (1 + (PChar->getMod(Mod::STORETP) / 100.f)));
-                }
-
-            }
+            return static_cast<int16>(PSpell->getMPCost() * (PEntity->getMod(Mod::OCCULT_ACUMEN) / 100.f) * (1 + (PEntity->getMod(Mod::STORETP) / 100.f)));
         }
 
         return 0;

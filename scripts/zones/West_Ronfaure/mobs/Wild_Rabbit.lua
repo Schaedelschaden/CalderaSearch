@@ -130,4 +130,12 @@ function onMobDeath(mob, player, isKiller)
     if mob:getID() == 17186822 then
         mob:setMobFlags(5, mob:getID())
     end
+    if player:getCharVar("BunnyDeathCounter") < 100 then
+        player:setCharVar("BunnyDeathCounter", player:getCharVar("BunnyDeathCounter") + 1)
+    end
+    if player:getCharVar("BunnyDeathCounter") == 100 then
+        player:addSpell(943, true, true) -- Lhu Mhakaracca
+        player:PrintToPlayer(string.format("You may now use Lhu Mhakaracca."),tpz.msg.channel.SYSTEM_3)
+        player:setCharVar("BunnyDeathCounter", 101)
+    end
 end

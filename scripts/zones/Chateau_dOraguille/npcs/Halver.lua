@@ -15,6 +15,13 @@ require("scripts/globals/utils")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+
+    if (trade:hasItemQty(18296, 1) == true and trade:getItemCount() == 1) then --Relic Lance
+        player:tradeComplete()
+        player:addSpell(972, true, true) -- Halver
+        player:PrintToPlayer(string.format("Halver: Thank you, I will need to test it next time we are out."),tpz.msg.channel.NS_SAY)
+        player:PrintToPlayer(string.format("You may now use Halver as a Trust."),tpz.msg.channel.SYSTEM_3)
+    end        
 end
 
 function onTrigger(player, npc)

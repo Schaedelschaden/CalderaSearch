@@ -10,7 +10,7 @@ require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------
 
-function onAbilityCheck(player,target,ability)
+function onAbilityCheck(player, target, ability)
     if not player:isWeaponTwoHanded() then
         return tpz.msg.basic.NEEDS_2H_WEAPON, 0
     else
@@ -18,7 +18,7 @@ function onAbilityCheck(player,target,ability)
     end
 end
 
-function onUseAbility(player,target,ability)
+function onUseAbility(player, target, ability)
     local spell  = getSpell(252)
     local params = {}
 			params.diff      = 0
@@ -34,6 +34,15 @@ function onUseAbility(player,target,ability)
         target:addStatusEffect(tpz.effect.STUN, 1, 0, 4)
     end
 
+    -- Augments "Weapon Bash" causes Weapon Bash to inflict Chainbound (Konzen-ittai) on the target
+    if
+        player:getMod(tpz.mod.WEAPON_BASH_CHAINBOUND) > 0 and
+        not target:hasStatusEffect(tpz.effect.CHAINBOUND, 0) and
+        not target:hasStatusEffect(tpz.effect.SKILLCHAIN, 0)
+    then
+        target:addStatusEffectEx(tpz.effect.CHAINBOUND, 0, 2, 0, 10, 0, 1)
+    end
+
     -- Weapon Bash deals damage dependant of Dark Knight level
     local darkKnightLvl = 0
     if player:getMainJob() == tpz.job.DRK then
@@ -44,6 +53,8 @@ function onUseAbility(player,target,ability)
 
     -- Calculating and applying Weapon Bash damage
     local damage = math.floor(((darkKnightLvl + 11) / 4) + player:getMod(tpz.mod.WEAPON_BASH))
+
+    -- Diorama Abdhaljs-Ghelsba (PvP zone) sets damage to 15% of target's HP
     if target:getZoneID() == 43 then
         damage = target:getMaxHP() * 0.15
         target:takeDamage(damage, player, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)

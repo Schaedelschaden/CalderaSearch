@@ -3,8 +3,10 @@
 --  Mob: Luaith
 -----------------------------------
 mixins = {require("scripts/mixins/job_special")}
-
+require("scripts/mixins/rage")
+-----------------------------------
 function onMobSpawn(mob)
+    mob:setLocalVar("[rage]timer", 1800) -- 30 minutes
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
 	mob:addMod(tpz.mod.PARALYZERES, 30) -- Resistance to Silence
     mob:addMod(tpz.mod.STUNRES, 30) -- Resistance to Stun
@@ -40,7 +42,7 @@ function onMobDisengage(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-    player:addSpell(1003, true, true) -- Matsui-P 
+    player:addSpell(976, true, true) -- Kayleel-P 
     mob:setRespawnTime(14400)
 end
 

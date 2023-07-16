@@ -9,7 +9,8 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:startEvent(133)
+    -- player:startEvent(133)
+    player:PrintToPlayer(string.format("Gate: Why are you talking to a gate you psycho?"),tpz.msg.channel.NS_SAY)
 end
 
 function onEventUpdate(player, csid, option)

@@ -81,7 +81,7 @@ tpz.magic.resistMod           = {tpz.mod.FIRERES,               tpz.mod.ICERES, 
 tpz.magic.specificDmgTakenMod = {tpz.mod.SDT_FIRE,              tpz.mod.SDT_ICE,              tpz.mod.SDT_WIND,               tpz.mod.SDT_EARTH,              tpz.mod.SDT_LIGHTNING,              tpz.mod.SDT_WATER,               tpz.mod.SDT_LIGHT,           tpz.mod.SDT_DARK }
 tpz.magic.defenseMod          = {tpz.mod.FIREDEF,               tpz.mod.ICEDEF,               tpz.mod.WINDDEF,                tpz.mod.EARTHDEF,               tpz.mod.THUNDERDEF,                 tpz.mod.WATERDEF,                tpz.mod.LIGHTDEF,            tpz.mod.DARKDEF}
 tpz.magic.absorbMod           = {tpz.mod.FIRE_ABSORB,           tpz.mod.ICE_ABSORB,           tpz.mod.WIND_ABSORB,            tpz.mod.EARTH_ABSORB,           tpz.mod.LTNG_ABSORB,                tpz.mod.WATER_ABSORB,            tpz.mod.LIGHT_ABSORB,        tpz.mod.DARK_ABSORB}
-local nullMod                 = {tpz.mod.FIRE_NULL,             tpz.mod.ICE_NULL,             tpz.mod.WIND_NULL,              tpz.mod.EARTH_NULL,             tpz.mod.LTNG_NULL,                  tpz.mod.WATER_NULL,              tpz.mod.LIGHT_NULL,          tpz.mod.DARK_NULL}
+tpz.magic.nullMod             = {tpz.mod.FIRE_NULL,             tpz.mod.ICE_NULL,             tpz.mod.WIND_NULL,              tpz.mod.EARTH_NULL,             tpz.mod.LTNG_NULL,                  tpz.mod.WATER_NULL,              tpz.mod.LIGHT_NULL,          tpz.mod.DARK_NULL}
 local blmMerit                = {tpz.merit.FIRE_MAGIC_POTENCY,  tpz.merit.ICE_MAGIC_POTENCY,  tpz.merit.WIND_MAGIC_POTENCY,   tpz.merit.EARTH_MAGIC_POTENCY,  tpz.merit.LIGHTNING_MAGIC_POTENCY,  tpz.merit.WATER_MAGIC_POTENCY}
 local rdmMerit                = {tpz.merit.FIRE_MAGIC_ACCURACY, tpz.merit.ICE_MAGIC_ACCURACY, tpz.merit.WIND_MAGIC_ACCURACY,  tpz.merit.EARTH_MAGIC_ACCURACY, tpz.merit.LIGHTNING_MAGIC_ACCURACY, tpz.merit.WATER_MAGIC_ACCURACY}
 tpz.magic.barSpell            = {tpz.effect.BARFIRE,            tpz.effect.BARBLIZZARD,       tpz.effect.BARAERO,             tpz.effect.BARSTONE,            tpz.effect.BARTHUNDER,              tpz.effect.BARWATER}
@@ -710,6 +710,16 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
     -- TODO: Remove after rebalancing
     magicACC = magicACC + calderaMACCBonus
 
+    if caster:getObjType() == tpz.objType.TRUST and caster:getMaster():getName() == "Khalum" then
+        printf("            MACC: [%i] = GEAR MACC: [%i] + SKILL MACC: [%i]", baseMACC + skillMACC, caster:getMod(tpz.mod.MACC), skillMACC)
+        printf("            MACC: [%i] = BASE MACC: [%i] + ENSPELL MACC: [%i] + GEO MACC: [%i]", baseMACC + skillMACC + enspellMACC + geoMACC, baseMACC + skillMACC, enspellMACC, geoMACC)
+        printf("            MACC: [%i] = BASE MACC: [%i] + RDM MERIT MACC: [%i] + NIN MERIT MACC: [%i] + DIVINE EMBLEM BONUS: [%i]", baseMACC + skillMACC + enspellMACC + geoMACC + rdmMeritMACC + ninMeritMACC + divineMACC, baseMACC + skillMACC + enspellMACC + geoMACC, rdmMeritMACC, ninMeritMACC, divineMACC)
+        printf("            MACC: [%i] = BASE MACC: [%i] * TROUBADOUR BONUS: [%1.2f] * UNDERLVL ENFEEBLE PENALTY: [%1.2f] * UNDERLVL ELEMENTAL PENALTY: [%1.2f]", baseMACC + skillMACC + enspellMACC + geoMACC + rdmMeritMACC + ninMeritMACC + divineMACC * troubBonus * enfeeblePenalty * elementPenalty, baseMACC + skillMACC + enspellMACC + geoMACC + rdmMeritMACC + ninMeritMACC + divineMACC, troubBonus, enfeeblePenalty, elementPenalty)
+        printf("            MACC: [%i] = BASE MACC: [%i] + BASE BONUS MACC: [%i] + AFFINITY BONUS MACC: [%i] + ELEMENTAL MACC: [%i]", baseMACC + skillMACC + enspellMACC + geoMACC + rdmMeritMACC + ninMeritMACC + divineMACC * troubBonus * enfeeblePenalty * elementPenalty + bonusAcc, baseMACC + skillMACC + enspellMACC + geoMACC + rdmMeritMACC + ninMeritMACC + divineMACC * troubBonus * enfeeblePenalty * elementPenalty, baseBonusMACC, affinityBonus, elementBonus)
+        printf("            MACC: [%i] = BASE MACC: [%i] + (BASE MACC: [%i] * FOOD MACCP: [%1.2f]) (CAPPED @ +[%i])", baseMACC + skillMACC + enspellMACC + geoMACC + rdmMeritMACC + ninMeritMACC + divineMACC * troubBonus * enfeeblePenalty * elementPenalty + bonusAcc + utils.clamp(magicACC * foodMACCP, 0, foodMACCPCap), baseMACC + skillMACC + enspellMACC + geoMACC + rdmMeritMACC + ninMeritMACC + divineMACC * troubBonus * enfeeblePenalty * elementPenalty + bonusAcc, baseMACC + skillMACC + enspellMACC + geoMACC + rdmMeritMACC + ninMeritMACC + divineMACC * troubBonus * enfeeblePenalty * elementPenalty + bonusAcc, foodMACCP, foodMACCPCap)
+        printf("        FINAL MACC: [%i] = BASE MACC: [%i] + CALDERA BONUS MACC: [%i]", baseMACC + skillMACC + enspellMACC + geoMACC + rdmMeritMACC + ninMeritMACC + divineMACC * troubBonus * enfeeblePenalty * elementPenalty + bonusAcc + utils.clamp(magicACC * foodMACCP, 0, foodMACCPCap) + calderaMACCBonus, baseMACC + skillMACC + enspellMACC + geoMACC + rdmMeritMACC + ninMeritMACC + divineMACC * troubBonus * enfeeblePenalty * elementPenalty + bonusAcc + utils.clamp(magicACC * foodMACCP, 0, foodMACCPCap), calderaMACCBonus)
+    end
+
     if caster:getLocalVar("AuditMagic") == 1 then
         caster:PrintToPlayer(string.format("            MACC: [%i] = GEAR MACC: [%i] + WEAPON ILVL MACC: [%i] + SKILL MACC: [%i]", baseMACC + skillMACC, caster:getMod(tpz.mod.MACC), caster:getILvlMacc(tpz.slot.MAIN), skillMACC),tpz.msg.channel.SYSTEM_3)
         caster:PrintToPlayer(string.format("            MACC: [%i] = BASE MACC: [%i] + ENSPELL MACC: [%i] + GEO MACC: [%i]", baseMACC + skillMACC + enspellMACC + geoMACC, baseMACC + skillMACC, enspellMACC, geoMACC),tpz.msg.channel.SYSTEM_3)
@@ -757,8 +767,17 @@ function calculateMagicHitRate(caster, magicACC, magicEVA, percentBonus, casterL
         adjustedPercent = 1 + (percentBonus / 100)
     end
 
+    if caster:getObjType() == tpz.objType.TRUST and caster:getMaster():getName() == "Khalum" then
+        printf("magic.lua calculateMagicHitRate  MASTER: [%s]  NAME: [%s]  ADJ PERCENT: [%2.2f]  PERCENT BONUS: [%i]", caster:getMaster():getName(), caster:getName(), adjustedPercent, percentBonus)
+    end
+
     if dMACC < 0 then
         p = (70 + math.floor(dMACC / 2)) * adjustedPercent
+
+        -- if caster:getObjType() == tpz.objType.TRUST and caster:getMaster():getName() == "Khalum" then
+            -- printf("magic.lua calculateMagicHitRate      dMACC: [%i] = MACC: [%i] - MEVA: [%i]", dMACC, magicACC, magicEVA)
+            -- printf("magic.lua calculateMagicHitRate  p: [%i] = (70 + (dMACC: [%i] / 2)) * ADJ PERCENT: [%2.2f]", p, dMACC, adjustedPercent)
+        -- end
 
         if
             caster:getLocalVar("AuditWeaponskill") == 1 or
@@ -769,12 +788,21 @@ function calculateMagicHitRate(caster, magicACC, magicEVA, percentBonus, casterL
     else
         p = (70 + dMACC) * adjustedPercent
 
+        -- if caster:getObjType() == tpz.objType.TRUST and caster:getMaster():getName() == "Khalum" then
+            -- printf("magic.lua calculateMagicHitRate      dMACC: [%i] = MACC: [%i] - MEVA: [%i]", dMACC, magicACC, magicEVA)
+            -- printf("magic.lua calculateMagicHitRate  p: [%i] = (70 + dMACC: [%i]) * ADJ PERCENT: [%2.2f]", p, dMACC, adjustedPercent)
+        -- end
+
         if
             caster:getLocalVar("AuditWeaponskill") == 1 or
             caster:getLocalVar("AuditMagic") == 1
         then
             caster:PrintToPlayer(string.format("        HIT RATE: [%i%%] = (BASE: [70] + (CASTER MACC: [%i] - TARGET MEVA: [%i])) * PERCENTBONUS: [%1.2f]", utils.clamp(p, 5, 95), magicACC, magicEVA, adjustedPercent),tpz.msg.channel.SYSTEM_3)
         end
+    end
+
+    if caster:getObjType() == tpz.objType.TRUST and caster:getMaster():getName() == "Khalum" then
+        printf("magic.lua calculateMagicHitRate  MASTER: [%s]  NAME: [%s]  p: [%i]", caster:getMaster():getName(), caster:getName(), p)
     end
 
     return utils.clamp(p, 0, 95)
@@ -784,6 +812,10 @@ end
 function getMagicDamageResist(caster, magicHitRate)
     if caster:getLocalVar("AuditMagic") == 1 then
         caster:PrintToPlayer(string.format("    --- RESISTANCE LEVEL ---"),tpz.msg.channel.SYSTEM_3)
+    end
+
+    if caster:getObjType() == tpz.objType.TRUST and caster:getMaster():getName() == "Khalum" then
+        printf("magic.lua getMagicDamageResist  MASTER: [%s]  NAME: [%s]  p: [%1.2f]", caster:getMaster():getName(), caster:getName(), magicHitRate)
     end
 
     local p      = magicHitRate / 100
@@ -920,6 +952,10 @@ function getEffectResistance(caster, target, effect)
         effectAllRes   = target:getMod(tpz.mod.ALLSTATUSRES)
 
         resFinal = utils.clamp(effectResist + effectAllRes + effectImmunity, 0, 100)
+
+        if caster:getObjType() == tpz.objType.TRUST and caster:getMaster():getName() == "Khalum" then
+            printf("magic.lua calculateMagicHitRate  MASTER: [%s]  NAME: [%s]  EFFECT: [%i]  TOTAL: [%i] = RESIST: [%i]  IMMUNITY: [%i]  ALL RESIST: [%i]", caster:getMaster():getName(), caster:getName(), effect, resFinal, effectResist, effectImmunity, effectAllRes)
+        end
 
         if caster:getLocalVar("AuditMagic") == 1 then
             caster:PrintToPlayer(string.format("        STATUS EFFECT: [%s]", effectResistTable[effect][1]),tpz.msg.channel.SYSTEM_3)
@@ -1575,7 +1611,7 @@ function adjustForTarget(target, dmg, ele)
         return -dmg
     end
 
-    if (nullRandom < target:getMod(nullMod[ele])) then
+    if (nullRandom < target:getMod(tpz.magic.nullMod[ele])) then
 --      printf("magic.lua adjustForTarget NULL RANDOM: [%i]", nullRandom)
         return 0
     end
@@ -3052,7 +3088,7 @@ function magicReduceAllianceEnmity(caster, target)
         caster:getObjType() == tpz.objType.PC or
         caster:getObjType() == tpz.objType.TRUST
     then
-        local enmityBonus = utils.clamp(caster:getMod(tpz.mod.ENMITY) + caster:getMerit(tpz.merit.ENMITY_INCREASE) + caster:getMerit(tpz.merit.ENMITY_DECREASE), 0, 200)
+        local enmityBonus = utils.clamp(caster:getMod(tpz.mod.ENMITY) + caster:getMerit(tpz.merit.ENMITY_INCREASE) - caster:getMerit(tpz.merit.ENMITY_DECREASE), -50, 200)
         local enmityList = target:getEnmityList()
         local enmityListName = {}
         local targ
@@ -3123,6 +3159,52 @@ function checkWeakestElement(caster, target, spell)
     -- end
 
     return weakestElement
+end
+
+function songsCheckEmpEffect(target, effect)
+    local power       = effect:getPower()
+    local subPower    = effect:getSubPower()
+    local element     = {tpz.magic.ele.FIRE, tpz.magic.ele.EARTH, tpz.magic.ele.WATER, tpz.magic.ele.WIND, tpz.magic.ele.ICE, tpz.magic.ele.LIGHTNING, tpz.magic.ele.LIGHT, tpz.magic.ele.DARK}
+    local stats       = {tpz.mod.STR,        tpz.mod.VIT,         tpz.mod.MND,         tpz.mod.AGI,        tpz.mod.INT,       tpz.mod.DEX,             tpz.mod.CHR,         tpz.mod.MP        }
+    local empSetBonus = 0
+    local bonusMod    = tpz.mod.NONE
+
+    -- Scherzo requires an exception to where its Empyrean mod power is stored
+    -- Effect power holds the damage threshold
+    -- Effect sub power holds the damage reduction
+    if effect:getType() == tpz.effect.SCHERZO then
+        power    = effect:getTier()
+        subPower = tpz.magic.ele.EARTH
+    elseif effect:getType() == tpz.effect.MARCH then
+        power    = effect:getTier()
+        subPower = tpz.magic.ele.LIGHTNING
+    end
+
+    if power >= 2000 and power < 3000 then
+        power = power - 2000
+        empSetBonus = 1
+    elseif power >= 3000 and power < 4000 then
+        power = power - 3000
+        empSetBonus = 2
+    elseif power >= 4000 and power < 5000 then
+        power = power - 4000
+        empSetBonus = 3
+    elseif power >= 5000 then
+        power = power - 5000
+        empSetBonus = 5
+    end
+
+    for i, v in pairs(element) do
+		if subPower == element[i] and empSetBonus > 0 then
+            bonusMod = stats[i]
+
+			if bonusMod == tpz.mod.MP then
+				empSetBonus = empSetBonus * 10
+			end
+		end
+	end
+
+    return power, empSetBonus, bonusMod
 end
 
 tpz.ma = tpz.magic

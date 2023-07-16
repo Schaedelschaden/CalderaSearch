@@ -46,7 +46,7 @@ function onMobSpawn(mob) -- When mob spawns (either forced or time)
 	mob:addMod(tpz.mod.CHR, 120)
     mob:addMod(tpz.mod.MAIN_DMG_RATING, 75)
     -- mob:addMod(tpz.mod.SKILLCHAINDMG, 100)
-    mob:addMod(tpz.mod.ALL_WSDMG_ALL_HITS, -25)
+    mob:addMod(tpz.mod.ALL_WSDMG_ALL_HITS, 65)
 
     mob:addListener("WEAPONSKILL_STATE_EXIT", "WEAPONSKILL_FINISHED", function(mobArg, skillid)
         if mobArg:getLocalVar("ALLOW_SKILLCHAIN") == 0 then

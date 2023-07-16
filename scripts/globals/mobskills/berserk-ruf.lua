@@ -1,9 +1,10 @@
 -----------------------------------
--- Ability: Warcry
+-- Ability: Berserk-Ruf
 -----------------------------------
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")
 require("scripts/globals/status")
+require("scripts/globals/msg")
 -----------------------------------
 
 function OnMobSkillCheck(target, mob, skill)
@@ -11,13 +12,12 @@ function OnMobSkillCheck(target, mob, skill)
 end
 
 function OnMobWeaponSkill(target, mob, skill)
-    local power = 25
-    local duration = 180
+    
+    target:addStatusEffect(tpz.effect.WARCRY, 25, 0, 180)
+    
+    skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
 
-    local typeEffect = tpz.effect.WARCRY
-    skill:setMsg(MobBuffMove(mob, typeEffect, power, 0, duration))
-
-    return typeEffect
+    return tpz.effect.WARCRY
 end
 
 

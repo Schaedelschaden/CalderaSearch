@@ -12,6 +12,12 @@ require("scripts/globals/mobs")
 -----------------------------------
 
 function onMobSpawn(mob)
+    local tierAby = 2
+    local tierMob = 2
+
+    -- Load default T2 stat increases
+    tpz.abyssea.updateBaseStats(mob, tierAby, tierMob)
+
     mob:setMod(tpz.mod.FIRERES, 350)
     mob:setMod(tpz.mod.ICERES, 350)
     mob:setMod(tpz.mod.WINDRES, 350)

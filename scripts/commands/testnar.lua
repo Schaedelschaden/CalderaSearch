@@ -18,10 +18,16 @@ cmdprops =
 }
 
 function onTrigger(player)
+
 ---------------------------------------------------------------------------------------------------
 
-    local derp = math.random(0, 4)
-    player:PrintToPlayer(string.format("test.lua onTrigger  DERP: [%i]", derp), tpz.msg.channel.NS_LINKSHELL3)
+    local target = player:getCursorTarget()
+    target:useJobAbility(602, target)
+
+---------------------------------------------------------------------------------------------------
+
+    -- local derp = math.random(0, 4)
+    -- player:PrintToPlayer(string.format("test.lua onTrigger  DERP: [%i]", derp), tpz.msg.channel.NS_LINKSHELL3)
 
 ---------------------------------------------------------------------------------------------------
 

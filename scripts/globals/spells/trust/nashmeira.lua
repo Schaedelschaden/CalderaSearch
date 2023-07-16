@@ -13,7 +13,8 @@ function onSpellCast(caster, target, spell)
 end
 
 function onMobSpawn(mob)
-    mob:addStatusEffect(tpz.effect.MAX_MP_BOOST, 70, 0, 0)
+    mob:addMod(tpz.mod.REFRESH, 5)
+    mob:addStatusEffect(tpz.effect.MAX_MP_BOOST, 200, 0, 0)
     mob:setMP(mob:getMaxMP())
     
     mob:addSimpleGambit(ai.t.PARTY, ai.c.HPP_LT, 50, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.CURE)

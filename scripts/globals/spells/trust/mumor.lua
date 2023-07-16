@@ -40,28 +40,7 @@ function onMobSpawn(mob)
                 end
             end
         end
-        -- Always set the boost, even if Uka wasn't found.
-        -- This accounts for her being in the party and giving the boost
-        -- and also if she dies and the boost goes away.
-        mobArg:setMod(tpz.mod.SAMBA_DURATION, sambaDurationBoost)
-        local target = mobArg:getTarget()
-        local family = target:getSystem()
-        if family == tpz.eco.UNDEAD then
-            if mobArg:getStatusEffect(tpz.effect.HASTE_SAMBA) == false then
-                mobArg:useJobAbility(tpz.ja.HASTE_SAMBA, mobArg)
-            end
-        else 
-            if mobArg:getStatusEffect(tpz.effect.DRAIN_SAMBA) == false then
-                mobArg:useJobAbility(tpz.ja.DRAIN_SAMBA, mobArg)
-            end
-        end
-        
-        
-        if target:getStatusEffect(tpz.effect.WEAKENED_DAZE_5) == false then
-            mobArg:useJobAbility(tpz.ja.STUTTER_STEP, target)
-        end
     end)
-
     -- Sets stance
     mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.SABER_DANCE, ai.r.JA, ai.s.SPECIFIC, tpz.ja.SABER_DANCE)
 
@@ -71,14 +50,27 @@ function onMobSpawn(mob)
     mob:addSimpleGambit(ai.t.TARGET, ai.c.READYING_MS, ai.r.JA, ai.s.SPECIFIC, tpz.ja.VIOLENT_FLOURISH)
     mob:addSimpleGambit(ai.t.TARGET, ai.c.READYING_JA, ai.r.JA, ai.s.SPECIFIC, tpz.ja.VIOLENT_FLOURISH)
     mob:addSimpleGambit(ai.t.TARGET, ai.c.CASTING_MA, ai.r.JA, ai.s.SPECIFIC, tpz.ja.VIOLENT_FLOURISH)
+end
 
-    -- Samba logic
-    -- Checks masters job, adjusts samba type if master has a healer main job.
-
-    -- Adds ecosystem to adjust samba to haste if target is undead
-    -- mob:addSimpleGambit(ai.t.TARGET, ai.c.IS_ECOSYSTEM, tpz.ecosystem.UNDEAD, ai.r.JA, ai.s.SPECIFIC, tpz.ja.HASTE_SAMBA)
-    -- Else picks highest drain spell available
-    -- mob:addSimpleGambit(ai.t.SELF, ai.c.NO_SAMBA, ai.r.JA, ai.s.BEST_SAMBA, tpz.ja.DRAIN_SAMBA)
+function onMobFight(mob, target)
+    if os.time() > mob:getLocalVar("CD") then
+        local target = mob:getTarget()
+        if not target:hasStatusEffect(tpz.effect.WEAKENED_DAZE_1) and mob:getTP() >= 100 then
+            mob:useJobAbility(tpz.ja.STUTTER_STEP, target)
+        end
+        
+        if target:getStatusEffect(tpz.effect.WEAKENED_DAZE_1):getTier() < 5 then
+            mob:useJobAbility(tpz.ja.STUTTER_STEP, target)
+        end
+        
+        if not mob:hasStatusEffect(tpz.effect.DRAIN_SAMBA) then
+            mob:useJobAbility(tpz.ja.DRAIN_SAMBA, mob)
+            mob:getMaster():addStatusEffect(tpz.effect.DRAIN_SAMBA, 3, 0, 300)
+            mob:setMod(tpz.mod.ENSPELL, 19)
+            mob:setMod(ypz.mod.ENSPELL_DMG, 2)
+        end
+        mob:setLocalVar("CD", os.time() + 5)
+    end
 end
 
 

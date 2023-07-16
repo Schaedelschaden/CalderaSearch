@@ -3,8 +3,10 @@
 --  Mob: Indich
 -----------------------------------
 mixins = {require("scripts/mixins/job_special")}
-
+require("scripts/mixins/rage")
+-----------------------------------
 function onMobSpawn(mob)
+    mob:setLocalVar("[rage]timer", 1800) -- 30 minutes
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
 	mob:addMod(tpz.mod.PARALYZERES, 30) -- Resistance to Silence
     mob:addMod(tpz.mod.STUNRES, 30) -- Resistance to Stun

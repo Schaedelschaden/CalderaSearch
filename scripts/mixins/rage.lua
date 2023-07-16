@@ -64,6 +64,7 @@ g_mixins.rage = function(mob)
     mob:addListener("DISENGAGE", "RAGE_DISENGAGE", function(mob)
         if mob:getLocalVar("[rage]started") == 1 then
             mob:setLocalVar("[rage]started", 0)
+            mob:setHP(mob:getMaxHP())
 
 			local rageStats = {tpz.mod.STR,   tpz.mod.DEX,     tpz.mod.VIT,    tpz.mod.AGI,         tpz.mod.INT,  tpz.mod.MND, tpz.mod.CHR, tpz.mod.MDEF,
 							   tpz.mod.DEF,   tpz.mod.ATT,     tpz.mod.ACC,    tpz.mod.MATT,        tpz.mod.MACC, tpz.mod.EVA, tpz.mod.MEVA,

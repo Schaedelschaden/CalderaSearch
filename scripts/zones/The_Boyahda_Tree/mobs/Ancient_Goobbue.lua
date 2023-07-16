@@ -10,18 +10,22 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
-    tpz.mix.jobSpecial.config(mob, {
-        specials =
-        {
-            {id = tpz.jsa.HUNDRED_FISTS, cooldown = 60, hpp = math.random(85, 95)},
-        },
-    })
-    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+    mob:addStatusEffect(tpz.effect.HUNDRED_FISTS, 1, 0, 0)
+    mob:addMod(tpz.mod.ACC, 750)
+    mob:addMod(tpz.mod.REGEN, 1000)
+    mob:addMod(tpz.mod.UDMGPHYS, -80)
+    mob:addMod(tpz.mod.UDMGMAGIC, -80)
+end
+
+function onMobFight(mob, target)
+    
+
 end
 
 function onMobDeath(mob, player, isKiller)
+    player:addSpell(959, true, true) -- Abenzio
 end
 
 function onMobDespawn(mob)
-    mob:setRespawnTime(math.random(75600, 86400)) -- 21 to 24 hours
+    mob:setRespawnTime(3600) 
 end

@@ -967,7 +967,11 @@ function BlueFinalAdjustments(caster, target, spell, dmg, params)
     dmg = utils.magicshield(target, dmg)
 
     target:takeSpellDamage(caster, spell, dmg, attackType, damageType)
-    target:updateEnmityFromDamage(caster, dmg)
+
+    local enmityEntity = caster:getTrickAttackChar(target) or caster
+
+    target:updateEnmityFromDamage(enmityEntity, dmg)
+
     target:handleAfflatusMiseryDamage(dmg)
     -- TP has already been dealt with.
 

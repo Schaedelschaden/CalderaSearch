@@ -39,5 +39,6 @@ function onMobFight(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-	
+    player:addSpell(1014, true, true) -- Tenzen
+    player:addSpell(961, true, true) -- kukki	
 end

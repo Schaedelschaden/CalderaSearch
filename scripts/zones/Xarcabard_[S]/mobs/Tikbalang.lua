@@ -99,6 +99,7 @@ function onMobDeath(mob, player, isKiller)
 
 	player:setCharVar("KillCounter_"..mobName, KillCounter)
 	player:PrintToPlayer(string.format("Lifetime << %s >> kills: %i", mobName, KillCounter), tpz.msg.channel.NS_LINKSHELL3)
+    player:addSpell(1003, true, true) -- Matsui-P 
 end
 
 function onMobDespawn(mob)
