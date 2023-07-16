@@ -148,9 +148,11 @@ function onMobDeath(mob, player, isKiller)
         end
     end
     
-    local target = mob:getTarget()
-    target:delMod(tpz.mod.FIRE_ABSORB, 100)
-    
+    if player:getLocalVar("ANTIBURN") == 1 then
+    -- local target = mob:getTarget()
+        player:delMod(tpz.mod.FIRE_ABSORB, 100)
+    end
+
     local playerName  = player:getName()
 	local mobName     = mob:getName()
 	local KillCounter = player:getCharVar("KillCounter_"..mobName)

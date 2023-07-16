@@ -7442,12 +7442,6 @@ namespace battleutils
 
     uint32 CalculateSpellCastTime(CBattleEntity* PEntity, CMagicState* PMagicState)
     {
-        if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-        {
-            static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                fmt::format("--- BEGIN SPELL CAST TIME AUDIT ---"), "Cast Time Audit System"));
-        }
-
         CSpell* PSpell = PMagicState->GetSpell();
         if (PSpell == nullptr)
         {
@@ -7461,20 +7455,8 @@ namespace battleutils
         // If quickMagicRate > 10 then quickMagicRate = 10 else quickMagicRate = quickMagicRate
         quickMagicRate = (quickMagicRate > 10) ? 10 : quickMagicRate;
 
-        if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-        {
-            static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                fmt::format("QUICK MAGIC: [{}]  RANDOM: [{}]", quickMagicRate, quickRandom), "Cast Time Audit System"));
-        }
-
         if (quickRandom < quickMagicRate)
         {
-            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-            {
-                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                    fmt::format("QUICK MAGIC TRIGGERED - NO CAST TIME"), "Cast Time Audit System"));
-            }
-            
             PMagicState->SetInstantCast(true);
             return 0;
         }
@@ -7483,20 +7465,8 @@ namespace battleutils
         uint32 base = PSpell->getCastTime();
         uint32 cast = base;
 
-        if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-        {
-            static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                fmt::format("BASE CAST TIME: [{}]", cast), "Cast Time Audit System"));
-        }
-
         if (PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_HASSO, EFFECT_SEIGAN}))
         {
-            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-            {
-                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                    fmt::format("HASSO/SEIGANN CAST TIME: [{}] = CAST: [{}] * 2", (uint32)(cast * 2.0f), cast), "Cast Time Audit System"));
-            }
-
             cast = (uint32)(cast * 2.0f);
         }
 
@@ -7508,12 +7478,6 @@ namespace battleutils
 
             if (zealBonus > 0)
             {
-                if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-                {
-                    static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                        fmt::format("COLLIMATED FERVOR CAST TIME: [{}] = CAST: [{}] / PRIMEVAL ZEAL: [{}]", (uint32)(cast / zealBonus), cast, zealBonus), "Cast Time Audit System"));
-                }
-
                 cast = (uint32)(cast / zealBonus);
             }
         }
@@ -7525,14 +7489,6 @@ namespace battleutils
             PSpell->getSpellFamily() == 68 || PSpell->getSpellFamily() == 69 || PSpell->getSpellFamily() == 70 ||
             PSpell->getSpellFamily() == 74 || PSpell->getSpellFamily() == 89)
             {
-                if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-                {
-                    static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                        fmt::format("DARK MAGIC CAST TIME: [{}] = CAST: [{}] * (1 + (BLACK MAGIC CAST: [{}] + DARK MAGIC CAST: [{}]) / 100)",
-                        (uint32)(cast * (1.0f + (PEntity->getMod(Mod::BLACK_MAGIC_CAST) + PEntity->getMod(Mod::DARK_MAGIC_CAST)) / 100.0f)),
-                        cast, PEntity->getMod(Mod::BLACK_MAGIC_CAST), PEntity->getMod(Mod::DARK_MAGIC_CAST)), "Cast Time Audit System"));
-                }
-
                 cast = (uint32)(cast * (1.0f + (PEntity->getMod(Mod::BLACK_MAGIC_CAST) + PEntity->getMod(Mod::DARK_MAGIC_CAST)) / 100.0f));
             }
             if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_ALACRITY))
@@ -7544,13 +7500,6 @@ namespace battleutils
                     bonus = PEntity->getMod(Mod::ALACRITY_CELERITY_EFFECT);
                 }
 
-                if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-                {
-                    static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                        fmt::format("BLACK MAGIC ALACRITY CAST TIME: [{}] = CAST: [{}] - (BASE: [{}] * ((100 - (50 + ALACRITY BONUS: [{}])) / 100))",
-                        cast - (uint32)(base * ((100 - (50 + bonus)) / 100.0f)), cast, base, bonus), "Cast Time Audit System"));
-                }
-
                 cast -= (uint32)(base * ((100 - (50 + bonus)) / 100.0f));
                 applyArts = false;
             }
@@ -7558,27 +7507,11 @@ namespace battleutils
             {
                 if (PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_DARK_ARTS, EFFECT_ADDENDUM_BLACK}))
                 {
-                    if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-                    {
-                        static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                            fmt::format("BLACK MAGIC DARK ARTS CAST TIME: [{}] = CAST: [{}] * (1 + (BLACK MAGIC CAST: [{}] + GRIMOIRE SPELLCASTING: [{}] / 100))",
-                            (uint32)(cast * (1.0f + (PEntity->getMod(Mod::BLACK_MAGIC_CAST) + PEntity->getMod(Mod::GRIMOIRE_SPELLCASTING)) / 100.0f)),
-                            cast, PEntity->getMod(Mod::BLACK_MAGIC_CAST), PEntity->getMod(Mod::GRIMOIRE_SPELLCASTING)), "Cast Time Audit System"));
-                    }
-
                     // Add any "Grimoire: Reduces spellcasting time" bonuses
                     cast = (uint32)(cast * (1.0f + (PEntity->getMod(Mod::BLACK_MAGIC_CAST) + PEntity->getMod(Mod::GRIMOIRE_SPELLCASTING)) / 100.0f));
                 }
                 else
                 {
-                    if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-                    {
-                        static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                            fmt::format("BLACK MAGIC CAST TIME: [{}] = CAST: [{}] * (1 + (BLACK MAGIC CAST: [{}] / 100))",
-                            (uint32)(cast * (1.0f + (PEntity->getMod(Mod::BLACK_MAGIC_CAST)) / 100.0f)),
-                            cast, PEntity->getMod(Mod::BLACK_MAGIC_CAST)), "Cast Time Audit System"));
-                    }
-
                     cast = (uint32)(cast * (1.0f + PEntity->getMod(Mod::BLACK_MAGIC_CAST) / 100.0f));
                 }
             }
@@ -7597,13 +7530,6 @@ namespace battleutils
                     bonus = PEntity->getMod(Mod::ALACRITY_CELERITY_EFFECT);
                 }
 
-                if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-                {
-                    static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                        fmt::format("WHITE MAGIC CELERITY CAST TIME: [{}] = CAST: [{}] - (BASE: [{}] * ((100 - (50 + CELERITY BONUS: [{}])) / 100))",
-                        cast - (uint32)(base * ((100 - (50 + bonus)) / 100.0f)), cast, base, bonus), "Cast Time Audit System"));
-                }
-
                 cast -= (uint32)(base * ((100 - (50 + bonus)) / 100.0f));
                 applyArts = false;
             }
@@ -7611,40 +7537,16 @@ namespace battleutils
             {
                 if (PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_LIGHT_ARTS, EFFECT_ADDENDUM_WHITE}))
                 {
-                    if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-                    {
-                        static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                            fmt::format("WHITE MAGIC LIGHT ARTS CAST TIME: [{}] = CAST: [{}] * (1 + (WHITE MAGIC CAST: [{}] + GRIMOIRE SPELLCASTING: [{}] / 100))",
-                            (uint32)(cast * (1.0f + (PEntity->getMod(Mod::WHITE_MAGIC_CAST) + PEntity->getMod(Mod::GRIMOIRE_SPELLCASTING)) / 100.0f)),
-                            cast, PEntity->getMod(Mod::WHITE_MAGIC_CAST), PEntity->getMod(Mod::GRIMOIRE_SPELLCASTING)), "Cast Time Audit System"));
-                    }
-
                     // Add any "Grimoire: Reduces spellcasting time" bonuses
                     cast = (uint32)(cast * (1.0f + (PEntity->getMod(Mod::WHITE_MAGIC_CAST) + PEntity->getMod(Mod::GRIMOIRE_SPELLCASTING)) / 100.0f));
                 }
                 else
                 {
-                    if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-                    {
-                        static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                            fmt::format("WHITE MAGIC CAST TIME: [{}] = CAST: [{}] * (1 + (WHITE MAGIC CAST: [{}] / 100))",
-                            (uint32)(cast * (1.0f + (PEntity->getMod(Mod::WHITE_MAGIC_CAST)) / 100.0f)),
-                            cast, PEntity->getMod(Mod::WHITE_MAGIC_CAST)), "Cast Time Audit System"));
-                    }
-
                     cast = (uint32)(cast * (1.0f + PEntity->getMod(Mod::WHITE_MAGIC_CAST) / 100.0f));
                 }
             }
             else if (spellID == 54 && PEntity->getMod(Mod::STONESKIN_CAST) > 0)
             {
-                if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-                {
-                    static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                        fmt::format("STONESKIN CAST TIME: [{}] = CAST: [{}] * (1 + (STONESKIN CAST: [{}] / 100))",
-                        (uint32)(cast * (1.0f + (PEntity->getMod(Mod::STONESKIN_CAST)) / 100.0f)),
-                        cast, PEntity->getMod(Mod::STONESKIN_CAST)), "Cast Time Audit System"));
-                }
-
                 cast = (uint32)(cast * (1.0f + PEntity->getMod(Mod::STONESKIN_CAST) / 100.0f));
             }
         }
@@ -7655,13 +7557,6 @@ namespace battleutils
             {
                 if (PSpell->getAOE() == SPELLAOE_PIANISSIMO)
                 {
-                    if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-                    {
-                        static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                            fmt::format("SONG PIANISSIMO CAST TIME: [{}] = BASE: [{}] / 2",
-                            base / 2, base), "Cast Time Audit System"));
-                    }
-
                     cast = base / 2;
                 }
             }
@@ -7670,139 +7565,55 @@ namespace battleutils
                 if (PEntity->objtype == TYPE_PC &&
                     tpzrand::GetRandomNumber(100) < ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_NIGHTINGALE, (CCharEntity*)PEntity) - 25)
                 {
-                    if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-                    {
-                        static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                            fmt::format("SONG NIGHTINGALE INSTANT CAST - NIGHTINGALE PROC CHANCE: [{}]",
-                            ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_NIGHTINGALE, (CCharEntity*)PEntity) - 25), "Cast Time Audit System"));
-                    }
-
                     return 0;
-                }
-
-                if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-                {
-                    static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                        fmt::format("SONG NIGHTINGALE CAST TIME: [{}] = CAST: [{}] * 0.5",
-                        (uint32)(cast * 0.5f), cast), "Cast Time Audit System"));
                 }
 
                 cast = (uint32)(cast * 0.5f);
             }
             if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_TROUBADOUR))
             {
-                if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-                {
-                    static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                        fmt::format("SONG TROUBADOUR CAST TIME: [{}] = CAST: [{}] * 1.5",
-                        (uint32)(cast * 1.5f), cast), "Cast Time Audit System"));
-                }
-
                 cast = (uint32)(cast * 1.5f);
             }
 
             uint16 songcasting = PEntity->getMod(Mod::SONG_SPELLCASTING_TIME);
-
-            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-            {
-                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                    fmt::format("SONG CAST TIME: [{}] = CAST: [{}] * (1 - (SONG SPELLCASTING TIME: [{}] / 100))",
-                    (uint32)(cast * (1.0f - ((songcasting > 50 ? 50 : songcasting) / 100.0f))), cast, songcasting), "Cast Time Audit System"));
-            }
 
             cast = (uint32)(cast * (1.0f - ((songcasting > 50 ? 50 : songcasting) / 100.0f)));
         }
 
         else if (PSpell->getSpellFamily() == SPELLFAMILY_UTSUSEMI) // PSpell->getSpellGroup() == SPELLGROUP_NINJUTSU &&
         {
-            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-            {
-                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                    fmt::format("UTSUSEMI CAST TIME: [{}] = CAST: [{}] * (1 + (UTSUSEMI CASTING TIME: [{}] / 100))",
-                    (uint32)(cast * (1.0f + (PEntity->getMod(Mod::UTSUSEMI_CAST) / 100.0f))), cast, PEntity->getMod(Mod::UTSUSEMI_CAST)), "Cast Time Audit System"));
-            }
-
             cast = (uint32)(cast * (1.0f + (PEntity->getMod(Mod::UTSUSEMI_CAST) / 100.0f)));
         }
 
         int16 fastCast = std::clamp<int16>(PEntity->getMod(Mod::FASTCAST), -100, 80);
 
-        if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-        {
-            static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                fmt::format("    FAST CAST: [{}]",
-                fastCast), "Cast Time Audit System"));
-        }
-
         if (PSpell->getSkillType() == SKILLTYPE::SKILL_ELEMENTAL_MAGIC) // Elemental Celerity reductions
         {
-            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-            {
-                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                    fmt::format("    FAST CAST: [{}] = FAST CAST: [{}] + ELEMENTAL CELERITY: [{}]",
-                    fastCast + PEntity->getMod(Mod::ELEMENTAL_CELERITY), fastCast, PEntity->getMod(Mod::ELEMENTAL_CELERITY)), "Cast Time Audit System"));
-            }
-
             fastCast += PEntity->getMod(Mod::ELEMENTAL_CELERITY);
         }
 
         else if (PSpell->getSkillType() == SKILLTYPE::SKILL_ENFEEBLING_MAGIC) // Enfeebling reductions
         {
-            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-            {
-                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                    fmt::format("    FAST CAST: [{}] = FAST CAST: [{}] * (1 + (ENFEEBLING MAGIC CAST: [{}] / 100))",
-                    (uint32)(fastCast * (1.0f + PEntity->getMod(Mod::ENFEEBLING_MAGIC_CAST) / 100.0f)), fastCast, PEntity->getMod(Mod::ENFEEBLING_MAGIC_CAST)), "Cast Time Audit System"));
-            }
-
             fastCast += (uint32)(fastCast * (1.0f + PEntity->getMod(Mod::ENFEEBLING_MAGIC_CAST) / 100.0f));
         }
 
         else if (PSpell->isCure()) // Cure cast time reductions
         {
-            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-            {
-                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                    fmt::format("    FAST CAST: [{}] = FAST CAST: [{}] + CURE CAST TIME: [{}]",
-                    fastCast + PEntity->getMod(Mod::CURE_CAST_TIME), fastCast, PEntity->getMod(Mod::CURE_CAST_TIME)), "Cast Time Audit System"));
-            }
-
             fastCast += PEntity->getMod(Mod::CURE_CAST_TIME);
 
             if (PEntity->objtype == TYPE_PC)
             {
-                if (PEntity->GetLocalVar("AuditCastTime") == 1)
-                {
-                    static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                        fmt::format("    FAST CAST: [{}] = FAST CAST: [{}] + CURE CAST TIME MERITS: [{}]",
-                        fastCast + ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_CURE_CAST_TIME, (CCharEntity*)PEntity), fastCast, ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_CURE_CAST_TIME, (CCharEntity*)PEntity)), "Cast Time Audit System"));
-                }
-
                 fastCast += ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_CURE_CAST_TIME, (CCharEntity*)PEntity);
             }
         }
 
         else if (PSpell->getSkillType() == SKILLTYPE::SKILL_ENHANCING_MAGIC) // Enhancing Magic Cast Time
         {
-            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-            {
-                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                    fmt::format("    FAST CAST: [{}] = FAST CAST: [{}] + ENHANCING MAGIC CAST TIME: [{}]",
-                    fastCast + PEntity->getMod(Mod::ENH_MAGIC_CAST_TIME), fastCast, PEntity->getMod(Mod::ENH_MAGIC_CAST_TIME)), "Cast Time Audit System"));
-            }
-
             fastCast += PEntity->getMod(Mod::ENH_MAGIC_CAST_TIME);
         }
 
         else if (PSpell->getSkillType() == SKILLTYPE::SKILL_BLUE_MAGIC) // Blue Magic Cast Time
         {
-            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-            {
-                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                    fmt::format("    FAST CAST: [{}] = FAST CAST: [{}] + BLUE MAGIC CAST TIME: [{}]",
-                    fastCast + PEntity->getMod(Mod::BLUE_MAGIC_CAST_TIME), fastCast, PEntity->getMod(Mod::BLUE_MAGIC_CAST_TIME)), "Cast Time Audit System"));
-            }
-
             fastCast += PEntity->getMod(Mod::BLUE_MAGIC_CAST_TIME);
         }
 
@@ -7812,25 +7623,11 @@ namespace battleutils
             (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_VALIANCE) ||
              PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_VALLATION)))
         {
-            if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-            {
-                static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                    fmt::format("    FAST CAST: [{}] = FAST CAST: [{}] + INSPIRATION: [{}]",
-                    fastCast + PEntity->getMod(Mod::INSPIRATION_FASTCAST) - 10, fastCast, PEntity->getMod(Mod::INSPIRATION_FASTCAST) - 10), "Cast Time Audit System"));
-            }
-
             fastCast += PEntity->getMod(Mod::INSPIRATION_FASTCAST) - 10;
         }
 
         fastCast = std::clamp<int16>(fastCast, -100, 80);
         int16 uncappedFastCast = std::clamp<int16>(PEntity->getMod(Mod::UFASTCAST), -100, 100);
-
-        if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-        {
-            static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                fmt::format("CAPPED FAST CAST: [{}]  UNCAPPED FAST CAST: [{}]",
-                fastCast, uncappedFastCast), "Cast Time Audit System"));
-        }
 
         // Add in fast cast from Divine Benison
         if (PSpell->isNa())
@@ -7845,21 +7642,7 @@ namespace battleutils
             uncappedFastCast = std::clamp<int16>(uncappedFastCast + PEntity->getMod(Mod::DIVINE_BENISON), -100, 100);
         }
 
-        if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-        {
-            static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                fmt::format("TOTAL FAST CAST: [{}] = FAST CAST: [{}] + UNCAPPED FAST CAST: [{}]",
-                std::clamp<float>((float)(fastCast + uncappedFastCast), -100.f, 100.f), fastCast, uncappedFastCast), "Cast Time Audit System"));
-        }
-
         float sumFastCast = std::clamp<float>((float)(fastCast + uncappedFastCast), -100.f, 100.f);
-
-        if (PEntity->objtype == TYPE_PC && PEntity->GetLocalVar("AuditCastTime") == 1)
-        {
-            static_cast<CCharEntity*>(PEntity)->pushPacket(new CChatMessagePacket(static_cast<CCharEntity*>(PEntity), MESSAGE_SYSTEM_3,
-                fmt::format("FINAL CAST TIME: [{}] = CAST: [{}] * ((100 - TOTAL FAST CAST: [{}]) / 100)",
-                (uint32)(cast * ((100.0f - sumFastCast) / 100.0f)), cast, sumFastCast), "Cast Time Audit System"));
-        }
 
         return (uint32)(cast * ((100.0f - sumFastCast) / 100.0f));
     }
